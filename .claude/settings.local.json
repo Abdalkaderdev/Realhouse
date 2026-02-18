@@ -1,0 +1,16 @@
+{
+  "permissions": {
+    "allow": [
+      "WebSearch",
+      "WebFetch(domain:www.awwwards.com)",
+      "WebFetch(domain:mediaboom.com)",
+      "WebFetch(domain:www.altastreet.com)",
+      "Bash(npm create:*)",
+      "Bash(npm install:*)",
+      "Bash(npx tsc:*)",
+      "Bash(timeout 10 npx vite:*)",
+      "mcp__plugin_playwright_playwright__browser_navigate",
+      "Bash(npx vite:*)"
+    ]
+  }
+}

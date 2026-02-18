@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Real House — Premium luxury real estate. Curated properties for the discerning buyer." />
+  <title>Real House — Luxury Real Estate</title>
+
+  <!-- Preconnect to Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+</head>
+<body>
+  <!-- Three.js Canvas (Background) -->
+  <canvas id="three-canvas" aria-hidden="true"></canvas>
+
+  <!-- Custom Cursor -->
+  <div id="cursor" class="cursor" aria-hidden="true">
+    <div class="cursor__ring"></div>
+  </div>
+  <div id="cursor-dot" class="cursor-dot" aria-hidden="true"></div>
+
+  <!-- Loader -->
+  <div id="loader" class="loader">
+    <div class="loader__content">
+      <div class="loader__logo">
+        <svg viewBox="0 0 200 60" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path class="loader__logo-line" d="M10 50 L10 10 L50 10" stroke="#C9A84C" stroke-width="2" fill="none"/>
+          <path class="loader__logo-line" d="M10 30 L40 30" stroke="#C9A84C" stroke-width="2" fill="none"/>
+          <path class="loader__logo-line" d="M30 10 L30 50" stroke="#C9A84C" stroke-width="2" fill="none"/>
+        </svg>
+        <span class="loader__text">Real House</span>
+      </div>
+      <div class="loader__progress">
+        <div class="loader__progress-bar"></div>
+      </div>
+      <div class="loader__counter">0%</div>
+    </div>
+  </div>
+
+  <!-- Page Transition Overlay -->
+  <div id="page-transition" class="page-transition" aria-hidden="true">
+    <span class="page-transition__label">Real House</span>
+  </div>
+
+  <!-- Navigation -->
+  <header id="nav" class="nav">
+    <div class="nav__container">
+      <a href="/" class="nav__logo" data-route>
+        <span class="nav__logo-icon">RH</span>
+        <span class="nav__logo-text">Real House</span>
+      </a>
+
+      <nav class="nav__menu">
+        <a href="/" class="nav__link" data-route>Home</a>
+        <a href="/properties" class="nav__link" data-route>Properties</a>
+        <a href="/about" class="nav__link" data-route>About</a>
+        <a href="/contact" class="nav__link" data-route>Contact</a>
+      </nav>
+
+      <div class="nav__actions">
+        <button class="nav__theme-toggle" id="theme-toggle" aria-label="Toggle theme">
+          <svg class="nav__theme-icon nav__theme-icon--sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="12" cy="12" r="5"/>
+            <path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/>
+          </svg>
+          <svg class="nav__theme-icon nav__theme-icon--moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+          </svg>
+        </button>
+        <a href="/contact" class="btn btn--primary btn--nav" data-route>Get in Touch</a>
+      </div>
+
+      <button class="nav__hamburger" id="nav-hamburger" aria-label="Toggle menu">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+  </header>
+
+  <!-- Mobile Menu -->
+  <div id="mobile-menu" class="mobile-menu">
+    <nav class="mobile-menu__nav">
+      <a href="/" class="mobile-menu__link" data-route>Home</a>
+      <a href="/properties" class="mobile-menu__link" data-route>Properties</a>
+      <a href="/about" class="mobile-menu__link" data-route>About</a>
+      <a href="/contact" class="mobile-menu__link" data-route>Contact</a>
+    </nav>
+  </div>
+
+  <!-- Main Content -->
+  <main id="app"></main>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="footer__container">
+      <div class="footer__top">
+        <div class="footer__brand">
+          <div class="footer__logo">
+            <span class="footer__logo-icon">RH</span>
+            <span class="footer__logo-text">Real House</span>
+          </div>
+          <p class="footer__tagline">Where luxury meets living. Premium properties for the discerning buyer.</p>
+        </div>
+
+        <div class="footer__links">
+          <div class="footer__col">
+            <h4>Explore</h4>
+            <a href="/properties" data-route>All Properties</a>
+            <a href="/properties?type=villa" data-route>Villas</a>
+            <a href="/properties?type=penthouse" data-route>Penthouses</a>
+            <a href="/properties?type=estate" data-route>Estates</a>
+          </div>
+          <div class="footer__col">
+            <h4>Company</h4>
+            <a href="/about" data-route>About Us</a>
+            <a href="/about#team" data-route>Our Team</a>
+            <a href="/contact" data-route>Contact</a>
+          </div>
+          <div class="footer__col">
+            <h4>Connect</h4>
+            <a href="https://instagram.com" target="_blank" rel="noopener">Instagram</a>
+            <a href="https://linkedin.com" target="_blank" rel="noopener">LinkedIn</a>
+            <a href="https://twitter.com" target="_blank" rel="noopener">Twitter</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="footer__bottom">
+        <p>&copy; 2025 Real House. All rights reserved.</p>
+        <div class="footer__legal">
+          <a href="/privacy">Privacy Policy</a>
+          <a href="/terms">Terms of Service</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- SVG Sprites -->
+  <svg xmlns="http://www.w3.org/2000/svg" style="display:none">
+    <symbol id="icon-location" viewBox="0 0 24 24">
+      <path fill="currentColor" d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/>
+    </symbol>
+    <symbol id="icon-bed" viewBox="0 0 24 24">
+      <path fill="currentColor" d="M7 14c1.66 0 3-1.34 3-3S8.66 8 7 8s-3 1.34-3 3 1.34 3 3 3zm0-4c.55 0 1 .45 1 1s-.45 1-1 1-1-.45-1-1 .45-1 1-1zm12-3h-8v5H3V5H1v15h2v-3h18v3h2v-9c0-2.21-1.79-4-4-4z"/>
+    </symbol>
+    <symbol id="icon-bath" viewBox="0 0 24 24">
+      <path fill="currentColor" d="M7 5c-1.1 0-2 .9-2 2v4H2v5c0 1.65 1.35 3 3 3h2v1h10v-1h2c1.65 0 3-1.35 3-3v-5h-3V7c0-1.1-.9-2-2-2h-3c-1.1 0-2 .9-2 2v4H7V7c0-.55-.45-1-1-1s-1 .45-1 1v4H3v-4c0-1.1.9-2 2-2h2c.35 0 .69.09 1 .26V5H7zm10 2v4h-4V7h4z"/>
+    </symbol>
+    <symbol id="icon-area" viewBox="0 0 24 24">
+      <path fill="currentColor" d="M19 12h-2v3h-3v2h5v-5zM7 9h3V7H5v5h2V9zm14-6H3c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h18c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16.01H3V4.99h18v14.02z"/>
+    </symbol>
+    <symbol id="icon-arrow-right" viewBox="0 0 24 24">
+      <path fill="currentColor" d="M12 4l-1.41 1.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8z"/>
+    </symbol>
+    <symbol id="icon-heart" viewBox="0 0 24 24">
+      <path fill="currentColor" d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
+    </symbol>
+    <symbol id="icon-calendar" viewBox="0 0 24 24">
+      <path fill="currentColor" d="M19 3h-1V1h-2v2H8V1H6v2H5c-1.11 0-1.99.9-1.99 2L3 19c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H5V8h14v11zM9 10H7v2h2v-2zm4 0h-2v2h2v-2zm4 0h-2v2h2v-2z"/>
+    </symbol>
+    <symbol id="icon-check" viewBox="0 0 24 24">
+      <path fill="currentColor" d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/>
+    </symbol>
+    <symbol id="icon-phone" viewBox="0 0 24 24">
+      <path fill="currentColor" d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/>
+    </symbol>
+    <symbol id="icon-email" viewBox="0 0 24 24">
+      <path fill="currentColor" d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/>
+    </symbol>
+    <symbol id="icon-arrow-left" viewBox="0 0 24 24">
+      <path fill="currentColor" d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"/>
+    </symbol>
+  </svg>
+
+  <script type="module" src="/src/main.ts"></script>
+</body>
+</html>
