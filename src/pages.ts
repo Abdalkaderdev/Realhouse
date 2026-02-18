@@ -225,6 +225,104 @@ export function renderHomePage(): DocumentFragment {
   featured.appendChild(featuredContainer);
   fragment.appendChild(featured);
 
+  // Marquee Banner
+  const marquee = createElement('div', 'marquee-banner marquee-banner--large');
+  marquee.setAttribute('data-scroll-marquee', '');
+  marquee.setAttribute('data-marquee-text', 'Luxury Living • Premium Properties • Exclusive Locations • Award Winning • Luxury Living • Premium Properties •');
+  fragment.appendChild(marquee);
+
+  // Horizontal Showcase Section
+  const showcase = createElement('section', 'showcase');
+  showcase.id = 'showcase';
+
+  const showcaseProgress = createElement('div', 'showcase__progress');
+  const progressBar = createElement('div', 'showcase__progress-bar');
+  showcaseProgress.appendChild(progressBar);
+  showcase.appendChild(showcaseProgress);
+
+  const showcaseWrapper = createElement('div', 'showcase__wrapper');
+
+  // Showcase panels with featured properties
+  const showcaseProperties = featuredProperties.slice(0, 4);
+  showcaseProperties.forEach((property, index) => {
+    const panel = createElement('div', 'showcase-panel');
+    panel.setAttribute('data-panel', (index + 1).toString());
+
+    // Background
+    const bg = createElement('div', 'showcase-panel__bg');
+    const bgImg = createElement('img');
+    bgImg.src = property.images[0];
+    bgImg.alt = property.title;
+    bgImg.loading = index === 0 ? 'eager' : 'lazy';
+    bg.appendChild(bgImg);
+    panel.appendChild(bg);
+
+    // Overlay
+    const overlay = createElement('div', 'showcase-panel__overlay');
+    panel.appendChild(overlay);
+
+    // Content
+    const content = createElement('div', 'showcase-panel__content');
+
+    const eyebrow = createElement('div', 'showcase-panel__eyebrow');
+    const eyebrowSpan = createElement('span', undefined, property.type.toUpperCase());
+    eyebrow.appendChild(eyebrowSpan);
+    content.appendChild(eyebrow);
+
+    const title = createElement('h2', 'showcase-panel__title');
+    const titleParts = property.title.split(' ');
+    title.textContent = titleParts.slice(0, -1).join(' ') + ' ';
+    const titleEm = createElement('em', undefined, titleParts[titleParts.length - 1]);
+    title.appendChild(titleEm);
+    content.appendChild(title);
+
+    const subtitle = createElement('p', 'showcase-panel__subtitle', property.description);
+    content.appendChild(subtitle);
+
+    const price = createElement('div', 'showcase-panel__price', formatPrice(property.price));
+    content.appendChild(price);
+
+    const specs = createElement('div', 'showcase-panel__specs');
+    const specData = [
+      { icon: 'icon-bed', value: `${property.specs.beds} Beds` },
+      { icon: 'icon-bath', value: `${property.specs.baths} Baths` },
+      { icon: 'icon-area', value: `${property.specs.sqft.toLocaleString()} sqft` }
+    ];
+    specData.forEach(spec => {
+      const specEl = createElement('div', 'showcase-panel__spec');
+      specEl.appendChild(createSVGUse(spec.icon));
+      specEl.appendChild(document.createTextNode(spec.value));
+      specs.appendChild(specEl);
+    });
+    content.appendChild(specs);
+
+    const cta = createElement('div', 'showcase-panel__cta');
+    const ctaBtn = createElement('a', 'btn btn--primary', 'View Property');
+    ctaBtn.href = `/properties/${property.id}`;
+    ctaBtn.setAttribute('data-route', '');
+    ctaBtn.setAttribute('data-magnetic', '');
+    cta.appendChild(ctaBtn);
+    content.appendChild(cta);
+
+    panel.appendChild(content);
+
+    // Panel number
+    const number = createElement('div', 'showcase-panel__number', `0${index + 1}`);
+    panel.appendChild(number);
+
+    showcaseWrapper.appendChild(panel);
+  });
+
+  showcase.appendChild(showcaseWrapper);
+  fragment.appendChild(showcase);
+
+  // Second Marquee (gold)
+  const marquee2 = createElement('div', 'marquee-banner marquee-banner--gold');
+  marquee2.setAttribute('data-marquee', '');
+  marquee2.setAttribute('data-marquee-text', 'Real House — Where Dreams Find Address — Exceptional Properties — Unmatched Service —');
+  marquee2.setAttribute('data-marquee-speed', '60');
+  fragment.appendChild(marquee2);
+
   // Process Section
   const process = createElement('section', 'process');
   const processContainer = createElement('div', 'container');

@@ -20,6 +20,11 @@ import {
   killAllAnimations,
   scrollReveal
 } from './animations/gsap';
+import { initAllEffects, initCardTilt, initImageParallax } from './animations/effects';
+import { initTextEffects, cinematicReveal } from './animations/text-effects';
+import { initHorizontalScroll, initVelocitySkew } from './animations/horizontal-scroll';
+import { initAllMarquees } from './animations/marquee';
+import { initImageDistortion, destroyImageDistortion } from './animations/image-distortion';
 import { renderHomePage, renderPropertiesPage, renderAboutPage, renderContactPage, renderPropertyDetailPage } from './pages';
 
 export class App {
@@ -51,6 +56,12 @@ export class App {
     // Initialize smooth scroll (Lenis)
     initSmoothScroll();
 
+    // Initialize scroll progress bar
+    this.initScrollProgress();
+
+    // Initialize velocity-based skew on images
+    initVelocitySkew('.property-card__image');
+
     // Initialize navigation
     this.initNavigation();
     initNavScroll();
@@ -73,6 +84,21 @@ export class App {
   private initTheme(): void {
     const savedTheme = localStorage.getItem('rh-theme') || 'dark';
     document.documentElement.setAttribute('data-theme', savedTheme);
+  }
+
+  private initScrollProgress(): void {
+    const bar = document.querySelector('.scroll-progress__bar') as HTMLElement;
+    if (!bar) return;
+
+    const updateProgress = () => {
+      const scrollTop = window.scrollY;
+      const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+      const progress = docHeight > 0 ? scrollTop / docHeight : 0;
+      bar.style.transform = `scaleX(${progress})`;
+    };
+
+    window.addEventListener('scroll', updateProgress, { passive: true });
+    updateProgress();
   }
 
   private initThemeToggle(): void {
@@ -214,16 +240,46 @@ export class App {
     // Initialize magnetic buttons
     initMagneticButtons();
 
-    // Initialize property card hover effects
+    // Initialize all visual effects
+    initAllEffects();
+
+    // Initialize text effects
+    initTextEffects();
+
+    // Initialize marquees
+    initAllMarquees();
+
+    // Initialize property card hover effects with 3D tilt
     document.querySelectorAll('.property-card').forEach(card => {
       initPropertyCardHover(card as HTMLElement);
     });
+    initCardTilt('.property-card');
+    initImageParallax('.property-card__media');
+
+    // Initialize image distortion on property images
+    initImageDistortion('.property-card__media', 0.8);
 
     // Page-specific animations
     if (path === '/') {
       animateHero();
       animateStats();
       animateFeatured();
+
+      // Initialize horizontal scroll showcase
+      initHorizontalScroll({
+        container: '.showcase',
+        wrapper: '.showcase__wrapper',
+        panels: '.showcase-panel',
+        parallaxImages: '.showcase-panel__bg img',
+        progressBar: '.showcase__progress-bar'
+      });
+
+      // Animate hero headline with cinematic reveal
+      const heroHeadline = document.querySelector('.hero__headline') as HTMLElement;
+      if (heroHeadline) {
+        cinematicReveal(heroHeadline, { delay: 0.5 });
+      }
+
       animateProcess();
     } else if (path === '/properties') {
       scrollReveal('.properties-page__header', { y: 40 });
@@ -254,6 +310,7 @@ export class App {
     this.sceneManager?.dispose();
     this.cursor?.destroy();
     destroySmoothScroll();
+    destroyImageDistortion();
     killAllAnimations();
   }
 }
