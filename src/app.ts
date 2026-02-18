@@ -25,11 +25,13 @@ import { initTextEffects, cinematicReveal } from './animations/text-effects';
 import { initHorizontalScroll, initVelocitySkew } from './animations/horizontal-scroll';
 import { initAllMarquees } from './animations/marquee';
 import { initImageDistortion, destroyImageDistortion } from './animations/image-distortion';
+import { CursorTrail, initMagneticGlow, initRippleEffect } from './animations/cursor-trail';
 import { renderHomePage, renderPropertiesPage, renderAboutPage, renderContactPage, renderPropertyDetailPage } from './pages';
 
 export class App {
   private sceneManager: SceneManager | null = null;
   private cursor: CustomCursor | null = null;
+  private cursorTrail: CursorTrail | null = null;
   private currentPage: string = '/';
 
   async init(): Promise<void> {
@@ -43,6 +45,10 @@ export class App {
     // Initialize custom cursor
     this.cursor = new CustomCursor();
     this.cursor.init();
+
+    // Initialize cursor particle trail
+    this.cursorTrail = new CursorTrail();
+    this.cursorTrail.start();
 
     // Run loader animation
     await animateLoader();
@@ -240,6 +246,12 @@ export class App {
     // Initialize magnetic buttons
     initMagneticButtons();
 
+    // Initialize magnetic glow on buttons
+    initMagneticGlow('.btn');
+
+    // Initialize ripple effect on buttons
+    initRippleEffect('.btn');
+
     // Initialize all visual effects
     initAllEffects();
 
@@ -309,6 +321,7 @@ export class App {
   destroy(): void {
     this.sceneManager?.dispose();
     this.cursor?.destroy();
+    this.cursorTrail?.destroy();
     destroySmoothScroll();
     destroyImageDistortion();
     killAllAnimations();
