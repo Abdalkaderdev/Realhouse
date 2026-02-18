@@ -45,8 +45,9 @@ export function initHorizontalScroll(options: HorizontalScrollOptions): ScrollTr
 
   // Parallax effect on images inside panels
   if (options.parallaxImages) {
+    const parallaxSelector = options.parallaxImages;
     panels.forEach((panel) => {
-      const img = panel.querySelector(options.parallaxImages) as HTMLElement;
+      const img = panel.querySelector(parallaxSelector) as HTMLElement;
       if (!img) return;
 
       gsap.fromTo(img,
@@ -67,7 +68,7 @@ export function initHorizontalScroll(options: HorizontalScrollOptions): ScrollTr
   }
 
   // Panel reveal animations
-  panels.forEach((panel, index) => {
+  panels.forEach((panel) => {
     const content = panel.querySelector('.showcase-panel__content');
     const title = panel.querySelector('.showcase-panel__title');
     const subtitle = panel.querySelector('.showcase-panel__subtitle');
@@ -196,7 +197,7 @@ export function initInfiniteLoop(options: {
 
   // Set initial positions
   gsap.set([content, clone], {
-    x: (i) => i * width * (direction === 'left' ? 1 : -1)
+    x: (i: number) => i * width * (direction === 'left' ? 1 : -1)
   });
 
   const tween = gsap.to([content, clone], {

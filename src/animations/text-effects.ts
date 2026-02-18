@@ -191,12 +191,10 @@ export function luxuryWordReveal(element: HTMLElement, options: {
 export function scrambleText(element: HTMLElement, options: {
   duration?: number;
   chars?: string;
-  revealDelay?: number;
 } = {}): gsap.core.Timeline {
   const {
     duration = 1.5,
-    chars = '!<>-_\\/[]{}—=+*^?#________',
-    revealDelay = 0.03
+    chars = '!<>-_\\/[]{}—=+*^?#________'
   } = options;
 
   const originalText = element.textContent || '';
@@ -272,7 +270,7 @@ export function typewriter(element: HTMLElement, options: {
   const textSpan = document.createElement('span');
   element.insertBefore(textSpan, cursorEl);
 
-  [...text].forEach((char, i) => {
+  [...text].forEach((char) => {
     tl.to({}, {
       duration: speed,
       onComplete: () => {
@@ -290,10 +288,9 @@ export function typewriter(element: HTMLElement, options: {
 
 // ─── Glitch Text Effect ──────────────────────────────────────────────────
 export function glitchText(element: HTMLElement, options: {
-  duration?: number;
   intensity?: number;
 } = {}): gsap.core.Timeline {
-  const { duration = 0.5, intensity = 1 } = options;
+  const { intensity = 1 } = options;
 
   const text = element.textContent || '';
 

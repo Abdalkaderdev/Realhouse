@@ -34,12 +34,14 @@ export function animateLoader(): Promise<void> {
     });
 
     // Animate logo SVG lines (draw effect)
-    tl.to(logoLines, {
-      strokeDashoffset: 0,
-      duration: 1,
-      stagger: 0.15,
-      ease: EASES.luxury
-    });
+    if (logoLines && logoLines.length > 0) {
+      tl.to(logoLines, {
+        strokeDashoffset: 0,
+        duration: 1,
+        stagger: 0.15,
+        ease: EASES.luxury
+      });
+    }
 
     // Animate progress bar and counter
     const counterObj = { value: 0 };
@@ -213,7 +215,7 @@ export function scrollReveal(
     delay?: number;
     trigger?: string | Element;
   } = {}
-): gsap.core.Timeline {
+): gsap.core.Tween {
   const {
     y = 60,
     opacity = 0,
@@ -308,7 +310,7 @@ export function animateHero(): gsap.core.Timeline {
   // Headline
   const headline = document.querySelector('.hero__headline') as HTMLElement;
   if (headline) {
-    tl.add(() => splitTextReveal(headline), '-=0.4');
+    tl.add(splitTextReveal(headline), '-=0.4');
   }
 
   // Subline

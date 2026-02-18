@@ -159,7 +159,7 @@ export function initHorizontalScroll(container: string): void {
   });
 
   // Animate each panel as it enters
-  panels.forEach((panel, i) => {
+  panels.forEach((panel) => {
     const content = panel.querySelector('.panel-content');
     if (!content) return;
 
