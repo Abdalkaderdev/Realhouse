@@ -65,9 +65,6 @@ function createProjectCard(project: Project): HTMLElement {
   // Content section
   const content = createElement('div', 'project-card__content');
 
-  const developer = createElement('div', 'project-card__developer', project.developer);
-  content.appendChild(developer);
-
   const title = createElement('h3', 'project-card__title', project.name);
   content.appendChild(title);
 
@@ -306,9 +303,6 @@ export function renderProjectDetailPage(projectId: string): DocumentFragment {
 
   const projectTitle = createElement('h1', 'project-detail__title', project.name);
   header.appendChild(projectTitle);
-
-  const developer = createElement('p', 'project-detail__developer', `By ${project.developer}`);
-  header.appendChild(developer);
 
   const location = createElement('p', 'project-detail__location');
   location.appendChild(createSVGUse('icon-location'));
