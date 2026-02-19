@@ -697,19 +697,17 @@ em {
     left: 50%;
     width: 300vw;
     height: 300vh;
-    transform: translateX(-50%) translateY(-25%); // Push video UP to cut bottom (metro text)
+    transform: translateX(-50%); // Only center horizontally, top aligned - bottom gets cut
     border: none;
 
     @media (max-width: 768px) {
       width: 400vw;
       height: 250vh;
-      transform: translateX(-50%) translateY(-20%);
     }
 
     @media (max-width: 480px) {
       width: 500vw;
       height: 300vh;
-      transform: translateX(-50%) translateY(-15%);
     }
   }
 
