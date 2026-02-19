@@ -27,7 +27,9 @@ import { initImageDistortion, destroyImageDistortion } from './animations/image-
 import { CursorTrail, initMagneticGlow, initRippleEffect } from './animations/cursor-trail';
 import { renderHomePage, renderPropertiesPage, renderAboutPage, renderContactPage, renderPropertyDetailPage, renderPrivacyPage, renderTermsPage, renderFAQPage, render404Page, renderComparisonPage, renderFavoritesPage, savePropertiesScrollPosition, getPropertiesScrollPosition, parseFiltersFromURL } from './pages';
 import { renderProjectsPage, renderProjectDetailPage } from './pages/projects';
+import { renderBlogPage, renderBlogPostPage, setupBlogPageSEO, setupBlogPostSEO } from './pages/blog';
 import { getPropertyById } from './data/properties';
+import { getBlogPostBySlug } from './data/blog';
 import { initComparisonBar, updateComparisonBar } from './comparison';
 import { initFavoritesUI } from './utils/favorites';
 import {
@@ -268,6 +270,11 @@ export class App {
       return renderComparisonPage();
     } else if (path === '/favorites') {
       return renderFavoritesPage();
+    } else if (path === '/blog') {
+      return renderBlogPage();
+    } else if (path.startsWith('/blog/')) {
+      const slug = path.replace('/blog/', '');
+      return renderBlogPostPage(slug);
     }
     // 404 for unknown routes
     return render404Page();
@@ -284,13 +291,17 @@ export class App {
       '/faq': 'FAQ — Real House',
       '/projects': 'Development Projects — Real House',
       '/favorites': 'My Favorites — Real House',
-      '/compare': 'Compare Properties — Real House'
+      '/compare': 'Compare Properties — Real House',
+      '/blog': 'Real Estate Blog — Real House'
     };
     if (path.startsWith('/properties/')) {
       return 'Property Details — Real House';
     }
     if (path.startsWith('/projects/')) {
       return 'Project Details — Real House';
+    }
+    if (path.startsWith('/blog/')) {
+      return 'Blog Article — Real House';
     }
     // Return 404 title for unknown routes
     return titles[path] || 'Page Not Found — Real House';
@@ -307,13 +318,17 @@ export class App {
       '/faq': 'Frequently asked questions about Real House services, the buying process, financing, and more.',
       '/projects': 'Explore premier real estate development projects in Erbil including Empire World, Dream City, Italian Village, and more.',
       '/favorites': 'View your saved favorite properties. Manage your wishlist and compare your top picks.',
-      '/compare': 'Compare properties side by side. Analyze features, prices, and specifications.'
+      '/compare': 'Compare properties side by side. Analyze features, prices, and specifications.',
+      '/blog': 'Expert real estate insights, market trends, and buying guides for property in Erbil, Kurdistan.'
     };
     if (path.startsWith('/properties/')) {
       return 'Explore this exceptional luxury property with detailed specifications, features, and virtual tour options.';
     }
     if (path.startsWith('/projects/')) {
       return 'Discover this exceptional development project with amenities, unit availability, and investment opportunities.';
+    }
+    if (path.startsWith('/blog/')) {
+      return 'Read expert insights on Erbil real estate market from Real House professionals.';
     }
     return descriptions[path] || descriptions['/'];
   }
@@ -331,6 +346,17 @@ export class App {
       }
     }
 
+    // Handle blog post pages with dynamic SEO
+    if (path.startsWith('/blog/')) {
+      const slug = path.replace('/blog/', '');
+      const post = getBlogPostBySlug(slug);
+
+      if (post) {
+        setupBlogPostSEO(post);
+        return;
+      }
+    }
+
     // Setup page-specific SEO schemas
     if (path === '/') {
       setupHomePageSEO();
@@ -342,6 +368,8 @@ export class App {
       setupAboutPageSEO();
     } else if (path === '/faq') {
       setupFAQPageSEO();
+    } else if (path === '/blog') {
+      setupBlogPageSEO();
     } else {
       // Clear dynamic schemas for other pages
       clearDynamicSchemas();
@@ -516,6 +544,16 @@ export class App {
     } else if (path === '/favorites') {
       scrollReveal('.favorites-page__header', { y: 40 });
       scrollReveal('.property-card', { y: 60, stagger: 0.1, trigger: '.favorites-page__grid' });
+    } else if (path === '/blog') {
+      scrollReveal('.blog-page__header', { y: 40 });
+      scrollReveal('.blog-page__featured', { y: 40 });
+      scrollReveal('.blog-card', { y: 60, stagger: 0.1, trigger: '.blog-page__grid' });
+      scrollReveal('.blog-page__cta', { y: 40 });
+    } else if (path.startsWith('/blog/')) {
+      scrollReveal('.blog-post-page__breadcrumb', { y: 20 });
+      scrollReveal('.blog-post-page__article', { y: 40 });
+      scrollReveal('.blog-post-page__sidebar', { y: 40 });
+      scrollReveal('.blog-post-page__back', { y: 30 });
     }
   }
 

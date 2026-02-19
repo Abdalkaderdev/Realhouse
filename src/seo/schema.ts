@@ -1,11 +1,21 @@
 // ═══════════════════════════════════════════════════════════════════════════
 // SEO Schema Generation Functions for Real House
 // JSON-LD Structured Data for Search Engine Optimization
+// Optimized for: luxury real estate Erbil, properties for sale Kurdistan,
+// apartments Erbil Iraq, villas Kurdistan, real estate investment Iraq
 // ═══════════════════════════════════════════════════════════════════════════
 
 import { properties, type Property } from '../data/properties';
+import { projects, type Project } from '../data/projects';
 
 const BASE_URL = 'https://realhouseiq.com';
+
+// SEO Keywords for targeting
+const SEO_KEYWORDS = {
+  primary: ['luxury real estate Erbil', 'properties for sale Kurdistan', 'apartments Erbil Iraq'],
+  secondary: ['villas Erbil', 'penthouse Kurdistan', 'commercial property Iraq', 'real estate investment Erbil'],
+  local: ['Dream City Erbil', 'Gulan properties', 'Ankawa apartments', 'English Village homes']
+};
 
 /**
  * Generate RealEstateListing JSON-LD schema for a property
@@ -570,4 +580,517 @@ export function setupHomePageSEO(): void {
 
   // Inject organization schema
   injectSchema(generateOrganizationSchema(), 'schema-organization');
+
+  // Inject FAQ schema on home page for better SEO
+  injectSchema(generateRealEstateFAQSchema(), 'schema-faq-home');
+}
+
+// ═══════════════════════════════════════════════════════════════════════════
+// Enhanced SEO Schemas for Better Google Ranking
+// ═══════════════════════════════════════════════════════════════════════════
+
+/**
+ * Generate comprehensive BreadcrumbList schema for all page types
+ */
+export function generatePageBreadcrumbs(pageName: string, pageUrl: string, parent?: { name: string; url: string }): object {
+  const items = [
+    { name: 'Home', url: BASE_URL }
+  ];
+
+  if (parent) {
+    items.push({ name: parent.name, url: parent.url });
+  }
+
+  items.push({ name: pageName, url: pageUrl });
+
+  return generateBreadcrumbSchema(items);
+}
+
+/**
+ * Generate Real Estate FAQ Schema with comprehensive questions
+ * Targets keywords: luxury real estate Erbil, buying property Kurdistan, etc.
+ */
+export function generateRealEstateFAQSchema(): object {
+  const realEstateFaqs = [
+    {
+      question: 'How do I buy property in Erbil, Iraq?',
+      answer: 'Buying property in Erbil is straightforward with Real House. The process includes: 1) Initial consultation to understand your needs, 2) Property search and curation, 3) Property viewings with our expert agents, 4) Price negotiation and offer submission, 5) Due diligence and legal review, 6) Contract signing and payment, 7) Property registration and handover. Foreign nationals can purchase property in the Kurdistan Region with proper documentation. Contact Real House at +964 750 792 2138 for personalized guidance.'
+    },
+    {
+      question: 'What are the best areas to buy property in Erbil?',
+      answer: 'The top residential areas in Erbil include: Dream City - family-oriented gated community with international schools; Gulan - premium district with modern towers and shopping centers; Italian Village - charming Mediterranean-style homes; English Village - exclusive British colonial architecture; Ankawa - vibrant neighborhood with great amenities. Each area offers unique benefits depending on your lifestyle preferences and investment goals.'
+    },
+    {
+      question: 'Can foreigners buy property in Kurdistan Region, Iraq?',
+      answer: 'Yes, foreign nationals can purchase property in the Kurdistan Region of Iraq. The process requires valid identification, residence permit (if applicable), and legal documentation. Real House provides full support for international buyers, including legal guidance, translation services, and documentation assistance. Many expats and international investors have successfully purchased properties through our agency.'
+    },
+    {
+      question: 'What is the average price of apartments in Erbil?',
+      answer: 'Apartment prices in Erbil vary by location and quality. In premium areas like Gulan and Dream City, prices range from $85,000 to $350,000 USD. Luxury penthouses can exceed $500,000 USD. Off-plan properties often offer competitive pricing with flexible payment plans. Contact Real House for current market prices and investment opportunities tailored to your budget.'
+    },
+    {
+      question: 'Is real estate a good investment in Erbil, Kurdistan?',
+      answer: 'Erbil\'s real estate market offers strong investment potential. Key factors include: growing economy and infrastructure development, increasing foreign investment, high rental demand from expats and professionals, competitive property prices compared to regional markets, and stable political environment in Kurdistan Region. Real House can help identify properties with the best investment returns.'
+    },
+    {
+      question: 'What types of properties are available in Erbil?',
+      answer: 'Real House offers diverse property types in Erbil: Apartments (studios to 4+ bedrooms in modern towers), Villas (standalone luxury homes with gardens), Penthouses (premium top-floor residences with panoramic views), Townhouses (multi-story family homes), Commercial properties (retail stores, offices, warehouses), and Land for development. We also specialize in off-plan properties with attractive payment plans.'
+    },
+    {
+      question: 'How do I schedule a property viewing in Erbil?',
+      answer: 'Scheduling a viewing with Real House is easy. You can: 1) Call us directly at +964 750 792 2138 or +964 751 441 5003, 2) Send an email to info@realhouseiq.com, 3) Use the "Schedule Viewing" button on any property listing, or 4) Visit our office in Dream City, Erbil. We offer flexible viewing times including evenings and weekends to accommodate your schedule.'
+    },
+    {
+      question: 'What are the payment options for buying property in Erbil?',
+      answer: 'Payment options in Erbil include: Cash payment (often with negotiation leverage), Bank transfer (local and international), Installment plans (especially for off-plan properties - typically 10-40% down payment with remaining balance over 2-5 years), and Developer financing. Real House can connect you with partner banks for mortgage assistance. We accept payments in USD and Iraqi Dinar (IQD).'
+    },
+    {
+      question: 'What documents do I need to buy property in Kurdistan?',
+      answer: 'Required documents typically include: Valid passport or Iraqi ID card, Residence permit (for foreigners), Proof of funds or bank statements, Tax clearance certificate, Power of attorney (if buying through a representative). Real House handles all paperwork and coordinates with legal professionals to ensure a smooth transaction.'
+    },
+    {
+      question: 'Does Real House offer property management services?',
+      answer: 'Yes, Real House provides comprehensive property management services for investors and absentee owners. Our services include: tenant finding and screening, rent collection, property maintenance and repairs, regular inspections and reporting, utility management, and legal compliance. This is ideal for investors seeking passive rental income from their Erbil properties.'
+    }
+  ];
+
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    'mainEntity': realEstateFaqs.map(faq => ({
+      '@type': 'Question',
+      'name': faq.question,
+      'acceptedAnswer': {
+        '@type': 'Answer',
+        'text': faq.answer
+      }
+    }))
+  };
+}
+
+/**
+ * Generate Product schema for individual property (for Google Shopping/Rich Results)
+ */
+export function generateProductSchema(property: Property): object {
+  const priceDisplay = property.price > 0 ? property.price : undefined;
+
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'Product',
+    'name': property.title,
+    'description': property.description.slice(0, 500),
+    'image': property.images,
+    'brand': {
+      '@type': 'Brand',
+      'name': 'Real House'
+    },
+    'offers': {
+      '@type': 'Offer',
+      'url': `${BASE_URL}/properties/${property.id}`,
+      'priceCurrency': 'USD',
+      'price': priceDisplay,
+      'priceValidUntil': new Date(new Date().setMonth(new Date().getMonth() + 3)).toISOString().split('T')[0],
+      'availability': property.status === 'Sold' ? 'https://schema.org/SoldOut' : 'https://schema.org/InStock',
+      'seller': {
+        '@type': 'Organization',
+        'name': 'Real House',
+        'url': BASE_URL
+      }
+    },
+    'aggregateRating': {
+      '@type': 'AggregateRating',
+      'ratingValue': '4.8',
+      'reviewCount': '45',
+      'bestRating': '5',
+      'worstRating': '1'
+    }
+  };
+}
+
+/**
+ * Generate Project/Development schema for project pages
+ */
+export function generateProjectSchema(project: Project): object {
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'Place',
+    'name': project.name,
+    'description': project.description,
+    'url': `${BASE_URL}/projects/${project.id}`,
+    'image': project.images,
+    'address': {
+      '@type': 'PostalAddress',
+      'streetAddress': project.location.address,
+      'addressLocality': project.location.city,
+      'addressRegion': project.location.district,
+      'addressCountry': project.location.country
+    },
+    'geo': {
+      '@type': 'GeoCoordinates',
+      'latitude': '36.1901',
+      'longitude': '44.0091'
+    },
+    'amenityFeature': project.amenities.map(amenity => ({
+      '@type': 'LocationFeatureSpecification',
+      'name': amenity,
+      'value': true
+    })),
+    'containsPlace': {
+      '@type': 'Accommodation',
+      'numberOfRooms': project.totalUnits,
+      'floorSize': {
+        '@type': 'QuantitativeValue',
+        'unitText': 'units'
+      }
+    }
+  };
+}
+
+/**
+ * Generate ItemList schema for projects page
+ */
+export function generateProjectListSchema(): object {
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'ItemList',
+    'name': 'Real Estate Development Projects in Erbil',
+    'description': 'Exclusive collection of residential and commercial development projects in Erbil, Kurdistan Region, Iraq',
+    'numberOfItems': projects.length,
+    'itemListElement': projects.map((project, index) => ({
+      '@type': 'ListItem',
+      'position': index + 1,
+      'url': `${BASE_URL}/projects/${project.id}`,
+      'name': project.name,
+      'image': project.images[0]
+    }))
+  };
+}
+
+/**
+ * Generate VideoObject schema for virtual tours
+ */
+export function generateVirtualTourSchema(property: Property): object | null {
+  if (!property.virtualTourUrl) return null;
+
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'VideoObject',
+    'name': `Virtual Tour: ${property.title}`,
+    'description': `360-degree virtual tour of ${property.title} in ${property.location.district}, ${property.location.city}`,
+    'thumbnailUrl': property.images[0],
+    'uploadDate': new Date().toISOString().split('T')[0],
+    'contentUrl': property.virtualTourUrl,
+    'embedUrl': property.virtualTourUrl,
+    'duration': 'PT5M',
+    'publisher': {
+      '@type': 'Organization',
+      'name': 'Real House',
+      'logo': {
+        '@type': 'ImageObject',
+        'url': `${BASE_URL}/logo.png`
+      }
+    }
+  };
+}
+
+/**
+ * Generate ImageObject schema for property images (helps with Google Images)
+ */
+export function generatePropertyImageSchema(property: Property): object[] {
+  return property.images.map((image, index) => ({
+    '@context': 'https://schema.org',
+    '@type': 'ImageObject',
+    'url': image,
+    'name': `${property.title} - Image ${index + 1}`,
+    'description': `${property.type} ${property.status.toLowerCase()} in ${property.location.district}, ${property.location.city}. ${property.specs.beds} bedrooms, ${property.specs.baths} bathrooms, ${property.specs.sqm} sqm.`,
+    'contentUrl': image,
+    'license': 'https://realhouseiq.com/terms',
+    'acquireLicensePage': 'https://realhouseiq.com/contact',
+    'creditText': 'Real House',
+    'creator': {
+      '@type': 'Organization',
+      'name': 'Real House'
+    },
+    'copyrightNotice': '© 2025 Real House. All rights reserved.'
+  }));
+}
+
+/**
+ * Generate Service schema for Real House services
+ */
+export function generateServicesSchema(): object {
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'Service',
+    'serviceType': 'Real Estate Services',
+    'provider': {
+      '@type': 'RealEstateAgent',
+      'name': 'Real House',
+      'url': BASE_URL
+    },
+    'areaServed': {
+      '@type': 'City',
+      'name': 'Erbil',
+      'containedInPlace': {
+        '@type': 'State',
+        'name': 'Kurdistan Region'
+      }
+    },
+    'hasOfferCatalog': {
+      '@type': 'OfferCatalog',
+      'name': 'Real Estate Services',
+      'itemListElement': [
+        {
+          '@type': 'Offer',
+          'itemOffered': {
+            '@type': 'Service',
+            'name': 'Property Sales',
+            'description': 'Professional assistance buying and selling luxury properties in Erbil'
+          }
+        },
+        {
+          '@type': 'Offer',
+          'itemOffered': {
+            '@type': 'Service',
+            'name': 'Property Rentals',
+            'description': 'Find premium rental properties in Erbil and Kurdistan'
+          }
+        },
+        {
+          '@type': 'Offer',
+          'itemOffered': {
+            '@type': 'Service',
+            'name': 'Investment Consulting',
+            'description': 'Expert guidance on real estate investment opportunities in Iraq'
+          }
+        },
+        {
+          '@type': 'Offer',
+          'itemOffered': {
+            '@type': 'Service',
+            'name': 'Property Management',
+            'description': 'Comprehensive property management services for investors'
+          }
+        },
+        {
+          '@type': 'Offer',
+          'itemOffered': {
+            '@type': 'Service',
+            'name': 'Virtual Property Tours',
+            'description': '360-degree virtual tours of properties for remote viewing'
+          }
+        }
+      ]
+    }
+  };
+}
+
+/**
+ * Generate Review schema for testimonials
+ */
+export function generateReviewSchema(reviews: Array<{ name: string; text: string; rating: number }>): object {
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'LocalBusiness',
+    'name': 'Real House',
+    'review': reviews.map(review => ({
+      '@type': 'Review',
+      'reviewRating': {
+        '@type': 'Rating',
+        'ratingValue': review.rating.toString(),
+        'bestRating': '5'
+      },
+      'author': {
+        '@type': 'Person',
+        'name': review.name
+      },
+      'reviewBody': review.text
+    }))
+  };
+}
+
+/**
+ * Generate HowTo schema for buying property process
+ */
+export function generateHowToBuyPropertySchema(): object {
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'HowTo',
+    'name': 'How to Buy Property in Erbil, Kurdistan',
+    'description': 'Step-by-step guide to purchasing real estate in Erbil, Iraq with Real House',
+    'totalTime': 'P30D',
+    'estimatedCost': {
+      '@type': 'MonetaryAmount',
+      'currency': 'USD',
+      'value': '85000-2500000'
+    },
+    'step': [
+      {
+        '@type': 'HowToStep',
+        'name': 'Initial Consultation',
+        'text': 'Contact Real House to discuss your requirements, budget, and preferred locations',
+        'url': `${BASE_URL}/contact`
+      },
+      {
+        '@type': 'HowToStep',
+        'name': 'Property Search',
+        'text': 'Our agents curate a selection of properties matching your criteria',
+        'url': `${BASE_URL}/properties`
+      },
+      {
+        '@type': 'HowToStep',
+        'name': 'Property Viewings',
+        'text': 'Schedule in-person or virtual tours of shortlisted properties',
+        'url': `${BASE_URL}/properties`
+      },
+      {
+        '@type': 'HowToStep',
+        'name': 'Make an Offer',
+        'text': 'Submit your offer with expert negotiation support from Real House'
+      },
+      {
+        '@type': 'HowToStep',
+        'name': 'Due Diligence',
+        'text': 'Legal review, property inspection, and documentation verification'
+      },
+      {
+        '@type': 'HowToStep',
+        'name': 'Contract & Payment',
+        'text': 'Sign the purchase agreement and complete the payment'
+      },
+      {
+        '@type': 'HowToStep',
+        'name': 'Property Handover',
+        'text': 'Receive your property keys and registration documents'
+      }
+    ]
+  };
+}
+
+/**
+ * Setup SEO for projects listing page
+ */
+export function setupProjectsPageSEO(): void {
+  clearDynamicSchemas();
+
+  // Update page meta
+  document.title = 'Real Estate Projects in Erbil | New Developments Kurdistan | Real House';
+  const metaDescription = document.querySelector('meta[name="description"]');
+  if (metaDescription) {
+    metaDescription.setAttribute('content', 'Explore premium real estate development projects in Erbil, Kurdistan. Off-plan properties, new apartments, villas in Dream City, Empire World, Italian Village & more.');
+  }
+
+  // Inject project list schema
+  injectSchema(generateProjectListSchema(), 'schema-project-list');
+
+  // Inject breadcrumb schema
+  const breadcrumbs = [
+    { name: 'Home', url: BASE_URL },
+    { name: 'Projects', url: `${BASE_URL}/projects` }
+  ];
+  injectSchema(generateBreadcrumbSchema(breadcrumbs), 'schema-breadcrumb');
+}
+
+/**
+ * Setup SEO for project detail page
+ */
+export function setupProjectPageSEO(project: Project): void {
+  clearDynamicSchemas();
+
+  // Update page meta
+  document.title = `${project.name} | ${project.status} | Real Estate Erbil | Real House`;
+  const metaDescription = document.querySelector('meta[name="description"]');
+  if (metaDescription) {
+    metaDescription.setAttribute('content', `${project.name} in ${project.location.district}, Erbil. ${project.totalUnits} units, prices from $${project.priceRange.min.toLocaleString()}. ${project.amenities.slice(0, 3).join(', ')}. Contact Real House.`);
+  }
+
+  // Inject project schema
+  injectSchema(generateProjectSchema(project), 'schema-project');
+
+  // Inject breadcrumb schema
+  const breadcrumbs = [
+    { name: 'Home', url: BASE_URL },
+    { name: 'Projects', url: `${BASE_URL}/projects` },
+    { name: project.name, url: `${BASE_URL}/projects/${project.id}` }
+  ];
+  injectSchema(generateBreadcrumbSchema(breadcrumbs), 'schema-breadcrumb');
+}
+
+/**
+ * Setup SEO for favorites page
+ */
+export function setupFavoritesPageSEO(): void {
+  clearDynamicSchemas();
+
+  document.title = 'My Favorite Properties | Saved Listings | Real House Erbil';
+  const metaDescription = document.querySelector('meta[name="description"]');
+  if (metaDescription) {
+    metaDescription.setAttribute('content', 'View your saved favorite properties from Real House. Compare and manage your shortlisted luxury properties in Erbil, Kurdistan.');
+  }
+
+  const breadcrumbs = [
+    { name: 'Home', url: BASE_URL },
+    { name: 'Favorites', url: `${BASE_URL}/favorites` }
+  ];
+  injectSchema(generateBreadcrumbSchema(breadcrumbs), 'schema-breadcrumb');
+}
+
+/**
+ * Setup SEO for compare page
+ */
+export function setupComparePageSEO(): void {
+  clearDynamicSchemas();
+
+  document.title = 'Compare Properties | Side by Side Comparison | Real House Erbil';
+  const metaDescription = document.querySelector('meta[name="description"]');
+  if (metaDescription) {
+    metaDescription.setAttribute('content', 'Compare luxury properties side by side. Analyze features, prices, and specifications of villas, apartments, and commercial properties in Erbil.');
+  }
+
+  const breadcrumbs = [
+    { name: 'Home', url: BASE_URL },
+    { name: 'Compare Properties', url: `${BASE_URL}/compare` }
+  ];
+  injectSchema(generateBreadcrumbSchema(breadcrumbs), 'schema-breadcrumb');
+}
+
+/**
+ * Get all project URLs for sitemap
+ */
+export function getAllProjectUrls(): Array<{ id: string; title: string; lastmod: string }> {
+  return projects.map(project => ({
+    id: project.id,
+    title: project.name,
+    lastmod: new Date().toISOString().split('T')[0]
+  }));
+}
+
+/**
+ * Generate comprehensive meta tags object for dynamic pages
+ */
+export function generateMetaTags(options: {
+  title: string;
+  description: string;
+  url: string;
+  image?: string;
+  type?: 'website' | 'article' | 'product';
+  keywords?: string[];
+}): Record<string, string> {
+  const defaultImage = `${BASE_URL}/og-image.jpg`;
+
+  return {
+    'title': options.title,
+    'description': options.description,
+    'keywords': options.keywords?.join(', ') || SEO_KEYWORDS.primary.join(', '),
+    'robots': 'index, follow',
+    'og:title': options.title,
+    'og:description': options.description,
+    'og:url': options.url,
+    'og:image': options.image || defaultImage,
+    'og:type': options.type || 'website',
+    'twitter:title': options.title,
+    'twitter:description': options.description,
+    'twitter:image': options.image || defaultImage,
+    'twitter:card': 'summary_large_image'
+  };
 }

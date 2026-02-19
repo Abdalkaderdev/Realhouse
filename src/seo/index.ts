@@ -1,5 +1,6 @@
 // ═══════════════════════════════════════════════════════════════════════════
 // SEO Module - Export all SEO schema functions
+// Optimized for: luxury real estate Erbil, properties Kurdistan, apartments Iraq
 // ═══════════════════════════════════════════════════════════════════════════
 
 export {
@@ -13,9 +14,23 @@ export {
   generateWebSiteSchema,
   generateFAQSchema,
 
+  // Enhanced schema generators
+  generatePageBreadcrumbs,
+  generateRealEstateFAQSchema,
+  generateProductSchema,
+  generateProjectSchema,
+  generateProjectListSchema,
+  generateVirtualTourSchema,
+  generatePropertyImageSchema,
+  generateServicesSchema,
+  generateReviewSchema,
+  generateHowToBuyPropertySchema,
+  generateMetaTags,
+
   // SEO helpers
   getPropertySEOMeta,
   getAllPropertyUrls,
+  getAllProjectUrls,
 
   // DOM manipulation
   injectSchema,
@@ -28,5 +43,9 @@ export {
   setupContactPageSEO,
   setupAboutPageSEO,
   setupFAQPageSEO,
-  setupHomePageSEO
+  setupHomePageSEO,
+  setupProjectsPageSEO,
+  setupProjectPageSEO,
+  setupFavoritesPageSEO,
+  setupComparePageSEO
 } from './schema';

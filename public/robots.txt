@@ -1,4 +1,160 @@
+# ═══════════════════════════════════════════════════════════════════════════
+# Real House - Robots.txt
+# Luxury Real Estate in Erbil, Kurdistan Region, Iraq
+# https://realhouseiq.com
+# ═══════════════════════════════════════════════════════════════════════════
+
+# Allow all search engines
 User-agent: *
 Allow: /
+Allow: /properties
+Allow: /properties/*
+Allow: /projects
+Allow: /projects/*
+Allow: /about
+Allow: /contact
+Allow: /faq
+Allow: /favorites
+Allow: /compare
+
+# Disallow admin and private areas
 Disallow: /admin/
+Disallow: /admin/*
+Disallow: /api/
+Disallow: /api/*
+Disallow: /_nuxt/
+Disallow: /node_modules/
+Disallow: /*.json$
+Disallow: /*.xml$
+Disallow: /server/
+Disallow: /dist/
+Disallow: /src/
+Disallow: /.git/
+Disallow: /*.ts$
+Disallow: /*.tsx$
+Disallow: /*.scss$
+Disallow: /*.map$
+
+# Allow CSS and JS for rendering
+Allow: /*.css$
+Allow: /*.js$
+Allow: /*.woff2$
+Allow: /*.woff$
+Allow: /*.ttf$
+
+# Allow images
+Allow: /*.jpg$
+Allow: /*.jpeg$
+Allow: /*.png$
+Allow: /*.gif$
+Allow: /*.svg$
+Allow: /*.webp$
+Allow: /*.ico$
+
+# ═══════════════════════════════════════════════════════════════════════════
+# Googlebot Specific
+# ═══════════════════════════════════════════════════════════════════════════
+
+User-agent: Googlebot
+Allow: /
+Disallow: /admin/
+Disallow: /api/
+
+User-agent: Googlebot-Image
+Allow: /
+Allow: /*.jpg$
+Allow: /*.jpeg$
+Allow: /*.png$
+Allow: /*.gif$
+Allow: /*.svg$
+Allow: /*.webp$
+
+# ═══════════════════════════════════════════════════════════════════════════
+# Bingbot Specific
+# ═══════════════════════════════════════════════════════════════════════════
+
+User-agent: Bingbot
+Allow: /
+Disallow: /admin/
+Disallow: /api/
+
+User-agent: msnbot
+Allow: /
+Disallow: /admin/
+Disallow: /api/
+
+# ═══════════════════════════════════════════════════════════════════════════
+# Social Media Crawlers
+# ═══════════════════════════════════════════════════════════════════════════
+
+User-agent: facebookexternalhit
+Allow: /
+
+User-agent: Twitterbot
+Allow: /
+
+User-agent: LinkedInBot
+Allow: /
+
+User-agent: WhatsApp
+Allow: /
+
+User-agent: TelegramBot
+Allow: /
+
+# ═══════════════════════════════════════════════════════════════════════════
+# SEO Tools
+# ═══════════════════════════════════════════════════════════════════════════
+
+User-agent: AhrefsBot
+Allow: /
+
+User-agent: SemrushBot
+Allow: /
+
+User-agent: DotBot
+Allow: /
+
+User-agent: MJ12bot
+Crawl-delay: 10
+Allow: /
+
+# ═══════════════════════════════════════════════════════════════════════════
+# Block Bad Bots
+# ═══════════════════════════════════════════════════════════════════════════
+
+User-agent: AhrefsBot
+Crawl-delay: 10
+
+User-agent: MJ12bot
+Crawl-delay: 10
+
+User-agent: SemrushBot
+Crawl-delay: 10
+
+User-agent: BLEXBot
+Disallow: /
+
+User-agent: DataForSeoBot
+Disallow: /
+
+User-agent: dotbot
+Crawl-delay: 10
+
+# ═══════════════════════════════════════════════════════════════════════════
+# Sitemap Location
+# ═══════════════════════════════════════════════════════════════════════════
+
 Sitemap: https://realhouseiq.com/sitemap.xml
+
+# ═══════════════════════════════════════════════════════════════════════════
+# Host Directive
+# ═══════════════════════════════════════════════════════════════════════════
+
+Host: https://realhouseiq.com
+
+# ═══════════════════════════════════════════════════════════════════════════
+# Crawl Delay (optional - uncomment if needed)
+# ═══════════════════════════════════════════════════════════════════════════
+
+# Crawl-delay: 1

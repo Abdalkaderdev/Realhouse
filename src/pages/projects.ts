@@ -44,7 +44,7 @@ function createProjectCard(project: Project): HTMLElement {
 
   const img = createElement('img', 'project-card__image');
   img.src = project.images[0];
-  img.alt = project.name;
+  img.alt = `${project.name} - Real estate development project in ${project.location.district}, ${project.location.city}. ${project.status}, ${project.totalUnits} total units.`;
   img.loading = 'lazy';
   media.appendChild(img);
 
@@ -245,11 +245,11 @@ export function renderProjectDetailPage(projectId: string): DocumentFragment {
   const gallery = createElement('section', 'project-gallery');
   const galleryContainer = createElement('div', 'container');
 
-  // Main image
+  // Main image with descriptive alt text for SEO
   const mainImageWrapper = createElement('div', 'project-gallery__main');
   const mainImage = createElement('img', 'project-gallery__main-image');
   mainImage.src = project.images[0];
-  mainImage.alt = project.name;
+  mainImage.alt = `${project.name} - ${project.status} real estate development in ${project.location.district}, ${project.location.city}, Kurdistan. ${project.availableUnits} of ${project.totalUnits} units available starting from ${formatPriceRange(project)}.`;
   mainImage.id = 'project-main-image';
   mainImageWrapper.appendChild(mainImage);
   galleryContainer.appendChild(mainImageWrapper);
@@ -262,7 +262,7 @@ export function renderProjectDetailPage(projectId: string): DocumentFragment {
       thumb.setAttribute('data-index', index.toString());
       const thumbImg = createElement('img');
       thumbImg.src = imageSrc;
-      thumbImg.alt = `${project.name} - Image ${index + 1}`;
+      thumbImg.alt = `${project.name} gallery image ${index + 1} of ${project.images.length} - ${project.location.district}, ${project.location.city}`;
       thumb.appendChild(thumbImg);
 
       thumb.addEventListener('click', () => {

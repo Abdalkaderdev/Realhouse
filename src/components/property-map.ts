@@ -54,7 +54,7 @@ function createPopupContent(property: Property): string {
   return `
     <div class="property-popup">
       <div class="property-popup__image">
-        <img src="${property.images[0]}" alt="${property.title}" loading="lazy" />
+        <img src="${property.images[0]}" alt="${property.type} - ${property.title} in ${property.location.district}, ${property.location.city}. ${specs.beds > 0 ? specs.beds + ' bedrooms, ' : ''}${specs.sqm} sqm." loading="lazy" />
         <span class="property-popup__type">${property.type}</span>
       </div>
       <div class="property-popup__content">
