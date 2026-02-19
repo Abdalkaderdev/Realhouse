@@ -693,27 +693,23 @@ em {
 
   &__video-iframe {
     position: absolute;
-    top: 50%;
+    top: 0;
     left: 50%;
-    width: 100vw;
-    height: 56.25vw; // 16:9 aspect ratio
-    min-height: 220%; // Scale up significantly to crop bottom
-    min-width: 300vh;
-    transform: translate(-50%, -62%); // Shift up more to crop RETRO watermark
+    width: 300vw;
+    height: 300vh;
+    transform: translateX(-50%) translateY(-25%); // Push video UP to cut bottom (metro text)
     border: none;
 
-    // Mobile: scale up and cut from bottom to hide metro text
     @media (max-width: 768px) {
-      min-height: 160%;
-      min-width: 220vw;
-      transform: translate(-50%, -30%); // Cut more from bottom
+      width: 400vw;
+      height: 250vh;
+      transform: translateX(-50%) translateY(-20%);
     }
 
-    // Small mobile: aggressive cropping to hide metro text
     @media (max-width: 480px) {
-      min-height: 180%;
-      min-width: 250vw;
-      transform: translate(-50%, -25%); // Cut even more from bottom
+      width: 500vw;
+      height: 300vh;
+      transform: translateX(-50%) translateY(-15%);
     }
   }
 
