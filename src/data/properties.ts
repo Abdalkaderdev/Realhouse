@@ -464,6 +464,17 @@ export function formatPrice(price: number, currency: 'USD' | 'IQD' = 'USD'): str
   return `$${price.toLocaleString()}`;
 }
 
+export function getDisplayPrice(property: Property): string {
+  // For rent-only properties (price is 0 or status is 'For Rent')
+  if (property.status === 'For Rent' || (property.price === 0 && property.rentPrice)) {
+    if (property.rentPrice) {
+      return `$${property.rentPrice.toLocaleString()}/mo`;
+    }
+    return 'Contact for Price';
+  }
+  return formatPrice(property.price);
+}
+
 export function getPropertyById(id: string): Property | undefined {
   return properties.find(p => p.id === id);
 }

@@ -5,7 +5,12 @@
 import { Request, Response, NextFunction } from 'express';
 import jwt from 'jsonwebtoken';
 
-const JWT_SECRET = process.env.JWT_SECRET || 'realhouse-secret-key-change-in-production';
+// SECRET_KEY must be set in production environment
+const SECRET_KEY = process.env.SECRET_KEY;
+if (!SECRET_KEY && process.env.NODE_ENV === 'production') {
+  throw new Error('SECRET_KEY environment variable is required in production');
+}
+const SECRET_KEY = SECRET_KEY || 'dev-only-secret-key';
 
 export interface AuthRequest extends Request {
   user?: {
@@ -25,7 +30,7 @@ export function authenticateToken(req: AuthRequest, res: Response, next: NextFun
   }
 
   try {
-    const decoded = jwt.verify(token, JWT_SECRET) as { id: string; email: string; role: string };
+    const decoded = jwt.verify(token, SECRET_KEY) as { id: string; email: string; role: string };
     req.user = decoded;
     next();
   } catch (err) {
@@ -34,5 +39,5 @@ export function authenticateToken(req: AuthRequest, res: Response, next: NextFun
 }
 
 export function generateToken(user: { id: string; email: string; role: string }): string {
-  return jwt.sign(user, JWT_SECRET, { expiresIn: '24h' });
+  return jwt.sign(user, SECRET_KEY, { expiresIn: '24h' });
 }

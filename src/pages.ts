@@ -3,8 +3,9 @@
 // Using Safe DOM Methods
 // ═══════════════════════════════════════════════════════════════════════════
 
-import { properties, featuredProperties, formatPrice, getPropertyById, type Property } from './data/properties';
+import { properties, featuredProperties, getDisplayPrice, getPropertyById, type Property } from './data/properties';
 import { testimonials } from './data/testimonials';
+import { submitInquiry } from './services/api';
 
 // ─── Filter State Interface ─────────────────────────────────────────────────
 interface FilterState {
@@ -173,7 +174,7 @@ function createPropertyCard(property: Property): HTMLElement {
   // Footer
   const footer = createElement('div', 'property-card__footer');
 
-  const price = createElement('span', 'property-card__price', formatPrice(property.price));
+  const price = createElement('span', 'property-card__price', getDisplayPrice(property));
   footer.appendChild(price);
 
   const viewBtn = createElement('a', 'btn btn--ghost btn--sm', 'View');
@@ -279,10 +280,47 @@ export function renderHomePage(): DocumentFragment {
   featuredContainer.appendChild(featuredHeader);
 
   const featuredGrid = createElement('div', 'featured__grid');
-  featuredProperties.slice(0, 3).forEach(property => {
+
+  // Initial display: show first 3 featured properties
+  const initialCount = 3;
+  let displayedCount = initialCount;
+
+  featuredProperties.slice(0, initialCount).forEach(property => {
     featuredGrid.appendChild(createPropertyCard(property));
   });
   featuredContainer.appendChild(featuredGrid);
+
+  // Load More button (only show if there are more properties)
+  if (featuredProperties.length > initialCount) {
+    const loadMoreContainer = createElement('div', 'featured__load-more');
+    const loadMoreBtn = createElement('button', 'btn btn--outline btn--lg', 'Load More Properties');
+    loadMoreBtn.setAttribute('data-load-more', '');
+
+    loadMoreBtn.addEventListener('click', () => {
+      const nextBatch = featuredProperties.slice(displayedCount, displayedCount + 3);
+      nextBatch.forEach(property => {
+        const card = createPropertyCard(property);
+        card.style.opacity = '0';
+        card.style.transform = 'translateY(20px)';
+        featuredGrid.appendChild(card);
+        // Animate in
+        requestAnimationFrame(() => {
+          card.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+          card.style.opacity = '1';
+          card.style.transform = 'translateY(0)';
+        });
+      });
+      displayedCount += nextBatch.length;
+
+      // Hide button if no more properties
+      if (displayedCount >= featuredProperties.length) {
+        loadMoreBtn.style.display = 'none';
+      }
+    });
+
+    loadMoreContainer.appendChild(loadMoreBtn);
+    featuredContainer.appendChild(loadMoreContainer);
+  }
 
   featured.appendChild(featuredContainer);
   fragment.appendChild(featured);
@@ -341,7 +379,7 @@ export function renderHomePage(): DocumentFragment {
     const subtitle = createElement('p', 'showcase-panel__subtitle', property.description);
     content.appendChild(subtitle);
 
-    const price = createElement('div', 'showcase-panel__price', formatPrice(property.price));
+    const price = createElement('div', 'showcase-panel__price', getDisplayPrice(property));
     content.appendChild(price);
 
     const specs = createElement('div', 'showcase-panel__specs');
@@ -883,30 +921,52 @@ export function renderContactPage(): DocumentFragment {
     submitBtn.textContent = 'Sending...';
     submitBtn.disabled = true;
 
-    // Simulate form submission (replace with actual API call)
-    setTimeout(() => {
-      // Reset form
-      form.reset();
+    // Get form data
+    const formData = new FormData(form);
+    const name = formData.get('name') as string;
+    const email = formData.get('email') as string;
+    const phone = formData.get('phone') as string;
+    const message = formData.get('message') as string;
 
-      // Reset aria-invalid attributes
-      const inputs = form.querySelectorAll<HTMLInputElement | HTMLTextAreaElement>('.form__input, .form__textarea');
-      inputs.forEach(input => {
-        input.setAttribute('aria-invalid', 'false');
+    // Submit to API
+    submitInquiry({ name, email, phone, message })
+      .then((result) => {
+        if (result.success) {
+          // Reset form
+          form.reset();
+
+          // Reset aria-invalid attributes
+          const inputs = form.querySelectorAll<HTMLInputElement | HTMLTextAreaElement>('.form__input, .form__textarea');
+          inputs.forEach(input => {
+            input.setAttribute('aria-invalid', 'false');
+          });
+
+          // Clear error messages
+          const errorSpans = form.querySelectorAll('.form__error-message');
+          errorSpans.forEach(span => {
+            span.textContent = '';
+          });
+
+          // Show success message
+          successMessage.textContent = result.message;
+          successMessage.style.display = 'block';
+        } else {
+          // Show error
+          successMessage.textContent = result.message;
+          successMessage.style.color = 'var(--color-error, #ef4444)';
+          successMessage.style.display = 'block';
+        }
+      })
+      .catch(() => {
+        successMessage.textContent = 'Something went wrong. Please try again.';
+        successMessage.style.color = 'var(--color-error, #ef4444)';
+        successMessage.style.display = 'block';
+      })
+      .finally(() => {
+        // Restore button
+        submitBtn.textContent = originalText;
+        submitBtn.disabled = false;
       });
-
-      // Clear error messages
-      const errorSpans = form.querySelectorAll('.form__error-message');
-      errorSpans.forEach(span => {
-        span.textContent = '';
-      });
-
-      // Show success message
-      successMessage.style.display = 'block';
-
-      // Restore button
-      submitBtn.textContent = originalText;
-      submitBtn.disabled = false;
-    }, 1000);
   });
 
   const fields = [
@@ -1774,6 +1834,60 @@ export function renderFAQPage(): DocumentFragment {
   cta.appendChild(ctaBtn);
   container.appendChild(cta);
 
+  page.appendChild(container);
+  fragment.appendChild(page);
+
+  return fragment;
+}
+
+// ─── 404 Not Found Page ───────────────────────────────────────────────────
+export function render404Page(): DocumentFragment {
+  const fragment = document.createDocumentFragment();
+
+  const page = createElement('div', 'error-page');
+  const container = createElement('div', 'container');
+
+  const content = createElement('div', 'error-page__content');
+
+  // Large 404 number
+  const errorCode = createElement('h1', 'error-page__code', '404');
+  content.appendChild(errorCode);
+
+  // Title
+  const title = createElement('h2', 'error-page__title', 'Page Not Found');
+  content.appendChild(title);
+
+  // Description
+  const description = createElement('p', 'error-page__description',
+    'The page you are looking for might have been removed, had its name changed, or is temporarily unavailable.');
+  content.appendChild(description);
+
+  // Action buttons
+  const actions = createElement('div', 'error-page__actions');
+
+  const homeBtn = createElement('a', 'btn btn--primary', 'Back to Home');
+  homeBtn.href = '/';
+  homeBtn.setAttribute('data-route', '');
+  actions.appendChild(homeBtn);
+
+  const propertiesBtn = createElement('a', 'btn btn--outline', 'View Properties');
+  propertiesBtn.href = '/properties';
+  propertiesBtn.setAttribute('data-route', '');
+  actions.appendChild(propertiesBtn);
+
+  content.appendChild(actions);
+
+  // Contact info
+  const contactInfo = createElement('p', 'error-page__contact');
+  contactInfo.textContent = 'Need help? ';
+  const contactLink = createElement('a');
+  contactLink.href = '/contact';
+  contactLink.setAttribute('data-route', '');
+  contactLink.textContent = 'Contact our team';
+  contactInfo.appendChild(contactLink);
+  content.appendChild(contactInfo);
+
+  container.appendChild(content);
   page.appendChild(container);
   fragment.appendChild(page);
 

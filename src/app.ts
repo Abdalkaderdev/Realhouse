@@ -25,7 +25,7 @@ import { initHorizontalScroll, initVelocitySkew } from './animations/horizontal-
 import { initAllMarquees } from './animations/marquee';
 import { initImageDistortion, destroyImageDistortion } from './animations/image-distortion';
 import { CursorTrail, initMagneticGlow, initRippleEffect } from './animations/cursor-trail';
-import { renderHomePage, renderPropertiesPage, renderAboutPage, renderContactPage, renderPropertyDetailPage, renderPrivacyPage, renderTermsPage, renderFAQPage } from './pages';
+import { renderHomePage, renderPropertiesPage, renderAboutPage, renderContactPage, renderPropertyDetailPage, renderPrivacyPage, renderTermsPage, renderFAQPage, render404Page } from './pages';
 
 export class App {
   private cursor: CustomCursor | null = null;
@@ -226,7 +226,8 @@ export class App {
     } else if (path === '/faq') {
       return renderFAQPage();
     }
-    return renderHomePage();
+    // 404 for unknown routes
+    return render404Page();
   }
 
   private getPageTitle(path: string): string {
@@ -242,7 +243,8 @@ export class App {
     if (path.startsWith('/properties/')) {
       return 'Property Details — Real House';
     }
-    return titles[path] || 'Real House — Luxury Real Estate';
+    // Return 404 title for unknown routes
+    return titles[path] || 'Page Not Found — Real House';
   }
 
   private getPageDescription(path: string): string {
