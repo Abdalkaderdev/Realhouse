@@ -8,6 +8,9 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
 gsap.registerPlugin(ScrollTrigger);
 
+// Check for reduced motion preference
+const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
 // ─── Character Split with Stagger ─────────────────────────────────────────
 export function splitChars(element: HTMLElement): HTMLSpanElement[] {
   const text = element.textContent || '';
@@ -264,6 +267,9 @@ export function scrollLinkedReveal(element: HTMLElement): void {
 
 // ─── Initialize All Text Effects on Page ──────────────────────────────────
 export function initTextEffects(): void {
+  // Skip text animations if user prefers reduced motion
+  if (prefersReducedMotion) return;
+
   // Hero headlines
   document.querySelectorAll('[data-text-reveal="hero"]').forEach((el) => {
     gsap.set(el, { opacity: 0 });

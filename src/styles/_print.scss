@@ -1,0 +1,530 @@
+// ═══════════════════════════════════════════════════════════════════════════
+// Real House - Print Stylesheet
+// Professional PDF/Print export for property details
+// ═══════════════════════════════════════════════════════════════════════════
+
+// ─── Print Utilities ─────────────────────────────────────────────────────────
+.no-print {
+  @media print {
+    display: none !important;
+  }
+}
+
+.print-only {
+  display: none !important;
+
+  @media print {
+    display: block !important;
+  }
+}
+
+// ─── Print Header ────────────────────────────────────────────────────────────
+.print-header {
+  display: none;
+
+  @media print {
+    display: flex !important;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 0 20pt 0;
+    margin-bottom: 20pt;
+    border-bottom: 2pt solid #C9A84C;
+  }
+
+  &__logo {
+    display: flex;
+    align-items: center;
+    gap: 12pt;
+
+    svg {
+      width: 32pt;
+      height: 38pt;
+    }
+  }
+
+  &__brand {
+    font-family: 'Cormorant', Georgia, serif;
+    font-size: 18pt;
+    font-weight: 600;
+    color: #0a0a0f;
+    letter-spacing: 0.02em;
+  }
+
+  &__contact {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 2pt;
+    font-size: 8pt;
+    color: #666;
+  }
+}
+
+// ─── Print Footer ────────────────────────────────────────────────────────────
+.print-footer {
+  display: none;
+
+  @media print {
+    display: flex !important;
+    justify-content: space-between;
+    align-items: flex-end;
+    padding: 15pt 0 0 0;
+    margin-top: 30pt;
+    border-top: 1pt solid #ddd;
+    font-size: 8pt;
+    color: #666;
+    page-break-inside: avoid;
+  }
+
+  &__left,
+  &__right {
+    display: flex;
+    flex-direction: column;
+    gap: 2pt;
+  }
+
+  &__right {
+    align-items: flex-end;
+    text-align: right;
+  }
+
+  &__brand {
+    font-weight: 600;
+    color: #C9A84C;
+  }
+
+  &__location {
+    color: #888;
+  }
+}
+
+// ═══════════════════════════════════════════════════════════════════════════
+// @media print - Complete Print Stylesheet
+// ═══════════════════════════════════════════════════════════════════════════
+
+@media print {
+  // ─── Page Setup ──────────────────────────────────────────────────────────
+  @page {
+    size: A4 portrait;
+    margin: 15mm 15mm 20mm 15mm;
+  }
+
+  // ─── Force Color Printing ────────────────────────────────────────────────
+  * {
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+    color-adjust: exact !important;
+  }
+
+  // ─── Base Styles ─────────────────────────────────────────────────────────
+  html {
+    font-size: 10pt;
+  }
+
+  body {
+    background: #fff !important;
+    color: #0a0a0f !important;
+    font-family: 'Inter', 'Segoe UI', -apple-system, sans-serif !important;
+    line-height: 1.5;
+    -webkit-font-smoothing: subpixel-antialiased;
+  }
+
+  // ─── Hide Non-Essential Elements ─────────────────────────────────────────
+  .nav,
+  .footer,
+  .loader,
+  .page-transition,
+  .scroll-progress,
+  .mobile-menu,
+  .custom-cursor,
+  .cursor-trail,
+  .skip-to-content,
+  #three-canvas,
+  .property-gallery__thumbs,
+  .property-detail__back,
+  .property-detail__agent-actions,
+  .property-detail__share,
+  .property-detail__print-card,
+  .floating-cta,
+  .comparison-bar,
+  .btn.no-print,
+  .no-print {
+    display: none !important;
+  }
+
+  // ─── Property Detail Page ────────────────────────────────────────────────
+  .property-detail-page {
+    padding: 0 !important;
+    min-height: auto !important;
+    background: #fff !important;
+  }
+
+  // ─── Property Gallery ────────────────────────────────────────────────────
+  .property-gallery {
+    padding: 0 !important;
+    margin-bottom: 20pt;
+
+    &__container {
+      padding: 0 !important;
+    }
+
+    &__main {
+      height: auto !important;
+      max-height: 280pt !important;
+      border-radius: 8pt !important;
+      overflow: hidden;
+      page-break-inside: avoid;
+
+      img {
+        width: 100% !important;
+        height: auto !important;
+        max-height: 280pt !important;
+        object-fit: cover !important;
+      }
+    }
+  }
+
+  // ─── Content Layout ──────────────────────────────────────────────────────
+  .property-detail {
+    padding: 0 !important;
+
+    &__grid {
+      display: block !important;
+      grid-template-columns: 1fr !important;
+    }
+
+    &__main {
+      margin-bottom: 20pt;
+    }
+
+    &__sidebar {
+      display: block !important;
+    }
+  }
+
+  // ─── Header Section ──────────────────────────────────────────────────────
+  .property-detail__header {
+    border-bottom: 1pt solid #ddd !important;
+    padding-bottom: 12pt !important;
+    margin-bottom: 15pt;
+    page-break-inside: avoid;
+  }
+
+  .property-detail__type {
+    display: inline-block;
+    padding: 3pt 8pt;
+    font-size: 8pt;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: #C9A84C !important;
+    background: rgba(201, 168, 76, 0.15) !important;
+    border-radius: 3pt;
+    margin-bottom: 8pt;
+  }
+
+  .property-detail__title {
+    font-family: 'Cormorant', Georgia, serif !important;
+    font-size: 22pt !important;
+    font-weight: 600;
+    color: #0a0a0f !important;
+    margin-bottom: 6pt;
+    line-height: 1.2;
+  }
+
+  .property-detail__location {
+    font-size: 10pt;
+    color: #666 !important;
+
+    svg {
+      width: 12pt;
+      height: 12pt;
+      color: #999 !important;
+    }
+  }
+
+  // ─── Price Section ───────────────────────────────────────────────────────
+  .property-detail__price-section {
+    background: #f8f8f8 !important;
+    padding: 12pt !important;
+    border-radius: 6pt;
+    margin-bottom: 15pt;
+    page-break-inside: avoid;
+  }
+
+  .property-detail__price-label {
+    font-size: 8pt;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: #666 !important;
+    margin-bottom: 4pt;
+  }
+
+  .property-detail__price {
+    font-family: 'Cormorant', Georgia, serif !important;
+    font-size: 24pt !important;
+    font-weight: 600;
+    color: #C9A84C !important;
+  }
+
+  // ─── Specs Grid ──────────────────────────────────────────────────────────
+  .property-detail__specs {
+    margin-bottom: 15pt;
+    page-break-inside: avoid;
+  }
+
+  .property-detail__section-title {
+    font-size: 11pt !important;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: #0a0a0f !important;
+    margin-bottom: 10pt;
+    padding-bottom: 5pt;
+    border-bottom: 1pt solid #eee;
+  }
+
+  .property-detail__specs-grid {
+    display: grid !important;
+    grid-template-columns: repeat(4, 1fr) !important;
+    gap: 10pt !important;
+  }
+
+  .property-detail__spec-item {
+    display: flex;
+    align-items: center;
+    gap: 8pt;
+    padding: 10pt !important;
+    background: #f8f8f8 !important;
+    border-radius: 4pt;
+  }
+
+  .property-detail__spec-icon {
+    width: 32pt !important;
+    height: 32pt !important;
+    background: rgba(201, 168, 76, 0.15) !important;
+    border-radius: 4pt;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    svg {
+      width: 16pt !important;
+      height: 16pt !important;
+      color: #C9A84C !important;
+    }
+  }
+
+  .property-detail__spec-value {
+    font-family: 'Cormorant', Georgia, serif !important;
+    font-size: 14pt !important;
+    font-weight: 600;
+    color: #0a0a0f !important;
+  }
+
+  .property-detail__spec-label {
+    font-size: 8pt !important;
+    color: #666 !important;
+  }
+
+  // ─── Description ─────────────────────────────────────────────────────────
+  .property-detail__description {
+    margin-bottom: 15pt;
+    page-break-inside: avoid;
+  }
+
+  .property-detail__description-text {
+    font-size: 10pt !important;
+    line-height: 1.6 !important;
+    color: #333 !important;
+    white-space: pre-wrap;
+  }
+
+  // ─── Features ────────────────────────────────────────────────────────────
+  .property-detail__features {
+    margin-bottom: 15pt;
+    page-break-inside: avoid;
+  }
+
+  .property-detail__features-list {
+    display: grid !important;
+    grid-template-columns: repeat(3, 1fr) !important;
+    gap: 6pt !important;
+    list-style: none !important;
+    padding: 0 !important;
+    margin: 0 !important;
+  }
+
+  .property-detail__feature {
+    display: flex;
+    align-items: center;
+    gap: 6pt;
+    padding: 6pt 8pt !important;
+    background: #f8f8f8 !important;
+    border-radius: 3pt;
+    font-size: 9pt;
+
+    svg {
+      width: 12pt !important;
+      height: 12pt !important;
+      color: #22c55e !important;
+    }
+  }
+
+  // ─── Agent Card ──────────────────────────────────────────────────────────
+  .property-detail__agent-card {
+    background: #f8f8f8 !important;
+    padding: 12pt !important;
+    border-radius: 6pt;
+    margin-bottom: 15pt;
+    page-break-inside: avoid;
+  }
+
+  .property-detail__agent-title {
+    font-size: 11pt !important;
+    font-weight: 600;
+    margin-bottom: 10pt;
+    color: #0a0a0f !important;
+  }
+
+  .property-detail__agent-info {
+    display: flex;
+    align-items: center;
+    gap: 10pt;
+    padding-bottom: 10pt;
+    border-bottom: 1pt solid #ddd !important;
+    margin-bottom: 10pt;
+  }
+
+  .property-detail__agent-avatar {
+    width: 40pt !important;
+    height: 40pt !important;
+    border-radius: 50%;
+    overflow: hidden;
+    border: 1.5pt solid #C9A84C !important;
+
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+  }
+
+  .property-detail__agent-name {
+    font-size: 11pt;
+    font-weight: 600;
+    color: #0a0a0f !important;
+  }
+
+  .property-detail__agent-role {
+    font-size: 9pt;
+    color: #C9A84C !important;
+  }
+
+  .property-detail__agent-contact {
+    margin-bottom: 0 !important;
+  }
+
+  .property-detail__agent-link {
+    font-size: 9pt;
+    color: #333 !important;
+
+    svg {
+      width: 12pt !important;
+      height: 12pt !important;
+      color: #666 !important;
+    }
+  }
+
+  // ─── Location Card ───────────────────────────────────────────────────────
+  .property-detail__location-card {
+    background: #f8f8f8 !important;
+    padding: 12pt !important;
+    border-radius: 6pt;
+    margin-bottom: 15pt;
+    page-break-inside: avoid;
+  }
+
+  .property-detail__location-title {
+    font-size: 11pt !important;
+    font-weight: 600;
+    margin-bottom: 10pt;
+    color: #0a0a0f !important;
+  }
+
+  .property-detail__address-line {
+    font-size: 10pt;
+    color: #333 !important;
+
+    svg {
+      width: 12pt !important;
+      height: 12pt !important;
+      color: #C9A84C !important;
+    }
+  }
+
+  .property-detail__city-line,
+  .property-detail__country-line {
+    font-size: 9pt !important;
+    color: #666 !important;
+    padding-left: 18pt !important;
+  }
+
+  // ─── QR Code Section ─────────────────────────────────────────────────────
+  .property-detail__qr-section {
+    display: block !important;
+    background: #f8f8f8 !important;
+    padding: 12pt !important;
+    border-radius: 6pt;
+    text-align: center;
+    page-break-inside: avoid;
+  }
+
+  .property-detail__qr-title {
+    font-size: 10pt;
+    font-weight: 600;
+    margin-bottom: 8pt;
+    color: #0a0a0f !important;
+  }
+
+  .property-detail__qr-code {
+    display: inline-flex;
+    padding: 6pt;
+    background: #fff !important;
+    border: 1pt solid #ddd;
+    border-radius: 4pt;
+    margin-bottom: 4pt;
+  }
+
+  .property-detail__qr-img {
+    width: 80pt !important;
+    height: 80pt !important;
+  }
+
+  .property-detail__qr-url {
+    font-size: 9pt;
+    font-weight: 600;
+    color: #C9A84C !important;
+  }
+
+  // ─── Container Adjustments ───────────────────────────────────────────────
+  .container {
+    max-width: 100% !important;
+    padding: 0 !important;
+  }
+
+  // ─── Page Breaks ─────────────────────────────────────────────────────────
+  h1, h2, h3, h4, h5, h6 {
+    page-break-after: avoid;
+  }
+
+  img {
+    page-break-inside: avoid;
+  }
+
+  // ─── Links ───────────────────────────────────────────────────────────────
+  a {
+    text-decoration: none !important;
+    color: inherit !important;
+  }
+}

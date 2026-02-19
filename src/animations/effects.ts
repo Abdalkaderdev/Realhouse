@@ -7,8 +7,12 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
 gsap.registerPlugin(ScrollTrigger);
 
+// Check for reduced motion preference
+const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
 // ─── Magnetic Elements ────────────────────────────────────────────────────
 export function initMagneticElements(): void {
+  if (prefersReducedMotion) return;
   const elements = document.querySelectorAll('[data-magnetic]');
 
   elements.forEach((el) => {
@@ -376,6 +380,9 @@ export function initElasticButtons(selector: string): void {
 
 // ─── Initialize All Effects ───────────────────────────────────────────────
 export function initAllEffects(): void {
+  // Skip all visual effects if user prefers reduced motion
+  if (prefersReducedMotion) return;
+
   initMagneticElements();
   // Disabled aggressive card tilt for elegant subtle hover effect
   // initCardTilt('.property-card');

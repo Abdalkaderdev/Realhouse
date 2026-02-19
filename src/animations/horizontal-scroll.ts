@@ -8,6 +8,9 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
 gsap.registerPlugin(ScrollTrigger);
 
+// Check for reduced motion preference
+const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
 interface HorizontalScrollOptions {
   container: string;
   wrapper: string;
@@ -17,6 +20,9 @@ interface HorizontalScrollOptions {
 }
 
 export function initHorizontalScroll(options: HorizontalScrollOptions): ScrollTrigger | null {
+  // Skip horizontal scroll effects if user prefers reduced motion
+  if (prefersReducedMotion) return null;
+
   const container = document.querySelector(options.container) as HTMLElement;
   const wrapper = document.querySelector(options.wrapper) as HTMLElement;
   const panels = document.querySelectorAll(options.panels);

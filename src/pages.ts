@@ -3,9 +3,79 @@
 // Using Safe DOM Methods
 // ═══════════════════════════════════════════════════════════════════════════
 
-import { properties, featuredProperties, getDisplayPrice, getPropertyById, type Property } from './data/properties';
+import { properties, featuredProperties, getDisplayPrice, getPropertyById, formatPrice, type Property } from './data/properties';
 import { testimonials } from './data/testimonials';
+import { agents, trustBadges, enhancedStats, featuredInMedia, partnerLogos } from './data/agents';
+import { projects, getProjectById, formatPriceRange, type Project, type ProjectStatus } from './data/projects';
 import { submitInquiry } from './services/api';
+import { isFavorite, toggleFavorite, getFavorites, clearFavorites, updateFavoriteButton, updateFavoritesBadge } from './utils/favorites';
+import { createCompareButton, initComparisonBar, updateComparisonBar } from './comparison';
+import { getAmenitiesForDistrict, getCategoryIcon, getCategoryLabel, type Amenity, type DistrictAmenities } from './data/amenities';
+import { openAppointmentScheduler } from './components/appointment-scheduler';
+import { openVirtualTourModal, injectVirtualTourStyles } from './components/virtual-tour-modal';
+import { openFloorPlanModal, injectFloorPlanStyles } from './components/floor-plan-modal';
+import { initPropertiesMap, updateMapMarkers, initPropertyDetailMap } from './components/property-map';
+export { renderComparisonPage } from './comparison';
+
+// ─── Mortgage Calculator Interface ─────────────────────────────────────────
+interface MortgageCalculation {
+  monthlyPayment: number;
+  totalInterest: number;
+  totalPayment: number;
+  principalPayments: number[];
+  interestPayments: number[];
+}
+
+// ─── Mortgage Calculator Logic ─────────────────────────────────────────────
+function calculateMortgage(
+  principal: number,
+  annualRate: number,
+  termYears: number
+): MortgageCalculation {
+  const monthlyRate = annualRate / 100 / 12;
+  const numPayments = termYears * 12;
+
+  // Monthly payment formula: M = P * [r(1+r)^n] / [(1+r)^n - 1]
+  let monthlyPayment: number;
+  if (monthlyRate === 0) {
+    monthlyPayment = principal / numPayments;
+  } else {
+    monthlyPayment = principal * (monthlyRate * Math.pow(1 + monthlyRate, numPayments)) /
+                     (Math.pow(1 + monthlyRate, numPayments) - 1);
+  }
+
+  const totalPayment = monthlyPayment * numPayments;
+  const totalInterest = totalPayment - principal;
+
+  // Calculate amortization schedule (simplified - first 5 years)
+  const principalPayments: number[] = [];
+  const interestPayments: number[] = [];
+  let balance = principal;
+
+  for (let year = 1; year <= Math.min(termYears, 5); year++) {
+    let yearlyPrincipal = 0;
+    let yearlyInterest = 0;
+
+    for (let month = 1; month <= 12; month++) {
+      const interestPayment = balance * monthlyRate;
+      const principalPayment = monthlyPayment - interestPayment;
+      yearlyInterest += interestPayment;
+      yearlyPrincipal += principalPayment;
+      balance -= principalPayment;
+    }
+
+    principalPayments.push(yearlyPrincipal);
+    interestPayments.push(yearlyInterest);
+  }
+
+  return {
+    monthlyPayment,
+    totalInterest,
+    totalPayment,
+    principalPayments,
+    interestPayments
+  };
+}
 
 // ─── Filter State Interface ─────────────────────────────────────────────────
 interface FilterState {
@@ -13,6 +83,14 @@ interface FilterState {
   priceRange: string;
   minBeds: number;
   searchQuery: string;
+  status: string;
+  // Advanced filters
+  minArea: number;
+  maxArea: number;
+  badges: string[];
+  minYearBuilt: number;
+  maxYearBuilt: number;
+  district: string;
 }
 
 // Current filter state
@@ -20,8 +98,127 @@ let currentFilterState: FilterState = {
   type: 'All',
   priceRange: 'All',
   minBeds: 0,
-  searchQuery: ''
+  searchQuery: '',
+  status: 'All',
+  // Advanced filters
+  minArea: 0,
+  maxArea: 1000,
+  badges: [],
+  minYearBuilt: 2000,
+  maxYearBuilt: new Date().getFullYear(),
+  district: 'All'
 };
+
+// Store scroll position for properties page
+let propertiesScrollPosition = 0;
+
+// ─── URL Filter Functions ────────────────────────────────────────────────────
+export function parseFiltersFromURL(): FilterState {
+  const params = new URLSearchParams(window.location.search);
+  const currentYear = new Date().getFullYear();
+
+  return {
+    type: params.get('type') || 'All',
+    priceRange: params.get('priceRange') || 'All',
+    minBeds: parseInt(params.get('minBeds') || '0', 10),
+    searchQuery: params.get('q') || '',
+    status: params.get('status') || 'All',
+    // Advanced filters
+    minArea: parseInt(params.get('minArea') || '0', 10),
+    maxArea: parseInt(params.get('maxArea') || '1000', 10),
+    badges: params.get('badges') ? params.get('badges')!.split(',') : [],
+    minYearBuilt: parseInt(params.get('minYear') || '2000', 10),
+    maxYearBuilt: parseInt(params.get('maxYear') || currentYear.toString(), 10),
+    district: params.get('district') || 'All'
+  };
+}
+
+function updateURLWithFilters(state: FilterState, replace: boolean = false): void {
+  const params = new URLSearchParams();
+  const currentYear = new Date().getFullYear();
+
+  if (state.type !== 'All') params.set('type', state.type);
+  if (state.priceRange !== 'All') params.set('priceRange', state.priceRange);
+  if (state.minBeds > 0) params.set('minBeds', state.minBeds.toString());
+  if (state.searchQuery.trim()) params.set('q', state.searchQuery.trim());
+  if (state.status !== 'All') params.set('status', state.status);
+  // Advanced filters
+  if (state.minArea > 0) params.set('minArea', state.minArea.toString());
+  if (state.maxArea < 1000) params.set('maxArea', state.maxArea.toString());
+  if (state.badges.length > 0) params.set('badges', state.badges.join(','));
+  if (state.minYearBuilt > 2000) params.set('minYear', state.minYearBuilt.toString());
+  if (state.maxYearBuilt < currentYear) params.set('maxYear', state.maxYearBuilt.toString());
+  if (state.district !== 'All') params.set('district', state.district);
+
+  const queryString = params.toString();
+  const newURL = queryString ? `/properties?${queryString}` : '/properties';
+
+  if (replace) {
+    history.replaceState({ scroll: propertiesScrollPosition }, '', newURL);
+  } else {
+    history.pushState({ scroll: propertiesScrollPosition }, '', newURL);
+  }
+}
+
+function hasActiveFilters(state: FilterState): boolean {
+  const currentYear = new Date().getFullYear();
+  return state.type !== 'All' ||
+         state.priceRange !== 'All' ||
+         state.minBeds > 0 ||
+         state.searchQuery.trim() !== '' ||
+         state.status !== 'All' ||
+         state.minArea > 0 ||
+         state.maxArea < 1000 ||
+         state.badges.length > 0 ||
+         state.minYearBuilt > 2000 ||
+         state.maxYearBuilt < currentYear ||
+         state.district !== 'All';
+}
+
+function hasAdvancedFiltersActive(state: FilterState): boolean {
+  const currentYear = new Date().getFullYear();
+  return state.minArea > 0 ||
+         state.maxArea < 1000 ||
+         state.badges.length > 0 ||
+         state.minYearBuilt > 2000 ||
+         state.maxYearBuilt < currentYear ||
+         state.district !== 'All';
+}
+
+function countActiveAdvancedFilters(state: FilterState): number {
+  const currentYear = new Date().getFullYear();
+  let count = 0;
+  if (state.minArea > 0 || state.maxArea < 1000) count++;
+  if (state.badges.length > 0) count++;
+  if (state.minYearBuilt > 2000 || state.maxYearBuilt < currentYear) count++;
+  if (state.district !== 'All') count++;
+  return count;
+}
+
+function formatPriceForBreadcrumb(priceRange: string): string {
+  if (priceRange === 'All') return '';
+  return priceRange;
+}
+
+function formatBedsForBreadcrumb(minBeds: number): string {
+  if (minBeds === 0) return '';
+  return `${minBeds}+ Beds`;
+}
+
+// Save scroll position when navigating away
+export function savePropertiesScrollPosition(): void {
+  propertiesScrollPosition = window.scrollY;
+}
+
+// Get saved scroll position
+export function getPropertiesScrollPosition(): number {
+  return propertiesScrollPosition;
+}
+
+// Reset scroll position
+export function resetPropertiesScrollPosition(): void {
+  propertiesScrollPosition = 0;
+}
 
 // ─── Filter Function ────────────────────────────────────────────────────────
 function filterProperties(props: Property[], state: FilterState): Property[] {
@@ -73,6 +270,49 @@ function filterProperties(props: Property[], state: FilterState): Property[] {
       }
     }
 
+    // Status filter
+    if (state.status !== 'All' && property.status !== state.status) {
+      return false;
+    }
+
+    // ─── Advanced Filters ─────────────────────────────────────────────────────
+
+    // Area/sqm filter
+    const sqm = property.specs.sqm;
+    if (state.minArea > 0 && sqm < state.minArea) {
+      return false;
+    }
+    if (state.maxArea < 1000 && sqm > state.maxArea) {
+      return false;
+    }
+
+    // Badges filter (match any selected badge)
+    if (state.badges.length > 0) {
+      const hasMatchingBadge = state.badges.some(badge =>
+        property.badges.includes(badge as any)
+      );
+      if (!hasMatchingBadge) {
+        return false;
+      }
+    }
+
+    // Year built filter
+    const yearBuilt = property.specs.yearBuilt;
+    if (yearBuilt) {
+      if (state.minYearBuilt > 2000 && yearBuilt < state.minYearBuilt) {
+        return false;
+      }
+      const currentYear = new Date().getFullYear();
+      if (state.maxYearBuilt < currentYear && yearBuilt > state.maxYearBuilt) {
+        return false;
+      }
+    }
+
+    // District filter
+    if (state.district !== 'All' && property.location.district !== state.district) {
+      return false;
+    }
+
     return true;
   });
 }
@@ -89,13 +329,33 @@ function createElement<K extends keyof HTMLElementTagNameMap>(
   return el;
 }
 
-function createSVGUse(iconId: string): SVGSVGElement {
+// Creates a decorative SVG icon (aria-hidden for screen readers)
+function createSVGUse(iconId: string, ariaLabel?: string): SVGSVGElement {
   const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
   svg.setAttribute('class', 'icon');
+  if (ariaLabel) {
+    svg.setAttribute('aria-label', ariaLabel);
+    svg.setAttribute('role', 'img');
+  } else {
+    // Decorative icon - hide from screen readers
+    svg.setAttribute('aria-hidden', 'true');
+  }
   const use = document.createElementNS('http://www.w3.org/2000/svg', 'use');
   use.setAttributeNS('http://www.w3.org/1999/xlink', 'href', `#${iconId}`);
   svg.appendChild(use);
   return svg;
+}
+
+// ─── Screen Reader Announcements ───────────────────────────────────────────
+function announceToScreenReader(message: string): void {
+  const announcer = document.getElementById('sr-announcements');
+  if (announcer) {
+    announcer.textContent = message;
+    // Clear after announcement to allow repeated messages
+    setTimeout(() => {
+      announcer.textContent = '';
+    }, 1000);
+  }
 }
 
 // ─── Property Card Component ──────────────────────────────────────────────
@@ -108,11 +368,13 @@ function createPropertyCard(property: Property): HTMLElement {
 
   const img = createElement('img', 'property-card__image');
   img.src = property.images[0];
-  img.alt = property.title;
+  // Descriptive alt text for accessibility
+  img.alt = `${property.type} - ${property.title} in ${property.location.district}, ${property.location.city}. ${property.specs.beds} bedrooms, ${property.specs.baths} bathrooms, ${property.specs.sqm.toLocaleString()} square meters.`;
   img.loading = 'lazy';
   media.appendChild(img);
 
   const overlay = createElement('div', 'property-card__overlay');
+  overlay.setAttribute('aria-hidden', 'true'); // Decorative element
   media.appendChild(overlay);
 
   // Badges
@@ -131,9 +393,40 @@ function createPropertyCard(property: Property): HTMLElement {
 
   // Favorite button
   const favorite = createElement('button', 'property-card__favorite');
-  favorite.setAttribute('aria-label', 'Add to favorites');
-  favorite.appendChild(createSVGUse('icon-heart'));
+  const isPropertyFavorite = isFavorite(property.id);
+  favorite.setAttribute('aria-label', isPropertyFavorite ? 'Remove from favorites' : 'Add to favorites');
+  if (isPropertyFavorite) {
+    favorite.classList.add('active');
+  }
+
+  // Create heart icons (outline and filled)
+  const heartOutline = createSVGUse('icon-heart-outline');
+  heartOutline.classList.add('heart-outline');
+  const heartFilled = createSVGUse('icon-heart');
+  heartFilled.classList.add('heart-filled');
+  favorite.appendChild(heartOutline);
+  favorite.appendChild(heartFilled);
+
+  // Toggle favorite on click
+  favorite.addEventListener('click', (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+
+    const newState = toggleFavorite(property.id);
+    updateFavoriteButton(favorite, newState);
+
+    // Add animation class
+    favorite.classList.add('animate');
+    setTimeout(() => {
+      favorite.classList.remove('animate');
+    }, 300);
+  });
+
   media.appendChild(favorite);
+
+  // Compare button
+  const compareBtn = createCompareButton(property.id);
+  media.appendChild(compareBtn);
 
   card.appendChild(media);
 
@@ -228,10 +521,37 @@ export function renderHomePage(): DocumentFragment {
   primaryBtn.href = '/properties';
   primaryBtn.setAttribute('data-route', '');
   cta.appendChild(primaryBtn);
+  const consultationBtn = createElement('a', 'btn btn--ghost btn--large', 'Schedule Free Consultation');
+  consultationBtn.href = '/contact';
+  consultationBtn.setAttribute('data-route', '');
+  cta.appendChild(consultationBtn);
   heroContent.appendChild(cta);
 
   hero.appendChild(heroContent);
   fragment.appendChild(hero);
+
+  // Trust Badges Section
+  const trustSection = createElement('section', 'trust-badges');
+  const trustContainer = createElement('div', 'container');
+  const trustGrid = createElement('div', 'trust-badges__grid');
+
+  trustBadges.forEach(badge => {
+    const badgeEl = createElement('div', 'trust-badges__item');
+    const iconWrapper = createElement('div', 'trust-badges__icon');
+    iconWrapper.appendChild(createSVGUse(badge.icon));
+    badgeEl.appendChild(iconWrapper);
+    const badgeContent = createElement('div', 'trust-badges__content');
+    const badgeTitle = createElement('span', 'trust-badges__title', badge.title);
+    const badgeDesc = createElement('span', 'trust-badges__desc', badge.description);
+    badgeContent.appendChild(badgeTitle);
+    badgeContent.appendChild(badgeDesc);
+    badgeEl.appendChild(badgeContent);
+    trustGrid.appendChild(badgeEl);
+  });
+
+  trustContainer.appendChild(trustGrid);
+  trustSection.appendChild(trustContainer);
+  fragment.appendChild(trustSection);
 
   // Stats Section
   const stats = createElement('section', 'stats');
@@ -517,6 +837,89 @@ export function renderHomePage(): DocumentFragment {
   testimonialsSection.appendChild(testimonialsContainer);
   fragment.appendChild(testimonialsSection);
 
+  // Agent Showcase
+  const agentSection = createElement('section', 'agent-showcase');
+  const agentContainer = createElement('div', 'container');
+  const agentHeader = createElement('div', 'agent-showcase__header');
+  const agentTitleEl = createElement('h2', 'agent-showcase__title');
+  agentTitleEl.textContent = 'Meet Our ';
+  agentTitleEl.appendChild(createElement('em', undefined, 'Expert'));
+  agentTitleEl.appendChild(document.createTextNode(' Team'));
+  agentHeader.appendChild(agentTitleEl);
+  agentHeader.appendChild(createElement('p', 'agent-showcase__subtitle', 'Dedicated professionals committed to finding your perfect property.'));
+  agentContainer.appendChild(agentHeader);
+  const agentGrid = createElement('div', 'agent-showcase__grid');
+  agents.forEach(agentData => {
+    const agentCard = createElement('div', 'agent-showcase__card');
+    const imageWrapper = createElement('div', 'agent-showcase__image');
+    const agentImg = createElement('img');
+    agentImg.src = agentData.image;
+    agentImg.alt = agentData.name;
+    agentImg.loading = 'lazy';
+    imageWrapper.appendChild(agentImg);
+    agentCard.appendChild(imageWrapper);
+    const agentContent = createElement('div', 'agent-showcase__content');
+    agentContent.appendChild(createElement('h3', 'agent-showcase__name', agentData.name));
+    agentContent.appendChild(createElement('p', 'agent-showcase__role', agentData.role));
+    agentContent.appendChild(createElement('p', 'agent-showcase__specialization', agentData.specialization));
+    const agentStatsDiv = createElement('div', 'agent-showcase__stats');
+    const yearsStat = createElement('div', 'agent-showcase__stat');
+    yearsStat.appendChild(createElement('span', 'agent-showcase__stat-value', `${agentData.yearsExperience}+`));
+    yearsStat.appendChild(createElement('span', 'agent-showcase__stat-label', 'Years'));
+    agentStatsDiv.appendChild(yearsStat);
+    const soldStat = createElement('div', 'agent-showcase__stat');
+    soldStat.appendChild(createElement('span', 'agent-showcase__stat-value', agentData.propertiesSold.toString()));
+    soldStat.appendChild(createElement('span', 'agent-showcase__stat-label', 'Sold'));
+    agentStatsDiv.appendChild(soldStat);
+    agentContent.appendChild(agentStatsDiv);
+    const agentContactDiv = createElement('div', 'agent-showcase__contact');
+    const phoneLink = createElement('a', 'agent-showcase__link');
+    phoneLink.href = `tel:${agentData.phone.replace(/\s/g, '')}`;
+    phoneLink.appendChild(createSVGUse('icon-phone'));
+    phoneLink.appendChild(document.createTextNode(agentData.phone));
+    agentContactDiv.appendChild(phoneLink);
+    agentContent.appendChild(agentContactDiv);
+    agentCard.appendChild(agentContent);
+    agentGrid.appendChild(agentCard);
+  });
+  agentContainer.appendChild(agentGrid);
+  agentSection.appendChild(agentContainer);
+  fragment.appendChild(agentSection);
+
+  // Featured In Media
+  const featuredInSection = createElement('section', 'featured-in');
+  const featuredInContainer = createElement('div', 'container');
+  const featuredInHeader = createElement('div', 'featured-in__header');
+  featuredInHeader.appendChild(createElement('h3', 'featured-in__title', 'As Featured In'));
+  featuredInContainer.appendChild(featuredInHeader);
+  const featuredInGrid = createElement('div', 'featured-in__grid');
+  featuredInMedia.forEach(mediaItem => {
+    const mediaEl = createElement('div', 'featured-in__item');
+    mediaEl.appendChild(createElement('span', 'featured-in__logo', mediaItem.logo));
+    mediaEl.appendChild(createElement('span', 'featured-in__name', mediaItem.name));
+    featuredInGrid.appendChild(mediaEl);
+  });
+  featuredInContainer.appendChild(featuredInGrid);
+  featuredInSection.appendChild(featuredInContainer);
+  fragment.appendChild(featuredInSection);
+
+  // Partners
+  const partnersSection = createElement('section', 'partners');
+  const partnersContainer = createElement('div', 'container');
+  const partnersHeader = createElement('div', 'partners__header');
+  partnersHeader.appendChild(createElement('h3', 'partners__title', 'Our Trusted Partners'));
+  partnersContainer.appendChild(partnersHeader);
+  const partnersGrid = createElement('div', 'partners__grid');
+  partnerLogos.forEach(partnerData => {
+    const partnerItem = createElement('div', 'partners__item');
+    partnerItem.appendChild(createElement('span', 'partners__logo', partnerData.logo));
+    partnerItem.appendChild(createElement('span', 'partners__name', partnerData.name));
+    partnersGrid.appendChild(partnerItem);
+  });
+  partnersContainer.appendChild(partnersGrid);
+  partnersSection.appendChild(partnersContainer);
+  fragment.appendChild(partnersSection);
+
   // CTA Section
   const ctaSection = createElement('section', 'cta-section');
   const ctaContainer = createElement('div', 'container cta-section__content');
@@ -543,24 +946,44 @@ export function renderHomePage(): DocumentFragment {
 export function renderPropertiesPage(): DocumentFragment {
   const fragment = document.createDocumentFragment();
 
-  // Reset filter state when page loads
-  currentFilterState = {
-    type: 'All',
-    priceRange: 'All',
-    minBeds: 0,
-    searchQuery: ''
-  };
+  // Read filters from URL on page load
+  currentFilterState = parseFiltersFromURL();
+
+  // Track view mode and map instance
+  let currentViewMode: 'list' | 'map' = 'list';
+  let mapInstance: ReturnType<typeof initPropertiesMap> = null;
 
   const page = createElement('div', 'properties-page');
   const container = createElement('div', 'container');
 
-  // Header
+  // Header with view toggle
   const header = createElement('div', 'properties-page__header');
+  const headerContent = createElement('div', 'properties-page__header-content');
   const title = createElement('h1', 'properties-page__title', 'Our Properties');
   const subtitle = createElement('p', 'properties-page__subtitle', 'Discover exceptional homes in the world\'s most desirable locations.');
-  header.appendChild(title);
-  header.appendChild(subtitle);
+  headerContent.appendChild(title);
+  headerContent.appendChild(subtitle);
+  header.appendChild(headerContent);
+
+  // View Toggle Buttons
+  const viewToggle = createElement('div', 'properties-page__view-toggle');
+  const listBtn = createElement('button', 'properties-page__view-btn properties-page__view-btn--active');
+  listBtn.setAttribute('data-view', 'list');
+  listBtn.setAttribute('aria-label', 'List view');
+  listBtn.innerHTML = '<svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2"><line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><line x1="3" y1="6" x2="3.01" y2="6"/><line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/></svg><span>List</span>';
+  viewToggle.appendChild(listBtn);
+  const mapBtn = createElement('button', 'properties-page__view-btn');
+  mapBtn.setAttribute('data-view', 'map');
+  mapBtn.setAttribute('aria-label', 'Map view');
+  mapBtn.innerHTML = '<svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2"><polygon points="1 6 1 22 8 18 16 22 23 18 23 2 16 6 8 2 1 6"/><line x1="8" y1="2" x2="8" y2="18"/><line x1="16" y1="6" x2="16" y2="22"/></svg><span>Map</span>';
+  viewToggle.appendChild(mapBtn);
+  header.appendChild(viewToggle);
   container.appendChild(header);
+
+  // Filter Breadcrumbs Section (shows active filters)
+  const breadcrumbsSection = createElement('div', 'properties-page__breadcrumbs');
+  breadcrumbsSection.id = 'filter-breadcrumbs';
+  container.appendChild(breadcrumbsSection);
 
   // Search Input
   const searchSection = createElement('div', 'properties-page__search');
@@ -568,6 +991,7 @@ export function renderPropertiesPage(): DocumentFragment {
   searchInput.type = 'text';
   searchInput.placeholder = 'Search properties by location, type, or features...';
   searchInput.setAttribute('aria-label', 'Search properties');
+  searchInput.value = currentFilterState.searchQuery;
   searchSection.appendChild(searchInput);
   container.appendChild(searchSection);
 
@@ -576,8 +1000,9 @@ export function renderPropertiesPage(): DocumentFragment {
   const typeLabel = createElement('span', 'properties-page__filter-label', 'Type:');
   typeFilterGroup.appendChild(typeLabel);
   const filterTypes = ['All', 'Villa', 'Apartment', 'Penthouse', 'Townhouse', 'Duplex', 'Land', 'Commercial'];
-  filterTypes.forEach((type, index) => {
-    const btn = createElement('button', `properties-page__filter${index === 0 ? ' active' : ''}`, type);
+  filterTypes.forEach((type) => {
+    const isActive = currentFilterState.type === type;
+    const btn = createElement('button', `properties-page__filter${isActive ? ' active' : ''}`, type);
     btn.setAttribute('data-filter-type', 'type');
     btn.setAttribute('data-filter-value', type);
     typeFilterGroup.appendChild(btn);
@@ -589,8 +1014,9 @@ export function renderPropertiesPage(): DocumentFragment {
   const priceLabel = createElement('span', 'properties-page__filter-label', 'Price:');
   priceFilterGroup.appendChild(priceLabel);
   const priceRanges = ['All', 'Under $200K', '$200K-$400K', '$400K-$700K', '$700K+'];
-  priceRanges.forEach((range, index) => {
-    const btn = createElement('button', `properties-page__filter${index === 0 ? ' active' : ''}`, range);
+  priceRanges.forEach((range) => {
+    const isActive = currentFilterState.priceRange === range;
+    const btn = createElement('button', `properties-page__filter${isActive ? ' active' : ''}`, range);
     btn.setAttribute('data-filter-type', 'price');
     btn.setAttribute('data-filter-value', range);
     priceFilterGroup.appendChild(btn);
@@ -608,29 +1034,247 @@ export function renderPropertiesPage(): DocumentFragment {
     { label: '5+', value: 5 },
     { label: '6+', value: 6 }
   ];
-  bedOptions.forEach((option, index) => {
-    const btn = createElement('button', `properties-page__filter${index === 0 ? ' active' : ''}`, option.label);
+  bedOptions.forEach((option) => {
+    const isActive = currentFilterState.minBeds === option.value;
+    const btn = createElement('button', `properties-page__filter${isActive ? ' active' : ''}`, option.label);
     btn.setAttribute('data-filter-type', 'beds');
     btn.setAttribute('data-filter-value', option.value.toString());
     bedsFilterGroup.appendChild(btn);
   });
   container.appendChild(bedsFilterGroup);
 
-  // Grid
+  // Status Filters (For Sale / For Rent)
+  const statusFilterGroup = createElement('div', 'properties-page__filter-group');
+  const statusLabel = createElement('span', 'properties-page__filter-label', 'Status:');
+  statusFilterGroup.appendChild(statusLabel);
+  const statusOptions = ['All', 'For Sale', 'For Rent'];
+  statusOptions.forEach((status) => {
+    const isActive = currentFilterState.status === status;
+    const btn = createElement('button', `properties-page__filter${isActive ? ' active' : ''}`, status);
+    btn.setAttribute('data-filter-type', 'status');
+    btn.setAttribute('data-filter-value', status);
+    statusFilterGroup.appendChild(btn);
+  });
+  container.appendChild(statusFilterGroup);
+
+  // ─── Advanced Filters Section ───────────────────────────────────────────────
+  const advancedToggle = createElement('div', 'properties-page__advanced-toggle');
+  const advToggleBtn = createElement('button', 'properties-page__advanced-toggle-btn');
+  advToggleBtn.setAttribute('aria-expanded', 'false');
+  advToggleBtn.setAttribute('aria-controls', 'advanced-filters-panel');
+  const advToggleText = createElement('span', 'properties-page__advanced-toggle-text', 'Advanced Filters');
+  advToggleBtn.appendChild(advToggleText);
+  const advToggleIcon = createElement('span', 'properties-page__advanced-toggle-icon', '+');
+  advToggleBtn.appendChild(advToggleIcon);
+  advancedToggle.appendChild(advToggleBtn);
+  container.appendChild(advancedToggle);
+
+  const advancedPanel = createElement('div', 'properties-page__advanced-panel');
+  advancedPanel.id = 'advanced-filters-panel';
+  const advancedContent = createElement('div', 'properties-page__advanced-content');
+
+  // Row 1: Area Range & Year Built
+  const advRow1 = createElement('div', 'properties-page__advanced-row');
+  const areaWrapper = createElement('div', 'advanced-filter__range');
+  areaWrapper.appendChild(createElement('label', 'advanced-filter__label', 'Area (sqm)'));
+  const areaSliderContainer = createElement('div', 'advanced-filter__slider-container');
+  const minAreaInput = createElement('input', 'advanced-filter__range-input') as HTMLInputElement;
+  minAreaInput.type = 'number'; minAreaInput.min = '0'; minAreaInput.placeholder = 'Min'; minAreaInput.id = 'min-area-input';
+  const maxAreaInput = createElement('input', 'advanced-filter__range-input') as HTMLInputElement;
+  maxAreaInput.type = 'number'; maxAreaInput.min = '0'; maxAreaInput.placeholder = 'Max (1000+)'; maxAreaInput.id = 'max-area-input';
+  areaSliderContainer.appendChild(minAreaInput);
+  areaSliderContainer.appendChild(createElement('span', 'advanced-filter__separator', 'to'));
+  areaSliderContainer.appendChild(maxAreaInput);
+  areaWrapper.appendChild(areaSliderContainer);
+  advRow1.appendChild(areaWrapper);
+
+  const yearWrapper = createElement('div', 'advanced-filter__range');
+  yearWrapper.appendChild(createElement('label', 'advanced-filter__label', 'Year Built'));
+  const yearSliderContainer = createElement('div', 'advanced-filter__slider-container');
+  const minYearInput = createElement('input', 'advanced-filter__range-input') as HTMLInputElement;
+  minYearInput.type = 'number'; minYearInput.min = '2000'; minYearInput.placeholder = 'Min Year'; minYearInput.id = 'min-year-input';
+  const maxYearInput = createElement('input', 'advanced-filter__range-input') as HTMLInputElement;
+  maxYearInput.type = 'number'; maxYearInput.min = '2000'; maxYearInput.placeholder = 'Max Year'; maxYearInput.id = 'max-year-input';
+  yearSliderContainer.appendChild(minYearInput);
+  yearSliderContainer.appendChild(createElement('span', 'advanced-filter__separator', 'to'));
+  yearSliderContainer.appendChild(maxYearInput);
+  yearWrapper.appendChild(yearSliderContainer);
+  advRow1.appendChild(yearWrapper);
+  advancedContent.appendChild(advRow1);
+
+  // Row 2: District Dropdown
+  const advRow2 = createElement('div', 'properties-page__advanced-row');
+  const districtWrapper = createElement('div', 'advanced-filter__dropdown');
+  const districtLbl = createElement('label', 'advanced-filter__label', 'District/Neighborhood');
+  districtLbl.setAttribute('for', 'district-filter');
+  districtWrapper.appendChild(districtLbl);
+  const districtSelect = createElement('select', 'advanced-filter__select') as HTMLSelectElement;
+  districtSelect.id = 'district-filter';
+  const allDistOpt = createElement('option', undefined, 'All Districts');
+  allDistOpt.value = 'All';
+  districtSelect.appendChild(allDistOpt);
+  const uniqueDistricts = new Set<string>();
+  properties.forEach(p => { if (p.location.district) uniqueDistricts.add(p.location.district); });
+  Array.from(uniqueDistricts).sort().forEach(d => { const opt = createElement('option', undefined, d); opt.value = d; districtSelect.appendChild(opt); });
+  districtWrapper.appendChild(districtSelect);
+  advRow2.appendChild(districtWrapper);
+  advRow2.appendChild(createElement('div'));
+  advancedContent.appendChild(advRow2);
+
+  // Row 3: Badges
+  const advRow3 = createElement('div', 'properties-page__advanced-row properties-page__advanced-row--full');
+  const badgesWrapper = createElement('div', 'advanced-filter__checkbox-group');
+  badgesWrapper.appendChild(createElement('label', 'advanced-filter__label', 'Property Badges'));
+  const badgesOpts = createElement('div', 'advanced-filter__options');
+  ['Hot', 'New', 'Exclusive', 'Discount', 'Installment'].forEach(badge => {
+    const optLbl = createElement('label', 'advanced-filter__option');
+    const cb = createElement('input') as HTMLInputElement;
+    cb.type = 'checkbox'; cb.className = 'advanced-filter__checkbox'; cb.value = badge; cb.id = 'badge-' + badge.toLowerCase();
+    optLbl.appendChild(cb);
+    optLbl.appendChild(createElement('span', 'advanced-filter__option-label', badge));
+    badgesOpts.appendChild(optLbl);
+  });
+  badgesWrapper.appendChild(badgesOpts);
+  advRow3.appendChild(badgesWrapper);
+  advancedContent.appendChild(advRow3);
+
+  // Reset Advanced Filters
+  const resetRow = createElement('div', 'properties-page__advanced-row properties-page__advanced-reset');
+  const resetAdvBtn = createElement('button', 'btn btn--ghost btn--sm', 'Reset Advanced Filters');
+  resetAdvBtn.id = 'reset-advanced-filters';
+  resetRow.appendChild(resetAdvBtn);
+  advancedContent.appendChild(resetRow);
+
+  advancedPanel.appendChild(advancedContent);
+  container.appendChild(advancedPanel);
+
+  // Filters Summary
+  const filtersSummary = createElement('div', 'properties-page__filters-summary');
+  filtersSummary.id = 'filters-summary';
+  const filtersCount = createElement('span', 'properties-page__filters-count');
+  filtersCount.id = 'filters-count';
+  filtersCount.textContent = properties.length + ' properties found';
+  filtersSummary.appendChild(filtersCount);
+  container.appendChild(filtersSummary);
+
+  // Content wrapper for grid and map
+  const contentWrapper = createElement('div', 'properties-page__content');
   const grid = createElement('div', 'properties-page__grid');
   grid.id = 'properties-grid';
-  properties.forEach(property => {
-    grid.appendChild(createPropertyCard(property));
-  });
-  container.appendChild(grid);
+  const initialFilteredProps = filterProperties(properties, currentFilterState);
+  if (initialFilteredProps.length === 0) {
+    const noResults = createElement('div', 'properties-page__no-results');
+    const noResultsTitle = createElement('h3', undefined, 'No properties found');
+    const noResultsText = createElement('p', undefined, 'Try adjusting your filters.');
+    noResults.appendChild(noResultsTitle);
+    noResults.appendChild(noResultsText);
+    grid.appendChild(noResults);
+  } else {
+    initialFilteredProps.forEach(property => {
+      grid.appendChild(createPropertyCard(property));
+    });
+  }
+  contentWrapper.appendChild(grid);
+  const mapContainer = createElement('div', 'properties-page__map-container');
+  mapContainer.id = 'properties-map-container';
+  mapContainer.style.display = 'none';
+  const mapDiv = createElement('div', 'properties-page__map');
+  mapDiv.id = 'properties-map';
+  mapContainer.appendChild(mapDiv);
+  contentWrapper.appendChild(mapContainer);
+  container.appendChild(contentWrapper);
 
   page.appendChild(container);
   fragment.appendChild(page);
+
+  // Breadcrumb helper functions
+  function updateBreadcrumbs() {
+    const el = document.getElementById('filter-breadcrumbs');
+    if (!el) return;
+    while (el.firstChild) el.removeChild(el.firstChild);
+    if (!hasActiveFilters(currentFilterState)) { el.style.display = 'none'; return; }
+    el.style.display = 'flex';
+    el.appendChild(createElement('span', 'properties-page__breadcrumb-base', 'Properties'));
+    if (currentFilterState.type !== 'All') el.appendChild(createFilterChip(currentFilterState.type, 'type'));
+    if (currentFilterState.minBeds > 0) el.appendChild(createFilterChip(formatBedsForBreadcrumb(currentFilterState.minBeds), 'beds'));
+    if (currentFilterState.priceRange !== 'All') el.appendChild(createFilterChip(formatPriceForBreadcrumb(currentFilterState.priceRange), 'price'));
+    if (currentFilterState.status !== 'All') el.appendChild(createFilterChip(currentFilterState.status, 'status'));
+    if (currentFilterState.searchQuery.trim()) el.appendChild(createFilterChip(`"${currentFilterState.searchQuery}"`, 'search'));
+    const clearBtn = createElement('button', 'properties-page__clear-filters', 'Clear All Filters');
+    clearBtn.setAttribute('type', 'button');
+    clearBtn.addEventListener('click', clearAllFilters);
+    el.appendChild(clearBtn);
+  }
+  function createFilterChip(label: string, filterType: string): HTMLElement {
+    const chip = createElement('span', 'properties-page__filter-chip');
+    chip.appendChild(createElement('span', 'properties-page__breadcrumb-separator', '>'));
+    chip.appendChild(createElement('span', 'properties-page__chip-label', label));
+    const removeBtn = createElement('button', 'properties-page__chip-remove', '\u00D7');
+    removeBtn.setAttribute('type', 'button');
+    removeBtn.addEventListener('click', (e) => { e.stopPropagation(); removeFilter(filterType); });
+    chip.appendChild(removeBtn);
+    return chip;
+  }
+  function removeFilter(filterType: string) {
+    if (filterType === 'type') currentFilterState.type = 'All';
+    else if (filterType === 'beds') currentFilterState.minBeds = 0;
+    else if (filterType === 'price') currentFilterState.priceRange = 'All';
+    else if (filterType === 'status') currentFilterState.status = 'All';
+    else if (filterType === 'search') { currentFilterState.searchQuery = ''; const s = document.querySelector('.properties-page__search-input') as HTMLInputElement; if (s) s.value = ''; }
+    updateFilterButtonsUI(); updateURLWithFilters(currentFilterState); updateBreadcrumbs(); renderGrid();
+  }
+  function clearAllFilters() {
+    currentFilterState = { type: 'All', priceRange: 'All', minBeds: 0, searchQuery: '', status: 'All', minArea: 0, maxArea: 1000, badges: [], minYearBuilt: 2000, maxYearBuilt: new Date().getFullYear(), district: 'All' };
+    const s = document.querySelector('.properties-page__search-input') as HTMLInputElement; if (s) s.value = '';
+    updateFilterButtonsUI(); updateURLWithFilters(currentFilterState); updateBreadcrumbs(); renderGrid();
+  }
+  function updateFilterButtonsUI() {
+    document.querySelectorAll('[data-filter-type="type"]').forEach(b => b.classList.toggle('active', b.getAttribute('data-filter-value') === currentFilterState.type));
+    document.querySelectorAll('[data-filter-type="price"]').forEach(b => b.classList.toggle('active', b.getAttribute('data-filter-value') === currentFilterState.priceRange));
+    document.querySelectorAll('[data-filter-type="beds"]').forEach(b => b.classList.toggle('active', parseInt(b.getAttribute('data-filter-value') || '0', 10) === currentFilterState.minBeds));
+    document.querySelectorAll('[data-filter-type="status"]').forEach(b => b.classList.toggle('active', b.getAttribute('data-filter-value') === currentFilterState.status));
+  }
+
+  // Toggle between list and map views
+  function toggleView(view: 'list' | 'map') {
+    if (view === currentViewMode) return;
+    const gridEl = document.getElementById('properties-grid');
+    const mapContainerEl = document.getElementById('properties-map-container');
+    const listBtnEl = document.querySelector('[data-view="list"]');
+    const mapBtnEl = document.querySelector('[data-view="map"]');
+    if (!gridEl || !mapContainerEl) return;
+    currentViewMode = view;
+    if (view === 'map') {
+      gridEl.style.display = 'none';
+      mapContainerEl.style.display = 'block';
+      listBtnEl?.classList.remove('properties-page__view-btn--active');
+      mapBtnEl?.classList.add('properties-page__view-btn--active');
+      if (!mapInstance) {
+        const filteredProps = filterProperties(properties, currentFilterState);
+        mapInstance = initPropertiesMap('properties-map', filteredProps, (id) => {
+          window.history.pushState({}, '', `/properties/${id}`);
+          window.dispatchEvent(new PopStateEvent('popstate'));
+        });
+      } else {
+        updateMapMarkers(mapInstance, filterProperties(properties, currentFilterState));
+      }
+      setTimeout(() => { if (mapInstance) mapInstance.invalidateSize(); }, 100);
+    } else {
+      gridEl.style.display = '';
+      mapContainerEl.style.display = 'none';
+      listBtnEl?.classList.add('properties-page__view-btn--active');
+      mapBtnEl?.classList.remove('properties-page__view-btn--active');
+    }
+  }
 
   // Function to re-render the grid
   function renderGrid() {
     const gridEl = document.getElementById('properties-grid');
     if (!gridEl) return;
+    // Update map if visible
+    if (currentViewMode === 'map' && mapInstance) {
+      updateMapMarkers(mapInstance, filterProperties(properties, currentFilterState));
+    }
 
     // Clear the grid safely (no innerHTML)
     while (gridEl.firstChild) {
@@ -648,16 +1292,28 @@ export function renderPropertiesPage(): DocumentFragment {
       noResults.appendChild(noResultsTitle);
       noResults.appendChild(noResultsText);
       gridEl.appendChild(noResults);
+      // Announce to screen readers
+      announceToScreenReader('No properties found. Try adjusting your filters.');
     } else {
       // Render filtered properties
       filteredProperties.forEach(property => {
         gridEl.appendChild(createPropertyCard(property));
       });
+      // Announce results to screen readers
+      announceToScreenReader(`Showing ${filteredProperties.length} ${filteredProperties.length === 1 ? 'property' : 'properties'}`);
     }
   }
 
   // Add event listeners after the fragment is appended to DOM
   setTimeout(() => {
+    // View toggle handlers
+    document.querySelectorAll('.properties-page__view-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const view = btn.getAttribute('data-view') as 'list' | 'map';
+        if (view) toggleView(view);
+      });
+    });
+
     // Search input handler
     const searchEl = document.querySelector('.properties-page__search-input') as HTMLInputElement;
     if (searchEl) {
@@ -666,6 +1322,8 @@ export function renderPropertiesPage(): DocumentFragment {
         clearTimeout(debounceTimeout);
         debounceTimeout = setTimeout(() => {
           currentFilterState.searchQuery = searchEl.value;
+          updateURLWithFilters(currentFilterState);
+          updateBreadcrumbs();
           renderGrid();
         }, 300);
       });
@@ -702,10 +1360,118 @@ export function renderPropertiesPage(): DocumentFragment {
             break;
         }
 
+        // Update URL and breadcrumbs
+        updateURLWithFilters(currentFilterState);
+        updateBreadcrumbs();
         // Re-render the grid
         renderGrid();
       });
     });
+
+    // Initial breadcrumbs update
+    updateBreadcrumbs();
+
+    // ─── Advanced Filters Event Handlers ────────────────────────────────────
+    const advToggleBtnEl = document.querySelector('.properties-page__advanced-toggle-btn');
+    if (advToggleBtnEl) {
+      advToggleBtnEl.addEventListener('click', () => {
+        const panel = document.getElementById('advanced-filters-panel');
+        const icon = document.querySelector('.properties-page__advanced-toggle-icon');
+        if (panel && icon) {
+          panel.classList.toggle('expanded');
+          icon.textContent = panel.classList.contains('expanded') ? '-' : '+';
+        }
+      });
+    }
+
+    const minAreaEl = document.getElementById('min-area-input') as HTMLInputElement;
+    const maxAreaEl = document.getElementById('max-area-input') as HTMLInputElement;
+    const minYearEl = document.getElementById('min-year-input') as HTMLInputElement;
+    const maxYearEl = document.getElementById('max-year-input') as HTMLInputElement;
+    const districtEl = document.getElementById('district-filter') as HTMLSelectElement;
+    const badgeCheckboxes = document.querySelectorAll('.advanced-filter__checkbox');
+
+    let advDebounce: ReturnType<typeof setTimeout>;
+    function updateAdvancedFiltersAndRender() {
+      clearTimeout(advDebounce);
+      advDebounce = setTimeout(() => {
+        currentFilterState.minArea = parseInt(minAreaEl?.value || '0', 10);
+        currentFilterState.maxArea = parseInt(maxAreaEl?.value || '1000', 10);
+        currentFilterState.minYearBuilt = parseInt(minYearEl?.value || '2000', 10);
+        currentFilterState.maxYearBuilt = parseInt(maxYearEl?.value || new Date().getFullYear().toString(), 10);
+        currentFilterState.district = districtEl?.value || 'All';
+        const selectedBadges: string[] = [];
+        document.querySelectorAll('.advanced-filter__checkbox:checked').forEach(c => selectedBadges.push((c as HTMLInputElement).value));
+        currentFilterState.badges = selectedBadges;
+        updateURLWithFilters(currentFilterState, true);
+        renderGrid();
+        updateFiltersCountDisplay();
+        updateAdvancedFilterCountBadge();
+      }, 300);
+    }
+
+    if (minAreaEl) minAreaEl.addEventListener('input', updateAdvancedFiltersAndRender);
+    if (maxAreaEl) maxAreaEl.addEventListener('input', updateAdvancedFiltersAndRender);
+    if (minYearEl) minYearEl.addEventListener('input', updateAdvancedFiltersAndRender);
+    if (maxYearEl) maxYearEl.addEventListener('input', updateAdvancedFiltersAndRender);
+    if (districtEl) districtEl.addEventListener('change', () => { currentFilterState.district = districtEl.value; updateURLWithFilters(currentFilterState, true); renderGrid(); updateFiltersCountDisplay(); updateAdvancedFilterCountBadge(); });
+    badgeCheckboxes.forEach(cb => cb.addEventListener('change', () => {
+      const selectedBadges: string[] = [];
+      document.querySelectorAll('.advanced-filter__checkbox:checked').forEach(c => selectedBadges.push((c as HTMLInputElement).value));
+      currentFilterState.badges = selectedBadges;
+      updateURLWithFilters(currentFilterState, true);
+      renderGrid();
+      updateFiltersCountDisplay();
+      updateAdvancedFilterCountBadge();
+    }));
+
+    const resetAdvBtnEl = document.getElementById('reset-advanced-filters');
+    if (resetAdvBtnEl) {
+      resetAdvBtnEl.addEventListener('click', () => {
+        currentFilterState.minArea = 0;
+        currentFilterState.maxArea = 1000;
+        currentFilterState.badges = [];
+        currentFilterState.minYearBuilt = 2000;
+        currentFilterState.maxYearBuilt = new Date().getFullYear();
+        currentFilterState.district = 'All';
+        if (minAreaEl) minAreaEl.value = '';
+        if (maxAreaEl) maxAreaEl.value = '';
+        if (minYearEl) minYearEl.value = '';
+        if (maxYearEl) maxYearEl.value = '';
+        if (districtEl) districtEl.value = 'All';
+        badgeCheckboxes.forEach(c => { (c as HTMLInputElement).checked = false; });
+        updateURLWithFilters(currentFilterState, true);
+        renderGrid();
+        updateFiltersCountDisplay();
+        updateAdvancedFilterCountBadge();
+      });
+    }
+
+    function updateFiltersCountDisplay() {
+      const countEl = document.getElementById('filters-count');
+      if (countEl) {
+        const filteredCount = filterProperties(properties, currentFilterState).length;
+        countEl.textContent = filteredCount + ' properties found';
+      }
+    }
+
+    function updateAdvancedFilterCountBadge() {
+      const toggleText = document.querySelector('.properties-page__advanced-toggle-text');
+      if (!toggleText) return;
+      const existingBadge = toggleText.querySelector('.properties-page__advanced-count');
+      if (existingBadge) existingBadge.remove();
+      const count = countActiveAdvancedFilters(currentFilterState);
+      if (count > 0) {
+        const countBadge = createElement('span', 'properties-page__advanced-count', count.toString());
+        toggleText.appendChild(countBadge);
+      }
+    }
+
+    updateFiltersCountDisplay();
+
+    // Initialize comparison bar
+    initComparisonBar();
+    updateComparisonBar();
   }, 0);
 
   return fragment;
@@ -749,8 +1515,9 @@ export function renderAboutPage(): DocumentFragment {
 
   const storyImage = createElement('div', 'about-page__story-image');
   const img = createElement('img');
-  img.src = 'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=800&q=80';
+  img.src = 'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=800&q=80&fm=webp';
   img.alt = 'Luxury property';
+  img.loading = 'lazy';
   storyImage.appendChild(img);
   storyContainer.appendChild(storyImage);
 
@@ -797,10 +1564,10 @@ export function renderAboutPage(): DocumentFragment {
 
   const teamGrid = createElement('div', 'about-page__team-grid');
   const teamMembers = [
-    { name: 'Alexandra Chen', role: 'CEO & Founder', image: 'https://images.unsplash.com/photo-1580489944761-15a19d654956?w=400&q=80' },
-    { name: 'Marcus Williams', role: 'Head of Sales', image: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=400&q=80' },
-    { name: 'Sofia Rodriguez', role: 'Chief Marketing Officer', image: 'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=400&q=80' },
-    { name: 'James Mitchell', role: 'Senior Agent', image: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=400&q=80' }
+    { name: 'Alexandra Chen', role: 'CEO & Founder', image: 'https://images.unsplash.com/photo-1580489944761-15a19d654956?w=400&q=80&fm=webp' },
+    { name: 'Marcus Williams', role: 'Head of Sales', image: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=400&q=80&fm=webp' },
+    { name: 'Sofia Rodriguez', role: 'Chief Marketing Officer', image: 'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=400&q=80&fm=webp' },
+    { name: 'James Mitchell', role: 'Senior Agent', image: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=400&q=80&fm=webp' }
   ];
 
   teamMembers.forEach(member => {
@@ -809,6 +1576,7 @@ export function renderAboutPage(): DocumentFragment {
     const memberImg = createElement('img');
     memberImg.src = member.image;
     memberImg.alt = member.name;
+    memberImg.loading = 'lazy';
     imgDiv.appendChild(memberImg);
     memberEl.appendChild(imgDiv);
 
@@ -852,34 +1620,48 @@ export function renderContactPage(): DocumentFragment {
 
   // Validation patterns
   const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-  const phonePattern = /^\+?[0-9]{1,4}[-.\s]?[0-9]{3}[-.\s]?[0-9]{3}[-.\s]?[0-9]{4,}$/;
+  // Iraq phone formats: +964 7XX XXX XXXX, 07XX XXX XXXX, 075X XXXX XXX
+  const phonePattern = /^(\+964\s?7\d{2}\s?\d{3}\s?\d{4}|07\d{2}\s?\d{3}\s?\d{4}|075\d\s?\d{4}\s?\d{3})$/;
 
   // Validation error messages
   const errorMessages: Record<string, string> = {
-    name: 'Please enter your full name',
+    name: 'Please enter your full name (at least 2 characters)',
     email: 'Please enter a valid email address',
-    phone: 'Please enter a valid US phone number',
-    message: 'Please enter a message'
+    phone: 'Please enter a valid Iraq phone number (e.g., +964 750 123 4567 or 0750 123 4567)',
+    message: 'Please enter a message (at least 10 characters)'
   };
 
-  // Helper to validate a single field
-  function validateField(input: HTMLInputElement | HTMLTextAreaElement): boolean {
-    const name = input.name;
+  // Helper to validate a single field with visual feedback
+  function validateField(input: HTMLInputElement | HTMLTextAreaElement, _showError: boolean = true): boolean {
+    const fieldName = input.name;
     const value = input.value.trim();
     let isValid = true;
 
-    if (!value) {
-      isValid = false;
-    } else if (name === 'email' && !emailPattern.test(value)) {
-      isValid = false;
-    } else if (name === 'phone' && !phonePattern.test(value)) {
-      isValid = false;
+    // Field-specific validation
+    if (fieldName === 'name') {
+      isValid = value.length >= 2;
+    } else if (fieldName === 'email') {
+      isValid = value.length > 0 && emailPattern.test(value);
+    } else if (fieldName === 'phone') {
+      const normalizedPhone = value.replace(/\s/g, '');
+      isValid = phonePattern.test(value) || /^(\+9647\d{9}|07\d{9})$/.test(normalizedPhone);
+    } else if (fieldName === 'message') {
+      isValid = value.length >= 10;
     }
 
-    input.setAttribute('aria-invalid', String(!isValid));
-    const errorSpan = document.getElementById(`${name}-error`);
+    // Update visual feedback classes
+    const group = input.closest('.form__group');
+    if (group) {
+      group.classList.remove('form__group--valid', 'form__group--invalid');
+      if (value.length > 0) {
+        group.classList.add(isValid ? 'form__group--valid' : 'form__group--invalid');
+      }
+    }
+
+    input.setAttribute('aria-invalid', String(!isValid && value.length > 0));
+    const errorSpan = document.getElementById(`${fieldName}-error`);
     if (errorSpan) {
-      errorSpan.textContent = isValid ? '' : errorMessages[name];
+      errorSpan.textContent = (!isValid && _showError && value.length > 0) ? (errorMessages[fieldName] || '') : '';
     }
 
     return isValid;
@@ -897,12 +1679,89 @@ export function renderContactPage(): DocumentFragment {
     return allValid;
   }
 
-  // Success message container
+  // Success message container (fallback)
   const successMessage = createElement('div', 'form__success');
   successMessage.style.display = 'none';
   successMessage.textContent = 'Thank you for your inquiry! We will contact you shortly.';
   successMessage.setAttribute('role', 'status');
   successMessage.setAttribute('aria-live', 'polite');
+
+  // Show success modal with next steps
+  function showSuccessModal(message: string) {
+    // Create modal overlay
+    const overlay = createElement('div', 'form__modal-overlay');
+    overlay.setAttribute('role', 'dialog');
+    overlay.setAttribute('aria-modal', 'true');
+    overlay.setAttribute('aria-labelledby', 'success-modal-title');
+
+    // Create modal
+    const modal = createElement('div', 'form__modal');
+
+    // Success icon
+    const iconWrapper = createElement('div', 'form__modal-icon');
+    iconWrapper.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>';
+    modal.appendChild(iconWrapper);
+
+    // Title
+    const title = createElement('h3', 'form__modal-title', 'Message Sent Successfully!');
+    title.id = 'success-modal-title';
+    modal.appendChild(title);
+
+    // Message
+    const msgText = createElement('p', 'form__modal-message', message);
+    modal.appendChild(msgText);
+
+    // Next steps
+    const nextSteps = createElement('div', 'form__modal-steps');
+    const stepsTitle = createElement('h4', undefined, 'What happens next?');
+    nextSteps.appendChild(stepsTitle);
+
+    const stepsList = createElement('ul');
+    const steps = [
+      'Our team will review your inquiry within 24 hours',
+      'A property specialist will contact you to discuss your needs',
+      'We\'ll arrange property viewings at your convenience'
+    ];
+    steps.forEach(step => {
+      const li = createElement('li', undefined, step);
+      stepsList.appendChild(li);
+    });
+    nextSteps.appendChild(stepsList);
+    modal.appendChild(nextSteps);
+
+    // Close button
+    const closeBtn = createElement('button', 'form__modal-close', 'Continue Browsing');
+    closeBtn.type = 'button';
+    closeBtn.addEventListener('click', () => {
+      overlay.classList.add('form__modal-overlay--closing');
+      setTimeout(() => overlay.remove(), 300);
+    });
+    modal.appendChild(closeBtn);
+
+    overlay.appendChild(modal);
+    document.body.appendChild(overlay);
+
+    // Focus close button for accessibility
+    setTimeout(() => closeBtn.focus(), 100);
+
+    // Close on overlay click
+    overlay.addEventListener('click', (e) => {
+      if (e.target === overlay) {
+        overlay.classList.add('form__modal-overlay--closing');
+        setTimeout(() => overlay.remove(), 300);
+      }
+    });
+
+    // Close on Escape key
+    const handleEscape = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') {
+        overlay.classList.add('form__modal-overlay--closing');
+        setTimeout(() => overlay.remove(), 300);
+        document.removeEventListener('keydown', handleEscape);
+      }
+    };
+    document.addEventListener('keydown', handleEscape);
+  }
 
   form.addEventListener('submit', (e) => {
     e.preventDefault();
@@ -912,14 +1771,21 @@ export function renderContactPage(): DocumentFragment {
 
     // Validate all fields
     if (!validateAllFields()) {
+      // Add shake animation on validation failure
+      form.classList.add('form--shake');
+      setTimeout(() => form.classList.remove('form--shake'), 500);
+      // Focus first invalid field
+      const firstInvalid = form.querySelector('.form__group--invalid .form__input, .form__group--invalid .form__textarea') as HTMLElement;
+      if (firstInvalid) firstInvalid.focus();
       return;
     }
 
-    // Show loading state
+    // Show loading state with ARIA
     const submitBtn = form.querySelector('.form__submit') as HTMLButtonElement;
-    const originalText = submitBtn.textContent;
-    submitBtn.textContent = 'Sending...';
+    submitBtn.classList.add('form__submit--loading');
     submitBtn.disabled = true;
+    submitBtn.setAttribute('aria-busy', 'true');
+    announceToScreenReader('Sending your message, please wait.');
 
     // Get form data
     const formData = new FormData(form);
@@ -947,32 +1813,53 @@ export function renderContactPage(): DocumentFragment {
             span.textContent = '';
           });
 
-          // Show success message
-          successMessage.textContent = result.message;
-          successMessage.style.display = 'block';
+          // Clear validation states
+          const groups = form.querySelectorAll('.form__group');
+          groups.forEach(g => g.classList.remove('form__group--valid', 'form__group--invalid'));
+
+          // Show success modal
+          showSuccessModal(result.message);
+          announceToScreenReader('Message sent successfully!');
         } else {
           // Show error
           successMessage.textContent = result.message;
           successMessage.style.color = 'var(--color-error, #ef4444)';
           successMessage.style.display = 'block';
+          announceToScreenReader('Error: ' + result.message);
         }
       })
       .catch(() => {
         successMessage.textContent = 'Something went wrong. Please try again.';
         successMessage.style.color = 'var(--color-error, #ef4444)';
         successMessage.style.display = 'block';
+        announceToScreenReader('Error: Something went wrong. Please try again.');
       })
       .finally(() => {
-        // Restore button
-        submitBtn.textContent = originalText;
+        // Restore button state
+        submitBtn.classList.remove('form__submit--loading');
         submitBtn.disabled = false;
+        submitBtn.setAttribute('aria-busy', 'false');
       });
   });
 
+  // Parse URL params for property pre-fill
+  const urlParams = new URLSearchParams(window.location.search);
+  const propertyId = urlParams.get('property');
+  const propertyTitle = urlParams.get('title');
+  let prefillMessage = '';
+  if (propertyId && propertyTitle) {
+    prefillMessage = `I am interested in the property: ${decodeURIComponent(propertyTitle)} (ID: ${propertyId})\n\nPlease contact me with more information.`;
+  } else if (propertyId) {
+    const propData = getPropertyById(propertyId);
+    if (propData) {
+      prefillMessage = `I am interested in the property: ${propData.title}\n\nPlease contact me with more information.`;
+    }
+  }
+
   const fields = [
-    { label: 'Full Name', type: 'text', name: 'name', placeholder: 'John Doe' },
-    { label: 'Email Address', type: 'email', name: 'email', placeholder: 'john@example.com' },
-    { label: 'Phone Number', type: 'tel', name: 'phone', placeholder: '+1 (555) 000-0000' }
+    { label: 'Full Name', type: 'text', name: 'name', placeholder: 'Ahmed Mohammed' },
+    { label: 'Email Address', type: 'email', name: 'email', placeholder: 'ahmed@example.com' },
+    { label: 'Phone Number', type: 'tel', name: 'phone', placeholder: '+964 750 123 4567' }
   ];
 
   fields.forEach(field => {
@@ -992,13 +1879,25 @@ export function renderContactPage(): DocumentFragment {
     // Add blur validation
     input.addEventListener('blur', () => validateField(input));
 
+    // Add real-time validation as user types
+    input.addEventListener('input', () => validateField(input, false));
+
+    // Validation icon
+    const validationIcon = createElement('span', 'form__validation-icon');
+    validationIcon.setAttribute('aria-hidden', 'true');
+
     // Error message span
     const errorSpan = createElement('span', 'form__error-message');
     errorSpan.id = `${field.name}-error`;
     errorSpan.setAttribute('aria-live', 'polite');
 
+    // Wrap input and icon in container
+    const inputWrapper = createElement('div', 'form__input-wrapper');
+    inputWrapper.appendChild(input);
+    inputWrapper.appendChild(validationIcon);
+
     group.appendChild(label);
-    group.appendChild(input);
+    group.appendChild(inputWrapper);
     group.appendChild(errorSpan);
     form.appendChild(group);
   });
@@ -1017,21 +1916,44 @@ export function renderContactPage(): DocumentFragment {
   textarea.setAttribute('aria-invalid', 'false');
   textarea.setAttribute('aria-describedby', 'message-error');
 
+  // Pre-fill message from URL params if available
+  if (prefillMessage) {
+    textarea.value = prefillMessage;
+  }
+
   // Add blur validation for textarea
   textarea.addEventListener('blur', () => validateField(textarea));
+
+  // Add real-time validation for textarea
+  textarea.addEventListener('input', () => validateField(textarea, false));
+
+  // Validation icon for textarea
+  const msgValidationIcon = createElement('span', 'form__validation-icon');
+  msgValidationIcon.setAttribute('aria-hidden', 'true');
 
   // Error message span for message
   const msgErrorSpan = createElement('span', 'form__error-message');
   msgErrorSpan.id = 'message-error';
   msgErrorSpan.setAttribute('aria-live', 'polite');
 
+  // Wrap textarea and icon
+  const textareaWrapper = createElement('div', 'form__input-wrapper form__input-wrapper--textarea');
+  textareaWrapper.appendChild(textarea);
+  textareaWrapper.appendChild(msgValidationIcon);
+
   msgGroup.appendChild(msgLabel);
-  msgGroup.appendChild(textarea);
+  msgGroup.appendChild(textareaWrapper);
   msgGroup.appendChild(msgErrorSpan);
   form.appendChild(msgGroup);
 
-  const submit = createElement('button', 'form__submit', 'Send Message');
+  // Submit button with spinner
+  const submit = createElement('button', 'form__submit');
   submit.type = 'submit';
+  const submitText = createElement('span', 'form__submit-text', 'Send Message');
+  const submitSpinner = createElement('span', 'form__submit-spinner');
+  submitSpinner.setAttribute('aria-hidden', 'true');
+  submit.appendChild(submitText);
+  submit.appendChild(submitSpinner);
   form.appendChild(submit);
 
   // Add success message after the form
@@ -1114,33 +2036,46 @@ export function renderPropertyDetailPage(propertyId: string): DocumentFragment {
   const gallery = createElement('section', 'property-gallery');
   const galleryContainer = createElement('div', 'container');
 
-  // Main image
+  // Main image with descriptive alt text
   const mainImageWrapper = createElement('div', 'property-gallery__main');
   const mainImage = createElement('img', 'property-gallery__main-image');
   mainImage.src = property.images[0];
-  mainImage.alt = property.title;
+  mainImage.alt = `${property.type} - ${property.title} in ${property.location.district}, ${property.location.city}. Main property image showing exterior view.`;
   mainImage.id = 'property-main-image';
   mainImageWrapper.appendChild(mainImage);
   galleryContainer.appendChild(mainImageWrapper);
 
-  // Thumbnails
+  // Thumbnails with accessibility
   if (property.images.length > 1) {
     const thumbnails = createElement('div', 'property-gallery__thumbnails');
+    thumbnails.setAttribute('role', 'group');
+    thumbnails.setAttribute('aria-label', 'Property image gallery');
     property.images.forEach((imageSrc, index) => {
       const thumb = createElement('button', `property-gallery__thumb${index === 0 ? ' active' : ''}`);
       thumb.setAttribute('data-index', index.toString());
+      thumb.setAttribute('aria-label', `View image ${index + 1} of ${property.images.length}`);
+      thumb.setAttribute('aria-pressed', index === 0 ? 'true' : 'false');
       const thumbImg = createElement('img');
       thumbImg.src = imageSrc;
-      thumbImg.alt = `${property.title} - Image ${index + 1}`;
+      thumbImg.alt = ''; // Decorative, button has aria-label
+      thumbImg.setAttribute('aria-hidden', 'true');
       thumb.appendChild(thumbImg);
 
       thumb.addEventListener('click', () => {
         const mainImg = document.getElementById('property-main-image') as HTMLImageElement;
         if (mainImg) {
           mainImg.src = imageSrc;
+          // Update main image alt text
+          mainImg.alt = `${property.type} - ${property.title}, image ${index + 1} of ${property.images.length}`;
         }
-        thumbnails.querySelectorAll('.property-gallery__thumb').forEach(t => t.classList.remove('active'));
+        // Update aria-pressed states
+        thumbnails.querySelectorAll('.property-gallery__thumb').forEach(t => {
+          t.classList.remove('active');
+          t.setAttribute('aria-pressed', 'false');
+        });
         thumb.classList.add('active');
+        thumb.setAttribute('aria-pressed', 'true');
+        announceToScreenReader(`Showing image ${index + 1} of ${property.images.length}`);
       });
 
       thumbnails.appendChild(thumb);
@@ -1172,6 +2107,136 @@ export function renderPropertyDetailPage(propertyId: string): DocumentFragment {
   location.appendChild(createSVGUse('icon-location'));
   location.appendChild(document.createTextNode(`${property.location.address}, ${property.location.district}, ${property.location.city}`));
   header.appendChild(location);
+
+  // ─── Social Share Buttons ────────────────────────────────────────────────
+  const shareSection = createElement('div', 'property-detail__share');
+
+  const shareLabel = createElement('span', 'property-detail__share-label', 'Share:');
+  shareSection.appendChild(shareLabel);
+
+  const shareButtons = createElement('div', 'property-detail__share-buttons');
+
+  // Helper function for share URLs
+  const getShareUrl = (): string => {
+    return window.location.href;
+  };
+
+  const getShareText = (): string => {
+    return `Check out this ${property.type}: ${property.title} - $${property.price.toLocaleString()}`;
+  };
+
+  // Toast notification function
+  const showToast = (message: string): void => {
+    // Remove any existing toast
+    const existingToast = document.querySelector('.share-toast');
+    if (existingToast) {
+      existingToast.remove();
+    }
+
+    const toast = createElement('div', 'share-toast');
+    toast.textContent = message;
+    document.body.appendChild(toast);
+
+    // Animate in
+    requestAnimationFrame(() => {
+      toast.classList.add('share-toast--visible');
+    });
+
+    // Remove after 3 seconds
+    setTimeout(() => {
+      toast.classList.remove('share-toast--visible');
+      setTimeout(() => toast.remove(), 300);
+    }, 3000);
+  };
+
+  // WhatsApp Share (popular in Iraq)
+  const whatsappBtn = createElement('button', 'property-detail__share-btn');
+  whatsappBtn.setAttribute('aria-label', 'Share on WhatsApp');
+  whatsappBtn.setAttribute('title', 'Share on WhatsApp');
+  whatsappBtn.innerHTML = `<svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>`;
+  whatsappBtn.addEventListener('click', () => {
+    const url = `https://wa.me/?text=${encodeURIComponent(getShareText() + ' ' + getShareUrl())}`;
+    window.open(url, '_blank', 'noopener,noreferrer');
+  });
+  shareButtons.appendChild(whatsappBtn);
+
+  // Facebook Share
+  const facebookBtn = createElement('button', 'property-detail__share-btn');
+  facebookBtn.setAttribute('aria-label', 'Share on Facebook');
+  facebookBtn.setAttribute('title', 'Share on Facebook');
+  facebookBtn.innerHTML = `<svg viewBox="0 0 24 24" fill="currentColor"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>`;
+  facebookBtn.addEventListener('click', () => {
+    const url = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(getShareUrl())}`;
+    window.open(url, '_blank', 'noopener,noreferrer,width=600,height=400');
+  });
+  shareButtons.appendChild(facebookBtn);
+
+  // Twitter/X Share
+  const twitterBtn = createElement('button', 'property-detail__share-btn');
+  twitterBtn.setAttribute('aria-label', 'Share on X (Twitter)');
+  twitterBtn.setAttribute('title', 'Share on X (Twitter)');
+  twitterBtn.innerHTML = `<svg viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>`;
+  twitterBtn.addEventListener('click', () => {
+    const url = `https://twitter.com/intent/tweet?text=${encodeURIComponent(getShareText())}&url=${encodeURIComponent(getShareUrl())}`;
+    window.open(url, '_blank', 'noopener,noreferrer,width=600,height=400');
+  });
+  shareButtons.appendChild(twitterBtn);
+
+  // Copy Link
+  const copyBtn = createElement('button', 'property-detail__share-btn');
+  copyBtn.setAttribute('aria-label', 'Copy link');
+  copyBtn.setAttribute('title', 'Copy link');
+  copyBtn.innerHTML = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>`;
+  copyBtn.addEventListener('click', async () => {
+    try {
+      // Try Web Share API first
+      if (navigator.share) {
+        await navigator.share({
+          title: property.title,
+          text: getShareText(),
+          url: getShareUrl()
+        });
+      } else {
+        // Fallback to clipboard
+        await navigator.clipboard.writeText(getShareUrl());
+        showToast('Link copied to clipboard!');
+      }
+    } catch {
+      // Fallback for older browsers
+      const textArea = document.createElement('textarea');
+      textArea.value = getShareUrl();
+      textArea.style.position = 'fixed';
+      textArea.style.left = '-9999px';
+      document.body.appendChild(textArea);
+      textArea.select();
+      document.execCommand('copy');
+      document.body.removeChild(textArea);
+      showToast('Link copied to clipboard!');
+    }
+  });
+  shareButtons.appendChild(copyBtn);
+
+  // Email Share
+  const emailBtn = createElement('button', 'property-detail__share-btn');
+  emailBtn.setAttribute('aria-label', 'Share via Email');
+  emailBtn.setAttribute('title', 'Share via Email');
+  emailBtn.innerHTML = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>`;
+  emailBtn.addEventListener('click', () => {
+    const subject = encodeURIComponent(`${property.title} - Real House Property`);
+    const body = encodeURIComponent(`${getShareText()}\n\nView the property: ${getShareUrl()}`);
+    window.location.href = `mailto:?subject=${subject}&body=${body}`;
+  });
+  shareButtons.appendChild(emailBtn);
+
+  shareSection.appendChild(shareButtons);
+
+  // Share count placeholder (optional display)
+  const shareCount = createElement('span', 'property-detail__share-count');
+  shareCount.textContent = '0 shares';
+  shareCount.setAttribute('aria-label', 'Number of shares');
+  shareSection.appendChild(shareCount);
+
+  header.appendChild(shareSection);
 
   mainInfo.appendChild(header);
 
@@ -1216,6 +2281,88 @@ export function renderPropertyDetailPage(propertyId: string): DocumentFragment {
   specsSection.appendChild(specsGrid);
   mainInfo.appendChild(specsSection);
 
+  // Virtual Tour & Floor Plan Section
+  const tourSection = createElement('div', 'property-detail__tour-section');
+  const tourSectionTitle = createElement('h3', 'property-detail__section-title', 'Explore Property');
+  tourSection.appendChild(tourSectionTitle);
+  const tourActions = createElement('div', 'property-detail__tour-actions');
+  const virtualTourBtn = createElement('button', 'property-detail__tour-btn property-detail__tour-btn--primary');
+  const tourIconSvg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+  tourIconSvg.setAttribute('viewBox', '0 0 24 24');
+  tourIconSvg.setAttribute('fill', 'none');
+  tourIconSvg.setAttribute('stroke', 'currentColor');
+  tourIconSvg.setAttribute('stroke-width', '2');
+  const tourCircle = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
+  tourCircle.setAttribute('cx', '12');
+  tourCircle.setAttribute('cy', '12');
+  tourCircle.setAttribute('r', '10');
+  tourIconSvg.appendChild(tourCircle);
+  const tourEllipse = document.createElementNS('http://www.w3.org/2000/svg', 'ellipse');
+  tourEllipse.setAttribute('cx', '12');
+  tourEllipse.setAttribute('cy', '12');
+  tourEllipse.setAttribute('rx', '10');
+  tourEllipse.setAttribute('ry', '4');
+  tourIconSvg.appendChild(tourEllipse);
+  virtualTourBtn.appendChild(tourIconSvg);
+  const tourBtnContent = createElement('div', 'property-detail__tour-btn-content');
+  const tourBtnTitle = createElement('span', 'property-detail__tour-btn-title', 'Virtual Tour');
+  const tourBtnSubtitle = createElement('span', 'property-detail__tour-btn-subtitle', property.virtualTourUrl ? 'Explore in 3D' : 'Demo Available');
+  tourBtnContent.appendChild(tourBtnTitle);
+  tourBtnContent.appendChild(tourBtnSubtitle);
+  virtualTourBtn.appendChild(tourBtnContent);
+  if (!property.virtualTourUrl) {
+    const demoBadge = createElement('span', 'property-detail__tour-badge', 'Demo');
+    virtualTourBtn.appendChild(demoBadge);
+  }
+  virtualTourBtn.addEventListener('click', () => {
+    injectVirtualTourStyles();
+    openVirtualTourModal({ url: property.virtualTourUrl || '', propertyTitle: property.title });
+  });
+  tourActions.appendChild(virtualTourBtn);
+  const floorPlanBtn = createElement('button', 'property-detail__tour-btn property-detail__tour-btn--secondary');
+  const planIconSvg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+  planIconSvg.setAttribute('viewBox', '0 0 24 24');
+  planIconSvg.setAttribute('fill', 'none');
+  planIconSvg.setAttribute('stroke', 'currentColor');
+  planIconSvg.setAttribute('stroke-width', '2');
+  const planRect = document.createElementNS('http://www.w3.org/2000/svg', 'rect');
+  planRect.setAttribute('x', '3');
+  planRect.setAttribute('y', '3');
+  planRect.setAttribute('width', '18');
+  planRect.setAttribute('height', '18');
+  planRect.setAttribute('rx', '2');
+  planIconSvg.appendChild(planRect);
+  const planLine1 = document.createElementNS('http://www.w3.org/2000/svg', 'line');
+  planLine1.setAttribute('x1', '3');
+  planLine1.setAttribute('y1', '12');
+  planLine1.setAttribute('x2', '21');
+  planLine1.setAttribute('y2', '12');
+  planIconSvg.appendChild(planLine1);
+  const planLine2 = document.createElementNS('http://www.w3.org/2000/svg', 'line');
+  planLine2.setAttribute('x1', '12');
+  planLine2.setAttribute('y1', '3');
+  planLine2.setAttribute('x2', '12');
+  planLine2.setAttribute('y2', '21');
+  planIconSvg.appendChild(planLine2);
+  floorPlanBtn.appendChild(planIconSvg);
+  const planBtnContent = createElement('div', 'property-detail__tour-btn-content');
+  const planBtnTitle = createElement('span', 'property-detail__tour-btn-title', 'Floor Plan');
+  const planBtnSubtitle = createElement('span', 'property-detail__tour-btn-subtitle', property.floorPlanUrl ? 'View Layout' : 'Sample Plan');
+  planBtnContent.appendChild(planBtnTitle);
+  planBtnContent.appendChild(planBtnSubtitle);
+  floorPlanBtn.appendChild(planBtnContent);
+  if (!property.floorPlanUrl) {
+    const sampleBadge = createElement('span', 'property-detail__tour-badge', 'Sample');
+    floorPlanBtn.appendChild(sampleBadge);
+  }
+  floorPlanBtn.addEventListener('click', () => {
+    injectFloorPlanStyles();
+    openFloorPlanModal({ imageUrl: property.floorPlanUrl || '', propertyTitle: property.title });
+  });
+  tourActions.appendChild(floorPlanBtn);
+  tourSection.appendChild(tourActions);
+  mainInfo.appendChild(tourSection);
+
   // Description
   const descSection = createElement('div', 'property-detail__description');
   const descTitle = createElement('h3', 'property-detail__section-title', 'Description');
@@ -1239,6 +2386,104 @@ export function renderPropertyDetailPage(propertyId: string): DocumentFragment {
   featuresSection.appendChild(featuresList);
   mainInfo.appendChild(featuresSection);
 
+  // ─── Neighborhood Section ───────────────────────────────────────────────
+  const neighborhoodSection = createElement('div', 'property-detail__neighborhood');
+  const neighborhoodTitle = createElement('h3', 'property-detail__section-title', 'Neighborhood');
+  neighborhoodSection.appendChild(neighborhoodTitle);
+
+  // Walk Score Display
+  if (property.neighborhood?.walkScore) {
+    const walkScoreContainer = createElement('div', 'property-detail__walk-score');
+    const walkScoreCircle = createElement('div', 'property-detail__walk-score-circle');
+
+    const walkScoreValue = createElement('span', 'property-detail__walk-score-value', property.neighborhood.walkScore.toString());
+    walkScoreCircle.appendChild(walkScoreValue);
+
+    const walkScoreLabel = createElement('span', 'property-detail__walk-score-label', 'Walk Score');
+    walkScoreCircle.appendChild(walkScoreLabel);
+
+    walkScoreContainer.appendChild(walkScoreCircle);
+
+    const walkScoreInfo = createElement('div', 'property-detail__walk-score-info');
+    const walkScoreDesc = createElement('span', 'property-detail__walk-score-desc');
+
+    // Determine walk score rating
+    const score = property.neighborhood.walkScore;
+    let rating = 'Walker\'s Paradise';
+    if (score < 50) rating = 'Car-Dependent';
+    else if (score < 70) rating = 'Somewhat Walkable';
+    else if (score < 90) rating = 'Very Walkable';
+
+    walkScoreDesc.textContent = rating;
+    walkScoreInfo.appendChild(walkScoreDesc);
+
+    if (property.neighborhood.description) {
+      const neighborhoodDesc = createElement('p', 'property-detail__neighborhood-desc', property.neighborhood.description);
+      walkScoreInfo.appendChild(neighborhoodDesc);
+    }
+
+    walkScoreContainer.appendChild(walkScoreInfo);
+    neighborhoodSection.appendChild(walkScoreContainer);
+  }
+
+  // Nearby Amenities
+  const districtName = property.location.district;
+  const districtAmenities = getAmenitiesForDistrict(districtName);
+
+  if (districtAmenities) {
+    const amenitiesContainer = createElement('div', 'property-detail__amenities');
+    const amenitiesSectionTitle = createElement('h4', 'property-detail__amenities-title', 'Nearby Amenities');
+    amenitiesContainer.appendChild(amenitiesSectionTitle);
+
+    const amenitiesGrid = createElement('div', 'property-detail__amenities-grid');
+
+    // Define categories to display
+    const categories: Array<{ key: keyof DistrictAmenities; icon: string; label: string }> = [
+      { key: 'schools', icon: 'icon-school', label: 'Schools' },
+      { key: 'restaurants', icon: 'icon-restaurant', label: 'Restaurants' },
+      { key: 'shopping', icon: 'icon-shopping', label: 'Shopping' },
+      { key: 'healthcare', icon: 'icon-healthcare', label: 'Healthcare' },
+      { key: 'parks', icon: 'icon-park', label: 'Parks' }
+    ];
+
+    categories.forEach(category => {
+      const categoryAmenities = districtAmenities[category.key];
+      if (categoryAmenities && categoryAmenities.length > 0) {
+        const categorySection = createElement('div', 'property-detail__amenity-category');
+
+        const categoryHeader = createElement('div', 'property-detail__amenity-header');
+        const categoryIcon = createElement('div', 'property-detail__amenity-icon');
+        categoryIcon.appendChild(createSVGUse(category.icon));
+        categoryHeader.appendChild(categoryIcon);
+
+        const categoryLabel = createElement('span', 'property-detail__amenity-label', category.label);
+        categoryHeader.appendChild(categoryLabel);
+        categorySection.appendChild(categoryHeader);
+
+        const amenityList = createElement('ul', 'property-detail__amenity-list');
+        categoryAmenities.forEach((amenity: Amenity) => {
+          const amenityItem = createElement('li', 'property-detail__amenity-item');
+
+          const amenityName = createElement('span', 'property-detail__amenity-name', amenity.name);
+          amenityItem.appendChild(amenityName);
+
+          const amenityDistance = createElement('span', 'property-detail__amenity-distance', amenity.distance);
+          amenityItem.appendChild(amenityDistance);
+
+          amenityList.appendChild(amenityItem);
+        });
+        categorySection.appendChild(amenityList);
+
+        amenitiesGrid.appendChild(categorySection);
+      }
+    });
+
+    amenitiesContainer.appendChild(amenitiesGrid);
+    neighborhoodSection.appendChild(amenitiesContainer);
+  }
+
+  mainInfo.appendChild(neighborhoodSection);
+
   contentGrid.appendChild(mainInfo);
 
   // ─── Right Column - Sidebar ──────────────────────────────────────────────
@@ -1252,8 +2497,9 @@ export function renderPropertyDetailPage(propertyId: string): DocumentFragment {
   const agentInfo = createElement('div', 'property-detail__agent-info');
   const agentAvatar = createElement('div', 'property-detail__agent-avatar');
   const agentImg = createElement('img');
-  agentImg.src = 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=200&q=80';
+  agentImg.src = 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=200&q=80&fm=webp';
   agentImg.alt = 'Marcus Williams';
+  agentImg.loading = 'lazy';
   agentAvatar.appendChild(agentImg);
   agentInfo.appendChild(agentAvatar);
 
@@ -1284,9 +2530,10 @@ export function renderPropertyDetailPage(propertyId: string): DocumentFragment {
   // Contact buttons
   const agentActions = createElement('div', 'property-detail__agent-actions');
 
-  const scheduleBtn = createElement('a', 'btn btn--primary btn--full', 'Schedule Viewing');
-  scheduleBtn.href = '/contact';
-  scheduleBtn.setAttribute('data-route', '');
+  const scheduleBtn = createElement('button', 'btn btn--primary btn--full', 'Schedule Viewing');
+  scheduleBtn.addEventListener('click', () => {
+    openAppointmentScheduler(property);
+  });
   agentActions.appendChild(scheduleBtn);
 
   const callBtn = createElement('a', 'btn btn--ghost btn--full', 'Call Agent');
@@ -1315,12 +2562,114 @@ export function renderPropertyDetailPage(propertyId: string): DocumentFragment {
   addressInfo.appendChild(countryLine);
 
   locationCard.appendChild(addressInfo);
+
+  // Location Map
+  if (property.location.coordinates) {
+    const mapSection = createElement('div', 'property-detail__map-section');
+    const mapDiv = createElement('div', 'property-location-map');
+    mapDiv.id = 'property-detail-map';
+    mapSection.appendChild(mapDiv);
+    locationCard.appendChild(mapSection);
+
+    // Initialize map after DOM is ready
+    setTimeout(() => {
+      initPropertyDetailMap('property-detail-map', property);
+    }, 100);
+  }
+
+  // Nearby Landmarks
+  if (property.location.nearbyLandmarks && property.location.nearbyLandmarks.length > 0) {
+    const landmarksSection = createElement('div', 'property-landmarks');
+    const landmarksTitle = createElement('h4', 'property-landmarks__title');
+    landmarksTitle.innerHTML = '<svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg> Nearby Landmarks';
+    landmarksSection.appendChild(landmarksTitle);
+
+    const landmarksList = createElement('div', 'property-landmarks__list');
+    property.location.nearbyLandmarks.forEach(landmark => {
+      const landmarkItem = createElement('div', 'property-landmarks__item', landmark);
+      landmarksList.appendChild(landmarkItem);
+    });
+    landmarksSection.appendChild(landmarksList);
+    locationCard.appendChild(landmarksSection);
+  }
+
   sidebar.appendChild(locationCard);
+
+  // Print/PDF Actions Card
+  const printCard = createElement('div', 'property-detail__print-card');
+  const printCardTitle = createElement('h3', 'property-detail__print-title', 'Save & Share');
+  printCard.appendChild(printCardTitle);
+  const printActions = createElement('div', 'property-detail__print-actions');
+  // Print Button
+  const printBtn = createElement('button', 'btn btn--ghost btn--full print-btn no-print');
+  const printIcon = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+  printIcon.setAttribute('class', 'btn__icon');
+  printIcon.setAttribute('viewBox', '0 0 24 24');
+  printIcon.setAttribute('width', '18');
+  printIcon.setAttribute('height', '18');
+  const printPath = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+  printPath.setAttribute('fill', 'currentColor');
+  printPath.setAttribute('d', 'M19 8H5c-1.66 0-3 1.34-3 3v6h4v4h12v-4h4v-6c0-1.66-1.34-3-3-3zm-3 11H8v-5h8v5zm3-7c-.55 0-1-.45-1-1s.45-1 1-1 1 .45 1 1-.45 1-1 1zm-1-9H6v4h12V3z');
+  printIcon.appendChild(printPath);
+  printBtn.appendChild(printIcon);
+  printBtn.appendChild(document.createTextNode(' Print'));
+  printBtn.addEventListener('click', () => { window.print(); });
+  printActions.appendChild(printBtn);
+  // Save PDF Button
+  const pdfBtn = createElement('button', 'btn btn--primary btn--full pdf-btn no-print');
+  const pdfIcon = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+  pdfIcon.setAttribute('class', 'btn__icon');
+  pdfIcon.setAttribute('viewBox', '0 0 24 24');
+  pdfIcon.setAttribute('width', '18');
+  pdfIcon.setAttribute('height', '18');
+  const pdfPath = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+  pdfPath.setAttribute('fill', 'currentColor');
+  pdfPath.setAttribute('d', 'M20 2H8c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm-8.5 7.5c0 .83-.67 1.5-1.5 1.5H9v2H7.5V7H10c.83 0 1.5.67 1.5 1.5v1zm5 2c0 .83-.67 1.5-1.5 1.5h-2.5V7H15c.83 0 1.5.67 1.5 1.5v3zm4-3H19v1h1.5V11H19v2h-1.5V7h3v1.5zM9 9.5h1v-1H9v1zM4 6H2v14c0 1.1.9 2 2 2h14v-2H4V6zm10 5.5h1v-3h-1v3z');
+  pdfIcon.appendChild(pdfPath);
+  pdfBtn.appendChild(pdfIcon);
+  pdfBtn.appendChild(document.createTextNode(' Save PDF'));
+  pdfBtn.addEventListener('click', () => {
+    const originalTitle = document.title;
+    document.title = `${property.title} - Real House Property Listing`;
+    window.print();
+    document.title = originalTitle;
+  });
+  printActions.appendChild(pdfBtn);
+  printCard.appendChild(printActions);
+  const printHint = createElement('p', 'property-detail__print-hint', 'Select "Save as PDF" in print dialog');
+  printCard.appendChild(printHint);
+  sidebar.appendChild(printCard);
+  // QR Code Section (for print view)
+  const qrSection = createElement('div', 'property-detail__qr-section print-only');
+  const qrCodeTitle = createElement('h4', 'property-detail__qr-title', 'View Online');
+  qrSection.appendChild(qrCodeTitle);
+  const qrCode = createElement('div', 'property-detail__qr-code');
+  const qrImg = createElement('img', 'property-detail__qr-img');
+  const propertyUrl = `https://realhouseiq.com/properties/${property.id}`;
+  qrImg.src = `https://api.qrserver.com/v1/create-qr-code/?size=120x120&data=${encodeURIComponent(propertyUrl)}&bgcolor=ffffff&color=0a0a0f`;
+  qrImg.alt = 'QR Code to view this property online';
+  qrImg.width = 120;
+  qrImg.height = 120;
+  qrCode.appendChild(qrImg);
+  qrSection.appendChild(qrCode);
+  const qrUrl = createElement('p', 'property-detail__qr-url', 'realhouseiq.com');
+  qrSection.appendChild(qrUrl);
+  sidebar.appendChild(qrSection);
 
   contentGrid.appendChild(sidebar);
   contentContainer.appendChild(contentGrid);
   content.appendChild(contentContainer);
   page.appendChild(content);
+
+  // Print Header (only visible in print)
+  const printHeader = createElement('div', 'print-header print-only');
+  printHeader.innerHTML = `<div class="print-header__logo"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 120" fill="none" width="40" height="48"><path d="M38 108 C18 95, 12 70, 20 50 C28 30, 42 20, 50 10" stroke="#C9A84C" stroke-width="6" fill="none" stroke-linecap="round"/><path d="M62 108 C82 95, 88 70, 80 50 C72 30, 58 20, 50 10" stroke="#C9A84C" stroke-width="6" fill="none" stroke-linecap="round"/><path d="M38 100 L38 65 C38 55, 45 45, 50 38" stroke="#C9A84C" stroke-width="6" fill="none" stroke-linecap="round" stroke-linejoin="round"/><path d="M50 100 L50 25 L62 40 L62 100" stroke="#C9A84C" stroke-width="6" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg><span class="print-header__brand">Real House</span></div><div class="print-header__contact"><span>realhouseiq.com</span><span>+964 750 792 2138</span><span>info@realhouseiq.com</span></div>`;
+  page.insertBefore(printHeader, page.firstChild);
+
+  // Print Footer (only visible in print)
+  const printFooter = createElement('div', 'print-footer print-only');
+  printFooter.innerHTML = `<div class="print-footer__left"><span class="print-footer__brand">Real House - Luxury Real Estate</span><span class="print-footer__location">Dream City, Erbil, Kurdistan Region, Iraq</span></div><div class="print-footer__right"><span>Property ID: ${property.id}</span><span>Generated: ${new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}</span></div>`;
+  page.appendChild(printFooter);
 
   // ─── Back Link ───────────────────────────────────────────────────────────
   const backSection = createElement('section', 'property-detail__back');
@@ -1762,32 +3111,42 @@ export function renderFAQPage(): DocumentFragment {
     }
   ];
 
-  faqs.forEach((faq) => {
+  // Store all question buttons for keyboard navigation
+  const questionButtons: HTMLButtonElement[] = [];
+
+  faqs.forEach((faq, index) => {
     const item = createElement('div', 'faq-page__item');
     item.setAttribute('data-faq-item', '');
 
-    const question = createElement('button', 'faq-page__question');
+    const question = createElement('button', 'faq-page__question') as HTMLButtonElement;
     question.setAttribute('aria-expanded', 'false');
     question.setAttribute('data-faq-trigger', '');
+    // Add unique ID for aria-controls
+    const answerId = `faq-answer-${index}`;
+    question.setAttribute('aria-controls', answerId);
+    question.id = `faq-question-${index}`;
 
     const questionText = createElement('span', 'faq-page__question-text', faq.question);
     question.appendChild(questionText);
 
     const icon = createElement('span', 'faq-page__icon');
     icon.textContent = '+';
+    icon.setAttribute('aria-hidden', 'true'); // Decorative icon
     question.appendChild(icon);
 
     const answer = createElement('div', 'faq-page__answer');
+    answer.id = answerId;
     answer.setAttribute('data-faq-answer', '');
+    answer.setAttribute('role', 'region');
+    answer.setAttribute('aria-labelledby', `faq-question-${index}`);
+
     const answerContent = createElement('div', 'faq-page__answer-content');
     const answerP = createElement('p', undefined, faq.answer);
     answerContent.appendChild(answerP);
     answer.appendChild(answerContent);
 
-    // Add click handler for accordion functionality
-    question.addEventListener('click', () => {
-      const isExpanded = question.getAttribute('aria-expanded') === 'true';
-
+    // Toggle function for the accordion
+    const toggleAccordion = (expand: boolean) => {
       // Close all other items
       accordion.querySelectorAll('.faq-page__item').forEach(otherItem => {
         const otherQuestion = otherItem.querySelector('.faq-page__question');
@@ -1802,23 +3161,75 @@ export function renderFAQPage(): DocumentFragment {
       });
 
       // Toggle current item
-      if (isExpanded) {
-        question.setAttribute('aria-expanded', 'false');
-        (answer as HTMLElement).style.maxHeight = '0';
-        icon.textContent = '+';
-        item.classList.remove('active');
-      } else {
+      if (expand) {
         question.setAttribute('aria-expanded', 'true');
         (answer as HTMLElement).style.maxHeight = answer.scrollHeight + 'px';
         icon.textContent = '-';
         item.classList.add('active');
+        announceToScreenReader(`${faq.question} expanded`);
+      } else {
+        question.setAttribute('aria-expanded', 'false');
+        (answer as HTMLElement).style.maxHeight = '0';
+        icon.textContent = '+';
+        item.classList.remove('active');
+        announceToScreenReader(`${faq.question} collapsed`);
+      }
+    };
+
+    // Add click handler for accordion functionality
+    question.addEventListener('click', () => {
+      const isExpanded = question.getAttribute('aria-expanded') === 'true';
+      toggleAccordion(!isExpanded);
+    });
+
+    // Add keyboard navigation (Enter, Space, Arrow keys)
+    question.addEventListener('keydown', (e) => {
+      const key = e.key;
+      const currentIndex = questionButtons.indexOf(question);
+
+      switch (key) {
+        case 'ArrowDown':
+          e.preventDefault();
+          // Move focus to next question
+          if (currentIndex < questionButtons.length - 1) {
+            questionButtons[currentIndex + 1].focus();
+          } else {
+            // Wrap to first
+            questionButtons[0].focus();
+          }
+          break;
+        case 'ArrowUp':
+          e.preventDefault();
+          // Move focus to previous question
+          if (currentIndex > 0) {
+            questionButtons[currentIndex - 1].focus();
+          } else {
+            // Wrap to last
+            questionButtons[questionButtons.length - 1].focus();
+          }
+          break;
+        case 'Home':
+          e.preventDefault();
+          // Move focus to first question
+          questionButtons[0].focus();
+          break;
+        case 'End':
+          e.preventDefault();
+          // Move focus to last question
+          questionButtons[questionButtons.length - 1].focus();
+          break;
+        // Enter and Space are handled by default button behavior (click)
       }
     });
 
+    questionButtons.push(question);
     item.appendChild(question);
     item.appendChild(answer);
     accordion.appendChild(item);
   });
+
+  // Set ARIA role for accordion
+  accordion.setAttribute('role', 'presentation');
 
   container.appendChild(accordion);
 
@@ -1833,6 +3244,91 @@ export function renderFAQPage(): DocumentFragment {
   cta.appendChild(ctaText);
   cta.appendChild(ctaBtn);
   container.appendChild(cta);
+
+  page.appendChild(container);
+  fragment.appendChild(page);
+
+  return fragment;
+}
+
+// ─── Favorites Page ───────────────────────────────────────────────────────
+export function renderFavoritesPage(): DocumentFragment {
+  const fragment = document.createDocumentFragment();
+
+  const page = createElement('div', 'favorites-page');
+  const container = createElement('div', 'container');
+
+  // Header
+  const header = createElement('div', 'favorites-page__header');
+  const title = createElement('h1', 'favorites-page__title', 'My Favorites');
+
+  const favoriteIds = getFavorites();
+  const subtitle = createElement('p', 'favorites-page__subtitle');
+  subtitle.textContent = favoriteIds.length === 0
+    ? 'You haven\'t saved any properties yet.'
+    : `You have ${favoriteIds.length} saved ${favoriteIds.length === 1 ? 'property' : 'properties'}.`;
+
+  header.appendChild(title);
+  header.appendChild(subtitle);
+  container.appendChild(header);
+
+  // If there are favorites, show clear all button and grid
+  if (favoriteIds.length > 0) {
+    // Actions row
+    const actions = createElement('div', 'favorites-page__actions');
+
+    const clearAllBtn = createElement('button', 'btn btn--ghost', 'Clear All Favorites');
+    clearAllBtn.addEventListener('click', () => {
+      if (confirm('Are you sure you want to remove all saved properties?')) {
+        clearFavorites();
+        // Re-render the page
+        const app = document.getElementById('app');
+        if (app) {
+          while (app.firstChild) {
+            app.removeChild(app.firstChild);
+          }
+          app.appendChild(renderFavoritesPage());
+        }
+        updateFavoritesBadge();
+      }
+    });
+    actions.appendChild(clearAllBtn);
+    container.appendChild(actions);
+
+    // Grid of favorite properties
+    const grid = createElement('div', 'favorites-page__grid');
+    grid.id = 'favorites-grid';
+
+    favoriteIds.forEach(id => {
+      const property = getPropertyById(id);
+      if (property) {
+        grid.appendChild(createPropertyCard(property));
+      }
+    });
+
+    container.appendChild(grid);
+  } else {
+    // Empty state
+    const emptyState = createElement('div', 'favorites-page__empty');
+
+    const emptyIcon = createElement('div', 'favorites-page__empty-icon');
+    emptyIcon.appendChild(createSVGUse('icon-heart-outline'));
+    emptyState.appendChild(emptyIcon);
+
+    const emptyTitle = createElement('h3', 'favorites-page__empty-title', 'No Favorites Yet');
+    emptyState.appendChild(emptyTitle);
+
+    const emptyText = createElement('p', 'favorites-page__empty-text',
+      'Start exploring properties and save your favorites by clicking the heart icon on any property card.');
+    emptyState.appendChild(emptyText);
+
+    const browseBtn = createElement('a', 'btn btn--primary', 'Browse Properties');
+    browseBtn.href = '/properties';
+    browseBtn.setAttribute('data-route', '');
+    emptyState.appendChild(browseBtn);
+
+    container.appendChild(emptyState);
+  }
 
   page.appendChild(container);
   fragment.appendChild(page);

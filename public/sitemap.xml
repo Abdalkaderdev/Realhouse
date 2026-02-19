@@ -1,120 +1,141 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
+
   <!-- Main Pages -->
   <url>
     <loc>https://realhouseiq.com/</loc>
-    <lastmod>2025-01-01</lastmod>
+    <lastmod>2026-02-19</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
   </url>
+
   <url>
     <loc>https://realhouseiq.com/properties</loc>
-    <lastmod>2025-01-01</lastmod>
+    <lastmod>2026-02-19</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.9</priority>
   </url>
+
   <url>
     <loc>https://realhouseiq.com/about</loc>
-    <lastmod>2025-01-01</lastmod>
+    <lastmod>2026-02-19</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://realhouseiq.com/contact</loc>
-    <lastmod>2025-01-01</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://realhouseiq.com/privacy</loc>
-    <lastmod>2025-01-01</lastmod>
-    <changefreq>yearly</changefreq>
-    <priority>0.3</priority>
-  </url>
-  <url>
-    <loc>https://realhouseiq.com/terms</loc>
-    <lastmod>2025-01-01</lastmod>
-    <changefreq>yearly</changefreq>
-    <priority>0.3</priority>
-  </url>
-  <url>
-    <loc>https://realhouseiq.com/faq</loc>
-    <lastmod>2025-01-01</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.5</priority>
   </url>
 
-  <!-- Property Detail Pages - Erbil -->
   <url>
-    <loc>https://realhouseiq.com/properties/empire-world-penthouse</loc>
-    <lastmod>2025-01-01</lastmod>
+    <loc>https://realhouseiq.com/contact</loc>
+    <lastmod>2026-02-19</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+
+  <url>
+    <loc>https://realhouseiq.com/faq</loc>
+    <lastmod>2026-02-19</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+
+  <url>
+    <loc>https://realhouseiq.com/privacy</loc>
+    <lastmod>2026-02-19</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.3</priority>
+  </url>
+
+  <url>
+    <loc>https://realhouseiq.com/terms</loc>
+    <lastmod>2026-02-19</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.3</priority>
+  </url>
+
+  <!-- Property Detail Pages - The Boulevard Apartments -->
+  <url>
+    <loc>https://realhouseiq.com/properties/boulevard-apt-floor-13</loc>
+    <lastmod>2026-02-19</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
+    <image:image>
+      <image:loc>https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?w=800&amp;q=80</image:loc>
+      <image:title>The Boulevard - 1BR Apartment (Floor 13)</image:title>
+      <image:caption>Modern one-bedroom apartment in Gulan, Erbil</image:caption>
+    </image:image>
   </url>
+
   <url>
-    <loc>https://realhouseiq.com/properties/dream-city-villa</loc>
-    <lastmod>2025-01-01</lastmod>
+    <loc>https://realhouseiq.com/properties/boulevard-apt-floor-14</loc>
+    <lastmod>2026-02-19</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
+    <image:image>
+      <image:loc>https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?w=800&amp;q=80</image:loc>
+      <image:title>The Boulevard - 1BR Apartment (Floor 14)</image:title>
+      <image:caption>Modern one-bedroom apartment in Gulan, Erbil</image:caption>
+    </image:image>
   </url>
+
   <url>
-    <loc>https://realhouseiq.com/properties/italian-village-townhouse</loc>
-    <lastmod>2025-01-01</lastmod>
+    <loc>https://realhouseiq.com/properties/boulevard-apt-floor-17</loc>
+    <lastmod>2026-02-19</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
+    <image:image>
+      <image:loc>https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?w=800&amp;q=80</image:loc>
+      <image:title>The Boulevard - 1BR Apartment (Floor 17)</image:title>
+      <image:caption>Premium one-bedroom apartment with panoramic views in Gulan, Erbil</image:caption>
+    </image:image>
   </url>
+
+  <!-- Property Detail Pages - Queen Towers Commercial -->
   <url>
-    <loc>https://realhouseiq.com/properties/gulan-tower-apartment</loc>
-    <lastmod>2025-01-01</lastmod>
+    <loc>https://realhouseiq.com/properties/queen-towers-store-1</loc>
+    <lastmod>2026-02-19</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
+    <image:image>
+      <image:loc>https://images.unsplash.com/photo-1604719312566-8912e9227c6a?w=800&amp;q=80</image:loc>
+      <image:title>Queen Towers - Commercial Store (128 sqm)</image:title>
+      <image:caption>Prime commercial space for rent in Gulan, Erbil</image:caption>
+    </image:image>
   </url>
+
   <url>
-    <loc>https://realhouseiq.com/properties/dilan-luxury-villa</loc>
-    <lastmod>2025-01-01</lastmod>
+    <loc>https://realhouseiq.com/properties/queen-towers-store-2</loc>
+    <lastmod>2026-02-19</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
+    <image:image>
+      <image:loc>https://images.unsplash.com/photo-1604719312566-8912e9227c6a?w=800&amp;q=80</image:loc>
+      <image:title>Queen Towers - Commercial Store (81 sqm)</image:title>
+      <image:caption>Boutique commercial space for rent in Gulan, Erbil</image:caption>
+    </image:image>
   </url>
+
   <url>
-    <loc>https://realhouseiq.com/properties/majidi-mall-commercial</loc>
-    <lastmod>2025-01-01</lastmod>
+    <loc>https://realhouseiq.com/properties/queen-towers-store-3</loc>
+    <lastmod>2026-02-19</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
+    <image:image>
+      <image:loc>https://images.unsplash.com/photo-1604719312566-8912e9227c6a?w=800&amp;q=80</image:loc>
+      <image:title>Queen Towers - Commercial Store (182 sqm)</image:title>
+      <image:caption>Large premium commercial space for rent in Gulan, Erbil</image:caption>
+    </image:image>
   </url>
+
   <url>
-    <loc>https://realhouseiq.com/properties/city-star-duplex</loc>
-    <lastmod>2025-01-01</lastmod>
+    <loc>https://realhouseiq.com/properties/queen-towers-store-4</loc>
+    <lastmod>2026-02-19</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
+    <image:image>
+      <image:loc>https://images.unsplash.com/photo-1604719312566-8912e9227c6a?w=800&amp;q=80</image:loc>
+      <image:title>Queen Towers - Commercial Store (63 sqm)</image:title>
+      <image:caption>Efficient commercial space for rent in Gulan, Erbil</image:caption>
+    </image:image>
   </url>
-  <url>
-    <loc>https://realhouseiq.com/properties/shorsh-land</loc>
-    <lastmod>2025-01-01</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://realhouseiq.com/properties/english-village-villa</loc>
-    <lastmod>2025-01-01</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://realhouseiq.com/properties/rotana-serviced-apartment</loc>
-    <lastmod>2025-01-01</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://realhouseiq.com/properties/lawan-city-offplan</loc>
-    <lastmod>2025-01-01</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://realhouseiq.com/properties/citadel-view-apartment</loc>
-    <lastmod>2025-01-01</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
-  </url>
+
 </urlset>

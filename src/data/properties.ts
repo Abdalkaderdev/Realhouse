@@ -32,6 +32,11 @@ export interface Property {
     city: string;
     district: string;
     country: string;
+    coordinates?: {
+      lat: number;
+      lng: number;
+    };
+    nearbyLandmarks?: string[];
   };
   specs: {
     beds: number;
@@ -67,13 +72,13 @@ export const agents: Agent[] = [
     name: 'Abdalkader',
     phone: '+964 750 792 2138',
     email: 'info@realhouseiq.com',
-    image: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=400&q=80'
+    image: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=400&q=80&fm=webp'
   },
   {
     name: 'Mahmood',
     phone: '+964 751 441 5003',
     email: 'info@realhouseiq.com',
-    image: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&q=80'
+    image: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&q=80&fm=webp'
   }
 ];
 
@@ -101,7 +106,9 @@ export const properties: Property[] = [
       address: 'The Boulevard Tower, Floor 13',
       city: 'Erbil',
       district: 'Gulan',
-      country: 'Iraq'
+      country: 'Iraq',
+      coordinates: { lat: 36.2085, lng: 44.0093 },
+      nearbyLandmarks: ['Family Mall', 'Gulan Park', 'Erbil Citadel', 'Majidi Mall']
     },
     specs: {
       beds: 1,
@@ -110,9 +117,9 @@ export const properties: Property[] = [
       floor: 13
     },
     images: [
-      'https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?w=800&q=80',
-      'https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?w=800&q=80',
-      'https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?w=800&q=80'
+      'https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?w=800&q=80&fm=webp',
+      'https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?w=800&q=80&fm=webp',
+      'https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?w=800&q=80&fm=webp'
     ],
     description: `Modern one-bedroom apartment in the prestigious Boulevard Tower, Erbil's premier residential address. This stylish unit on the 13th floor offers spectacular city views and contemporary living.
 
@@ -133,6 +140,8 @@ Available for sale at $100,000 or for rent - contact us for rental pricing.`,
     ],
     isFeatured: true,
     isNew: true,
+    virtualTourUrl: 'https://my.matterport.com/show/?m=SxQL3iGyvAk',
+    floorPlanUrl: 'https://images.unsplash.com/photo-1580219015423-3e2b6a92f9c5?w=1200&q=80&fm=webp',
     neighborhood: {
       name: 'Gulan',
       walkScore: 85,
@@ -154,7 +163,9 @@ Available for sale at $100,000 or for rent - contact us for rental pricing.`,
       address: 'The Boulevard Tower, Floor 14',
       city: 'Erbil',
       district: 'Gulan',
-      country: 'Iraq'
+      country: 'Iraq',
+      coordinates: { lat: 36.2085, lng: 44.0093 },
+      nearbyLandmarks: ['Family Mall', 'Gulan Park', 'Erbil Citadel', 'Majidi Mall']
     },
     specs: {
       beds: 1,
@@ -163,9 +174,9 @@ Available for sale at $100,000 or for rent - contact us for rental pricing.`,
       floor: 14
     },
     images: [
-      'https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?w=800&q=80',
-      'https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?w=800&q=80',
-      'https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?w=800&q=80'
+      'https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?w=800&q=80&fm=webp',
+      'https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?w=800&q=80&fm=webp',
+      'https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?w=800&q=80&fm=webp'
     ],
     description: `Modern one-bedroom apartment in the prestigious Boulevard Tower. This unit on the 14th floor offers enhanced city views and contemporary living at its finest.
 
@@ -186,6 +197,8 @@ Available for sale at $100,000 or for rent - contact us for rental pricing.`,
     ],
     isFeatured: true,
     isNew: true,
+    virtualTourUrl: 'https://my.matterport.com/show/?m=SxQL3iGyvAk',
+    floorPlanUrl: 'https://images.unsplash.com/photo-1580219015423-3e2b6a92f9c5?w=1200&q=80&fm=webp',
     neighborhood: {
       name: 'Gulan',
       walkScore: 85,
@@ -207,7 +220,9 @@ Available for sale at $100,000 or for rent - contact us for rental pricing.`,
       address: 'The Boulevard Tower, Floor 17',
       city: 'Erbil',
       district: 'Gulan',
-      country: 'Iraq'
+      country: 'Iraq',
+      coordinates: { lat: 36.2085, lng: 44.0093 },
+      nearbyLandmarks: ['Family Mall', 'Gulan Park', 'Erbil Citadel', 'Majidi Mall']
     },
     specs: {
       beds: 1,
@@ -216,9 +231,9 @@ Available for sale at $100,000 or for rent - contact us for rental pricing.`,
       floor: 17
     },
     images: [
-      'https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?w=800&q=80',
-      'https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?w=800&q=80',
-      'https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?w=800&q=80'
+      'https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?w=800&q=80&fm=webp',
+      'https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?w=800&q=80&fm=webp',
+      'https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?w=800&q=80&fm=webp'
     ],
     description: `Premium one-bedroom apartment on the 17th floor of the prestigious Boulevard Tower - the highest available floor offering panoramic city views.
 
@@ -240,6 +255,8 @@ Available for sale at $100,000 or for rent - contact us for rental pricing.`,
     ],
     isFeatured: true,
     isNew: true,
+    virtualTourUrl: 'https://my.matterport.com/show/?m=SxQL3iGyvAk',
+    floorPlanUrl: 'https://images.unsplash.com/photo-1580219015423-3e2b6a92f9c5?w=1200&q=80&fm=webp',
     neighborhood: {
       name: 'Gulan',
       walkScore: 85,
@@ -262,7 +279,9 @@ Available for sale at $100,000 or for rent - contact us for rental pricing.`,
       address: 'Queen Towers, Ground Floor',
       city: 'Erbil',
       district: 'Gulan',
-      country: 'Iraq'
+      country: 'Iraq',
+      coordinates: { lat: 36.2120, lng: 44.0150 },
+      nearbyLandmarks: ['Erbil International Hotel', 'Sami Abdulrahman Park', '100 Meter Road', 'Ankawa']
     },
     specs: {
       beds: 0,
@@ -271,8 +290,8 @@ Available for sale at $100,000 or for rent - contact us for rental pricing.`,
       floor: 0
     },
     images: [
-      'https://images.unsplash.com/photo-1604719312566-8912e9227c6a?w=800&q=80',
-      'https://images.unsplash.com/photo-1582037928769-181f2644ecb7?w=800&q=80'
+      'https://images.unsplash.com/photo-1604719312566-8912e9227c6a?w=800&q=80&fm=webp',
+      'https://images.unsplash.com/photo-1582037928769-181f2644ecb7?w=800&q=80&fm=webp'
     ],
     description: `Prime commercial space available for rent in Queen Towers, one of Erbil's most prestigious mixed-use developments. This 128 sqm store offers excellent visibility and foot traffic.
 
@@ -311,7 +330,9 @@ Contact us for rental pricing and available lease terms.`,
       address: 'Queen Towers, Ground Floor',
       city: 'Erbil',
       district: 'Gulan',
-      country: 'Iraq'
+      country: 'Iraq',
+      coordinates: { lat: 36.2118, lng: 44.0155 },
+      nearbyLandmarks: ['Erbil International Hotel', 'Sami Abdulrahman Park', '100 Meter Road', 'Ankawa']
     },
     specs: {
       beds: 0,
@@ -320,8 +341,8 @@ Contact us for rental pricing and available lease terms.`,
       floor: 0
     },
     images: [
-      'https://images.unsplash.com/photo-1604719312566-8912e9227c6a?w=800&q=80',
-      'https://images.unsplash.com/photo-1582037928769-181f2644ecb7?w=800&q=80'
+      'https://images.unsplash.com/photo-1604719312566-8912e9227c6a?w=800&q=80&fm=webp',
+      'https://images.unsplash.com/photo-1582037928769-181f2644ecb7?w=800&q=80&fm=webp'
     ],
     description: `Compact commercial space in Queen Towers, perfect for boutique retail, café, or professional services. This 81 sqm unit offers efficient use of space with excellent location benefits.
 
@@ -359,7 +380,9 @@ Contact us for rental pricing and available lease terms.`,
       address: 'Queen Towers, Ground Floor',
       city: 'Erbil',
       district: 'Gulan',
-      country: 'Iraq'
+      country: 'Iraq',
+      coordinates: { lat: 36.2122, lng: 44.0148 },
+      nearbyLandmarks: ['Erbil International Hotel', 'Sami Abdulrahman Park', '100 Meter Road', 'Ankawa']
     },
     specs: {
       beds: 0,
@@ -368,8 +391,8 @@ Contact us for rental pricing and available lease terms.`,
       floor: 0
     },
     images: [
-      'https://images.unsplash.com/photo-1604719312566-8912e9227c6a?w=800&q=80',
-      'https://images.unsplash.com/photo-1582037928769-181f2644ecb7?w=800&q=80'
+      'https://images.unsplash.com/photo-1604719312566-8912e9227c6a?w=800&q=80&fm=webp',
+      'https://images.unsplash.com/photo-1582037928769-181f2644ecb7?w=800&q=80&fm=webp'
     ],
     description: `Large premium commercial space in Queen Towers - the largest available unit at 182 sqm. Ideal for flagship stores, restaurants, or showrooms requiring maximum visibility and space.
 
@@ -408,7 +431,9 @@ Contact us for rental pricing and available lease terms.`,
       address: 'Queen Towers, Ground Floor',
       city: 'Erbil',
       district: 'Gulan',
-      country: 'Iraq'
+      country: 'Iraq',
+      coordinates: { lat: 36.2116, lng: 44.0152 },
+      nearbyLandmarks: ['Erbil International Hotel', 'Sami Abdulrahman Park', '100 Meter Road', 'Ankawa']
     },
     specs: {
       beds: 0,
@@ -417,8 +442,8 @@ Contact us for rental pricing and available lease terms.`,
       floor: 0
     },
     images: [
-      'https://images.unsplash.com/photo-1604719312566-8912e9227c6a?w=800&q=80',
-      'https://images.unsplash.com/photo-1582037928769-181f2644ecb7?w=800&q=80'
+      'https://images.unsplash.com/photo-1604719312566-8912e9227c6a?w=800&q=80&fm=webp',
+      'https://images.unsplash.com/photo-1582037928769-181f2644ecb7?w=800&q=80&fm=webp'
     ],
     description: `Efficient commercial space in Queen Towers at 63 sqm - perfect for kiosks, small retail, phone shops, or service businesses. Affordable entry point into Erbil's premium commercial market.
 
@@ -514,5 +539,16 @@ export const propertyTypes = ['Villa', 'Apartment', 'Penthouse', 'Townhouse', 'L
 export const propertyStatuses = ['For Sale', 'For Rent', 'Off Plan', 'Ready', 'Sold'] as const;
 export const propertyBadges = ['Hot', 'New', 'Discount', 'Installment', 'Exclusive'] as const;
 export const districts = [
-  'Gulan'
+  'Gulan',
+  'Dream City',
+  'English Village',
+  'Italian Village',
+  'Empire World',
+  'Ankawa',
+  'Ainkawa',
+  'Sarbasti',
+  '100 Meter Road',
+  '60 Meter Road',
+  'Kasnazan',
+  'Nawroz'
 ] as const;

@@ -117,7 +117,13 @@ function loadTexture(gl: WebGLRenderingContext, image: HTMLImageElement): WebGLT
 
 const effects: Map<HTMLElement, DistortionEffect> = new Map();
 
+// Check for reduced motion preference
+const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
 export function initImageDistortion(selector: string, intensity = 1.0): void {
+  // Skip WebGL effects if user prefers reduced motion
+  if (prefersReducedMotion) return;
+
   // Skip WebGL initialization on mobile devices to reduce resource usage
   if (window.innerWidth < 768) {
     return;

@@ -8,6 +8,15 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger';
 // Register GSAP plugins
 gsap.registerPlugin(ScrollTrigger);
 
+// Check for reduced motion preference
+const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+// Configure GSAP for reduced motion
+if (prefersReducedMotion) {
+  gsap.defaults({ duration: 0.01 });
+  ScrollTrigger.defaults({ markers: false });
+}
+
 // Custom easing curves
 const EASES = {
   luxury: 'power3.out',
@@ -406,47 +415,35 @@ export function animateProcess(): void {
 }
 
 // ─── Property Card Hover Effects ──────────────────────────────────────────
+// Elegant, subtle hover effect - no aggressive tilting
 export function initPropertyCardHover(card: HTMLElement): void {
   const image = card.querySelector('.property-card__image');
   const overlay = card.querySelector('.property-card__overlay');
 
-  let bounds: DOMRect;
-
   card.addEventListener('mouseenter', () => {
-    bounds = card.getBoundingClientRect();
-    gsap.to(card, { scale: 1.02, duration: 0.4, ease: EASES.luxury });
-    gsap.to(image, { scale: 1.08, duration: 0.6, ease: EASES.luxury });
-    gsap.to(overlay, { opacity: 0.4, duration: 0.4 });
+    // Subtle lift with golden glow
+    gsap.to(card, {
+      y: -4,
+      boxShadow: '0 12px 40px rgba(201, 168, 76, 0.15)',
+      duration: 0.4,
+      ease: EASES.luxury
+    });
+    gsap.to(image, { scale: 1.03, duration: 0.5, ease: EASES.luxury });
+    gsap.to(overlay, { opacity: 0.5, duration: 0.4 });
   });
 
   card.addEventListener('mouseleave', () => {
     gsap.to(card, {
-      scale: 1,
-      rotateX: 0,
-      rotateY: 0,
-      duration: 0.5,
+      y: 0,
+      boxShadow: '0 4px 20px rgba(0, 0, 0, 0.1)',
+      duration: 0.4,
       ease: EASES.luxury
     });
-    gsap.to(image, { scale: 1, duration: 0.5 });
+    gsap.to(image, { scale: 1, duration: 0.4 });
     gsap.to(overlay, { opacity: 0.6, duration: 0.4 });
   });
 
-  card.addEventListener('mousemove', (e) => {
-    if (!bounds) return;
-
-    const cx = bounds.left + bounds.width / 2;
-    const cy = bounds.top + bounds.height / 2;
-    const rx = ((e.clientY - cy) / (bounds.height / 2)) * -6;
-    const ry = ((e.clientX - cx) / (bounds.width / 2)) * 6;
-
-    gsap.to(card, {
-      rotateX: rx,
-      rotateY: ry,
-      transformPerspective: 1000,
-      duration: 0.3,
-      ease: 'power2.out'
-    });
-  });
+  // No mousemove tilt - keep it elegant and stable
 }
 
 // ─── Navigation Scroll Effect ─────────────────────────────────────────────

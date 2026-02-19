@@ -25,7 +25,20 @@ import { initHorizontalScroll, initVelocitySkew } from './animations/horizontal-
 import { initAllMarquees } from './animations/marquee';
 import { initImageDistortion, destroyImageDistortion } from './animations/image-distortion';
 import { CursorTrail, initMagneticGlow, initRippleEffect } from './animations/cursor-trail';
-import { renderHomePage, renderPropertiesPage, renderAboutPage, renderContactPage, renderPropertyDetailPage, renderPrivacyPage, renderTermsPage, renderFAQPage, render404Page } from './pages';
+import { renderHomePage, renderPropertiesPage, renderAboutPage, renderContactPage, renderPropertyDetailPage, renderPrivacyPage, renderTermsPage, renderFAQPage, render404Page, renderComparisonPage, renderFavoritesPage, savePropertiesScrollPosition, getPropertiesScrollPosition, parseFiltersFromURL } from './pages';
+import { renderProjectsPage, renderProjectDetailPage } from './pages/projects';
+import { getPropertyById } from './data/properties';
+import { initComparisonBar, updateComparisonBar } from './comparison';
+import { initFavoritesUI } from './utils/favorites';
+import {
+  setupPropertyPageSEO,
+  setupPropertiesPageSEO,
+  setupContactPageSEO,
+  setupAboutPageSEO,
+  setupFAQPageSEO,
+  setupHomePageSEO,
+  clearDynamicSchemas
+} from './seo/schema';
 
 export class App {
   private cursor: CustomCursor | null = null;
@@ -64,12 +77,17 @@ export class App {
     // Initialize theme toggle
     this.initThemeToggle();
 
+    // Initialize favorites UI (badge count)
+    initFavoritesUI();
+
     // Load initial page
     await this.navigate(window.location.pathname, false);
 
     // Handle browser back/forward
     window.addEventListener('popstate', () => {
-      this.navigate(window.location.pathname, false);
+      const path = window.location.pathname + window.location.search;
+      const isReturningToProperties = window.location.pathname === '/properties';
+      this.navigate(path, false, isReturningToProperties);
     });
   }
 
@@ -153,9 +171,14 @@ export class App {
     });
   }
 
-  async navigate(path: string, animate: boolean): Promise<void> {
-    // Clean path
+  async navigate(path: string, animate: boolean, restoreScroll: boolean = false): Promise<void> {
+    // Clean path (preserve query string for properties page)
     const cleanPath = path.split('?')[0].split('#')[0] || '/';
+
+    // Save scroll position when leaving properties page
+    if (this.currentPage === '/properties' && cleanPath !== '/properties') {
+      savePropertiesScrollPosition();
+    }
 
     // Update active nav link
     this.updateActiveNavLink(cleanPath);
@@ -192,8 +215,19 @@ export class App {
       await pageTransitionIn();
     }
 
-    // Scroll to top
-    scrollToTop({ immediate: true });
+    // Handle scroll position
+    if (restoreScroll && cleanPath === '/properties') {
+      // Restore saved scroll position when returning to properties page
+      const savedScroll = getPropertiesScrollPosition();
+      if (savedScroll > 0) {
+        setTimeout(() => {
+          window.scrollTo(0, savedScroll);
+        }, 100);
+      }
+    } else {
+      // Scroll to top for other pages
+      scrollToTop({ immediate: true });
+    }
   }
 
   private updateActiveNavLink(path: string): void {
@@ -225,6 +259,15 @@ export class App {
       return renderTermsPage();
     } else if (path === '/faq') {
       return renderFAQPage();
+    } else if (path === '/projects') {
+      return renderProjectsPage();
+    } else if (path.startsWith('/projects/')) {
+      const projectId = path.replace('/projects/', '');
+      return renderProjectDetailPage(projectId);
+    } else if (path === '/compare') {
+      return renderComparisonPage();
+    } else if (path === '/favorites') {
+      return renderFavoritesPage();
     }
     // 404 for unknown routes
     return render404Page();
@@ -238,10 +281,16 @@ export class App {
       '/contact': 'Contact — Real House',
       '/privacy': 'Privacy Policy — Real House',
       '/terms': 'Terms of Service — Real House',
-      '/faq': 'FAQ — Real House'
+      '/faq': 'FAQ — Real House',
+      '/projects': 'Development Projects — Real House',
+      '/favorites': 'My Favorites — Real House',
+      '/compare': 'Compare Properties — Real House'
     };
     if (path.startsWith('/properties/')) {
       return 'Property Details — Real House';
+    }
+    if (path.startsWith('/projects/')) {
+      return 'Project Details — Real House';
     }
     // Return 404 title for unknown routes
     return titles[path] || 'Page Not Found — Real House';
@@ -255,15 +304,50 @@ export class App {
       '/contact': 'Get in touch with Real House. Contact our team for personalized assistance with your luxury property search.',
       '/privacy': 'Real House Privacy Policy. Learn how we protect and handle your personal information.',
       '/terms': 'Real House Terms of Service. Read our terms and conditions for using our services.',
-      '/faq': 'Frequently asked questions about Real House services, the buying process, financing, and more.'
+      '/faq': 'Frequently asked questions about Real House services, the buying process, financing, and more.',
+      '/projects': 'Explore premier real estate development projects in Erbil including Empire World, Dream City, Italian Village, and more.',
+      '/favorites': 'View your saved favorite properties. Manage your wishlist and compare your top picks.',
+      '/compare': 'Compare properties side by side. Analyze features, prices, and specifications.'
     };
     if (path.startsWith('/properties/')) {
       return 'Explore this exceptional luxury property with detailed specifications, features, and virtual tour options.';
+    }
+    if (path.startsWith('/projects/')) {
+      return 'Discover this exceptional development project with amenities, unit availability, and investment opportunities.';
     }
     return descriptions[path] || descriptions['/'];
   }
 
   private updateMetaTags(path: string): void {
+    // Handle property detail pages with dynamic SEO
+    if (path.startsWith('/properties/')) {
+      const propertyId = path.replace('/properties/', '');
+      const property = getPropertyById(propertyId);
+
+      if (property) {
+        // Use enhanced SEO for property pages
+        setupPropertyPageSEO(property);
+        return;
+      }
+    }
+
+    // Setup page-specific SEO schemas
+    if (path === '/') {
+      setupHomePageSEO();
+    } else if (path === '/properties') {
+      setupPropertiesPageSEO();
+    } else if (path === '/contact') {
+      setupContactPageSEO();
+    } else if (path === '/about') {
+      setupAboutPageSEO();
+    } else if (path === '/faq') {
+      setupFAQPageSEO();
+    } else {
+      // Clear dynamic schemas for other pages
+      clearDynamicSchemas();
+    }
+
+    // Standard meta tag updates for non-property pages
     const title = this.getPageTitle(path);
     const description = this.getPageDescription(path);
     const url = `https://realhouseiq.com${path === '/' ? '' : path}`;
@@ -299,6 +383,12 @@ export class App {
       ogUrl.setAttribute('content', url);
     }
 
+    // Reset og:image to default for non-property pages
+    const ogImage = document.querySelector('meta[property="og:image"]');
+    if (ogImage) {
+      ogImage.setAttribute('content', 'https://realhouseiq.com/favicon.svg');
+    }
+
     // Update Twitter Card tags
     const twitterTitle = document.querySelector('meta[name="twitter:title"]');
     if (twitterTitle) {
@@ -309,11 +399,23 @@ export class App {
     if (twitterDescription) {
       twitterDescription.setAttribute('content', description);
     }
+
+    // Reset twitter:image to default for non-property pages
+    const twitterImage = document.querySelector('meta[name="twitter:image"]');
+    if (twitterImage) {
+      twitterImage.setAttribute('content', 'https://realhouseiq.com/favicon.svg');
+    }
   }
 
   private async initPageAnimations(path: string): Promise<void> {
     // Wait a frame for DOM to be ready
     await new Promise(resolve => requestAnimationFrame(resolve));
+
+    // Initialize comparison bar for pages with property cards
+    if (path === '/' || path === '/properties' || path === '/compare' || path === '/favorites') {
+      initComparisonBar();
+      updateComparisonBar();
+    }
 
     // Initialize magnetic buttons
     initMagneticButtons();
@@ -400,6 +502,20 @@ export class App {
       scrollReveal('.faq-page__header', { y: 40 });
       scrollReveal('.faq-page__item', { y: 30, stagger: 0.08 });
       scrollReveal('.faq-page__cta', { y: 40 });
+    } else if (path === '/projects') {
+      scrollReveal('.projects-page__header', { y: 40 });
+      scrollReveal('.project-card', { y: 60, stagger: 0.1, trigger: '.projects-page__grid' });
+    } else if (path.startsWith('/projects/')) {
+      scrollReveal('.project-gallery', { y: 40 });
+      scrollReveal('.project-detail__header', { y: 30 });
+      scrollReveal('.project-detail__stats', { y: 30 });
+      scrollReveal('.project-detail__description', { y: 30 });
+      scrollReveal('.project-detail__amenities', { y: 30 });
+      scrollReveal('.project-detail__contact-card', { y: 40 });
+      scrollReveal('.project-detail__location-card', { y: 40 });
+    } else if (path === '/favorites') {
+      scrollReveal('.favorites-page__header', { y: 40 });
+      scrollReveal('.property-card', { y: 60, stagger: 0.1, trigger: '.favorites-page__grid' });
     }
   }
 
