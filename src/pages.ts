@@ -328,7 +328,7 @@ export function renderHomePage(): DocumentFragment {
   // Marquee Banner
   const marquee = createElement('div', 'marquee-banner marquee-banner--large');
   marquee.setAttribute('data-scroll-marquee', '');
-  marquee.setAttribute('data-marquee-text', 'Luxury Living • Premium Properties • Exclusive Locations • Award Winning • Luxury Living • Premium Properties •');
+  marquee.setAttribute('data-marquee-text', 'Luxury Living • Premium Properties • Exclusive Locations • Award Winning');
   fragment.appendChild(marquee);
 
   // Horizontal Showcase Section
@@ -419,7 +419,7 @@ export function renderHomePage(): DocumentFragment {
   // Second Marquee (gold)
   const marquee2 = createElement('div', 'marquee-banner marquee-banner--gold');
   marquee2.setAttribute('data-marquee', '');
-  marquee2.setAttribute('data-marquee-text', 'Real House — Where Dreams Find Address — Exceptional Properties — Unmatched Service —');
+  marquee2.setAttribute('data-marquee-text', 'Real House — Where Dreams Find Address — Exceptional Properties — Unmatched Service');
   marquee2.setAttribute('data-marquee-speed', '60');
   fragment.appendChild(marquee2);
 
