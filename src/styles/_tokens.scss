@@ -12,11 +12,9 @@
   --c-gold:         #C9A84C;
   --c-gold-light:   #E8C97A;
   --c-gold-dark:    #9A7A2E;
-  --c-platinum:     #8B9BB4;
-
   --c-text:         #F0EDE8;
-  --c-text-2:       #9A9BAA;
-  --c-text-3:       #5A5B6A;
+  --c-text-2:       #B8B9C6;
+  --c-text-3:       #7A7B8A;
 
   --c-glass-bg:     rgba(255, 255, 255, 0.04);
   --c-glass-border: rgba(255, 255, 255, 0.08);
@@ -24,6 +22,20 @@
 
   --c-error:        #E05252;
   --c-success:      #52C98A;
+  --c-border:       rgba(255, 255, 255, 0.12);
+
+  // ─── Z-Index Scale ─────────────────────────────────────────────────────
+  --z-base:         1;
+  --z-dropdown:     100;
+  --z-sticky:       500;
+  --z-modal:        1000;
+  --z-tooltip:      1500;
+
+  // ─── Icon Sizes ────────────────────────────────────────────────────────
+  --icon-sm:        16px;
+  --icon-md:        20px;
+  --icon-lg:        24px;
+  --icon-xl:        32px;
 
   // ─── Typography ─────────────────────────────────────────────────────────
   --font-serif:     'Cormorant', Georgia, serif;

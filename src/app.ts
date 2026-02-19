@@ -2,7 +2,6 @@
 // Real House - Application Controller
 // ═══════════════════════════════════════════════════════════════════════════
 
-import { SceneManager } from './three/scene';
 import { CustomCursor } from './animations/cursor';
 import { initSmoothScroll, destroySmoothScroll, scrollToTop } from './animations/smooth-scroll';
 import {
@@ -26,10 +25,9 @@ import { initHorizontalScroll, initVelocitySkew } from './animations/horizontal-
 import { initAllMarquees } from './animations/marquee';
 import { initImageDistortion, destroyImageDistortion } from './animations/image-distortion';
 import { CursorTrail, initMagneticGlow, initRippleEffect } from './animations/cursor-trail';
-import { renderHomePage, renderPropertiesPage, renderAboutPage, renderContactPage, renderPropertyDetailPage } from './pages';
+import { renderHomePage, renderPropertiesPage, renderAboutPage, renderContactPage, renderPropertyDetailPage, renderPrivacyPage, renderTermsPage, renderFAQPage } from './pages';
 
 export class App {
-  private sceneManager: SceneManager | null = null;
   private cursor: CustomCursor | null = null;
   private cursorTrail: CursorTrail | null = null;
   private currentPage: string = '/';
@@ -38,23 +36,11 @@ export class App {
     // Set initial theme
     this.initTheme();
 
-    // Initialize Three.js scene
-    this.sceneManager = new SceneManager();
-    this.sceneManager.start();
 
-    // Initialize custom cursor
-    this.cursor = new CustomCursor();
-    this.cursor.init();
-
-    // Initialize cursor particle trail
-    this.cursorTrail = new CursorTrail();
-    this.cursorTrail.start();
 
     // Run loader animation
     await animateLoader();
 
-    // Camera intro animation
-    await this.sceneManager.cinematicIntro();
 
     // Hide loader
     await hideLoader();
@@ -140,6 +126,12 @@ export class App {
 
     if (!hamburger || !mobileMenu) return;
 
+    const closeMenu = () => {
+      hamburger.classList.remove('active');
+      mobileMenu.classList.remove('active');
+      document.body.style.overflow = '';
+    };
+
     hamburger.addEventListener('click', () => {
       hamburger.classList.toggle('active');
       mobileMenu.classList.toggle('active');
@@ -149,10 +141,15 @@ export class App {
     // Close menu on link click
     mobileMenu.querySelectorAll('a').forEach(link => {
       link.addEventListener('click', () => {
-        hamburger.classList.remove('active');
-        mobileMenu.classList.remove('active');
-        document.body.style.overflow = '';
+        closeMenu();
       });
+    });
+
+    // Close menu on Escape key
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && mobileMenu.classList.contains('active')) {
+        closeMenu();
+      }
     });
   }
 
@@ -185,8 +182,8 @@ export class App {
 
     this.currentPage = cleanPath;
 
-    // Update page title
-    document.title = this.getPageTitle(cleanPath);
+    // Update page title and meta tags for SEO
+    this.updateMetaTags(cleanPath);
 
     // Initialize page-specific animations
     await this.initPageAnimations(cleanPath);
@@ -222,6 +219,12 @@ export class App {
       return renderAboutPage();
     } else if (path === '/contact') {
       return renderContactPage();
+    } else if (path === '/privacy') {
+      return renderPrivacyPage();
+    } else if (path === '/terms') {
+      return renderTermsPage();
+    } else if (path === '/faq') {
+      return renderFAQPage();
     }
     return renderHomePage();
   }
@@ -231,12 +234,79 @@ export class App {
       '/': 'Real House — Luxury Real Estate',
       '/properties': 'Properties — Real House',
       '/about': 'About — Real House',
-      '/contact': 'Contact — Real House'
+      '/contact': 'Contact — Real House',
+      '/privacy': 'Privacy Policy — Real House',
+      '/terms': 'Terms of Service — Real House',
+      '/faq': 'FAQ — Real House'
     };
     if (path.startsWith('/properties/')) {
       return 'Property Details — Real House';
     }
     return titles[path] || 'Real House — Luxury Real Estate';
+  }
+
+  private getPageDescription(path: string): string {
+    const descriptions: Record<string, string> = {
+      '/': 'Real House — Premium luxury real estate. Curated properties for the discerning buyer.',
+      '/properties': 'Browse our exclusive collection of luxury properties including villas, penthouses, and estates worldwide.',
+      '/about': 'Learn about Real House, our mission, values, and the team behind the premier luxury real estate experience.',
+      '/contact': 'Get in touch with Real House. Contact our team for personalized assistance with your luxury property search.',
+      '/privacy': 'Real House Privacy Policy. Learn how we protect and handle your personal information.',
+      '/terms': 'Real House Terms of Service. Read our terms and conditions for using our services.',
+      '/faq': 'Frequently asked questions about Real House services, the buying process, financing, and more.'
+    };
+    if (path.startsWith('/properties/')) {
+      return 'Explore this exceptional luxury property with detailed specifications, features, and virtual tour options.';
+    }
+    return descriptions[path] || descriptions['/'];
+  }
+
+  private updateMetaTags(path: string): void {
+    const title = this.getPageTitle(path);
+    const description = this.getPageDescription(path);
+    const url = `https://realhouseiq.com${path === '/' ? '' : path}`;
+
+    // Update document title
+    document.title = title;
+
+    // Update meta description
+    const metaDescription = document.querySelector('meta[name="description"]');
+    if (metaDescription) {
+      metaDescription.setAttribute('content', description);
+    }
+
+    // Update canonical URL
+    const canonical = document.querySelector('link[rel="canonical"]');
+    if (canonical) {
+      canonical.setAttribute('href', url);
+    }
+
+    // Update Open Graph tags
+    const ogTitle = document.querySelector('meta[property="og:title"]');
+    if (ogTitle) {
+      ogTitle.setAttribute('content', title);
+    }
+
+    const ogDescription = document.querySelector('meta[property="og:description"]');
+    if (ogDescription) {
+      ogDescription.setAttribute('content', description);
+    }
+
+    const ogUrl = document.querySelector('meta[property="og:url"]');
+    if (ogUrl) {
+      ogUrl.setAttribute('content', url);
+    }
+
+    // Update Twitter Card tags
+    const twitterTitle = document.querySelector('meta[name="twitter:title"]');
+    if (twitterTitle) {
+      twitterTitle.setAttribute('content', title);
+    }
+
+    const twitterDescription = document.querySelector('meta[name="twitter:description"]');
+    if (twitterDescription) {
+      twitterDescription.setAttribute('content', description);
+    }
   }
 
   private async initPageAnimations(path: string): Promise<void> {
@@ -277,14 +347,17 @@ export class App {
       animateStats();
       animateFeatured();
 
-      // Initialize horizontal scroll showcase
-      initHorizontalScroll({
-        container: '.showcase',
-        wrapper: '.showcase__wrapper',
-        panels: '.showcase-panel',
-        parallaxImages: '.showcase-panel__bg img',
-        progressBar: '.showcase__progress-bar'
-      });
+      // Initialize horizontal scroll showcase only on desktop (> 768px)
+      // Skip on mobile devices to allow vertical stacking
+      if (window.innerWidth > 768) {
+        initHorizontalScroll({
+          container: '.showcase',
+          wrapper: '.showcase__wrapper',
+          panels: '.showcase-panel',
+          parallaxImages: '.showcase-panel__bg img',
+          progressBar: '.showcase__progress-bar'
+        });
+      }
 
       // Animate hero headline with cinematic reveal
       const heroHeadline = document.querySelector('.hero__headline') as HTMLElement;
@@ -315,11 +388,20 @@ export class App {
       scrollReveal('.property-detail__features', { y: 30 });
       scrollReveal('.property-detail__agent-card', { y: 40 });
       scrollReveal('.property-detail__location-card', { y: 40 });
+    } else if (path === '/privacy') {
+      scrollReveal('.privacy-page__header', { y: 40 });
+      scrollReveal('.privacy-page__section', { y: 30, stagger: 0.1 });
+    } else if (path === '/terms') {
+      scrollReveal('.terms-page__header', { y: 40 });
+      scrollReveal('.terms-page__section', { y: 30, stagger: 0.1 });
+    } else if (path === '/faq') {
+      scrollReveal('.faq-page__header', { y: 40 });
+      scrollReveal('.faq-page__item', { y: 30, stagger: 0.08 });
+      scrollReveal('.faq-page__cta', { y: 40 });
     }
   }
 
   destroy(): void {
-    this.sceneManager?.dispose();
     this.cursor?.destroy();
     this.cursorTrail?.destroy();
     destroySmoothScroll();

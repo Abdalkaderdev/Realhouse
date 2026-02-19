@@ -4,6 +4,77 @@
 // ═══════════════════════════════════════════════════════════════════════════
 
 import { properties, featuredProperties, formatPrice, getPropertyById, type Property } from './data/properties';
+import { testimonials } from './data/testimonials';
+
+// ─── Filter State Interface ─────────────────────────────────────────────────
+interface FilterState {
+  type: string;
+  priceRange: string;
+  minBeds: number;
+  searchQuery: string;
+}
+
+// Current filter state
+let currentFilterState: FilterState = {
+  type: 'All',
+  priceRange: 'All',
+  minBeds: 0,
+  searchQuery: ''
+};
+
+// ─── Filter Function ────────────────────────────────────────────────────────
+function filterProperties(props: Property[], state: FilterState): Property[] {
+  return props.filter(property => {
+    // Type filter
+    if (state.type !== 'All' && property.type !== state.type) {
+      return false;
+    }
+
+    // Price range filter (updated for Erbil market)
+    if (state.priceRange !== 'All') {
+      const price = property.price;
+      switch (state.priceRange) {
+        case 'Under $200K':
+          if (price >= 200000) return false;
+          break;
+        case '$200K-$400K':
+          if (price < 200000 || price >= 400000) return false;
+          break;
+        case '$400K-$700K':
+          if (price < 400000 || price >= 700000) return false;
+          break;
+        case '$700K+':
+          if (price < 700000) return false;
+          break;
+      }
+    }
+
+    // Beds filter
+    if (state.minBeds > 0 && property.specs.beds < state.minBeds) {
+      return false;
+    }
+
+    // Search query filter
+    if (state.searchQuery.trim()) {
+      const query = state.searchQuery.toLowerCase();
+      const searchableText = [
+        property.title,
+        property.type,
+        property.location.city,
+        property.location.district,
+        property.location.address,
+        property.description,
+        ...property.features
+      ].join(' ').toLowerCase();
+
+      if (!searchableText.includes(query)) {
+        return false;
+      }
+    }
+
+    return true;
+  });
+}
 
 // ─── Helper Functions ─────────────────────────────────────────────────────
 function createElement<K extends keyof HTMLElementTagNameMap>(
@@ -76,7 +147,7 @@ function createPropertyCard(property: Property): HTMLElement {
 
   const location = createElement('p', 'property-card__location');
   location.appendChild(createSVGUse('icon-location'));
-  location.appendChild(document.createTextNode(`${property.location.city}, ${property.location.state}`));
+  location.appendChild(document.createTextNode(`${property.location.district}, ${property.location.city}`));
   content.appendChild(location);
 
   // Specs
@@ -94,7 +165,7 @@ function createPropertyCard(property: Property): HTMLElement {
 
   const areaSpec = createElement('span', 'property-card__spec');
   areaSpec.appendChild(createSVGUse('icon-area'));
-  areaSpec.appendChild(document.createTextNode(`${property.specs.sqft.toLocaleString()} sqft`));
+  areaSpec.appendChild(document.createTextNode(`${property.specs.sqm.toLocaleString()} m²`));
   specs.appendChild(areaSpec);
 
   content.appendChild(specs);
@@ -126,48 +197,23 @@ export function renderHomePage(): DocumentFragment {
 
   const heroContent = createElement('div', 'hero__content container');
 
-  // Eyebrow
-  const eyebrow = createElement('div', 'hero__eyebrow');
-  const line1 = createElement('span', 'hero__line');
-  const eyebrowText = createElement('span', undefined, 'Premium Real Estate');
-  const line2 = createElement('span', 'hero__line');
-  eyebrow.appendChild(line1);
-  eyebrow.appendChild(eyebrowText);
-  eyebrow.appendChild(line2);
-  heroContent.appendChild(eyebrow);
-
   // Headline
-  const headline = createElement('h1', 'hero__headline', 'Where Luxury Meets Living');
+  const headline = createElement('h1', 'hero__headline', 'Find Your Dream Home');
   heroContent.appendChild(headline);
 
   // Subline
-  const subline = createElement('p', 'hero__subline', 'Curated properties for the discerning buyer. Architecture that inspires. Locations that define.');
+  const subline = createElement('p', 'hero__subline', 'Luxury properties in the world\'s most desirable locations.');
   heroContent.appendChild(subline);
 
   // CTA
   const cta = createElement('div', 'hero__cta');
-
-  const primaryBtn = createElement('a', 'btn btn--primary btn--large', 'Explore Properties');
+  const primaryBtn = createElement('a', 'btn btn--primary btn--large', 'View Properties');
   primaryBtn.href = '/properties';
   primaryBtn.setAttribute('data-route', '');
   cta.appendChild(primaryBtn);
-
-  const ghostBtn = createElement('a', 'btn btn--ghost btn--large', 'Our Story');
-  ghostBtn.href = '/about';
-  ghostBtn.setAttribute('data-route', '');
-  cta.appendChild(ghostBtn);
-
   heroContent.appendChild(cta);
+
   hero.appendChild(heroContent);
-
-  // Scroll indicator
-  const scroll = createElement('div', 'hero__scroll');
-  const scrollLine = createElement('div', 'hero__scroll-line');
-  const scrollText = createElement('span', undefined, 'Scroll');
-  scroll.appendChild(scrollLine);
-  scroll.appendChild(scrollText);
-  hero.appendChild(scroll);
-
   fragment.appendChild(hero);
 
   // Stats Section
@@ -286,7 +332,7 @@ export function renderHomePage(): DocumentFragment {
     const specData = [
       { icon: 'icon-bed', value: `${property.specs.beds} Beds` },
       { icon: 'icon-bath', value: `${property.specs.baths} Baths` },
-      { icon: 'icon-area', value: `${property.specs.sqft.toLocaleString()} sqft` }
+      { icon: 'icon-area', value: `${property.specs.sqm.toLocaleString()} m²` }
     ];
     specData.forEach(spec => {
       const specEl = createElement('div', 'showcase-panel__spec');
@@ -362,6 +408,61 @@ export function renderHomePage(): DocumentFragment {
   process.appendChild(processContainer);
   fragment.appendChild(process);
 
+  // Testimonials Section
+  const testimonialsSection = createElement('section', 'testimonials');
+  const testimonialsContainer = createElement('div', 'container');
+
+  const testimonialsHeader = createElement('div', 'testimonials__header');
+  const testimonialsTitle = createElement('h2', 'testimonials__title');
+  testimonialsTitle.textContent = 'What Our ';
+  const emTestimonials = createElement('em', undefined, 'Clients');
+  testimonialsTitle.appendChild(emTestimonials);
+  testimonialsTitle.appendChild(document.createTextNode(' Say'));
+  testimonialsHeader.appendChild(testimonialsTitle);
+  testimonialsContainer.appendChild(testimonialsHeader);
+
+  const testimonialsGrid = createElement('div', 'testimonials__grid');
+
+  // Display first 3 testimonials
+  testimonials.slice(0, 3).forEach(testimonial => {
+    const card = createElement('article', 'testimonials__card');
+
+    // Quote
+    const quote = createElement('blockquote', 'testimonials__quote');
+    quote.textContent = `"${testimonial.quote}"`;
+    card.appendChild(quote);
+
+    // Rating
+    const rating = createElement('div', 'testimonials__rating');
+    for (let i = 0; i < testimonial.rating; i++) {
+      rating.appendChild(document.createTextNode('\u2605')); // Star character
+    }
+    card.appendChild(rating);
+
+    // Author section
+    const author = createElement('div', 'testimonials__author');
+
+    const avatar = createElement('img', 'testimonials__avatar');
+    avatar.src = testimonial.image;
+    avatar.alt = testimonial.name;
+    avatar.loading = 'lazy';
+    author.appendChild(avatar);
+
+    const authorInfo = createElement('div', 'testimonials__author-info');
+    const name = createElement('span', 'testimonials__name', testimonial.name);
+    const location = createElement('span', 'testimonials__location', testimonial.location);
+    authorInfo.appendChild(name);
+    authorInfo.appendChild(location);
+    author.appendChild(authorInfo);
+
+    card.appendChild(author);
+    testimonialsGrid.appendChild(card);
+  });
+
+  testimonialsContainer.appendChild(testimonialsGrid);
+  testimonialsSection.appendChild(testimonialsContainer);
+  fragment.appendChild(testimonialsSection);
+
   // CTA Section
   const ctaSection = createElement('section', 'cta-section');
   const ctaContainer = createElement('div', 'container cta-section__content');
@@ -388,6 +489,14 @@ export function renderHomePage(): DocumentFragment {
 export function renderPropertiesPage(): DocumentFragment {
   const fragment = document.createDocumentFragment();
 
+  // Reset filter state when page loads
+  currentFilterState = {
+    type: 'All',
+    priceRange: 'All',
+    minBeds: 0,
+    searchQuery: ''
+  };
+
   const page = createElement('div', 'properties-page');
   const container = createElement('div', 'container');
 
@@ -399,17 +508,63 @@ export function renderPropertiesPage(): DocumentFragment {
   header.appendChild(subtitle);
   container.appendChild(header);
 
-  // Filters
-  const filters = createElement('div', 'properties-page__filters');
-  const filterTypes = ['All', 'Villa', 'Penthouse', 'Estate', 'Townhouse', 'Condominium'];
+  // Search Input
+  const searchSection = createElement('div', 'properties-page__search');
+  const searchInput = createElement('input', 'properties-page__search-input');
+  searchInput.type = 'text';
+  searchInput.placeholder = 'Search properties by location, type, or features...';
+  searchInput.setAttribute('aria-label', 'Search properties');
+  searchSection.appendChild(searchInput);
+  container.appendChild(searchSection);
+
+  // Property Type Filters
+  const typeFilterGroup = createElement('div', 'properties-page__filter-group');
+  const typeLabel = createElement('span', 'properties-page__filter-label', 'Type:');
+  typeFilterGroup.appendChild(typeLabel);
+  const filterTypes = ['All', 'Villa', 'Apartment', 'Penthouse', 'Townhouse', 'Duplex', 'Land', 'Commercial'];
   filterTypes.forEach((type, index) => {
     const btn = createElement('button', `properties-page__filter${index === 0 ? ' active' : ''}`, type);
-    filters.appendChild(btn);
+    btn.setAttribute('data-filter-type', 'type');
+    btn.setAttribute('data-filter-value', type);
+    typeFilterGroup.appendChild(btn);
   });
-  container.appendChild(filters);
+  container.appendChild(typeFilterGroup);
+
+  // Price Range Filters
+  const priceFilterGroup = createElement('div', 'properties-page__filter-group');
+  const priceLabel = createElement('span', 'properties-page__filter-label', 'Price:');
+  priceFilterGroup.appendChild(priceLabel);
+  const priceRanges = ['All', 'Under $200K', '$200K-$400K', '$400K-$700K', '$700K+'];
+  priceRanges.forEach((range, index) => {
+    const btn = createElement('button', `properties-page__filter${index === 0 ? ' active' : ''}`, range);
+    btn.setAttribute('data-filter-type', 'price');
+    btn.setAttribute('data-filter-value', range);
+    priceFilterGroup.appendChild(btn);
+  });
+  container.appendChild(priceFilterGroup);
+
+  // Beds Filters
+  const bedsFilterGroup = createElement('div', 'properties-page__filter-group');
+  const bedsLabel = createElement('span', 'properties-page__filter-label', 'Bedrooms:');
+  bedsFilterGroup.appendChild(bedsLabel);
+  const bedOptions = [
+    { label: 'Any', value: 0 },
+    { label: '3+', value: 3 },
+    { label: '4+', value: 4 },
+    { label: '5+', value: 5 },
+    { label: '6+', value: 6 }
+  ];
+  bedOptions.forEach((option, index) => {
+    const btn = createElement('button', `properties-page__filter${index === 0 ? ' active' : ''}`, option.label);
+    btn.setAttribute('data-filter-type', 'beds');
+    btn.setAttribute('data-filter-value', option.value.toString());
+    bedsFilterGroup.appendChild(btn);
+  });
+  container.appendChild(bedsFilterGroup);
 
   // Grid
   const grid = createElement('div', 'properties-page__grid');
+  grid.id = 'properties-grid';
   properties.forEach(property => {
     grid.appendChild(createPropertyCard(property));
   });
@@ -417,6 +572,87 @@ export function renderPropertiesPage(): DocumentFragment {
 
   page.appendChild(container);
   fragment.appendChild(page);
+
+  // Function to re-render the grid
+  function renderGrid() {
+    const gridEl = document.getElementById('properties-grid');
+    if (!gridEl) return;
+
+    // Clear the grid safely (no innerHTML)
+    while (gridEl.firstChild) {
+      gridEl.removeChild(gridEl.firstChild);
+    }
+
+    // Filter properties
+    const filteredProperties = filterProperties(properties, currentFilterState);
+
+    if (filteredProperties.length === 0) {
+      // Show no results message
+      const noResults = createElement('div', 'properties-page__no-results');
+      const noResultsTitle = createElement('h3', undefined, 'No properties found');
+      const noResultsText = createElement('p', undefined, 'Try adjusting your filters to find more properties.');
+      noResults.appendChild(noResultsTitle);
+      noResults.appendChild(noResultsText);
+      gridEl.appendChild(noResults);
+    } else {
+      // Render filtered properties
+      filteredProperties.forEach(property => {
+        gridEl.appendChild(createPropertyCard(property));
+      });
+    }
+  }
+
+  // Add event listeners after the fragment is appended to DOM
+  setTimeout(() => {
+    // Search input handler
+    const searchEl = document.querySelector('.properties-page__search-input') as HTMLInputElement;
+    if (searchEl) {
+      let debounceTimeout: ReturnType<typeof setTimeout>;
+      searchEl.addEventListener('input', () => {
+        clearTimeout(debounceTimeout);
+        debounceTimeout = setTimeout(() => {
+          currentFilterState.searchQuery = searchEl.value;
+          renderGrid();
+        }, 300);
+      });
+    }
+
+    // Filter button handlers
+    const filterButtons = document.querySelectorAll('.properties-page__filter');
+    filterButtons.forEach(btn => {
+      btn.addEventListener('click', () => {
+        const filterType = btn.getAttribute('data-filter-type');
+        const filterValue = btn.getAttribute('data-filter-value');
+
+        if (!filterType || !filterValue) return;
+
+        // Update active state for buttons in the same group
+        const parentGroup = btn.parentElement;
+        if (parentGroup) {
+          parentGroup.querySelectorAll('.properties-page__filter').forEach(b => {
+            b.classList.remove('active');
+          });
+        }
+        btn.classList.add('active');
+
+        // Update filter state
+        switch (filterType) {
+          case 'type':
+            currentFilterState.type = filterValue;
+            break;
+          case 'price':
+            currentFilterState.priceRange = filterValue;
+            break;
+          case 'beds':
+            currentFilterState.minBeds = parseInt(filterValue, 10);
+            break;
+        }
+
+        // Re-render the grid
+        renderGrid();
+      });
+    });
+  }, 0);
 
   return fragment;
 }
@@ -558,9 +794,103 @@ export function renderContactPage(): DocumentFragment {
   // Form
   const formWrapper = createElement('div', 'contact-page__form');
   const form = createElement('form', 'form');
+  form.setAttribute('novalidate', '');
+
+  // Validation patterns
+  const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  const phonePattern = /^\+?[0-9]{1,4}[-.\s]?[0-9]{3}[-.\s]?[0-9]{3}[-.\s]?[0-9]{4,}$/;
+
+  // Validation error messages
+  const errorMessages: Record<string, string> = {
+    name: 'Please enter your full name',
+    email: 'Please enter a valid email address',
+    phone: 'Please enter a valid US phone number',
+    message: 'Please enter a message'
+  };
+
+  // Helper to validate a single field
+  function validateField(input: HTMLInputElement | HTMLTextAreaElement): boolean {
+    const name = input.name;
+    const value = input.value.trim();
+    let isValid = true;
+
+    if (!value) {
+      isValid = false;
+    } else if (name === 'email' && !emailPattern.test(value)) {
+      isValid = false;
+    } else if (name === 'phone' && !phonePattern.test(value)) {
+      isValid = false;
+    }
+
+    input.setAttribute('aria-invalid', String(!isValid));
+    const errorSpan = document.getElementById(`${name}-error`);
+    if (errorSpan) {
+      errorSpan.textContent = isValid ? '' : errorMessages[name];
+    }
+
+    return isValid;
+  }
+
+  // Helper to validate all fields
+  function validateAllFields(): boolean {
+    const inputs = form.querySelectorAll<HTMLInputElement | HTMLTextAreaElement>('.form__input, .form__textarea');
+    let allValid = true;
+    inputs.forEach(input => {
+      if (!validateField(input)) {
+        allValid = false;
+      }
+    });
+    return allValid;
+  }
+
+  // Success message container
+  const successMessage = createElement('div', 'form__success');
+  successMessage.style.display = 'none';
+  successMessage.textContent = 'Thank you for your inquiry! We will contact you shortly.';
+  successMessage.setAttribute('role', 'status');
+  successMessage.setAttribute('aria-live', 'polite');
+
   form.addEventListener('submit', (e) => {
     e.preventDefault();
-    alert('Thank you for your inquiry! We will contact you shortly.');
+
+    // Hide any previous success message
+    successMessage.style.display = 'none';
+
+    // Validate all fields
+    if (!validateAllFields()) {
+      return;
+    }
+
+    // Show loading state
+    const submitBtn = form.querySelector('.form__submit') as HTMLButtonElement;
+    const originalText = submitBtn.textContent;
+    submitBtn.textContent = 'Sending...';
+    submitBtn.disabled = true;
+
+    // Simulate form submission (replace with actual API call)
+    setTimeout(() => {
+      // Reset form
+      form.reset();
+
+      // Reset aria-invalid attributes
+      const inputs = form.querySelectorAll<HTMLInputElement | HTMLTextAreaElement>('.form__input, .form__textarea');
+      inputs.forEach(input => {
+        input.setAttribute('aria-invalid', 'false');
+      });
+
+      // Clear error messages
+      const errorSpans = form.querySelectorAll('.form__error-message');
+      errorSpans.forEach(span => {
+        span.textContent = '';
+      });
+
+      // Show success message
+      successMessage.style.display = 'block';
+
+      // Restore button
+      submitBtn.textContent = originalText;
+      submitBtn.disabled = false;
+    }, 1000);
   });
 
   const fields = [
@@ -579,8 +909,21 @@ export function renderContactPage(): DocumentFragment {
     input.id = field.name;
     input.placeholder = field.placeholder;
     input.required = true;
+    input.setAttribute('aria-required', 'true');
+    input.setAttribute('aria-invalid', 'false');
+    input.setAttribute('aria-describedby', `${field.name}-error`);
+
+    // Add blur validation
+    input.addEventListener('blur', () => validateField(input));
+
+    // Error message span
+    const errorSpan = createElement('span', 'form__error-message');
+    errorSpan.id = `${field.name}-error`;
+    errorSpan.setAttribute('aria-live', 'polite');
+
     group.appendChild(label);
     group.appendChild(input);
+    group.appendChild(errorSpan);
     form.appendChild(group);
   });
 
@@ -593,13 +936,30 @@ export function renderContactPage(): DocumentFragment {
   textarea.id = 'message';
   textarea.placeholder = 'Tell us about your ideal property...';
   textarea.rows = 5;
+  textarea.required = true;
+  textarea.setAttribute('aria-required', 'true');
+  textarea.setAttribute('aria-invalid', 'false');
+  textarea.setAttribute('aria-describedby', 'message-error');
+
+  // Add blur validation for textarea
+  textarea.addEventListener('blur', () => validateField(textarea));
+
+  // Error message span for message
+  const msgErrorSpan = createElement('span', 'form__error-message');
+  msgErrorSpan.id = 'message-error';
+  msgErrorSpan.setAttribute('aria-live', 'polite');
+
   msgGroup.appendChild(msgLabel);
   msgGroup.appendChild(textarea);
+  msgGroup.appendChild(msgErrorSpan);
   form.appendChild(msgGroup);
 
   const submit = createElement('button', 'form__submit', 'Send Message');
   submit.type = 'submit';
   form.appendChild(submit);
+
+  // Add success message after the form
+  form.appendChild(successMessage);
 
   formWrapper.appendChild(form);
   grid.appendChild(formWrapper);
@@ -608,10 +968,11 @@ export function renderContactPage(): DocumentFragment {
   const info = createElement('div', 'contact-page__info');
 
   const infoItems = [
-    { title: 'Office', content: '100 Park Avenue, Suite 1500\nNew York, NY 10017' },
-    { title: 'Phone', content: '+1 (212) 555-0100', isLink: true, href: 'tel:+12125550100' },
-    { title: 'Email', content: 'hello@realhouse.com', isLink: true, href: 'mailto:hello@realhouse.com' },
-    { title: 'Hours', content: 'Monday - Friday: 9AM - 6PM\nWeekends: By Appointment' }
+    { title: 'Office', content: 'Dream City, Erbil\nKurdistan Region, Iraq' },
+    { title: 'Abdalkader', content: '+964 750 792 2138', isLink: true, href: 'tel:+9647507922138' },
+    { title: 'Mahmood', content: '+964 751 441 5003', isLink: true, href: 'tel:+9647514415003' },
+    { title: 'Email', content: 'info@realhouseiq.com', isLink: true, href: 'mailto:info@realhouseiq.com' },
+    { title: 'Hours', content: 'Saturday - Thursday: 9AM - 6PM\nFriday: By Appointment' }
   ];
 
   infoItems.forEach(item => {
@@ -733,7 +1094,7 @@ export function renderPropertyDetailPage(propertyId: string): DocumentFragment {
 
   const location = createElement('p', 'property-detail__location');
   location.appendChild(createSVGUse('icon-location'));
-  location.appendChild(document.createTextNode(`${property.location.address}, ${property.location.city}, ${property.location.state}`));
+  location.appendChild(document.createTextNode(`${property.location.address}, ${property.location.district}, ${property.location.city}`));
   header.appendChild(location);
 
   mainInfo.appendChild(header);
@@ -756,8 +1117,8 @@ export function renderPropertyDetailPage(propertyId: string): DocumentFragment {
   const specsData = [
     { icon: 'icon-bed', label: 'Bedrooms', value: property.specs.beds.toString() },
     { icon: 'icon-bath', label: 'Bathrooms', value: property.specs.baths.toString() },
-    { icon: 'icon-area', label: 'Square Feet', value: property.specs.sqft.toLocaleString() },
-    { icon: 'icon-calendar', label: 'Year Built', value: property.specs.yearBuilt.toString() }
+    { icon: 'icon-area', label: 'Area (m²)', value: property.specs.sqm.toLocaleString() },
+    ...(property.specs.yearBuilt ? [{ icon: 'icon-calendar', label: 'Year Built', value: property.specs.yearBuilt.toString() }] : [])
   ];
 
   specsData.forEach(spec => {
@@ -831,15 +1192,15 @@ export function renderPropertyDetailPage(propertyId: string): DocumentFragment {
   const agentContact = createElement('div', 'property-detail__agent-contact');
 
   const phoneLink = createElement('a', 'property-detail__agent-link');
-  phoneLink.href = 'tel:+12125550100';
+  phoneLink.href = 'tel:+9647507922138';
   phoneLink.appendChild(createSVGUse('icon-phone'));
-  phoneLink.appendChild(document.createTextNode('+1 (212) 555-0100'));
+  phoneLink.appendChild(document.createTextNode('+964 750 792 2138'));
   agentContact.appendChild(phoneLink);
 
   const emailLink = createElement('a', 'property-detail__agent-link');
-  emailLink.href = 'mailto:marcus@realhouse.com';
+  emailLink.href = 'mailto:contact@realhouseiq.com';
   emailLink.appendChild(createSVGUse('icon-email'));
-  emailLink.appendChild(document.createTextNode('marcus@realhouse.com'));
+  emailLink.appendChild(document.createTextNode('contact@realhouseiq.com'));
   agentContact.appendChild(emailLink);
 
   agentCard.appendChild(agentContact);
@@ -853,7 +1214,7 @@ export function renderPropertyDetailPage(propertyId: string): DocumentFragment {
   agentActions.appendChild(scheduleBtn);
 
   const callBtn = createElement('a', 'btn btn--ghost btn--full', 'Call Agent');
-  callBtn.href = 'tel:+12125550100';
+  callBtn.href = 'tel:+9647507922138';
   agentActions.appendChild(callBtn);
 
   agentCard.appendChild(agentActions);
@@ -871,7 +1232,7 @@ export function renderPropertyDetailPage(propertyId: string): DocumentFragment {
   addressLine.appendChild(document.createTextNode(property.location.address));
   addressInfo.appendChild(addressLine);
 
-  const cityLine = createElement('p', 'property-detail__city-line', `${property.location.city}, ${property.location.state}`);
+  const cityLine = createElement('p', 'property-detail__city-line', `${property.location.district}, ${property.location.city}`);
   addressInfo.appendChild(cityLine);
 
   const countryLine = createElement('p', 'property-detail__country-line', property.location.country);
@@ -898,5 +1259,507 @@ export function renderPropertyDetailPage(propertyId: string): DocumentFragment {
   page.appendChild(backSection);
 
   fragment.appendChild(page);
+  return fragment;
+}
+
+// ─── Privacy Policy Page ──────────────────────────────────────────────────
+export function renderPrivacyPage(): DocumentFragment {
+  const fragment = document.createDocumentFragment();
+
+  const page = createElement('div', 'privacy-page');
+  const container = createElement('div', 'container');
+
+  // Header
+  const header = createElement('div', 'privacy-page__header');
+  const title = createElement('h1', 'privacy-page__title', 'Privacy Policy');
+  const lastUpdated = createElement('p', 'privacy-page__date', 'Last Updated: February 2026');
+  header.appendChild(title);
+  header.appendChild(lastUpdated);
+  container.appendChild(header);
+
+  // Content
+  const content = createElement('div', 'privacy-page__content');
+
+  // Introduction
+  const intro = createElement('section', 'privacy-page__section');
+  const introTitle = createElement('h2', undefined, 'Introduction');
+  const introP1 = createElement('p', undefined, 'Real House ("we," "our," or "us") is committed to protecting your privacy. This Privacy Policy explains how we collect, use, disclose, and safeguard your information when you visit our website or use our services.');
+  const introP2 = createElement('p', undefined, 'Please read this privacy policy carefully. If you do not agree with the terms of this privacy policy, please do not access the site.');
+  intro.appendChild(introTitle);
+  intro.appendChild(introP1);
+  intro.appendChild(introP2);
+  content.appendChild(intro);
+
+  // Information We Collect
+  const collection = createElement('section', 'privacy-page__section');
+  const collectionTitle = createElement('h2', undefined, 'Information We Collect');
+
+  const personalInfo = createElement('h3', undefined, 'Personal Information');
+  const personalP = createElement('p', undefined, 'We may collect personal information that you voluntarily provide to us when you:');
+  const personalList = createElement('ul');
+  const personalItems = [
+    'Register on our website or request property information',
+    'Schedule property viewings or consultations',
+    'Subscribe to our newsletter or marketing communications',
+    'Contact us through our website, email, or phone',
+    'Apply for financing or mortgage pre-approval assistance'
+  ];
+  personalItems.forEach(item => {
+    const li = createElement('li', undefined, item);
+    personalList.appendChild(li);
+  });
+
+  const autoInfo = createElement('h3', undefined, 'Automatically Collected Information');
+  const autoP = createElement('p', undefined, 'When you visit our website, we automatically collect certain information about your device, including:');
+  const autoList = createElement('ul');
+  const autoItems = [
+    'IP address and browser type',
+    'Operating system and device information',
+    'Pages visited and time spent on our website',
+    'Referring website addresses',
+    'Property search history and preferences'
+  ];
+  autoItems.forEach(item => {
+    const li = createElement('li', undefined, item);
+    autoList.appendChild(li);
+  });
+
+  collection.appendChild(collectionTitle);
+  collection.appendChild(personalInfo);
+  collection.appendChild(personalP);
+  collection.appendChild(personalList);
+  collection.appendChild(autoInfo);
+  collection.appendChild(autoP);
+  collection.appendChild(autoList);
+  content.appendChild(collection);
+
+  // How We Use Your Information
+  const usage = createElement('section', 'privacy-page__section');
+  const usageTitle = createElement('h2', undefined, 'How We Use Your Information');
+  const usageP = createElement('p', undefined, 'We use the information we collect to:');
+  const usageList = createElement('ul');
+  const usageItems = [
+    'Provide, operate, and maintain our services',
+    'Process property inquiries and schedule viewings',
+    'Send you relevant property listings and market updates',
+    'Respond to your comments, questions, and requests',
+    'Improve our website and customer service',
+    'Send you marketing and promotional communications (with your consent)',
+    'Protect against fraudulent or illegal activity'
+  ];
+  usageItems.forEach(item => {
+    const li = createElement('li', undefined, item);
+    usageList.appendChild(li);
+  });
+  usage.appendChild(usageTitle);
+  usage.appendChild(usageP);
+  usage.appendChild(usageList);
+  content.appendChild(usage);
+
+  // Cookies
+  const cookies = createElement('section', 'privacy-page__section');
+  const cookiesTitle = createElement('h2', undefined, 'Cookies and Tracking Technologies');
+  const cookiesP1 = createElement('p', undefined, 'We use cookies and similar tracking technologies to track activity on our website and store certain information. Cookies are files with a small amount of data that may include an anonymous unique identifier.');
+  const cookiesP2 = createElement('p', undefined, 'You can instruct your browser to refuse all cookies or to indicate when a cookie is being sent. However, if you do not accept cookies, you may not be able to use some portions of our website.');
+  const cookiesTypes = createElement('h3', undefined, 'Types of Cookies We Use:');
+  const cookiesList = createElement('ul');
+  const cookiesItems = [
+    'Essential Cookies: Required for the website to function properly',
+    'Analytics Cookies: Help us understand how visitors interact with our website',
+    'Marketing Cookies: Used to track visitors across websites for advertising purposes',
+    'Preference Cookies: Remember your settings and preferences'
+  ];
+  cookiesItems.forEach(item => {
+    const li = createElement('li', undefined, item);
+    cookiesList.appendChild(li);
+  });
+  cookies.appendChild(cookiesTitle);
+  cookies.appendChild(cookiesP1);
+  cookies.appendChild(cookiesP2);
+  cookies.appendChild(cookiesTypes);
+  cookies.appendChild(cookiesList);
+  content.appendChild(cookies);
+
+  // Third Party Disclosure
+  const thirdParty = createElement('section', 'privacy-page__section');
+  const thirdPartyTitle = createElement('h2', undefined, 'Third-Party Disclosure');
+  const thirdPartyP1 = createElement('p', undefined, 'We may share your information with third parties in the following circumstances:');
+  const thirdPartyList = createElement('ul');
+  const thirdPartyItems = [
+    'With property owners, sellers, or their agents when you inquire about a property',
+    'With mortgage lenders and financial institutions when you request financing assistance',
+    'With service providers who assist us in operating our website and services',
+    'With legal authorities when required by law or to protect our rights',
+    'In connection with a merger, acquisition, or sale of assets'
+  ];
+  thirdPartyItems.forEach(item => {
+    const li = createElement('li', undefined, item);
+    thirdPartyList.appendChild(li);
+  });
+  const thirdPartyP2 = createElement('p', undefined, 'We do not sell, trade, or otherwise transfer your personally identifiable information to outside parties for marketing purposes without your explicit consent.');
+  thirdParty.appendChild(thirdPartyTitle);
+  thirdParty.appendChild(thirdPartyP1);
+  thirdParty.appendChild(thirdPartyList);
+  thirdParty.appendChild(thirdPartyP2);
+  content.appendChild(thirdParty);
+
+  // Data Security
+  const security = createElement('section', 'privacy-page__section');
+  const securityTitle = createElement('h2', undefined, 'Data Security');
+  const securityP = createElement('p', undefined, 'We implement appropriate technical and organizational security measures to protect your personal information against unauthorized access, alteration, disclosure, or destruction. However, no method of transmission over the Internet or electronic storage is 100% secure, and we cannot guarantee absolute security.');
+  security.appendChild(securityTitle);
+  security.appendChild(securityP);
+  content.appendChild(security);
+
+  // Your Rights
+  const rights = createElement('section', 'privacy-page__section');
+  const rightsTitle = createElement('h2', undefined, 'Your Privacy Rights');
+  const rightsP = createElement('p', undefined, 'Depending on your location, you may have the following rights regarding your personal information:');
+  const rightsList = createElement('ul');
+  const rightsItems = [
+    'Right to access and obtain a copy of your personal data',
+    'Right to rectify inaccurate or incomplete information',
+    'Right to erasure ("right to be forgotten")',
+    'Right to restrict or object to processing',
+    'Right to data portability',
+    'Right to withdraw consent at any time'
+  ];
+  rightsItems.forEach(item => {
+    const li = createElement('li', undefined, item);
+    rightsList.appendChild(li);
+  });
+  const rightsP2 = createElement('p', undefined, 'To exercise any of these rights, please contact us using the information provided below.');
+  rights.appendChild(rightsTitle);
+  rights.appendChild(rightsP);
+  rights.appendChild(rightsList);
+  rights.appendChild(rightsP2);
+  content.appendChild(rights);
+
+  // Contact
+  const contact = createElement('section', 'privacy-page__section');
+  const contactTitle = createElement('h2', undefined, 'Contact Us');
+  const contactP = createElement('p', undefined, 'If you have any questions about this Privacy Policy or our data practices, please contact us at:');
+  const contactInfo = createElement('div', 'privacy-page__contact');
+  const contactEmail = createElement('p');
+  contactEmail.textContent = 'Email: ';
+  const emailLink = createElement('a');
+  emailLink.href = 'mailto:privacy@realhouseiq.com';
+  emailLink.textContent = 'privacy@realhouseiq.com';
+  contactEmail.appendChild(emailLink);
+  const contactPhone = createElement('p', undefined, 'Phone: +964 750 792 2138');
+  const contactAddress = createElement('p', undefined, 'Address: Dream City, Erbil, Kurdistan Region, Iraq');
+  contactInfo.appendChild(contactEmail);
+  contactInfo.appendChild(contactPhone);
+  contactInfo.appendChild(contactAddress);
+  contact.appendChild(contactTitle);
+  contact.appendChild(contactP);
+  contact.appendChild(contactInfo);
+  content.appendChild(contact);
+
+  container.appendChild(content);
+  page.appendChild(container);
+  fragment.appendChild(page);
+
+  return fragment;
+}
+
+// ─── Terms of Service Page ────────────────────────────────────────────────
+export function renderTermsPage(): DocumentFragment {
+  const fragment = document.createDocumentFragment();
+
+  const page = createElement('div', 'terms-page');
+  const container = createElement('div', 'container');
+
+  // Header
+  const header = createElement('div', 'terms-page__header');
+  const title = createElement('h1', 'terms-page__title', 'Terms of Service');
+  const lastUpdated = createElement('p', 'terms-page__date', 'Last Updated: February 2026');
+  header.appendChild(title);
+  header.appendChild(lastUpdated);
+  container.appendChild(header);
+
+  // Content
+  const content = createElement('div', 'terms-page__content');
+
+  // Agreement
+  const agreement = createElement('section', 'terms-page__section');
+  const agreementTitle = createElement('h2', undefined, 'Agreement to Terms');
+  const agreementP1 = createElement('p', undefined, 'By accessing or using the Real House website and services, you agree to be bound by these Terms of Service and all applicable laws and regulations. If you do not agree with any of these terms, you are prohibited from using or accessing this site.');
+  const agreementP2 = createElement('p', undefined, 'These Terms of Service apply to all visitors, users, and others who access or use our services. We reserve the right to modify these terms at any time, and such modifications shall be effective immediately upon posting.');
+  agreement.appendChild(agreementTitle);
+  agreement.appendChild(agreementP1);
+  agreement.appendChild(agreementP2);
+  content.appendChild(agreement);
+
+  // Use of Service
+  const useService = createElement('section', 'terms-page__section');
+  const useServiceTitle = createElement('h2', undefined, 'Use of Service');
+  const useServiceP1 = createElement('p', undefined, 'Our services are intended to provide information about luxury real estate properties and connect potential buyers with property listings. You agree to use our services only for lawful purposes and in accordance with these Terms.');
+  const useServiceP2 = createElement('p', undefined, 'You agree not to:');
+  const useServiceList = createElement('ul');
+  const useServiceItems = [
+    'Use the service for any unlawful purpose or in violation of any applicable laws',
+    'Attempt to gain unauthorized access to any portion of the service or any systems',
+    'Interfere with or disrupt the service or servers connected to the service',
+    'Use any robot, spider, or other automatic device to access the service',
+    'Transmit any viruses, worms, or other malicious code',
+    'Collect or harvest any personally identifiable information from other users',
+    'Impersonate any person or entity or misrepresent your affiliation'
+  ];
+  useServiceItems.forEach(item => {
+    const li = createElement('li', undefined, item);
+    useServiceList.appendChild(li);
+  });
+  useService.appendChild(useServiceTitle);
+  useService.appendChild(useServiceP1);
+  useService.appendChild(useServiceP2);
+  useService.appendChild(useServiceList);
+  content.appendChild(useService);
+
+  // Property Listings
+  const listings = createElement('section', 'terms-page__section');
+  const listingsTitle = createElement('h2', undefined, 'Property Listings and Information');
+  const listingsP1 = createElement('p', undefined, 'All property information, including but not limited to prices, availability, features, and descriptions, is provided for informational purposes only. While we strive to ensure accuracy, we do not guarantee that all information is complete, accurate, or current.');
+  const listingsP2 = createElement('p', undefined, 'Property listings may be subject to change without notice. Prices listed do not include closing costs, taxes, or other fees that may be applicable. All property purchases are subject to separate purchase agreements and due diligence.');
+  listings.appendChild(listingsTitle);
+  listings.appendChild(listingsP1);
+  listings.appendChild(listingsP2);
+  content.appendChild(listings);
+
+  // Intellectual Property
+  const ip = createElement('section', 'terms-page__section');
+  const ipTitle = createElement('h2', undefined, 'Intellectual Property Rights');
+  const ipP1 = createElement('p', undefined, 'The Real House website and its entire contents, features, and functionality (including but not limited to all information, software, text, displays, images, video, and audio) are owned by Real House, its licensors, or other providers and are protected by United States and international copyright, trademark, patent, trade secret, and other intellectual property laws.');
+  const ipP2 = createElement('p', undefined, 'You may not:');
+  const ipList = createElement('ul');
+  const ipItems = [
+    'Copy, reproduce, or distribute any content without express written permission',
+    'Modify, create derivative works based on, or reverse engineer any content',
+    'Use any content for commercial purposes without authorization',
+    'Remove any copyright or proprietary notices from materials',
+    'Transfer content to another person or "mirror" content on any other server'
+  ];
+  ipItems.forEach(item => {
+    const li = createElement('li', undefined, item);
+    ipList.appendChild(li);
+  });
+  ip.appendChild(ipTitle);
+  ip.appendChild(ipP1);
+  ip.appendChild(ipP2);
+  ip.appendChild(ipList);
+  content.appendChild(ip);
+
+  // User Accounts
+  const accounts = createElement('section', 'terms-page__section');
+  const accountsTitle = createElement('h2', undefined, 'User Accounts');
+  const accountsP1 = createElement('p', undefined, 'When you create an account with us, you must provide accurate, complete, and current information. You are responsible for safeguarding the password and for all activities that occur under your account.');
+  const accountsP2 = createElement('p', undefined, 'You agree to immediately notify us of any unauthorized use of your account or any other security breach. We will not be liable for any loss or damage arising from your failure to comply with this section.');
+  accounts.appendChild(accountsTitle);
+  accounts.appendChild(accountsP1);
+  accounts.appendChild(accountsP2);
+  content.appendChild(accounts);
+
+  // Disclaimers
+  const disclaimers = createElement('section', 'terms-page__section');
+  const disclaimersTitle = createElement('h2', undefined, 'Disclaimers');
+  const disclaimersP1 = createElement('p', undefined, 'THE SERVICE IS PROVIDED ON AN "AS IS" AND "AS AVAILABLE" BASIS WITHOUT ANY WARRANTIES OF ANY KIND, EITHER EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO IMPLIED WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE, OR NON-INFRINGEMENT.');
+  const disclaimersP2 = createElement('p', undefined, 'Real House does not warrant that the service will be uninterrupted, timely, secure, or error-free. We do not warrant the accuracy or reliability of any information obtained through the service.');
+  const disclaimersP3 = createElement('p', undefined, 'Real House is not a licensed real estate broker or agent in all jurisdictions and may refer you to licensed professionals for certain transactions.');
+  disclaimers.appendChild(disclaimersTitle);
+  disclaimers.appendChild(disclaimersP1);
+  disclaimers.appendChild(disclaimersP2);
+  disclaimers.appendChild(disclaimersP3);
+  content.appendChild(disclaimers);
+
+  // Limitation of Liability
+  const liability = createElement('section', 'terms-page__section');
+  const liabilityTitle = createElement('h2', undefined, 'Limitation of Liability');
+  const liabilityP1 = createElement('p', undefined, 'TO THE FULLEST EXTENT PERMITTED BY APPLICABLE LAW, REAL HOUSE SHALL NOT BE LIABLE FOR ANY INDIRECT, INCIDENTAL, SPECIAL, CONSEQUENTIAL, OR PUNITIVE DAMAGES, INCLUDING WITHOUT LIMITATION LOSS OF PROFITS, DATA, USE, GOODWILL, OR OTHER INTANGIBLE LOSSES.');
+  const liabilityP2 = createElement('p', undefined, 'In no event shall our total liability exceed the amount you have paid to us in the twelve (12) months prior to the event giving rise to the liability, or one hundred dollars ($100) if you have not made any payments.');
+  liability.appendChild(liabilityTitle);
+  liability.appendChild(liabilityP1);
+  liability.appendChild(liabilityP2);
+  content.appendChild(liability);
+
+  // Indemnification
+  const indemnification = createElement('section', 'terms-page__section');
+  const indemnificationTitle = createElement('h2', undefined, 'Indemnification');
+  const indemnificationP = createElement('p', undefined, 'You agree to defend, indemnify, and hold harmless Real House and its officers, directors, employees, contractors, agents, licensors, and suppliers from and against any claims, liabilities, damages, judgments, awards, losses, costs, expenses, or fees (including reasonable attorneys\' fees) arising out of or relating to your violation of these Terms or your use of the service.');
+  indemnification.appendChild(indemnificationTitle);
+  indemnification.appendChild(indemnificationP);
+  content.appendChild(indemnification);
+
+  // Governing Law
+  const governing = createElement('section', 'terms-page__section');
+  const governingTitle = createElement('h2', undefined, 'Governing Law');
+  const governingP = createElement('p', undefined, 'These Terms shall be governed by and construed in accordance with the laws of the Kurdistan Region of Iraq. Any legal action or proceeding arising under these Terms will be brought exclusively in the courts located in Erbil, Kurdistan Region, Iraq.');
+  governing.appendChild(governingTitle);
+  governing.appendChild(governingP);
+  content.appendChild(governing);
+
+  // Changes to Terms
+  const changes = createElement('section', 'terms-page__section');
+  const changesTitle = createElement('h2', undefined, 'Changes to Terms');
+  const changesP = createElement('p', undefined, 'We reserve the right to modify or replace these Terms at any time at our sole discretion. If a revision is material, we will provide at least 30 days\' notice prior to any new terms taking effect. What constitutes a material change will be determined at our sole discretion. By continuing to access or use our service after revisions become effective, you agree to be bound by the revised terms.');
+  changes.appendChild(changesTitle);
+  changes.appendChild(changesP);
+  content.appendChild(changes);
+
+  // Contact
+  const contact = createElement('section', 'terms-page__section');
+  const contactTitle = createElement('h2', undefined, 'Contact Us');
+  const contactP = createElement('p', undefined, 'If you have any questions about these Terms of Service, please contact us at:');
+  const contactInfo = createElement('div', 'terms-page__contact');
+  const contactEmail = createElement('p');
+  contactEmail.textContent = 'Email: ';
+  const emailLink = createElement('a');
+  emailLink.href = 'mailto:legal@realhouseiq.com';
+  emailLink.textContent = 'legal@realhouseiq.com';
+  contactEmail.appendChild(emailLink);
+  const contactPhone = createElement('p', undefined, 'Phone: +964 750 792 2138');
+  const contactAddress = createElement('p', undefined, 'Address: Dream City, Erbil, Kurdistan Region, Iraq');
+  contactInfo.appendChild(contactEmail);
+  contactInfo.appendChild(contactPhone);
+  contactInfo.appendChild(contactAddress);
+  contact.appendChild(contactTitle);
+  contact.appendChild(contactP);
+  contact.appendChild(contactInfo);
+  content.appendChild(contact);
+
+  container.appendChild(content);
+  page.appendChild(container);
+  fragment.appendChild(page);
+
+  return fragment;
+}
+
+// ─── FAQ Page ─────────────────────────────────────────────────────────────
+export function renderFAQPage(): DocumentFragment {
+  const fragment = document.createDocumentFragment();
+
+  const page = createElement('div', 'faq-page');
+  const container = createElement('div', 'container');
+
+  // Header
+  const header = createElement('div', 'faq-page__header');
+  const title = createElement('h1', 'faq-page__title', 'Frequently Asked Questions');
+  const subtitle = createElement('p', 'faq-page__subtitle', 'Find answers to common questions about our services and the home buying process.');
+  header.appendChild(title);
+  header.appendChild(subtitle);
+  container.appendChild(header);
+
+  // FAQ Accordion
+  const accordion = createElement('div', 'faq-page__accordion');
+
+  const faqs = [
+    {
+      question: 'How do I schedule a viewing?',
+      answer: 'Scheduling a viewing is easy. Simply navigate to any property listing and click the "Schedule Viewing" button, or contact us directly through our contact page. You can also call our office at +964 750 792 2138. Our agents are available Monday through Friday from 9 AM to 6 PM, and by appointment on weekends. We offer both in-person tours and virtual walkthroughs via video call for your convenience.'
+    },
+    {
+      question: 'What areas do you serve?',
+      answer: 'Real House specializes in luxury properties across 15 global markets. Our primary focus areas include Manhattan, The Hamptons, Miami, Los Angeles, San Francisco, and international destinations such as London, Paris, Monaco, and Dubai. We have established networks of trusted partners in each market to ensure seamless service regardless of location. Contact us to discuss your specific geographic preferences.'
+    },
+    {
+      question: 'How does the buying process work?',
+      answer: 'Our buying process is designed to be smooth and transparent. It typically involves: 1) Initial consultation to understand your needs and preferences, 2) Property curation where we handpick listings matching your criteria, 3) Private viewings and tours of selected properties, 4) Making an offer with expert negotiation support, 5) Due diligence including inspections and appraisals, 6) Closing with full transaction management support. Our team guides you through every step, typically completing transactions within 30-90 days depending on complexity.'
+    },
+    {
+      question: 'Do you help with financing?',
+      answer: 'Yes, we provide comprehensive financing assistance. While Real House is not a lender, we have established relationships with premier private banks, mortgage lenders, and financial institutions specializing in luxury real estate. We can connect you with financing options including jumbo mortgages, portfolio loans, and international financing solutions. Our team can also assist with mortgage pre-approval to strengthen your purchasing position.'
+    },
+    {
+      question: 'What are your fees?',
+      answer: 'For buyers, our services are typically free of charge as we receive compensation from the listing side of the transaction. For sellers, our commission structure is competitive and varies based on the property value and market. We offer tiered commission rates for high-value properties and portfolio listings. All fees are transparent and discussed upfront before any agreement. Contact us for a personalized consultation to discuss your specific situation.'
+    },
+    {
+      question: 'Can you help me sell my property?',
+      answer: 'Absolutely. We offer comprehensive selling services including professional photography and videography, virtual tours, targeted marketing to our network of qualified buyers, staging consultations, and expert pricing strategy. Our properties receive exposure through our website, partner networks, and exclusive luxury real estate platforms. Our average time to sell is significantly below market average for comparable properties.'
+    },
+    {
+      question: 'Do you work with international buyers?',
+      answer: 'Yes, we have extensive experience working with international buyers and investors. We understand the unique requirements including visa considerations, foreign national financing, tax implications, and currency exchange. Our multilingual team can assist clients from around the world, and we have established processes for remote transactions including virtual tours, digital document signing, and coordination with international attorneys and financial institutions.'
+    },
+    {
+      question: 'What makes Real House different from other agencies?',
+      answer: 'Real House combines over 24 years of experience with a personalized, white-glove approach to luxury real estate. Unlike large agencies, we maintain a curated portfolio ensuring quality over quantity. Our agents specialize exclusively in luxury properties and provide dedicated attention to each client. We offer access to off-market listings, a global network of partners, and comprehensive concierge services including relocation assistance, interior design referrals, and property management connections.'
+    }
+  ];
+
+  faqs.forEach((faq) => {
+    const item = createElement('div', 'faq-page__item');
+    item.setAttribute('data-faq-item', '');
+
+    const question = createElement('button', 'faq-page__question');
+    question.setAttribute('aria-expanded', 'false');
+    question.setAttribute('data-faq-trigger', '');
+
+    const questionText = createElement('span', 'faq-page__question-text', faq.question);
+    question.appendChild(questionText);
+
+    const icon = createElement('span', 'faq-page__icon');
+    icon.textContent = '+';
+    question.appendChild(icon);
+
+    const answer = createElement('div', 'faq-page__answer');
+    answer.setAttribute('data-faq-answer', '');
+    const answerContent = createElement('div', 'faq-page__answer-content');
+    const answerP = createElement('p', undefined, faq.answer);
+    answerContent.appendChild(answerP);
+    answer.appendChild(answerContent);
+
+    // Add click handler for accordion functionality
+    question.addEventListener('click', () => {
+      const isExpanded = question.getAttribute('aria-expanded') === 'true';
+
+      // Close all other items
+      accordion.querySelectorAll('.faq-page__item').forEach(otherItem => {
+        const otherQuestion = otherItem.querySelector('.faq-page__question');
+        const otherAnswer = otherItem.querySelector('.faq-page__answer') as HTMLElement;
+        const otherIcon = otherItem.querySelector('.faq-page__icon');
+        if (otherQuestion && otherAnswer && otherIcon && otherQuestion !== question) {
+          otherQuestion.setAttribute('aria-expanded', 'false');
+          otherAnswer.style.maxHeight = '0';
+          otherIcon.textContent = '+';
+          otherItem.classList.remove('active');
+        }
+      });
+
+      // Toggle current item
+      if (isExpanded) {
+        question.setAttribute('aria-expanded', 'false');
+        (answer as HTMLElement).style.maxHeight = '0';
+        icon.textContent = '+';
+        item.classList.remove('active');
+      } else {
+        question.setAttribute('aria-expanded', 'true');
+        (answer as HTMLElement).style.maxHeight = answer.scrollHeight + 'px';
+        icon.textContent = '-';
+        item.classList.add('active');
+      }
+    });
+
+    item.appendChild(question);
+    item.appendChild(answer);
+    accordion.appendChild(item);
+  });
+
+  container.appendChild(accordion);
+
+  // Contact CTA
+  const cta = createElement('div', 'faq-page__cta');
+  const ctaTitle = createElement('h3', undefined, 'Still have questions?');
+  const ctaText = createElement('p', undefined, 'Our team is here to help. Contact us for personalized assistance.');
+  const ctaBtn = createElement('a', 'btn btn--primary', 'Contact Us');
+  ctaBtn.href = '/contact';
+  ctaBtn.setAttribute('data-route', '');
+  cta.appendChild(ctaTitle);
+  cta.appendChild(ctaText);
+  cta.appendChild(ctaBtn);
+  container.appendChild(cta);
+
+  page.appendChild(container);
+  fragment.appendChild(page);
+
   return fragment;
 }

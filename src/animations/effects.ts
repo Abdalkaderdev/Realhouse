@@ -69,69 +69,6 @@ export function initMagneticElements(): void {
   });
 }
 
-// ─── Text Scramble Effect ─────────────────────────────────────────────────
-export function textScramble(element: HTMLElement, newText?: string): gsap.core.Timeline {
-  const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ!@#$%^&*()';
-  const originalText = newText || element.textContent || '';
-  const duration = 1.5;
-
-  element.style.fontFamily = 'monospace';
-
-  const tl = gsap.timeline();
-
-  tl.to({}, {
-    duration,
-    onUpdate: function() {
-      const progress = this.progress();
-      let result = '';
-
-      for (let i = 0; i < originalText.length; i++) {
-        const charProgress = (progress * originalText.length - i) / 1;
-
-        if (charProgress > 1) {
-          result += originalText[i];
-        } else if (charProgress > 0) {
-          result += chars[Math.floor(Math.random() * chars.length)];
-        } else {
-          result += originalText[i] === ' ' ? ' ' : chars[Math.floor(Math.random() * chars.length)];
-        }
-      }
-
-      element.textContent = result;
-    },
-    onComplete: () => {
-      element.textContent = originalText;
-      element.style.fontFamily = '';
-    }
-  });
-
-  return tl;
-}
-
-// ─── Reveal on Scroll with Clip Path ──────────────────────────────────────
-export function clipReveal(element: Element | string, direction: 'up' | 'down' | 'left' | 'right' = 'up'): gsap.core.Tween {
-  const clips: Record<string, { from: string; to: string }> = {
-    up: { from: 'inset(100% 0% 0% 0%)', to: 'inset(0% 0% 0% 0%)' },
-    down: { from: 'inset(0% 0% 100% 0%)', to: 'inset(0% 0% 0% 0%)' },
-    left: { from: 'inset(0% 100% 0% 0%)', to: 'inset(0% 0% 0% 0%)' },
-    right: { from: 'inset(0% 0% 0% 100%)', to: 'inset(0% 0% 0% 0%)' }
-  };
-
-  return gsap.fromTo(element,
-    { clipPath: clips[direction].from },
-    {
-      clipPath: clips[direction].to,
-      duration: 1.2,
-      ease: 'power4.inOut',
-      scrollTrigger: {
-        trigger: element,
-        start: 'top 85%',
-        toggleActions: 'play none none reverse'
-      }
-    }
-  );
-}
-
 // ─── Horizontal Scroll Section ────────────────────────────────────────────
 export function initHorizontalScroll(container: string): void {
   const section = document.querySelector(container);
@@ -283,27 +220,6 @@ export function initCardTilt(selector: string): void {
         gsap.to(shine, { opacity: 0, duration: 0.3 });
       }
     });
-  });
-}
-
-// ─── Number Counter with Morphing ─────────────────────────────────────────
-export function morphingCounter(element: HTMLElement, target: number, suffix = ''): void {
-  const obj = { val: 0 };
-
-  ScrollTrigger.create({
-    trigger: element,
-    start: 'top 80%',
-    onEnter: () => {
-      gsap.to(obj, {
-        val: target,
-        duration: 2.5,
-        ease: 'power2.out',
-        onUpdate: () => {
-          const current = Math.round(obj.val);
-          element.textContent = current.toLocaleString() + suffix;
-        }
-      });
-    }
   });
 }
 
@@ -464,13 +380,6 @@ export function initAllEffects(): void {
   initCardTilt('.property-card');
   initImageParallax('.property-card__media');
   initElasticButtons('.btn');
-
-  // Stats counters
-  document.querySelectorAll('.stats__number').forEach((el) => {
-    const target = parseInt((el as HTMLElement).dataset.target || '0', 10);
-    const suffix = (el as HTMLElement).dataset.suffix || '';
-    morphingCounter(el as HTMLElement, target, suffix);
-  });
 
   // Staggered reveals
   staggeredGridReveal('.featured__grid', '.property-card');

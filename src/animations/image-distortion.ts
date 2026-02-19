@@ -118,6 +118,11 @@ function loadTexture(gl: WebGLRenderingContext, image: HTMLImageElement): WebGLT
 const effects: Map<HTMLElement, DistortionEffect> = new Map();
 
 export function initImageDistortion(selector: string, intensity = 1.0): void {
+  // Skip WebGL initialization on mobile devices to reduce resource usage
+  if (window.innerWidth < 768) {
+    return;
+  }
+
   const elements = document.querySelectorAll(selector);
 
   elements.forEach((el) => {
