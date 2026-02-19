@@ -377,8 +377,10 @@ export function initElasticButtons(selector: string): void {
 // ─── Initialize All Effects ───────────────────────────────────────────────
 export function initAllEffects(): void {
   initMagneticElements();
-  initCardTilt('.property-card');
-  initImageParallax('.property-card__media');
+  // Disabled aggressive card tilt for elegant subtle hover effect
+  // initCardTilt('.property-card');
+  // Disabled image parallax for stable, elegant card hover
+  // initImageParallax('.property-card__media');
   initElasticButtons('.btn');
 
   // Staggered reveals

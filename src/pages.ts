@@ -195,6 +195,22 @@ export function renderHomePage(): DocumentFragment {
   const hero = createElement('section', 'hero');
   hero.id = 'hero';
 
+  // YouTube Video Background
+  const videoBackground = createElement('div', 'hero__video-background');
+  const videoIframe = document.createElement('iframe');
+  videoIframe.src = 'https://www.youtube.com/embed/N2nROpXXG88?autoplay=1&mute=1&loop=1&playlist=N2nROpXXG88&controls=0&showinfo=0&rel=0&modestbranding=1&playsinline=1';
+  videoIframe.className = 'hero__video-iframe';
+  videoIframe.setAttribute('frameborder', '0');
+  videoIframe.setAttribute('allow', 'autoplay; encrypted-media');
+  videoIframe.setAttribute('allowfullscreen', '');
+  videoIframe.setAttribute('loading', 'lazy');
+  videoBackground.appendChild(videoIframe);
+  hero.appendChild(videoBackground);
+
+  // Video Overlay for text readability
+  const videoOverlay = createElement('div', 'hero__video-overlay');
+  hero.appendChild(videoOverlay);
+
   const heroContent = createElement('div', 'hero__content container');
 
   // Headline
@@ -202,7 +218,7 @@ export function renderHomePage(): DocumentFragment {
   heroContent.appendChild(headline);
 
   // Subline
-  const subline = createElement('p', 'hero__subline', 'Luxury properties in the world\'s most desirable locations.');
+  const subline = createElement('p', 'hero__subline', 'What makes us different is trust.');
   heroContent.appendChild(subline);
 
   // CTA

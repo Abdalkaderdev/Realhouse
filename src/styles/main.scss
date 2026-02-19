@@ -111,14 +111,14 @@ em {
     margin-bottom: var(--space-8);
 
     svg {
-      width: 80px;
-      height: 40px;
+      width: 60px;
+      height: 72px;
     }
   }
 
   &__logo-line {
-    stroke-dasharray: 200;
-    stroke-dashoffset: 200;
+    stroke-dasharray: 300;
+    stroke-dashoffset: 300;
   }
 
   &__text {
@@ -209,14 +209,13 @@ em {
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 40px;
-    height: 40px;
-    background: linear-gradient(135deg, var(--c-gold-dark), var(--c-gold));
-    border-radius: var(--radius-sm);
-    font-family: var(--font-serif);
-    font-weight: 600;
-    font-size: var(--text-lg);
-    color: var(--c-bg);
+    width: 36px;
+    height: 44px;
+
+    svg {
+      width: 100%;
+      height: 100%;
+    }
   }
 
   &__logo-text {
@@ -509,13 +508,13 @@ em {
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 40px;
-    height: 40px;
-    background: linear-gradient(135deg, var(--c-gold-dark), var(--c-gold));
-    border-radius: var(--radius-sm);
-    font-family: var(--font-serif);
-    font-weight: 600;
-    color: var(--c-bg);
+    width: 36px;
+    height: 44px;
+
+    svg {
+      width: 100%;
+      height: 100%;
+    }
   }
 
   &__logo-text {
@@ -605,11 +604,83 @@ em {
 // ─── Hero Section ─────────────────────────────────────────────────────────
 .hero {
   position: relative;
-  min-height: 100vh;
+  height: 55vh; // Shorter hero to fully crop RETRO watermark
+  min-height: 380px;
+  max-height: 550px;
   display: flex;
   align-items: center;
   justify-content: center;
   overflow: hidden;
+
+  &__video-background {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 0;
+    pointer-events: none;
+    overflow: hidden;
+  }
+
+  &__video-iframe {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 100vw;
+    height: 56.25vw; // 16:9 aspect ratio
+    min-height: 220%; // Scale up significantly to crop bottom
+    min-width: 300vh;
+    transform: translate(-50%, -62%); // Shift up more to crop RETRO watermark
+    border: none;
+  }
+
+  &__video-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    // Very light overlay - preserves original video colors
+    background: linear-gradient(
+      to bottom,
+      rgba(10, 10, 15, 0.25) 0%,
+      rgba(10, 10, 15, 0.1) 50%,
+      rgba(10, 10, 15, 0.3) 100%
+    );
+    z-index: 1;
+  }
+
+  &__video-container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 0;
+    pointer-events: none;
+
+    iframe {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 100vw;
+      height: 56.25vw; // 16:9 aspect ratio
+      min-height: 100vh;
+      min-width: 177.77vh; // 16:9 aspect ratio
+      transform: translate(-50%, -50%);
+    }
+  }
+
+  &__overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 1;
+  }
 
   &__content {
     position: relative;
@@ -796,19 +867,21 @@ em {
   border-radius: var(--radius-lg);
   overflow: hidden;
   background: var(--c-surface);
-  transition: transform 0.5s var(--ease-out), box-shadow 0.5s;
+  transition: transform 0.4s var(--ease-out), box-shadow 0.4s;
   cursor: pointer;
+  border: 1px solid transparent;
 
   &:hover {
-    transform: translateY(-8px);
-    box-shadow: var(--shadow-lg);
+    transform: translateY(-4px);
+    box-shadow: 0 10px 40px rgba(201, 168, 76, 0.15);
+    border-color: rgba(201, 168, 76, 0.2);
 
     .property-card__image {
-      transform: scale(1.08);
+      transform: scale(1.03);
     }
 
     .property-card__overlay {
-      opacity: 0.4;
+      opacity: 0.5;
     }
   }
 
