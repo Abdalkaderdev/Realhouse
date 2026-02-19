@@ -492,7 +492,7 @@ export function renderHomePage(): DocumentFragment {
   // YouTube Video Background
   const videoBackground = createElement('div', 'hero__video-background');
   const videoIframe = document.createElement('iframe');
-  videoIframe.src = 'https://www.youtube.com/embed/N2nROpXXG88?autoplay=1&mute=1&loop=1&playlist=N2nROpXXG88&controls=0&showinfo=0&rel=0&modestbranding=1&playsinline=1';
+  videoIframe.src = 'https://www.youtube.com/embed/N2nROpXXG88?autoplay=1&mute=1&loop=1&playlist=N2nROpXXG88&controls=0&showinfo=0&rel=0&modestbranding=1&playsinline=1&start=0&end=60';
   videoIframe.className = 'hero__video-iframe';
   videoIframe.setAttribute('frameborder', '0');
   videoIframe.setAttribute('allow', 'autoplay; encrypted-media');
