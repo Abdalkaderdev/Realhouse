@@ -702,18 +702,18 @@ em {
     transform: translate(-50%, -62%); // Shift up more to crop RETRO watermark
     border: none;
 
-    // Mobile: reduce scaling so video is visible and properly cropped
+    // Mobile: scale up and cut from bottom to hide metro text
     @media (max-width: 768px) {
-      min-height: 150%;
-      min-width: 180vw;
-      transform: translate(-50%, -55%);
+      min-height: 160%;
+      min-width: 220vw;
+      transform: translate(-50%, -30%); // Cut more from bottom
     }
 
-    // Small mobile: further adjustments for very small screens
+    // Small mobile: aggressive cropping to hide metro text
     @media (max-width: 480px) {
-      min-height: 130%;
-      min-width: 200vw;
-      transform: translate(-50%, -52%);
+      min-height: 180%;
+      min-width: 250vw;
+      transform: translate(-50%, -25%); // Cut even more from bottom
     }
   }
 
@@ -748,9 +748,9 @@ em {
       left: 50%;
       width: 100vw;
       height: 56.25vw; // 16:9 aspect ratio
-      min-height: 100vh;
-      min-width: 177.77vh; // 16:9 aspect ratio
-      transform: translate(-50%, -50%);
+      min-height: 140vh; // Scale up to allow more cropping
+      min-width: 200vh; // Scale up to allow more cropping
+      transform: translate(-50%, -35%); // Move down to cut bottom (hide metro text)
     }
   }
 
