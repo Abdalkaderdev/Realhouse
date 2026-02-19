@@ -108,8 +108,8 @@ export const trustBadges: TrustBadge[] = [
   {
     id: 'badge-experience',
     icon: 'icon-award',
-    title: '15+ Years',
-    description: 'Over 15 years of trusted service in Kurdistan'
+    title: '23+ Years',
+    description: 'Over 23 years of trusted service in Kurdistan'
   }
 ];
 
