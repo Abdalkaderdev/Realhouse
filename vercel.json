@@ -24,11 +24,10 @@
     { "source": "/dream-city", "destination": "/properties/dream-city", "permanent": true },
     { "source": "/italian-village", "destination": "/properties/italian-village", "permanent": true },
     { "source": "/english-village", "destination": "/properties/english-village", "permanent": true },
-    { "source": "/empire-world", "destination": "/properties/empire-world", "permanent": true },
-    { "source": "/:path*/", "destination": "/:path*", "permanent": true }
+    { "source": "/empire-world", "destination": "/properties/empire-world", "permanent": true }
   ],
   "rewrites": [
-    { "source": "/(.*)", "destination": "/index.html" }
+    { "source": "/((?!assets|api|_next).*)", "destination": "/index.html" }
   ],
   "headers": [
     {
