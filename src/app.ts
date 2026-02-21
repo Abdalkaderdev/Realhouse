@@ -28,6 +28,9 @@ import { CursorTrail, initMagneticGlow, initRippleEffect } from './animations/cu
 import { renderHomePage, renderPropertiesPage, renderAboutPage, renderContactPage, renderPropertyDetailPage, renderPrivacyPage, renderTermsPage, renderFAQPage, renderComparisonPage, renderFavoritesPage, savePropertiesScrollPosition, getPropertiesScrollPosition, parseFiltersFromURL, render404Page } from './pages';
 import { renderEnhanced404Page, initGlobalErrorHandler, setup404PageSEO, logError } from './pages/404';
 import { renderProjectsPage, renderProjectDetailPage } from './pages/projects';
+import { renderComprehensiveProjectDetailPage } from './pages/project-detail';
+import { renderProjectComparePage, setupProjectComparePageSEO } from './pages/compare-projects';
+import { initProjectComparisonBar, updateProjectComparisonBar } from './components/project-compare';
 import { renderBlogPage, renderBlogPostPage, setupBlogPageSEO, setupBlogPostSEO } from './pages/blog';
 import { renderServicesPage, renderServiceDetailPage, setupServicesPageSEO, setupServiceDetailPageSEO } from './pages/services';
 import { renderLocationsPage, renderDistrictPage } from './pages/locations';
@@ -396,9 +399,12 @@ export class App {
       return renderFAQPage();
     } else if (path === '/projects') {
       return renderProjectsPage();
+    } else if (path === '/projects/compare') {
+      return renderProjectComparePage();
     } else if (path.startsWith('/projects/')) {
       const projectId = path.replace('/projects/', '');
-      return renderProjectDetailPage(projectId);
+      // Use the comprehensive project detail page with all sections
+      return renderComprehensiveProjectDetailPage(projectId);
     } else if (path === '/compare') {
       return renderComparisonPage();
     } else if (path === '/favorites') {
@@ -443,6 +449,7 @@ export class App {
       '/terms': 'Terms of Service | Real House Erbil Kurdistan',
       '/faq': 'FAQ | Erbil Property Questions Answered | Real House',
       '/projects': 'New Development Projects Erbil 2025 | Off-Plan Kurdistan',
+      '/projects/compare': 'Compare Development Projects Erbil | Side-by-Side',
       '/favorites': 'Saved Properties | Real House Erbil Kurdistan',
       '/compare': 'Compare Properties Erbil | Side-by-Side Analysis',
       '/blog': 'Erbil Real Estate Blog | Market Insights, Buying Guides',
@@ -533,6 +540,7 @@ export class App {
       '/terms': 'Real House terms of service for property listings, viewings, and transactions in Erbil, Kurdistan. Updated 2025. Read before using our services.',
       '/faq': 'Get answers to common Erbil property questions: foreign ownership, payment plans, legal requirements. Expert advice from Real House agents. Ask us anything!',
       '/projects': 'Explore new development projects in Erbil 2025. Off-plan properties with flexible payment plans from $85K. Book your exclusive site tour today!',
+      '/projects/compare': 'Compare Erbil development projects side-by-side: pricing, amenities, completion dates & availability. Make informed investment decisions. Free tool!',
       '/favorites': 'Your saved properties at Real House Erbil. Compare villas, apartments & land side-by-side. Share your shortlist or schedule viewings with one click.',
       '/compare': 'Compare Erbil properties side-by-side: prices, sizes, features & locations. Make confident decisions with Real House comparison tool. Try it free!',
       '/blog': 'Expert Erbil real estate insights: 2025 market trends, buying guides, investment tips & neighborhood reviews. Stay informed with Real House professionals.',
@@ -1015,6 +1023,14 @@ export class App {
     } else if (path === '/projects') {
       scrollReveal('.projects-page__header', { y: 40 });
       scrollReveal('.project-card', { y: 60, stagger: 0.1, trigger: '.projects-page__grid' });
+      // Initialize project comparison bar
+      initProjectComparisonBar();
+      updateProjectComparisonBar();
+    } else if (path === '/projects/compare') {
+      scrollReveal('.project-compare-page__header', { y: 40 });
+      scrollReveal('.project-compare-card', { y: 60, stagger: 0.1 });
+      scrollReveal('.project-compare-section', { y: 40, stagger: 0.1 });
+      scrollReveal('.project-compare-page__cta', { y: 40 });
     } else if (path.startsWith('/projects/')) {
       scrollReveal('.project-gallery', { y: 40 });
       scrollReveal('.project-detail__header', { y: 30 });

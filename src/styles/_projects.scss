@@ -92,6 +92,439 @@
   }
 }
 
+// ═══════════════════════════════════════════════════════════════════════════
+// CONSTRUCTION PROGRESS INDICATOR
+// ═══════════════════════════════════════════════════════════════════════════
+
+.construction-progress {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  padding: var(--space-3) var(--space-4);
+  background: rgba(0, 0, 0, 0.4);
+  backdrop-filter: blur(8px);
+  border-radius: var(--radius-md);
+  margin-bottom: var(--space-3);
+
+  &__ring {
+    position: relative;
+    width: 48px;
+    height: 48px;
+    flex-shrink: 0;
+  }
+
+  &__svg {
+    width: 100%;
+    height: 100%;
+    transform: rotate(-90deg);
+  }
+
+  &__track {
+    fill: none;
+    stroke: rgba(255, 255, 255, 0.15);
+    stroke-width: 4;
+  }
+
+  &__progress {
+    fill: none;
+    stroke-width: 4;
+    stroke-linecap: round;
+    transition: stroke-dashoffset 1s ease-out, stroke 0.3s ease;
+
+    &--high {
+      stroke: var(--c-success, #22c55e);
+    }
+
+    &--medium {
+      stroke: var(--c-gold, #C9A84C);
+    }
+
+    &--low {
+      stroke: #f97316;
+    }
+  }
+
+  &__percentage {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: var(--text-xs);
+    font-weight: 700;
+    color: white;
+    line-height: 1;
+  }
+
+  &__info {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-1);
+    flex: 1;
+    min-width: 0;
+  }
+
+  &__label {
+    font-size: var(--text-xs);
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: rgba(255, 255, 255, 0.7);
+  }
+
+  &__milestone {
+    font-size: var(--text-sm);
+    color: white;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  // Tooltip for milestones
+  &__tooltip {
+    position: absolute;
+    bottom: calc(100% + 8px);
+    left: 50%;
+    transform: translateX(-50%);
+    min-width: 280px;
+    max-width: 320px;
+    padding: var(--space-4);
+    background: var(--c-surface, #1a1a2e);
+    border: 1px solid var(--c-glass-border, rgba(255, 255, 255, 0.1));
+    border-radius: var(--radius-lg);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.2s ease, visibility 0.2s ease;
+    z-index: 100;
+    pointer-events: none;
+
+    &::before {
+      content: '';
+      position: absolute;
+      bottom: -8px;
+      left: 50%;
+      transform: translateX(-50%);
+      border: 8px solid transparent;
+      border-top-color: var(--c-surface, #1a1a2e);
+    }
+  }
+
+  &:hover &__tooltip {
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+  }
+
+  &__tooltip-title {
+    font-size: var(--text-sm);
+    font-weight: 600;
+    color: var(--c-gold, #C9A84C);
+    margin-bottom: var(--space-3);
+  }
+
+  &__milestones {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
+  }
+
+  &__milestone-item {
+    display: flex;
+    align-items: flex-start;
+    gap: var(--space-3);
+    font-size: var(--text-xs);
+    color: var(--c-text-2, #a1a1aa);
+
+    &--completed {
+      color: var(--c-text, white);
+
+      .construction-progress__milestone-icon {
+        background: var(--c-success, #22c55e);
+      }
+    }
+  }
+
+  &__milestone-icon {
+    flex-shrink: 0;
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    background: var(--c-surface-3, #333);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 2px;
+
+    svg {
+      width: 10px;
+      height: 10px;
+      color: white;
+    }
+  }
+
+  &__milestone-content {
+    flex: 1;
+    min-width: 0;
+  }
+
+  &__milestone-date {
+    font-weight: 600;
+    color: var(--c-text-3, #666);
+    margin-bottom: 2px;
+  }
+
+  &__milestone-title {
+    font-weight: 500;
+    color: inherit;
+  }
+}
+
+// Linear progress bar variant (for card view)
+.progress-bar {
+  position: relative;
+  width: 100%;
+  height: 6px;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 3px;
+  overflow: hidden;
+
+  &__fill {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    border-radius: 3px;
+    transition: width 1s ease-out;
+
+    &--high {
+      background: linear-gradient(90deg, var(--c-success, #22c55e), #4ade80);
+    }
+
+    &--medium {
+      background: linear-gradient(90deg, var(--c-gold, #C9A84C), #e5c468);
+    }
+
+    &--low {
+      background: linear-gradient(90deg, #f97316, #fb923c);
+    }
+  }
+
+  &__label {
+    position: absolute;
+    right: 0;
+    top: -20px;
+    font-size: var(--text-xs);
+    font-weight: 600;
+    color: var(--c-text-2, #a1a1aa);
+  }
+}
+
+// Animation for progress ring
+@keyframes progressFill {
+  from {
+    stroke-dashoffset: 138;
+  }
+}
+
+.construction-progress__progress {
+  animation: progressFill 1s ease-out forwards;
+}
+
+// Animate on scroll into view
+.construction-progress[data-animate="true"] {
+  .construction-progress__progress {
+    animation: progressFill 1s ease-out forwards;
+  }
+}
+
+// ═══════════════════════════════════════════════════════════════════════════
+// DETAIL PAGE PROGRESS SECTION
+// ═══════════════════════════════════════════════════════════════════════════
+
+.project-detail__progress-section {
+  margin-top: var(--space-6);
+  padding-top: var(--space-6);
+  border-top: 1px solid var(--c-glass-border, rgba(255, 255, 255, 0.1));
+}
+
+.project-detail__progress-title {
+  font-size: var(--text-base);
+  font-weight: 600;
+  color: var(--c-gold, #C9A84C);
+  margin-bottom: var(--space-6);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.progress-detail {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: var(--space-8);
+  align-items: flex-start;
+
+  @media (max-width: 640px) {
+    grid-template-columns: 1fr;
+    gap: var(--space-6);
+  }
+
+  &__circle {
+    position: relative;
+    width: 140px;
+    height: 140px;
+    flex-shrink: 0;
+
+    @media (max-width: 640px) {
+      margin: 0 auto;
+    }
+  }
+
+  &__svg {
+    width: 100%;
+    height: 100%;
+  }
+
+  &__progress {
+    transition: stroke-dashoffset 1.5s ease-out;
+
+    &--high {
+      stroke: var(--c-success, #22c55e);
+    }
+
+    &--medium {
+      stroke: var(--c-gold, #C9A84C);
+    }
+
+    &--low {
+      stroke: #f97316;
+    }
+  }
+
+  &__percentage-container {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  &__percentage {
+    font-size: var(--text-4xl);
+    font-weight: 700;
+    color: white;
+    line-height: 1;
+  }
+
+  &__percentage-symbol {
+    font-size: var(--text-lg);
+    font-weight: 600;
+    color: var(--c-text-2, #a1a1aa);
+  }
+
+  &__percentage-label {
+    font-size: var(--text-xs);
+    font-weight: 500;
+    color: var(--c-text-3, #666);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    margin-top: var(--space-1);
+  }
+
+  // Timeline
+  &__timeline {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+  }
+
+  &__milestone {
+    display: flex;
+    gap: var(--space-4);
+    position: relative;
+
+    &:last-child {
+      .progress-detail__connector-line {
+        display: none;
+      }
+    }
+  }
+
+  &__connector {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 24px;
+    flex-shrink: 0;
+  }
+
+  &__dot {
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    background: var(--c-surface-3, #333);
+    border: 2px solid var(--c-glass-border, rgba(255, 255, 255, 0.1));
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    z-index: 1;
+
+    svg {
+      width: 12px;
+      height: 12px;
+      color: white;
+    }
+
+    .progress-detail__milestone--completed & {
+      background: var(--c-success, #22c55e);
+      border-color: var(--c-success, #22c55e);
+    }
+  }
+
+  &__connector-line {
+    width: 2px;
+    height: var(--space-8);
+    background: var(--c-glass-border, rgba(255, 255, 255, 0.1));
+    margin-top: var(--space-2);
+
+    &--completed {
+      background: var(--c-success, #22c55e);
+    }
+  }
+
+  &__content {
+    padding-bottom: var(--space-6);
+    flex: 1;
+  }
+
+  &__date {
+    font-size: var(--text-xs);
+    font-weight: 600;
+    color: var(--c-text-3, #666);
+    margin-bottom: var(--space-1);
+  }
+
+  &__title {
+    font-size: var(--text-sm);
+    font-weight: 600;
+    color: var(--c-text, white);
+    margin-bottom: var(--space-1);
+
+    .progress-detail__milestone--completed & {
+      color: var(--c-success, #22c55e);
+    }
+  }
+
+  &__description {
+    font-size: var(--text-xs);
+    color: var(--c-text-2, #a1a1aa);
+    line-height: 1.5;
+  }
+}
+
 // ─── Project Card ──────────────────────────────────────────────────────────
 .project-card {
   position: relative;
@@ -241,6 +674,29 @@
       width: 16px;
       height: 16px;
       color: var(--c-text-3);
+    }
+  }
+
+  &__actions {
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+
+    .btn--sm {
+      padding: var(--space-2) var(--space-3);
+      font-size: var(--text-xs);
+    }
+
+    .inquiry-btn {
+      background: rgba(201, 168, 76, 0.1);
+      border-color: var(--c-gold);
+      color: var(--c-gold);
+
+      &:hover,
+      &:focus-visible {
+        background: var(--c-gold);
+        color: var(--c-bg);
+      }
     }
   }
 }
@@ -543,6 +999,31 @@
     display: flex;
     flex-direction: column;
     gap: var(--space-3);
+
+    .inquiry-btn {
+      justify-content: center;
+    }
+
+    .btn--whatsapp {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: var(--space-2);
+      background: #25D366;
+      border-color: #25D366;
+      color: white;
+
+      svg {
+        width: 18px;
+        height: 18px;
+      }
+
+      &:hover,
+      &:focus-visible {
+        background: #1DA851;
+        border-color: #1DA851;
+      }
+    }
   }
 
   &__address-info {

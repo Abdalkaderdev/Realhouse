@@ -4,6 +4,8 @@
 @use 'trust-signals';
 @use 'advanced-filters';
 @use 'projects';
+@use 'project-detail';
+@use 'project-compare';
 @use 'print';
 @use 'map';
 @use 'blog';
@@ -14,6 +16,7 @@
 @use 'gallery';
 @use 'about-eeat';
 @use 'areas';
+@use 'inquiry-form';
 
 // ═══════════════════════════════════════════════════════════════════════════
 // Real House - Main Styles

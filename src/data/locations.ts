@@ -554,14 +554,14 @@ export const businessNAP = {
   name: 'Real House',
   legalName: 'Real House Real Estate LLC',
   address: {
-    street: 'Dream City Complex, Building A3',
+    street: 'Queen Tower, Erbil, Building A3',
     district: 'Dream City',
     city: 'Erbil',
     region: 'Kurdistan Region',
     postalCode: '44001',
     country: 'Iraq',
     countryCode: 'IQ',
-    formatted: 'Dream City Complex, Building A3, Erbil, Kurdistan Region 44001, Iraq'
+    formatted: 'Queen Tower, Erbil, Building A3, Erbil, Kurdistan Region 44001, Iraq'
   },
   phones: [
     {

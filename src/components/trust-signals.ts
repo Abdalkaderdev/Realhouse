@@ -127,17 +127,19 @@ export function createPartnersSection(): HTMLElement {
   const container = createElement('div', 'container');
 
   const header = createElement('div', 'partners__header');
-  const title = createElement('h3', 'partners__title', 'Our Partners');
+  const title = createElement('h3', 'partners__title', 'Trusted Developer Partners');
+  const subtitle = createElement('p', 'partners__subtitle', 'We work exclusively with Erbil\'s most reputable developers');
   header.appendChild(title);
+  header.appendChild(subtitle);
   container.appendChild(header);
 
   const grid = createElement('div', 'partners__grid');
 
   partnerLogos.forEach(partner => {
-    const item = createElement('div', 'partners__item');
-    const logo = createElement('span', 'partners__logo', partner.logo);
+    const item = createElement('a', 'partners__item');
+    item.setAttribute('href', `/projects?developer=${encodeURIComponent(partner.name)}`);
+    item.setAttribute('data-route', '');
     const name = createElement('span', 'partners__name', partner.name);
-    item.appendChild(logo);
     item.appendChild(name);
     grid.appendChild(item);
   });

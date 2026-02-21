@@ -830,7 +830,7 @@ export function setupServiceDetailPageSEO(service: Service): void {
       'email': 'info@realhouseiq.com',
       'address': {
         '@type': 'PostalAddress',
-        'streetAddress': 'Dream City Complex',
+        'streetAddress': 'Queen Tower, Erbil',
         'addressLocality': 'Erbil',
         'addressRegion': 'Kurdistan Region',
         'postalCode': '44001',

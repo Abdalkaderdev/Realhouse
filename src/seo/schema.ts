@@ -2798,7 +2798,7 @@ export function generateEnhancedLocalBusinessSchema(): object {
     'paymentAccepted': 'Cash, Bank Transfer, Installment Plans, Developer Financing',
     'address': {
       '@type': 'PostalAddress',
-      'streetAddress': 'Dream City Complex, Building A3',
+      'streetAddress': 'Queen Tower, Erbil, Building A3',
       'addressLocality': 'Erbil',
       'addressRegion': 'Kurdistan Region',
       'postalCode': '44001',
@@ -4976,7 +4976,7 @@ export function generateMaxLocalBusinessSchema(): object {
     'email': COMPANY_INFO.email,
     'address': {
       '@type': 'PostalAddress',
-      'streetAddress': 'Dream City Complex, Building A3, Ground Floor',
+      'streetAddress': 'Queen Tower, Erbil, Building A3, Ground Floor',
       'addressLocality': 'Erbil',
       'addressRegion': 'Kurdistan Region',
       'postalCode': '44001',

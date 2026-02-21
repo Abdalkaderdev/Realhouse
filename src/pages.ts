@@ -2260,7 +2260,7 @@ export function renderContactPage(): DocumentFragment {
   napAddress.setAttribute('itemscope', '');
   napAddress.setAttribute('itemtype', 'https://schema.org/PostalAddress');
   napAddress.innerHTML = `
-    <span itemprop="streetAddress">Dream City Complex, Building A3</span><br>
+    <span itemprop="streetAddress">Queen Tower, Erbil, Building A3</span><br>
     <span itemprop="addressLocality">Erbil</span>,
     <span itemprop="addressRegion">Kurdistan Region</span>
     <span itemprop="postalCode">44001</span><br>

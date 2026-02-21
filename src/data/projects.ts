@@ -4,6 +4,13 @@
 
 export type ProjectStatus = 'Under Construction' | 'Ready' | 'Coming Soon';
 
+export interface ConstructionMilestone {
+  date: string;
+  title: string;
+  description: string;
+  completed: boolean;
+}
+
 export interface Project {
   id: string;
   name: string;
@@ -24,8 +31,13 @@ export interface Project {
   completionDate: string;
   amenities: string[];
   images: string[];
+  image?: string; // Main hero image (optional)
+  gallery?: string[]; // 4-6 gallery images (optional)
+  floorPlanImages?: string[]; // 2-3 floor plan images (optional)
   description: string;
   propertyIds: string[]; // Links to individual properties
+  constructionProgress?: number; // 0-100 percentage (optional - calculated from status if not set)
+  constructionMilestones?: ConstructionMilestone[]; // Optional - generated from status if not set
 }
 
 // ═══════════════════════════════════════════════════════════════════════════
@@ -70,12 +82,33 @@ export const projects: Project[] = [
       'https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?w=800&q=80&fm=webp',
       'https://images.unsplash.com/photo-1565623833408-d77e39b88af6?w=800&q=80&fm=webp'
     ],
+    image: 'https://images.unsplash.com/photo-1486325212027-8081e485255e?w=1200&q=80&fm=webp',
+    gallery: [
+      'https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=800&q=80&fm=webp',
+      'https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?w=800&q=80&fm=webp',
+      'https://images.unsplash.com/photo-1565623833408-d77e39b88af6?w=800&q=80&fm=webp',
+      'https://images.unsplash.com/photo-1567767292278-a4f21aa2d36e?w=800&q=80&fm=webp',
+      'https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?w=800&q=80&fm=webp',
+      'https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?w=800&q=80&fm=webp'
+    ],
+    floorPlanImages: [
+      'https://images.unsplash.com/photo-1574362848149-11496d93a7c7?w=800&q=80&fm=webp',
+      'https://images.unsplash.com/photo-1503387837-b154d5074bd2?w=800&q=80&fm=webp',
+      'https://images.unsplash.com/photo-1600585152220-90363fe7e115?w=800&q=80&fm=webp'
+    ],
     description: `Empire World is Erbil's most ambitious mixed-use development project, setting new standards for luxury living in the Kurdistan Region. This landmark development features residential towers, a world-class shopping mall, five-star hotel, and premium office spaces.
 
 The project spans over 500,000 square meters and will become the commercial heart of Erbil. Residential units range from elegant studio apartments to sprawling penthouses with panoramic city views. Every residence features premium finishes, smart home technology, and access to exclusive amenities.
 
 Empire World represents the future of urban living in Iraq, combining international standards with local hospitality traditions.`,
-    propertyIds: []
+    propertyIds: [],
+    constructionProgress: 65,
+    constructionMilestones: [
+      { date: '2023-Q1', title: 'Foundation Complete', description: 'Foundation and underground structure completed', completed: true },
+      { date: '2024-Q2', title: 'Structure 50%', description: 'Main structure reached 50% completion', completed: true },
+      { date: '2025-Q4', title: 'Exterior Finishing', description: 'External facade and cladding installation', completed: false },
+      { date: '2027-Q2', title: 'Final Handover', description: 'Project completion and unit handover', completed: false }
+    ]
   },
   {
     id: 'dream-city',
@@ -114,12 +147,33 @@ Empire World represents the future of urban living in Iraq, combining internatio
       'https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=800&q=80&fm=webp',
       'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=800&q=80&fm=webp'
     ],
+    image: 'https://images.unsplash.com/photo-1449824913935-59a10b8d2000?w=1200&q=80&fm=webp',
+    gallery: [
+      'https://images.unsplash.com/photo-1512917774080-9991f1c4c750?w=800&q=80&fm=webp',
+      'https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=800&q=80&fm=webp',
+      'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=800&q=80&fm=webp',
+      'https://images.unsplash.com/photo-1564013799919-ab600027ffc6?w=800&q=80&fm=webp',
+      'https://images.unsplash.com/photo-1582268611958-ebfd161ef9cf?w=800&q=80&fm=webp',
+      'https://images.unsplash.com/photo-1580587771525-78b9dba3b914?w=800&q=80&fm=webp'
+    ],
+    floorPlanImages: [
+      'https://images.unsplash.com/photo-1600585152220-90363fe7e115?w=800&q=80&fm=webp',
+      'https://images.unsplash.com/photo-1503387837-b154d5074bd2?w=800&q=80&fm=webp',
+      'https://images.unsplash.com/photo-1600566752734-2a0cd66c42ae?w=800&q=80&fm=webp'
+    ],
     description: `Dream City is one of Erbil's premier residential communities, offering a complete lifestyle destination for families and professionals. This master-planned community combines modern architecture with thoughtful urban planning.
 
 The project features a diverse range of housing options including villas, townhouses, and apartments, all set within beautifully landscaped grounds. Residents enjoy access to international schools, healthcare facilities, shopping centers, and recreational amenities without leaving the community.
 
 Dream City represents the ideal blend of privacy, security, and community living, making it one of the most sought-after addresses in Erbil.`,
-    propertyIds: []
+    propertyIds: [],
+    constructionProgress: 100,
+    constructionMilestones: [
+      { date: '2020-Q1', title: 'Construction Started', description: 'Groundbreaking ceremony', completed: true },
+      { date: '2021-Q3', title: 'Structure Complete', description: 'All structures completed', completed: true },
+      { date: '2022-Q4', title: 'Interior Finishing', description: 'Interior finishing completed', completed: true },
+      { date: '2023-Q2', title: 'Project Delivered', description: 'Full project handover complete', completed: true }
+    ]
   },
   {
     id: 'italian-village',
@@ -157,6 +211,20 @@ Dream City represents the ideal blend of privacy, security, and community living
       'https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?w=800&q=80&fm=webp',
       'https://images.unsplash.com/photo-1600566753190-17f0baa2a6c3?w=800&q=80&fm=webp',
       'https://images.unsplash.com/photo-1600585154526-990dced4db0d?w=800&q=80&fm=webp'
+    ],
+    image: 'https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=1200&q=80&fm=webp',
+    gallery: [
+      'https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?w=800&q=80&fm=webp',
+      'https://images.unsplash.com/photo-1600566753190-17f0baa2a6c3?w=800&q=80&fm=webp',
+      'https://images.unsplash.com/photo-1600585154526-990dced4db0d?w=800&q=80&fm=webp',
+      'https://images.unsplash.com/photo-1600566753086-00f18fb6b3ea?w=800&q=80&fm=webp',
+      'https://images.unsplash.com/photo-1600585154363-67eb9e2e2099?w=800&q=80&fm=webp',
+      'https://images.unsplash.com/photo-1600573472550-8090b5e0745e?w=800&q=80&fm=webp'
+    ],
+    floorPlanImages: [
+      'https://images.unsplash.com/photo-1600607688969-a5bfcd646154?w=800&q=80&fm=webp',
+      'https://images.unsplash.com/photo-1600566752734-2a0cd66c42ae?w=800&q=80&fm=webp',
+      'https://images.unsplash.com/photo-1600210491892-03d54c0aaf87?w=800&q=80&fm=webp'
     ],
     description: `Italian Village brings the charm of Tuscany to the heart of Erbil. This unique residential development features authentic Italian architecture, with homes designed around picturesque courtyards and a central piazza.
 
@@ -202,6 +270,20 @@ Each residence is crafted with attention to detail, featuring terracotta roofs, 
       'https://images.unsplash.com/photo-1600566753086-00f18fb6b3ea?w=800&q=80&fm=webp',
       'https://images.unsplash.com/photo-1600585154363-67eb9e2e2099?w=800&q=80&fm=webp'
     ],
+    image: 'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=1200&q=80&fm=webp',
+    gallery: [
+      'https://images.unsplash.com/photo-1600047509807-ba8f99d2cdde?w=800&q=80&fm=webp',
+      'https://images.unsplash.com/photo-1600566753086-00f18fb6b3ea?w=800&q=80&fm=webp',
+      'https://images.unsplash.com/photo-1600585154363-67eb9e2e2099?w=800&q=80&fm=webp',
+      'https://images.unsplash.com/photo-1600210492493-0946911123ea?w=800&q=80&fm=webp',
+      'https://images.unsplash.com/photo-1600607687644-aac4c3eac7f4?w=800&q=80&fm=webp',
+      'https://images.unsplash.com/photo-1600566752355-35792bedcfea?w=800&q=80&fm=webp'
+    ],
+    floorPlanImages: [
+      'https://images.unsplash.com/photo-1600607688969-a5bfcd646154?w=800&q=80&fm=webp',
+      'https://images.unsplash.com/photo-1600566752734-2a0cd66c42ae?w=800&q=80&fm=webp',
+      'https://images.unsplash.com/photo-1600210491892-03d54c0aaf87?w=800&q=80&fm=webp'
+    ],
     description: `English Village is an exclusive residential enclave that captures the elegance of British country living. This prestigious community features stately homes inspired by Georgian and Victorian architecture.
 
 Residents enjoy a refined lifestyle with access to a private country club, manicured gardens, and world-class amenities. The village is designed for those who appreciate timeless elegance and seek a distinguished address in Erbil.
@@ -245,6 +327,20 @@ Each residence offers generous living spaces, quality craftsmanship, and private
       'https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?w=800&q=80&fm=webp',
       'https://images.unsplash.com/photo-1512917774080-9991f1c4c750?w=800&q=80&fm=webp',
       'https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?w=800&q=80&fm=webp'
+    ],
+    image: 'https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=1200&q=80&fm=webp',
+    gallery: [
+      'https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?w=800&q=80&fm=webp',
+      'https://images.unsplash.com/photo-1567767292278-a4f21aa2d36e?w=800&q=80&fm=webp',
+      'https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?w=800&q=80&fm=webp',
+      'https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?w=800&q=80&fm=webp',
+      'https://images.unsplash.com/photo-1493809842364-78817add7ffb?w=800&q=80&fm=webp',
+      'https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?w=800&q=80&fm=webp'
+    ],
+    floorPlanImages: [
+      'https://images.unsplash.com/photo-1574362848149-11496d93a7c7?w=800&q=80&fm=webp',
+      'https://images.unsplash.com/photo-1503387837-b154d5074bd2?w=800&q=80&fm=webp',
+      'https://images.unsplash.com/photo-1600585152220-90363fe7e115?w=800&q=80&fm=webp'
     ],
     description: `The Boulevard is a premier residential complex in the heart of Gulan, offering modern luxury apartments with stunning city views. This iconic development combines contemporary design with premium amenities.
 
@@ -290,6 +386,20 @@ The Boulevard is perfectly located near shopping centers, restaurants, and enter
       'https://images.unsplash.com/photo-1567767292278-a4f21aa2d36e?w=800&q=80&fm=webp',
       'https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?w=800&q=80&fm=webp'
     ],
+    image: 'https://images.unsplash.com/photo-1565623833408-d77e39b88af6?w=1200&q=80&fm=webp',
+    gallery: [
+      'https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=800&q=80&fm=webp',
+      'https://images.unsplash.com/photo-1567767292278-a4f21aa2d36e?w=800&q=80&fm=webp',
+      'https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?w=800&q=80&fm=webp',
+      'https://images.unsplash.com/photo-1560185893-a55cbc8c57e8?w=800&q=80&fm=webp',
+      'https://images.unsplash.com/photo-1512918728675-ed5a9ecdebfd?w=800&q=80&fm=webp',
+      'https://images.unsplash.com/photo-1560184897-ae75f418493e?w=800&q=80&fm=webp'
+    ],
+    floorPlanImages: [
+      'https://images.unsplash.com/photo-1574362848149-11496d93a7c7?w=800&q=80&fm=webp',
+      'https://images.unsplash.com/photo-1503387837-b154d5074bd2?w=800&q=80&fm=webp',
+      'https://images.unsplash.com/photo-1600585152220-90363fe7e115?w=800&q=80&fm=webp'
+    ],
     description: `Cavally Tower stands as one of Ankawa's most prestigious residential addresses. This elegant high-rise offers luxury apartments with breathtaking panoramic views of Erbil and the surrounding mountains.
 
 The tower features world-class amenities including a sky lounge, infinity pool, spa, and private cinema. Every apartment is designed with attention to detail, featuring premium materials, smart home technology, and spacious balconies.
@@ -334,6 +444,20 @@ Cavally Tower represents the pinnacle of vertical living in Erbil, combining sop
       'https://images.unsplash.com/photo-1565623833408-d77e39b88af6?w=800&q=80&fm=webp',
       'https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=800&q=80&fm=webp'
     ],
+    image: 'https://images.unsplash.com/photo-1577495508326-19a1b3cf65b7?w=1200&q=80&fm=webp',
+    gallery: [
+      'https://images.unsplash.com/photo-1577495508326-19a1b3cf65b7?w=800&q=80&fm=webp',
+      'https://images.unsplash.com/photo-1565623833408-d77e39b88af6?w=800&q=80&fm=webp',
+      'https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?w=800&q=80&fm=webp',
+      'https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?w=800&q=80&fm=webp',
+      'https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?w=800&q=80&fm=webp',
+      'https://images.unsplash.com/photo-1560185893-a55cbc8c57e8?w=800&q=80&fm=webp'
+    ],
+    floorPlanImages: [
+      'https://images.unsplash.com/photo-1574362848149-11496d93a7c7?w=800&q=80&fm=webp',
+      'https://images.unsplash.com/photo-1503387837-b154d5074bd2?w=800&q=80&fm=webp',
+      'https://images.unsplash.com/photo-1600585152220-90363fe7e115?w=800&q=80&fm=webp'
+    ],
     description: `Tulip Towers is a distinctive twin-tower residential complex offering modern apartments in the heart of Gulan. The iconic design features two elegant towers connected by landscaped gardens and shared amenities.
 
 Residents enjoy a variety of apartment sizes to suit different lifestyles, from cozy studios to spacious family apartments. The development includes a swimming pool, fitness center, children's play areas, and a shopping arcade at ground level.
@@ -377,6 +501,20 @@ Tulip Towers combines affordability with quality, making it an excellent choice 
       'https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?w=800&q=80&fm=webp',
       'https://images.unsplash.com/photo-1600047509807-ba8f99d2cdde?w=800&q=80&fm=webp',
       'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=800&q=80&fm=webp'
+    ],
+    image: 'https://images.unsplash.com/photo-1486325212027-8081e485255e?w=1200&q=80&fm=webp',
+    gallery: [
+      'https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?w=800&q=80&fm=webp',
+      'https://images.unsplash.com/photo-1600047509807-ba8f99d2cdde?w=800&q=80&fm=webp',
+      'https://images.unsplash.com/photo-1567767292278-a4f21aa2d36e?w=800&q=80&fm=webp',
+      'https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?w=800&q=80&fm=webp',
+      'https://images.unsplash.com/photo-1493809842364-78817add7ffb?w=800&q=80&fm=webp',
+      'https://images.unsplash.com/photo-1512918728675-ed5a9ecdebfd?w=800&q=80&fm=webp'
+    ],
+    floorPlanImages: [
+      'https://images.unsplash.com/photo-1574362848149-11496d93a7c7?w=800&q=80&fm=webp',
+      'https://images.unsplash.com/photo-1503387837-b154d5074bd2?w=800&q=80&fm=webp',
+      'https://images.unsplash.com/photo-1600585152220-90363fe7e115?w=800&q=80&fm=webp'
     ],
     description: `London Towers brings British elegance to Erbil's skyline. This prestigious residential development features refined architecture inspired by London's most desirable addresses, combined with modern luxury amenities.
 
@@ -466,6 +604,20 @@ Early buyers can take advantage of attractive pre-construction pricing and flexi
       'https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=800&q=80&fm=webp',
       'https://images.unsplash.com/photo-1582268611958-ebfd161ef9cf?w=800&q=80&fm=webp'
     ],
+    image: 'https://images.unsplash.com/photo-1512917774080-9991f1c4c750?w=1200&q=80&fm=webp',
+    gallery: [
+      'https://images.unsplash.com/photo-1613490493576-7fde63acd811?w=800&q=80&fm=webp',
+      'https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=800&q=80&fm=webp',
+      'https://images.unsplash.com/photo-1582268611958-ebfd161ef9cf?w=800&q=80&fm=webp',
+      'https://images.unsplash.com/photo-1580587771525-78b9dba3b914?w=800&q=80&fm=webp',
+      'https://images.unsplash.com/photo-1600047509807-ba8f99d2cdde?w=800&q=80&fm=webp',
+      'https://images.unsplash.com/photo-1613977257363-707ba9348227?w=800&q=80&fm=webp'
+    ],
+    floorPlanImages: [
+      'https://images.unsplash.com/photo-1600607688969-a5bfcd646154?w=800&q=80&fm=webp',
+      'https://images.unsplash.com/photo-1600566752734-2a0cd66c42ae?w=800&q=80&fm=webp',
+      'https://images.unsplash.com/photo-1600585152220-90363fe7e115?w=800&q=80&fm=webp'
+    ],
     description: `Pavilion Erbil is one of the most significant and luxurious residential developments in Kurdistan and Iraq, spanning over 170 hectares with neighborhoods designed as an island escape. The centerpiece is a stunning 320,000 square meter lagoon and waterways providing a refreshing environment.
 
 The project offers luxury villas in four collections with plot sizes ranging from 400 to over 1,000 square meters, featuring modern architecture with large balconies, expansive windows, and smart home technologies. Apartments line the green edge of the masterplan with views of the canal and lagoon.
@@ -553,6 +705,20 @@ Residents enjoy comprehensive amenities including a health club, swimming pool, 
       'https://images.unsplash.com/photo-1486325212027-8081e485255e?w=800&q=80&fm=webp',
       'https://images.unsplash.com/photo-1577495508326-19a1b3cf65b7?w=800&q=80&fm=webp',
       'https://images.unsplash.com/photo-1565623833408-d77e39b88af6?w=800&q=80&fm=webp'
+    ],
+    image: 'https://images.unsplash.com/photo-1449824913935-59a10b8d2000?w=1200&q=80&fm=webp',
+    gallery: [
+      'https://images.unsplash.com/photo-1486325212027-8081e485255e?w=800&q=80&fm=webp',
+      'https://images.unsplash.com/photo-1577495508326-19a1b3cf65b7?w=800&q=80&fm=webp',
+      'https://images.unsplash.com/photo-1565623833408-d77e39b88af6?w=800&q=80&fm=webp',
+      'https://images.unsplash.com/photo-1480714378408-67cf0d13bc1b?w=800&q=80&fm=webp',
+      'https://images.unsplash.com/photo-1564013799919-ab600027ffc6?w=800&q=80&fm=webp',
+      'https://images.unsplash.com/photo-1582268611958-ebfd161ef9cf?w=800&q=80&fm=webp'
+    ],
+    floorPlanImages: [
+      'https://images.unsplash.com/photo-1600585152220-90363fe7e115?w=800&q=80&fm=webp',
+      'https://images.unsplash.com/photo-1503387837-b154d5074bd2?w=800&q=80&fm=webp',
+      'https://images.unsplash.com/photo-1600566752734-2a0cd66c42ae?w=800&q=80&fm=webp'
     ],
     description: `Downtown Erbil is a landmark $3 billion mixed-use development spanning 541,000 square meters, strategically located between the historic Citadel of Erbil and the modern Erbil International Airport. This ambitious project will transform the city center.
 
@@ -1258,6 +1424,20 @@ Signature Towers represents sophisticated urban living in central Erbil, offerin
       'https://images.unsplash.com/photo-1582719508461-905c673771fd?w=800&q=80&fm=webp',
       'https://images.unsplash.com/photo-1551882547-ff40c63fe5fa?w=800&q=80&fm=webp'
     ],
+    image: 'https://images.unsplash.com/photo-1566073771259-6a8506099945?w=1200&q=80&fm=webp',
+    gallery: [
+      'https://images.unsplash.com/photo-1566073771259-6a8506099945?w=800&q=80&fm=webp',
+      'https://images.unsplash.com/photo-1582719508461-905c673771fd?w=800&q=80&fm=webp',
+      'https://images.unsplash.com/photo-1551882547-ff40c63fe5fa?w=800&q=80&fm=webp',
+      'https://images.unsplash.com/photo-1520250497591-112f2f40a3f4?w=800&q=80&fm=webp',
+      'https://images.unsplash.com/photo-1578683010236-d716f9a3f461?w=800&q=80&fm=webp',
+      'https://images.unsplash.com/photo-1584132967334-10e028bd69f7?w=800&q=80&fm=webp'
+    ],
+    floorPlanImages: [
+      'https://images.unsplash.com/photo-1600585152220-90363fe7e115?w=800&q=80&fm=webp',
+      'https://images.unsplash.com/photo-1574362848149-11496d93a7c7?w=800&q=80&fm=webp',
+      'https://images.unsplash.com/photo-1600607688960-e095ff83135c?w=800&q=80&fm=webp'
+    ],
     description: `Rotana Hotel & Residences brings international hospitality standards to Erbil with its branded residential tower on the prestigious 100 Meter Road. Residents enjoy all the luxury amenities of a five-star hotel combined with the privacy of home ownership.
 
 The development features elegantly appointed apartments with premium finishes, panoramic city views, and access to world-class facilities including spa, infinity pool, and fine dining. Hotel-style services such as concierge, housekeeping, and room service are available to residents.
@@ -1301,6 +1481,20 @@ This is ideal for investors seeking hassle-free luxury living with the option of
       'https://images.unsplash.com/photo-1564501049412-61c2a3083791?w=800&q=80&fm=webp',
       'https://images.unsplash.com/photo-1571896349842-33c89424de2d?w=800&q=80&fm=webp',
       'https://images.unsplash.com/photo-1520250497591-112f2f40a3f4?w=800&q=80&fm=webp'
+    ],
+    image: 'https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?w=1200&q=80&fm=webp',
+    gallery: [
+      'https://images.unsplash.com/photo-1564501049412-61c2a3083791?w=800&q=80&fm=webp',
+      'https://images.unsplash.com/photo-1571896349842-33c89424de2d?w=800&q=80&fm=webp',
+      'https://images.unsplash.com/photo-1520250497591-112f2f40a3f4?w=800&q=80&fm=webp',
+      'https://images.unsplash.com/photo-1563911302283-d2bc129e7570?w=800&q=80&fm=webp',
+      'https://images.unsplash.com/photo-1596436889106-be35e843f974?w=800&q=80&fm=webp',
+      'https://images.unsplash.com/photo-1590490360182-c33d57733427?w=800&q=80&fm=webp'
+    ],
+    floorPlanImages: [
+      'https://images.unsplash.com/photo-1600585152220-90363fe7e115?w=800&q=80&fm=webp',
+      'https://images.unsplash.com/photo-1574362848149-11496d93a7c7?w=800&q=80&fm=webp',
+      'https://images.unsplash.com/photo-1600607688960-e095ff83135c?w=800&q=80&fm=webp'
     ],
     description: `Divan Erbil represents Turkish hospitality excellence with luxury serviced residences in the heart of Gulan. The development combines the renowned Divan brand's service standards with premium residential living.
 
@@ -3459,3 +3653,340 @@ export function formatPriceRange(project: Project): string {
 }
 
 export const projectStatuses: ProjectStatus[] = ['Under Construction', 'Ready', 'Coming Soon'];
+
+// ═══════════════════════════════════════════════════════════════════════════
+// Construction Progress Helpers
+// ═══════════════════════════════════════════════════════════════════════════
+
+/**
+ * Generate default construction milestones based on project status and completion date
+ */
+export function generateDefaultMilestones(project: Project): ConstructionMilestone[] {
+  const completionYear = parseInt(project.completionDate) || 2025;
+
+  if (project.status === 'Ready') {
+    return [
+      { date: `${completionYear - 3}-Q1`, title: 'Construction Started', description: 'Groundbreaking and foundation work began', completed: true },
+      { date: `${completionYear - 2}-Q2`, title: 'Structure Complete', description: 'Main structure and framework completed', completed: true },
+      { date: `${completionYear - 1}-Q3`, title: 'Interior Finishing', description: 'Interior finishing and MEP installation', completed: true },
+      { date: `${completionYear}-Q4`, title: 'Project Delivered', description: 'Full project handover and occupancy', completed: true }
+    ];
+  } else if (project.status === 'Under Construction') {
+    const progress = getProjectProgress(project);
+    return [
+      { date: `${completionYear - 3}-Q1`, title: 'Construction Started', description: 'Groundbreaking and foundation work', completed: true },
+      { date: `${completionYear - 2}-Q2`, title: 'Foundation Complete', description: 'Foundation and basement structure', completed: progress >= 30 },
+      { date: `${completionYear - 1}-Q3`, title: 'Structure Progress', description: 'Main structure and framework', completed: progress >= 60 },
+      { date: `${completionYear}-Q4`, title: 'Expected Completion', description: 'Project completion and handover', completed: false }
+    ];
+  } else {
+    // Coming Soon
+    return [
+      { date: `${completionYear - 2}-Q1`, title: 'Planning Phase', description: 'Design and permits acquisition', completed: true },
+      { date: `${completionYear - 1}-Q2`, title: 'Construction Start', description: 'Groundbreaking ceremony expected', completed: false },
+      { date: `${completionYear}-Q3`, title: 'Structure Phase', description: 'Main construction phase', completed: false },
+      { date: `${completionYear + 1}-Q4`, title: 'Project Delivery', description: 'Expected project completion', completed: false }
+    ];
+  }
+}
+
+/**
+ * Get construction progress percentage for a project
+ * Returns 100 for Ready, 0-20 for Coming Soon, and varies for Under Construction
+ */
+export function getProjectProgress(project: Project): number {
+  // If project has explicit progress defined, use it
+  if (project.constructionProgress !== undefined) {
+    return project.constructionProgress;
+  }
+
+  // Otherwise, generate based on status
+  if (project.status === 'Ready') return 100;
+  if (project.status === 'Coming Soon') return 10;
+
+  // For Under Construction, estimate based on completion date
+  const completionYear = parseInt(project.completionDate) || 2027;
+  const currentYear = 2026;
+  const yearsRemaining = completionYear - currentYear;
+
+  if (yearsRemaining <= 0) return 95;
+  if (yearsRemaining === 1) return 75;
+  if (yearsRemaining === 2) return 55;
+  if (yearsRemaining === 3) return 35;
+  return 25;
+}
+
+/**
+ * Get milestones for a project (uses defined ones or generates defaults)
+ */
+export function getProjectMilestones(project: Project): ConstructionMilestone[] {
+  if (project.constructionMilestones && project.constructionMilestones.length > 0) {
+    return project.constructionMilestones;
+  }
+  return generateDefaultMilestones(project);
+}
+
+/**
+ * Get progress color class based on percentage
+ */
+export function getProgressColorClass(progress: number): string {
+  if (progress >= 75) return 'progress--high';
+  if (progress >= 40) return 'progress--medium';
+  return 'progress--low';
+}
+
+// ═══════════════════════════════════════════════════════════════════════════
+// Project Image Collections
+// ═══════════════════════════════════════════════════════════════════════════
+
+// Image sets organized by project type
+const projectImageSets = {
+  // Luxury Tower/Skyscraper Images
+  tower: {
+    heroes: [
+      'https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=1200&q=80&fm=webp',
+      'https://images.unsplash.com/photo-1565623833408-d77e39b88af6?w=1200&q=80&fm=webp',
+      'https://images.unsplash.com/photo-1486325212027-8081e485255e?w=1200&q=80&fm=webp',
+      'https://images.unsplash.com/photo-1577495508326-19a1b3cf65b7?w=1200&q=80&fm=webp',
+      'https://images.unsplash.com/photo-1478860409698-8707f313ee8b?w=1200&q=80&fm=webp',
+      'https://images.unsplash.com/photo-1448630360428-65456885c650?w=1200&q=80&fm=webp',
+      'https://images.unsplash.com/photo-1460317442991-0ec209397118?w=1200&q=80&fm=webp',
+      'https://images.unsplash.com/photo-1512453979798-5ea266f8880c?w=1200&q=80&fm=webp',
+    ],
+    galleries: [
+      'https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?w=800&q=80&fm=webp',
+      'https://images.unsplash.com/photo-1567767292278-a4f21aa2d36e?w=800&q=80&fm=webp',
+      'https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?w=800&q=80&fm=webp',
+      'https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?w=800&q=80&fm=webp',
+      'https://images.unsplash.com/photo-1493809842364-78817add7ffb?w=800&q=80&fm=webp',
+      'https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?w=800&q=80&fm=webp',
+      'https://images.unsplash.com/photo-1560185893-a55cbc8c57e8?w=800&q=80&fm=webp',
+      'https://images.unsplash.com/photo-1512918728675-ed5a9ecdebfd?w=800&q=80&fm=webp',
+      'https://images.unsplash.com/photo-1560184897-ae75f418493e?w=800&q=80&fm=webp',
+      'https://images.unsplash.com/photo-1560185007-c5ca9d2c014d?w=800&q=80&fm=webp',
+    ],
+    floorPlans: [
+      'https://images.unsplash.com/photo-1574362848149-11496d93a7c7?w=800&q=80&fm=webp',
+      'https://images.unsplash.com/photo-1503387837-b154d5074bd2?w=800&q=80&fm=webp',
+      'https://images.unsplash.com/photo-1600585152220-90363fe7e115?w=800&q=80&fm=webp',
+    ]
+  },
+  // Villa & Village Images
+  villa: {
+    heroes: [
+      'https://images.unsplash.com/photo-1613490493576-7fde63acd811?w=1200&q=80&fm=webp',
+      'https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=1200&q=80&fm=webp',
+      'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=1200&q=80&fm=webp',
+      'https://images.unsplash.com/photo-1600047509807-ba8f99d2cdde?w=1200&q=80&fm=webp',
+      'https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?w=1200&q=80&fm=webp',
+      'https://images.unsplash.com/photo-1600566753190-17f0baa2a6c3?w=1200&q=80&fm=webp',
+      'https://images.unsplash.com/photo-1580587771525-78b9dba3b914?w=1200&q=80&fm=webp',
+      'https://images.unsplash.com/photo-1564013799919-ab600027ffc6?w=1200&q=80&fm=webp',
+    ],
+    galleries: [
+      'https://images.unsplash.com/photo-1600585154526-990dced4db0d?w=800&q=80&fm=webp',
+      'https://images.unsplash.com/photo-1600566753086-00f18fb6b3ea?w=800&q=80&fm=webp',
+      'https://images.unsplash.com/photo-1600585154363-67eb9e2e2099?w=800&q=80&fm=webp',
+      'https://images.unsplash.com/photo-1600573472550-8090b5e0745e?w=800&q=80&fm=webp',
+      'https://images.unsplash.com/photo-1600210492493-0946911123ea?w=800&q=80&fm=webp',
+      'https://images.unsplash.com/photo-1600607687644-aac4c3eac7f4?w=800&q=80&fm=webp',
+      'https://images.unsplash.com/photo-1600566752355-35792bedcfea?w=800&q=80&fm=webp',
+      'https://images.unsplash.com/photo-1600585154084-4e5fe7c39198?w=800&q=80&fm=webp',
+      'https://images.unsplash.com/photo-1600607688969-a5bfcd646154?w=800&q=80&fm=webp',
+      'https://images.unsplash.com/photo-1600566752734-2a0cd66c42ae?w=800&q=80&fm=webp',
+    ],
+    floorPlans: [
+      'https://images.unsplash.com/photo-1600607688969-a5bfcd646154?w=800&q=80&fm=webp',
+      'https://images.unsplash.com/photo-1600566752734-2a0cd66c42ae?w=800&q=80&fm=webp',
+      'https://images.unsplash.com/photo-1600210491892-03d54c0aaf87?w=800&q=80&fm=webp',
+    ]
+  },
+  // Luxury Hotel/Branded Residences Images
+  hotel: {
+    heroes: [
+      'https://images.unsplash.com/photo-1566073771259-6a8506099945?w=1200&q=80&fm=webp',
+      'https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?w=1200&q=80&fm=webp',
+      'https://images.unsplash.com/photo-1571896349842-33c89424de2d?w=1200&q=80&fm=webp',
+      'https://images.unsplash.com/photo-1618773928121-c32242e63f39?w=1200&q=80&fm=webp',
+      'https://images.unsplash.com/photo-1564501049412-61c2a3083791?w=1200&q=80&fm=webp',
+      'https://images.unsplash.com/photo-1551882547-ff40c63fe5fa?w=1200&q=80&fm=webp',
+    ],
+    galleries: [
+      'https://images.unsplash.com/photo-1582719508461-905c673771fd?w=800&q=80&fm=webp',
+      'https://images.unsplash.com/photo-1520250497591-112f2f40a3f4?w=800&q=80&fm=webp',
+      'https://images.unsplash.com/photo-1578683010236-d716f9a3f461?w=800&q=80&fm=webp',
+      'https://images.unsplash.com/photo-1584132967334-10e028bd69f7?w=800&q=80&fm=webp',
+      'https://images.unsplash.com/photo-1563911302283-d2bc129e7570?w=800&q=80&fm=webp',
+      'https://images.unsplash.com/photo-1596436889106-be35e843f974?w=800&q=80&fm=webp',
+      'https://images.unsplash.com/photo-1590490360182-c33d57733427?w=800&q=80&fm=webp',
+      'https://images.unsplash.com/photo-1595576508898-0ad5c879a061?w=800&q=80&fm=webp',
+    ],
+    floorPlans: [
+      'https://images.unsplash.com/photo-1600585152220-90363fe7e115?w=800&q=80&fm=webp',
+      'https://images.unsplash.com/photo-1574362848149-11496d93a7c7?w=800&q=80&fm=webp',
+      'https://images.unsplash.com/photo-1600607688960-e095ff83135c?w=800&q=80&fm=webp',
+    ]
+  },
+  // Mixed-Use/City Development Images
+  city: {
+    heroes: [
+      'https://images.unsplash.com/photo-1449824913935-59a10b8d2000?w=1200&q=80&fm=webp',
+      'https://images.unsplash.com/photo-1480714378408-67cf0d13bc1b?w=1200&q=80&fm=webp',
+      'https://images.unsplash.com/photo-1444723121867-7a241cacace9?w=1200&q=80&fm=webp',
+      'https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?w=1200&q=80&fm=webp',
+      'https://images.unsplash.com/photo-1512917774080-9991f1c4c750?w=1200&q=80&fm=webp',
+      'https://images.unsplash.com/photo-1494526585095-c41746248156?w=1200&q=80&fm=webp',
+    ],
+    galleries: [
+      'https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?w=800&q=80&fm=webp',
+      'https://images.unsplash.com/photo-1564013799919-ab600027ffc6?w=800&q=80&fm=webp',
+      'https://images.unsplash.com/photo-1582268611958-ebfd161ef9cf?w=800&q=80&fm=webp',
+      'https://images.unsplash.com/photo-1580587771525-78b9dba3b914?w=800&q=80&fm=webp',
+      'https://images.unsplash.com/photo-1568605114967-8130f3a36994?w=800&q=80&fm=webp',
+      'https://images.unsplash.com/photo-1583608205776-bfd35f0d9f83?w=800&q=80&fm=webp',
+      'https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?w=800&q=80&fm=webp',
+      'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=800&q=80&fm=webp',
+    ],
+    floorPlans: [
+      'https://images.unsplash.com/photo-1600585152220-90363fe7e115?w=800&q=80&fm=webp',
+      'https://images.unsplash.com/photo-1503387837-b154d5074bd2?w=800&q=80&fm=webp',
+      'https://images.unsplash.com/photo-1600566752734-2a0cd66c42ae?w=800&q=80&fm=webp',
+    ]
+  },
+  // Waterfront/Lagoon Development Images
+  waterfront: {
+    heroes: [
+      'https://images.unsplash.com/photo-1512917774080-9991f1c4c750?w=1200&q=80&fm=webp',
+      'https://images.unsplash.com/photo-1580587771525-78b9dba3b914?w=1200&q=80&fm=webp',
+      'https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=1200&q=80&fm=webp',
+      'https://images.unsplash.com/photo-1582268611958-ebfd161ef9cf?w=1200&q=80&fm=webp',
+      'https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?w=1200&q=80&fm=webp',
+    ],
+    galleries: [
+      'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=800&q=80&fm=webp',
+      'https://images.unsplash.com/photo-1600047509807-ba8f99d2cdde?w=800&q=80&fm=webp',
+      'https://images.unsplash.com/photo-1600573472550-8090b5e0745e?w=800&q=80&fm=webp',
+      'https://images.unsplash.com/photo-1600566753086-00f18fb6b3ea?w=800&q=80&fm=webp',
+      'https://images.unsplash.com/photo-1613977257363-707ba9348227?w=800&q=80&fm=webp',
+      'https://images.unsplash.com/photo-1600585154526-990dced4db0d?w=800&q=80&fm=webp',
+    ],
+    floorPlans: [
+      'https://images.unsplash.com/photo-1600607688969-a5bfcd646154?w=800&q=80&fm=webp',
+      'https://images.unsplash.com/photo-1600566752734-2a0cd66c42ae?w=800&q=80&fm=webp',
+      'https://images.unsplash.com/photo-1600585152220-90363fe7e115?w=800&q=80&fm=webp',
+    ]
+  }
+};
+
+// Project type mapping based on project name/id patterns
+type ProjectType = 'tower' | 'villa' | 'hotel' | 'city' | 'waterfront';
+
+function getProjectType(projectId: string, projectName: string): ProjectType {
+  const id = projectId.toLowerCase();
+  const name = projectName.toLowerCase();
+
+  // Hotel/Branded Residences
+  if (id.includes('rotana') || id.includes('divan') || id.includes('marriott') ||
+      id.includes('kempinski') || name.includes('hotel') || name.includes('residence')) {
+    return 'hotel';
+  }
+
+  // Waterfront/Lagoon
+  if (id.includes('pavilion') || name.includes('lagoon') || name.includes('marina') ||
+      name.includes('atlantic')) {
+    return 'waterfront';
+  }
+
+  // Towers
+  if (id.includes('tower') || name.includes('tower') || id.includes('sky') ||
+      id.includes('quattro') || id.includes('twin') || id.includes('signature') ||
+      id.includes('crystal') || id.includes('ruby') || id.includes('venus') ||
+      id.includes('cihan-tower') || id.includes('ster') || id.includes('life-tower') ||
+      id.includes('naz-towers') || id.includes('classy') || id.includes('royal-towers') ||
+      id.includes('star-towers') || id.includes('gulan-towers') || id.includes('roya') ||
+      id.includes('erbil-one') || id.includes('boulevard') || id.includes('cavally') ||
+      id.includes('zaniary') || id.includes('ankawa-4') || id.includes('sarbast') ||
+      id.includes('mrf') || id.includes('z-center') || id.includes('bakhtyari') ||
+      id.includes('queen-towers') || id.includes('four-towers') || id.includes('park-view') ||
+      id.includes('qaiwan')) {
+    return 'tower';
+  }
+
+  // Villas & Villages
+  if (id.includes('village') || name.includes('village') || id.includes('villa') ||
+      id.includes('american') || id.includes('english') || id.includes('italian') ||
+      id.includes('lebanese') || id.includes('garden-city') || id.includes('ganjan') ||
+      id.includes('aram') || id.includes('zanko') || id.includes('mnara') ||
+      id.includes('four-season') || id.includes('family-land') || id.includes('green-world')) {
+    return 'villa';
+  }
+
+  // Default to city for large mixed-use developments
+  return 'city';
+}
+
+/**
+ * Get image set for a project based on its type
+ */
+function getProjectImageSet(projectId: string, projectName: string, index: number) {
+  const projectType = getProjectType(projectId, projectName);
+  const imageSet = projectImageSets[projectType];
+
+  // Use index to vary images across similar projects
+  const heroIndex = index % imageSet.heroes.length;
+  const galleryStart = (index * 2) % Math.max(1, imageSet.galleries.length - 5);
+
+  return {
+    image: imageSet.heroes[heroIndex],
+    gallery: imageSet.galleries.slice(galleryStart, galleryStart + 6),
+    floorPlanImages: imageSet.floorPlans
+  };
+}
+
+/**
+ * Get the main hero image for a project
+ */
+export function getProjectImage(project: Project): string {
+  if (project.image) {
+    return project.image;
+  }
+  const index = projects.findIndex(p => p.id === project.id);
+  return getProjectImageSet(project.id, project.name, index >= 0 ? index : 0).image;
+}
+
+/**
+ * Get gallery images for a project
+ */
+export function getProjectGallery(project: Project): string[] {
+  if (project.gallery && project.gallery.length > 0) {
+    return project.gallery;
+  }
+  const index = projects.findIndex(p => p.id === project.id);
+  return getProjectImageSet(project.id, project.name, index >= 0 ? index : 0).gallery;
+}
+
+/**
+ * Get floor plan images for a project
+ */
+export function getProjectFloorPlans(project: Project): string[] {
+  if (project.floorPlanImages && project.floorPlanImages.length > 0) {
+    return project.floorPlanImages;
+  }
+  const index = projects.findIndex(p => p.id === project.id);
+  return getProjectImageSet(project.id, project.name, index >= 0 ? index : 0).floorPlanImages;
+}
+
+/**
+ * Get all project images (hero + gallery + floor plans)
+ */
+export function getAllProjectImages(project: Project): {
+  hero: string;
+  gallery: string[];
+  floorPlans: string[];
+} {
+  return {
+    hero: getProjectImage(project),
+    gallery: getProjectGallery(project),
+    floorPlans: getProjectFloorPlans(project)
+  };
+}

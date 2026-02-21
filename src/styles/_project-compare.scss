@@ -1,0 +1,788 @@
+// ═══════════════════════════════════════════════════════════════════════════
+// Project Comparison Styles
+// Side-by-side comparison of development projects
+// ═══════════════════════════════════════════════════════════════════════════
+
+// ─── Project Comparison Bar (Floating Bottom Bar) ─────────────────────────────
+.project-comparison-bar {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: var(--z-sticky);
+  background: var(--c-surface);
+  border-top: 1px solid var(--c-glass-border);
+  box-shadow: 0 -4px 24px rgba(0, 0, 0, 0.3);
+  transform: translateY(100%);
+  transition: transform 0.4s var(--ease-out);
+  padding: var(--space-4) 0;
+
+  &.visible {
+    transform: translateY(0);
+  }
+
+  &__container {
+    max-width: var(--container-max);
+    margin: 0 auto;
+    padding: 0 var(--container-pad);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-8);
+
+    @media (max-width: 768px) {
+      flex-direction: column;
+      gap: var(--space-4);
+    }
+  }
+
+  &__projects {
+    display: flex;
+    gap: var(--space-4);
+    flex: 1;
+
+    @media (max-width: 768px) {
+      width: 100%;
+      justify-content: center;
+      gap: var(--space-3);
+    }
+  }
+
+  &__item {
+    display: flex;
+    align-items: center;
+    gap: var(--space-3);
+    background: var(--c-surface-2);
+    border-radius: var(--radius-md);
+    padding: var(--space-2) var(--space-3);
+    border: 1px solid var(--c-glass-border);
+    min-width: 180px;
+    position: relative;
+    transition: all 0.3s var(--ease-out);
+
+    &:hover {
+      border-color: var(--c-gold);
+    }
+
+    &--empty {
+      border-style: dashed;
+      justify-content: center;
+      opacity: 0.5;
+
+      &:hover {
+        border-color: var(--c-glass-border);
+      }
+    }
+
+    @media (max-width: 768px) {
+      min-width: 100px;
+      padding: var(--space-2);
+    }
+  }
+
+  &__item-image {
+    width: 48px;
+    height: 48px;
+    border-radius: var(--radius-sm);
+    object-fit: cover;
+
+    @media (max-width: 768px) {
+      width: 36px;
+      height: 36px;
+    }
+  }
+
+  &__item-info {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    flex: 1;
+    min-width: 0;
+
+    @media (max-width: 768px) {
+      display: none;
+    }
+  }
+
+  &__item-title {
+    font-size: var(--text-sm);
+    font-weight: 600;
+    color: var(--c-text);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  &__item-status {
+    font-size: var(--text-xs);
+    color: var(--c-text-2);
+  }
+
+  &__item-placeholder {
+    font-size: var(--text-sm);
+    color: var(--c-text-3);
+  }
+
+  &__item-remove {
+    position: absolute;
+    top: -6px;
+    right: -6px;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background: var(--c-error);
+    color: white;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+    line-height: 1;
+    transition: all 0.2s var(--ease-out);
+    opacity: 0;
+
+    &:hover {
+      transform: scale(1.1);
+    }
+  }
+
+  &__item:hover &__item-remove {
+    opacity: 1;
+  }
+
+  &__actions {
+    display: flex;
+    gap: var(--space-3);
+
+    @media (max-width: 768px) {
+      width: 100%;
+      justify-content: center;
+    }
+  }
+
+  &__compare-btn {
+    white-space: nowrap;
+  }
+
+  &__clear-btn {
+    white-space: nowrap;
+  }
+}
+
+// ─── Project Card Compare Button ──────────────────────────────────────────────
+.project-card__compare {
+  position: absolute;
+  top: var(--space-3);
+  right: var(--space-3);
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  background: rgba(0, 0, 0, 0.7);
+  backdrop-filter: blur(8px);
+  border: 1px solid var(--c-glass-border);
+  border-radius: var(--radius-pill);
+  padding: var(--space-2) var(--space-3);
+  cursor: pointer;
+  transition: all 0.3s var(--ease-out);
+  z-index: 10;
+  opacity: 0;
+
+  .project-card:hover & {
+    opacity: 1;
+  }
+
+  &:hover {
+    background: rgba(0, 0, 0, 0.85);
+    border-color: var(--c-gold);
+  }
+
+  &.active {
+    background: var(--c-gold);
+    border-color: var(--c-gold);
+    opacity: 1;
+
+    .compare-checkbox {
+      background: white;
+
+      &::after {
+        opacity: 1;
+      }
+    }
+
+    .compare-label {
+      color: var(--c-bg);
+    }
+  }
+
+  &.disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+    pointer-events: none;
+  }
+
+  .compare-checkbox {
+    width: 16px;
+    height: 16px;
+    border: 2px solid var(--c-gold);
+    border-radius: 4px;
+    position: relative;
+    transition: all 0.2s var(--ease-out);
+
+    &::after {
+      content: '\2713';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      font-size: 10px;
+      color: var(--c-gold);
+      opacity: 0;
+      transition: opacity 0.2s;
+    }
+  }
+
+  .compare-label {
+    font-size: var(--text-xs);
+    font-weight: 600;
+    color: var(--c-text);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+}
+
+// ─── Toast Notification ───────────────────────────────────────────────────────
+.project-comparison-toast {
+  position: fixed;
+  bottom: 100px;
+  left: 50%;
+  transform: translateX(-50%) translateY(20px);
+  background: var(--c-surface);
+  color: var(--c-text);
+  padding: var(--space-4) var(--space-6);
+  border-radius: var(--radius-md);
+  border: 1px solid var(--c-gold);
+  box-shadow: var(--shadow-lg);
+  z-index: var(--z-tooltip);
+  opacity: 0;
+  transition: all 0.3s var(--ease-out);
+  font-size: var(--text-sm);
+
+  &.visible {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+  }
+}
+
+// ═══════════════════════════════════════════════════════════════════════════
+// Project Comparison Page
+// ═══════════════════════════════════════════════════════════════════════════
+
+.project-compare-page {
+  min-height: 100vh;
+  padding: var(--space-24) 0 var(--space-16);
+  background: var(--c-bg);
+
+  &__breadcrumbs {
+    margin-bottom: var(--space-8);
+  }
+
+  &__header {
+    text-align: center;
+    margin-bottom: var(--space-12);
+  }
+
+  &__title {
+    font-family: var(--font-serif);
+    font-size: var(--text-4xl);
+    font-weight: 400;
+    color: var(--c-text);
+    margin-bottom: var(--space-4);
+  }
+
+  &__subtitle {
+    font-size: var(--text-lg);
+    color: var(--c-text-2);
+    max-width: 600px;
+    margin: 0 auto var(--space-6);
+  }
+
+  &__clear-btn {
+    margin-top: var(--space-4);
+  }
+
+  &__cta {
+    margin-top: var(--space-16);
+    padding: var(--space-12) var(--space-8);
+    background: var(--c-surface);
+    border-radius: var(--radius-lg);
+    border: 1px solid var(--c-glass-border);
+    text-align: center;
+  }
+
+  &__cta-content {
+    max-width: 600px;
+    margin: 0 auto;
+  }
+
+  &__cta-title {
+    font-family: var(--font-serif);
+    font-size: var(--text-2xl);
+    color: var(--c-text);
+    margin-bottom: var(--space-4);
+  }
+
+  &__cta-text {
+    color: var(--c-text-2);
+    margin-bottom: var(--space-6);
+  }
+
+  &__cta-actions {
+    display: flex;
+    gap: var(--space-4);
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+
+  &__back {
+    margin-top: var(--space-12);
+    text-align: center;
+  }
+
+  &__back-link {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-2);
+    color: var(--c-text-2);
+    text-decoration: none;
+    font-size: var(--text-base);
+    transition: color 0.3s;
+
+    &:hover {
+      color: var(--c-gold);
+    }
+
+    .icon {
+      width: 20px;
+      height: 20px;
+    }
+  }
+}
+
+// ─── Project Comparison Container ─────────────────────────────────────────────
+.project-compare {
+  &__grid {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-8);
+  }
+
+  &__empty {
+    text-align: center;
+    padding: var(--space-20) var(--space-8);
+    background: var(--c-surface);
+    border-radius: var(--radius-lg);
+    border: 1px dashed var(--c-glass-border);
+  }
+
+  &__empty-icon {
+    width: 80px;
+    height: 80px;
+    margin: 0 auto var(--space-6);
+    color: var(--c-text-3);
+
+    svg {
+      width: 100%;
+      height: 100%;
+    }
+  }
+
+  &__empty-title {
+    font-family: var(--font-serif);
+    font-size: var(--text-2xl);
+    color: var(--c-text);
+    margin-bottom: var(--space-3);
+  }
+
+  &__empty-text {
+    color: var(--c-text-2);
+    max-width: 400px;
+    margin: 0 auto var(--space-6);
+  }
+
+  &__share {
+    margin-top: var(--space-8);
+    padding: var(--space-6);
+    background: var(--c-surface);
+    border-radius: var(--radius-md);
+    border: 1px solid var(--c-glass-border);
+  }
+
+  &__share-title {
+    font-size: var(--text-lg);
+    color: var(--c-text);
+    margin-bottom: var(--space-4);
+    text-align: center;
+  }
+
+  &__share-actions {
+    display: flex;
+    gap: var(--space-3);
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+
+  &__share-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-2);
+
+    .icon {
+      width: 18px;
+      height: 18px;
+    }
+
+    &.success {
+      background: var(--c-success);
+      border-color: var(--c-success);
+      color: white;
+    }
+
+    &--whatsapp:hover {
+      background: #25D366;
+      border-color: #25D366;
+      color: white;
+    }
+
+    &--email:hover {
+      background: var(--c-gold);
+      border-color: var(--c-gold);
+      color: var(--c-bg);
+    }
+  }
+}
+
+// ─── Project Cards Row ────────────────────────────────────────────────────────
+.project-compare-row {
+  &--cards {
+    display: grid;
+    grid-template-columns: repeat(var(--compare-count, 2), 1fr);
+    gap: var(--space-6);
+
+    @media (max-width: 768px) {
+      grid-template-columns: 1fr;
+      gap: var(--space-4);
+    }
+  }
+}
+
+// ─── Project Compare Card ─────────────────────────────────────────────────────
+.project-compare-card {
+  background: var(--c-surface);
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--c-glass-border);
+  overflow: hidden;
+  transition: all 0.3s var(--ease-out);
+
+  &:hover {
+    border-color: var(--c-gold);
+    box-shadow: var(--shadow-gold);
+  }
+
+  &__image {
+    position: relative;
+    aspect-ratio: 16 / 10;
+    overflow: hidden;
+
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.5s var(--ease-out);
+    }
+
+    &:hover img {
+      transform: scale(1.05);
+    }
+  }
+
+  &__status {
+    position: absolute;
+    top: var(--space-3);
+    left: var(--space-3);
+    padding: var(--space-1) var(--space-3);
+    border-radius: var(--radius-pill);
+    font-size: var(--text-xs);
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+
+    &--ready {
+      background: var(--c-success);
+      color: white;
+    }
+
+    &--under-construction {
+      background: var(--c-gold);
+      color: var(--c-bg);
+    }
+
+    &--coming-soon {
+      background: var(--c-surface-3);
+      color: var(--c-text);
+    }
+  }
+
+  &__remove {
+    position: absolute;
+    top: var(--space-3);
+    right: var(--space-3);
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background: rgba(0, 0, 0, 0.7);
+    color: white;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+    transition: all 0.2s var(--ease-out);
+    opacity: 0;
+
+    &:hover {
+      background: var(--c-error);
+      transform: scale(1.1);
+    }
+  }
+
+  &:hover &__remove {
+    opacity: 1;
+  }
+
+  &__title {
+    font-family: var(--font-serif);
+    font-size: var(--text-xl);
+    color: var(--c-text);
+    padding: var(--space-4) var(--space-4) var(--space-2);
+    margin: 0;
+  }
+
+  &__location {
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+    padding: 0 var(--space-4) var(--space-4);
+    color: var(--c-text-2);
+    font-size: var(--text-sm);
+    margin: 0;
+
+    .icon {
+      width: 16px;
+      height: 16px;
+      color: var(--c-gold);
+    }
+  }
+
+  &__view {
+    display: block;
+    margin: 0 var(--space-4) var(--space-4);
+  }
+}
+
+// ─── Comparison Table ─────────────────────────────────────────────────────────
+.project-compare-table {
+  background: var(--c-surface);
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--c-glass-border);
+  overflow: hidden;
+}
+
+.project-compare-section {
+  border-bottom: 1px solid var(--c-glass-border);
+
+  &:last-child {
+    border-bottom: none;
+  }
+
+  &__title {
+    font-size: var(--text-base);
+    font-weight: 600;
+    color: var(--c-gold);
+    padding: var(--space-4) var(--space-6);
+    background: var(--c-surface-2);
+    margin: 0;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+}
+
+.project-compare-row {
+  display: grid;
+  grid-template-columns: 180px 1fr;
+  border-bottom: 1px solid var(--c-glass-border);
+
+  &:last-child {
+    border-bottom: none;
+  }
+
+  @media (max-width: 768px) {
+    grid-template-columns: 120px 1fr;
+  }
+
+  &__label {
+    padding: var(--space-4) var(--space-6);
+    background: var(--c-surface-2);
+    color: var(--c-text-2);
+    font-size: var(--text-sm);
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    border-right: 1px solid var(--c-glass-border);
+
+    @media (max-width: 768px) {
+      padding: var(--space-3) var(--space-4);
+      font-size: var(--text-xs);
+    }
+  }
+
+  &__values {
+    display: grid;
+    grid-template-columns: repeat(var(--compare-count, 2), 1fr);
+
+    @media (max-width: 768px) {
+      grid-template-columns: repeat(var(--compare-count, 2), 1fr);
+    }
+  }
+
+  &__value {
+    padding: var(--space-4) var(--space-6);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    color: var(--c-text);
+    font-size: var(--text-base);
+    border-left: 1px solid var(--c-glass-border);
+    position: relative;
+
+    &:first-child {
+      border-left: none;
+    }
+
+    @media (max-width: 768px) {
+      padding: var(--space-3) var(--space-2);
+      font-size: var(--text-sm);
+    }
+
+    &--best {
+      background: rgba(82, 201, 138, 0.1);
+
+      .project-compare-indicator {
+        background: var(--c-success);
+      }
+    }
+
+    &--worst {
+      background: rgba(224, 82, 82, 0.1);
+    }
+  }
+}
+
+// ─── Comparison Value Styles ──────────────────────────────────────────────────
+.project-compare-value--price {
+  font-weight: 600;
+  color: var(--c-gold);
+  font-size: var(--text-lg);
+
+  @media (max-width: 768px) {
+    font-size: var(--text-base);
+  }
+}
+
+.project-compare-status {
+  display: inline-block;
+  padding: var(--space-1) var(--space-3);
+  border-radius: var(--radius-pill);
+  font-size: var(--text-xs);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+
+  &--ready {
+    background: var(--c-success);
+    color: white;
+  }
+
+  &--under-construction {
+    background: var(--c-gold);
+    color: var(--c-bg);
+  }
+
+  &--coming-soon {
+    background: var(--c-surface-3);
+    color: var(--c-text);
+  }
+}
+
+.project-compare-feature--yes {
+  color: var(--c-success);
+  font-size: var(--text-xl);
+  font-weight: bold;
+}
+
+.project-compare-feature--no {
+  color: var(--c-error);
+  font-size: var(--text-xl);
+  opacity: 0.5;
+}
+
+.project-compare-indicator {
+  position: absolute;
+  top: var(--space-1);
+  right: var(--space-1);
+  padding: 2px var(--space-2);
+  border-radius: var(--radius-pill);
+  font-size: 10px;
+  font-weight: 600;
+  text-transform: uppercase;
+  color: white;
+  background: var(--c-gold);
+}
+
+// ─── Responsive Adjustments ───────────────────────────────────────────────────
+@media (max-width: 480px) {
+  .project-compare-page {
+    padding: var(--space-20) 0 var(--space-12);
+  }
+
+  .project-compare-page__title {
+    font-size: var(--text-3xl);
+  }
+
+  .project-compare-row__label {
+    padding: var(--space-2);
+    font-size: 11px;
+  }
+
+  .project-compare-row__value {
+    padding: var(--space-2);
+    font-size: var(--text-xs);
+  }
+
+  .project-compare-value--price {
+    font-size: var(--text-sm);
+  }
+
+  .project-comparison-bar__container {
+    padding: 0 var(--space-4);
+  }
+
+  .project-comparison-bar__item {
+    min-width: auto;
+    flex: 1;
+    max-width: 100px;
+  }
+}

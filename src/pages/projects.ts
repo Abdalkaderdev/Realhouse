@@ -2,8 +2,22 @@
 // Projects Page Renderer for Real House
 // ═══════════════════════════════════════════════════════════════════════════
 
-import { projects, getProjectById, formatPriceRange, type Project } from '../data/projects';
+import {
+  projects,
+  getProjectById,
+  formatPriceRange,
+  type Project,
+  getProjectProgress,
+  getProjectMilestones,
+  getProgressColorClass,
+  type ConstructionMilestone
+} from '../data/projects';
 import { createProjectShareButtons } from '../components/share-buttons';
+import {
+  createProjectCompareButton,
+  initProjectComparisonBar,
+  updateProjectComparisonBar
+} from '../components/project-compare';
 import {
   generateProjectAltText,
   generateProjectTitle,
@@ -26,6 +40,7 @@ import {
   createInternalCTA,
   createLocationLinks
 } from '../components/internal-linking';
+import { createInquiryButton } from '../components/project-inquiry-form';
 
 // ─── Helper Functions ─────────────────────────────────────────────────────
 function createElement<K extends keyof HTMLElementTagNameMap>(
@@ -46,6 +61,238 @@ function createSVGUse(iconId: string): SVGSVGElement {
   use.setAttributeNS('http://www.w3.org/1999/xlink', 'href', `#${iconId}`);
   svg.appendChild(use);
   return svg;
+}
+
+// ─── Construction Progress Component ──────────────────────────────────────
+function createProgressIndicator(project: Project): HTMLElement | null {
+  const progress = getProjectProgress(project);
+
+  // Don't show for ready projects (already 100%)
+  if (project.status === 'Ready') {
+    return null;
+  }
+
+  const milestones = getProjectMilestones(project);
+  const colorClass = getProgressColorClass(progress);
+
+  // Calculate SVG circle values
+  const radius = 20;
+  const circumference = 2 * Math.PI * radius;
+  const offset = circumference - (progress / 100) * circumference;
+
+  // Find current milestone
+  const currentMilestone = milestones.find(m => !m.completed) || milestones[milestones.length - 1];
+
+  const container = createElement('div', 'construction-progress');
+  container.setAttribute('data-progress', progress.toString());
+
+  // Circular progress ring
+  const ring = createElement('div', 'construction-progress__ring');
+
+  const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+  svg.setAttribute('class', 'construction-progress__svg');
+  svg.setAttribute('viewBox', '0 0 48 48');
+
+  // Background track
+  const track = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
+  track.setAttribute('class', 'construction-progress__track');
+  track.setAttribute('cx', '24');
+  track.setAttribute('cy', '24');
+  track.setAttribute('r', radius.toString());
+  svg.appendChild(track);
+
+  // Progress arc
+  const progressCircle = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
+  progressCircle.setAttribute('class', `construction-progress__progress construction-progress__progress${colorClass.replace('progress', '')}`);
+  progressCircle.setAttribute('cx', '24');
+  progressCircle.setAttribute('cy', '24');
+  progressCircle.setAttribute('r', radius.toString());
+  progressCircle.setAttribute('stroke-dasharray', circumference.toString());
+  progressCircle.setAttribute('stroke-dashoffset', offset.toString());
+  svg.appendChild(progressCircle);
+
+  ring.appendChild(svg);
+
+  // Percentage text
+  const percentage = createElement('span', 'construction-progress__percentage', `${progress}%`);
+  ring.appendChild(percentage);
+
+  container.appendChild(ring);
+
+  // Info section
+  const info = createElement('div', 'construction-progress__info');
+  const label = createElement('span', 'construction-progress__label', 'Construction');
+  info.appendChild(label);
+
+  const milestoneText = createElement('span', 'construction-progress__milestone', currentMilestone.title);
+  info.appendChild(milestoneText);
+
+  container.appendChild(info);
+
+  // Tooltip with milestones
+  const tooltip = createElement('div', 'construction-progress__tooltip');
+  const tooltipTitle = createElement('div', 'construction-progress__tooltip-title', 'Construction Milestones');
+  tooltip.appendChild(tooltipTitle);
+
+  const milestonesContainer = createElement('div', 'construction-progress__milestones');
+  milestones.forEach(milestone => {
+    const item = createElement('div', `construction-progress__milestone-item${milestone.completed ? ' construction-progress__milestone-item--completed' : ''}`);
+
+    const icon = createElement('div', 'construction-progress__milestone-icon');
+    if (milestone.completed) {
+      const checkSvg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+      checkSvg.setAttribute('viewBox', '0 0 24 24');
+      checkSvg.setAttribute('fill', 'none');
+      checkSvg.setAttribute('stroke', 'currentColor');
+      checkSvg.setAttribute('stroke-width', '3');
+      const path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+      path.setAttribute('d', 'M5 13l4 4L19 7');
+      checkSvg.appendChild(path);
+      icon.appendChild(checkSvg);
+    }
+    item.appendChild(icon);
+
+    const content = createElement('div', 'construction-progress__milestone-content');
+    const date = createElement('div', 'construction-progress__milestone-date', milestone.date);
+    const title = createElement('div', 'construction-progress__milestone-title', milestone.title);
+    content.appendChild(date);
+    content.appendChild(title);
+    item.appendChild(content);
+
+    milestonesContainer.appendChild(item);
+  });
+
+  tooltip.appendChild(milestonesContainer);
+  container.appendChild(tooltip);
+
+  return container;
+}
+
+// ─── Linear Progress Bar Component ─────────────────────────────────────────
+function createProgressBar(project: Project): HTMLElement | null {
+  const progress = getProjectProgress(project);
+
+  // Don't show for ready projects
+  if (project.status === 'Ready') {
+    return null;
+  }
+
+  const colorClass = getProgressColorClass(progress);
+
+  const container = createElement('div', 'progress-bar');
+  container.setAttribute('data-progress', progress.toString());
+
+  const fill = createElement('div', `progress-bar__fill progress-bar__fill${colorClass.replace('progress', '')}`);
+  fill.style.width = `${progress}%`;
+  container.appendChild(fill);
+
+  const label = createElement('span', 'progress-bar__label', `${progress}%`);
+  container.appendChild(label);
+
+  return container;
+}
+
+// ─── Detail Page Progress Section ──────────────────────────────────────────
+function createDetailProgressSection(project: Project): HTMLElement {
+  const progress = getProjectProgress(project);
+  const milestones = getProjectMilestones(project);
+  const colorClass = getProgressColorClass(progress);
+
+  const container = createElement('div', 'progress-detail');
+
+  // Large circular progress
+  const progressCircleContainer = createElement('div', 'progress-detail__circle');
+
+  const radius = 60;
+  const circumference = 2 * Math.PI * radius;
+  const offset = circumference - (progress / 100) * circumference;
+
+  const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+  svg.setAttribute('class', 'progress-detail__svg');
+  svg.setAttribute('viewBox', '0 0 140 140');
+
+  // Background track
+  const track = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
+  track.setAttribute('class', 'progress-detail__track');
+  track.setAttribute('cx', '70');
+  track.setAttribute('cy', '70');
+  track.setAttribute('r', radius.toString());
+  track.setAttribute('fill', 'none');
+  track.setAttribute('stroke', 'rgba(255, 255, 255, 0.1)');
+  track.setAttribute('stroke-width', '8');
+  svg.appendChild(track);
+
+  // Progress arc
+  const progressCircle = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
+  progressCircle.setAttribute('class', `progress-detail__progress progress-detail__progress${colorClass.replace('progress', '')}`);
+  progressCircle.setAttribute('cx', '70');
+  progressCircle.setAttribute('cy', '70');
+  progressCircle.setAttribute('r', radius.toString());
+  progressCircle.setAttribute('fill', 'none');
+  progressCircle.setAttribute('stroke-width', '8');
+  progressCircle.setAttribute('stroke-linecap', 'round');
+  progressCircle.setAttribute('stroke-dasharray', circumference.toString());
+  progressCircle.setAttribute('stroke-dashoffset', offset.toString());
+  progressCircle.style.transform = 'rotate(-90deg)';
+  progressCircle.style.transformOrigin = 'center';
+  svg.appendChild(progressCircle);
+
+  progressCircleContainer.appendChild(svg);
+
+  // Percentage in center
+  const percentageContainer = createElement('div', 'progress-detail__percentage-container');
+  const percentageValue = createElement('span', 'progress-detail__percentage', `${progress}`);
+  const percentageSymbol = createElement('span', 'progress-detail__percentage-symbol', '%');
+  const percentageLabel = createElement('span', 'progress-detail__percentage-label', 'Complete');
+  percentageContainer.appendChild(percentageValue);
+  percentageContainer.appendChild(percentageSymbol);
+  percentageContainer.appendChild(percentageLabel);
+  progressCircleContainer.appendChild(percentageContainer);
+
+  container.appendChild(progressCircleContainer);
+
+  // Milestones timeline
+  const timeline = createElement('div', 'progress-detail__timeline');
+
+  milestones.forEach((milestone, index) => {
+    const item = createElement('div', `progress-detail__milestone${milestone.completed ? ' progress-detail__milestone--completed' : ''}`);
+
+    const connector = createElement('div', 'progress-detail__connector');
+    if (index < milestones.length - 1) {
+      const line = createElement('div', `progress-detail__connector-line${milestone.completed ? ' progress-detail__connector-line--completed' : ''}`);
+      connector.appendChild(line);
+    }
+
+    const dot = createElement('div', 'progress-detail__dot');
+    if (milestone.completed) {
+      const checkSvg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+      checkSvg.setAttribute('viewBox', '0 0 24 24');
+      checkSvg.setAttribute('fill', 'none');
+      checkSvg.setAttribute('stroke', 'currentColor');
+      checkSvg.setAttribute('stroke-width', '3');
+      const path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+      path.setAttribute('d', 'M5 13l4 4L19 7');
+      checkSvg.appendChild(path);
+      dot.appendChild(checkSvg);
+    }
+    connector.appendChild(dot);
+    item.appendChild(connector);
+
+    const content = createElement('div', 'progress-detail__content');
+    const date = createElement('div', 'progress-detail__date', milestone.date);
+    const title = createElement('div', 'progress-detail__title', milestone.title);
+    const description = createElement('div', 'progress-detail__description', milestone.description);
+    content.appendChild(date);
+    content.appendChild(title);
+    content.appendChild(description);
+    item.appendChild(content);
+
+    timeline.appendChild(item);
+  });
+
+  container.appendChild(timeline);
+
+  return container;
 }
 
 // ─── Project Filter State ─────────────────────────────────────────────────
@@ -91,6 +338,22 @@ function createProjectCard(project: Project): HTMLElement {
   statusBadge.textContent = project.status;
   media.appendChild(statusBadge);
 
+  // Compare button
+  const compareBtn = createProjectCompareButton(project.id);
+  media.appendChild(compareBtn);
+
+  // Add construction progress indicator for non-ready projects
+  const progressIndicator = createProgressIndicator(project);
+  if (progressIndicator) {
+    // Position the progress indicator at bottom of media section
+    progressIndicator.style.position = 'absolute';
+    progressIndicator.style.bottom = 'var(--space-3)';
+    progressIndicator.style.left = 'var(--space-3)';
+    progressIndicator.style.right = 'var(--space-3)';
+    progressIndicator.style.zIndex = '5';
+    media.appendChild(progressIndicator);
+  }
+
   card.appendChild(media);
 
   // Content section
@@ -131,10 +394,20 @@ function createProjectCard(project: Project): HTMLElement {
   completion.appendChild(document.createTextNode(`Completion: ${project.completionDate}`));
   footer.appendChild(completion);
 
+  // Action buttons container
+  const footerActions = createElement('div', 'project-card__actions');
+
+  // Inquiry button
+  const inquiryBtn = createInquiryButton(project, 'sm');
+  footerActions.appendChild(inquiryBtn);
+
+  // View Project button
   const viewBtn = createElement('a', 'btn btn--ghost btn--sm', 'View Project');
   viewBtn.href = `/projects/${project.id}`;
   viewBtn.setAttribute('data-route', '');
-  footer.appendChild(viewBtn);
+  footerActions.appendChild(viewBtn);
+
+  footer.appendChild(footerActions);
 
   content.appendChild(footer);
   card.appendChild(content);
@@ -256,8 +529,15 @@ export function renderProjectsPage(): DocumentFragment {
 
         // Re-render the grid
         renderGrid();
+
+        // Update comparison bar after re-render
+        updateProjectComparisonBar();
       });
     });
+
+    // Initialize project comparison bar
+    initProjectComparisonBar();
+    updateProjectComparisonBar();
   }, 0);
 
   return fragment;
@@ -427,6 +707,20 @@ export function renderProjectDetailPage(projectId: string): DocumentFragment {
   });
 
   statsSection.appendChild(statsGrid);
+
+  // Add construction progress section for non-ready projects
+  if (project.status !== 'Ready') {
+    const progressSection = createElement('div', 'project-detail__progress-section');
+    const progressTitle = createElement('h4', 'project-detail__progress-title', 'Construction Progress');
+    progressSection.appendChild(progressTitle);
+
+    // Create detailed progress component
+    const detailProgressIndicator = createDetailProgressSection(project);
+    progressSection.appendChild(detailProgressIndicator);
+
+    statsSection.appendChild(progressSection);
+  }
+
   mainInfo.appendChild(statsSection);
 
   // Description
@@ -473,14 +767,26 @@ export function renderProjectDetailPage(projectId: string): DocumentFragment {
 
   const contactActions = createElement('div', 'project-detail__contact-actions');
 
-  const inquiryBtn = createElement('a', 'btn btn--primary btn--full', 'Request Information');
-  inquiryBtn.href = '/contact';
-  inquiryBtn.setAttribute('data-route', '');
-  contactActions.appendChild(inquiryBtn);
+  // Quick Inquiry Button (opens modal)
+  const quickInquiryBtn = createInquiryButton(project, 'primary');
+  quickInquiryBtn.classList.add('btn--full');
+  const inquiryBtnText = quickInquiryBtn.querySelector('.inquiry-btn__text');
+  if (inquiryBtnText) inquiryBtnText.textContent = 'Quick Inquiry';
+  contactActions.appendChild(quickInquiryBtn);
 
   const callBtn = createElement('a', 'btn btn--ghost btn--full', 'Call +964 750 792 2138');
   callBtn.href = 'tel:+9647507922138';
   contactActions.appendChild(callBtn);
+
+  // WhatsApp Quick Contact
+  const whatsappBtn = createElement('a', 'btn btn--whatsapp btn--full');
+  whatsappBtn.href = `https://wa.me/9647507922138?text=${encodeURIComponent(`Hi, I'm interested in ${project.name}`)}`;
+  whatsappBtn.target = '_blank';
+  whatsappBtn.rel = 'noopener noreferrer';
+  const whatsappIcon = createSVGUse('icon-whatsapp');
+  whatsappBtn.appendChild(whatsappIcon);
+  whatsappBtn.appendChild(document.createTextNode(' WhatsApp Us'));
+  contactActions.appendChild(whatsappBtn);
 
   contactCard.appendChild(contactActions);
   sidebar.appendChild(contactCard);
