@@ -1,43 +1,106 @@
-// ═══════════════════════════════════════════════════════════════════════════
-// SEO Module - Export all SEO schema functions
-// Optimized for: luxury real estate Erbil, properties Kurdistan, apartments Iraq
-// ═══════════════════════════════════════════════════════════════════════════
+// =============================================================================
+// COMPREHENSIVE SEO MODULE - All Schema.org Markup Exports
+// Maximum Google Rich Results Implementation - 20+ Schema Types
+// =============================================================================
+// Target Keywords: "real estate erbil", "property erbil", "houses for sale erbil",
+// "apartments erbil iraq", "luxury homes kurdistan"
+// =============================================================================
 
 export {
-  // Schema generators
-  generatePropertySchema,
-  generateResidenceSchema,
-  generateBreadcrumbSchema,
+  // ==========================================================================
+  // 1. REAL ESTATE AGENT / LOCAL BUSINESS SCHEMA
+  // ==========================================================================
   generateLocalBusinessSchema,
-  generateOrganizationSchema,
-  generatePropertyListSchema,
-  generateWebSiteSchema,
-  generateFAQSchema,
+  generateEnhancedLocalBusinessSchema,
 
-  // Enhanced schema generators
-  generatePageBreadcrumbs,
-  generateRealEstateFAQSchema,
-  generateProductSchema,
-  generateProjectSchema,
-  generateProjectListSchema,
-  generateVirtualTourSchema,
+  // ==========================================================================
+  // 2. REAL ESTATE LISTING SCHEMA (For Properties)
+  // ==========================================================================
+  generatePropertySchema,
+
+  // ==========================================================================
+  // 4. PLACE SCHEMA (Geo Coordinates)
+  // ==========================================================================
+  generateDistrictPlaceSchema,
+
+  // ==========================================================================
+  // 5. IMAGE SCHEMA
+  // ==========================================================================
   generatePropertyImageSchema,
-  generateServicesSchema,
+
+  // ==========================================================================
+  // 6. VIDEO OBJECT SCHEMA (Virtual Tours)
+  // ==========================================================================
+  generateVirtualTourSchema,
+
+  // ==========================================================================
+  // 7. REVIEW & AGGREGATE RATING SCHEMAS
+  // ==========================================================================
   generateReviewSchema,
+  generateAggregateRatingSchema,
+  generateAllReviewsSchema,
+
+  // ==========================================================================
+  // 8. FAQ PAGE SCHEMA (25+ Questions)
+  // ==========================================================================
+  generateFAQSchema,
+  generateHomeFAQSchema,
+  generateAboutFAQSchema,
+  generateContactFAQSchema,
+  generateCategoryFAQSchema,
+  generateRealEstateFAQSchema, // Legacy alias
+
+  // ==========================================================================
+  // 9. HOW-TO SCHEMA
+  // ==========================================================================
   generateHowToBuyPropertySchema,
+  generateHowToSellPropertySchema,
+
+  // ==========================================================================
+  // 13. ITEM LIST SCHEMA
+  // ==========================================================================
+  generatePropertyListSchema,
+  generateProjectListSchema,
+
+  // ==========================================================================
+  // ADDITIONAL SCHEMA TYPES
+  // ==========================================================================
+  generateProductSchema,
+  generateResidenceSchema,
+  generateOrganizationSchema,
+  generateWebSiteSchema,
+  generateProjectSchema,
+  generateServicesSchema,
+  generateArticleSchema,
+  generateBlogSchema,
   generateMetaTags,
 
-  // SEO helpers
+  // ==========================================================================
+  // BREADCRUMB SCHEMA
+  // ==========================================================================
+  generateBreadcrumbSchema,
+  generatePageBreadcrumbs,
+
+  // ==========================================================================
+  // SEO HELPERS
+  // ==========================================================================
   getPropertySEOMeta,
   getAllPropertyUrls,
   getAllProjectUrls,
+  getAllDistrictSlugs,
+  getDistrictInfo,
 
-  // DOM manipulation
+  // ==========================================================================
+  // DOM MANIPULATION
+  // ==========================================================================
   injectSchema,
+  injectSchemaGraph,
   clearDynamicSchemas,
   updatePropertyMeta,
 
-  // Page-specific SEO setup
+  // ==========================================================================
+  // PAGE-SPECIFIC SEO SETUP
+  // ==========================================================================
   setupPropertyPageSEO,
   setupPropertiesPageSEO,
   setupContactPageSEO,
@@ -47,5 +110,70 @@ export {
   setupProjectsPageSEO,
   setupProjectPageSEO,
   setupFavoritesPageSEO,
-  setupComparePageSEO
+  setupComparePageSEO,
+  setupBlogPageSEO,
+  setupBlogPostSEO,
+  setupLocationsPageSEO,
+  setupDistrictPageSEO,
+
+  // ==========================================================================
+  // PAGINATION SEO
+  // ==========================================================================
+  setupPaginationSEO,
+  clearPaginationSEO,
+
+  // ==========================================================================
+  // CANONICAL & DUPLICATE CONTENT
+  // ==========================================================================
+  updateCanonicalUrl,
+  setNoIndex,
+  getCanonicalUrl,
+
+  // ==========================================================================
+  // HREFLANG FOR MULTILINGUAL
+  // ==========================================================================
+  setupHreflangTags,
+
+  // ==========================================================================
+  // SCHEMA VALIDATION & DEBUG
+  // ==========================================================================
+  validateSchema,
+  debugSchemas
 } from './schema';
+
+// =============================================================================
+// SOCIAL MEDIA SEO EXPORTS
+// =============================================================================
+
+export {
+  // Open Graph Tags
+  generateOpenGraphTags,
+  generateTwitterCardTags,
+  generatePinterestTags,
+  generateLinkedInTags,
+
+  // Page-Specific Social Meta Generators
+  generatePropertySocialMeta,
+  generateProjectSocialMeta,
+  generateBlogSocialMeta,
+  generatePageSocialMeta,
+
+  // Social Meta Application Functions
+  applySocialMeta,
+  applyPropertySocialMeta,
+  applyProjectSocialMeta,
+  applyBlogSocialMeta,
+  applyPageSocialMeta,
+
+  // Social Proof Schema
+  generateAggregateRatingSchema as generateSocialAggregateRatingSchema,
+  generateSocialProofReviewSchema,
+  generateOrganizationSocialProofSchema,
+
+  // Social Share Helpers
+  getShareUrl,
+  generateDynamicOGImageUrl,
+
+  // Types
+  type SocialMetaConfig
+} from './social';

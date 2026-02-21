@@ -1,20 +1,25 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
         xmlns:image="http://www.google.com/schemas/sitemap-image/1.1"
-        xmlns:xhtml="http://www.w3.org/1999/xhtml">
+        xmlns:xhtml="http://www.w3.org/1999/xhtml"
+        xmlns:video="http://www.google.com/schemas/sitemap-video/1.1">
 
   <!-- ═══════════════════════════════════════════════════════════════════════════ -->
-  <!-- Main Pages -->
+  <!-- Real House Sitemap - SEO Optimized -->
+  <!-- Last Updated: 2026-02-21 -->
+  <!-- Main Pages - Highest Priority -->
+  <!-- All URLs: lowercase, hyphens, no trailing slashes -->
   <!-- ═══════════════════════════════════════════════════════════════════════════ -->
 
   <url>
-    <loc>https://realhouseiq.com/</loc>
+    <loc>https://realhouseiq.com</loc>
     <lastmod>2026-02-19</lastmod>
     <changefreq>daily</changefreq>
     <priority>1.0</priority>
-    <xhtml:link rel="alternate" hreflang="en" href="https://realhouseiq.com/" />
-    <xhtml:link rel="alternate" hreflang="ar" href="https://realhouseiq.com/ar/" />
-    <xhtml:link rel="alternate" hreflang="ku" href="https://realhouseiq.com/ku/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://realhouseiq.com" />
+    <xhtml:link rel="alternate" hreflang="ar" href="https://realhouseiq.com/ar" />
+    <xhtml:link rel="alternate" hreflang="ku" href="https://realhouseiq.com/ku" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://realhouseiq.com" />
     <image:image>
       <image:loc>https://realhouseiq.com/og-image.jpg</image:loc>
       <image:title>Real House - Luxury Real Estate in Erbil, Kurdistan</image:title>
@@ -47,6 +52,18 @@
   </url>
 
   <url>
+    <loc>https://realhouseiq.com/blog</loc>
+    <lastmod>2026-02-19</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.85</priority>
+    <image:image>
+      <image:loc>https://realhouseiq.com/og-image.jpg</image:loc>
+      <image:title>Erbil Real Estate Blog - Market Insights</image:title>
+      <image:caption>Expert insights on property investment, market trends, and buying guides for Erbil Kurdistan</image:caption>
+    </image:image>
+  </url>
+
+  <url>
     <loc>https://realhouseiq.com/about</loc>
     <lastmod>2026-02-19</lastmod>
     <changefreq>monthly</changefreq>
@@ -61,24 +78,197 @@
   </url>
 
   <url>
+    <loc>https://realhouseiq.com/faq</loc>
+    <lastmod>2026-02-19</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+
+  <url>
+    <loc>https://realhouseiq.com/services</loc>
+    <lastmod>2026-02-19</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.85</priority>
+    <image:image>
+      <image:loc>https://realhouseiq.com/og-image.jpg</image:loc>
+      <image:title>Real Estate Services Erbil - Buy, Sell, Rent, Invest</image:title>
+      <image:caption>Professional real estate services in Kurdistan: buying, selling, renting, property management, investment consulting.</image:caption>
+    </image:image>
+  </url>
+
+  <url>
+    <loc>https://realhouseiq.com/services/buy</loc>
+    <lastmod>2026-02-19</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <url>
+    <loc>https://realhouseiq.com/services/sell</loc>
+    <lastmod>2026-02-19</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <url>
+    <loc>https://realhouseiq.com/services/rent</loc>
+    <lastmod>2026-02-19</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <url>
+    <loc>https://realhouseiq.com/services/property-management</loc>
+    <lastmod>2026-02-19</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.75</priority>
+  </url>
+
+  <url>
+    <loc>https://realhouseiq.com/services/investment-consulting</loc>
+    <lastmod>2026-02-19</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.75</priority>
+  </url>
+
+  <url>
+    <loc>https://realhouseiq.com/services/valuation</loc>
+    <lastmod>2026-02-19</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.75</priority>
+  </url>
+
+  <url>
+    <loc>https://realhouseiq.com/sitemap</loc>
+    <lastmod>2026-02-19</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+
+  <url>
     <loc>https://realhouseiq.com/favorites</loc>
     <lastmod>2026-02-19</lastmod>
     <changefreq>weekly</changefreq>
-    <priority>0.6</priority>
+    <priority>0.5</priority>
   </url>
 
   <url>
     <loc>https://realhouseiq.com/compare</loc>
     <lastmod>2026-02-19</lastmod>
     <changefreq>weekly</changefreq>
-    <priority>0.6</priority>
+    <priority>0.5</priority>
+  </url>
+
+  <!-- ═══════════════════════════════════════════════════════════════════════════ -->
+  <!-- Location Pages - Area-Specific Landing Pages for Local SEO -->
+  <!-- Format: /properties/{district-slug} or /locations -->
+  <!-- Optimized for "real estate erbil" searches -->
+  <!-- ═══════════════════════════════════════════════════════════════════════════ -->
+
+  <url>
+    <loc>https://realhouseiq.com/locations</loc>
+    <lastmod>2026-02-19</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.85</priority>
+    <image:image>
+      <image:loc>https://realhouseiq.com/og-image.jpg</image:loc>
+      <image:title>Real Estate by Location in Erbil Kurdistan</image:title>
+      <image:caption>Explore properties by district in Erbil: Gulan, Dream City, Ankawa, Italian Village, English Village, Empire World</image:caption>
+    </image:image>
   </url>
 
   <url>
-    <loc>https://realhouseiq.com/faq</loc>
+    <loc>https://realhouseiq.com/properties/gulan</loc>
     <lastmod>2026-02-19</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
+    <changefreq>weekly</changefreq>
+    <priority>0.85</priority>
+    <image:image>
+      <image:loc>https://images.unsplash.com/photo-1486325212027-8081e485255e?w=800&amp;q=80&amp;fm=webp</image:loc>
+      <image:title>Gulan Real Estate Erbil - Apartments and Commercial Properties</image:title>
+      <image:caption>Premium properties in Gulan District, Erbil. Modern towers, upscale shopping, and fine dining.</image:caption>
+    </image:image>
+  </url>
+
+  <url>
+    <loc>https://realhouseiq.com/properties/ankawa</loc>
+    <lastmod>2026-02-19</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.85</priority>
+    <image:image>
+      <image:loc>https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?w=800&amp;q=80&amp;fm=webp</image:loc>
+      <image:title>Ankawa Real Estate Erbil - Apartments and Villas</image:title>
+      <image:caption>Properties in Ankawa neighborhood, Erbil. Historic district with international community and vibrant nightlife.</image:caption>
+    </image:image>
+  </url>
+
+  <url>
+    <loc>https://realhouseiq.com/properties/dream-city</loc>
+    <lastmod>2026-02-19</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+    <image:image>
+      <image:loc>https://images.unsplash.com/photo-1512917774080-9991f1c4c750?w=800&amp;q=80&amp;fm=webp</image:loc>
+      <image:title>Dream City Real Estate Erbil - Villas and Family Homes</image:title>
+      <image:caption>Premier gated community in Erbil with international schools and family amenities.</image:caption>
+    </image:image>
+  </url>
+
+  <url>
+    <loc>https://realhouseiq.com/properties/italian-village</loc>
+    <lastmod>2026-02-19</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.85</priority>
+    <image:image>
+      <image:loc>https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?w=800&amp;q=80&amp;fm=webp</image:loc>
+      <image:title>Italian Village Real Estate Erbil - Mediterranean Style Homes</image:title>
+      <image:caption>Charming Mediterranean-style community in Erbil with Tuscan architecture and lifestyle.</image:caption>
+    </image:image>
+  </url>
+
+  <url>
+    <loc>https://realhouseiq.com/properties/english-village</loc>
+    <lastmod>2026-02-19</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.85</priority>
+    <image:image>
+      <image:loc>https://images.unsplash.com/photo-1600047509807-ba8f99d2cdde?w=800&amp;q=80&amp;fm=webp</image:loc>
+      <image:title>English Village Real Estate Erbil - Exclusive Luxury Villas</image:title>
+      <image:caption>Exclusive British colonial-style community in Erbil with country club amenities.</image:caption>
+    </image:image>
+  </url>
+
+  <url>
+    <loc>https://realhouseiq.com/properties/empire-world</loc>
+    <lastmod>2026-02-19</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+    <image:image>
+      <image:loc>https://images.unsplash.com/photo-1486325212027-8081e485255e?w=800&amp;q=80&amp;fm=webp</image:loc>
+      <image:title>Empire World Real Estate Erbil - Mixed-Use Development</image:title>
+      <image:caption>Erbil's largest mixed-use development with residential towers, shopping mall, and five-star hotel.</image:caption>
+    </image:image>
+  </url>
+
+  <url>
+    <loc>https://realhouseiq.com/gallery</loc>
+    <lastmod>2026-02-19</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+    <image:image>
+      <image:loc>https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=1200&amp;q=80&amp;fm=webp</image:loc>
+      <image:title>Real House Property Gallery - Luxury Real Estate Photos Erbil Kurdistan</image:title>
+      <image:caption>Browse stunning photos of luxury villas, apartments, penthouses, and development projects in Erbil, Kurdistan. High-quality property images.</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://images.unsplash.com/photo-1512917774080-9991f1c4c750?w=1200&amp;q=80&amp;fm=webp</image:loc>
+      <image:title>Luxury Villa Interior Erbil - Modern Design Kurdistan</image:title>
+      <image:caption>Modern luxury villa interior showcasing premium finishes and contemporary design in Erbil real estate.</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=1200&amp;q=80&amp;fm=webp</image:loc>
+      <image:title>High-Rise Development Project Erbil - Skyline View</image:title>
+      <image:caption>Impressive high-rise development in Erbil showing the modern skyline and real estate growth in Kurdistan.</image:caption>
+    </image:image>
   </url>
 
   <url>
@@ -96,9 +286,11 @@
   </url>
 
   <!-- ═══════════════════════════════════════════════════════════════════════════ -->
-  <!-- Property Detail Pages - The Boulevard Apartments -->
+  <!-- Property Detail Pages - SEO-Optimized URLs -->
+  <!-- Format: /properties/{property-id} (clean, short, descriptive IDs) -->
   <!-- ═══════════════════════════════════════════════════════════════════════════ -->
 
+  <!-- The Boulevard Apartments -->
   <url>
     <loc>https://realhouseiq.com/properties/boulevard-apt-floor-13</loc>
     <lastmod>2026-02-19</lastmod>
@@ -106,7 +298,7 @@
     <priority>0.8</priority>
     <image:image>
       <image:loc>https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?w=800&amp;q=80</image:loc>
-      <image:title>The Boulevard - 1BR Apartment Floor 13 - $100,000</image:title>
+      <image:title>The Boulevard 1BR Apartment Floor 13 Gulan Erbil - $100,000</image:title>
       <image:caption>Modern one-bedroom apartment for sale in Gulan, Erbil. 92.5 sqm with city views and premium amenities.</image:caption>
     </image:image>
   </url>
@@ -118,7 +310,7 @@
     <priority>0.8</priority>
     <image:image>
       <image:loc>https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?w=800&amp;q=80</image:loc>
-      <image:title>The Boulevard - 1BR Apartment Floor 14 - $100,000</image:title>
+      <image:title>The Boulevard 1BR Apartment Floor 14 Gulan Erbil - $100,000</image:title>
       <image:caption>Modern one-bedroom apartment for sale in Gulan, Erbil. 92.5 sqm with enhanced city views.</image:caption>
     </image:image>
   </url>
@@ -130,15 +322,12 @@
     <priority>0.85</priority>
     <image:image>
       <image:loc>https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?w=800&amp;q=80</image:loc>
-      <image:title>The Boulevard - 1BR Apartment Floor 17 - $100,000</image:title>
+      <image:title>The Boulevard 1BR Apartment Floor 17 Gulan Erbil - $100,000</image:title>
       <image:caption>Premium one-bedroom apartment with panoramic views in Gulan, Erbil. Highest floor available.</image:caption>
     </image:image>
   </url>
 
-  <!-- ═══════════════════════════════════════════════════════════════════════════ -->
-  <!-- Property Detail Pages - Queen Towers Commercial -->
-  <!-- ═══════════════════════════════════════════════════════════════════════════ -->
-
+  <!-- Queen Towers Commercial Stores -->
   <url>
     <loc>https://realhouseiq.com/properties/queen-towers-store-1</loc>
     <lastmod>2026-02-19</lastmod>
@@ -146,7 +335,7 @@
     <priority>0.8</priority>
     <image:image>
       <image:loc>https://images.unsplash.com/photo-1604719312566-8912e9227c6a?w=800&amp;q=80</image:loc>
-      <image:title>Queen Towers - Commercial Store 128 sqm for Rent</image:title>
+      <image:title>Queen Towers Commercial Store 128 sqm Gulan Erbil for Rent</image:title>
       <image:caption>Prime commercial space for rent in Queen Towers, Gulan, Erbil. Ideal for retail or restaurant.</image:caption>
     </image:image>
   </url>
@@ -158,7 +347,7 @@
     <priority>0.75</priority>
     <image:image>
       <image:loc>https://images.unsplash.com/photo-1604719312566-8912e9227c6a?w=800&amp;q=80</image:loc>
-      <image:title>Queen Towers - Commercial Store 81 sqm for Rent</image:title>
+      <image:title>Queen Towers Commercial Store 81 sqm Gulan Erbil for Rent</image:title>
       <image:caption>Boutique commercial space for rent in Queen Towers, Gulan, Erbil.</image:caption>
     </image:image>
   </url>
@@ -170,7 +359,7 @@
     <priority>0.8</priority>
     <image:image>
       <image:loc>https://images.unsplash.com/photo-1604719312566-8912e9227c6a?w=800&amp;q=80</image:loc>
-      <image:title>Queen Towers - Commercial Store 182 sqm for Rent</image:title>
+      <image:title>Queen Towers Commercial Store 182 sqm Gulan Erbil for Rent</image:title>
       <image:caption>Large premium commercial space for rent in Queen Towers, Gulan, Erbil. Corner position with dual frontage.</image:caption>
     </image:image>
   </url>
@@ -182,13 +371,14 @@
     <priority>0.7</priority>
     <image:image>
       <image:loc>https://images.unsplash.com/photo-1604719312566-8912e9227c6a?w=800&amp;q=80</image:loc>
-      <image:title>Queen Towers - Commercial Store 63 sqm for Rent</image:title>
+      <image:title>Queen Towers Commercial Store 63 sqm Gulan Erbil for Rent</image:title>
       <image:caption>Efficient commercial space for rent in Queen Towers, Gulan, Erbil. Perfect starter space.</image:caption>
     </image:image>
   </url>
 
   <!-- ═══════════════════════════════════════════════════════════════════════════ -->
-  <!-- Project Detail Pages -->
+  <!-- Project Detail Pages - SEO-Optimized URLs -->
+  <!-- Format: /projects/{project-slug} -->
   <!-- ═══════════════════════════════════════════════════════════════════════════ -->
 
   <url>
@@ -198,7 +388,7 @@
     <priority>0.85</priority>
     <image:image>
       <image:loc>https://images.unsplash.com/photo-1486325212027-8081e485255e?w=800&amp;q=80</image:loc>
-      <image:title>Empire World - Erbil's Largest Mixed-Use Development</image:title>
+      <image:title>Empire World Erbil - Largest Mixed-Use Development Kurdistan</image:title>
       <image:caption>Empire World: 2500 units, shopping mall, five-star hotel. Under construction with completion in 2027.</image:caption>
     </image:image>
   </url>
@@ -210,7 +400,7 @@
     <priority>0.85</priority>
     <image:image>
       <image:loc>https://images.unsplash.com/photo-1512917774080-9991f1c4c750?w=800&amp;q=80</image:loc>
-      <image:title>Dream City - Premier Residential Community in Erbil</image:title>
+      <image:title>Dream City Erbil - Premier Residential Community Kurdistan</image:title>
       <image:caption>Dream City: 3200 units, gated community with international schools and medical facilities.</image:caption>
     </image:image>
   </url>
@@ -222,7 +412,7 @@
     <priority>0.8</priority>
     <image:image>
       <image:loc>https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?w=800&amp;q=80</image:loc>
-      <image:title>Italian Village - Tuscan-Style Living in Erbil</image:title>
+      <image:title>Italian Village Erbil - Tuscan-Style Living Kurdistan</image:title>
       <image:caption>Italian Village: 1800 units with authentic Italian architecture and Mediterranean lifestyle.</image:caption>
     </image:image>
   </url>
@@ -234,7 +424,7 @@
     <priority>0.8</priority>
     <image:image>
       <image:loc>https://images.unsplash.com/photo-1600047509807-ba8f99d2cdde?w=800&amp;q=80</image:loc>
-      <image:title>English Village - British Colonial Elegance in Erbil</image:title>
+      <image:title>English Village Erbil - British Colonial Elegance Kurdistan</image:title>
       <image:caption>English Village: 1200 exclusive homes with country club, tennis courts, and private gardens.</image:caption>
     </image:image>
   </url>
@@ -246,7 +436,7 @@
     <priority>0.85</priority>
     <image:image>
       <image:loc>https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?w=800&amp;q=80</image:loc>
-      <image:title>The Boulevard - Modern Luxury Apartments in Gulan</image:title>
+      <image:title>The Boulevard Gulan - Modern Luxury Apartments Erbil</image:title>
       <image:caption>The Boulevard: 500 modern apartments with rooftop garden, fitness center, and smart home features.</image:caption>
     </image:image>
   </url>
@@ -258,7 +448,7 @@
     <priority>0.8</priority>
     <image:image>
       <image:loc>https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=800&amp;q=80</image:loc>
-      <image:title>Cavally Tower - Premium High-Rise in Ankawa</image:title>
+      <image:title>Cavally Tower Ankawa - Premium High-Rise Erbil</image:title>
       <image:caption>Cavally Tower: 350 luxury apartments with sky lounge, infinity pool, and panoramic views.</image:caption>
     </image:image>
   </url>
@@ -270,7 +460,7 @@
     <priority>0.75</priority>
     <image:image>
       <image:loc>https://images.unsplash.com/photo-1577495508326-19a1b3cf65b7?w=800&amp;q=80</image:loc>
-      <image:title>Tulip Towers - Twin Tower Living in Gulan</image:title>
+      <image:title>Tulip Towers Gulan - Twin Tower Living Erbil</image:title>
       <image:caption>Tulip Towers: 600 apartments in distinctive twin-tower design with central gardens.</image:caption>
     </image:image>
   </url>
@@ -282,7 +472,7 @@
     <priority>0.8</priority>
     <image:image>
       <image:loc>https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?w=800&amp;q=80</image:loc>
-      <image:title>London Towers - British-Inspired Living in Gulan</image:title>
+      <image:title>London Towers Gulan - British-Inspired Living Erbil</image:title>
       <image:caption>London Towers: 400 apartments with British-inspired design, indoor pool, and rooftop terrace.</image:caption>
     </image:image>
   </url>
@@ -294,15 +484,275 @@
     <priority>0.75</priority>
     <image:image>
       <image:loc>https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=800&amp;q=80</image:loc>
-      <image:title>MNW Towers - Smart Living Coming to Ankawa</image:title>
+      <image:title>MNW Towers Ankawa - Smart Living Coming 2026 Erbil</image:title>
       <image:caption>MNW Towers: 800 units under construction with smart home technology. Completion 2026.</image:caption>
     </image:image>
   </url>
 
+  <url>
+    <loc>https://realhouseiq.com/projects/pavilion-erbil</loc>
+    <lastmod>2026-02-19</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.85</priority>
+    <image:image>
+      <image:loc>https://images.unsplash.com/photo-1613490493576-7fde63acd811?w=800&amp;q=80</image:loc>
+      <image:title>Pavilion Erbil - Lagoon Living Kurdistan Luxury</image:title>
+      <image:caption>Pavilion Erbil: 2800 units with 320,000 sqm lagoon, private beach, and waterfront villas.</image:caption>
+    </image:image>
+  </url>
+
+  <url>
+    <loc>https://realhouseiq.com/projects/lebanese-village</loc>
+    <lastmod>2026-02-19</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.75</priority>
+    <image:image>
+      <image:loc>https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?w=800&amp;q=80</image:loc>
+      <image:title>Lebanese Village Erbil - Mixed-Use Development Baherka</image:title>
+      <image:caption>Lebanese Village: 3400 units with health club, swimming pool, and Lebanese-inspired architecture.</image:caption>
+    </image:image>
+  </url>
+
+  <url>
+    <loc>https://realhouseiq.com/projects/downtown-erbil</loc>
+    <lastmod>2026-02-19</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+    <image:image>
+      <image:loc>https://images.unsplash.com/photo-1486325212027-8081e485255e?w=800&amp;q=80</image:loc>
+      <image:title>Downtown Erbil - $3B Mixed-Use Development Kurdistan</image:title>
+      <image:caption>Downtown Erbil: 4500 units, twin towers, three five-star hotels. 541,000 sqm landmark development.</image:caption>
+    </image:image>
+  </url>
+
+  <url>
+    <loc>https://realhouseiq.com/projects/sky-towers</loc>
+    <lastmod>2026-02-19</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+    <image:image>
+      <image:loc>https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=800&amp;q=80</image:loc>
+      <image:title>Sky Towers 100m Road - 38-Story Towers Erbil</image:title>
+      <image:caption>Sky Towers: 1224 luxury apartments in three 38-story towers beside Arjaan by Rotana.</image:caption>
+    </image:image>
+  </url>
+
+  <url>
+    <loc>https://realhouseiq.com/projects/zaniary-towers</loc>
+    <lastmod>2026-02-19</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+    <image:image>
+      <image:loc>https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?w=800&amp;q=80</image:loc>
+      <image:title>Zaniary Towers - Tallest Building Iraq 48 Stories</image:title>
+      <image:caption>Zaniary Towers: Features Iraq's tallest building at 48 stories and 180 meters.</image:caption>
+    </image:image>
+  </url>
+
+  <url>
+    <loc>https://realhouseiq.com/projects/american-village</loc>
+    <lastmod>2026-02-19</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.75</priority>
+    <image:image>
+      <image:loc>https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=800&amp;q=80</image:loc>
+      <image:title>American Village Erbil - American-Style Suburb Kurdistan</image:title>
+      <image:caption>American Village: 850 homes in authentic American East Coast style near Salahadin Road.</image:caption>
+    </image:image>
+  </url>
+
   <!-- ═══════════════════════════════════════════════════════════════════════════ -->
-  <!-- Property Type Filter Pages (for SEO) -->
+  <!-- Blog Posts - SEO-Optimized URLs with Keywords -->
+  <!-- Format: /blog/{keyword-rich-slug} -->
   <!-- ═══════════════════════════════════════════════════════════════════════════ -->
 
+  <url>
+    <loc>https://realhouseiq.com/blog/erbil-real-estate-market-trends-2025</loc>
+    <lastmod>2025-01-15</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.75</priority>
+    <image:image>
+      <image:loc>https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=1200&amp;q=80</image:loc>
+      <image:title>Erbil Real Estate Market Trends 2025</image:title>
+      <image:caption>Latest trends shaping Erbil's property market in 2025</image:caption>
+    </image:image>
+  </url>
+
+  <url>
+    <loc>https://realhouseiq.com/blog/buying-property-in-kurdistan-complete-guide</loc>
+    <lastmod>2025-01-10</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <image:image>
+      <image:loc>https://images.unsplash.com/photo-1560518883-ce09059eeffa?w=1200&amp;q=80</image:loc>
+      <image:title>Complete Guide to Buying Property in Kurdistan</image:title>
+      <image:caption>Everything foreign buyers need to know about purchasing real estate in Kurdistan</image:caption>
+    </image:image>
+  </url>
+
+  <url>
+    <loc>https://realhouseiq.com/blog/erbil-neighborhoods-guide-gulan-ankawa-dream-city</loc>
+    <lastmod>2025-01-05</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.75</priority>
+    <image:image>
+      <image:loc>https://images.unsplash.com/photo-1449824913935-59a10b8d2000?w=1200&amp;q=80</image:loc>
+      <image:title>Erbil Neighborhoods Guide - Gulan, Ankawa, Dream City</image:title>
+      <image:caption>Explore Erbil's most desirable neighborhoods for property investment</image:caption>
+    </image:image>
+  </url>
+
+  <url>
+    <loc>https://realhouseiq.com/blog/investment-opportunities-erbil-real-estate</loc>
+    <lastmod>2024-12-28</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.75</priority>
+    <image:image>
+      <image:loc>https://images.unsplash.com/photo-1560520653-9e0e4c89eb11?w=1200&amp;q=80</image:loc>
+      <image:title>Top Investment Opportunities in Erbil Real Estate 2025</image:title>
+      <image:caption>Best real estate investment opportunities in Erbil for 2025</image:caption>
+    </image:image>
+  </url>
+
+  <url>
+    <loc>https://realhouseiq.com/blog/luxury-living-erbil-modern-amenities</loc>
+    <lastmod>2024-12-20</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <image:image>
+      <image:loc>https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=1200&amp;q=80</image:loc>
+      <image:title>Luxury Living in Erbil - Modern Amenities</image:title>
+      <image:caption>What luxury living means in modern Erbil</image:caption>
+    </image:image>
+  </url>
+
+  <url>
+    <loc>https://realhouseiq.com/blog/off-plan-properties-erbil-what-to-know</loc>
+    <lastmod>2024-12-15</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.75</priority>
+    <image:image>
+      <image:loc>https://images.unsplash.com/photo-1541888946425-d81bb19240f5?w=1200&amp;q=80</image:loc>
+      <image:title>Off-Plan Properties in Erbil - Buyer's Guide</image:title>
+      <image:caption>What every buyer should know about off-plan purchases in Erbil</image:caption>
+    </image:image>
+  </url>
+
+  <url>
+    <loc>https://realhouseiq.com/blog/erbil-commercial-real-estate-opportunities</loc>
+    <lastmod>2024-12-10</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <image:image>
+      <image:loc>https://images.unsplash.com/photo-1497366216548-37526070297c?w=1200&amp;q=80</image:loc>
+      <image:title>Commercial Real Estate in Erbil - Opportunities</image:title>
+      <image:caption>Retail and office space opportunities in Erbil's commercial market</image:caption>
+    </image:image>
+  </url>
+
+  <url>
+    <loc>https://realhouseiq.com/blog/erbil-expat-guide-finding-home</loc>
+    <lastmod>2024-12-05</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.75</priority>
+    <image:image>
+      <image:loc>https://images.unsplash.com/photo-1512917774080-9991f1c4c750?w=1200&amp;q=80</image:loc>
+      <image:title>Expat Guide to Finding a Home in Erbil Kurdistan</image:title>
+      <image:caption>Comprehensive guide for expatriates relocating to Erbil</image:caption>
+    </image:image>
+  </url>
+
+  <!-- SEO-Targeted Blog Posts: Competitor & Alternative Queries -->
+  <url>
+    <loc>https://realhouseiq.com/blog/best-real-estate-companies-erbil-2025</loc>
+    <lastmod>2025-01-20</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.85</priority>
+    <image:image>
+      <image:loc>https://images.unsplash.com/photo-1560518883-ce09059eeffa?w=1200&amp;q=80</image:loc>
+      <image:title>Best Real Estate Companies in Erbil 2025</image:title>
+      <image:caption>Complete guide to top property agents in Kurdistan</image:caption>
+    </image:image>
+  </url>
+
+  <url>
+    <loc>https://realhouseiq.com/blog/where-to-buy-property-iraq-complete-guide</loc>
+    <lastmod>2025-01-18</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <image:image>
+      <image:loc>https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=1200&amp;q=80</image:loc>
+      <image:title>Where to Buy Property in Iraq 2025 Investment Guide</image:title>
+      <image:caption>Complete investment guide for property buyers in Iraq</image:caption>
+    </image:image>
+  </url>
+
+  <url>
+    <loc>https://realhouseiq.com/blog/erbil-vs-baghdad-property-prices-comparison</loc>
+    <lastmod>2025-01-16</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.75</priority>
+    <image:image>
+      <image:loc>https://images.unsplash.com/photo-1449824913935-59a10b8d2000?w=1200&amp;q=80</image:loc>
+      <image:title>Erbil vs Baghdad Property Prices 2025 Comparison</image:title>
+      <image:caption>Real estate comparison between Erbil and Baghdad</image:caption>
+    </image:image>
+  </url>
+
+  <url>
+    <loc>https://realhouseiq.com/blog/sulaymaniyah-vs-erbil-real-estate</loc>
+    <lastmod>2025-01-14</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.75</priority>
+    <image:image>
+      <image:loc>https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=1200&amp;q=80</image:loc>
+      <image:title>Sulaymaniyah vs Erbil Real Estate Investment</image:title>
+      <image:caption>Where should you invest in Kurdistan real estate</image:caption>
+    </image:image>
+  </url>
+
+  <url>
+    <loc>https://realhouseiq.com/blog/best-city-invest-iraq-2025</loc>
+    <lastmod>2025-01-12</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <image:image>
+      <image:loc>https://images.unsplash.com/photo-1560520653-9e0e4c89eb11?w=1200&amp;q=80</image:loc>
+      <image:title>Best City to Invest in Iraq 2025</image:title>
+      <image:caption>Complete real estate analysis of Iraqi cities</image:caption>
+    </image:image>
+  </url>
+
+  <url>
+    <loc>https://realhouseiq.com/blog/erbil-property-market-2025-forecast</loc>
+    <lastmod>2025-01-08</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <image:image>
+      <image:loc>https://images.unsplash.com/photo-1560520653-9e0e4c89eb11?w=1200&amp;q=80</image:loc>
+      <image:title>Erbil Property Market 2025 Forecast</image:title>
+      <image:caption>Prices, trends, and investment forecast for Kurdistan real estate</image:caption>
+    </image:image>
+  </url>
+
+  <url>
+    <loc>https://realhouseiq.com/blog/faq-buying-property-erbil-kurdistan</loc>
+    <lastmod>2025-01-22</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.85</priority>
+    <image:image>
+      <image:loc>https://images.unsplash.com/photo-1560518883-ce09059eeffa?w=1200&amp;q=80</image:loc>
+      <image:title>Property Buying FAQ Erbil Kurdistan</image:title>
+      <image:caption>Common questions answered about buying property in Erbil</image:caption>
+    </image:image>
+  </url>
+
+  <!-- ═══════════════════════════════════════════════════════════════════════════ -->
+  <!-- Property Filter Pages - SEO Landing Pages -->
+  <!-- Format: /properties?{filter-params} with hyphens -->
+  <!-- ═══════════════════════════════════════════════════════════════════════════ -->
+
+  <!-- Property Type Filters -->
   <url>
     <loc>https://realhouseiq.com/properties?type=villa</loc>
     <lastmod>2026-02-19</lastmod>
@@ -339,6 +789,21 @@
   </url>
 
   <url>
+    <loc>https://realhouseiq.com/properties?type=townhouse</loc>
+    <lastmod>2026-02-19</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+
+  <url>
+    <loc>https://realhouseiq.com/properties?type=duplex</loc>
+    <lastmod>2026-02-19</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+
+  <!-- Status Filters -->
+  <url>
     <loc>https://realhouseiq.com/properties?status=for-sale</loc>
     <lastmod>2026-02-19</lastmod>
     <changefreq>daily</changefreq>
@@ -359,10 +824,7 @@
     <priority>0.75</priority>
   </url>
 
-  <!-- ═══════════════════════════════════════════════════════════════════════════ -->
-  <!-- Location/District Pages (for Local SEO) -->
-  <!-- ═══════════════════════════════════════════════════════════════════════════ -->
-
+  <!-- District/Location Filters -->
   <url>
     <loc>https://realhouseiq.com/properties?district=gulan</loc>
     <lastmod>2026-02-19</lastmod>
@@ -393,6 +855,57 @@
 
   <url>
     <loc>https://realhouseiq.com/properties?district=english-village</loc>
+    <lastmod>2026-02-19</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+
+  <url>
+    <loc>https://realhouseiq.com/properties?district=empire-world</loc>
+    <lastmod>2026-02-19</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+
+  <!-- Price Range Filters -->
+  <url>
+    <loc>https://realhouseiq.com/properties?price=under-200k</loc>
+    <lastmod>2026-02-19</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.65</priority>
+  </url>
+
+  <url>
+    <loc>https://realhouseiq.com/properties?price=200k-400k</loc>
+    <lastmod>2026-02-19</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.65</priority>
+  </url>
+
+  <url>
+    <loc>https://realhouseiq.com/properties?price=above-500k</loc>
+    <lastmod>2026-02-19</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.65</priority>
+  </url>
+
+  <!-- Combined Filters (High-Value Landing Pages) -->
+  <url>
+    <loc>https://realhouseiq.com/properties?type=villa&amp;district=gulan</loc>
+    <lastmod>2026-02-19</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+
+  <url>
+    <loc>https://realhouseiq.com/properties?type=apartment&amp;status=for-sale</loc>
+    <lastmod>2026-02-19</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+
+  <url>
+    <loc>https://realhouseiq.com/properties?type=commercial&amp;status=for-rent</loc>
     <lastmod>2026-02-19</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>

@@ -8,6 +8,7 @@ import { testimonials } from './data/testimonials';
 import { agents, trustBadges, enhancedStats, featuredInMedia, partnerLogos } from './data/agents';
 import { projects, getProjectById, formatPriceRange, type Project, type ProjectStatus } from './data/projects';
 import { submitInquiry } from './services/api';
+import { updateAriaCurrentPage, announcePageChange, createTimeElement, createFigure } from './utils/semantic-html';
 import { isFavorite, toggleFavorite, getFavorites, clearFavorites, updateFavoriteButton, updateFavoritesBadge } from './utils/favorites';
 import { createCompareButton, initComparisonBar, updateComparisonBar } from './comparison';
 import { getAmenitiesForDistrict, getCategoryIcon, getCategoryLabel, type Amenity, type DistrictAmenities } from './data/amenities';
@@ -15,7 +16,33 @@ import { openAppointmentScheduler } from './components/appointment-scheduler';
 import { openVirtualTourModal, injectVirtualTourStyles } from './components/virtual-tour-modal';
 import { openFloorPlanModal, injectFloorPlanStyles } from './components/floor-plan-modal';
 import { initPropertiesMap, updateMapMarkers, initPropertyDetailMap } from './components/property-map';
+import { createPropertyShareButtons, createProjectShareButtons, createFloatingShareButton } from './components/share-buttons';
+import {
+  generatePropertyAltText,
+  generatePropertyTitle,
+  generateProjectAltText,
+  generateProjectTitle,
+  generateSrcSet,
+  generateSizes,
+  createSEOImage,
+  updateImageMetaTags,
+  generatePropertyImageSchema,
+  addPropertyImageSchemaToPage,
+  IMAGE_DIMENSIONS
+} from './utils/image-seo';
 export { renderComparisonPage } from './comparison';
+import { renderComprehensiveFAQPage } from './pages/faq';
+import {
+  createBreadcrumbs,
+  injectBreadcrumbSchema,
+  getPropertyDetailBreadcrumbs,
+  getPropertiesBreadcrumbs,
+  getContactBreadcrumbs,
+  getFavoritesBreadcrumbs,
+  getRelatedProperties,
+  createRelatedPropertiesSection,
+  type BreadcrumbItem
+} from './components/internal-linking';
 
 // ─── Mortgage Calculator Interface ─────────────────────────────────────────
 interface MortgageCalculation {
@@ -360,17 +387,28 @@ function announceToScreenReader(message: string): void {
 
 // ─── Property Card Component ──────────────────────────────────────────────
 function createPropertyCard(property: Property): HTMLElement {
+  // Use article element for self-contained property listing
   const card = createElement('article', 'property-card');
   card.setAttribute('data-id', property.id);
+  // Add structured data attributes for SEO
+  card.setAttribute('itemscope', '');
+  card.setAttribute('itemtype', 'https://schema.org/RealEstateListing');
 
-  // Media section
-  const media = createElement('div', 'property-card__media');
+  // Media section with figure element for semantic markup
+  const media = createElement('figure', 'property-card__media');
 
-  const img = createElement('img', 'property-card__image');
-  img.src = property.images[0];
-  // Descriptive alt text for accessibility
-  img.alt = `${property.type} - ${property.title} in ${property.location.district}, ${property.location.city}. ${property.specs.beds} bedrooms, ${property.specs.baths} bathrooms, ${property.specs.sqm.toLocaleString()} square meters.`;
-  img.loading = 'lazy';
+  // SEO-Optimized Image with srcset, sizes, dimensions
+  const img = createSEOImage({
+    src: property.images[0],
+    alt: generatePropertyAltText(property, 0, 'card'),
+    title: generatePropertyTitle(property),
+    className: 'property-card__image',
+    loading: 'lazy',
+    width: IMAGE_DIMENSIONS.card.width,
+    height: IMAGE_DIMENSIONS.card.height,
+    srcset: generateSrcSet(property.images[0], [400, 600, 800]),
+    sizes: generateSizes('card'),
+  });
   media.appendChild(img);
 
   const overlay = createElement('div', 'property-card__overlay');
@@ -434,13 +472,18 @@ function createPropertyCard(property: Property): HTMLElement {
   const content = createElement('div', 'property-card__content');
 
   const type = createElement('div', 'property-card__type', property.type);
+  type.setAttribute('itemprop', 'additionalType');
   content.appendChild(type);
 
   const title = createElement('h3', 'property-card__title', property.title);
+  title.setAttribute('itemprop', 'name');
   content.appendChild(title);
 
   const location = createElement('p', 'property-card__location');
-  location.appendChild(createSVGUse('icon-location'));
+  location.setAttribute('itemprop', 'address');
+  const locationIcon = createSVGUse('icon-location');
+  locationIcon.setAttribute('aria-hidden', 'true');
+  location.appendChild(locationIcon);
   location.appendChild(document.createTextNode(`${property.location.district}, ${property.location.city}`));
   content.appendChild(location);
 
@@ -465,14 +508,17 @@ function createPropertyCard(property: Property): HTMLElement {
   content.appendChild(specs);
 
   // Footer
-  const footer = createElement('div', 'property-card__footer');
+  const footer = createElement('footer', 'property-card__footer');
 
   const price = createElement('span', 'property-card__price', getDisplayPrice(property));
+  price.setAttribute('itemprop', 'price');
   footer.appendChild(price);
 
-  const viewBtn = createElement('a', 'btn btn--ghost btn--sm', 'View');
+  const viewBtn = createElement('a', 'btn btn--ghost btn--sm', 'View property details');
   viewBtn.href = `/properties/${property.id}`;
   viewBtn.setAttribute('data-route', '');
+  viewBtn.setAttribute('itemprop', 'url');
+  viewBtn.setAttribute('aria-label', `View details for ${property.title}`);
   footer.appendChild(viewBtn);
 
   content.appendChild(footer);
@@ -485,12 +531,14 @@ function createPropertyCard(property: Property): HTMLElement {
 export function renderHomePage(): DocumentFragment {
   const fragment = document.createDocumentFragment();
 
-  // Hero Section
+  // Hero Section with proper semantic structure
   const hero = createElement('section', 'hero');
   hero.id = 'hero';
+  hero.setAttribute('aria-label', 'Welcome to Real House - Luxury Real Estate');
 
   // YouTube Video Background
   const videoBackground = createElement('div', 'hero__video-background');
+  videoBackground.setAttribute('aria-hidden', 'true'); // Decorative video
   const videoIframe = document.createElement('iframe');
   videoIframe.src = 'https://www.youtube.com/embed/N2nROpXXG88?autoplay=1&mute=1&loop=1&playlist=N2nROpXXG88&controls=0&showinfo=0&rel=0&modestbranding=1&playsinline=1&start=0&end=60';
   videoIframe.className = 'hero__video-iframe';
@@ -498,30 +546,32 @@ export function renderHomePage(): DocumentFragment {
   videoIframe.setAttribute('allow', 'autoplay; encrypted-media');
   videoIframe.setAttribute('allowfullscreen', '');
   videoIframe.setAttribute('loading', 'lazy');
+  videoIframe.setAttribute('title', 'Real House promotional video background');
   videoBackground.appendChild(videoIframe);
   hero.appendChild(videoBackground);
 
   // Video Overlay for text readability
   const videoOverlay = createElement('div', 'hero__video-overlay');
+  videoOverlay.setAttribute('aria-hidden', 'true');
   hero.appendChild(videoOverlay);
 
   const heroContent = createElement('div', 'hero__content container');
 
-  // Headline
-  const headline = createElement('h1', 'hero__headline', 'Find Your Dream Home');
+  // Headline - Primary keyword in H1 (only one h1 per page)
+  const headline = createElement('h1', 'hero__headline', 'Real Estate Erbil — Houses for Sale Erbil & Apartments Erbil Iraq');
   heroContent.appendChild(headline);
 
-  // Subline
-  const subline = createElement('p', 'hero__subline', 'What makes us different is trust.');
+  // Subline with LSI keywords
+  const subline = createElement('p', 'hero__subline', 'The most trusted property Erbil agency for luxury homes Kurdistan, apartments Erbil Iraq, villas Erbil Iraq, and penthouse Erbil. Best real estate agent Erbil helping you buy house Erbil in the Erbil property market.');
   heroContent.appendChild(subline);
 
   // CTA
   const cta = createElement('div', 'hero__cta');
-  const primaryBtn = createElement('a', 'btn btn--primary btn--large', 'View Properties');
+  const primaryBtn = createElement('a', 'btn btn--primary btn--large', 'Houses for Sale Erbil');
   primaryBtn.href = '/properties';
   primaryBtn.setAttribute('data-route', '');
   cta.appendChild(primaryBtn);
-  const consultationBtn = createElement('a', 'btn btn--ghost btn--large', 'Schedule Free Consultation');
+  const consultationBtn = createElement('a', 'btn btn--ghost btn--large', 'Best Real Estate Agent Erbil');
   consultationBtn.href = '/contact';
   consultationBtn.setAttribute('data-route', '');
   cta.appendChild(consultationBtn);
@@ -532,12 +582,16 @@ export function renderHomePage(): DocumentFragment {
 
   // Trust Badges Section
   const trustSection = createElement('section', 'trust-badges');
+  trustSection.setAttribute('aria-label', 'Why choose Real House');
   const trustContainer = createElement('div', 'container');
   const trustGrid = createElement('div', 'trust-badges__grid');
+  trustGrid.setAttribute('role', 'list');
 
   trustBadges.forEach(badge => {
     const badgeEl = createElement('div', 'trust-badges__item');
+    badgeEl.setAttribute('role', 'listitem');
     const iconWrapper = createElement('div', 'trust-badges__icon');
+    iconWrapper.setAttribute('aria-hidden', 'true');
     iconWrapper.appendChild(createSVGUse(badge.icon));
     badgeEl.appendChild(iconWrapper);
     const badgeContent = createElement('div', 'trust-badges__content');
@@ -555,8 +609,10 @@ export function renderHomePage(): DocumentFragment {
 
   // Stats Section
   const stats = createElement('section', 'stats');
+  stats.setAttribute('aria-label', 'Our achievements in numbers');
   const statsContainer = createElement('div', 'container');
   const statsGrid = createElement('div', 'stats__grid');
+  statsGrid.setAttribute('role', 'list');
 
   const statsData = [
     { number: 2400, suffix: '+', label: 'Properties Sold' },
@@ -567,6 +623,7 @@ export function renderHomePage(): DocumentFragment {
 
   statsData.forEach(stat => {
     const item = createElement('div', 'stats__item');
+    item.setAttribute('role', 'listitem');
     const num = createElement('span', 'stats__number', '0');
     num.setAttribute('data-target', stat.number.toString());
     num.setAttribute('data-suffix', stat.suffix);
@@ -582,16 +639,18 @@ export function renderHomePage(): DocumentFragment {
 
   // Featured Properties Section
   const featured = createElement('section', 'featured');
+  featured.setAttribute('aria-labelledby', 'featured-title');
   const featuredContainer = createElement('div', 'container');
 
-  const featuredHeader = createElement('div', 'featured__header');
+  const featuredHeader = createElement('header', 'featured__header');
   const featuredTitle = createElement('h2', 'featured__title');
-  featuredTitle.textContent = 'Featured ';
-  const em = createElement('em', undefined, 'Properties');
+  featuredTitle.id = 'featured-title';
+  featuredTitle.textContent = 'Featured Property Erbil — ';
+  const em = createElement('em', undefined, 'Luxury Homes Kurdistan');
   featuredTitle.appendChild(em);
   featuredHeader.appendChild(featuredTitle);
 
-  const viewAllLink = createElement('a', 'featured__link', 'View All');
+  const viewAllLink = createElement('a', 'featured__link', 'View all houses for sale Erbil');
   viewAllLink.href = '/properties';
   viewAllLink.setAttribute('data-route', '');
   viewAllLink.appendChild(createSVGUse('icon-arrow-right'));
@@ -668,12 +727,19 @@ export function renderHomePage(): DocumentFragment {
     const panel = createElement('div', 'showcase-panel');
     panel.setAttribute('data-panel', (index + 1).toString());
 
-    // Background
+    // Background with SEO-optimized image
     const bg = createElement('div', 'showcase-panel__bg');
-    const bgImg = createElement('img');
-    bgImg.src = property.images[0];
-    bgImg.alt = property.title;
-    bgImg.loading = index === 0 ? 'eager' : 'lazy';
+    const bgImg = createSEOImage({
+      src: property.images[0],
+      alt: generatePropertyAltText(property, 0, 'detail'),
+      title: generatePropertyTitle(property),
+      loading: index === 0 ? 'eager' : 'lazy',
+      width: 1200,
+      height: 800,
+      srcset: generateSrcSet(property.images[0], [800, 1200, 1600]),
+      sizes: '100vw',
+      fetchPriority: index === 0 ? 'high' : 'auto',
+    });
     bg.appendChild(bgImg);
     panel.appendChild(bg);
 
@@ -752,10 +818,10 @@ export function renderHomePage(): DocumentFragment {
   processTitle.textContent = 'The ';
   const emProcess = createElement('em', undefined, 'Real House');
   processTitle.appendChild(emProcess);
-  processTitle.appendChild(document.createTextNode(' Experience'));
+  processTitle.appendChild(document.createTextNode(' Real Estate Kurdistan Experience'));
   processHeader.appendChild(processTitle);
 
-  const processSubtitle = createElement('p', 'process__subtitle', 'Our white-glove service ensures a seamless journey from discovery to acquisition.');
+  const processSubtitle = createElement('p', 'process__subtitle', 'Our expert property Erbil team ensures a seamless journey from discovery to acquisition. We specialize in apartments Erbil Iraq, houses for sale Erbil, villas Erbil Iraq, and penthouse Erbil transactions in the Erbil property market.');
   processHeader.appendChild(processSubtitle);
   processContainer.appendChild(processHeader);
 
@@ -788,10 +854,10 @@ export function renderHomePage(): DocumentFragment {
 
   const testimonialsHeader = createElement('div', 'testimonials__header');
   const testimonialsTitle = createElement('h2', 'testimonials__title');
-  testimonialsTitle.textContent = 'What Our ';
+  testimonialsTitle.textContent = 'What Our Property Erbil ';
   const emTestimonials = createElement('em', undefined, 'Clients');
   testimonialsTitle.appendChild(emTestimonials);
-  testimonialsTitle.appendChild(document.createTextNode(' Say'));
+  testimonialsTitle.appendChild(document.createTextNode(' Say About Real Estate Erbil'));
   testimonialsHeader.appendChild(testimonialsTitle);
   testimonialsContainer.appendChild(testimonialsHeader);
 
@@ -816,10 +882,16 @@ export function renderHomePage(): DocumentFragment {
     // Author section
     const author = createElement('div', 'testimonials__author');
 
-    const avatar = createElement('img', 'testimonials__avatar');
-    avatar.src = testimonial.image;
-    avatar.alt = testimonial.name;
-    avatar.loading = 'lazy';
+    // SEO-optimized testimonial avatar
+    const avatar = createSEOImage({
+      src: testimonial.image,
+      alt: `${testimonial.name} from ${testimonial.location} - Real House client testimonial`,
+      title: `${testimonial.name} - Satisfied Real House client`,
+      className: 'testimonials__avatar',
+      loading: 'lazy',
+      width: 60,
+      height: 60,
+    });
     author.appendChild(avatar);
 
     const authorInfo = createElement('div', 'testimonials__author-info');
@@ -842,20 +914,27 @@ export function renderHomePage(): DocumentFragment {
   const agentContainer = createElement('div', 'container');
   const agentHeader = createElement('div', 'agent-showcase__header');
   const agentTitleEl = createElement('h2', 'agent-showcase__title');
-  agentTitleEl.textContent = 'Meet Our ';
+  agentTitleEl.textContent = 'Best Real Estate Agent Erbil — Meet Our ';
   agentTitleEl.appendChild(createElement('em', undefined, 'Expert'));
   agentTitleEl.appendChild(document.createTextNode(' Team'));
   agentHeader.appendChild(agentTitleEl);
-  agentHeader.appendChild(createElement('p', 'agent-showcase__subtitle', 'Dedicated professionals committed to finding your perfect property.'));
+  agentHeader.appendChild(createElement('p', 'agent-showcase__subtitle', 'Dedicated property Erbil professionals committed to helping you buy house Erbil. Our experts specialize in real estate Kurdistan, apartments Erbil Iraq, villas Erbil Iraq, and property investment Kurdistan Iraq.'));
   agentContainer.appendChild(agentHeader);
   const agentGrid = createElement('div', 'agent-showcase__grid');
   agents.forEach(agentData => {
     const agentCard = createElement('div', 'agent-showcase__card');
     const imageWrapper = createElement('div', 'agent-showcase__image');
-    const agentImg = createElement('img');
-    agentImg.src = agentData.image;
-    agentImg.alt = agentData.name;
-    agentImg.loading = 'lazy';
+    // SEO-optimized agent image
+    const agentImg = createSEOImage({
+      src: agentData.image,
+      alt: `${agentData.name}, ${agentData.role} - Best real estate agent Erbil specializing in ${agentData.specialization}`,
+      title: `${agentData.name} - ${agentData.role} at Real House Erbil`,
+      loading: 'lazy',
+      width: 300,
+      height: 400,
+      srcset: generateSrcSet(agentData.image, [200, 300, 400]),
+      sizes: '(max-width: 640px) 100vw, 300px',
+    });
     imageWrapper.appendChild(agentImg);
     agentCard.appendChild(imageWrapper);
     const agentContent = createElement('div', 'agent-showcase__content');
@@ -926,12 +1005,12 @@ export function renderHomePage(): DocumentFragment {
 
   const ctaTitle = createElement('h2', 'cta-section__title');
   ctaTitle.textContent = 'Ready to Find Your ';
-  const emCta = createElement('em', undefined, 'Dream Home');
+  const emCta = createElement('em', undefined, 'Dream Property Erbil');
   ctaTitle.appendChild(emCta);
-  ctaTitle.appendChild(document.createTextNode('?'));
+  ctaTitle.appendChild(document.createTextNode('? Houses for Sale Erbil Await'));
   ctaContainer.appendChild(ctaTitle);
 
-  const ctaBtn = createElement('a', 'btn btn--primary btn--large', 'Schedule a Consultation');
+  const ctaBtn = createElement('a', 'btn btn--primary btn--large', 'Contact Best Real Estate Agent Erbil');
   ctaBtn.href = '/contact';
   ctaBtn.setAttribute('data-route', '');
   ctaContainer.appendChild(ctaBtn);
@@ -953,28 +1032,35 @@ export function renderPropertiesPage(): DocumentFragment {
   let currentViewMode: 'list' | 'map' = 'list';
   let mapInstance: ReturnType<typeof initPropertiesMap> = null;
 
-  const page = createElement('div', 'properties-page');
+  // Main section for properties listing
+  const page = createElement('section', 'properties-page');
+  page.setAttribute('aria-labelledby', 'properties-title');
   const container = createElement('div', 'container');
 
-  // Header with view toggle
-  const header = createElement('div', 'properties-page__header');
+  // Header with view toggle - only ONE h1 per page
+  const header = createElement('header', 'properties-page__header');
   const headerContent = createElement('div', 'properties-page__header-content');
-  const title = createElement('h1', 'properties-page__title', 'Our Properties');
-  const subtitle = createElement('p', 'properties-page__subtitle', 'Discover exceptional homes in the world\'s most desirable locations.');
+  const title = createElement('h1', 'properties-page__title', 'Property Erbil — Houses for Sale Erbil, Apartments Erbil Iraq & Luxury Homes Kurdistan');
+  title.id = 'properties-title';
+  const subtitle = createElement('p', 'properties-page__subtitle', 'Discover exceptional real estate Erbil listings. Browse villas Erbil Iraq, penthouse Erbil, apartments Erbil Iraq, and luxury homes Kurdistan. Best real estate agent Erbil for buy house Erbil and real estate Kurdistan property investment Kurdistan Iraq.');
   headerContent.appendChild(title);
   headerContent.appendChild(subtitle);
   header.appendChild(headerContent);
 
-  // View Toggle Buttons
+  // View Toggle Buttons with proper ARIA
   const viewToggle = createElement('div', 'properties-page__view-toggle');
+  viewToggle.setAttribute('role', 'group');
+  viewToggle.setAttribute('aria-label', 'View mode');
   const listBtn = createElement('button', 'properties-page__view-btn properties-page__view-btn--active');
   listBtn.setAttribute('data-view', 'list');
-  listBtn.setAttribute('aria-label', 'List view');
+  listBtn.setAttribute('aria-label', 'View properties as list');
+  listBtn.setAttribute('aria-pressed', 'true');
   listBtn.innerHTML = '<svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2"><line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><line x1="3" y1="6" x2="3.01" y2="6"/><line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/></svg><span>List</span>';
   viewToggle.appendChild(listBtn);
   const mapBtn = createElement('button', 'properties-page__view-btn');
   mapBtn.setAttribute('data-view', 'map');
-  mapBtn.setAttribute('aria-label', 'Map view');
+  mapBtn.setAttribute('aria-label', 'View properties on map');
+  mapBtn.setAttribute('aria-pressed', 'false');
   mapBtn.innerHTML = '<svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2"><polygon points="1 6 1 22 8 18 16 22 23 18 23 2 16 6 8 2 1 6"/><line x1="8" y1="2" x2="8" y2="18"/><line x1="16" y1="6" x2="16" y2="22"/></svg><span>Map</span>';
   viewToggle.appendChild(mapBtn);
   header.appendChild(viewToggle);
@@ -1481,68 +1567,89 @@ export function renderPropertiesPage(): DocumentFragment {
 export function renderAboutPage(): DocumentFragment {
   const fragment = document.createDocumentFragment();
 
-  const page = createElement('div', 'about-page');
+  // Main article wrapper for the about page content
+  const page = createElement('article', 'about-page');
+  page.setAttribute('itemscope', '');
+  page.setAttribute('itemtype', 'https://schema.org/AboutPage');
 
-  // Hero
-  const hero = createElement('div', 'about-page__hero');
+  // Hero section (header for the article)
+  const hero = createElement('header', 'about-page__hero');
   const heroContent = createElement('div', 'container');
 
+  // Only ONE h1 per page
   const title = createElement('h1', 'about-page__title');
-  title.textContent = 'Redefining ';
+  title.setAttribute('itemprop', 'name');
+  title.textContent = 'Real Estate Erbil — Redefining ';
   const em = createElement('em', undefined, 'Luxury');
   title.appendChild(em);
-  title.appendChild(document.createTextNode(' Real Estate'));
+  title.appendChild(document.createTextNode(' Property Erbil'));
   heroContent.appendChild(title);
 
-  const subtitle = createElement('p', 'about-page__subtitle', 'For over two decades, Real House has been the premier destination for discerning buyers seeking extraordinary properties.');
+  const subtitle = createElement('p', 'about-page__subtitle');
+  subtitle.setAttribute('itemprop', 'description');
+  subtitle.textContent = 'Real House is the premier real estate Kurdistan agency for houses for sale Erbil and apartments Erbil Iraq. We are the best real estate agent Erbil for villas Erbil Iraq, penthouse Erbil, and luxury homes Kurdistan in the Erbil property market.';
   heroContent.appendChild(subtitle);
 
   hero.appendChild(heroContent);
   page.appendChild(hero);
 
-  // Story Section
+  // Story Section - Proper heading hierarchy h2
   const story = createElement('section', 'about-page__story');
+  story.setAttribute('aria-labelledby', 'story-title');
   const storyContainer = createElement('div', 'container about-page__story-grid');
 
   const storyContent = createElement('div', 'about-page__story-content');
-  const storyTitle = createElement('h3', undefined, 'Our Story');
-  const storyP1 = createElement('p', undefined, 'Founded in 2001 by a team of visionary real estate professionals, Real House was born from a simple belief: that finding your perfect home should be an extraordinary experience.');
-  const storyP2 = createElement('p', undefined, 'Today, we represent the finest properties across 15 global markets, from Manhattan penthouses to Mediterranean villas, each one personally curated to meet the exacting standards of our clients.');
+  const storyTitle = createElement('h2', undefined, 'Our Real Estate Erbil Story');
+  storyTitle.id = 'story-title';
+  const storyP1 = createElement('p', undefined, 'Founded in 2001 by a team of visionary property Erbil professionals, Real House was born from a simple belief: that finding your perfect houses for sale Erbil or apartments Erbil should be an extraordinary experience. Our team became the trusted best real estate agent Erbil for buyers across the Erbil property market.');
+  const storyP2 = createElement('p', undefined, 'Today, we represent the finest villas Erbil Iraq, penthouse Erbil, and luxury homes Kurdistan, including exclusive apartments Erbil Iraq. Every real estate Erbil listing is personally curated for clients seeking property investment Kurdistan Iraq and real estate Kurdistan opportunities.');
   storyContent.appendChild(storyTitle);
   storyContent.appendChild(storyP1);
   storyContent.appendChild(storyP2);
   storyContainer.appendChild(storyContent);
 
   const storyImage = createElement('div', 'about-page__story-image');
-  const img = createElement('img');
-  img.src = 'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=800&q=80&fm=webp';
-  img.alt = 'Luxury property';
-  img.loading = 'lazy';
+  // SEO-optimized about page image
+  const img = createSEOImage({
+    src: 'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=800&q=80&fm=webp',
+    alt: 'Luxury villa Erbil Iraq - Premium real estate Erbil property featuring modern architecture in Kurdistan Region',
+    title: 'Real House - Luxury Real Estate in Erbil, Kurdistan',
+    loading: 'lazy',
+    width: 800,
+    height: 600,
+    srcset: 'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=400&q=80&fm=webp 400w, https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=800&q=80&fm=webp 800w, https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=1200&q=80&fm=webp 1200w',
+    sizes: '(max-width: 768px) 100vw, 50vw',
+  });
   storyImage.appendChild(img);
   storyContainer.appendChild(storyImage);
 
   story.appendChild(storyContainer);
   page.appendChild(story);
 
-  // Values Section
+  // Values Section - h2 for proper hierarchy
   const values = createElement('section', 'about-page__values');
+  values.setAttribute('aria-labelledby', 'values-title');
   const valuesContainer = createElement('div', 'container');
 
-  const valuesHeader = createElement('div', 'about-page__values-header');
-  const valuesTitle = createElement('h3', undefined, 'Our Values');
+  const valuesHeader = createElement('header', 'about-page__values-header');
+  const valuesTitle = createElement('h2', undefined, 'Our Real Estate Kurdistan Values');
+  valuesTitle.id = 'values-title';
   valuesHeader.appendChild(valuesTitle);
   valuesContainer.appendChild(valuesHeader);
 
   const valuesGrid = createElement('div', 'about-page__values-grid');
+  valuesGrid.setAttribute('role', 'list');
   const valuesList = [
-    { title: 'Excellence', desc: 'We pursue perfection in every detail, from property selection to client service.' },
-    { title: 'Integrity', desc: 'Honesty and transparency guide every interaction with our clients and partners.' },
-    { title: 'Innovation', desc: 'We leverage cutting-edge technology to deliver superior real estate experiences.' }
+    { title: 'Excellence in Property Erbil', desc: 'We pursue perfection in every real estate Erbil transaction, from houses for sale Erbil to luxury villa Erbil price negotiations.' },
+    { title: 'Integrity', desc: 'Honesty and transparency guide every interaction, making us the best real estate agent Erbil for apartments Erbil and villas.' },
+    { title: 'Innovation in Erbil Property Market', desc: 'We leverage cutting-edge technology to help you buy house in Erbil Iraq with superior real estate Kurdistan experiences.' }
   ];
 
   valuesList.forEach(value => {
     const valueEl = createElement('div', 'about-page__value');
-    const vTitle = createElement('h4', undefined, value.title);
+    valueEl.setAttribute('role', 'listitem');
+    // h3 since it's under h2
+    const vTitle = createElement('h3', undefined, value.title);
     const vDesc = createElement('p', undefined, value.desc);
     valueEl.appendChild(vTitle);
     valueEl.appendChild(vDesc);
@@ -1553,16 +1660,20 @@ export function renderAboutPage(): DocumentFragment {
   values.appendChild(valuesContainer);
   page.appendChild(values);
 
-  // Team Section
+  // Team Section - h2 for proper hierarchy
   const team = createElement('section', 'about-page__team');
+  team.id = 'team';
+  team.setAttribute('aria-labelledby', 'team-title');
   const teamContainer = createElement('div', 'container');
 
-  const teamHeader = createElement('div', 'about-page__team-header');
-  const teamTitle = createElement('h3', undefined, 'Meet Our Team');
+  const teamHeader = createElement('header', 'about-page__team-header');
+  const teamTitle = createElement('h2', undefined, 'Meet Our Best Real Estate Agent Erbil Team');
+  teamTitle.id = 'team-title';
   teamHeader.appendChild(teamTitle);
   teamContainer.appendChild(teamHeader);
 
   const teamGrid = createElement('div', 'about-page__team-grid');
+  teamGrid.setAttribute('role', 'list');
   const teamMembers = [
     { name: 'Alexandra Chen', role: 'CEO & Founder', image: 'https://images.unsplash.com/photo-1580489944761-15a19d654956?w=400&q=80&fm=webp' },
     { name: 'Marcus Williams', role: 'Head of Sales', image: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=400&q=80&fm=webp' },
@@ -1571,17 +1682,32 @@ export function renderAboutPage(): DocumentFragment {
   ];
 
   teamMembers.forEach(member => {
-    const memberEl = createElement('div', 'about-page__member');
+    // Use article for each team member (self-contained content)
+    const memberEl = createElement('article', 'about-page__member');
+    memberEl.setAttribute('role', 'listitem');
+    memberEl.setAttribute('itemscope', '');
+    memberEl.setAttribute('itemtype', 'https://schema.org/Person');
     const imgDiv = createElement('div', 'about-page__member-image');
-    const memberImg = createElement('img');
-    memberImg.src = member.image;
-    memberImg.alt = member.name;
-    memberImg.loading = 'lazy';
+    // SEO-optimized team member image
+    const memberImg = createSEOImage({
+      src: member.image,
+      alt: `${member.name}, ${member.role} at Real House - Luxury real estate professional in Erbil, Kurdistan`,
+      title: `${member.name} - ${member.role}`,
+      loading: 'lazy',
+      width: 300,
+      height: 300,
+      srcset: generateSrcSet(member.image, [200, 300, 400]),
+      sizes: '(max-width: 640px) 150px, 300px',
+    });
+    memberImg.setAttribute('itemprop', 'image');
     imgDiv.appendChild(memberImg);
     memberEl.appendChild(imgDiv);
 
-    const name = createElement('h4', undefined, member.name);
+    // h3 since under h2
+    const name = createElement('h3', undefined, member.name);
+    name.setAttribute('itemprop', 'name');
     const role = createElement('p', undefined, member.role);
+    role.setAttribute('itemprop', 'jobTitle');
     memberEl.appendChild(name);
     memberEl.appendChild(role);
     teamGrid.appendChild(memberEl);
@@ -1599,13 +1725,16 @@ export function renderAboutPage(): DocumentFragment {
 export function renderContactPage(): DocumentFragment {
   const fragment = document.createDocumentFragment();
 
-  const page = createElement('div', 'contact-page');
+  // Main article wrapper with structured data
+  const page = createElement('article', 'contact-page');
+  page.setAttribute('itemscope', '');
+  page.setAttribute('itemtype', 'https://schema.org/ContactPage');
   const container = createElement('div', 'container');
 
-  // Header
-  const header = createElement('div', 'contact-page__header');
-  const title = createElement('h1', 'contact-page__title', 'Get in Touch');
-  const subtitle = createElement('p', 'contact-page__subtitle', 'Ready to find your dream property? Our team is here to help.');
+  // Header section with h1
+  const header = createElement('header', 'contact-page__header');
+  const title = createElement('h1', 'contact-page__title', 'Contact Real Estate Erbil — Best Real Estate Agent Erbil for Houses for Sale Erbil');
+  const subtitle = createElement('p', 'contact-page__subtitle', 'Ready to find your dream property Erbil? Looking for houses for sale Erbil, apartments Erbil Iraq, penthouse Erbil, or villas Erbil Iraq? Our real estate Kurdistan experts and best real estate agent Erbil team help you buy house Erbil in the Erbil property market.');
   header.appendChild(title);
   header.appendChild(subtitle);
   container.appendChild(header);
@@ -2030,22 +2159,53 @@ export function renderPropertyDetailPage(propertyId: string): DocumentFragment {
     return fragment;
   }
 
-  const page = createElement('div', 'property-detail-page');
+  // Use article for the property detail as it's a self-contained content item
+  const page = createElement('article', 'property-detail-page');
+  page.setAttribute('itemscope', '');
+  page.setAttribute('itemtype', 'https://schema.org/RealEstateListing');
+
+  // ─── Breadcrumbs Navigation ────────────────────────────────────────────────
+  const breadcrumbSection = createElement('nav', 'property-detail__breadcrumbs');
+  breadcrumbSection.setAttribute('aria-label', 'Breadcrumb navigation');
+  const breadcrumbContainer = createElement('div', 'container');
+  const breadcrumbItems = getPropertyDetailBreadcrumbs(property);
+  breadcrumbContainer.appendChild(createBreadcrumbs(breadcrumbItems));
+  breadcrumbSection.appendChild(breadcrumbContainer);
+  page.appendChild(breadcrumbSection);
+
+  // Inject breadcrumb schema for SEO
+  injectBreadcrumbSchema(breadcrumbItems);
 
   // ─── Gallery Section ─────────────────────────────────────────────────────
   const gallery = createElement('section', 'property-gallery');
+  gallery.setAttribute('aria-label', 'Property image gallery');
   const galleryContainer = createElement('div', 'container');
 
-  // Main image with descriptive alt text
-  const mainImageWrapper = createElement('div', 'property-gallery__main');
-  const mainImage = createElement('img', 'property-gallery__main-image');
-  mainImage.src = property.images[0];
-  mainImage.alt = `${property.type} - ${property.title} in ${property.location.district}, ${property.location.city}. Main property image showing exterior view.`;
+  // Main image with SEO-optimized attributes wrapped in figure
+  const mainImageWrapper = createElement('figure', 'property-gallery__main');
+  const mainImage = createSEOImage({
+    src: property.images[0],
+    alt: generatePropertyAltText(property, 0, 'detail'),
+    title: generatePropertyTitle(property),
+    className: 'property-gallery__main-image',
+    loading: 'eager',
+    width: IMAGE_DIMENSIONS.detail.width,
+    height: IMAGE_DIMENSIONS.detail.height,
+    srcset: generateSrcSet(property.images[0], [600, 800, 1200]),
+    sizes: generateSizes('detail'),
+    fetchPriority: 'high',
+  });
   mainImage.id = 'property-main-image';
   mainImageWrapper.appendChild(mainImage);
   galleryContainer.appendChild(mainImageWrapper);
 
-  // Thumbnails with accessibility
+  // Update meta tags with property image for social sharing
+  updateImageMetaTags(property.images[0], generatePropertyAltText(property, 0, 'detail'), 'property');
+
+  // Add structured data for property images (ImageObject schema)
+  addPropertyImageSchemaToPage(property);
+
+  // Thumbnails with accessibility and SEO attributes
   if (property.images.length > 1) {
     const thumbnails = createElement('div', 'property-gallery__thumbnails');
     thumbnails.setAttribute('role', 'group');
@@ -2055,9 +2215,14 @@ export function renderPropertyDetailPage(propertyId: string): DocumentFragment {
       thumb.setAttribute('data-index', index.toString());
       thumb.setAttribute('aria-label', `View image ${index + 1} of ${property.images.length}`);
       thumb.setAttribute('aria-pressed', index === 0 ? 'true' : 'false');
-      const thumbImg = createElement('img');
-      thumbImg.src = imageSrc;
-      thumbImg.alt = ''; // Decorative, button has aria-label
+      // SEO-optimized thumbnail image
+      const thumbImg = createSEOImage({
+        src: imageSrc,
+        alt: '', // Decorative, button has aria-label
+        loading: 'lazy',
+        width: IMAGE_DIMENSIONS.thumbnail.width,
+        height: IMAGE_DIMENSIONS.thumbnail.height,
+      });
       thumbImg.setAttribute('aria-hidden', 'true');
       thumb.appendChild(thumbImg);
 
@@ -2065,8 +2230,9 @@ export function renderPropertyDetailPage(propertyId: string): DocumentFragment {
         const mainImg = document.getElementById('property-main-image') as HTMLImageElement;
         if (mainImg) {
           mainImg.src = imageSrc;
-          // Update main image alt text
-          mainImg.alt = `${property.type} - ${property.title}, image ${index + 1} of ${property.images.length}`;
+          // Update main image alt text with SEO-friendly description
+          mainImg.alt = generatePropertyAltText(property, index, 'gallery');
+          mainImg.title = `${property.title} - Image ${index + 1} of ${property.images.length}`;
         }
         // Update aria-pressed states
         thumbnails.querySelectorAll('.property-gallery__thumb').forEach(t => {
@@ -2108,13 +2274,13 @@ export function renderPropertyDetailPage(propertyId: string): DocumentFragment {
   location.appendChild(document.createTextNode(`${property.location.address}, ${property.location.district}, ${property.location.city}`));
   header.appendChild(location);
 
-  // ─── Social Share Buttons ────────────────────────────────────────────────
-  const shareSection = createElement('div', 'property-detail__share');
+  // ─── Inline Social Share Buttons in Header ────────────────────────────────
+  const headerShareSection = createElement('div', 'property-detail__share');
 
   const shareLabel = createElement('span', 'property-detail__share-label', 'Share:');
-  shareSection.appendChild(shareLabel);
+  headerShareSection.appendChild(shareLabel);
 
-  const shareButtons = createElement('div', 'property-detail__share-buttons');
+  const headerShareButtons = createElement('div', 'property-detail__share-buttons');
 
   // Helper function for share URLs
   const getShareUrl = (): string => {
@@ -2158,7 +2324,7 @@ export function renderPropertyDetailPage(propertyId: string): DocumentFragment {
     const url = `https://wa.me/?text=${encodeURIComponent(getShareText() + ' ' + getShareUrl())}`;
     window.open(url, '_blank', 'noopener,noreferrer');
   });
-  shareButtons.appendChild(whatsappBtn);
+  headerShareButtons.appendChild(whatsappBtn);
 
   // Facebook Share
   const facebookBtn = createElement('button', 'property-detail__share-btn');
@@ -2169,7 +2335,7 @@ export function renderPropertyDetailPage(propertyId: string): DocumentFragment {
     const url = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(getShareUrl())}`;
     window.open(url, '_blank', 'noopener,noreferrer,width=600,height=400');
   });
-  shareButtons.appendChild(facebookBtn);
+  headerShareButtons.appendChild(facebookBtn);
 
   // Twitter/X Share
   const twitterBtn = createElement('button', 'property-detail__share-btn');
@@ -2180,7 +2346,7 @@ export function renderPropertyDetailPage(propertyId: string): DocumentFragment {
     const url = `https://twitter.com/intent/tweet?text=${encodeURIComponent(getShareText())}&url=${encodeURIComponent(getShareUrl())}`;
     window.open(url, '_blank', 'noopener,noreferrer,width=600,height=400');
   });
-  shareButtons.appendChild(twitterBtn);
+  headerShareButtons.appendChild(twitterBtn);
 
   // Copy Link
   const copyBtn = createElement('button', 'property-detail__share-btn');
@@ -2214,7 +2380,7 @@ export function renderPropertyDetailPage(propertyId: string): DocumentFragment {
       showToast('Link copied to clipboard!');
     }
   });
-  shareButtons.appendChild(copyBtn);
+  headerShareButtons.appendChild(copyBtn);
 
   // Email Share
   const emailBtn = createElement('button', 'property-detail__share-btn');
@@ -2226,17 +2392,17 @@ export function renderPropertyDetailPage(propertyId: string): DocumentFragment {
     const body = encodeURIComponent(`${getShareText()}\n\nView the property: ${getShareUrl()}`);
     window.location.href = `mailto:?subject=${subject}&body=${body}`;
   });
-  shareButtons.appendChild(emailBtn);
+  headerShareButtons.appendChild(emailBtn);
 
-  shareSection.appendChild(shareButtons);
+  headerShareSection.appendChild(headerShareButtons);
 
   // Share count placeholder (optional display)
   const shareCount = createElement('span', 'property-detail__share-count');
   shareCount.textContent = '0 shares';
   shareCount.setAttribute('aria-label', 'Number of shares');
-  shareSection.appendChild(shareCount);
+  headerShareSection.appendChild(shareCount);
 
-  header.appendChild(shareSection);
+  header.appendChild(headerShareSection);
 
   mainInfo.appendChild(header);
 
@@ -2656,6 +2822,14 @@ export function renderPropertyDetailPage(propertyId: string): DocumentFragment {
   qrSection.appendChild(qrUrl);
   sidebar.appendChild(qrSection);
 
+  // ─── Social Share Section ────────────────────────────────────────────────
+  const shareSection = createElement('div', 'property-detail__share-section');
+  const shareSectionTitle = createElement('h4', 'property-detail__share-title', 'Share Property');
+  shareSection.appendChild(shareSectionTitle);
+  const shareButtons = createPropertyShareButtons(property);
+  shareSection.appendChild(shareButtons);
+  sidebar.appendChild(shareSection);
+
   contentGrid.appendChild(sidebar);
   contentContainer.appendChild(contentGrid);
   content.appendChild(contentContainer);
@@ -2670,6 +2844,13 @@ export function renderPropertyDetailPage(propertyId: string): DocumentFragment {
   const printFooter = createElement('div', 'print-footer print-only');
   printFooter.innerHTML = `<div class="print-footer__left"><span class="print-footer__brand">Real House - Luxury Real Estate</span><span class="print-footer__location">Dream City, Erbil, Kurdistan Region, Iraq</span></div><div class="print-footer__right"><span>Property ID: ${property.id}</span><span>Generated: ${new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}</span></div>`;
   page.appendChild(printFooter);
+
+  // ─── Related Properties Section ─────────────────────────────────────────
+  const relatedProperties = getRelatedProperties(property, 4);
+  if (relatedProperties.length > 0) {
+    const relatedSection = createRelatedPropertiesSection(relatedProperties);
+    page.appendChild(relatedSection);
+  }
 
   // ─── Back Link ───────────────────────────────────────────────────────────
   const backSection = createElement('section', 'property-detail__back');
@@ -3059,208 +3240,24 @@ export function renderTermsPage(): DocumentFragment {
 }
 
 // ─── FAQ Page ─────────────────────────────────────────────────────────────
+// Uses comprehensive FAQ page with 60+ questions organized by category
 export function renderFAQPage(): DocumentFragment {
-  const fragment = document.createDocumentFragment();
-
-  const page = createElement('div', 'faq-page');
-  const container = createElement('div', 'container');
-
-  // Header
-  const header = createElement('div', 'faq-page__header');
-  const title = createElement('h1', 'faq-page__title', 'Frequently Asked Questions');
-  const subtitle = createElement('p', 'faq-page__subtitle', 'Find answers to common questions about our services and the home buying process.');
-  header.appendChild(title);
-  header.appendChild(subtitle);
-  container.appendChild(header);
-
-  // FAQ Accordion
-  const accordion = createElement('div', 'faq-page__accordion');
-
-  const faqs = [
-    {
-      question: 'How do I schedule a viewing?',
-      answer: 'Scheduling a viewing is easy. Simply navigate to any property listing and click the "Schedule Viewing" button, or contact us directly through our contact page. You can also call our office at +964 750 792 2138. Our agents are available Monday through Friday from 9 AM to 6 PM, and by appointment on weekends. We offer both in-person tours and virtual walkthroughs via video call for your convenience.'
-    },
-    {
-      question: 'What areas do you serve?',
-      answer: 'Real House specializes in luxury properties across 15 global markets. Our primary focus areas include Manhattan, The Hamptons, Miami, Los Angeles, San Francisco, and international destinations such as London, Paris, Monaco, and Dubai. We have established networks of trusted partners in each market to ensure seamless service regardless of location. Contact us to discuss your specific geographic preferences.'
-    },
-    {
-      question: 'How does the buying process work?',
-      answer: 'Our buying process is designed to be smooth and transparent. It typically involves: 1) Initial consultation to understand your needs and preferences, 2) Property curation where we handpick listings matching your criteria, 3) Private viewings and tours of selected properties, 4) Making an offer with expert negotiation support, 5) Due diligence including inspections and appraisals, 6) Closing with full transaction management support. Our team guides you through every step, typically completing transactions within 30-90 days depending on complexity.'
-    },
-    {
-      question: 'Do you help with financing?',
-      answer: 'Yes, we provide comprehensive financing assistance. While Real House is not a lender, we have established relationships with premier private banks, mortgage lenders, and financial institutions specializing in luxury real estate. We can connect you with financing options including jumbo mortgages, portfolio loans, and international financing solutions. Our team can also assist with mortgage pre-approval to strengthen your purchasing position.'
-    },
-    {
-      question: 'What are your fees?',
-      answer: 'For buyers, our services are typically free of charge as we receive compensation from the listing side of the transaction. For sellers, our commission structure is competitive and varies based on the property value and market. We offer tiered commission rates for high-value properties and portfolio listings. All fees are transparent and discussed upfront before any agreement. Contact us for a personalized consultation to discuss your specific situation.'
-    },
-    {
-      question: 'Can you help me sell my property?',
-      answer: 'Absolutely. We offer comprehensive selling services including professional photography and videography, virtual tours, targeted marketing to our network of qualified buyers, staging consultations, and expert pricing strategy. Our properties receive exposure through our website, partner networks, and exclusive luxury real estate platforms. Our average time to sell is significantly below market average for comparable properties.'
-    },
-    {
-      question: 'Do you work with international buyers?',
-      answer: 'Yes, we have extensive experience working with international buyers and investors. We understand the unique requirements including visa considerations, foreign national financing, tax implications, and currency exchange. Our multilingual team can assist clients from around the world, and we have established processes for remote transactions including virtual tours, digital document signing, and coordination with international attorneys and financial institutions.'
-    },
-    {
-      question: 'What makes Real House different from other agencies?',
-      answer: 'Real House combines over 24 years of experience with a personalized, white-glove approach to luxury real estate. Unlike large agencies, we maintain a curated portfolio ensuring quality over quantity. Our agents specialize exclusively in luxury properties and provide dedicated attention to each client. We offer access to off-market listings, a global network of partners, and comprehensive concierge services including relocation assistance, interior design referrals, and property management connections.'
-    }
-  ];
-
-  // Store all question buttons for keyboard navigation
-  const questionButtons: HTMLButtonElement[] = [];
-
-  faqs.forEach((faq, index) => {
-    const item = createElement('div', 'faq-page__item');
-    item.setAttribute('data-faq-item', '');
-
-    const question = createElement('button', 'faq-page__question') as HTMLButtonElement;
-    question.setAttribute('aria-expanded', 'false');
-    question.setAttribute('data-faq-trigger', '');
-    // Add unique ID for aria-controls
-    const answerId = `faq-answer-${index}`;
-    question.setAttribute('aria-controls', answerId);
-    question.id = `faq-question-${index}`;
-
-    const questionText = createElement('span', 'faq-page__question-text', faq.question);
-    question.appendChild(questionText);
-
-    const icon = createElement('span', 'faq-page__icon');
-    icon.textContent = '+';
-    icon.setAttribute('aria-hidden', 'true'); // Decorative icon
-    question.appendChild(icon);
-
-    const answer = createElement('div', 'faq-page__answer');
-    answer.id = answerId;
-    answer.setAttribute('data-faq-answer', '');
-    answer.setAttribute('role', 'region');
-    answer.setAttribute('aria-labelledby', `faq-question-${index}`);
-
-    const answerContent = createElement('div', 'faq-page__answer-content');
-    const answerP = createElement('p', undefined, faq.answer);
-    answerContent.appendChild(answerP);
-    answer.appendChild(answerContent);
-
-    // Toggle function for the accordion
-    const toggleAccordion = (expand: boolean) => {
-      // Close all other items
-      accordion.querySelectorAll('.faq-page__item').forEach(otherItem => {
-        const otherQuestion = otherItem.querySelector('.faq-page__question');
-        const otherAnswer = otherItem.querySelector('.faq-page__answer') as HTMLElement;
-        const otherIcon = otherItem.querySelector('.faq-page__icon');
-        if (otherQuestion && otherAnswer && otherIcon && otherQuestion !== question) {
-          otherQuestion.setAttribute('aria-expanded', 'false');
-          otherAnswer.style.maxHeight = '0';
-          otherIcon.textContent = '+';
-          otherItem.classList.remove('active');
-        }
-      });
-
-      // Toggle current item
-      if (expand) {
-        question.setAttribute('aria-expanded', 'true');
-        (answer as HTMLElement).style.maxHeight = answer.scrollHeight + 'px';
-        icon.textContent = '-';
-        item.classList.add('active');
-        announceToScreenReader(`${faq.question} expanded`);
-      } else {
-        question.setAttribute('aria-expanded', 'false');
-        (answer as HTMLElement).style.maxHeight = '0';
-        icon.textContent = '+';
-        item.classList.remove('active');
-        announceToScreenReader(`${faq.question} collapsed`);
-      }
-    };
-
-    // Add click handler for accordion functionality
-    question.addEventListener('click', () => {
-      const isExpanded = question.getAttribute('aria-expanded') === 'true';
-      toggleAccordion(!isExpanded);
-    });
-
-    // Add keyboard navigation (Enter, Space, Arrow keys)
-    question.addEventListener('keydown', (e) => {
-      const key = e.key;
-      const currentIndex = questionButtons.indexOf(question);
-
-      switch (key) {
-        case 'ArrowDown':
-          e.preventDefault();
-          // Move focus to next question
-          if (currentIndex < questionButtons.length - 1) {
-            questionButtons[currentIndex + 1].focus();
-          } else {
-            // Wrap to first
-            questionButtons[0].focus();
-          }
-          break;
-        case 'ArrowUp':
-          e.preventDefault();
-          // Move focus to previous question
-          if (currentIndex > 0) {
-            questionButtons[currentIndex - 1].focus();
-          } else {
-            // Wrap to last
-            questionButtons[questionButtons.length - 1].focus();
-          }
-          break;
-        case 'Home':
-          e.preventDefault();
-          // Move focus to first question
-          questionButtons[0].focus();
-          break;
-        case 'End':
-          e.preventDefault();
-          // Move focus to last question
-          questionButtons[questionButtons.length - 1].focus();
-          break;
-        // Enter and Space are handled by default button behavior (click)
-      }
-    });
-
-    questionButtons.push(question);
-    item.appendChild(question);
-    item.appendChild(answer);
-    accordion.appendChild(item);
-  });
-
-  // Set ARIA role for accordion
-  accordion.setAttribute('role', 'presentation');
-
-  container.appendChild(accordion);
-
-  // Contact CTA
-  const cta = createElement('div', 'faq-page__cta');
-  const ctaTitle = createElement('h3', undefined, 'Still have questions?');
-  const ctaText = createElement('p', undefined, 'Our team is here to help. Contact us for personalized assistance.');
-  const ctaBtn = createElement('a', 'btn btn--primary', 'Contact Us');
-  ctaBtn.href = '/contact';
-  ctaBtn.setAttribute('data-route', '');
-  cta.appendChild(ctaTitle);
-  cta.appendChild(ctaText);
-  cta.appendChild(ctaBtn);
-  container.appendChild(cta);
-
-  page.appendChild(container);
-  fragment.appendChild(page);
-
-  return fragment;
+  return renderComprehensiveFAQPage();
 }
 
 // ─── Favorites Page ───────────────────────────────────────────────────────
 export function renderFavoritesPage(): DocumentFragment {
   const fragment = document.createDocumentFragment();
 
-  const page = createElement('div', 'favorites-page');
+  // Main section for favorites
+  const page = createElement('section', 'favorites-page');
+  page.setAttribute('aria-labelledby', 'favorites-title');
   const container = createElement('div', 'container');
 
-  // Header
-  const header = createElement('div', 'favorites-page__header');
-  const title = createElement('h1', 'favorites-page__title', 'My Favorites');
+  // Header with h1
+  const header = createElement('header', 'favorites-page__header');
+  const title = createElement('h1', 'favorites-page__title', 'My Saved Properties');
+  title.id = 'favorites-title';
 
   const favoriteIds = getFavorites();
   const subtitle = createElement('p', 'favorites-page__subtitle');
@@ -3340,18 +3337,29 @@ export function renderFavoritesPage(): DocumentFragment {
 export function render404Page(): DocumentFragment {
   const fragment = document.createDocumentFragment();
 
-  const page = createElement('div', 'error-page');
+  // Use article for self-contained error page
+  const page = createElement('article', 'error-page');
+  page.setAttribute('role', 'alert');
   const container = createElement('div', 'container');
 
   const content = createElement('div', 'error-page__content');
 
-  // Large 404 number
-  const errorCode = createElement('h1', 'error-page__code', '404');
-  content.appendChild(errorCode);
+  // Only ONE h1 per page - contains both error code and message
+  const heading = createElement('h1', 'error-page__heading');
 
-  // Title
-  const title = createElement('h2', 'error-page__title', 'Page Not Found');
-  content.appendChild(title);
+  // Large 404 number as part of h1
+  const errorCode = createElement('span', 'error-page__code', '404');
+  errorCode.setAttribute('aria-hidden', 'true');
+  heading.appendChild(errorCode);
+
+  // Screen reader text
+  const srText = createElement('span', 'visually-hidden', 'Error 404: ');
+  heading.appendChild(srText);
+
+  // Title as part of h1
+  const title = createElement('span', 'error-page__title', 'Page Not Found');
+  heading.appendChild(title);
+  content.appendChild(heading);
 
   // Description
   const description = createElement('p', 'error-page__description',
@@ -3359,14 +3367,15 @@ export function render404Page(): DocumentFragment {
   content.appendChild(description);
 
   // Action buttons
-  const actions = createElement('div', 'error-page__actions');
+  const actions = createElement('nav', 'error-page__actions');
+  actions.setAttribute('aria-label', 'Error page navigation');
 
-  const homeBtn = createElement('a', 'btn btn--primary', 'Back to Home');
+  const homeBtn = createElement('a', 'btn btn--primary', 'Return to homepage');
   homeBtn.href = '/';
   homeBtn.setAttribute('data-route', '');
   actions.appendChild(homeBtn);
 
-  const propertiesBtn = createElement('a', 'btn btn--outline', 'View Properties');
+  const propertiesBtn = createElement('a', 'btn btn--outline', 'Browse properties');
   propertiesBtn.href = '/properties';
   propertiesBtn.setAttribute('data-route', '');
   actions.appendChild(propertiesBtn);
@@ -3379,7 +3388,7 @@ export function render404Page(): DocumentFragment {
   const contactLink = createElement('a');
   contactLink.href = '/contact';
   contactLink.setAttribute('data-route', '');
-  contactLink.textContent = 'Contact our team';
+  contactLink.textContent = 'Contact our support team';
   contactInfo.appendChild(contactLink);
   content.appendChild(contactInfo);
 

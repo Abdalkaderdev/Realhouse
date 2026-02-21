@@ -1,19 +1,38 @@
-# ═══════════════════════════════════════════════════════════════════════════
+# ===============================================================================
 # Real House - Robots.txt
 # Luxury Real Estate in Erbil, Kurdistan Region, Iraq
 # https://realhouseiq.com
-# ═══════════════════════════════════════════════════════════════════════════
+# Last Updated: 2026-02-21
+# ===============================================================================
 
-# Allow all search engines
+# ===============================================================================
+# Default rules for all search engines
+# ===============================================================================
+
 User-agent: *
 Allow: /
 Allow: /properties
 Allow: /properties/*
 Allow: /projects
 Allow: /projects/*
+Allow: /blog
+Allow: /blog/*
 Allow: /about
 Allow: /contact
 Allow: /faq
+Allow: /services
+Allow: /services/*
+Allow: /locations
+Allow: /gallery
+Allow: /buy
+Allow: /rent
+Allow: /invest
+Allow: /luxury
+Allow: /sitemap
+Allow: /privacy
+Allow: /terms
+
+# User-specific pages (noindex but allow crawl for link discovery)
 Allow: /favorites
 Allow: /compare
 
@@ -22,20 +41,53 @@ Disallow: /admin/
 Disallow: /admin/*
 Disallow: /api/
 Disallow: /api/*
+Disallow: /server/
 Disallow: /_nuxt/
 Disallow: /node_modules/
-Disallow: /*.json$
-Disallow: /*.xml$
-Disallow: /server/
 Disallow: /dist/
 Disallow: /src/
 Disallow: /.git/
+Disallow: /.env
+Disallow: /.env.*
+Disallow: /config/
+Disallow: /logs/
+Disallow: /tmp/
+Disallow: /cache/
+
+# Disallow source files
 Disallow: /*.ts$
 Disallow: /*.tsx$
 Disallow: /*.scss$
 Disallow: /*.map$
+Disallow: /*.json$
+Disallow: /*.lock$
+Disallow: /*.log$
 
-# Allow CSS and JS for rendering
+# Disallow duplicate content and parameters that create duplicates
+Disallow: /*?*sort=
+Disallow: /*?*order=
+Disallow: /*?*session=
+Disallow: /*?*ref=
+Disallow: /*?*utm_*
+Disallow: /*?*fbclid=
+Disallow: /*?*gclid=
+Disallow: /*?*_ga=
+Disallow: /*?*_gl=
+Disallow: /*?*mc_cid=
+Disallow: /*?*mc_eid=
+Disallow: /*?*msclkid=
+Disallow: /*?*yclid=
+Disallow: /*?*preview=
+Disallow: /*?*draft=
+Disallow: /*print=
+Disallow: /*pdf=
+
+# Pagination handling (allow first pages, use rel=next/prev)
+Allow: /properties?page=
+Allow: /blog?page=
+Allow: /projects?page=
+
+# Allow important resources for rendering (Critical for proper indexing)
 Allow: /*.css$
 Allow: /*.js$
 Allow: /*.woff2$
@@ -49,19 +101,27 @@ Allow: /*.png$
 Allow: /*.gif$
 Allow: /*.svg$
 Allow: /*.webp$
+Allow: /*.avif$
 Allow: /*.ico$
 
-# ═══════════════════════════════════════════════════════════════════════════
+# Allow sitemaps
+Allow: /sitemap*.xml
+Allow: /sitemap-index.xml
+
+# ===============================================================================
 # Googlebot Specific
-# ═══════════════════════════════════════════════════════════════════════════
+# ===============================================================================
 
 User-agent: Googlebot
 Allow: /
+Crawl-delay: 1
 Disallow: /admin/
 Disallow: /api/
+Disallow: /server/
 
 User-agent: Googlebot-Image
 Allow: /
+Allow: /images/
 Allow: /*.jpg$
 Allow: /*.jpeg$
 Allow: /*.png$
@@ -69,23 +129,45 @@ Allow: /*.gif$
 Allow: /*.svg$
 Allow: /*.webp$
 
-# ═══════════════════════════════════════════════════════════════════════════
+# ===============================================================================
 # Bingbot Specific
-# ═══════════════════════════════════════════════════════════════════════════
+# ===============================================================================
 
 User-agent: Bingbot
 Allow: /
+Crawl-delay: 1
 Disallow: /admin/
 Disallow: /api/
 
 User-agent: msnbot
 Allow: /
+Crawl-delay: 2
 Disallow: /admin/
 Disallow: /api/
 
-# ═══════════════════════════════════════════════════════════════════════════
-# Social Media Crawlers
-# ═══════════════════════════════════════════════════════════════════════════
+# ===============================================================================
+# Yandex Bot
+# ===============================================================================
+
+User-agent: Yandex
+Allow: /
+Crawl-delay: 2
+Disallow: /admin/
+Disallow: /api/
+
+# ===============================================================================
+# Baidu Spider
+# ===============================================================================
+
+User-agent: Baiduspider
+Allow: /
+Crawl-delay: 5
+Disallow: /admin/
+Disallow: /api/
+
+# ===============================================================================
+# Social Media Crawlers (No crawl delay)
+# ===============================================================================
 
 User-agent: facebookexternalhit
 Allow: /
@@ -102,35 +184,39 @@ Allow: /
 User-agent: TelegramBot
 Allow: /
 
-# ═══════════════════════════════════════════════════════════════════════════
-# SEO Tools
-# ═══════════════════════════════════════════════════════════════════════════
+User-agent: Slackbot
+Allow: /
+
+User-agent: Pinterest
+Allow: /
+
+# ===============================================================================
+# SEO Tools (With crawl delay to prevent server overload)
+# ===============================================================================
 
 User-agent: AhrefsBot
+Crawl-delay: 10
 Allow: /
 
 User-agent: SemrushBot
+Crawl-delay: 10
 Allow: /
 
 User-agent: DotBot
+Crawl-delay: 10
 Allow: /
 
 User-agent: MJ12bot
 Crawl-delay: 10
 Allow: /
 
-# ═══════════════════════════════════════════════════════════════════════════
-# Block Bad Bots
-# ═══════════════════════════════════════════════════════════════════════════
+User-agent: Screaming Frog SEO Spider
+Crawl-delay: 5
+Allow: /
 
-User-agent: AhrefsBot
-Crawl-delay: 10
-
-User-agent: MJ12bot
-Crawl-delay: 10
-
-User-agent: SemrushBot
-Crawl-delay: 10
+# ===============================================================================
+# Block Aggressive/Unwanted Bots
+# ===============================================================================
 
 User-agent: BLEXBot
 Disallow: /
@@ -138,23 +224,77 @@ Disallow: /
 User-agent: DataForSeoBot
 Disallow: /
 
+User-agent: SeznamBot
+Crawl-delay: 30
+
+User-agent: Bytespider
+Disallow: /
+
+User-agent: PetalBot
+Disallow: /
+
+User-agent: Sogou
+Disallow: /
+
 User-agent: dotbot
-Crawl-delay: 10
+Crawl-delay: 30
 
-# ═══════════════════════════════════════════════════════════════════════════
-# Sitemap Location
-# ═══════════════════════════════════════════════════════════════════════════
+# AI Training Crawlers (Block to protect content)
+User-agent: GPTBot
+Disallow: /
 
+User-agent: ChatGPT-User
+Disallow: /
+
+User-agent: CCBot
+Disallow: /
+
+User-agent: anthropic-ai
+Disallow: /
+
+User-agent: ClaudeBot
+Disallow: /
+
+User-agent: Google-Extended
+Disallow: /
+
+User-agent: FacebookBot
+Disallow: /
+
+# ===============================================================================
+# URL Normalization Rules (for SEO)
+# ===============================================================================
+
+# Trailing slash handling - canonical URLs without trailing slash
+# Note: Server should 301 redirect /path/ to /path
+
+# Allow filter URLs with proper parameter format
+Allow: /properties?type=*
+Allow: /properties?status=*
+Allow: /properties?district=*
+Allow: /properties?price=*
+Allow: /properties?beds=*
+
+# ===============================================================================
+# Sitemap Locations (All sitemaps for comprehensive indexing)
+# ===============================================================================
+
+Sitemap: https://realhouseiq.com/sitemap-index.xml
 Sitemap: https://realhouseiq.com/sitemap.xml
+Sitemap: https://realhouseiq.com/sitemap-pages.xml
+Sitemap: https://realhouseiq.com/sitemap-properties.xml
+Sitemap: https://realhouseiq.com/sitemap-projects.xml
+Sitemap: https://realhouseiq.com/sitemap-blog.xml
+Sitemap: https://realhouseiq.com/sitemap-images.xml
 
-# ═══════════════════════════════════════════════════════════════════════════
-# Host Directive
-# ═══════════════════════════════════════════════════════════════════════════
+# ===============================================================================
+# Host Directive (Preferred Domain)
+# ===============================================================================
 
 Host: https://realhouseiq.com
 
-# ═══════════════════════════════════════════════════════════════════════════
-# Crawl Delay (optional - uncomment if needed)
-# ═══════════════════════════════════════════════════════════════════════════
-
-# Crawl-delay: 1
+# ===============================================================================
+# IndexNow Protocol Support
+# Key file location: https://realhouseiq.com/indexnow-key.txt
+# Documentation: See SEO-SETUP.md for IndexNow configuration
+# ===============================================================================

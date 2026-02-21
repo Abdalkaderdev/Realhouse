@@ -1,0 +1,271 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  ===============================================================================
+  Real House - Image Sitemap
+  Dedicated image sitemap for Google Images indexing
+  Optimized with target keywords: real estate erbil, property erbil, houses for
+  sale erbil, apartments erbil, villas erbil iraq, luxury homes kurdistan
+  Last Updated: 2026-02-21
+  ===============================================================================
+-->
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
+
+  <!-- ═══════════════════════════════════════════════════════════════════════════ -->
+  <!-- Homepage Images -->
+  <!-- ═══════════════════════════════════════════════════════════════════════════ -->
+
+  <url>
+    <loc>https://realhouseiq.com</loc>
+    <image:image>
+      <image:loc>https://realhouseiq.com/og-image.jpg</image:loc>
+      <image:title>Real House - Real Estate Erbil | Luxury Properties Kurdistan</image:title>
+      <image:caption>Premium real estate agency in Erbil, Kurdistan. Houses for sale Erbil, apartments Erbil, villas Erbil Iraq. Property Erbil specialists.</image:caption>
+      <image:geo_location>Erbil, Kurdistan Region, Iraq</image:geo_location>
+    </image:image>
+    <image:image>
+      <image:loc>https://realhouseiq.com/logo.png</image:loc>
+      <image:title>Real House Logo - Real Estate Erbil Agency</image:title>
+      <image:caption>Real House - The most trusted property Erbil agency for luxury homes Kurdistan</image:caption>
+    </image:image>
+  </url>
+
+  <!-- ═══════════════════════════════════════════════════════════════════════════ -->
+  <!-- Properties Page Images -->
+  <!-- ═══════════════════════════════════════════════════════════════════════════ -->
+
+  <url>
+    <loc>https://realhouseiq.com/properties</loc>
+    <image:image>
+      <image:loc>https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?w=800&amp;q=80&amp;fm=webp</image:loc>
+      <image:title>Luxury Apartments Erbil - Modern Living in Gulan District</image:title>
+      <image:caption>Modern luxury apartments for sale in Erbil, Kurdistan Region. Property Erbil listings for houses for sale Erbil.</image:caption>
+      <image:geo_location>Gulan, Erbil, Kurdistan Region, Iraq</image:geo_location>
+    </image:image>
+    <image:image>
+      <image:loc>https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=800&amp;q=80&amp;fm=webp</image:loc>
+      <image:title>Villas Erbil Iraq - Dream City Luxury Homes</image:title>
+      <image:caption>Luxury villas Erbil Iraq in premium gated communities. Luxury homes Kurdistan for discerning buyers.</image:caption>
+      <image:geo_location>Dream City, Erbil, Kurdistan Region, Iraq</image:geo_location>
+    </image:image>
+    <image:image>
+      <image:loc>https://images.unsplash.com/photo-1604719312566-8912e9227c6a?w=800&amp;q=80&amp;fm=webp</image:loc>
+      <image:title>Commercial Properties Erbil - Prime Business Locations</image:title>
+      <image:caption>Prime commercial real estate in Erbil, Iraq. Property investment Kurdistan Iraq opportunities.</image:caption>
+      <image:geo_location>Erbil, Kurdistan Region, Iraq</image:geo_location>
+    </image:image>
+    <image:image>
+      <image:loc>https://images.unsplash.com/photo-1512917774080-9991f1c4c750?w=800&amp;q=80&amp;fm=webp</image:loc>
+      <image:title>Family Homes in Erbil Gated Communities</image:title>
+      <image:caption>Spacious family homes in secure gated communities throughout Erbil, Kurdistan.</image:caption>
+      <image:geo_location>Erbil, Kurdistan Region, Iraq</image:geo_location>
+    </image:image>
+  </url>
+
+  <!-- ═══════════════════════════════════════════════════════════════════════════ -->
+  <!-- Individual Property Images - The Boulevard -->
+  <!-- ═══════════════════════════════════════════════════════════════════════════ -->
+
+  <url>
+    <loc>https://realhouseiq.com/properties/boulevard-apt-floor-13</loc>
+    <image:image>
+      <image:loc>https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?w=800&amp;q=80&amp;fm=webp</image:loc>
+      <image:title>The Boulevard 1BR Apartment Floor 13 - Apartment Erbil Gulan</image:title>
+      <image:caption>Modern 1-bedroom apartment Erbil in The Boulevard Tower, Floor 13. 92.5 sqm, city views. Property Erbil for sale $100,000. Houses for sale Erbil.</image:caption>
+      <image:geo_location>Gulan, Erbil, Kurdistan Region, Iraq</image:geo_location>
+    </image:image>
+    <image:image>
+      <image:loc>https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?w=800&amp;q=80&amp;fm=webp</image:loc>
+      <image:title>The Boulevard Living Room Interior - Apartments Erbil Modern Design</image:title>
+      <image:caption>Interior living room of The Boulevard apartment in Erbil. Modern finishes, open-plan design. Apartments for sale in Erbil Kurdistan.</image:caption>
+      <image:geo_location>Gulan, Erbil, Kurdistan Region, Iraq</image:geo_location>
+    </image:image>
+    <image:image>
+      <image:loc>https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?w=800&amp;q=80&amp;fm=webp</image:loc>
+      <image:title>The Boulevard Bedroom - Real Estate Erbil Luxury Apartments</image:title>
+      <image:caption>Spacious bedroom in The Boulevard apartment. Real estate Erbil premium living in Gulan district.</image:caption>
+      <image:geo_location>Gulan, Erbil, Kurdistan Region, Iraq</image:geo_location>
+    </image:image>
+  </url>
+
+  <url>
+    <loc>https://realhouseiq.com/properties/boulevard-apt-floor-17</loc>
+    <image:image>
+      <image:loc>https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?w=800&amp;q=80&amp;fm=webp</image:loc>
+      <image:title>The Boulevard 1BR Apartment Floor 17 - Panoramic Views Erbil</image:title>
+      <image:caption>Premium 1-bedroom apartment Erbil with panoramic city views. Corner unit, Floor 17. Property Erbil hot listing $100,000.</image:caption>
+      <image:geo_location>Gulan, Erbil, Kurdistan Region, Iraq</image:geo_location>
+    </image:image>
+  </url>
+
+  <!-- ═══════════════════════════════════════════════════════════════════════════ -->
+  <!-- Projects Page Images -->
+  <!-- ═══════════════════════════════════════════════════════════════════════════ -->
+
+  <url>
+    <loc>https://realhouseiq.com/projects</loc>
+    <image:image>
+      <image:loc>https://images.unsplash.com/photo-1486325212027-8081e485255e?w=800&amp;q=80&amp;fm=webp</image:loc>
+      <image:title>Empire World Development - Real Estate Erbil Mixed-Use Project</image:title>
+      <image:caption>Empire World - Erbil's largest mixed-use real estate development. Property investment Kurdistan Iraq opportunities. 2500 units.</image:caption>
+      <image:geo_location>Gulan, Erbil, Kurdistan Region, Iraq</image:geo_location>
+    </image:image>
+    <image:image>
+      <image:loc>https://images.unsplash.com/photo-1512917774080-9991f1c4c750?w=800&amp;q=80&amp;fm=webp</image:loc>
+      <image:title>Dream City Residential Community - Villas Erbil Iraq</image:title>
+      <image:caption>Dream City - Premier gated residential community in Erbil. Villas Erbil Iraq, luxury homes Kurdistan. 3200 units.</image:caption>
+      <image:geo_location>Dream City, Erbil, Kurdistan Region, Iraq</image:geo_location>
+    </image:image>
+    <image:image>
+      <image:loc>https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?w=800&amp;q=80&amp;fm=webp</image:loc>
+      <image:title>Italian Village Homes - Mediterranean Style Properties Erbil</image:title>
+      <image:caption>Italian Village - Mediterranean-style luxury homes in Erbil. Houses for sale Erbil with European design.</image:caption>
+      <image:geo_location>Italian Village, Erbil, Kurdistan Region, Iraq</image:geo_location>
+    </image:image>
+    <image:image>
+      <image:loc>https://images.unsplash.com/photo-1600047509807-ba8f99d2cdde?w=800&amp;q=80&amp;fm=webp</image:loc>
+      <image:title>English Village - British Colonial Homes Erbil</image:title>
+      <image:caption>English Village - Exclusive British colonial-style residential community in Erbil, Kurdistan.</image:caption>
+      <image:geo_location>English Village, Erbil, Kurdistan Region, Iraq</image:geo_location>
+    </image:image>
+    <image:image>
+      <image:loc>https://images.unsplash.com/photo-1613490493576-7fde63acd811?w=800&amp;q=80&amp;fm=webp</image:loc>
+      <image:title>Pavilion Erbil - Lagoon Living Luxury Villas</image:title>
+      <image:caption>Pavilion Erbil - Luxury waterfront living with 320,000 sqm lagoon and private beach.</image:caption>
+      <image:geo_location>Pavilion, Erbil, Kurdistan Region, Iraq</image:geo_location>
+    </image:image>
+  </url>
+
+  <!-- ═══════════════════════════════════════════════════════════════════════════ -->
+  <!-- Individual Project Pages -->
+  <!-- ═══════════════════════════════════════════════════════════════════════════ -->
+
+  <url>
+    <loc>https://realhouseiq.com/projects/empire-world</loc>
+    <image:image>
+      <image:loc>https://images.unsplash.com/photo-1486325212027-8081e485255e?w=800&amp;q=80&amp;fm=webp</image:loc>
+      <image:title>Empire World Project Exterior - Under Construction Real Estate Erbil</image:title>
+      <image:caption>Empire World development project in Gulan, Erbil. Under construction with 850 units available. Property Erbil investment opportunity. Completion 2027.</image:caption>
+      <image:geo_location>Gulan, Erbil, Kurdistan Region, Iraq</image:geo_location>
+    </image:image>
+    <image:image>
+      <image:loc>https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?w=800&amp;q=80&amp;fm=webp</image:loc>
+      <image:title>Empire World Amenities - Luxury Apartments Erbil Development</image:title>
+      <image:caption>Empire World amenities and facilities. Shopping mall, hotel, fitness center. Apartments Erbil with premium lifestyle.</image:caption>
+      <image:geo_location>Gulan, Erbil, Kurdistan Region, Iraq</image:geo_location>
+    </image:image>
+  </url>
+
+  <url>
+    <loc>https://realhouseiq.com/projects/dream-city</loc>
+    <image:image>
+      <image:loc>https://images.unsplash.com/photo-1512917774080-9991f1c4c750?w=800&amp;q=80&amp;fm=webp</image:loc>
+      <image:title>Dream City Ready Project - Gated Community Erbil</image:title>
+      <image:caption>Dream City gated residential community. Ready project with 420 units available. Houses for sale Erbil, villas Erbil Iraq.</image:caption>
+      <image:geo_location>Dream City, Erbil, Kurdistan Region, Iraq</image:geo_location>
+    </image:image>
+  </url>
+
+  <url>
+    <loc>https://realhouseiq.com/projects/pavilion-erbil</loc>
+    <image:image>
+      <image:loc>https://images.unsplash.com/photo-1613490493576-7fde63acd811?w=800&amp;q=80&amp;fm=webp</image:loc>
+      <image:title>Pavilion Erbil Lagoon Development - Waterfront Living Kurdistan</image:title>
+      <image:caption>Pavilion Erbil luxury development with 320,000 sqm lagoon. Villas Erbil Iraq waterfront properties. Completion 2028.</image:caption>
+      <image:geo_location>Pavilion, Erbil, Kurdistan Region, Iraq</image:geo_location>
+    </image:image>
+  </url>
+
+  <!-- ═══════════════════════════════════════════════════════════════════════════ -->
+  <!-- Blog Images -->
+  <!-- ═══════════════════════════════════════════════════════════════════════════ -->
+
+  <url>
+    <loc>https://realhouseiq.com/blog</loc>
+    <image:image>
+      <image:loc>https://images.unsplash.com/photo-1560518883-ce09059eeffa?w=800&amp;q=80&amp;fm=webp</image:loc>
+      <image:title>Real Estate Erbil Blog - Property Market Insights</image:title>
+      <image:caption>Expert real estate Erbil insights and property market trends. Houses for sale Erbil guides, apartments Erbil advice.</image:caption>
+      <image:geo_location>Erbil, Kurdistan Region, Iraq</image:geo_location>
+    </image:image>
+    <image:image>
+      <image:loc>https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=800&amp;q=80&amp;fm=webp</image:loc>
+      <image:title>Property Investment Kurdistan Iraq - Market Analysis</image:title>
+      <image:caption>Property investment Kurdistan Iraq analysis and market trends. Erbil property market growth and opportunities.</image:caption>
+      <image:geo_location>Erbil, Kurdistan Region, Iraq</image:geo_location>
+    </image:image>
+  </url>
+
+  <!-- ═══════════════════════════════════════════════════════════════════════════ -->
+  <!-- About Page Images -->
+  <!-- ═══════════════════════════════════════════════════════════════════════════ -->
+
+  <url>
+    <loc>https://realhouseiq.com/about</loc>
+    <image:image>
+      <image:loc>https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=800&amp;q=80&amp;fm=webp</image:loc>
+      <image:title>Real House Office - Best Real Estate Agent Erbil</image:title>
+      <image:caption>Real House - The most trusted real estate agent Erbil for property Erbil transactions. 23+ years serving Kurdistan.</image:caption>
+      <image:geo_location>Dream City, Erbil, Kurdistan Region, Iraq</image:geo_location>
+    </image:image>
+    <image:image>
+      <image:loc>https://images.unsplash.com/photo-1580489944761-15a19d654956?w=400&amp;q=80&amp;fm=webp</image:loc>
+      <image:title>Real House Team - Expert Property Erbil Professionals</image:title>
+      <image:caption>Meet our expert real estate team specializing in houses for sale Erbil, apartments Erbil, and luxury homes Kurdistan.</image:caption>
+      <image:geo_location>Erbil, Kurdistan Region, Iraq</image:geo_location>
+    </image:image>
+  </url>
+
+  <!-- ═══════════════════════════════════════════════════════════════════════════ -->
+  <!-- Gallery Page Images -->
+  <!-- ═══════════════════════════════════════════════════════════════════════════ -->
+
+  <url>
+    <loc>https://realhouseiq.com/gallery</loc>
+    <image:image>
+      <image:loc>https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?w=800&amp;q=80&amp;fm=webp</image:loc>
+      <image:title>Property Gallery - Apartments Erbil Interiors</image:title>
+      <image:caption>Browse stunning photos of real estate Erbil properties. Apartments Erbil, villas Erbil Iraq, luxury homes Kurdistan gallery.</image:caption>
+      <image:geo_location>Erbil, Kurdistan Region, Iraq</image:geo_location>
+    </image:image>
+    <image:image>
+      <image:loc>https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=800&amp;q=80&amp;fm=webp</image:loc>
+      <image:title>Property Gallery - Villas Erbil Iraq Exteriors</image:title>
+      <image:caption>Luxury villas Erbil Iraq photo gallery. Houses for sale Erbil in premium locations throughout Kurdistan.</image:caption>
+      <image:geo_location>Erbil, Kurdistan Region, Iraq</image:geo_location>
+    </image:image>
+    <image:image>
+      <image:loc>https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?w=800&amp;q=80&amp;fm=webp</image:loc>
+      <image:title>Property Gallery - Modern Kitchen Designs Erbil</image:title>
+      <image:caption>Modern kitchen designs in Erbil properties. Real estate Erbil interiors featuring premium finishes.</image:caption>
+      <image:geo_location>Erbil, Kurdistan Region, Iraq</image:geo_location>
+    </image:image>
+    <image:image>
+      <image:loc>https://images.unsplash.com/photo-1567767292278-a4f21aa2d36e?w=800&amp;q=80&amp;fm=webp</image:loc>
+      <image:title>Penthouse Interior Erbil Kurdistan</image:title>
+      <image:caption>Luxurious penthouse interior with panoramic views of Erbil city skyline.</image:caption>
+      <image:geo_location>Erbil, Kurdistan Region, Iraq</image:geo_location>
+    </image:image>
+    <image:image>
+      <image:loc>https://images.unsplash.com/photo-1600566753086-00f18fb6b3ea?w=800&amp;q=80&amp;fm=webp</image:loc>
+      <image:title>Swimming Pool Villa Erbil</image:title>
+      <image:caption>Private swimming pool at luxury villa in Erbil. Resort-style living in Kurdistan.</image:caption>
+      <image:geo_location>Erbil, Kurdistan Region, Iraq</image:geo_location>
+    </image:image>
+  </url>
+
+  <!-- ═══════════════════════════════════════════════════════════════════════════ -->
+  <!-- Contact Page -->
+  <!-- ═══════════════════════════════════════════════════════════════════════════ -->
+
+  <url>
+    <loc>https://realhouseiq.com/contact</loc>
+    <image:image>
+      <image:loc>https://realhouseiq.com/og-image.jpg</image:loc>
+      <image:title>Contact Real House - Best Real Estate Agent Erbil</image:title>
+      <image:caption>Contact Real House for houses for sale Erbil, apartments Erbil, property investment Kurdistan Iraq. Best real estate agent Erbil.</image:caption>
+      <image:geo_location>Dream City, Erbil, Kurdistan Region, Iraq</image:geo_location>
+    </image:image>
+  </url>
+
+</urlset>

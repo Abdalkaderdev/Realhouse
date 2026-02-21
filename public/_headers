@@ -1,0 +1,75 @@
+# Netlify Headers - Core Web Vitals & Security Optimization
+# Last Updated: 2026-02-21
+
+# Default headers for all pages
+/*
+  X-Content-Type-Options: nosniff
+  X-Frame-Options: DENY
+  X-XSS-Protection: 1; mode=block
+  Referrer-Policy: strict-origin-when-cross-origin
+  Permissions-Policy: camera=(), microphone=(), geolocation=(self), payment=()
+  Strict-Transport-Security: max-age=31536000; includeSubDomains; preload
+  X-DNS-Prefetch-Control: on
+
+# Cache static assets for 1 year (immutable - filename has hash)
+/assets/*
+  Cache-Control: public, max-age=31536000, immutable
+
+# JavaScript files with hash - long cache
+/*.js
+  Cache-Control: public, max-age=31536000, immutable
+
+# CSS files with hash - long cache
+/*.css
+  Cache-Control: public, max-age=31536000, immutable
+
+# Font files - long cache
+/*.woff2
+  Cache-Control: public, max-age=31536000, immutable
+
+/*.woff
+  Cache-Control: public, max-age=31536000, immutable
+
+# Modern image formats - long cache
+/*.webp
+  Cache-Control: public, max-age=31536000, immutable
+
+/*.avif
+  Cache-Control: public, max-age=31536000, immutable
+
+# Standard images - long cache
+/*.png
+  Cache-Control: public, max-age=31536000, immutable
+
+/*.jpg
+  Cache-Control: public, max-age=31536000, immutable
+
+/*.jpeg
+  Cache-Control: public, max-age=31536000, immutable
+
+# SVGs - moderate cache with revalidation
+/*.svg
+  Cache-Control: public, max-age=604800, stale-while-revalidate=86400
+
+# Favicon - daily cache
+/favicon.svg
+  Cache-Control: public, max-age=86400, stale-while-revalidate=604800
+
+# HTML - no cache (SPA)
+/index.html
+  Cache-Control: public, max-age=0, must-revalidate
+
+# PWA Manifest - daily cache
+/manifest.json
+  Cache-Control: public, max-age=86400, stale-while-revalidate=604800
+
+# Service Worker - no cache (must always be fresh)
+/sw.js
+  Cache-Control: public, max-age=0, must-revalidate
+
+# Robots and sitemap - daily cache
+/robots.txt
+  Cache-Control: public, max-age=86400
+
+/sitemap.xml
+  Cache-Control: public, max-age=86400

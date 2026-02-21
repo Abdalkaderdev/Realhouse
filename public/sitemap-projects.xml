@@ -1,0 +1,371 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  ===============================================================================
+  Real House - Development Projects Sitemap
+  All 25+ real estate development projects in Erbil, Kurdistan
+  Last Updated: 2026-02-21
+  ===============================================================================
+-->
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
+
+  <!-- ═══════════════════════════════════════════════════════════════════════════ -->
+  <!-- Major Development Projects - Under Construction -->
+  <!-- ═══════════════════════════════════════════════════════════════════════════ -->
+
+  <url>
+    <loc>https://realhouseiq.com/projects/empire-world</loc>
+    <lastmod>2026-02-21</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+    <image:image>
+      <image:loc>https://images.unsplash.com/photo-1486325212027-8081e485255e?w=800&amp;q=80&amp;fm=webp</image:loc>
+      <image:title>Empire World - Erbil's Largest Mixed-Use Development</image:title>
+      <image:caption>Empire World: 2500 units, shopping mall, five-star hotel. Under construction with completion in 2027. Starting from $150,000.</image:caption>
+      <image:geo_location>Gulan, Erbil, Kurdistan Region, Iraq</image:geo_location>
+    </image:image>
+  </url>
+
+  <url>
+    <loc>https://realhouseiq.com/projects/pavilion-erbil</loc>
+    <lastmod>2026-02-21</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+    <image:image>
+      <image:loc>https://images.unsplash.com/photo-1613490493576-7fde63acd811?w=800&amp;q=80&amp;fm=webp</image:loc>
+      <image:title>Pavilion Erbil - 320,000 sqm Lagoon Luxury Living</image:title>
+      <image:caption>Pavilion Erbil: 2800 units with private beach, 320,000 sqm lagoon, marina, and waterfront villas. Starting from $250,000.</image:caption>
+      <image:geo_location>Pavilion, Erbil, Kurdistan Region, Iraq</image:geo_location>
+    </image:image>
+  </url>
+
+  <url>
+    <loc>https://realhouseiq.com/projects/downtown-erbil</loc>
+    <lastmod>2026-02-21</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+    <image:image>
+      <image:loc>https://images.unsplash.com/photo-1486325212027-8081e485255e?w=800&amp;q=80&amp;fm=webp</image:loc>
+      <image:title>Downtown Erbil - $3 Billion Landmark Development</image:title>
+      <image:caption>Downtown Erbil: 4500 units, iconic twin towers, three five-star hotels. 541,000 sqm development. Starting from $200,000.</image:caption>
+      <image:geo_location>Downtown, Erbil, Kurdistan Region, Iraq</image:geo_location>
+    </image:image>
+  </url>
+
+  <url>
+    <loc>https://realhouseiq.com/projects/mnw-towers</loc>
+    <lastmod>2026-02-21</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+    <image:image>
+      <image:loc>https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=800&amp;q=80&amp;fm=webp</image:loc>
+      <image:title>MNW Towers - Smart Living in Ankawa</image:title>
+      <image:caption>MNW Towers: 800 smart home units under construction. Completion 2026. Starting from $90,000.</image:caption>
+      <image:geo_location>Ankawa, Erbil, Kurdistan Region, Iraq</image:geo_location>
+    </image:image>
+  </url>
+
+  <url>
+    <loc>https://realhouseiq.com/projects/quattro-towers</loc>
+    <lastmod>2026-02-21</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+    <image:image>
+      <image:loc>https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=800&amp;q=80&amp;fm=webp</image:loc>
+      <image:title>Quattro Towers - Four 31-Story Towers in Gulan</image:title>
+      <image:caption>Quattro Towers: 1240 premium apartments beside Turkish Consulate. Completion 2026. Starting from $110,000.</image:caption>
+      <image:geo_location>Gulan, Erbil, Kurdistan Region, Iraq</image:geo_location>
+    </image:image>
+  </url>
+
+  <url>
+    <loc>https://realhouseiq.com/projects/hiwa-city</loc>
+    <lastmod>2026-02-21</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.75</priority>
+    <image:image>
+      <image:loc>https://images.unsplash.com/photo-1600566753190-17f0baa2a6c3?w=800&amp;q=80&amp;fm=webp</image:loc>
+      <image:title>Hiwa City - Green Living Community</image:title>
+      <image:caption>Hiwa City: 2200 units on Kasnazan Koya Road. Known for spacious green spaces. Completion 2027.</image:caption>
+      <image:geo_location>Kasnazan, Erbil, Kurdistan Region, Iraq</image:geo_location>
+    </image:image>
+  </url>
+
+  <url>
+    <loc>https://realhouseiq.com/projects/majidi-view</loc>
+    <lastmod>2026-02-21</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.75</priority>
+    <image:image>
+      <image:loc>https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?w=800&amp;q=80&amp;fm=webp</image:loc>
+      <image:title>Majidi View - Near Majidi Mall</image:title>
+      <image:caption>Majidi View: 1500 units with premium materials and scenic views. Near Majidi Mall. Completion 2027.</image:caption>
+      <image:geo_location>Koya Street, Erbil, Kurdistan Region, Iraq</image:geo_location>
+    </image:image>
+  </url>
+
+  <!-- ═══════════════════════════════════════════════════════════════════════════ -->
+  <!-- Ready Projects - Move-In Ready -->
+  <!-- ═══════════════════════════════════════════════════════════════════════════ -->
+
+  <url>
+    <loc>https://realhouseiq.com/projects/dream-city</loc>
+    <lastmod>2026-02-21</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+    <image:image>
+      <image:loc>https://images.unsplash.com/photo-1512917774080-9991f1c4c750?w=800&amp;q=80&amp;fm=webp</image:loc>
+      <image:title>Dream City - Premier Gated Community Erbil</image:title>
+      <image:caption>Dream City: 3200 units ready. Gated community with international schools, medical facilities. Starting from $85,000.</image:caption>
+      <image:geo_location>Dream City, Erbil, Kurdistan Region, Iraq</image:geo_location>
+    </image:image>
+  </url>
+
+  <url>
+    <loc>https://realhouseiq.com/projects/italian-village</loc>
+    <lastmod>2026-02-21</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.85</priority>
+    <image:image>
+      <image:loc>https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?w=800&amp;q=80&amp;fm=webp</image:loc>
+      <image:title>Italian Village - Tuscan-Style Living in Erbil</image:title>
+      <image:caption>Italian Village: 1800 units with authentic Italian architecture and Mediterranean lifestyle. Starting from $120,000.</image:caption>
+      <image:geo_location>Italian Village, Erbil, Kurdistan Region, Iraq</image:geo_location>
+    </image:image>
+  </url>
+
+  <url>
+    <loc>https://realhouseiq.com/projects/english-village</loc>
+    <lastmod>2026-02-21</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.85</priority>
+    <image:image>
+      <image:loc>https://images.unsplash.com/photo-1600047509807-ba8f99d2cdde?w=800&amp;q=80&amp;fm=webp</image:loc>
+      <image:title>English Village - British Colonial Elegance</image:title>
+      <image:caption>English Village: 1200 exclusive homes with country club, tennis courts, private gardens. Starting from $180,000.</image:caption>
+      <image:geo_location>English Village, Erbil, Kurdistan Region, Iraq</image:geo_location>
+    </image:image>
+  </url>
+
+  <url>
+    <loc>https://realhouseiq.com/projects/boulevard</loc>
+    <lastmod>2026-02-21</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.85</priority>
+    <image:image>
+      <image:loc>https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?w=800&amp;q=80&amp;fm=webp</image:loc>
+      <image:title>The Boulevard - Modern Luxury Apartments Gulan</image:title>
+      <image:caption>The Boulevard: 500 modern apartments with rooftop garden, fitness center, smart home features. Ready 2024.</image:caption>
+      <image:geo_location>Gulan, Erbil, Kurdistan Region, Iraq</image:geo_location>
+    </image:image>
+  </url>
+
+  <url>
+    <loc>https://realhouseiq.com/projects/cavally-tower</loc>
+    <lastmod>2026-02-21</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.85</priority>
+    <image:image>
+      <image:loc>https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=800&amp;q=80&amp;fm=webp</image:loc>
+      <image:title>Cavally Tower - Premium High-Rise Ankawa</image:title>
+      <image:caption>Cavally Tower: 350 luxury apartments with sky lounge, infinity pool, panoramic views. Ready 2023.</image:caption>
+      <image:geo_location>Ankawa, Erbil, Kurdistan Region, Iraq</image:geo_location>
+    </image:image>
+  </url>
+
+  <url>
+    <loc>https://realhouseiq.com/projects/tulip-towers</loc>
+    <lastmod>2026-02-21</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+    <image:image>
+      <image:loc>https://images.unsplash.com/photo-1577495508326-19a1b3cf65b7?w=800&amp;q=80&amp;fm=webp</image:loc>
+      <image:title>Tulip Towers - Twin Tower Living Gulan</image:title>
+      <image:caption>Tulip Towers: 600 apartments in distinctive twin-tower design with central gardens. Starting from $85,000.</image:caption>
+      <image:geo_location>Gulan, Erbil, Kurdistan Region, Iraq</image:geo_location>
+    </image:image>
+  </url>
+
+  <url>
+    <loc>https://realhouseiq.com/projects/london-towers</loc>
+    <lastmod>2026-02-21</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.85</priority>
+    <image:image>
+      <image:loc>https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?w=800&amp;q=80&amp;fm=webp</image:loc>
+      <image:title>London Towers - British-Inspired Living Gulan</image:title>
+      <image:caption>London Towers: 400 apartments with British-inspired design, indoor pool, rooftop terrace. Ready 2023.</image:caption>
+      <image:geo_location>Gulan, Erbil, Kurdistan Region, Iraq</image:geo_location>
+    </image:image>
+  </url>
+
+  <url>
+    <loc>https://realhouseiq.com/projects/lebanese-village</loc>
+    <lastmod>2026-02-21</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+    <image:image>
+      <image:loc>https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?w=800&amp;q=80&amp;fm=webp</image:loc>
+      <image:title>Lebanese Village - Mixed-Use Development Baherka</image:title>
+      <image:caption>Lebanese Village: 3400 units with health club, swimming pool, Lebanese-inspired architecture. Starting from $65,000.</image:caption>
+      <image:geo_location>Baherka, Erbil, Kurdistan Region, Iraq</image:geo_location>
+    </image:image>
+  </url>
+
+  <url>
+    <loc>https://realhouseiq.com/projects/sky-towers</loc>
+    <lastmod>2026-02-21</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.85</priority>
+    <image:image>
+      <image:loc>https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=800&amp;q=80&amp;fm=webp</image:loc>
+      <image:title>Sky Towers - Three 38-Story Towers on 100m Road</image:title>
+      <image:caption>Sky Towers: 1224 luxury apartments in three 38-story towers beside Arjaan by Rotana. Ready 2024.</image:caption>
+      <image:geo_location>100 Meter Road, Erbil, Kurdistan Region, Iraq</image:geo_location>
+    </image:image>
+  </url>
+
+  <url>
+    <loc>https://realhouseiq.com/projects/zaniary-towers</loc>
+    <lastmod>2026-02-21</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.85</priority>
+    <image:image>
+      <image:loc>https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?w=800&amp;q=80&amp;fm=webp</image:loc>
+      <image:title>Zaniary Towers - Iraq's Tallest Building at 48 Stories</image:title>
+      <image:caption>Zaniary Towers: Features Iraq's tallest building at 48 stories and 180 meters. 1600 units. Ready 2023.</image:caption>
+      <image:geo_location>Zaniary, Erbil, Kurdistan Region, Iraq</image:geo_location>
+    </image:image>
+  </url>
+
+  <url>
+    <loc>https://realhouseiq.com/projects/american-village</loc>
+    <lastmod>2026-02-21</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+    <image:image>
+      <image:loc>https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=800&amp;q=80&amp;fm=webp</image:loc>
+      <image:title>American Village - American East Coast Style Living</image:title>
+      <image:caption>American Village: 850 homes in authentic American suburban style near Salahadin Road. Starting from $280,000.</image:caption>
+      <image:geo_location>Salahadin, Erbil, Kurdistan Region, Iraq</image:geo_location>
+    </image:image>
+  </url>
+
+  <url>
+    <loc>https://realhouseiq.com/projects/ankawa-4-towers</loc>
+    <lastmod>2026-02-21</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.75</priority>
+    <image:image>
+      <image:loc>https://images.unsplash.com/photo-1577495508326-19a1b3cf65b7?w=800&amp;q=80&amp;fm=webp</image:loc>
+      <image:title>Ankawa 4 Towers - Four 15-Story Smart Towers</image:title>
+      <image:caption>Ankawa 4 Towers: 240 smart apartments with pre-installed kitchens and sports complex. Ready 2022.</image:caption>
+      <image:geo_location>Ankawa, Erbil, Kurdistan Region, Iraq</image:geo_location>
+    </image:image>
+  </url>
+
+  <url>
+    <loc>https://realhouseiq.com/projects/naz-city</loc>
+    <lastmod>2026-02-21</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.75</priority>
+    <image:image>
+      <image:loc>https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?w=800&amp;q=80&amp;fm=webp</image:loc>
+      <image:title>Naz City - 14 Residential Buildings</image:title>
+      <image:caption>Naz City: 700 units in 14 buildings. High security and maintenance standards. Ready 2021.</image:caption>
+      <image:geo_location>Naz City, Erbil, Kurdistan Region, Iraq</image:geo_location>
+    </image:image>
+  </url>
+
+  <url>
+    <loc>https://realhouseiq.com/projects/gulan-towers</loc>
+    <lastmod>2026-02-21</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.85</priority>
+    <image:image>
+      <image:loc>https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=800&amp;q=80&amp;fm=webp</image:loc>
+      <image:title>Gulan Park-WTC Towers - Radisson Hotel and Residences</image:title>
+      <image:caption>Gulan Park-WTC: 450 premium residences with Radisson Hotel, World Trade Center offices, and Gulan Mall. Ready 2020.</image:caption>
+      <image:geo_location>Gulan, Erbil, Kurdistan Region, Iraq</image:geo_location>
+    </image:image>
+  </url>
+
+  <url>
+    <loc>https://realhouseiq.com/projects/roya-towers</loc>
+    <lastmod>2026-02-21</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+    <image:image>
+      <image:loc>https://images.unsplash.com/photo-1577495508326-19a1b3cf65b7?w=800&amp;q=80&amp;fm=webp</image:loc>
+      <image:title>Roya Towers - Five 29-Story Towers</image:title>
+      <image:caption>Roya Towers: 1180 apartments in five 29-story towers with retail and parking. Central location. Ready 2022.</image:caption>
+      <image:geo_location>Central Erbil, Kurdistan Region, Iraq</image:geo_location>
+    </image:image>
+  </url>
+
+  <url>
+    <loc>https://realhouseiq.com/projects/star-towers</loc>
+    <lastmod>2026-02-21</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.75</priority>
+    <image:image>
+      <image:loc>https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?w=800&amp;q=80&amp;fm=webp</image:loc>
+      <image:title>Star Towers - Golden Square Area</image:title>
+      <image:caption>Star Towers: 602 apartments in four 14-story towers. Views of Dream City. 5km from airport. Ready 2022.</image:caption>
+      <image:geo_location>Golden Square, Erbil, Kurdistan Region, Iraq</image:geo_location>
+    </image:image>
+  </url>
+
+  <url>
+    <loc>https://realhouseiq.com/projects/garden-city</loc>
+    <lastmod>2026-02-21</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+    <image:image>
+      <image:loc>https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=800&amp;q=80&amp;fm=webp</image:loc>
+      <image:title>Garden City - 18 Buildings and 146 Villas</image:title>
+      <image:caption>Garden City: 1850 units including apartments and villas. Schools, sports center, extensive gardens. Ready 2021.</image:caption>
+      <image:geo_location>King Mahmoud Ring Road, Erbil, Kurdistan Region, Iraq</image:geo_location>
+    </image:image>
+  </url>
+
+  <url>
+    <loc>https://realhouseiq.com/projects/ganjan-city</loc>
+    <lastmod>2026-02-21</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+    <image:image>
+      <image:loc>https://images.unsplash.com/photo-1600047509807-ba8f99d2cdde?w=800&amp;q=80&amp;fm=webp</image:loc>
+      <image:title>Ganjan City - 1000 Acre Community</image:title>
+      <image:caption>Ganjan City: 2400 units on 1000 acres with 30% green space. Single and two-story villas. Ready 2020.</image:caption>
+      <image:geo_location>Ganjan, Erbil, Kurdistan Region, Iraq</image:geo_location>
+    </image:image>
+  </url>
+
+  <url>
+    <loc>https://realhouseiq.com/projects/kurdistan-city</loc>
+    <lastmod>2026-02-21</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.75</priority>
+    <image:image>
+      <image:loc>https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=800&amp;q=80&amp;fm=webp</image:loc>
+      <image:title>Kurdistan City - Established Family Community</image:title>
+      <image:caption>Kurdistan City: 772 units in established community. Schools, hospital, 24/7 electricity. Ready since 2014.</image:caption>
+      <image:geo_location>150 Meter Road, Erbil, Kurdistan Region, Iraq</image:geo_location>
+    </image:image>
+  </url>
+
+  <url>
+    <loc>https://realhouseiq.com/projects/signature-towers</loc>
+    <lastmod>2026-02-21</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+    <image:image>
+      <image:loc>https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=800&amp;q=80&amp;fm=webp</image:loc>
+      <image:title>Signature Towers - Premium Central Erbil</image:title>
+      <image:caption>Signature Towers: 680 luxury apartments with 20 residential floors, commercial space, underground parking. Ready 2023.</image:caption>
+      <image:geo_location>Central Erbil, Kurdistan Region, Iraq</image:geo_location>
+    </image:image>
+  </url>
+
+</urlset>

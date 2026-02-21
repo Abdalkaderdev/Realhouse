@@ -1,6 +1,24 @@
 // ═══════════════════════════════════════════════════════════════════════════
 // Real House Design Tokens
+// Optimized for Core Web Vitals (LCP, FID, CLS)
 // ═══════════════════════════════════════════════════════════════════════════
+
+// ─── Font Face Declarations with font-display: swap ──────────────────────────
+// Ensures text remains visible during font load (improves LCP and CLS)
+// Note: Google Fonts CSS already includes display=swap, but these are fallbacks
+// for any custom fonts or if the parameter is missed
+
+@font-face {
+  font-family: 'Cormorant';
+  font-display: swap;
+  src: local('Cormorant');
+}
+
+@font-face {
+  font-family: 'Inter';
+  font-display: swap;
+  src: local('Inter');
+}
 
 :root {
   // ─── Colors ─────────────────────────────────────────────────────────────

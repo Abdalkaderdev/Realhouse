@@ -12,9 +12,32 @@ import {
   getRelatedPosts,
   formatBlogDate,
   getAllTags,
+  blogAuthors,
+  generateBlogAuthorSchema,
   type BlogPost,
-  type BlogCategory
+  type BlogCategory,
+  type EnhancedBlogAuthor
 } from '../data/blog';
+import {
+  generateBlogImageAlt,
+  generateBlogImageTitle,
+  generateBlogAltText,
+  createSEOImage,
+  generateSrcSet,
+  updateImageMetaTags,
+  addBlogImageSchema,
+  IMAGE_DIMENSIONS
+} from '../utils/image-seo';
+import { createBlogShareButtons } from '../components/share-buttons';
+import {
+  createBreadcrumbs,
+  injectBreadcrumbSchema,
+  getBlogBreadcrumbs,
+  getBlogPostBreadcrumbs,
+  createYouMayAlsoLikeSection,
+  createBlogContentLinks,
+  createContentSidebar
+} from '../components/internal-linking';
 
 // ─── Helper Functions ─────────────────────────────────────────────────────
 function createElement<K extends keyof HTMLElementTagNameMap>(
@@ -101,17 +124,26 @@ function createBlogCard(post: BlogPost, featured: boolean = false): HTMLElement 
   const article = createElement('article', featured ? 'blog-card blog-card--featured' : 'blog-card');
   article.setAttribute('data-id', post.id);
 
-  // Image section
-  const media = createElement('div', 'blog-card__media');
+  // Image section with figure for semantic markup
+  const media = createElement('figure', 'blog-card__media');
   const imageLink = createElement('a', 'blog-card__image-link');
   imageLink.href = `/blog/${post.slug}`;
   imageLink.setAttribute('data-route', '');
   imageLink.setAttribute('aria-label', `Read: ${post.title}`);
 
-  const img = createElement('img', 'blog-card__image');
-  img.src = post.image;
-  img.alt = post.title;
-  img.loading = featured ? 'eager' : 'lazy';
+  // SEO-optimized blog image
+  const img = createSEOImage({
+    src: post.image,
+    alt: generateBlogImageAlt(post),
+    title: generateBlogImageTitle(post),
+    className: 'blog-card__image',
+    loading: featured ? 'eager' : 'lazy',
+    width: featured ? 800 : IMAGE_DIMENSIONS.card.width,
+    height: featured ? 450 : IMAGE_DIMENSIONS.card.height,
+    srcset: generateSrcSet(post.image, [400, 600, 800, 1200]),
+    sizes: featured ? '(max-width: 768px) 100vw, 60vw' : '(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw',
+    fetchPriority: featured ? 'high' : 'auto',
+  });
   imageLink.appendChild(img);
   media.appendChild(imageLink);
 
@@ -126,8 +158,12 @@ function createBlogCard(post: BlogPost, featured: boolean = false): HTMLElement 
 
   // Meta info
   const meta = createElement('div', 'blog-card__meta');
-  const dateSpan = createElement('span', 'blog-card__date', formatBlogDate(post.date));
-  meta.appendChild(dateSpan);
+  // Use time element with datetime attribute for proper semantics
+  const dateTime = document.createElement('time');
+  dateTime.className = 'blog-card__date';
+  dateTime.setAttribute('datetime', new Date(post.date).toISOString());
+  dateTime.textContent = formatBlogDate(post.date);
+  meta.appendChild(dateTime);
   const separator = createElement('span', 'blog-card__separator', '\u00B7');
   meta.appendChild(separator);
   const readTime = createElement('span', 'blog-card__read-time', `${post.readTime} min read`);
@@ -230,14 +266,20 @@ export function renderBlogPage(): DocumentFragment {
   const page = createElement('div', 'blog-page');
   const container = createElement('div', 'container');
 
-  // Header section
+  // Breadcrumbs
+  const breadcrumbItems = getBlogBreadcrumbs();
+  container.appendChild(createBreadcrumbs(breadcrumbItems));
+  injectBreadcrumbSchema(breadcrumbItems);
+
+  // Header section with SEO keywords
   const header = createElement('div', 'blog-page__header');
   const title = createElement('h1', 'blog-page__title');
-  title.textContent = 'Real Estate ';
+  title.textContent = 'Real Estate Erbil ';
   const em = createElement('em', undefined, 'Insights');
   title.appendChild(em);
+  title.appendChild(document.createTextNode(' — Erbil Property Market Blog'));
   header.appendChild(title);
-  const subtitle = createElement('p', 'blog-page__subtitle', 'Expert advice, market trends, and guides for buying property in Erbil and Kurdistan.');
+  const subtitle = createElement('p', 'blog-page__subtitle', 'Expert property Erbil advice, real estate Kurdistan market trends, and comprehensive guides for houses for sale Erbil. Learn about apartments Erbil, villas Erbil Iraq, luxury homes Kurdistan, and property investment Kurdistan Iraq opportunities.');
   header.appendChild(subtitle);
   container.appendChild(header);
 
@@ -372,46 +414,42 @@ export function renderBlogPostPage(slug: string): DocumentFragment {
     return fragment;
   }
 
-  const page = createElement('div', 'blog-post-page');
+  // Use article for the entire blog post page as it's self-contained content
+  const page = createElement('article', 'blog-post-page');
+  page.setAttribute('itemscope', '');
+  page.setAttribute('itemtype', 'https://schema.org/BlogPosting');
 
-  // Hero section with image
-  const hero = createElement('div', 'blog-post-page__hero');
-  const heroImage = createElement('img', 'blog-post-page__hero-image');
-  heroImage.src = post.image;
-  heroImage.alt = post.title;
+  // Hero section with SEO-optimized image wrapped in figure
+  const hero = createElement('figure', 'blog-post-page__hero');
+  const heroImage = createSEOImage({
+    src: post.image,
+    alt: generateBlogImageAlt(post),
+    title: generateBlogImageTitle(post),
+    className: 'blog-post-page__hero-image',
+    loading: 'eager',
+    width: 1200,
+    height: 630,
+    srcset: generateSrcSet(post.image, [600, 900, 1200, 1600]),
+    sizes: '100vw',
+    fetchPriority: 'high',
+  });
   hero.appendChild(heroImage);
   const heroOverlay = createElement('div', 'blog-post-page__hero-overlay');
   hero.appendChild(heroOverlay);
   page.appendChild(hero);
 
+  // Update meta tags for social sharing
+  updateImageMetaTags(post.image, generateBlogImageAlt(post), 'blog');
+
+  // Add structured data for blog image (ImageObject schema)
+  addBlogImageSchema(post);
+
   const container = createElement('div', 'container');
 
-  // Breadcrumb
-  const breadcrumb = createElement('nav', 'blog-post-page__breadcrumb');
-  breadcrumb.setAttribute('aria-label', 'Breadcrumb');
-  const breadcrumbList = createElement('ol', 'breadcrumb');
-
-  const homeCrumb = createElement('li', 'breadcrumb__item');
-  const homeLink = createElement('a', undefined, 'Home');
-  homeLink.href = '/';
-  homeLink.setAttribute('data-route', '');
-  homeCrumb.appendChild(homeLink);
-  breadcrumbList.appendChild(homeCrumb);
-
-  const blogCrumb = createElement('li', 'breadcrumb__item');
-  const blogLink = createElement('a', undefined, 'Blog');
-  blogLink.href = '/blog';
-  blogLink.setAttribute('data-route', '');
-  blogCrumb.appendChild(blogLink);
-  breadcrumbList.appendChild(blogCrumb);
-
-  const currentCrumb = createElement('li', 'breadcrumb__item breadcrumb__item--current');
-  currentCrumb.textContent = post.title.length > 50 ? post.title.substring(0, 50) + '...' : post.title;
-  currentCrumb.setAttribute('aria-current', 'page');
-  breadcrumbList.appendChild(currentCrumb);
-
-  breadcrumb.appendChild(breadcrumbList);
-  container.appendChild(breadcrumb);
+  // Breadcrumb (using standardized component with schema)
+  const breadcrumbItems = getBlogPostBreadcrumbs(post);
+  container.appendChild(createBreadcrumbs(breadcrumbItems));
+  injectBreadcrumbSchema(breadcrumbItems);
 
   // Article content wrapper
   const articleWrapper = createElement('div', 'blog-post-page__wrapper');
@@ -446,10 +484,16 @@ export function renderBlogPostPage(slug: string): DocumentFragment {
   articleMeta.appendChild(authorDiv);
 
   const metaDetails = createElement('div', 'blog-post-page__meta-details');
-  const dateSpan = createElement('span', 'blog-post-page__date');
-  dateSpan.appendChild(createSVGUse('icon-calendar'));
-  dateSpan.appendChild(document.createTextNode(formatBlogDate(post.date)));
-  metaDetails.appendChild(dateSpan);
+  // Use time element with datetime attribute for proper semantics
+  const dateTime = document.createElement('time');
+  dateTime.className = 'blog-post-page__date';
+  dateTime.setAttribute('datetime', new Date(post.date).toISOString());
+  dateTime.setAttribute('itemprop', 'datePublished');
+  const calendarIcon = createSVGUse('icon-calendar');
+  calendarIcon.setAttribute('aria-hidden', 'true');
+  dateTime.appendChild(calendarIcon);
+  dateTime.appendChild(document.createTextNode(formatBlogDate(post.date)));
+  metaDetails.appendChild(dateTime);
   const readTimeSpan = createElement('span', 'blog-post-page__read-time');
   readTimeSpan.appendChild(createSVGUse('icon-clock'));
   readTimeSpan.appendChild(document.createTextNode(`${post.readTime} min read`));
@@ -478,43 +522,9 @@ export function renderBlogPostPage(slug: string): DocumentFragment {
   tagsSection.appendChild(tagsList);
   article.appendChild(tagsSection);
 
-  // Share section
+  // Share section - using reusable share buttons component
   const shareSection = createElement('div', 'blog-post-page__share');
-  const shareLabel = createElement('span', 'blog-post-page__share-label', 'Share this article:');
-  shareSection.appendChild(shareLabel);
-  const shareButtons = createElement('div', 'blog-post-page__share-buttons');
-
-  // Twitter/X share
-  const twitterBtn = createElement('a', 'blog-post-page__share-btn blog-post-page__share-btn--twitter');
-  twitterBtn.href = `https://twitter.com/intent/tweet?text=${encodeURIComponent(post.title)}&url=${encodeURIComponent(`https://realhouseiq.com/blog/${post.slug}`)}`;
-  twitterBtn.target = '_blank';
-  twitterBtn.rel = 'noopener noreferrer';
-  twitterBtn.setAttribute('aria-label', 'Share on Twitter');
-  twitterBtn.textContent = 'X';
-  shareButtons.appendChild(twitterBtn);
-
-  // LinkedIn share
-  const linkedinBtn = createElement('a', 'blog-post-page__share-btn blog-post-page__share-btn--linkedin');
-  linkedinBtn.href = `https://www.linkedin.com/shareArticle?mini=true&url=${encodeURIComponent(`https://realhouseiq.com/blog/${post.slug}`)}&title=${encodeURIComponent(post.title)}`;
-  linkedinBtn.target = '_blank';
-  linkedinBtn.rel = 'noopener noreferrer';
-  linkedinBtn.setAttribute('aria-label', 'Share on LinkedIn');
-  linkedinBtn.textContent = 'in';
-  shareButtons.appendChild(linkedinBtn);
-
-  // Copy link
-  const copyBtn = createElement('button', 'blog-post-page__share-btn blog-post-page__share-btn--copy');
-  copyBtn.setAttribute('aria-label', 'Copy link');
-  copyBtn.textContent = 'Copy';
-  copyBtn.addEventListener('click', () => {
-    navigator.clipboard.writeText(`https://realhouseiq.com/blog/${post.slug}`);
-    copyBtn.textContent = 'Copied!';
-    setTimeout(() => {
-      copyBtn.textContent = 'Copy';
-    }, 2000);
-  });
-  shareButtons.appendChild(copyBtn);
-
+  const shareButtons = createBlogShareButtons(post);
   shareSection.appendChild(shareButtons);
   article.appendChild(shareSection);
 
@@ -523,18 +533,80 @@ export function renderBlogPostPage(slug: string): DocumentFragment {
   // Sidebar
   const sidebar = createElement('aside', 'blog-post-page__sidebar');
 
-  // Author bio card
+  // Enhanced author bio card with E-E-A-T credentials
   const authorCard = createElement('div', 'blog-post-page__author-card');
+  authorCard.setAttribute('itemscope', '');
+  authorCard.setAttribute('itemtype', 'https://schema.org/Person');
+
   const authorCardImg = createElement('img', 'blog-post-page__author-card-image');
   authorCardImg.src = post.author.image;
   authorCardImg.alt = post.author.name;
+  authorCardImg.setAttribute('itemprop', 'image');
   authorCard.appendChild(authorCardImg);
-  const authorCardName = createElement('h3', 'blog-post-page__author-card-name', post.author.name);
+
+  const authorCardName = createElement('h3', 'blog-post-page__author-card-name');
+  authorCardName.setAttribute('itemprop', 'name');
+  authorCardName.textContent = post.author.name;
   authorCard.appendChild(authorCardName);
-  const authorCardRole = createElement('p', 'blog-post-page__author-card-role', post.author.role);
+
+  const authorCardRole = createElement('p', 'blog-post-page__author-card-role');
+  authorCardRole.setAttribute('itemprop', 'jobTitle');
+  authorCardRole.textContent = post.author.role;
   authorCard.appendChild(authorCardRole);
-  const authorCardBio = createElement('p', 'blog-post-page__author-card-bio', post.author.bio);
+
+  // Find enhanced author data for credentials
+  const authorKey = Object.keys(blogAuthors).find(
+    key => blogAuthors[key].name === post.author.name ||
+           blogAuthors[key].name.includes(post.author.name.split(' ')[0])
+  );
+  const enhancedAuthor = authorKey ? blogAuthors[authorKey] as EnhancedBlogAuthor : null;
+
+  // Show experience badge
+  if (enhancedAuthor) {
+    const expBadge = createElement('div', 'blog-post-page__author-experience');
+    expBadge.textContent = `${enhancedAuthor.yearsExperience}+ Years Experience`;
+    authorCard.appendChild(expBadge);
+  }
+
+  const authorCardBio = createElement('p', 'blog-post-page__author-card-bio');
+  authorCardBio.setAttribute('itemprop', 'description');
+  authorCardBio.textContent = post.author.bio;
   authorCard.appendChild(authorCardBio);
+
+  // Show credentials
+  if (enhancedAuthor && enhancedAuthor.credentials.length > 0) {
+    const credentials = createElement('div', 'blog-post-page__author-credentials');
+    const credTitle = createElement('span', 'blog-post-page__author-cred-title', 'Credentials:');
+    credentials.appendChild(credTitle);
+    const credList = createElement('ul', 'blog-post-page__author-cred-list');
+    enhancedAuthor.credentials.forEach(cred => {
+      const credItem = createElement('li', undefined, cred);
+      credList.appendChild(credItem);
+    });
+    credentials.appendChild(credList);
+    authorCard.appendChild(credentials);
+  }
+
+  // Author link to team page
+  if (enhancedAuthor) {
+    const authorLink = createElement('a', 'blog-post-page__author-link', 'View Full Profile');
+    authorLink.href = `/about#team-${enhancedAuthor.teamMemberId}`;
+    authorLink.setAttribute('data-route', '');
+    authorLink.setAttribute('itemprop', 'url');
+    authorCard.appendChild(authorLink);
+
+    // LinkedIn link
+    if (enhancedAuthor.linkedinUrl) {
+      const linkedinLink = createElement('a', 'blog-post-page__author-linkedin');
+      linkedinLink.href = enhancedAuthor.linkedinUrl;
+      linkedinLink.target = '_blank';
+      linkedinLink.rel = 'noopener noreferrer';
+      linkedinLink.setAttribute('itemprop', 'sameAs');
+      linkedinLink.textContent = 'Connect on LinkedIn';
+      authorCard.appendChild(linkedinLink);
+    }
+  }
+
   sidebar.appendChild(authorCard);
 
   // Related posts
@@ -584,6 +656,12 @@ export function renderBlogPostPage(slug: string): DocumentFragment {
   articleWrapper.appendChild(sidebar);
   container.appendChild(articleWrapper);
 
+  // Related Properties/Projects Links (within article)
+  const contentLinks = createBlogContentLinks(post);
+  if (contentLinks.children.length > 0) {
+    container.appendChild(contentLinks);
+  }
+
   // Back to blog
   const backSection = createElement('div', 'blog-post-page__back');
   const backLink = createElement('a', 'btn btn--ghost', 'Back to Blog');
@@ -595,6 +673,11 @@ export function renderBlogPostPage(slug: string): DocumentFragment {
   container.appendChild(backSection);
 
   page.appendChild(container);
+
+  // "You May Also Like" Section (full-width, after container)
+  const youMayLikeSection = createYouMayAlsoLikeSection(post, 4);
+  page.appendChild(youMayLikeSection);
+
   fragment.appendChild(page);
 
   return fragment;
@@ -602,23 +685,27 @@ export function renderBlogPostPage(slug: string): DocumentFragment {
 
 // ─── SEO Helper for Blog Pages ─────────────────────────────────────────────
 export function setupBlogPageSEO(): void {
-  // Update meta tags for blog listing page
-  document.title = 'Real Estate Blog | Erbil Property Insights | Real House';
+  // Update meta tags for blog listing page (optimized for CTR)
+  document.title = 'Erbil Real Estate Blog | Market Insights, Buying Guides';
 
   const metaDescription = document.querySelector('meta[name="description"]');
   if (metaDescription) {
-    metaDescription.setAttribute('content', 'Expert real estate insights, market trends, and buying guides for property in Erbil, Kurdistan. Tips for buyers, investors, and expats.');
+    metaDescription.setAttribute('content', 'Expert Erbil real estate insights: 2025 market trends, buying guides, investment tips & neighborhood reviews. Stay informed with Real House professionals.');
   }
 }
 
 export function setupBlogPostSEO(post: BlogPost): void {
-  // Update title
-  document.title = `${post.title} | Real House Blog`;
+  // Update title (optimized for CTR - max 60 chars)
+  const title = `${post.title} | Real House Erbil`;
+  document.title = title.length <= 60 ? title : post.title.substring(0, 47) + '... | Real House';
 
-  // Update meta description
+  // Update meta description (150-160 chars with CTA)
   const metaDescription = document.querySelector('meta[name="description"]');
   if (metaDescription) {
-    metaDescription.setAttribute('content', post.excerpt);
+    const excerpt = post.excerpt.length <= 140
+      ? `${post.excerpt} Read more on Real House Blog!`
+      : post.excerpt;
+    metaDescription.setAttribute('content', excerpt.length <= 160 ? excerpt : excerpt.substring(0, 157) + '...');
   }
 
   // Update canonical URL
@@ -669,11 +756,31 @@ export function setupBlogPostSEO(post: BlogPost): void {
     twitterImage.setAttribute('content', post.image);
   }
 
-  // Add Article-specific structured data
+  // Add Article-specific structured data with enhanced E-E-A-T author schema
   const existingArticleSchema = document.querySelector('script[data-schema="article"]');
   if (existingArticleSchema) {
     existingArticleSchema.remove();
   }
+
+  // Find enhanced author from blogAuthors
+  const authorKey = Object.keys(blogAuthors).find(
+    key => blogAuthors[key].name === post.author.name ||
+           blogAuthors[key].name.includes(post.author.name.split(' ')[0])
+  );
+  const enhancedAuthor = authorKey ? blogAuthors[authorKey] : null;
+
+  // Build author schema with E-E-A-T signals
+  const authorSchema = enhancedAuthor ? generateBlogAuthorSchema(enhancedAuthor) : {
+    '@type': 'Person',
+    'name': post.author.name,
+    'jobTitle': post.author.role,
+    'image': post.author.image,
+    'worksFor': {
+      '@type': 'RealEstateAgent',
+      'name': 'Real House',
+      'url': 'https://realhouseiq.com'
+    }
+  };
 
   const articleSchema = document.createElement('script');
   articleSchema.type = 'application/ld+json';
@@ -683,18 +790,28 @@ export function setupBlogPostSEO(post: BlogPost): void {
     '@type': 'Article',
     'headline': post.title,
     'description': post.excerpt,
-    'image': post.image,
-    'author': {
-      '@type': 'Person',
-      'name': post.author.name,
-      'jobTitle': post.author.role
+    'image': {
+      '@type': 'ImageObject',
+      'url': post.image,
+      'width': 1200,
+      'height': 630
     },
+    'author': authorSchema,
     'publisher': {
-      '@type': 'Organization',
+      '@type': 'RealEstateAgent',
       'name': 'Real House',
+      'url': 'https://realhouseiq.com',
       'logo': {
         '@type': 'ImageObject',
-        'url': 'https://realhouseiq.com/favicon.svg'
+        'url': 'https://realhouseiq.com/favicon.svg',
+        'width': 512,
+        'height': 512
+      },
+      'foundingDate': '2001',
+      'numberOfEmployees': '25+',
+      'areaServed': {
+        '@type': 'Place',
+        'name': 'Kurdistan Region, Iraq'
       }
     },
     'datePublished': post.date,
@@ -704,7 +821,14 @@ export function setupBlogPostSEO(post: BlogPost): void {
       '@id': `https://realhouseiq.com/blog/${post.slug}`
     },
     'keywords': post.tags.join(', '),
-    'articleSection': post.category
+    'articleSection': post.category,
+    'inLanguage': 'en',
+    'isAccessibleForFree': true,
+    'copyrightYear': new Date(post.date).getFullYear(),
+    'copyrightHolder': {
+      '@type': 'Organization',
+      'name': 'Real House'
+    }
   });
   document.head.appendChild(articleSchema);
 

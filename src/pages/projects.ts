@@ -3,6 +3,26 @@
 // ═══════════════════════════════════════════════════════════════════════════
 
 import { projects, getProjectById, formatPriceRange, type Project } from '../data/projects';
+import { createProjectShareButtons } from '../components/share-buttons';
+import {
+  generateProjectAltText,
+  generateProjectTitle,
+  createSEOImage,
+  generateSrcSet,
+  generateSizes,
+  updateImageMetaTags,
+  generateProjectImageSchema,
+  addProjectImageSchemaToPage,
+  IMAGE_DIMENSIONS
+} from '../utils/image-seo';
+import {
+  createBreadcrumbs,
+  injectBreadcrumbSchema,
+  getProjectsBreadcrumbs,
+  getProjectDetailBreadcrumbs,
+  getRelatedProjects,
+  createRelatedProjectsSection
+} from '../components/internal-linking';
 
 // ─── Helper Functions ─────────────────────────────────────────────────────
 function createElement<K extends keyof HTMLElementTagNameMap>(
@@ -42,10 +62,18 @@ function createProjectCard(project: Project): HTMLElement {
   // Media section
   const media = createElement('div', 'project-card__media');
 
-  const img = createElement('img', 'project-card__image');
-  img.src = project.images[0];
-  img.alt = `${project.name} - Real estate development project in ${project.location.district}, ${project.location.city}. ${project.status}, ${project.totalUnits} total units.`;
-  img.loading = 'lazy';
+  // SEO-Optimized project image
+  const img = createSEOImage({
+    src: project.images[0],
+    alt: generateProjectAltText(project, 0, 'card'),
+    title: generateProjectTitle(project),
+    className: 'project-card__image',
+    loading: 'lazy',
+    width: IMAGE_DIMENSIONS.card.width,
+    height: IMAGE_DIMENSIONS.card.height,
+    srcset: generateSrcSet(project.images[0], [400, 600, 800]),
+    sizes: generateSizes('card'),
+  });
   media.appendChild(img);
 
   const overlay = createElement('div', 'project-card__overlay');
@@ -123,14 +151,19 @@ export function renderProjectsPage(): DocumentFragment {
   const page = createElement('div', 'projects-page');
   const container = createElement('div', 'container');
 
+  // Breadcrumbs
+  const breadcrumbItems = getProjectsBreadcrumbs();
+  container.appendChild(createBreadcrumbs(breadcrumbItems));
+  injectBreadcrumbSchema(breadcrumbItems);
+
   // Header
   const header = createElement('div', 'projects-page__header');
   const title = createElement('h1', 'projects-page__title');
-  title.textContent = 'Development ';
+  title.textContent = 'Real Estate Erbil Development — Houses for Sale Erbil & Apartments Erbil Iraq ';
   const em = createElement('em', undefined, 'Projects');
   title.appendChild(em);
   header.appendChild(title);
-  const subtitle = createElement('p', 'projects-page__subtitle', 'Explore premier real estate developments in Erbil, from luxurious residential communities to mixed-use urban centers.');
+  const subtitle = createElement('p', 'projects-page__subtitle', 'Explore premier property Erbil developments including houses for sale Erbil, apartments Erbil Iraq, penthouse Erbil, and luxury homes Kurdistan. Best real estate agent Erbil for property investment Kurdistan Iraq opportunities. Browse villas Erbil Iraq and real estate Kurdistan in the growing Erbil property market.');
   header.appendChild(subtitle);
   container.appendChild(header);
 
@@ -241,37 +274,79 @@ export function renderProjectDetailPage(projectId: string): DocumentFragment {
 
   const page = createElement('div', 'project-detail-page');
 
+  // ─── Breadcrumbs Section ────────────────────────────────────────────────
+  const breadcrumbSection = createElement('section', 'project-detail__breadcrumbs');
+  const breadcrumbContainer = createElement('div', 'container');
+  const breadcrumbItems = getProjectDetailBreadcrumbs(project);
+  breadcrumbContainer.appendChild(createBreadcrumbs(breadcrumbItems));
+  breadcrumbSection.appendChild(breadcrumbContainer);
+  page.appendChild(breadcrumbSection);
+
+  // Inject breadcrumb schema for SEO
+  injectBreadcrumbSchema(breadcrumbItems);
+
   // ─── Gallery Section ─────────────────────────────────────────────────────
   const gallery = createElement('section', 'project-gallery');
   const galleryContainer = createElement('div', 'container');
 
-  // Main image with descriptive alt text for SEO
+  // Main image with SEO-optimized attributes
   const mainImageWrapper = createElement('div', 'project-gallery__main');
-  const mainImage = createElement('img', 'project-gallery__main-image');
-  mainImage.src = project.images[0];
-  mainImage.alt = `${project.name} - ${project.status} real estate development in ${project.location.district}, ${project.location.city}, Kurdistan. ${project.availableUnits} of ${project.totalUnits} units available starting from ${formatPriceRange(project)}.`;
+  const mainImage = createSEOImage({
+    src: project.images[0],
+    alt: generateProjectAltText(project, 0, 'detail'),
+    title: generateProjectTitle(project),
+    className: 'project-gallery__main-image',
+    loading: 'eager',
+    width: IMAGE_DIMENSIONS.detail.width,
+    height: IMAGE_DIMENSIONS.detail.height,
+    srcset: generateSrcSet(project.images[0], [600, 800, 1200]),
+    sizes: generateSizes('detail'),
+    fetchPriority: 'high',
+  });
   mainImage.id = 'project-main-image';
   mainImageWrapper.appendChild(mainImage);
   galleryContainer.appendChild(mainImageWrapper);
 
-  // Thumbnails
+  // Update meta tags for social sharing
+  updateImageMetaTags(project.images[0], generateProjectAltText(project, 0, 'detail'), 'project');
+
+  // Add structured data for project images (ImageObject schema)
+  addProjectImageSchemaToPage(project);
+
+  // Thumbnails with SEO-optimized images
   if (project.images.length > 1) {
     const thumbnails = createElement('div', 'project-gallery__thumbnails');
+    thumbnails.setAttribute('role', 'group');
+    thumbnails.setAttribute('aria-label', 'Project image gallery');
     project.images.forEach((imageSrc, index) => {
       const thumb = createElement('button', `project-gallery__thumb${index === 0 ? ' active' : ''}`);
       thumb.setAttribute('data-index', index.toString());
-      const thumbImg = createElement('img');
-      thumbImg.src = imageSrc;
-      thumbImg.alt = `${project.name} gallery image ${index + 1} of ${project.images.length} - ${project.location.district}, ${project.location.city}`;
+      thumb.setAttribute('aria-label', `View image ${index + 1} of ${project.images.length}`);
+      thumb.setAttribute('aria-pressed', index === 0 ? 'true' : 'false');
+      // SEO-optimized thumbnail
+      const thumbImg = createSEOImage({
+        src: imageSrc,
+        alt: '', // Decorative, button has aria-label
+        loading: 'lazy',
+        width: IMAGE_DIMENSIONS.thumbnail.width,
+        height: IMAGE_DIMENSIONS.thumbnail.height,
+      });
+      thumbImg.setAttribute('aria-hidden', 'true');
       thumb.appendChild(thumbImg);
 
       thumb.addEventListener('click', () => {
         const mainImg = document.getElementById('project-main-image') as HTMLImageElement;
         if (mainImg) {
           mainImg.src = imageSrc;
+          mainImg.alt = generateProjectAltText(project, index, 'gallery');
+          mainImg.title = `${project.name} - Image ${index + 1} of ${project.images.length}`;
         }
-        thumbnails.querySelectorAll('.project-gallery__thumb').forEach(t => t.classList.remove('active'));
+        thumbnails.querySelectorAll('.project-gallery__thumb').forEach(t => {
+          t.classList.remove('active');
+          t.setAttribute('aria-pressed', 'false');
+        });
         thumb.classList.add('active');
+        thumb.setAttribute('aria-pressed', 'true');
       });
 
       thumbnails.appendChild(thumb);
@@ -373,10 +448,10 @@ export function renderProjectDetailPage(projectId: string): DocumentFragment {
 
   // Contact Card
   const contactCard = createElement('div', 'project-detail__contact-card');
-  const contactTitle = createElement('h3', 'project-detail__contact-title', 'Interested in This Project?');
+  const contactTitle = createElement('h3', 'project-detail__contact-title', 'Interested in This Property Erbil Project?');
   contactCard.appendChild(contactTitle);
 
-  const contactText = createElement('p', 'project-detail__contact-text', 'Contact our team for available units, pricing details, and payment plans.');
+  const contactText = createElement('p', 'project-detail__contact-text', 'Contact our best real estate agent Erbil team for available units, luxury villa Erbil price details, and payment plans. We help you buy house in Erbil Iraq with flexible property investment Kurdistan Iraq options.');
   contactCard.appendChild(contactText);
 
   const contactActions = createElement('div', 'project-detail__contact-actions');
@@ -414,10 +489,25 @@ export function renderProjectDetailPage(projectId: string): DocumentFragment {
   locationCard.appendChild(addressInfo);
   sidebar.appendChild(locationCard);
 
+  // ─── Social Share Section ─────────────────────────────────────────────────
+  const shareSection = createElement('div', 'project-share');
+  const shareTitle = createElement('h4', 'project-share__title', 'Share This Project');
+  shareSection.appendChild(shareTitle);
+  const shareButtons = createProjectShareButtons(project);
+  shareSection.appendChild(shareButtons);
+  sidebar.appendChild(shareSection);
+
   contentGrid.appendChild(sidebar);
   contentContainer.appendChild(contentGrid);
   content.appendChild(contentContainer);
   page.appendChild(content);
+
+  // ─── Related Projects Section ───────────────────────────────────────────
+  const relatedProjects = getRelatedProjects(project, 3);
+  if (relatedProjects.length > 0) {
+    const relatedSection = createRelatedProjectsSection(relatedProjects);
+    page.appendChild(relatedSection);
+  }
 
   // ─── Back Link ───────────────────────────────────────────────────────────
   const backSection = createElement('section', 'project-detail__back');

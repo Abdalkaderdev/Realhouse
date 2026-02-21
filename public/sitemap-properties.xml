@@ -1,0 +1,289 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  ===============================================================================
+  Real House - Properties Sitemap
+  All individual property listings with image markup
+  Last Updated: 2026-02-21
+  ===============================================================================
+-->
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
+
+  <!-- ═══════════════════════════════════════════════════════════════════════════ -->
+  <!-- The Boulevard Apartments - Gulan District -->
+  <!-- ═══════════════════════════════════════════════════════════════════════════ -->
+
+  <url>
+    <loc>https://realhouseiq.com/properties/boulevard-apt-floor-13</loc>
+    <lastmod>2026-02-21</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+    <image:image>
+      <image:loc>https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?w=800&amp;q=80&amp;fm=webp</image:loc>
+      <image:title>The Boulevard 1BR Apartment Floor 13 - Gulan Erbil $100,000</image:title>
+      <image:caption>Modern one-bedroom apartment for sale in The Boulevard Tower, Gulan District, Erbil. 92.5 sqm with city views, 24/7 security, concierge service, and fitness center access.</image:caption>
+      <image:geo_location>Gulan, Erbil, Kurdistan Region, Iraq</image:geo_location>
+    </image:image>
+    <image:image>
+      <image:loc>https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?w=800&amp;q=80&amp;fm=webp</image:loc>
+      <image:title>The Boulevard Apartment Modern Kitchen</image:title>
+      <image:caption>Modern kitchen with premium appliances in The Boulevard apartment.</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?w=800&amp;q=80&amp;fm=webp</image:loc>
+      <image:title>The Boulevard Apartment Living Room</image:title>
+      <image:caption>Contemporary living room with floor-to-ceiling windows in The Boulevard.</image:caption>
+    </image:image>
+  </url>
+
+  <url>
+    <loc>https://realhouseiq.com/properties/boulevard-apt-floor-14</loc>
+    <lastmod>2026-02-21</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+    <image:image>
+      <image:loc>https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?w=800&amp;q=80&amp;fm=webp</image:loc>
+      <image:title>The Boulevard 1BR Apartment Floor 14 - Gulan Erbil $100,000</image:title>
+      <image:caption>Modern one-bedroom apartment for sale in The Boulevard Tower, Gulan District, Erbil. 92.5 sqm with enhanced city views on floor 14.</image:caption>
+      <image:geo_location>Gulan, Erbil, Kurdistan Region, Iraq</image:geo_location>
+    </image:image>
+  </url>
+
+  <url>
+    <loc>https://realhouseiq.com/properties/boulevard-apt-floor-17</loc>
+    <lastmod>2026-02-21</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.85</priority>
+    <image:image>
+      <image:loc>https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?w=800&amp;q=80&amp;fm=webp</image:loc>
+      <image:title>The Boulevard 1BR Apartment Floor 17 - Panoramic Views Gulan Erbil $100,000</image:title>
+      <image:caption>Premium one-bedroom apartment on the 17th floor of The Boulevard Tower with panoramic city views. Highest available floor, corner unit with designer kitchen. Hot listing.</image:caption>
+      <image:geo_location>Gulan, Erbil, Kurdistan Region, Iraq</image:geo_location>
+    </image:image>
+  </url>
+
+  <!-- ═══════════════════════════════════════════════════════════════════════════ -->
+  <!-- Queen Towers Commercial - Gulan District -->
+  <!-- ═══════════════════════════════════════════════════════════════════════════ -->
+
+  <url>
+    <loc>https://realhouseiq.com/properties/queen-towers-store-1</loc>
+    <lastmod>2026-02-21</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+    <image:image>
+      <image:loc>https://images.unsplash.com/photo-1604719312566-8912e9227c6a?w=800&amp;q=80&amp;fm=webp</image:loc>
+      <image:title>Queen Towers Commercial Store 128 sqm - Gulan Erbil For Rent</image:title>
+      <image:caption>Prime 128 sqm commercial space for rent in Queen Towers, Gulan District, Erbil. High ceilings, large display windows, excellent foot traffic. Ideal for retail, restaurant, or showroom.</image:caption>
+      <image:geo_location>Gulan, Erbil, Kurdistan Region, Iraq</image:geo_location>
+    </image:image>
+  </url>
+
+  <url>
+    <loc>https://realhouseiq.com/properties/queen-towers-store-2</loc>
+    <lastmod>2026-02-21</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.75</priority>
+    <image:image>
+      <image:loc>https://images.unsplash.com/photo-1604719312566-8912e9227c6a?w=800&amp;q=80&amp;fm=webp</image:loc>
+      <image:title>Queen Towers Commercial Store 81 sqm - Gulan Erbil For Rent</image:title>
+      <image:caption>Boutique 81 sqm commercial space for rent in Queen Towers. Perfect for small retail, cafe, or professional services in Gulan, Erbil.</image:caption>
+      <image:geo_location>Gulan, Erbil, Kurdistan Region, Iraq</image:geo_location>
+    </image:image>
+  </url>
+
+  <url>
+    <loc>https://realhouseiq.com/properties/queen-towers-store-3</loc>
+    <lastmod>2026-02-21</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+    <image:image>
+      <image:loc>https://images.unsplash.com/photo-1604719312566-8912e9227c6a?w=800&amp;q=80&amp;fm=webp</image:loc>
+      <image:title>Queen Towers Commercial Store 182 sqm - Largest Unit Gulan Erbil For Rent</image:title>
+      <image:caption>Largest 182 sqm premium commercial space in Queen Towers. Corner position with dual frontage, extra-high ceilings, dedicated restrooms. Ideal for flagship stores, restaurants, or showrooms in Erbil.</image:caption>
+      <image:geo_location>Gulan, Erbil, Kurdistan Region, Iraq</image:geo_location>
+    </image:image>
+  </url>
+
+  <url>
+    <loc>https://realhouseiq.com/properties/queen-towers-store-4</loc>
+    <lastmod>2026-02-21</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+    <image:image>
+      <image:loc>https://images.unsplash.com/photo-1604719312566-8912e9227c6a?w=800&amp;q=80&amp;fm=webp</image:loc>
+      <image:title>Queen Towers Commercial Store 63 sqm - Affordable Gulan Erbil For Rent</image:title>
+      <image:caption>Efficient 63 sqm commercial space in Queen Towers. Perfect for kiosks, phone shops, or service businesses. Affordable entry into Erbil's premium commercial market.</image:caption>
+      <image:geo_location>Gulan, Erbil, Kurdistan Region, Iraq</image:geo_location>
+    </image:image>
+  </url>
+
+  <!-- ═══════════════════════════════════════════════════════════════════════════ -->
+  <!-- Property Type Filter Pages (for SEO) -->
+  <!-- ═══════════════════════════════════════════════════════════════════════════ -->
+
+  <url>
+    <loc>https://realhouseiq.com/properties?type=villa</loc>
+    <lastmod>2026-02-21</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.75</priority>
+    <image:image>
+      <image:loc>https://images.unsplash.com/photo-1512917774080-9991f1c4c750?w=800&amp;q=80&amp;fm=webp</image:loc>
+      <image:title>Villas for Sale in Erbil Kurdistan</image:title>
+      <image:caption>Browse luxury villas for sale in Erbil, Kurdistan Region. Premium homes in gated communities.</image:caption>
+    </image:image>
+  </url>
+
+  <url>
+    <loc>https://realhouseiq.com/properties?type=apartment</loc>
+    <lastmod>2026-02-21</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.75</priority>
+    <image:image>
+      <image:loc>https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?w=800&amp;q=80&amp;fm=webp</image:loc>
+      <image:title>Apartments for Sale in Erbil Kurdistan</image:title>
+      <image:caption>Modern apartments for sale in Erbil. Studios to 3-bedroom units in premium towers.</image:caption>
+    </image:image>
+  </url>
+
+  <url>
+    <loc>https://realhouseiq.com/properties?type=penthouse</loc>
+    <lastmod>2026-02-21</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.75</priority>
+    <image:image>
+      <image:loc>https://images.unsplash.com/photo-1567767292278-a4f21aa2d36e?w=800&amp;q=80&amp;fm=webp</image:loc>
+      <image:title>Luxury Penthouses for Sale in Erbil</image:title>
+      <image:caption>Exclusive penthouses with panoramic views in Erbil's premier towers.</image:caption>
+    </image:image>
+  </url>
+
+  <url>
+    <loc>https://realhouseiq.com/properties?type=commercial</loc>
+    <lastmod>2026-02-21</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.75</priority>
+    <image:image>
+      <image:loc>https://images.unsplash.com/photo-1604719312566-8912e9227c6a?w=800&amp;q=80&amp;fm=webp</image:loc>
+      <image:title>Commercial Properties in Erbil Kurdistan</image:title>
+      <image:caption>Prime commercial spaces for rent and sale in Erbil. Retail, office, and showroom spaces.</image:caption>
+    </image:image>
+  </url>
+
+  <url>
+    <loc>https://realhouseiq.com/properties?type=land</loc>
+    <lastmod>2026-02-21</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+    <image:image>
+      <image:loc>https://images.unsplash.com/photo-1500382017468-9049fed747ef?w=800&amp;q=80&amp;fm=webp</image:loc>
+      <image:title>Land for Sale in Erbil Kurdistan</image:title>
+      <image:caption>Development land and plots for sale in Erbil and surrounding areas.</image:caption>
+    </image:image>
+  </url>
+
+  <!-- ═══════════════════════════════════════════════════════════════════════════ -->
+  <!-- Status Filter Pages -->
+  <!-- ═══════════════════════════════════════════════════════════════════════════ -->
+
+  <url>
+    <loc>https://realhouseiq.com/properties?status=for-sale</loc>
+    <lastmod>2026-02-21</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.8</priority>
+    <image:image>
+      <image:loc>https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=800&amp;q=80&amp;fm=webp</image:loc>
+      <image:title>Properties for Sale in Erbil</image:title>
+      <image:caption>All properties currently for sale in Erbil, Kurdistan. Villas, apartments, and commercial.</image:caption>
+    </image:image>
+  </url>
+
+  <url>
+    <loc>https://realhouseiq.com/properties?status=for-rent</loc>
+    <lastmod>2026-02-21</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.8</priority>
+    <image:image>
+      <image:loc>https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?w=800&amp;q=80&amp;fm=webp</image:loc>
+      <image:title>Properties for Rent in Erbil</image:title>
+      <image:caption>Rental properties available in Erbil. Apartments and commercial spaces.</image:caption>
+    </image:image>
+  </url>
+
+  <url>
+    <loc>https://realhouseiq.com/properties?status=off-plan</loc>
+    <lastmod>2026-02-21</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.75</priority>
+    <image:image>
+      <image:loc>https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=800&amp;q=80&amp;fm=webp</image:loc>
+      <image:title>Off-Plan Properties in Erbil</image:title>
+      <image:caption>Pre-construction and off-plan properties in upcoming Erbil developments.</image:caption>
+    </image:image>
+  </url>
+
+  <!-- ═══════════════════════════════════════════════════════════════════════════ -->
+  <!-- District Filter Pages -->
+  <!-- ═══════════════════════════════════════════════════════════════════════════ -->
+
+  <url>
+    <loc>https://realhouseiq.com/properties?district=gulan</loc>
+    <lastmod>2026-02-21</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+    <image:image>
+      <image:loc>https://images.unsplash.com/photo-1486325212027-8081e485255e?w=800&amp;q=80&amp;fm=webp</image:loc>
+      <image:title>Properties in Gulan District Erbil</image:title>
+      <image:caption>Real estate listings in Gulan - Erbil's premier business and residential district.</image:caption>
+    </image:image>
+  </url>
+
+  <url>
+    <loc>https://realhouseiq.com/properties?district=dream-city</loc>
+    <lastmod>2026-02-21</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+    <image:image>
+      <image:loc>https://images.unsplash.com/photo-1512917774080-9991f1c4c750?w=800&amp;q=80&amp;fm=webp</image:loc>
+      <image:title>Properties in Dream City Erbil</image:title>
+      <image:caption>Homes and villas in Dream City - Erbil's premier gated community.</image:caption>
+    </image:image>
+  </url>
+
+  <url>
+    <loc>https://realhouseiq.com/properties?district=ankawa</loc>
+    <lastmod>2026-02-21</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+    <image:image>
+      <image:loc>https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?w=800&amp;q=80&amp;fm=webp</image:loc>
+      <image:title>Properties in Ankawa Erbil</image:title>
+      <image:caption>Real estate in Ankawa - Erbil's historic international district.</image:caption>
+    </image:image>
+  </url>
+
+  <url>
+    <loc>https://realhouseiq.com/properties?district=italian-village</loc>
+    <lastmod>2026-02-21</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+    <image:image>
+      <image:loc>https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?w=800&amp;q=80&amp;fm=webp</image:loc>
+      <image:title>Properties in Italian Village Erbil</image:title>
+      <image:caption>Mediterranean-style homes in Italian Village community.</image:caption>
+    </image:image>
+  </url>
+
+  <url>
+    <loc>https://realhouseiq.com/properties?district=english-village</loc>
+    <lastmod>2026-02-21</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+    <image:image>
+      <image:loc>https://images.unsplash.com/photo-1600047509807-ba8f99d2cdde?w=800&amp;q=80&amp;fm=webp</image:loc>
+      <image:title>Properties in English Village Erbil</image:title>
+      <image:caption>British colonial-style homes in exclusive English Village.</image:caption>
+    </image:image>
+  </url>
+
+</urlset>

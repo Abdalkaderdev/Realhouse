@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  ===============================================================================
+  Real House - Sitemap Index
+  Luxury Real Estate in Erbil, Kurdistan Region, Iraq
+  https://realhouseiq.com
+
+  This sitemap index contains references to all individual sitemaps.
+  Search engines use this to discover and crawl all site content efficiently.
+
+  Sitemaps included:
+  - sitemap-pages.xml    : Static pages (Home, About, Contact, FAQ, etc.)
+  - sitemap-properties.xml: All property listings with images
+  - sitemap-projects.xml  : All development projects with images
+  - sitemap-blog.xml      : All blog posts with news markup
+  - sitemap-images.xml    : Dedicated image sitemap for Google Images
+
+  Last Updated: 2026-02-21
+  ===============================================================================
+-->
+<sitemapindex xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+
+  <!-- Main Pages Sitemap - Static pages, navigation, and filter pages -->
+  <sitemap>
+    <loc>https://realhouseiq.com/sitemap-pages.xml</loc>
+    <lastmod>2026-02-21</lastmod>
+  </sitemap>
+
+  <!-- Properties Sitemap - All property listings (apartments, villas, commercial) -->
+  <sitemap>
+    <loc>https://realhouseiq.com/sitemap-properties.xml</loc>
+    <lastmod>2026-02-21</lastmod>
+  </sitemap>
+
+  <!-- Projects Sitemap - All 25+ development projects in Erbil -->
+  <sitemap>
+    <loc>https://realhouseiq.com/sitemap-projects.xml</loc>
+    <lastmod>2026-02-21</lastmod>
+  </sitemap>
+
+  <!-- Blog Sitemap - All blog posts and articles with news markup -->
+  <sitemap>
+    <loc>https://realhouseiq.com/sitemap-blog.xml</loc>
+    <lastmod>2026-02-21</lastmod>
+  </sitemap>
+
+  <!-- Images Sitemap - All property and project images for Google Images -->
+  <sitemap>
+    <loc>https://realhouseiq.com/sitemap-images.xml</loc>
+    <lastmod>2026-02-21</lastmod>
+  </sitemap>
+
+</sitemapindex>

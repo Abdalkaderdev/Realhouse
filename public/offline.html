@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>Offline - Real House</title>
+  <meta name="theme-color" content="#C9A84C">
+  <style>
+    *{box-sizing:border-box;margin:0;padding:0}
+    html,body{height:100%}
+    body{
+      font-family:'Inter',system-ui,-apple-system,sans-serif;
+      background:#0A0A0F;
+      color:#F0EDE8;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      min-height:100vh;
+      padding:20px;
+      text-align:center;
+    }
+    .offline-container{max-width:400px}
+    .offline-icon{
+      width:80px;
+      height:80px;
+      margin:0 auto 24px;
+      background:rgba(201,168,76,0.1);
+      border-radius:50%;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+    }
+    .offline-icon svg{width:40px;height:40px;color:#C9A84C}
+    h1{
+      font-family:'Cormorant',Georgia,serif;
+      font-size:clamp(1.5rem,5vw,2rem);
+      font-weight:500;
+      margin-bottom:16px;
+      color:#F0EDE8;
+    }
+    p{
+      color:#B8B9C6;
+      font-size:1rem;
+      line-height:1.6;
+      margin-bottom:24px;
+    }
+    .retry-btn{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      gap:8px;
+      padding:14px 28px;
+      min-height:48px;
+      background:linear-gradient(135deg,#9A7A2E,#C9A84C);
+      color:#0A0A0F;
+      border:none;
+      border-radius:9999px;
+      font-size:0.875rem;
+      font-weight:500;
+      text-transform:uppercase;
+      letter-spacing:0.1em;
+      cursor:pointer;
+      transition:all 0.3s ease;
+      touch-action:manipulation;
+    }
+    .retry-btn:hover,.retry-btn:focus{
+      transform:translateY(-2px);
+      box-shadow:0 0 40px rgba(201,168,76,0.15);
+    }
+    .retry-btn:active{transform:scale(0.98)}
+    .logo{
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      gap:12px;
+      margin-bottom:32px;
+    }
+    .logo-icon{width:36px;height:44px}
+    .logo-text{
+      font-family:'Cormorant',Georgia,serif;
+      font-size:1.25rem;
+      font-weight:500;
+      color:#F0EDE8;
+    }
+  </style>
+</head>
+<body>
+  <div class="offline-container">
+    <div class="logo">
+      <svg class="logo-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 120" fill="none">
+        <path d="M38 108 C18 95, 12 70, 20 50 C28 30, 42 20, 50 10" stroke="#E9A33E" stroke-width="6" fill="none" stroke-linecap="round"/>
+        <path d="M62 108 C82 95, 88 70, 80 50 C72 30, 58 20, 50 10" stroke="#E9A33E" stroke-width="6" fill="none" stroke-linecap="round"/>
+        <path d="M38 100 L38 65 C38 55, 45 45, 50 38" stroke="#E9A33E" stroke-width="6" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+        <path d="M50 100 L50 25 L62 40 L62 100" stroke="#E9A33E" stroke-width="6" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+      <span class="logo-text">Real House</span>
+    </div>
+
+    <div class="offline-icon">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <line x1="1" y1="1" x2="23" y2="23"></line>
+        <path d="M16.72 11.06A10.94 10.94 0 0 1 19 12.55"></path>
+        <path d="M5 12.55a10.94 10.94 0 0 1 5.17-2.39"></path>
+        <path d="M10.71 5.05A16 16 0 0 1 22.58 9"></path>
+        <path d="M1.42 9a15.91 15.91 0 0 1 4.7-2.88"></path>
+        <path d="M8.53 16.11a6 6 0 0 1 6.95 0"></path>
+        <line x1="12" y1="20" x2="12.01" y2="20"></line>
+      </svg>
+    </div>
+
+    <h1>You're Offline</h1>
+    <p>It looks like you've lost your internet connection. Please check your connection and try again.</p>
+
+    <button class="retry-btn" onclick="window.location.reload()">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <polyline points="23 4 23 10 17 10"></polyline>
+        <polyline points="1 20 1 14 7 14"></polyline>
+        <path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"></path>
+      </svg>
+      Try Again
+    </button>
+  </div>
+
+  <script>
+    // Check if back online
+    window.addEventListener('online', () => {
+      window.location.reload();
+    });
+  </script>
+</body>
+</html>
