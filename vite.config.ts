@@ -83,9 +83,9 @@ export default defineConfig({
         hoistTransitiveImports: true
       },
 
-      // Tree shaking optimization
+      // Tree shaking optimization (preserve entry point side effects)
       treeshake: {
-        moduleSideEffects: false,
+        moduleSideEffects: true,
         propertyReadSideEffects: false,
         tryCatchDeoptimization: false
       }

@@ -899,9 +899,7 @@
   <!-- Module scripts are automatically deferred and parsed asynchronously -->
   <script type="module" src="/src/main.ts"></script>
 
-  <!-- Preload critical JS chunks for faster INP -->
-  <link rel="modulepreload" href="/src/app.ts" />
-  <link rel="modulepreload" href="/src/performance/index.ts" />
+  <!-- JS chunks are automatically preloaded by Vite -->
 
   <!-- Inline Performance Monitoring - Starts measuring early for accurate metrics -->
   <script>
@@ -910,35 +908,19 @@
       performance.mark('html-end');
     }
 
-    // Report paint timing early
+    // Report paint timing early (production only logs errors)
     if ('PerformanceObserver' in window) {
       try {
         new PerformanceObserver(function(list) {
-          list.getEntries().forEach(function(entry) {
-            if (window.console && import.meta && import.meta.env && import.meta.env.DEV) {
-              console.log('[Paint] ' + entry.name + ': ' + Math.round(entry.startTime) + 'ms');
-            }
-          });
+          // Paint metrics observed
         }).observe({ type: 'paint', buffered: true });
       } catch (e) {}
     }
 
-    // Preload critical images on page load (for routes that require immediate image display)
+    // Mark page load completion
     window.addEventListener('load', function() {
-      // Mark page load completion
       if ('performance' in window && 'mark' in performance) {
         performance.mark('page-loaded');
-      }
-
-      // Log resource loading summary in development
-      if (window.console && import.meta && import.meta.env && import.meta.env.DEV) {
-        var resources = performance.getEntriesByType('resource');
-        var stats = {
-          total: resources.length,
-          duration: Math.round(resources.reduce(function(sum, r) { return sum + r.duration; }, 0)),
-          transferSize: Math.round(resources.reduce(function(sum, r) { return sum + (r.transferSize || 0); }, 0) / 1024)
-        };
-        console.log('[Resources] ' + stats.total + ' resources, ' + stats.duration + 'ms total, ' + stats.transferSize + 'KB transferred');
       }
     });
   </script>
