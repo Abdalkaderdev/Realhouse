@@ -1,25 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<xsl:stylesheet version="2.0"
+<xsl:stylesheet version="1.0"
   xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
-  xmlns:sitemap="http://www.sitemaps.org/schemas/sitemap/0.9"
-  xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
+  xmlns:s="http://www.sitemaps.org/schemas/sitemap/0.9"
+  xmlns:image="http://www.google.com/schemas/sitemap-image/1.1"
+  exclude-result-prefixes="s image">
 
-  <xsl:output method="html" version="1.0" encoding="UTF-8" indent="yes"/>
+  <xsl:output method="html" indent="yes" encoding="UTF-8"/>
 
   <xsl:template match="/">
-    <html xmlns="http://www.w3.org/1999/xhtml">
+    <html>
       <head>
         <title>XML Sitemap - Real House Erbil</title>
-        <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+        <meta charset="UTF-8"/>
         <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-        <style type="text/css">
-          * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-          }
+        <style>
+          * { margin: 0; padding: 0; box-sizing: border-box; }
           body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
             font-size: 14px;
             color: #333;
             background: #f5f5f5;
@@ -38,17 +35,9 @@
             margin-bottom: 10px;
             color: #c9a84c;
           }
-          .header p {
-            color: #aaa;
-            font-size: 14px;
-          }
-          .header a {
-            color: #c9a84c;
-            text-decoration: none;
-          }
-          .header a:hover {
-            text-decoration: underline;
-          }
+          .header p { color: #aaa; font-size: 14px; }
+          .header a { color: #c9a84c; text-decoration: none; }
+          .header a:hover { text-decoration: underline; }
           .container {
             max-width: 1200px;
             margin: 0 auto;
@@ -103,10 +92,7 @@
             border-radius: 20px;
             font-size: 12px;
           }
-          table {
-            width: 100%;
-            border-collapse: collapse;
-          }
+          table { width: 100%; border-collapse: collapse; }
           th {
             background: #f9f9f9;
             padding: 12px 15px;
@@ -123,20 +109,14 @@
             border-bottom: 1px solid #f0f0f0;
             vertical-align: top;
           }
-          tr:hover {
-            background: #fafafa;
-          }
-          .url-cell {
-            max-width: 400px;
-          }
+          tr:hover { background: #fafafa; }
+          .url-cell { max-width: 400px; }
           .url-cell a {
             color: #1a73e8;
             text-decoration: none;
             word-break: break-all;
           }
-          .url-cell a:hover {
-            text-decoration: underline;
-          }
+          .url-cell a:hover { text-decoration: underline; }
           .priority {
             display: inline-block;
             padding: 3px 8px;
@@ -144,26 +124,11 @@
             font-size: 12px;
             font-weight: 600;
           }
-          .priority-high {
-            background: #e8f5e9;
-            color: #2e7d32;
-          }
-          .priority-medium {
-            background: #fff3e0;
-            color: #ef6c00;
-          }
-          .priority-low {
-            background: #f5f5f5;
-            color: #757575;
-          }
-          .freq {
-            color: #666;
-            font-size: 13px;
-          }
-          .date {
-            color: #888;
-            font-size: 13px;
-          }
+          .priority-high { background: #e8f5e9; color: #2e7d32; }
+          .priority-medium { background: #fff3e0; color: #ef6c00; }
+          .priority-low { background: #f5f5f5; color: #757575; }
+          .freq { color: #666; font-size: 13px; }
+          .date { color: #888; font-size: 13px; }
           .image-count {
             background: #e3f2fd;
             color: #1565c0;
@@ -177,42 +142,32 @@
             color: #888;
             font-size: 13px;
           }
-          .footer a {
-            color: #c9a84c;
-            text-decoration: none;
-          }
+          .footer a { color: #c9a84c; text-decoration: none; }
           @media (max-width: 768px) {
-            .stats {
-              flex-direction: column;
-            }
-            .url-cell {
-              max-width: 200px;
-            }
-            th, td {
-              padding: 10px;
-              font-size: 12px;
-            }
+            .stats { flex-direction: column; }
+            .url-cell { max-width: 200px; }
+            th, td { padding: 10px; font-size: 12px; }
           }
         </style>
       </head>
       <body>
         <div class="header">
           <h1>🏠 Real House XML Sitemap</h1>
-          <p>This sitemap contains <strong><xsl:value-of select="count(sitemap:urlset/sitemap:url)"/></strong> URLs for <a href="https://realhouseiq.com">realhouseiq.com</a></p>
+          <p>This sitemap contains <strong><xsl:value-of select="count(s:urlset/s:url)"/></strong> URLs for <a href="https://realhouseiq.com">realhouseiq.com</a></p>
         </div>
 
         <div class="container">
           <div class="stats">
             <div class="stat-card">
-              <div class="number"><xsl:value-of select="count(sitemap:urlset/sitemap:url)"/></div>
+              <div class="number"><xsl:value-of select="count(s:urlset/s:url)"/></div>
               <div class="label">Total URLs</div>
             </div>
             <div class="stat-card">
-              <div class="number"><xsl:value-of select="count(sitemap:urlset/sitemap:url[sitemap:image:image])"/></div>
+              <div class="number"><xsl:value-of select="count(s:urlset/s:url[image:image])"/></div>
               <div class="label">With Images</div>
             </div>
             <div class="stat-card">
-              <div class="number"><xsl:value-of select="count(sitemap:urlset/sitemap:url[sitemap:priority >= 0.8])"/></div>
+              <div class="number"><xsl:value-of select="count(s:urlset/s:url[s:priority >= 0.8])"/></div>
               <div class="label">High Priority</div>
             </div>
           </div>
@@ -220,7 +175,7 @@
           <div class="section">
             <div class="section-header">
               <span>📄 All URLs</span>
-              <span class="count"><xsl:value-of select="count(sitemap:urlset/sitemap:url)"/> pages</span>
+              <span class="count"><xsl:value-of select="count(s:urlset/s:url)"/> pages</span>
             </div>
             <table>
               <thead>
@@ -233,30 +188,36 @@
                 </tr>
               </thead>
               <tbody>
-                <xsl:for-each select="sitemap:urlset/sitemap:url">
-                  <xsl:sort select="sitemap:priority" order="descending"/>
+                <xsl:for-each select="s:urlset/s:url">
+                  <xsl:sort select="s:priority" order="descending" data-type="number"/>
                   <tr>
                     <td class="url-cell">
-                      <a href="{sitemap:loc}">
-                        <xsl:value-of select="substring-after(sitemap:loc, 'https://realhouseiq.com')"/>
-                        <xsl:if test="sitemap:loc = 'https://realhouseiq.com'">/</xsl:if>
+                      <a href="{s:loc}">
+                        <xsl:choose>
+                          <xsl:when test="s:loc = 'https://realhouseiq.com'">
+                            <xsl:text>/</xsl:text>
+                          </xsl:when>
+                          <xsl:otherwise>
+                            <xsl:value-of select="substring-after(s:loc, 'https://realhouseiq.com')"/>
+                          </xsl:otherwise>
+                        </xsl:choose>
                       </a>
                     </td>
                     <td>
                       <xsl:choose>
-                        <xsl:when test="sitemap:priority >= 0.8">
-                          <span class="priority priority-high"><xsl:value-of select="sitemap:priority"/></span>
+                        <xsl:when test="s:priority >= 0.8">
+                          <span class="priority priority-high"><xsl:value-of select="s:priority"/></span>
                         </xsl:when>
-                        <xsl:when test="sitemap:priority >= 0.6">
-                          <span class="priority priority-medium"><xsl:value-of select="sitemap:priority"/></span>
+                        <xsl:when test="s:priority >= 0.6">
+                          <span class="priority priority-medium"><xsl:value-of select="s:priority"/></span>
                         </xsl:when>
                         <xsl:otherwise>
-                          <span class="priority priority-low"><xsl:value-of select="sitemap:priority"/></span>
+                          <span class="priority priority-low"><xsl:value-of select="s:priority"/></span>
                         </xsl:otherwise>
                       </xsl:choose>
                     </td>
-                    <td class="freq"><xsl:value-of select="sitemap:changefreq"/></td>
-                    <td class="date"><xsl:value-of select="sitemap:lastmod"/></td>
+                    <td class="freq"><xsl:value-of select="s:changefreq"/></td>
+                    <td class="date"><xsl:value-of select="s:lastmod"/></td>
                     <td>
                       <xsl:if test="image:image">
                         <span class="image-count"><xsl:value-of select="count(image:image)"/> img</span>
@@ -271,7 +232,6 @@
 
         <div class="footer">
           <p>Generated by <a href="https://realhouseiq.com">Real House</a> • Luxury Real Estate in Erbil, Kurdistan</p>
-          <p style="margin-top: 10px;">Last updated: <xsl:value-of select="sitemap:urlset/sitemap:url[1]/sitemap:lastmod"/></p>
         </div>
       </body>
     </html>
