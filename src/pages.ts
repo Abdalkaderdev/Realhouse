@@ -41,6 +41,12 @@ import {
   getFavoritesBreadcrumbs,
   getRelatedProperties,
   createRelatedPropertiesSection,
+  createPropertyCrossLinks,
+  createInternalCTA,
+  createLocationLinks,
+  createPopularPropertiesWidget,
+  createPopularProjectsWidget,
+  createRecentBlogWidget,
   type BreadcrumbItem
 } from './components/internal-linking';
 
@@ -1271,6 +1277,20 @@ export function renderPropertiesPage(): DocumentFragment {
   container.appendChild(contentWrapper);
 
   page.appendChild(container);
+
+  // ─── Location Links Section ─────────────────────────────────────────────
+  const locationLinks = createLocationLinks();
+  page.appendChild(locationLinks);
+
+  // ─── Internal CTA ─────────────────────────────────────────────────────────
+  const listingCta = createInternalCTA(
+    'Need Help Finding Your Perfect Property?',
+    'Our experienced real estate consultants are here to help you find the ideal property that matches your lifestyle and budget.',
+    { text: 'Contact Our Experts', url: '/contact' },
+    { text: 'View Development Projects', url: '/projects' }
+  );
+  page.appendChild(listingCta);
+
   fragment.appendChild(page);
 
   // Breadcrumb helper functions
@@ -2091,42 +2111,201 @@ export function renderContactPage(): DocumentFragment {
   formWrapper.appendChild(form);
   grid.appendChild(formWrapper);
 
-  // Info
+  // Info - Using semantic <address> element for contact information
   const info = createElement('div', 'contact-page__info');
 
-  const infoItems = [
-    { title: 'Office', content: 'Dream City, Erbil\nKurdistan Region, Iraq' },
-    { title: 'Abdalkader', content: '+964 750 792 2138', isLink: true, href: 'tel:+9647507922138' },
-    { title: 'Mahmood', content: '+964 751 441 5003', isLink: true, href: 'tel:+9647514415003' },
-    { title: 'Email', content: 'info@realhouseiq.com', isLink: true, href: 'mailto:info@realhouseiq.com' },
-    { title: 'Hours', content: 'Saturday - Thursday: 9AM - 6PM\nFriday: By Appointment' }
+  // Office Address - Using semantic address element
+  const officeSection = createElement('div', 'contact-page__info-item');
+  const officeTitle = createElement('h3', 'contact-page__info-heading', 'Office Location');
+  officeSection.appendChild(officeTitle);
+  const officeAddress = document.createElement('address');
+  officeAddress.className = 'contact-page__address';
+  officeAddress.setAttribute('itemscope', '');
+  officeAddress.setAttribute('itemtype', 'https://schema.org/PostalAddress');
+  const streetLine = createElement('span', 'contact-page__address-street');
+  streetLine.setAttribute('itemprop', 'streetAddress');
+  streetLine.textContent = 'Dream City';
+  officeAddress.appendChild(streetLine);
+  officeAddress.appendChild(document.createElement('br'));
+  const cityLine = createElement('span', 'contact-page__address-city');
+  cityLine.setAttribute('itemprop', 'addressLocality');
+  cityLine.textContent = 'Erbil';
+  officeAddress.appendChild(cityLine);
+  officeAddress.appendChild(document.createTextNode(', '));
+  const regionLine = createElement('span', 'contact-page__address-region');
+  regionLine.setAttribute('itemprop', 'addressRegion');
+  regionLine.textContent = 'Kurdistan Region';
+  officeAddress.appendChild(regionLine);
+  officeAddress.appendChild(document.createElement('br'));
+  const countryLine = createElement('span', 'contact-page__address-country');
+  countryLine.setAttribute('itemprop', 'addressCountry');
+  countryLine.textContent = 'Iraq';
+  officeAddress.appendChild(countryLine);
+  officeSection.appendChild(officeAddress);
+  info.appendChild(officeSection);
+
+  // Phone Numbers - Also part of address context
+  const phoneSection = createElement('div', 'contact-page__info-item');
+  const phoneTitle = createElement('h3', 'contact-page__info-heading', 'Call Us');
+  phoneSection.appendChild(phoneTitle);
+  const phoneAddress = document.createElement('address');
+  phoneAddress.className = 'contact-page__phone-list';
+
+  const phoneNumbers = [
+    { name: 'Abdalkader', number: '+964 750 792 2138', href: 'tel:+9647507922138' },
+    { name: 'Mahmood', number: '+964 751 441 5003', href: 'tel:+9647514415003' }
   ];
 
-  infoItems.forEach(item => {
-    const infoItem = createElement('div', 'contact-page__info-item');
-    const infoTitle = createElement('h4', undefined, item.title);
-    infoItem.appendChild(infoTitle);
-
-    if (item.isLink && item.href) {
-      const link = createElement('a');
-      link.href = item.href;
-      link.textContent = item.content;
-      const p = createElement('p');
-      p.appendChild(link);
-      infoItem.appendChild(p);
-    } else {
-      const lines = item.content.split('\n');
-      lines.forEach(line => {
-        const p = createElement('p', undefined, line);
-        infoItem.appendChild(p);
-      });
-    }
-
-    info.appendChild(infoItem);
+  phoneNumbers.forEach(phone => {
+    const phoneWrapper = createElement('div', 'contact-page__phone-item');
+    const phoneName = createElement('span', 'contact-page__phone-name', `${phone.name}: `);
+    phoneWrapper.appendChild(phoneName);
+    const phoneLink = createElement('a', 'contact-page__phone-link');
+    phoneLink.href = phone.href;
+    phoneLink.setAttribute('itemprop', 'telephone');
+    phoneLink.textContent = phone.number;
+    phoneWrapper.appendChild(phoneLink);
+    phoneAddress.appendChild(phoneWrapper);
   });
+  phoneSection.appendChild(phoneAddress);
+  info.appendChild(phoneSection);
+
+  // Email
+  const emailSection = createElement('div', 'contact-page__info-item');
+  const emailTitle = createElement('h3', 'contact-page__info-heading', 'Email Us');
+  emailSection.appendChild(emailTitle);
+  const emailAddress = document.createElement('address');
+  emailAddress.className = 'contact-page__email';
+  const emailLink = createElement('a');
+  emailLink.href = 'mailto:info@realhouseiq.com';
+  emailLink.setAttribute('itemprop', 'email');
+  emailLink.textContent = 'info@realhouseiq.com';
+  emailAddress.appendChild(emailLink);
+  emailSection.appendChild(emailAddress);
+  info.appendChild(emailSection);
+
+  // Business Hours - Using definition list for key-value data
+  const hoursSection = createElement('div', 'contact-page__info-item');
+  const hoursTitle = createElement('h3', 'contact-page__info-heading', 'Business Hours');
+  hoursSection.appendChild(hoursTitle);
+  const hoursList = document.createElement('dl');
+  hoursList.className = 'contact-page__hours';
+  const hoursData = [
+    { days: 'Saturday - Thursday', time: '9:00 AM - 6:00 PM' },
+    { days: 'Friday', time: 'By Appointment' }
+  ];
+  hoursData.forEach(hour => {
+    const dt = createElement('dt', 'contact-page__hours-days', hour.days);
+    const dd = createElement('dd', 'contact-page__hours-time', hour.time);
+    hoursList.appendChild(dt);
+    hoursList.appendChild(dd);
+  });
+  hoursSection.appendChild(hoursList);
+  info.appendChild(hoursSection);
 
   grid.appendChild(info);
   container.appendChild(grid);
+
+  // ─── Google Maps Embed Section ─────────────────────────────────────────────
+  const mapSection = createElement('section', 'contact-page__map-section');
+
+  const mapHeader = createElement('div', 'contact-page__map-header');
+  const mapTitle = createElement('h2', 'contact-page__map-title', 'Visit Our Office');
+  const mapSubtitle = createElement('p', 'contact-page__map-subtitle', 'Located in Dream City, Erbil - Kurdistan\'s premier real estate hub');
+  mapHeader.appendChild(mapTitle);
+  mapHeader.appendChild(mapSubtitle);
+  mapSection.appendChild(mapHeader);
+
+  // Google Maps iframe embed - Real House office location
+  const mapContainer = createElement('div', 'contact-page__map-container');
+  const mapIframe = document.createElement('iframe');
+  mapIframe.src = 'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3000!2d44.0091!3d36.1901!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2z36LCsDExJzI0LjQiTiA0NMKwMDAnMzIuOCJF!5e0!3m2!1sen!2s!4v1708500000000';
+  mapIframe.width = '100%';
+  mapIframe.height = '400';
+  mapIframe.style.border = '0';
+  mapIframe.style.borderRadius = '12px';
+  mapIframe.allowFullscreen = true;
+  mapIframe.loading = 'lazy';
+  mapIframe.referrerPolicy = 'no-referrer-when-downgrade';
+  mapIframe.title = 'Real House Office Location - Dream City, Erbil, Kurdistan';
+  mapContainer.appendChild(mapIframe);
+
+  // Get Directions link
+  const directionsLink = createElement('a', 'contact-page__directions');
+  directionsLink.href = 'https://www.google.com/maps/dir/?api=1&destination=36.1901,44.0091';
+  directionsLink.target = '_blank';
+  directionsLink.rel = 'noopener noreferrer';
+  directionsLink.innerHTML = '<svg viewBox="0 0 24 24" fill="currentColor" width="20" height="20" aria-hidden="true"><path d="M21.71 11.29l-9-9c-.39-.39-1.02-.39-1.41 0l-9 9c-.39.39-.39 1.02 0 1.41l9 9c.39.39 1.02.39 1.41 0l9-9c.39-.38.39-1.01 0-1.41zM14 14.5V12h-4v3H8v-4c0-.55.45-1 1-1h5V7.5l3.5 3.5-3.5 3.5z"></path></svg> Get Driving Directions';
+  mapContainer.appendChild(directionsLink);
+
+  mapSection.appendChild(mapContainer);
+
+  // NAP (Name, Address, Phone) Section for consistency
+  const napSection = createElement('div', 'contact-page__nap');
+  napSection.setAttribute('itemscope', '');
+  napSection.setAttribute('itemtype', 'https://schema.org/RealEstateAgent');
+
+  const napName = createElement('h3', 'contact-page__nap-name');
+  napName.setAttribute('itemprop', 'name');
+  napName.textContent = 'Real House';
+  napSection.appendChild(napName);
+
+  const napLegal = createElement('p', 'contact-page__nap-legal');
+  napLegal.setAttribute('itemprop', 'legalName');
+  napLegal.textContent = 'Real House Real Estate LLC';
+  napSection.appendChild(napLegal);
+
+  const napAddress = createElement('address', 'contact-page__nap-address');
+  napAddress.setAttribute('itemprop', 'address');
+  napAddress.setAttribute('itemscope', '');
+  napAddress.setAttribute('itemtype', 'https://schema.org/PostalAddress');
+  napAddress.innerHTML = `
+    <span itemprop="streetAddress">Dream City Complex, Building A3</span><br>
+    <span itemprop="addressLocality">Erbil</span>,
+    <span itemprop="addressRegion">Kurdistan Region</span>
+    <span itemprop="postalCode">44001</span><br>
+    <span itemprop="addressCountry">Iraq</span>
+  `;
+  napSection.appendChild(napAddress);
+
+  const napPhones = createElement('div', 'contact-page__nap-phones');
+  napPhones.innerHTML = `
+    <a href="tel:+9647507922138" itemprop="telephone">+964 750 792 2138</a> (Abdalkader - Sales)<br>
+    <a href="tel:+9647514415003" itemprop="telephone">+964 751 441 5003</a> (Mahmood - Support)
+  `;
+  napSection.appendChild(napPhones);
+
+  const napEmail = createElement('a', 'contact-page__nap-email');
+  napEmail.href = 'mailto:info@realhouseiq.com';
+  napEmail.setAttribute('itemprop', 'email');
+  napEmail.textContent = 'info@realhouseiq.com';
+  napSection.appendChild(napEmail);
+
+  // Hidden geo coordinates for SEO
+  const geoDiv = createElement('div');
+  geoDiv.setAttribute('itemprop', 'geo');
+  geoDiv.setAttribute('itemscope', '');
+  geoDiv.setAttribute('itemtype', 'https://schema.org/GeoCoordinates');
+  geoDiv.innerHTML = `
+    <meta itemprop="latitude" content="36.1901">
+    <meta itemprop="longitude" content="44.0091">
+  `;
+  geoDiv.style.display = 'none';
+  napSection.appendChild(geoDiv);
+
+  // Price range and other business meta
+  const businessMeta = createElement('div');
+  businessMeta.innerHTML = `
+    <meta itemprop="priceRange" content="$$$">
+    <link itemprop="url" href="https://realhouseiq.com">
+    <meta itemprop="openingHours" content="Sa-Th 09:00-18:00">
+  `;
+  businessMeta.style.display = 'none';
+  napSection.appendChild(businessMeta);
+
+  mapSection.appendChild(napSection);
+  container.appendChild(mapSection);
+
   page.appendChild(container);
   fragment.appendChild(page);
 
@@ -2851,6 +3030,21 @@ export function renderPropertyDetailPage(propertyId: string): DocumentFragment {
     const relatedSection = createRelatedPropertiesSection(relatedProperties);
     page.appendChild(relatedSection);
   }
+
+  // ─── Cross-Content Links (Projects & Blog) ─────────────────────────────
+  const crossLinks = createPropertyCrossLinks(property);
+  if (crossLinks.children.length > 0) {
+    page.appendChild(crossLinks);
+  }
+
+  // ─── Internal CTA ─────────────────────────────────────────────────────────
+  const ctaSection = createInternalCTA(
+    'Find More Properties Like This',
+    'Discover similar properties in our curated collection, or explore new development projects in Erbil.',
+    { text: 'Browse All Properties', url: '/properties' },
+    { text: 'View Projects', url: '/projects' }
+  );
+  page.appendChild(ctaSection);
 
   // ─── Back Link ───────────────────────────────────────────────────────────
   const backSection = createElement('section', 'property-detail__back');

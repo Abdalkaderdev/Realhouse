@@ -35,12 +35,12 @@ export function renderLocationsPage(): DocumentFragment {
 
   const h1 = document.createElement('h1');
   h1.className = 'locations-page__title';
-  h1.textContent = 'Properties by Location in Erbil';
+  h1.textContent = 'Property Erbil by Location — Real Estate Erbil Districts';
   heroContent.appendChild(h1);
 
   const subtitle = document.createElement('p');
   subtitle.className = 'locations-page__subtitle';
-  subtitle.textContent = 'Explore real estate opportunities across Erbil\'s most desirable districts. From luxury apartments in Gulan to family villas in Dream City, find your perfect property in Kurdistan.';
+  subtitle.textContent = 'Explore houses for sale Erbil across the Erbil property market. Find apartments Erbil Iraq in Gulan, villas Erbil Iraq in Dream City, and luxury homes Kurdistan. Best real estate agent Erbil to buy house Erbil in real estate Kurdistan.';
   heroContent.appendChild(subtitle);
 
   hero.appendChild(heroContent);
@@ -137,7 +137,7 @@ export function renderLocationsPage(): DocumentFragment {
 
   const statsTitle = document.createElement('h2');
   statsTitle.className = 'locations-page__section-title';
-  statsTitle.textContent = 'Erbil Real Estate Market Overview';
+  statsTitle.textContent = 'Real Estate Erbil — Erbil Property Market Overview';
   statsContainer.appendChild(statsTitle);
 
   const statsGrid = document.createElement('div');

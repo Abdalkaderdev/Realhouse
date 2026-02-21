@@ -107,7 +107,12 @@ Real estate in Gulan commands premium prices due to its unmatched location, qual
       'luxury apartment Gulan',
       'Boulevard Tower apartments',
       'real estate Gulan Erbil',
-      'penthouse Gulan Kurdistan'
+      'penthouse Gulan Kurdistan',
+      // Near me keywords
+      'apartments near me Erbil',
+      'properties near Family Mall',
+      'real estate near Gulan Park',
+      'houses near me Erbil Kurdistan'
     ]
   },
   {
@@ -176,7 +181,12 @@ The district's international atmosphere, combined with its safety and quality of
       'property for sale Ankawa',
       'expat housing Erbil',
       'villas Ankawa Kurdistan',
-      'Ankawa neighborhood Erbil'
+      'Ankawa neighborhood Erbil',
+      // Near me keywords
+      'properties near me Ankawa',
+      'houses near St Joseph Cathedral',
+      'real estate near Ankawa Mall',
+      'expat apartments near me Erbil'
     ]
   },
   {
@@ -245,7 +255,12 @@ Dream City has become the address of choice for families with children, diplomat
       'family housing Erbil',
       'gated community Kurdistan',
       'Dream City properties',
-      'houses for sale Dream City Erbil'
+      'houses for sale Dream City Erbil',
+      // Near me keywords
+      'family homes near me Erbil',
+      'gated community near me Kurdistan',
+      'villas near international schools',
+      'properties near Dream City Mall'
     ]
   },
   {
@@ -313,7 +328,12 @@ Italian Village appeals to those seeking something different - buyers who apprec
       'Mediterranean homes Kurdistan',
       'Italian Village properties',
       'unique homes Erbil',
-      'Tuscan style houses Erbil'
+      'Tuscan style houses Erbil',
+      // Near me keywords
+      'Mediterranean style homes near me',
+      'unique properties near me Erbil',
+      'European style houses near me Kurdistan',
+      'Italian architecture homes Erbil'
     ]
   },
   {
@@ -381,7 +401,12 @@ English Village attracts a distinguished clientele including senior executives, 
       'exclusive homes Kurdistan',
       'English Village properties',
       'mansion Erbil',
-      'premium real estate Erbil'
+      'premium real estate Erbil',
+      // Near me keywords
+      'luxury homes near me Erbil',
+      'exclusive properties near me Kurdistan',
+      'premium villas near country club',
+      'mansion near me Erbil'
     ]
   },
   {
@@ -449,9 +474,40 @@ The project's scale and ambition have attracted significant international attent
       'new development Kurdistan',
       'Empire World apartments',
       'investment property Erbil',
-      'luxury apartments Erbil'
+      'luxury apartments Erbil',
+      // Near me keywords
+      'new apartments near me Erbil',
+      'off-plan properties near me Kurdistan',
+      'investment properties near me',
+      'luxury towers near me Erbil'
     ]
   }
+];
+
+// ═══════════════════════════════════════════════════════════════════════════
+// Near Me Search Optimization Data
+// Targets: "real estate near me", "property near me erbil"
+// ═══════════════════════════════════════════════════════════════════════════
+
+export const nearMeKeywords = [
+  'real estate near me Erbil',
+  'property near me Kurdistan',
+  'houses for sale near me Erbil',
+  'apartments near me Erbil Iraq',
+  'villas near me Kurdistan',
+  'real estate agent near me Erbil',
+  'property for rent near me Erbil',
+  'homes near me Kurdistan Region',
+  'best real estate near me Iraq',
+  'luxury property near me Erbil'
+];
+
+export const landmarkProximity = [
+  { landmark: 'Erbil Citadel', areas: ['Gulan', 'Ankawa'], distance: '10-15 min' },
+  { landmark: 'Family Mall', areas: ['Gulan'], distance: '5 min walk' },
+  { landmark: 'Erbil International Airport', areas: ['Dream City', 'Ankawa'], distance: '15-20 min' },
+  { landmark: 'Majidi Mall', areas: ['Gulan', 'Empire World'], distance: '5-10 min' },
+  { landmark: 'International Schools', areas: ['Dream City', 'Italian Village'], distance: '5-10 min' }
 ];
 
 // ═══════════════════════════════════════════════════════════════════════════

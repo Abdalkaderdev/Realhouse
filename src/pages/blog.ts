@@ -36,7 +36,11 @@ import {
   getBlogPostBreadcrumbs,
   createYouMayAlsoLikeSection,
   createBlogContentLinks,
-  createContentSidebar
+  createContentSidebar,
+  createInternalCTA,
+  createLocationLinks,
+  createPopularPropertiesWidget,
+  createPopularProjectsWidget
 } from '../components/internal-linking';
 
 // ─── Helper Functions ─────────────────────────────────────────────────────
@@ -354,6 +358,20 @@ export function renderBlogPage(): DocumentFragment {
   container.appendChild(ctaSection);
 
   page.appendChild(container);
+
+  // ─── Location Links Section ─────────────────────────────────────────────
+  const locationLinks = createLocationLinks();
+  page.appendChild(locationLinks);
+
+  // ─── Property & Project Browse CTA ─────────────────────────────────────
+  const browseCta = createInternalCTA(
+    'Ready to Find Your Dream Property?',
+    'Explore our curated selection of luxury properties and development projects in Erbil, Kurdistan.',
+    { text: 'Browse Properties', url: '/properties' },
+    { text: 'View Projects', url: '/projects' }
+  );
+  page.appendChild(browseCta);
+
   fragment.appendChild(page);
 
   // Add event listeners after DOM is ready
@@ -652,6 +670,14 @@ export function renderBlogPostPage(slug: string): DocumentFragment {
   ctaBtn.setAttribute('data-route', '');
   ctaCard.appendChild(ctaBtn);
   sidebar.appendChild(ctaCard);
+
+  // Popular Properties Widget
+  const popularPropsWidget = createPopularPropertiesWidget(4);
+  sidebar.appendChild(popularPropsWidget);
+
+  // Popular Projects Widget
+  const popularProjWidget = createPopularProjectsWidget(3);
+  sidebar.appendChild(popularProjWidget);
 
   articleWrapper.appendChild(sidebar);
   container.appendChild(articleWrapper);

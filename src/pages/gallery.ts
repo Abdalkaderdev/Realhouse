@@ -40,7 +40,9 @@ let filteredImages: GalleryImage[] = [];
 
 // ─── Gallery Card Component ───────────────────────────────────────────────
 function createGalleryCard(image: GalleryImage, index: number): HTMLElement {
-  const card = createElement('article', 'gallery-card');
+  // Use figure element for proper semantic grouping of image + caption
+  const card = document.createElement('figure');
+  card.className = 'gallery-card';
   card.setAttribute('data-id', image.id);
   card.setAttribute('data-category', image.category);
 
@@ -64,10 +66,12 @@ function createGalleryCard(image: GalleryImage, index: number): HTMLElement {
   // Overlay with info
   const overlay = createElement('div', 'gallery-card__overlay');
 
-  const title = createElement('h3', 'gallery-card__title', image.title);
+  const title = createElement('span', 'gallery-card__title', image.title);
+  title.setAttribute('aria-hidden', 'true'); // Decorative as it duplicates alt text
   overlay.appendChild(title);
 
-  const location = createElement('p', 'gallery-card__location', image.location);
+  const location = createElement('span', 'gallery-card__location', image.location);
+  location.setAttribute('aria-hidden', 'true');
   overlay.appendChild(location);
 
   const viewBtn = createElement('button', 'gallery-card__view-btn', 'View Full Size');
@@ -81,7 +85,7 @@ function createGalleryCard(image: GalleryImage, index: number): HTMLElement {
   imageContainer.appendChild(overlay);
   card.appendChild(imageContainer);
 
-  // Caption for SEO
+  // Figcaption for SEO - provides semantic caption for the image
   const caption = createElement('figcaption', 'gallery-card__caption', image.caption);
   card.appendChild(caption);
 
@@ -273,11 +277,11 @@ export function renderGalleryPage(): DocumentFragment {
   // Header section
   const header = createElement('div', 'gallery-page__header');
   const title = createElement('h1', 'gallery-page__title');
-  title.textContent = 'Property ';
-  const em = createElement('em', undefined, 'Gallery');
+  title.textContent = 'Property Erbil Gallery — ';
+  const em = createElement('em', undefined, 'Real Estate Erbil Photos');
   title.appendChild(em);
   header.appendChild(title);
-  const subtitle = createElement('p', 'gallery-page__subtitle', 'Browse stunning photos of luxury villas, apartments, and development projects in Erbil, Kurdistan. High-quality images showcasing the finest real estate in the region.');
+  const subtitle = createElement('p', 'gallery-page__subtitle', 'Browse stunning photos of luxury homes Kurdistan, villas Erbil Iraq, apartments Erbil Iraq, and penthouse Erbil. High-quality images showcasing the finest real estate Erbil from best real estate agent Erbil. Discover houses for sale Erbil and property Erbil in the Erbil property market.');
   header.appendChild(subtitle);
   container.appendChild(header);
 
@@ -337,11 +341,11 @@ export function setupGalleryPageSEO(): void {
   clearDynamicSchemas();
 
   // Update meta tags for gallery page
-  document.title = 'Property Photo Gallery | Luxury Real Estate Images Erbil | Real House';
+  document.title = 'Property Erbil Gallery | Real Estate Erbil Photos | Luxury Homes Kurdistan | Real House';
 
   const metaDescription = document.querySelector('meta[name="description"]');
   if (metaDescription) {
-    metaDescription.setAttribute('content', 'Browse stunning photos of luxury properties in Erbil, Kurdistan. High-quality images of villas, apartments, penthouses, and development projects. Real House property gallery.');
+    metaDescription.setAttribute('content', 'Property Erbil gallery - Browse photos of luxury homes Kurdistan, villas Erbil Iraq, apartments Erbil Iraq, penthouse Erbil. Best real estate agent Erbil showcasing houses for sale Erbil in the Erbil property market.');
   }
 
   // Update canonical URL
@@ -353,12 +357,12 @@ export function setupGalleryPageSEO(): void {
   // Update Open Graph tags
   const ogTitle = document.querySelector('meta[property="og:title"]');
   if (ogTitle) {
-    ogTitle.setAttribute('content', 'Property Photo Gallery | Real House Erbil');
+    ogTitle.setAttribute('content', 'Property Erbil Gallery | Real Estate Erbil Photos | Real House');
   }
 
   const ogDescription = document.querySelector('meta[property="og:description"]');
   if (ogDescription) {
-    ogDescription.setAttribute('content', 'Browse stunning photos of luxury properties in Erbil, Kurdistan. High-quality images of villas, apartments, and development projects.');
+    ogDescription.setAttribute('content', 'Browse property Erbil photos - luxury homes Kurdistan, villas Erbil Iraq, apartments Erbil Iraq, penthouse Erbil. Best real estate agent Erbil gallery.');
   }
 
   const ogUrl = document.querySelector('meta[property="og:url"]');
@@ -373,8 +377,8 @@ export function setupGalleryPageSEO(): void {
       '@context': 'https://schema.org',
       '@type': 'CollectionPage',
       '@id': 'https://realhouseiq.com/gallery#collection',
-      'name': 'Real House Property Gallery',
-      'description': 'Browse professional photos of luxury properties in Erbil, Kurdistan. High-quality images of villas, apartments, penthouses, and commercial spaces.',
+      'name': 'Property Erbil Gallery - Real Estate Erbil Photos',
+      'description': 'Browse property Erbil photos - luxury homes Kurdistan, villas Erbil Iraq, apartments Erbil Iraq, penthouse Erbil. Best real estate agent Erbil showcasing houses for sale Erbil.',
       'url': 'https://realhouseiq.com/gallery',
       'mainEntity': {
         '@type': 'ItemList',

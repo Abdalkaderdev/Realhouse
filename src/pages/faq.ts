@@ -898,12 +898,12 @@ export function renderComprehensiveFAQPage(): DocumentFragment {
   const header = createElement('div', 'faq-page__header');
 
   const title = createElement('h1', 'faq-page__title');
-  title.textContent = 'Frequently Asked ';
-  const em = createElement('em', undefined, 'Questions');
+  title.textContent = 'Real Estate Erbil FAQ — ';
+  const em = createElement('em', undefined, 'Property Erbil Questions');
   title.appendChild(em);
   header.appendChild(title);
 
-  const subtitle = createElement('p', 'faq-page__subtitle', 'Find comprehensive answers about buying, selling, renting, and investing in Erbil real estate. Our expert team is here to guide you through every step of your property journey.');
+  const subtitle = createElement('p', 'faq-page__subtitle', 'Find answers about houses for sale Erbil, apartments Erbil Iraq, villas Erbil Iraq, and luxury homes Kurdistan. Best real estate agent Erbil guidance to buy house Erbil in the Erbil property market. Real estate Kurdistan expertise.');
   header.appendChild(subtitle);
 
   // Search box

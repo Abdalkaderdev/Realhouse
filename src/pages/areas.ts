@@ -1301,7 +1301,7 @@ export function setupAreaPageSEO(district: DistrictLocation): void {
     canonical.setAttribute('href', `https://realhouseiq.com/areas/${district.slug}`);
   }
 
-  // Keywords meta
+  // Keywords meta - Enhanced for "near me" searches
   let keywordsMeta = document.querySelector('meta[name="keywords"]');
   if (!keywordsMeta) {
     keywordsMeta = document.createElement('meta');
@@ -1313,15 +1313,27 @@ export function setupAreaPageSEO(district: DistrictLocation): void {
     `real estate ${district.name.toLowerCase()}`,
     `properties near ${district.name.toLowerCase()}`,
     `homes for sale ${district.name.toLowerCase()} erbil`,
+    // Near me keywords
     'real estate near me erbil',
-    'property near me kurdistan'
+    'property near me kurdistan',
+    'houses for sale near me erbil',
+    'apartments near me kurdistan',
+    `${district.propertyTypes[0]?.toLowerCase() || 'property'} near me erbil`,
+    // Location-based keywords
+    `${district.name.toLowerCase()} neighborhood guide`,
+    `living in ${district.name.toLowerCase()} erbil`,
+    `${district.name.toLowerCase()} real estate market`
   ].join(', '));
 
-  // Geo meta tags for local SEO
+  // Geo meta tags for local SEO - Critical for "near me" searches
   updateOrCreateMeta('geo.region', 'IQ-AR');
   updateOrCreateMeta('geo.placename', `${district.name}, Erbil, Kurdistan`);
   updateOrCreateMeta('geo.position', `${district.coordinates.lat};${district.coordinates.lng}`);
   updateOrCreateMeta('ICBM', `${district.coordinates.lat}, ${district.coordinates.lng}`);
+
+  // Additional geo targeting for mobile "near me" searches
+  updateOrCreateMeta('DC.title', `${district.name} Real Estate - Properties Near You in Erbil`);
+  updateOrCreateMeta('DC.coverage', `${district.name}, Erbil, Kurdistan Region, Iraq`);
 
   // Open Graph
   const ogTitle = document.querySelector('meta[property="og:title"]');

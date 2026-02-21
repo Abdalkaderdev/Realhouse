@@ -277,27 +277,27 @@ function renderHubPage(config: HubPageConfig, breadcrumbsFn: () => ReturnType<ty
 
 export function renderBuyPage(): DocumentFragment {
   return renderHubPage({
-    title: 'Properties',
-    titleEm: 'For Sale',
-    subtitle: 'Discover your dream home in Erbil. Browse our exclusive collection of apartments, villas, penthouses, and more available for purchase.',
-    metaDescription: 'Find properties for sale in Erbil, Kurdistan. Browse luxury villas, apartments, penthouses, and commercial properties. Expert guidance for property buyers.',
+    title: 'Houses for Sale Erbil —',
+    titleEm: 'Buy Property Erbil',
+    subtitle: 'Find your dream home with the best real estate agent Erbil. Browse houses for sale Erbil, apartments Erbil Iraq, villas Erbil Iraq, and luxury homes Kurdistan. Our real estate Erbil experts help you buy house Erbil in the Erbil property market.',
+    metaDescription: 'Houses for sale Erbil - Browse property Erbil listings. Find apartments Erbil Iraq, villas Erbil Iraq, penthouse Erbil. Best real estate agent Erbil for luxury homes Kurdistan.',
     filterFn: (p) => p.status === 'For Sale',
     relatedLinks: [
-      { name: 'Rental Properties', url: '/rent', description: 'Browse properties available for rent in Erbil' },
-      { name: 'Investment Opportunities', url: '/invest', description: 'Find high-yield investment properties' },
-      { name: 'Buying Guide', url: '/blog/how-to-buy-property-in-erbil', description: 'Essential guide for property buyers in Kurdistan' },
-      { name: 'Development Projects', url: '/projects', description: 'Explore new residential developments' }
+      { name: 'Apartments Erbil Iraq for Rent', url: '/rent', description: 'Browse rental properties in the Erbil property market' },
+      { name: 'Real Estate Kurdistan Investment', url: '/invest', description: 'High-yield property Erbil investment opportunities' },
+      { name: 'Buy House Erbil Guide', url: '/blog/how-to-buy-property-in-erbil', description: 'Essential guide for property buyers in Kurdistan' },
+      { name: 'Luxury Homes Kurdistan Projects', url: '/projects', description: 'Explore new villas Erbil Iraq developments' }
     ],
-    ctaTitle: 'Ready to Find Your Dream Home?',
-    ctaText: 'Our expert team will help you find the perfect property that matches your requirements and budget.'
+    ctaTitle: 'Ready to Buy House Erbil?',
+    ctaText: 'Our best real estate agent Erbil team will help you find the perfect property Erbil that matches your requirements in the Erbil property market.'
   }, getBuyBreadcrumbs);
 }
 
 export function setupBuyPageSEO(): void {
-  document.title = 'Properties for Sale in Erbil | Buy Homes & Apartments | Real House';
+  document.title = 'Houses for Sale Erbil | Buy Property Erbil | Apartments Erbil Iraq | Real House';
   const meta = document.querySelector('meta[name="description"]');
   if (meta) {
-    meta.setAttribute('content', 'Find properties for sale in Erbil, Kurdistan. Browse luxury villas, apartments, penthouses, and commercial properties. Expert guidance for property buyers.');
+    meta.setAttribute('content', 'Houses for sale Erbil - Find property Erbil with best real estate agent Erbil. Browse apartments Erbil Iraq, villas Erbil Iraq, penthouse Erbil, luxury homes Kurdistan. Buy house Erbil in the Erbil property market.');
   }
 }
 
@@ -307,27 +307,27 @@ export function setupBuyPageSEO(): void {
 
 export function renderRentPage(): DocumentFragment {
   return renderHubPage({
-    title: 'Properties',
-    titleEm: 'For Rent',
-    subtitle: 'Find your perfect rental in Erbil. From furnished apartments to luxury villas, discover premium rental properties across Kurdistan.',
-    metaDescription: 'Rent apartments, villas, and homes in Erbil. Browse furnished and unfurnished rental properties in top locations across Kurdistan Region.',
+    title: 'Apartments Erbil Iraq —',
+    titleEm: 'Rent Property Erbil',
+    subtitle: 'Find apartments Erbil Iraq for rent with real estate Erbil experts. Browse villas Erbil Iraq, penthouse Erbil, and luxury homes Kurdistan rentals. Best real estate agent Erbil for premium property Erbil in the Erbil property market.',
+    metaDescription: 'Rent apartments Erbil Iraq, villas Erbil Iraq, and penthouse Erbil. Property Erbil rentals from best real estate agent Erbil. Real estate Kurdistan premium rentals.',
     filterFn: (p) => p.status === 'For Rent',
     relatedLinks: [
-      { name: 'Properties for Sale', url: '/buy', description: 'Looking to buy? Browse properties for sale' },
-      { name: 'Expat Housing Guide', url: '/blog/expat-guide-to-living-in-erbil', description: 'Essential tips for expats renting in Erbil' },
-      { name: 'Furnished Apartments', url: '/properties?furnished=true', description: 'Move-in ready furnished properties' },
-      { name: 'Commercial Rentals', url: '/properties?type=Commercial&status=For%20Rent', description: 'Office and retail spaces for rent' }
+      { name: 'Houses for Sale Erbil', url: '/buy', description: 'Buy house Erbil - Browse property Erbil for sale' },
+      { name: 'Expat Real Estate Kurdistan Guide', url: '/blog/expat-guide-to-living-in-erbil', description: 'Essential tips for property Erbil renters' },
+      { name: 'Furnished Apartments Erbil Iraq', url: '/properties?furnished=true', description: 'Move-in ready luxury homes Kurdistan' },
+      { name: 'Commercial Real Estate Erbil', url: '/properties?type=Commercial&status=For%20Rent', description: 'Office and retail property Erbil for rent' }
     ],
-    ctaTitle: 'Looking for the Perfect Rental?',
-    ctaText: 'Let us help you find a rental property that fits your lifestyle and budget.'
+    ctaTitle: 'Looking for Apartments Erbil Iraq?',
+    ctaText: 'Our best real estate agent Erbil team will find the perfect rental property Erbil that fits your lifestyle in the Erbil property market.'
   }, getRentBreadcrumbs);
 }
 
 export function setupRentPageSEO(): void {
-  document.title = 'Properties for Rent in Erbil | Apartments & Villas | Real House';
+  document.title = 'Apartments Erbil Iraq for Rent | Villas Erbil Iraq | Property Erbil | Real House';
   const meta = document.querySelector('meta[name="description"]');
   if (meta) {
-    meta.setAttribute('content', 'Rent apartments, villas, and homes in Erbil. Browse furnished and unfurnished rental properties in top locations across Kurdistan Region.');
+    meta.setAttribute('content', 'Rent apartments Erbil Iraq, villas Erbil Iraq, penthouse Erbil. Best real estate agent Erbil for property Erbil rentals. Luxury homes Kurdistan in the Erbil property market.');
   }
 }
 
@@ -349,25 +349,25 @@ export function renderInvestPage(): DocumentFragment {
   // Header
   const header = createElement('header', 'hub-page__header');
   const title = createElement('h1', 'hub-page__title');
-  title.textContent = 'Investment ';
-  const em = createElement('em', undefined, 'Properties');
+  title.textContent = 'Real Estate Erbil Investment — ';
+  const em = createElement('em', undefined, 'Property Erbil');
   title.appendChild(em);
   header.appendChild(title);
-  const subtitle = createElement('p', 'hub-page__subtitle', 'Maximize your returns with strategic real estate investments in Erbil. From off-plan developments to rental income properties.');
+  const subtitle = createElement('p', 'hub-page__subtitle', 'Maximize returns with real estate Erbil investments. Property Erbil opportunities include luxury homes Kurdistan, apartments Erbil Iraq, villas Erbil Iraq, and penthouse Erbil. Best real estate agent Erbil for the Erbil property market.');
   header.appendChild(subtitle);
   container.appendChild(header);
 
   // Investment benefits
   const benefits = createElement('section', 'hub-page__benefits');
-  const benefitsTitle = createElement('h2', 'hub-page__section-title', 'Why Invest in Erbil Real Estate?');
+  const benefitsTitle = createElement('h2', 'hub-page__section-title', 'Why Invest in Real Estate Erbil — Erbil Property Market');
   benefits.appendChild(benefitsTitle);
 
   const benefitsGrid = createElement('div', 'hub-page__benefits-grid');
   const benefitItems = [
-    { title: 'High ROI Potential', desc: 'Rental yields averaging 8-12% annually in prime locations' },
-    { title: 'Growing Market', desc: 'Kurdistan\'s economy continues to expand, driving property values' },
-    { title: 'Tax Benefits', desc: 'Favorable tax environment for foreign investors' },
-    { title: 'Strategic Location', desc: 'Erbil is a regional business and diplomatic hub' }
+    { title: 'High ROI Property Erbil', desc: 'Rental yields averaging 8-12% annually on apartments Erbil Iraq and luxury homes Kurdistan' },
+    { title: 'Growing Erbil Property Market', desc: 'Real estate Kurdistan economy expands, driving property Erbil values' },
+    { title: 'Tax Benefits Real Estate Erbil', desc: 'Favorable tax environment for villas Erbil Iraq and property investment' },
+    { title: 'Strategic Location', desc: 'Erbil is a regional business hub - ideal for buy house Erbil investment' }
   ];
 
   benefitItems.forEach(benefit => {
@@ -389,7 +389,7 @@ export function renderInvestPage(): DocumentFragment {
   );
 
   const propertiesSection = createElement('section', 'hub-page__properties');
-  const propertiesTitle = createElement('h2', 'hub-page__section-title', 'Investment Opportunities');
+  const propertiesTitle = createElement('h2', 'hub-page__section-title', 'Property Erbil Investment Opportunities');
   propertiesSection.appendChild(propertiesTitle);
 
   const grid = createElement('div', 'hub-page__grid');
@@ -404,7 +404,7 @@ export function renderInvestPage(): DocumentFragment {
   const projectsTitle = createElement('h2', 'hub-page__section-title', 'Featured Development Projects');
   projectsSection.appendChild(projectsTitle);
 
-  const projectsSubtitle = createElement('p', 'hub-page__projects-subtitle', 'Invest early in premier developments with attractive payment plans and growth potential.');
+  const projectsSubtitle = createElement('p', 'hub-page__projects-subtitle', 'Invest early in luxury homes Kurdistan developments with attractive payment plans. Best real estate agent Erbil for villas Erbil Iraq and apartments Erbil Iraq projects.');
   projectsSection.appendChild(projectsSubtitle);
 
   const projectsGrid = createElement('div', 'hub-page__projects-grid');
@@ -450,7 +450,7 @@ export function renderInvestPage(): DocumentFragment {
 
   // Related Articles
   const articlesSection = createElement('section', 'hub-page__articles');
-  const articlesTitle = createElement('h2', 'hub-page__section-title', 'Investment Insights');
+  const articlesTitle = createElement('h2', 'hub-page__section-title', 'Real Estate Erbil Investment Insights');
   articlesSection.appendChild(articlesTitle);
 
   const articlesGrid = createElement('div', 'hub-page__articles-grid');
@@ -478,11 +478,11 @@ export function renderInvestPage(): DocumentFragment {
   // CTA
   const ctaSection = createElement('section', 'hub-page__cta');
   const ctaContent = createElement('div', 'hub-page__cta-content');
-  const ctaTitle = createElement('h2', 'hub-page__cta-title', 'Ready to Start Your Investment Journey?');
+  const ctaTitle = createElement('h2', 'hub-page__cta-title', 'Ready to Invest in Property Erbil?');
   ctaContent.appendChild(ctaTitle);
-  const ctaText = createElement('p', 'hub-page__cta-text', 'Our investment advisors will guide you through the best opportunities in Erbil\'s real estate market.');
+  const ctaText = createElement('p', 'hub-page__cta-text', 'Our best real estate agent Erbil investment advisors will guide you through the best houses for sale Erbil and apartments Erbil Iraq opportunities in the Erbil property market.');
   ctaContent.appendChild(ctaText);
-  const ctaBtn = createElement('a', 'btn btn--primary', 'Schedule a Consultation');
+  const ctaBtn = createElement('a', 'btn btn--primary', 'Contact Best Real Estate Agent Erbil');
   ctaBtn.href = '/contact';
   ctaBtn.setAttribute('data-route', '');
   ctaContent.appendChild(ctaBtn);
@@ -496,10 +496,10 @@ export function renderInvestPage(): DocumentFragment {
 }
 
 export function setupInvestPageSEO(): void {
-  document.title = 'Investment Properties in Erbil | Real Estate Investment | Real House';
+  document.title = 'Real Estate Erbil Investment | Property Erbil | Buy House Erbil | Real House';
   const meta = document.querySelector('meta[name="description"]');
   if (meta) {
-    meta.setAttribute('content', 'Invest in Erbil real estate. High-yield investment properties, off-plan developments, and rental income opportunities in Kurdistan Region.');
+    meta.setAttribute('content', 'Invest in real estate Erbil. Property Erbil investment including houses for sale Erbil, apartments Erbil Iraq, villas Erbil Iraq. Best real estate agent Erbil for Erbil property market opportunities.');
   }
 }
 
@@ -521,11 +521,11 @@ export function renderLuxuryPage(): DocumentFragment {
   // Hero Header
   const header = createElement('header', 'hub-page__header hub-page__header--luxury');
   const title = createElement('h1', 'hub-page__title');
-  title.textContent = 'Luxury ';
-  const em = createElement('em', undefined, 'Properties');
+  title.textContent = 'Luxury Homes Kurdistan — ';
+  const em = createElement('em', undefined, 'Property Erbil');
   title.appendChild(em);
   header.appendChild(title);
-  const subtitle = createElement('p', 'hub-page__subtitle', 'Experience the finest in Erbil living. Our curated collection of luxury homes represents the pinnacle of elegance, comfort, and prestige.');
+  const subtitle = createElement('p', 'hub-page__subtitle', 'Experience the finest real estate Erbil living. Browse luxury homes Kurdistan, villas Erbil Iraq, penthouse Erbil, and premium apartments Erbil Iraq. Best real estate agent Erbil for exclusive property Erbil in the Erbil property market.');
   header.appendChild(subtitle);
   container.appendChild(header);
 
@@ -578,7 +578,7 @@ export function renderLuxuryPage(): DocumentFragment {
 
   // Luxury Collection Grid
   const propertiesSection = createElement('section', 'hub-page__properties');
-  const propertiesTitle = createElement('h2', 'hub-page__section-title', 'The Luxury Collection');
+  const propertiesTitle = createElement('h2', 'hub-page__section-title', 'Luxury Homes Kurdistan Collection — Villas Erbil Iraq');
   propertiesSection.appendChild(propertiesTitle);
 
   const grid = createElement('div', 'hub-page__grid');
@@ -599,15 +599,15 @@ export function renderLuxuryPage(): DocumentFragment {
 
   // Luxury By Type
   const typeSection = createElement('section', 'hub-page__by-type');
-  const typeTitle = createElement('h2', 'hub-page__section-title', 'Browse by Property Type');
+  const typeTitle = createElement('h2', 'hub-page__section-title', 'Property Erbil by Type — Real Estate Erbil');
   typeSection.appendChild(typeTitle);
 
   const typeGrid = createElement('div', 'hub-page__type-grid');
   const luxuryTypes = [
-    { type: 'Villa', desc: 'Exclusive villas with private gardens and premium finishes', count: luxuryProps.filter(p => p.type === 'Villa').length },
-    { type: 'Penthouse', desc: 'Sky-high living with panoramic city views', count: luxuryProps.filter(p => p.type === 'Penthouse').length },
-    { type: 'Duplex', desc: 'Two-story luxury living spaces', count: luxuryProps.filter(p => p.type === 'Duplex').length },
-    { type: 'Apartment', desc: 'Premium apartments in prestigious buildings', count: luxuryProps.filter(p => p.type === 'Apartment').length }
+    { type: 'Villa', desc: 'Exclusive villas Erbil Iraq with private gardens - luxury homes Kurdistan', count: luxuryProps.filter(p => p.type === 'Villa').length },
+    { type: 'Penthouse', desc: 'Penthouse Erbil sky-high living with panoramic city views', count: luxuryProps.filter(p => p.type === 'Penthouse').length },
+    { type: 'Duplex', desc: 'Two-story luxury property Erbil living spaces', count: luxuryProps.filter(p => p.type === 'Duplex').length },
+    { type: 'Apartment', desc: 'Premium apartments Erbil Iraq in prestigious buildings', count: luxuryProps.filter(p => p.type === 'Apartment').length }
   ];
 
   luxuryTypes.forEach(lt => {
@@ -631,7 +631,7 @@ export function renderLuxuryPage(): DocumentFragment {
 
   // Premium Locations
   const locSection = createElement('section', 'hub-page__locations');
-  const locTitle = createElement('h2', 'hub-page__section-title', 'Premium Locations');
+  const locTitle = createElement('h2', 'hub-page__section-title', 'Premium Locations — Houses for Sale Erbil');
   locSection.appendChild(locTitle);
 
   const locGrid = createElement('div', 'hub-page__location-links');
@@ -657,11 +657,11 @@ export function renderLuxuryPage(): DocumentFragment {
   // CTA
   const ctaSection = createElement('section', 'hub-page__cta');
   const ctaContent = createElement('div', 'hub-page__cta-content');
-  const ctaTitle = createElement('h2', 'hub-page__cta-title', 'Experience Exclusive Service');
+  const ctaTitle = createElement('h2', 'hub-page__cta-title', 'Experience Luxury Homes Kurdistan with Best Real Estate Agent Erbil');
   ctaContent.appendChild(ctaTitle);
-  const ctaText = createElement('p', 'hub-page__cta-text', 'Our luxury property specialists provide personalized service to help you find the exceptional home you deserve.');
+  const ctaText = createElement('p', 'hub-page__cta-text', 'Our best real estate agent Erbil luxury property specialists provide personalized service for villas Erbil Iraq, penthouse Erbil, and apartments Erbil Iraq.');
   ctaContent.appendChild(ctaText);
-  const ctaBtn = createElement('a', 'btn btn--primary', 'Request Private Viewing');
+  const ctaBtn = createElement('a', 'btn btn--primary', 'Request Property Erbil Viewing');
   ctaBtn.href = '/contact';
   ctaBtn.setAttribute('data-route', '');
   ctaContent.appendChild(ctaBtn);
@@ -675,9 +675,9 @@ export function renderLuxuryPage(): DocumentFragment {
 }
 
 export function setupLuxuryPageSEO(): void {
-  document.title = 'Luxury Properties in Erbil | Premium Homes & Villas | Real House';
+  document.title = 'Luxury Homes Kurdistan | Villas Erbil Iraq | Penthouse Erbil | Real House';
   const meta = document.querySelector('meta[name="description"]');
   if (meta) {
-    meta.setAttribute('content', 'Discover luxury properties in Erbil. Premium villas, penthouses, and exclusive apartments in the finest locations of Kurdistan Region.');
+    meta.setAttribute('content', 'Luxury homes Kurdistan - Find villas Erbil Iraq, penthouse Erbil, apartments Erbil Iraq. Best real estate agent Erbil for property Erbil. Real estate Erbil in the Erbil property market.');
   }
 }

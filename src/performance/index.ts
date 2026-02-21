@@ -91,6 +91,20 @@ export {
   getFontLoadingStatus
 } from './font-optimization';
 
+// INP (Interaction to Next Paint) Optimization
+export {
+  yieldToMainThread,
+  processWithYielding,
+  debounceWithFeedback,
+  throttleWithRAF,
+  createResponsiveClickHandler,
+  optimizeEventListeners,
+  scheduleIdleWork,
+  cancelIdleWork,
+  createOptimizedInputHandler,
+  initINPOptimizations
+} from './inp-optimization';
+
 // ─────────────────────────────────────────────────────────────────────────────
 // Combined Initialization
 // ─────────────────────────────────────────────────────────────────────────────
@@ -100,6 +114,7 @@ import { initLazyLoading, injectImageStyles, observeImages } from './lazy-loadin
 import { initResourceHints, prefetchVisibleLinks, preconnectToCDN } from './resource-hints';
 import { initFontLoading } from './font-optimization';
 import { observeImageLoading } from './image-optimization';
+import { initINPOptimizations } from './inp-optimization';
 
 /**
  * Initialize all performance optimizations
@@ -131,6 +146,9 @@ export function initPerformance(): void {
 
   // Initialize resource hints
   initResourceHints();
+
+  // Initialize INP optimizations (improves responsiveness)
+  initINPOptimizations();
 
   // Observe image loading performance
   observeImageLoading();

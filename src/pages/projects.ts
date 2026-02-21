@@ -21,7 +21,10 @@ import {
   getProjectsBreadcrumbs,
   getProjectDetailBreadcrumbs,
   getRelatedProjects,
-  createRelatedProjectsSection
+  createRelatedProjectsSection,
+  createProjectCrossLinks,
+  createInternalCTA,
+  createLocationLinks
 } from '../components/internal-linking';
 
 // ─── Helper Functions ─────────────────────────────────────────────────────
@@ -188,6 +191,20 @@ export function renderProjectsPage(): DocumentFragment {
   container.appendChild(grid);
 
   page.appendChild(container);
+
+  // ─── Location Links Section ─────────────────────────────────────────────
+  const locationLinks = createLocationLinks();
+  page.appendChild(locationLinks);
+
+  // ─── Internal CTA for Projects Page ─────────────────────────────────────
+  const listingCta = createInternalCTA(
+    'Need Help Finding the Right Project?',
+    'Our property experts can guide you to the perfect investment opportunity based on your goals and budget.',
+    { text: 'Contact Our Team', url: '/contact' },
+    { text: 'Browse Properties', url: '/properties' }
+  );
+  page.appendChild(listingCta);
+
   fragment.appendChild(page);
 
   // Function to re-render the grid
@@ -508,6 +525,21 @@ export function renderProjectDetailPage(projectId: string): DocumentFragment {
     const relatedSection = createRelatedProjectsSection(relatedProjects);
     page.appendChild(relatedSection);
   }
+
+  // ─── Cross-Content Links (Properties & Blog) ─────────────────────────────
+  const crossLinks = createProjectCrossLinks(project);
+  if (crossLinks.children.length > 0) {
+    page.appendChild(crossLinks);
+  }
+
+  // ─── Internal CTA ─────────────────────────────────────────────────────────
+  const ctaSection = createInternalCTA(
+    'Looking for Similar Properties?',
+    'Browse our complete collection of luxury properties in Erbil, or contact our experts for personalized recommendations.',
+    { text: 'View All Properties', url: '/properties' },
+    { text: 'Contact Us', url: '/contact' }
+  );
+  page.appendChild(ctaSection);
 
   // ─── Back Link ───────────────────────────────────────────────────────────
   const backSection = createElement('section', 'project-detail__back');

@@ -201,8 +201,8 @@
   <link rel="preconnect" href="https://images.unsplash.com" crossorigin />
 
   <!-- Preload Critical Fonts (woff2 for best compression) - Improves LCP -->
-  <link rel="preload" href="https://fonts.gstatic.com/s/cormorant/v21/H4c2BXOCl9bbnla_nHIiRPmvgoq5.woff2" as="font" type="font/woff2" crossorigin />
-  <link rel="preload" href="https://fonts.gstatic.com/s/inter/v18/UcCO3FwrK3iLTeHuS_nVMrMxCp50SjIw2boKoduKmMEVuLyfAZ9hjQ.woff2" as="font" type="font/woff2" crossorigin />
+  <link rel="preload" href="https://fonts.gstatic.com/s/cormorant/v21/H4c2BXOCl9bbnla_nHIiRPmvgoq5.woff2" as="font" type="font/woff2" crossorigin fetchpriority="high" />
+  <link rel="preload" href="https://fonts.gstatic.com/s/inter/v18/UcCO3FwrK3iLTeHuS_nVMrMxCp50SjIw2boKoduKmMEVuLyfAZ9hjQ.woff2" as="font" type="font/woff2" crossorigin fetchpriority="high" />
 
   <!-- Preload Critical Assets -->
   <link rel="preload" href="/favicon.svg" as="image" type="image/svg+xml" />
@@ -572,9 +572,6 @@
     <span class="page-transition__label">Real House</span>
   </div>
 
-  <!-- Skip Navigation Link for Accessibility -->
-  <a href="#main-content" class="skip-link">Skip to main content</a>
-
   <!-- Scroll Progress -->
   <div class="scroll-progress" role="progressbar" aria-label="Page scroll progress" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100">
     <div class="scroll-progress__bar"></div>
@@ -810,7 +807,7 @@
       </div>
 
       <div class="footer__bottom">
-        <p><small>&copy; <time datetime="2025">2025</time> Real House. All rights reserved.</small></p>
+        <p><small>&copy; <time datetime="2025">2025</time> Real House Real Estate LLC. All rights reserved. | Erbil, Kurdistan Region, Iraq</small></p>
         <nav class="footer__legal" aria-label="Legal links">
           <ul>
             <li><a href="/privacy" data-route>Privacy Policy</a></li>
@@ -899,7 +896,12 @@
   </svg>
 
   <!-- Main Application Script - type="module" is deferred by default -->
+  <!-- Module scripts are automatically deferred and parsed asynchronously -->
   <script type="module" src="/src/main.ts"></script>
+
+  <!-- Preload critical JS chunks for faster INP -->
+  <link rel="modulepreload" href="/src/app.ts" />
+  <link rel="modulepreload" href="/src/performance/index.ts" />
 
   <!-- Inline Performance Monitoring - Starts measuring early for accurate metrics -->
   <script>

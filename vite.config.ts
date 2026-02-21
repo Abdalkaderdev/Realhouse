@@ -1,6 +1,7 @@
 import { defineConfig } from 'vite';
 import { resolve } from 'path';
 
+// Performance-optimized Vite configuration for Core Web Vitals
 export default defineConfig({
   server: {
     port: 4000,
@@ -42,54 +43,9 @@ export default defineConfig({
     // Rollup options for optimized code splitting
     rollupOptions: {
       output: {
-        // Optimized manual chunk splitting for better caching and loading
-        manualChunks: (id) => {
-          // Vendor chunks - split by library for granular caching
-          if (id.includes('node_modules/gsap')) {
-            return 'vendor-gsap';
-          }
-          if (id.includes('node_modules/lenis')) {
-            return 'vendor-lenis';
-          }
-          if (id.includes('node_modules/leaflet')) {
-            return 'vendor-leaflet';
-          }
-
-          // Performance monitoring - load early but defer execution
-          if (id.includes('/performance/')) {
-            return 'performance';
-          }
-
-          // Animations - defer loading, not critical for LCP
-          if (id.includes('/animations/')) {
-            return 'animations';
-          }
-
-          // Data chunks - cached separately for updates
-          if (id.includes('/data/')) {
-            return 'data';
-          }
-
-          // Page components - split for route-based loading
-          if (id.includes('/pages/')) {
-            return 'pages';
-          }
-
-          // SEO utilities - load with pages
-          if (id.includes('/seo/')) {
-            return 'seo';
-          }
-
-          // Components - shared across pages
-          if (id.includes('/components/')) {
-            return 'components';
-          }
-
-          // Utils - shared utilities
-          if (id.includes('/utils/')) {
-            return 'utils';
-          }
-        },
+        // Let Vite handle chunking automatically for optimal bundle splitting
+        // Manual chunks can cause issues with small bundles creating HTTP overhead
+        // Vite's default behavior with tree-shaking produces efficient bundles
 
         // Asset file naming with content hash for cache busting
         assetFileNames: (assetInfo) => {
@@ -178,6 +134,7 @@ export default defineConfig({
   esbuild: {
     // Remove console.log in production (keep errors and warnings)
     drop: ['debugger'],
+    pure: ['console.log', 'console.debug', 'console.info'],
     // Minify identifiers
     minifyIdentifiers: true,
     // Minify syntax
@@ -187,7 +144,9 @@ export default defineConfig({
     // Target modern browsers
     target: 'es2020',
     // Legal comments handling
-    legalComments: 'none'
+    legalComments: 'none',
+    // Tree shaking hints
+    treeShaking: true
   },
 
   // Define global constants

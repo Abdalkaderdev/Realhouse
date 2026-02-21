@@ -242,14 +242,13 @@ export function renderServicesPage(): DocumentFragment {
   heroContainer.appendChild(heroBadge);
 
   const heroTitle = createElement('h1', 'services-page__title');
-  heroTitle.textContent = 'Expert ';
-  const heroTitleEm = createElement('em', undefined, 'Real Estate Services');
+  heroTitle.textContent = 'Real Estate Erbil Services — ';
+  const heroTitleEm = createElement('em', undefined, 'Best Real Estate Agent Erbil');
   heroTitle.appendChild(heroTitleEm);
-  heroTitle.appendChild(document.createTextNode(' in Erbil'));
   heroContainer.appendChild(heroTitle);
 
   const heroSubtitle = createElement('p', 'services-page__subtitle');
-  heroSubtitle.textContent = 'Real House provides comprehensive real estate services for buyers, sellers, investors, and property owners in Kurdistan. Our experienced team delivers professional guidance at every step of your property journey.';
+  heroSubtitle.textContent = 'Real House provides property Erbil services for houses for sale Erbil, apartments Erbil Iraq, villas Erbil Iraq, and luxury homes Kurdistan. Our best real estate agent Erbil team delivers professional guidance to buy house Erbil and navigate the Erbil property market.';
   heroContainer.appendChild(heroSubtitle);
 
   hero.appendChild(heroContainer);
@@ -272,10 +271,10 @@ export function renderServicesPage(): DocumentFragment {
   const whyContainer = createElement('div', 'container');
 
   const whyHeader = createElement('div', 'services-page__section-header');
-  const whyTitle = createElement('h2', 'services-page__section-title', 'Why Choose Real House?');
+  const whyTitle = createElement('h2', 'services-page__section-title', 'Why Choose Real House for Property Erbil?');
   whyHeader.appendChild(whyTitle);
   const whySubtitle = createElement('p', 'services-page__section-subtitle');
-  whySubtitle.textContent = 'Trusted by hundreds of clients for professional real estate services in Erbil.';
+  whySubtitle.textContent = 'Trusted by hundreds of clients for real estate Erbil - houses for sale Erbil and apartments Erbil Iraq services.';
   whyHeader.appendChild(whySubtitle);
   whyContainer.appendChild(whyHeader);
 
@@ -306,7 +305,7 @@ export function renderServicesPage(): DocumentFragment {
   const testimonialsContainer = createElement('div', 'container');
 
   const testimonialsHeader = createElement('div', 'services-page__section-header');
-  const testimonialsTitle = createElement('h2', 'services-page__section-title', 'What Our Clients Say');
+  const testimonialsTitle = createElement('h2', 'services-page__section-title', 'Property Erbil Client Testimonials');
   testimonialsHeader.appendChild(testimonialsTitle);
   testimonialsContainer.appendChild(testimonialsHeader);
 
@@ -324,11 +323,11 @@ export function renderServicesPage(): DocumentFragment {
   const ctaContainer = createElement('div', 'container');
   const ctaContent = createElement('div', 'services-page__cta-content');
 
-  const ctaTitle = createElement('h2', 'services-page__cta-title', 'Ready to Get Started?');
+  const ctaTitle = createElement('h2', 'services-page__cta-title', 'Ready for Real Estate Erbil Services?');
   ctaContent.appendChild(ctaTitle);
 
   const ctaText = createElement('p', 'services-page__cta-text');
-  ctaText.textContent = 'Contact our expert team today for personalized real estate assistance in Erbil.';
+  ctaText.textContent = 'Contact our best real estate agent Erbil team for houses for sale Erbil, apartments Erbil Iraq, luxury homes Kurdistan, and property Erbil assistance.';
   ctaContent.appendChild(ctaText);
 
   const ctaBtns = createElement('div', 'services-page__cta-btns');

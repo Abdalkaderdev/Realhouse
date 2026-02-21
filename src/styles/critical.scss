@@ -1,6 +1,7 @@
 // ═══════════════════════════════════════════════════════════════════════════
 // Critical CSS - Above-the-fold styles for faster First Contentful Paint
 // These styles are inlined in the HTML to reduce render-blocking
+// Target: LCP < 2.5s, CLS < 0.1, FID < 100ms
 // ═══════════════════════════════════════════════════════════════════════════
 
 // Variables needed for critical rendering
@@ -344,5 +345,92 @@ img.loaded {
     animation-duration: 0.01ms !important;
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
+  }
+}
+
+// ═══════════════════════════════════════════════════════════════════════════
+// INP (Interaction to Next Paint) Optimization
+// ═══════════════════════════════════════════════════════════════════════════
+
+// Fast tap/click feedback for better perceived performance
+button,
+a,
+[role="button"],
+.btn,
+.nav__link,
+.property-card {
+  // Prevent 300ms tap delay on mobile
+  touch-action: manipulation;
+
+  // Immediate visual feedback
+  &:active {
+    transform: scale(0.98);
+    transition: transform 50ms ease-out;
+  }
+}
+
+// Optimize scrolling performance
+.scroll-container,
+.property-grid,
+.gallery-grid {
+  // Enable native momentum scrolling on iOS
+  -webkit-overflow-scrolling: touch;
+
+  // Optimize scroll performance
+  overscroll-behavior: contain;
+}
+
+// ═══════════════════════════════════════════════════════════════════════════
+// Paint Containment for Rendering Performance
+// ═══════════════════════════════════════════════════════════════════════════
+
+// Isolate expensive paint operations
+.property-card,
+.blog-card,
+.project-card {
+  contain: layout style paint;
+  isolation: isolate;
+}
+
+// Prevent expensive box-shadow repaints
+.nav.scrolled,
+.modal,
+.dropdown-menu {
+  will-change: opacity, transform;
+}
+
+// ═══════════════════════════════════════════════════════════════════════════
+// Low Data Mode Support
+// ═══════════════════════════════════════════════════════════════════════════
+
+@media (prefers-reduced-data: reduce) {
+  // Disable non-essential images
+  .decorative-image,
+  .background-pattern {
+    display: none !important;
+  }
+
+  // Use solid colors instead of gradients
+  .hero__overlay {
+    background: var(--c-bg) !important;
+  }
+}
+
+// ═══════════════════════════════════════════════════════════════════════════
+// Print Optimization (for property brochures)
+// ═══════════════════════════════════════════════════════════════════════════
+
+@media print {
+  .loader,
+  .nav,
+  .scroll-progress,
+  .page-transition,
+  .skip-to-content {
+    display: none !important;
+  }
+
+  body {
+    background: white !important;
+    color: black !important;
   }
 }

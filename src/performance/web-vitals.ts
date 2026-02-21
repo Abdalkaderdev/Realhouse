@@ -22,14 +22,15 @@ interface PerformanceMetrics {
   inp?: number;
 }
 
-// Rating thresholds based on Google's Core Web Vitals (2024 targets)
+// Rating thresholds based on Google's Core Web Vitals (2025 targets)
+// Updated with latest Google recommendations
 const THRESHOLDS = {
-  LCP: { good: 2500, poor: 4000 },   // Target: < 2.5s
-  FID: { good: 100, poor: 300 },     // Target: < 100ms
-  CLS: { good: 0.1, poor: 0.25 },    // Target: < 0.1
-  FCP: { good: 1800, poor: 3000 },   // Target: < 1.8s
-  TTFB: { good: 800, poor: 1800 },   // Target: < 800ms
-  INP: { good: 200, poor: 500 }      // Target: < 200ms (replaces FID)
+  LCP: { good: 2500, poor: 4000 },   // Target: < 2.5s (Largest Contentful Paint)
+  FID: { good: 100, poor: 300 },     // Target: < 100ms (First Input Delay - legacy)
+  CLS: { good: 0.1, poor: 0.25 },    // Target: < 0.1 (Cumulative Layout Shift)
+  FCP: { good: 1800, poor: 3000 },   // Target: < 1.8s (First Contentful Paint)
+  TTFB: { good: 800, poor: 1800 },   // Target: < 800ms (Time to First Byte)
+  INP: { good: 200, poor: 500 }      // Target: < 200ms (Interaction to Next Paint - replaces FID)
 };
 
 function getRating(name: string, value: number): 'good' | 'needs-improvement' | 'poor' {

@@ -52,18 +52,28 @@ import {
   setupLocationsPageSEO,
   setupDistrictPageSEO,
   clearDynamicSchemas,
+  setupHreflangTags,
   // Comprehensive schema functions for rich results
   setupComprehensiveHomePageSEO,
   setupComprehensivePropertyPageSEO,
+  setupAllHomePageSchemas,
   generateRealEstateAgentSchema,
   generateOpenHouseEventSchema,
   generateImageGallerySchema,
+  generateCompleteImageGallerySchema,
   generatePropertyOfferSchema,
   generateNeighborhoodSchema,
   generateNeighborhoodsListSchema,
   generateFeaturedPropertiesListSchema,
   generatePropertiesByTypeListSchema,
-  generateComprehensiveReviewSchema
+  generateComprehensiveReviewSchema,
+  generateCompleteOrganizationSchema,
+  generateCompleteWebSiteSchema,
+  generateCompleteVideoTourSchema,
+  generateCompletePlaceSchema,
+  generateCompletePropertyListSchema,
+  generateHowToRentPropertySchema,
+  generateDetailedServicesSchema
 } from './seo/schema';
 import {
   normalizeUrl,
@@ -736,6 +746,9 @@ export class App {
     this.updateOrCreateMeta('name', 'twitter:title', title);
     this.updateOrCreateMeta('name', 'twitter:description', description);
     this.updateOrCreateMeta('name', 'twitter:image', 'https://realhouseiq.com/twitter-card.jpg');
+
+    // Update hreflang tags for multilingual support
+    setupHreflangTags(path);
   }
 
   // ═══════════════════════════════════════════════════════════════════════════

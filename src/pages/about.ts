@@ -131,10 +131,10 @@ function createHeroSection(): HTMLElement {
   content.appendChild(badge);
 
   const title = createElement('h1', 'about-hero__title');
-  title.textContent = 'Redefining ';
-  const em = createElement('em', undefined, 'Luxury');
+  title.textContent = 'Real Estate Erbil — ';
+  const em = createElement('em', undefined, 'Best Real Estate Agent Erbil');
   title.appendChild(em);
-  title.appendChild(document.createTextNode(' Real Estate in Kurdistan'));
+  title.appendChild(document.createTextNode(' for Luxury Homes Kurdistan'));
   content.appendChild(title);
 
   const subtitle = createElement('p', 'about-hero__subtitle', companyHistory.mission);
@@ -219,7 +219,7 @@ function createStorySection(): HTMLElement {
   const em = createElement('em', undefined, 'Story');
   headerTitle.appendChild(em);
   header.appendChild(headerTitle);
-  const headerSubtitle = createElement('p', 'section-subtitle', `${companyHistory.yearsInBusiness} years of trusted service in Kurdistan`);
+  const headerSubtitle = createElement('p', 'section-subtitle', `${companyHistory.yearsInBusiness} years of trusted real estate Erbil service - houses for sale Erbil and property Erbil`);
   header.appendChild(headerSubtitle);
   container.appendChild(header);
 
@@ -280,7 +280,7 @@ function createTimelineSection(): HTMLElement {
   const em = createElement('em', undefined, 'Journey');
   headerTitle.appendChild(em);
   header.appendChild(headerTitle);
-  const headerSubtitle = createElement('p', 'section-subtitle', 'Key milestones in our 23-year history');
+  const headerSubtitle = createElement('p', 'section-subtitle', 'Key milestones in our 23-year real estate Erbil history - Erbil property market leaders');
   header.appendChild(headerSubtitle);
   container.appendChild(header);
 
@@ -360,7 +360,7 @@ function createLeadershipSection(): HTMLElement {
   const em = createElement('em', undefined, 'Leadership');
   headerTitle.appendChild(em);
   header.appendChild(headerTitle);
-  const headerSubtitle = createElement('p', 'section-subtitle', 'Meet the experienced team guiding Real House');
+  const headerSubtitle = createElement('p', 'section-subtitle', 'Meet the best real estate agent Erbil team guiding property Erbil transactions');
   header.appendChild(headerSubtitle);
   container.appendChild(header);
 
@@ -393,7 +393,7 @@ function createTeamSection(): HTMLElement {
   headerTitle.appendChild(em);
   headerTitle.appendChild(document.createTextNode(' Consultants'));
   header.appendChild(headerTitle);
-  const headerSubtitle = createElement('p', 'section-subtitle', 'Dedicated professionals committed to finding your perfect property');
+  const headerSubtitle = createElement('p', 'section-subtitle', 'Dedicated real estate Kurdistan professionals - buy house Erbil with apartments Erbil Iraq experts');
   header.appendChild(headerSubtitle);
   container.appendChild(header);
 
@@ -552,7 +552,7 @@ function createAwardsSection(): HTMLElement {
   const em = createElement('em', undefined, 'Recognition');
   headerTitle.appendChild(em);
   header.appendChild(headerTitle);
-  const headerSubtitle = createElement('p', 'section-subtitle', 'Industry recognition for our commitment to excellence');
+  const headerSubtitle = createElement('p', 'section-subtitle', 'Industry recognition for real estate Erbil excellence - best real estate agent Erbil awards');
   header.appendChild(headerSubtitle);
   container.appendChild(header);
 
@@ -652,7 +652,7 @@ function createAffiliationsSection(): HTMLElement {
   const em = createElement('em', undefined, 'Affiliations');
   headerTitle.appendChild(em);
   header.appendChild(headerTitle);
-  const headerSubtitle = createElement('p', 'section-subtitle', 'Member of leading real estate organizations');
+  const headerSubtitle = createElement('p', 'section-subtitle', 'Member of leading real estate Kurdistan organizations - property Erbil professionals');
   header.appendChild(headerSubtitle);
   container.appendChild(header);
 
@@ -697,7 +697,7 @@ function createCertificationsSection(): HTMLElement {
   const em = createElement('em', undefined, 'Certifications');
   headerTitle.appendChild(em);
   header.appendChild(headerTitle);
-  const headerSubtitle = createElement('p', 'section-subtitle', 'Fully licensed and certified real estate agency');
+  const headerSubtitle = createElement('p', 'section-subtitle', 'Fully licensed real estate Erbil agency - certified for houses for sale Erbil');
   header.appendChild(headerSubtitle);
   container.appendChild(header);
 
@@ -916,7 +916,7 @@ function createResourcesSection(): HTMLElement {
   const em = createElement('em', undefined, 'Center');
   headerTitle.appendChild(em);
   header.appendChild(headerTitle);
-  const headerSubtitle = createElement('p', 'section-subtitle', 'Free guides, reports, and tools for buyers and investors');
+  const headerSubtitle = createElement('p', 'section-subtitle', 'Free guides for buy house Erbil and property Erbil investment in the Erbil property market');
   header.appendChild(headerSubtitle);
   container.appendChild(header);
 
@@ -1137,12 +1137,12 @@ function createCTASection(): HTMLElement {
 
   const title = createElement('h2', 'about-cta__title');
   title.textContent = 'Ready to Find Your ';
-  const em = createElement('em', undefined, 'Dream Property');
+  const em = createElement('em', undefined, 'Property Erbil');
   title.appendChild(em);
-  title.appendChild(document.createTextNode('?'));
+  title.appendChild(document.createTextNode(' Dream Home?'));
   content.appendChild(title);
 
-  const subtitle = createElement('p', 'about-cta__subtitle', 'Let our expert team guide you through your real estate journey in Kurdistan');
+  const subtitle = createElement('p', 'about-cta__subtitle', 'Let our best real estate agent Erbil team guide you through houses for sale Erbil, apartments Erbil Iraq, and luxury homes Kurdistan');
   content.appendChild(subtitle);
 
   const buttons = createElement('div', 'about-cta__buttons');

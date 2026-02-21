@@ -285,6 +285,55 @@
     <priority>0.3</priority>
   </url>
 
+  <!-- Hub Pages - Property Category Landing Pages -->
+  <url>
+    <loc>https://realhouseiq.com/buy</loc>
+    <lastmod>2026-02-21</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.9</priority>
+    <image:image>
+      <image:loc>https://realhouseiq.com/og-image.jpg</image:loc>
+      <image:title>Properties for Sale Erbil - Houses, Apartments, Villas Kurdistan</image:title>
+      <image:caption>Browse luxury properties for sale in Erbil. Villas, apartments, penthouses and commercial real estate in Kurdistan.</image:caption>
+    </image:image>
+  </url>
+
+  <url>
+    <loc>https://realhouseiq.com/rent</loc>
+    <lastmod>2026-02-21</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.9</priority>
+    <image:image>
+      <image:loc>https://realhouseiq.com/og-image.jpg</image:loc>
+      <image:title>Properties for Rent Erbil - Apartments, Villas Kurdistan</image:title>
+      <image:caption>Find rental properties in Erbil. Furnished and unfurnished apartments, villas, and commercial spaces in Kurdistan.</image:caption>
+    </image:image>
+  </url>
+
+  <url>
+    <loc>https://realhouseiq.com/invest</loc>
+    <lastmod>2026-02-21</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.85</priority>
+    <image:image>
+      <image:loc>https://realhouseiq.com/og-image.jpg</image:loc>
+      <image:title>Investment Properties Erbil - Real Estate Investment Kurdistan Iraq</image:title>
+      <image:caption>High ROI investment properties in Erbil. Off-plan developments and rental income opportunities in Kurdistan.</image:caption>
+    </image:image>
+  </url>
+
+  <url>
+    <loc>https://realhouseiq.com/luxury</loc>
+    <lastmod>2026-02-21</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.85</priority>
+    <image:image>
+      <image:loc>https://realhouseiq.com/og-image.jpg</image:loc>
+      <image:title>Luxury Real Estate Erbil - Premium Villas Penthouses Kurdistan</image:title>
+      <image:caption>Exclusive luxury properties in Erbil. Premium villas, penthouses and apartments in Kurdistan's finest locations.</image:caption>
+    </image:image>
+  </url>
+
   <!-- ═══════════════════════════════════════════════════════════════════════════ -->
   <!-- Property Detail Pages - SEO-Optimized URLs -->
   <!-- Format: /properties/{property-id} (clean, short, descriptive IDs) -->

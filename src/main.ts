@@ -23,7 +23,8 @@ import {
   initFontLoading,
   observeImageLoading,
   loadAnalytics,
-  deferExecution
+  deferExecution,
+  initINPOptimizations
 } from './performance';
 
 // Import mobile-specific SEO schemas
@@ -165,6 +166,11 @@ document.addEventListener('DOMContentLoaded', () => {
   scheduleIdleTask(() => {
     initLazyLoading();
     initResourceHints();
+  });
+
+  // Initialize INP optimizations for better interactivity
+  scheduleIdleTask(() => {
+    initINPOptimizations();
   });
 
   // Initialize mobile-specific SEO schemas

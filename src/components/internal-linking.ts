@@ -1112,7 +1112,7 @@ export function createBlogContentLinks(post: BlogPost): HTMLElement {
 export interface SiteLink {
   name: string;
   url: string;
-  type: 'main' | 'property' | 'project' | 'blog' | 'hub' | 'legal';
+  type: 'main' | 'property' | 'project' | 'blog' | 'hub' | 'legal' | 'service' | 'location';
 }
 
 export function getAllSiteLinks(): SiteLink[] {
@@ -1126,7 +1126,10 @@ export function getAllSiteLinks(): SiteLink[] {
     { name: 'Blog', url: '/blog', type: 'main' },
     { name: 'About', url: '/about', type: 'main' },
     { name: 'Contact', url: '/contact', type: 'main' },
-    { name: 'FAQ', url: '/faq', type: 'main' }
+    { name: 'FAQ', url: '/faq', type: 'main' },
+    { name: 'Gallery', url: '/gallery', type: 'main' },
+    { name: 'Services', url: '/services', type: 'main' },
+    { name: 'Locations', url: '/locations', type: 'main' }
   );
 
   // Hub pages
@@ -1179,6 +1182,478 @@ export function checkForOrphanPages(): SiteLink[] {
   // In a real implementation, this would check which pages have no internal links pointing to them
   // For now, we return an empty array as all pages are linked from the footer and sitemap
   return [];
+}
+
+// ═══════════════════════════════════════════════════════════════════════════
+// Cross-Content Linking: Properties <-> Projects <-> Blog
+// ═══════════════════════════════════════════════════════════════════════════
+
+export interface CrossLink {
+  title: string;
+  url: string;
+  type: 'property' | 'project' | 'blog';
+  image?: string;
+  subtitle?: string;
+}
+
+// Get properties in the same location as a project
+export function getPropertiesInProject(project: Project, limit: number = 4): Property[] {
+  return properties
+    .filter(p => p.location.district === project.location.district)
+    .slice(0, limit);
+}
+
+// Get project that a property belongs to (if any)
+export function getProjectForProperty(property: Property): Project | null {
+  return projects.find(proj =>
+    proj.location.district === property.location.district
+  ) || null;
+}
+
+// Get blog posts related to a property's location or type
+export function getBlogPostsForProperty(property: Property, limit: number = 3): BlogPost[] {
+  const keywords = [
+    property.type.toLowerCase(),
+    property.location.district.toLowerCase(),
+    property.status.toLowerCase().replace(' ', '-')
+  ];
+
+  return blogPosts
+    .filter(post => {
+      const postText = `${post.title} ${post.excerpt} ${post.tags.join(' ')}`.toLowerCase();
+      return keywords.some(keyword => postText.includes(keyword));
+    })
+    .slice(0, limit);
+}
+
+// Get blog posts related to a project
+export function getBlogPostsForProject(project: Project, limit: number = 3): BlogPost[] {
+  const keywords = [
+    project.name.toLowerCase(),
+    project.location.district.toLowerCase(),
+    project.status.toLowerCase()
+  ];
+
+  return blogPosts
+    .filter(post => {
+      const postText = `${post.title} ${post.excerpt} ${post.tags.join(' ')}`.toLowerCase();
+      return keywords.some(keyword => postText.includes(keyword));
+    })
+    .slice(0, limit);
+}
+
+// ═══════════════════════════════════════════════════════════════════════════
+// Cross-Content Links Section Component
+// ═══════════════════════════════════════════════════════════════════════════
+
+export function createCrossContentLinks(
+  currentType: 'property' | 'project' | 'blog',
+  relatedItems: CrossLink[]
+): HTMLElement {
+  const section = createElement('section', 'cross-content-links');
+  const container = createElement('div', 'container');
+
+  const header = createElement('div', 'cross-content-links__header');
+  const title = createElement('h3', 'cross-content-links__title', 'You Might Also Be Interested In');
+  header.appendChild(title);
+  container.appendChild(header);
+
+  const grid = createElement('div', 'cross-content-links__grid');
+
+  relatedItems.forEach(item => {
+    const card = createElement('a', 'cross-content-links__card');
+    card.href = item.url;
+    card.setAttribute('data-route', '');
+
+    if (item.image) {
+      const imageWrapper = createElement('div', 'cross-content-links__image-wrapper');
+      const img = createElement('img', 'cross-content-links__image');
+      img.src = item.image;
+      img.alt = item.title;
+      img.loading = 'lazy';
+      imageWrapper.appendChild(img);
+
+      const typeBadge = createElement('span', `cross-content-links__badge cross-content-links__badge--${item.type}`);
+      typeBadge.textContent = item.type.charAt(0).toUpperCase() + item.type.slice(1);
+      imageWrapper.appendChild(typeBadge);
+
+      card.appendChild(imageWrapper);
+    }
+
+    const content = createElement('div', 'cross-content-links__content');
+    const cardTitle = createElement('h4', 'cross-content-links__card-title', item.title);
+    content.appendChild(cardTitle);
+
+    if (item.subtitle) {
+      const subtitle = createElement('p', 'cross-content-links__subtitle', item.subtitle);
+      content.appendChild(subtitle);
+    }
+
+    card.appendChild(content);
+    grid.appendChild(card);
+  });
+
+  container.appendChild(grid);
+  section.appendChild(container);
+  return section;
+}
+
+// ═══════════════════════════════════════════════════════════════════════════
+// Property Detail Cross-Links
+// ═══════════════════════════════════════════════════════════════════════════
+
+export function createPropertyCrossLinks(property: Property): HTMLElement {
+  const crossLinks: CrossLink[] = [];
+
+  // Add related project
+  const project = getProjectForProperty(property);
+  if (project) {
+    crossLinks.push({
+      title: project.name,
+      url: `/projects/${project.id}`,
+      type: 'project',
+      image: project.images[0],
+      subtitle: `${project.status} - ${project.availableUnits} units available`
+    });
+  }
+
+  // Add related blog posts
+  const relatedPosts = getBlogPostsForProperty(property, 2);
+  relatedPosts.forEach(post => {
+    crossLinks.push({
+      title: post.title,
+      url: `/blog/${post.slug}`,
+      type: 'blog',
+      image: post.image,
+      subtitle: post.category
+    });
+  });
+
+  if (crossLinks.length === 0) {
+    return createElement('div'); // Empty div if no cross-links
+  }
+
+  return createCrossContentLinks('property', crossLinks);
+}
+
+// ═══════════════════════════════════════════════════════════════════════════
+// Project Detail Cross-Links
+// ═══════════════════════════════════════════════════════════════════════════
+
+export function createProjectCrossLinks(project: Project): HTMLElement {
+  const crossLinks: CrossLink[] = [];
+
+  // Add related properties
+  const relatedProperties = getPropertiesInProject(project, 2);
+  relatedProperties.forEach(prop => {
+    crossLinks.push({
+      title: prop.title,
+      url: `/properties/${prop.id}`,
+      type: 'property',
+      image: prop.images[0],
+      subtitle: `${prop.type} - ${prop.status}`
+    });
+  });
+
+  // Add related blog posts
+  const relatedPosts = getBlogPostsForProject(project, 2);
+  relatedPosts.forEach(post => {
+    crossLinks.push({
+      title: post.title,
+      url: `/blog/${post.slug}`,
+      type: 'blog',
+      image: post.image,
+      subtitle: post.category
+    });
+  });
+
+  if (crossLinks.length === 0) {
+    return createElement('div'); // Empty div if no cross-links
+  }
+
+  return createCrossContentLinks('project', crossLinks);
+}
+
+// ═══════════════════════════════════════════════════════════════════════════
+// Inline Contextual Link Inserter
+// ═══════════════════════════════════════════════════════════════════════════
+
+export function insertContextualLinks(content: string): string {
+  let processedContent = content;
+
+  // Sort by keyword length (longer first) to avoid partial replacements
+  const sortedLinks = [...contextualLinks].sort((a, b) => b.keyword.length - a.keyword.length);
+
+  sortedLinks.forEach(link => {
+    // Case-insensitive search, but only replace first occurrence
+    const regex = new RegExp(`\\b(${escapeRegExp(link.keyword)})\\b`, 'i');
+    const replacement = `<a href="${link.url}" class="contextual-link" title="${link.title}" data-route>$1</a>`;
+    processedContent = processedContent.replace(regex, replacement);
+  });
+
+  return processedContent;
+}
+
+function escapeRegExp(string: string): string {
+  return string.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+}
+
+// ═══════════════════════════════════════════════════════════════════════════
+// Quick Navigation Component
+// ═══════════════════════════════════════════════════════════════════════════
+
+export function createQuickNav(): HTMLElement {
+  const nav = createElement('nav', 'quick-nav');
+  nav.setAttribute('aria-label', 'Quick Navigation');
+
+  const container = createElement('div', 'container');
+  const list = createElement('ul', 'quick-nav__list');
+
+  const quickLinks = [
+    { name: 'Properties', url: '/properties', icon: 'icon-home' },
+    { name: 'For Sale', url: '/buy', icon: 'icon-tag' },
+    { name: 'For Rent', url: '/rent', icon: 'icon-key' },
+    { name: 'Projects', url: '/projects', icon: 'icon-building' },
+    { name: 'Blog', url: '/blog', icon: 'icon-book' },
+    { name: 'Contact', url: '/contact', icon: 'icon-phone' }
+  ];
+
+  quickLinks.forEach(link => {
+    const li = createElement('li', 'quick-nav__item');
+    const a = createElement('a', 'quick-nav__link');
+    a.href = link.url;
+    a.setAttribute('data-route', '');
+
+    a.appendChild(createSVGUse(link.icon));
+    a.appendChild(document.createTextNode(link.name));
+
+    li.appendChild(a);
+    list.appendChild(li);
+  });
+
+  container.appendChild(list);
+  nav.appendChild(container);
+  return nav;
+}
+
+// ═══════════════════════════════════════════════════════════════════════════
+// Popular Content Widget (for sidebars)
+// ═══════════════════════════════════════════════════════════════════════════
+
+export function createPopularPropertiesWidget(limit: number = 5): HTMLElement {
+  const widget = createElement('div', 'popular-widget');
+  const title = createElement('h3', 'popular-widget__title', 'Popular Properties');
+  widget.appendChild(title);
+
+  const list = createElement('div', 'popular-widget__list');
+
+  const featuredProps = properties
+    .filter(p => p.isFeatured)
+    .slice(0, limit);
+
+  featuredProps.forEach(prop => {
+    const item = createElement('a', 'popular-widget__item');
+    item.href = `/properties/${prop.id}`;
+    item.setAttribute('data-route', '');
+
+    const thumb = createElement('div', 'popular-widget__thumb');
+    const img = createElement('img');
+    img.src = prop.images[0];
+    img.alt = prop.title;
+    img.loading = 'lazy';
+    thumb.appendChild(img);
+    item.appendChild(thumb);
+
+    const info = createElement('div', 'popular-widget__info');
+    const itemTitle = createElement('span', 'popular-widget__item-title');
+    itemTitle.textContent = prop.title.length > 30 ? prop.title.substring(0, 30) + '...' : prop.title;
+    info.appendChild(itemTitle);
+
+    const price = createElement('span', 'popular-widget__price');
+    price.textContent = prop.price > 0 ? `$${prop.price.toLocaleString()}` : 'Contact for Price';
+    info.appendChild(price);
+
+    item.appendChild(info);
+    list.appendChild(item);
+  });
+
+  widget.appendChild(list);
+
+  const viewAll = createElement('a', 'popular-widget__view-all', 'View All Properties');
+  viewAll.href = '/properties';
+  viewAll.setAttribute('data-route', '');
+  widget.appendChild(viewAll);
+
+  return widget;
+}
+
+export function createPopularProjectsWidget(limit: number = 4): HTMLElement {
+  const widget = createElement('div', 'popular-widget');
+  const title = createElement('h3', 'popular-widget__title', 'Featured Projects');
+  widget.appendChild(title);
+
+  const list = createElement('div', 'popular-widget__list');
+
+  projects.slice(0, limit).forEach(proj => {
+    const item = createElement('a', 'popular-widget__item');
+    item.href = `/projects/${proj.id}`;
+    item.setAttribute('data-route', '');
+
+    const thumb = createElement('div', 'popular-widget__thumb');
+    const img = createElement('img');
+    img.src = proj.images[0];
+    img.alt = proj.name;
+    img.loading = 'lazy';
+    thumb.appendChild(img);
+    item.appendChild(thumb);
+
+    const info = createElement('div', 'popular-widget__info');
+    const itemTitle = createElement('span', 'popular-widget__item-title', proj.name);
+    info.appendChild(itemTitle);
+
+    const status = createElement('span', 'popular-widget__status', proj.status);
+    info.appendChild(status);
+
+    item.appendChild(info);
+    list.appendChild(item);
+  });
+
+  widget.appendChild(list);
+
+  const viewAll = createElement('a', 'popular-widget__view-all', 'View All Projects');
+  viewAll.href = '/projects';
+  viewAll.setAttribute('data-route', '');
+  widget.appendChild(viewAll);
+
+  return widget;
+}
+
+export function createRecentBlogWidget(limit: number = 4): HTMLElement {
+  const widget = createElement('div', 'popular-widget');
+  const title = createElement('h3', 'popular-widget__title', 'Recent Articles');
+  widget.appendChild(title);
+
+  const list = createElement('div', 'popular-widget__list');
+
+  blogPosts.slice(0, limit).forEach(post => {
+    const item = createElement('a', 'popular-widget__item');
+    item.href = `/blog/${post.slug}`;
+    item.setAttribute('data-route', '');
+
+    const thumb = createElement('div', 'popular-widget__thumb');
+    const img = createElement('img');
+    img.src = post.image;
+    img.alt = post.title;
+    img.loading = 'lazy';
+    thumb.appendChild(img);
+    item.appendChild(thumb);
+
+    const info = createElement('div', 'popular-widget__info');
+    const itemTitle = createElement('span', 'popular-widget__item-title');
+    itemTitle.textContent = post.title.length > 40 ? post.title.substring(0, 40) + '...' : post.title;
+    info.appendChild(itemTitle);
+
+    const category = createElement('span', 'popular-widget__category', post.category);
+    info.appendChild(category);
+
+    item.appendChild(info);
+    list.appendChild(item);
+  });
+
+  widget.appendChild(list);
+
+  const viewAll = createElement('a', 'popular-widget__view-all', 'View All Articles');
+  viewAll.href = '/blog';
+  viewAll.setAttribute('data-route', '');
+  widget.appendChild(viewAll);
+
+  return widget;
+}
+
+// ═══════════════════════════════════════════════════════════════════════════
+// Location-Based Internal Links
+// ═══════════════════════════════════════════════════════════════════════════
+
+export function createLocationLinks(): HTMLElement {
+  const section = createElement('section', 'location-links');
+  const container = createElement('div', 'container');
+
+  const title = createElement('h2', 'location-links__title', 'Explore Properties by Location');
+  container.appendChild(title);
+
+  const grid = createElement('div', 'location-links__grid');
+
+  // Get unique districts with property counts
+  const districtCounts = new Map<string, number>();
+  properties.forEach(prop => {
+    const count = districtCounts.get(prop.location.district) || 0;
+    districtCounts.set(prop.location.district, count + 1);
+  });
+
+  // Sort by count descending
+  const sortedDistricts = [...districtCounts.entries()]
+    .sort((a, b) => b[1] - a[1])
+    .slice(0, 8);
+
+  sortedDistricts.forEach(([district, count]) => {
+    const card = createElement('a', 'location-links__card');
+    card.href = `/properties?district=${encodeURIComponent(district)}`;
+    card.setAttribute('data-route', '');
+
+    const name = createElement('span', 'location-links__name', district);
+    card.appendChild(name);
+
+    const countEl = createElement('span', 'location-links__count', `${count} properties`);
+    card.appendChild(countEl);
+
+    grid.appendChild(card);
+  });
+
+  container.appendChild(grid);
+  section.appendChild(container);
+  return section;
+}
+
+// ═══════════════════════════════════════════════════════════════════════════
+// Call-to-Action Internal Links Section
+// ═══════════════════════════════════════════════════════════════════════════
+
+export function createInternalCTA(
+  title: string,
+  description: string,
+  primaryLink: { text: string; url: string },
+  secondaryLink?: { text: string; url: string }
+): HTMLElement {
+  const section = createElement('section', 'internal-cta');
+  const container = createElement('div', 'container');
+
+  const content = createElement('div', 'internal-cta__content');
+
+  const heading = createElement('h2', 'internal-cta__title', title);
+  content.appendChild(heading);
+
+  const desc = createElement('p', 'internal-cta__description', description);
+  content.appendChild(desc);
+
+  const actions = createElement('div', 'internal-cta__actions');
+
+  const primary = createElement('a', 'btn btn--primary', primaryLink.text);
+  primary.href = primaryLink.url;
+  primary.setAttribute('data-route', '');
+  actions.appendChild(primary);
+
+  if (secondaryLink) {
+    const secondary = createElement('a', 'btn btn--ghost', secondaryLink.text);
+    secondary.href = secondaryLink.url;
+    secondary.setAttribute('data-route', '');
+    actions.appendChild(secondary);
+  }
+
+  content.appendChild(actions);
+  container.appendChild(content);
+  section.appendChild(container);
+
+  return section;
 }
 
 // ═══════════════════════════════════════════════════════════════════════════

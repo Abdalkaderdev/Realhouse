@@ -12,12 +12,39 @@
   font-family: 'Cormorant';
   font-display: swap;
   src: local('Cormorant');
+  // Size-adjust to match fallback font metrics (prevents CLS)
+  size-adjust: 105%;
+  ascent-override: 95%;
+  descent-override: 25%;
 }
 
 @font-face {
   font-family: 'Inter';
   font-display: swap;
   src: local('Inter');
+  // Size-adjust to match fallback font metrics (prevents CLS)
+  size-adjust: 100%;
+  ascent-override: 90%;
+  descent-override: 22%;
+}
+
+// Fallback font declarations with adjusted metrics to prevent CLS during font swap
+@font-face {
+  font-family: 'Cormorant Fallback';
+  src: local('Georgia'), local('Times New Roman'), local('serif');
+  size-adjust: 105%;
+  ascent-override: 95%;
+  descent-override: 25%;
+  line-gap-override: 0%;
+}
+
+@font-face {
+  font-family: 'Inter Fallback';
+  src: local('system-ui'), local('-apple-system'), local('BlinkMacSystemFont'), local('Segoe UI');
+  size-adjust: 100%;
+  ascent-override: 90%;
+  descent-override: 22%;
+  line-gap-override: 0%;
 }
 
 :root {
@@ -56,8 +83,9 @@
   --icon-xl:        32px;
 
   // ─── Typography ─────────────────────────────────────────────────────────
-  --font-serif:     'Cormorant', Georgia, serif;
-  --font-sans:      'Inter', system-ui, -apple-system, sans-serif;
+  // Use fallback fonts with size-adjust for zero CLS during font swap
+  --font-serif:     'Cormorant', 'Cormorant Fallback', Georgia, serif;
+  --font-sans:      'Inter', 'Inter Fallback', system-ui, -apple-system, sans-serif;
 
   --text-xs:    clamp(0.7rem, 1vw, 0.75rem);
   --text-sm:    clamp(0.8rem, 1.2vw, 0.875rem);

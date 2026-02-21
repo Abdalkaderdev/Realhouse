@@ -12,26 +12,43 @@ export {
   // ==========================================================================
   generateLocalBusinessSchema,
   generateEnhancedLocalBusinessSchema,
+  generateRealEstateAgentSchema,
 
   // ==========================================================================
   // 2. REAL ESTATE LISTING SCHEMA (For Properties)
   // ==========================================================================
   generatePropertySchema,
+  generateEnhancedPropertyListingSchema,
+  generateProductSchema,
+  generateResidenceSchema,
+  generatePropertyOfferSchema,
+
+  // ==========================================================================
+  // 3. ORGANIZATION SCHEMA (With Social Profiles)
+  // ==========================================================================
+  generateOrganizationSchema,
+  generateCompleteOrganizationSchema,
 
   // ==========================================================================
   // 4. PLACE SCHEMA (Geo Coordinates)
   // ==========================================================================
   generateDistrictPlaceSchema,
+  generateNeighborhoodSchema,
+  generateCompletePlaceSchema,
+  generateNeighborhoodsListSchema,
 
   // ==========================================================================
-  // 5. IMAGE SCHEMA
+  // 5. IMAGE SCHEMA / IMAGE GALLERY
   // ==========================================================================
   generatePropertyImageSchema,
+  generateImageGallerySchema,
+  generateCompleteImageGallerySchema,
 
   // ==========================================================================
   // 6. VIDEO OBJECT SCHEMA (Virtual Tours)
   // ==========================================================================
   generateVirtualTourSchema,
+  generateCompleteVideoTourSchema,
 
   // ==========================================================================
   // 7. REVIEW & AGGREGATE RATING SCHEMAS
@@ -39,51 +56,89 @@ export {
   generateReviewSchema,
   generateAggregateRatingSchema,
   generateAllReviewsSchema,
+  generateComprehensiveReviewSchema,
 
   // ==========================================================================
-  // 8. FAQ PAGE SCHEMA (25+ Questions)
+  // 8. FAQ PAGE SCHEMA (50+ Questions)
   // ==========================================================================
   generateFAQSchema,
   generateHomeFAQSchema,
   generateAboutFAQSchema,
   generateContactFAQSchema,
   generateCategoryFAQSchema,
+  generatePropertyFAQSchema,
+  generatePeopleAlsoAskSchema,
   generateRealEstateFAQSchema, // Legacy alias
 
   // ==========================================================================
-  // 9. HOW-TO SCHEMA
+  // 9. HOW-TO SCHEMA (For Guides)
   // ==========================================================================
   generateHowToBuyPropertySchema,
   generateHowToSellPropertySchema,
+  generateHowToInvestSchema,
+  generateHowToViewPropertySchema,
+  generateHowToRentPropertySchema,
 
   // ==========================================================================
-  // 13. ITEM LIST SCHEMA
+  // 10. ARTICLE / BLOG SCHEMA
   // ==========================================================================
-  generatePropertyListSchema,
-  generateProjectListSchema,
-
-  // ==========================================================================
-  // ADDITIONAL SCHEMA TYPES
-  // ==========================================================================
-  generateProductSchema,
-  generateResidenceSchema,
-  generateOrganizationSchema,
-  generateWebSiteSchema,
-  generateProjectSchema,
-  generateServicesSchema,
   generateArticleSchema,
   generateBlogSchema,
-  generateMetaTags,
+  generateBlogPostingSchema,
+  generateNewsArticleSchema,
 
   // ==========================================================================
-  // BREADCRUMB SCHEMA
+  // 11. WEBSITE SCHEMA (With SearchAction)
+  // ==========================================================================
+  generateWebSiteSchema,
+  generateCompleteWebSiteSchema,
+  generateSearchActionSchema,
+
+  // ==========================================================================
+  // 12. ITEM LIST SCHEMA (For Property Listings)
+  // ==========================================================================
+  generatePropertyListSchema,
+  generateCompletePropertyListSchema,
+  generateProjectListSchema,
+  generateFeaturedPropertiesListSchema,
+  generatePropertiesByTypeListSchema,
+
+  // ==========================================================================
+  // 13. EVENT SCHEMA (Open Houses)
+  // ==========================================================================
+  generateOpenHouseEventSchema,
+  generatePropertyEventSchema,
+  generateSpecialAnnouncementSchema,
+
+  // ==========================================================================
+  // 14. SERVICE SCHEMA
+  // ==========================================================================
+  generateServicesSchema,
+  generateDetailedServicesSchema,
+
+  // ==========================================================================
+  // PROJECT SCHEMA
+  // ==========================================================================
+  generateProjectSchema,
+
+  // ==========================================================================
+  // PAGE TYPE SCHEMAS
+  // ==========================================================================
+  generateContactPageSchema,
+  generateAboutPageSchema,
+  generateCollectionPageSchema,
+
+  // ==========================================================================
+  // NAVIGATION & BREADCRUMB SCHEMA
   // ==========================================================================
   generateBreadcrumbSchema,
   generatePageBreadcrumbs,
+  generateSiteNavigationSchema,
 
   // ==========================================================================
-  // SEO HELPERS
+  // META TAG HELPERS
   // ==========================================================================
+  generateMetaTags,
   getPropertySEOMeta,
   getAllPropertyUrls,
   getAllProjectUrls,
@@ -99,7 +154,7 @@ export {
   updatePropertyMeta,
 
   // ==========================================================================
-  // PAGE-SPECIFIC SEO SETUP
+  // PAGE-SPECIFIC SEO SETUP FUNCTIONS
   // ==========================================================================
   setupPropertyPageSEO,
   setupPropertiesPageSEO,
@@ -115,6 +170,12 @@ export {
   setupBlogPostSEO,
   setupLocationsPageSEO,
   setupDistrictPageSEO,
+  setupGalleryPageSEO,
+
+  // Comprehensive Page Setup
+  setupComprehensiveHomePageSEO,
+  setupComprehensivePropertyPageSEO,
+  setupAllHomePageSchemas,
 
   // ==========================================================================
   // PAGINATION SEO
@@ -138,7 +199,12 @@ export {
   // SCHEMA VALIDATION & DEBUG
   // ==========================================================================
   validateSchema,
-  debugSchemas
+  debugSchemas,
+
+  // ==========================================================================
+  // MASTER SCHEMA GENERATORS OBJECT
+  // ==========================================================================
+  schemaGenerators
 } from './schema';
 
 // =============================================================================

@@ -532,3 +532,308 @@ export function announcePageChange(title: string): void {
     }, 1000);
   }
 }
+
+// ─── Skip Link for Accessibility ───────────────────────────────────────────
+
+export function createSkipLink(
+  targetId: string,
+  text: string = 'Skip to main content'
+): HTMLAnchorElement {
+  const link = document.createElement('a');
+  link.href = `#${targetId}`;
+  link.className = 'skip-link';
+  link.textContent = text;
+  return link;
+}
+
+// ─── Screen Reader Only Text ───────────────────────────────────────────────
+
+export function createSrOnlyText(text: string): HTMLSpanElement {
+  const span = document.createElement('span');
+  span.className = 'visually-hidden';
+  span.textContent = text;
+  return span;
+}
+
+// ─── Card Component with Proper Structure ──────────────────────────────────
+
+export interface CardOptions {
+  title: string;
+  headingLevel?: 2 | 3 | 4 | 5 | 6;
+  description?: string;
+  image?: {
+    src: string;
+    alt: string;
+    width?: number;
+    height?: number;
+  };
+  imageCaption?: string;
+  link?: string;
+  className?: string;
+  footer?: HTMLElement;
+  asArticle?: boolean;
+}
+
+export function createCard(options: CardOptions): HTMLElement {
+  const card = document.createElement(options.asArticle ? 'article' : 'div');
+  card.className = options.className || 'card';
+
+  if (options.image) {
+    // Use figure for image with optional caption
+    if (options.imageCaption) {
+      const figure = createElement('figure', 'card__figure');
+      const img = document.createElement('img');
+      img.src = options.image.src;
+      img.alt = options.image.alt;
+      img.loading = 'lazy';
+      if (options.image.width) img.width = options.image.width;
+      if (options.image.height) img.height = options.image.height;
+      figure.appendChild(img);
+      const figcaption = createElement('figcaption', 'card__figcaption', options.imageCaption);
+      figure.appendChild(figcaption);
+      card.appendChild(figure);
+    } else {
+      const imgWrapper = createElement('div', 'card__image');
+      const img = document.createElement('img');
+      img.src = options.image.src;
+      img.alt = options.image.alt;
+      img.loading = 'lazy';
+      if (options.image.width) img.width = options.image.width;
+      if (options.image.height) img.height = options.image.height;
+      imgWrapper.appendChild(img);
+      card.appendChild(imgWrapper);
+    }
+  }
+
+  const content = createElement('div', 'card__content');
+
+  const level = options.headingLevel || 3;
+  const heading = document.createElement(`h${level}`);
+  heading.className = 'card__title';
+
+  if (options.link) {
+    const link = document.createElement('a');
+    link.href = options.link;
+    link.textContent = options.title;
+    link.setAttribute('data-route', '');
+    heading.appendChild(link);
+  } else {
+    heading.textContent = options.title;
+  }
+
+  content.appendChild(heading);
+
+  if (options.description) {
+    const desc = createElement('p', 'card__description', options.description);
+    content.appendChild(desc);
+  }
+
+  card.appendChild(content);
+
+  if (options.footer) {
+    const footer = createElement('footer', 'card__footer');
+    footer.appendChild(options.footer);
+    card.appendChild(footer);
+  }
+
+  return card;
+}
+
+// ─── Image with Figure/Figcaption ──────────────────────────────────────────
+
+export interface ImageFigureOptions {
+  src: string;
+  alt: string;
+  caption: string;
+  className?: string;
+  loading?: 'lazy' | 'eager';
+  width?: number;
+  height?: number;
+  srcset?: string;
+  sizes?: string;
+}
+
+export function createImageFigure(options: ImageFigureOptions): HTMLElement {
+  const figure = createElement('figure', options.className || 'figure');
+
+  const img = document.createElement('img');
+  img.src = options.src;
+  img.alt = options.alt;
+  img.loading = options.loading || 'lazy';
+  if (options.width) img.width = options.width;
+  if (options.height) img.height = options.height;
+  if (options.srcset) img.srcset = options.srcset;
+  if (options.sizes) img.sizes = options.sizes;
+  figure.appendChild(img);
+
+  const figcaption = createElement('figcaption', 'figure__caption', options.caption);
+  figure.appendChild(figcaption);
+
+  return figure;
+}
+
+// ─── Heading Level Manager ─────────────────────────────────────────────────
+
+export class HeadingLevelManager {
+  private currentLevel: number = 1;
+
+  reset(): void {
+    this.currentLevel = 1;
+  }
+
+  getCurrentLevel(): number {
+    return this.currentLevel;
+  }
+
+  createHeading(text: string, className?: string): HTMLHeadingElement {
+    const level = Math.min(this.currentLevel, 6) as 1 | 2 | 3 | 4 | 5 | 6;
+    const heading = document.createElement(`h${level}`);
+    heading.textContent = text;
+    if (className) heading.className = className;
+    return heading;
+  }
+
+  increaseLevel(): void {
+    if (this.currentLevel < 6) {
+      this.currentLevel++;
+    }
+  }
+
+  decreaseLevel(): void {
+    if (this.currentLevel > 1) {
+      this.currentLevel--;
+    }
+  }
+
+  setLevel(level: 1 | 2 | 3 | 4 | 5 | 6): void {
+    this.currentLevel = level;
+  }
+}
+
+// ─── Initialize Skip Link and SR Announcer ─────────────────────────────────
+
+export function initializeAccessibility(): void {
+  // Add skip link if not present
+  if (!document.querySelector('.skip-link')) {
+    const skipLink = createSkipLink('main-content', 'Skip to main content');
+    document.body.insertBefore(skipLink, document.body.firstChild);
+  }
+
+  // Add screen reader announcement region if not present
+  if (!document.getElementById('sr-announcements')) {
+    const announcer = document.createElement('div');
+    announcer.id = 'sr-announcements';
+    announcer.className = 'visually-hidden';
+    announcer.setAttribute('role', 'status');
+    announcer.setAttribute('aria-live', 'polite');
+    announcer.setAttribute('aria-atomic', 'true');
+    document.body.appendChild(announcer);
+  }
+}
+
+// ─── Create Navigation List ────────────────────────────────────────────────
+
+export interface NavLinkItem {
+  text: string;
+  href: string;
+  active?: boolean;
+  srOnly?: string;  // Screen reader only text
+  children?: NavLinkItem[];
+}
+
+export function createNavList(
+  items: NavLinkItem[],
+  className?: string
+): HTMLUListElement {
+  const ul = document.createElement('ul');
+  if (className) ul.className = className;
+  ul.setAttribute('role', 'list');
+
+  items.forEach(item => {
+    const li = document.createElement('li');
+
+    const link = document.createElement('a');
+    link.href = item.href;
+    link.setAttribute('data-route', '');
+
+    if (item.active) {
+      link.setAttribute('aria-current', 'page');
+    }
+
+    link.textContent = item.text;
+
+    if (item.srOnly) {
+      const srText = createSrOnlyText(item.srOnly);
+      link.appendChild(srText);
+    }
+
+    li.appendChild(link);
+
+    if (item.children && item.children.length > 0) {
+      const subNav = createNavList(item.children);
+      li.appendChild(subNav);
+    }
+
+    ul.appendChild(li);
+  });
+
+  return ul;
+}
+
+// ─── Breadcrumb Component ──────────────────────────────────────────────────
+
+export interface BreadcrumbItem {
+  text: string;
+  href?: string;
+  current?: boolean;
+}
+
+export function createBreadcrumbNav(
+  items: BreadcrumbItem[],
+  className?: string
+): HTMLElement {
+  const nav = document.createElement('nav');
+  nav.setAttribute('aria-label', 'Breadcrumb');
+  if (className) nav.className = className;
+
+  const ol = document.createElement('ol');
+  ol.className = 'breadcrumb__list';
+  ol.setAttribute('itemscope', '');
+  ol.setAttribute('itemtype', 'https://schema.org/BreadcrumbList');
+
+  items.forEach((item, index) => {
+    const li = document.createElement('li');
+    li.className = 'breadcrumb__item';
+    li.setAttribute('itemprop', 'itemListElement');
+    li.setAttribute('itemscope', '');
+    li.setAttribute('itemtype', 'https://schema.org/ListItem');
+
+    if (item.current || !item.href) {
+      const span = createElement('span', 'breadcrumb__current', item.text);
+      span.setAttribute('itemprop', 'name');
+      span.setAttribute('aria-current', 'page');
+      li.appendChild(span);
+    } else {
+      const link = document.createElement('a');
+      link.href = item.href;
+      link.className = 'breadcrumb__link';
+      link.setAttribute('itemprop', 'item');
+      link.setAttribute('data-route', '');
+
+      const name = createElement('span', undefined, item.text);
+      name.setAttribute('itemprop', 'name');
+      link.appendChild(name);
+      li.appendChild(link);
+    }
+
+    const position = document.createElement('meta');
+    position.setAttribute('itemprop', 'position');
+    position.setAttribute('content', String(index + 1));
+    li.appendChild(position);
+
+    ol.appendChild(li);
+  });
+
+  nav.appendChild(ol);
+  return nav;
+}
