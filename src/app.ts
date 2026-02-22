@@ -25,6 +25,7 @@ import { initHorizontalScroll, initVelocitySkew } from './animations/horizontal-
 import { initAllMarquees } from './animations/marquee';
 import { initImageDistortion, destroyImageDistortion } from './animations/image-distortion';
 import { CursorTrail, initMagneticGlow, initRippleEffect } from './animations/cursor-trail';
+// ─── Page Imports ────────────────────────────────────────────────────────────
 import { renderHomePage, renderPropertiesPage, renderAboutPage, renderContactPage, renderPrivacyPage, renderTermsPage, renderFAQPage, renderComparisonPage, renderFavoritesPage, savePropertiesScrollPosition, getPropertiesScrollPosition, parseFiltersFromURL, render404Page } from './pages';
 import { renderPropertyDetailPage, setupPropertyDetailSEO } from './pages/property-detail';
 import { renderEnhanced404Page, initGlobalErrorHandler, setup404PageSEO, logError } from './pages/404';
@@ -402,12 +403,10 @@ export class App {
       return renderEnhanced404Page();
     } else if (path.startsWith('/properties/')) {
       const idOrSlug = path.replace('/properties/', '');
-      // Check if it's a district slug (area-specific landing page)
       const districtSlugs = getAllDistrictSlugs();
       if (districtSlugs.includes(idOrSlug)) {
         return renderDistrictPage(idOrSlug);
       }
-      // Otherwise it's a property ID
       return renderPropertyDetailPage(idOrSlug);
     } else if (path === '/about') {
       return renderAboutPage();
@@ -427,7 +426,6 @@ export class App {
       return renderProjectComparePage();
     } else if (path.startsWith('/projects/')) {
       const projectId = path.replace('/projects/', '');
-      // Use the comprehensive project detail page with all sections
       return renderComprehensiveProjectDetailPage(projectId);
     } else if (path === '/compare') {
       return renderComparisonPage();
@@ -514,7 +512,6 @@ export class App {
     } else if (path === '/testimonials') {
       return renderTestimonialsPage();
     }
-    // 404 for unknown routes - use enhanced version with error logging
     return renderEnhanced404Page();
   }
 
