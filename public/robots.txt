@@ -215,6 +215,26 @@ Crawl-delay: 5
 Allow: /
 
 # ===============================================================================
+# Block Old/Legacy URLs (from previous site version - prevent 404 crawls)
+# ===============================================================================
+
+# Old CMS/template patterns
+Disallow: /cgi-bin/
+Disallow: /en-new/
+Disallow: /estate_agent/
+Disallow: /estate_property/
+Disallow: /property_city/
+Disallow: /user/
+Disallow: /langs/
+Disallow: /payment
+Disallow: /properties-standard-list/
+Disallow: /compare-properties
+
+# Template variables (should never be crawled)
+Disallow: /*[locale]*
+Disallow: /search/*
+
+# ===============================================================================
 # Block Aggressive/Unwanted Bots
 # ===============================================================================
 
