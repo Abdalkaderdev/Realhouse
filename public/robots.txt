@@ -281,11 +281,6 @@ Allow: /properties?beds=*
 
 Sitemap: https://realhouseiq.com/sitemap-index.xml
 Sitemap: https://realhouseiq.com/sitemap.xml
-Sitemap: https://realhouseiq.com/sitemap-pages.xml
-Sitemap: https://realhouseiq.com/sitemap-properties.xml
-Sitemap: https://realhouseiq.com/sitemap-projects.xml
-Sitemap: https://realhouseiq.com/sitemap-blog.xml
-Sitemap: https://realhouseiq.com/sitemap-images.xml
 
 # ===============================================================================
 # Host Directive (Preferred Domain)

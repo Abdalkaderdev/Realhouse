@@ -10,8 +10,6 @@
 
   Sitemaps included:
   - sitemap.xml          : Main sitemap (English - default)
-  - sitemap-ar.xml       : Arabic language pages
-  - sitemap-ckb.xml      : Kurdish (Sorani) language pages
   - sitemap-pages.xml    : Static pages (Home, About, Contact, FAQ, etc.)
   - sitemap-properties.xml: All property listings with images
   - sitemap-projects.xml  : All development projects with images
@@ -27,18 +25,6 @@
   <!-- Main Sitemap - English (default) with all pages -->
   <sitemap>
     <loc>https://realhouseiq.com/sitemap.xml</loc>
-    <lastmod>2026-02-22</lastmod>
-  </sitemap>
-
-  <!-- Arabic Language Sitemap -->
-  <sitemap>
-    <loc>https://realhouseiq.com/sitemap-ar.xml</loc>
-    <lastmod>2026-02-22</lastmod>
-  </sitemap>
-
-  <!-- Kurdish (Sorani) Language Sitemap -->
-  <sitemap>
-    <loc>https://realhouseiq.com/sitemap-ckb.xml</loc>
     <lastmod>2026-02-22</lastmod>
   </sitemap>
 
