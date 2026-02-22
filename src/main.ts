@@ -44,13 +44,8 @@ document.documentElement.classList.add('fonts-loading');
 // 2. Inject image styles to prevent CLS
 injectImageStyles();
 
-// 3. Preconnect to critical origins for faster LCP
-const criticalOrigins = [
-  'https://fonts.googleapis.com',
-  'https://fonts.gstatic.com',
-  'https://images.unsplash.com'
-];
-criticalOrigins.forEach(origin => preconnectToCDN(origin));
+// 3. Preconnect to critical origins - HANDLED IN HTML (index.html) to avoid duplication
+// Static preconnects in HTML are faster than dynamic JS ones
 
 // 4. Initialize font loading (async, non-blocking)
 initFontLoading().then(() => {

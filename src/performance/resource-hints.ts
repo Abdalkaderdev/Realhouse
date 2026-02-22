@@ -24,18 +24,16 @@ const preloadedResources = new Set<string>();
 // Critical Origins for Real Estate Site
 // ─────────────────────────────────────────────────────────────────────────────
 
-const CRITICAL_ORIGINS = [
-  'https://fonts.googleapis.com',
-  'https://fonts.gstatic.com',
-  'https://images.unsplash.com',
-  'https://www.google-analytics.com',
-  'https://www.googletagmanager.com',
+// Critical origins are already preconnected in index.html
+// Only add origins here that aren't in the static HTML
+const CRITICAL_ORIGINS: string[] = [
+  // fonts.googleapis.com, fonts.gstatic.com, images.unsplash.com are in index.html
+  // Analytics origins removed - analytics is not active
 ];
 
-const CDN_ORIGINS = [
-  'https://cdn.jsdelivr.net',
-  'https://unpkg.com',
-  'https://cdnjs.cloudflare.com',
+// CDN origins - only add if actually used in the app
+const CDN_ORIGINS: string[] = [
+  // Removed - not actively using external CDNs
 ];
 
 // ─────────────────────────────────────────────────────────────────────────────
@@ -96,11 +94,8 @@ export function preconnectToCDN(origin: string, crossorigin: boolean = true): vo
 
     preconnectedOrigins.add(normalizedOrigin);
 
-    // Also add dns-prefetch as fallback for older browsers
-    const dnsLink = document.createElement('link');
-    dnsLink.rel = 'dns-prefetch';
-    dnsLink.href = normalizedOrigin;
-    document.head.appendChild(dnsLink);
+    // Note: dns-prefetch is redundant when preconnect is present
+    // Modern browsers use preconnect; dns-prefetch adds unnecessary connections
 
   } catch (e) {
     console.warn(`[Resource Hints] Invalid origin: ${origin}`);

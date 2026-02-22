@@ -124,13 +124,8 @@ export function initPerformance(): void {
   // Inject critical CSS for images (prevents CLS)
   injectImageStyles();
 
-  // Preconnect to critical CDNs immediately
-  const criticalOrigins = [
-    'https://fonts.googleapis.com',
-    'https://fonts.gstatic.com',
-    'https://images.unsplash.com'
-  ];
-  criticalOrigins.forEach(origin => preconnectToCDN(origin));
+  // Preconnect to critical CDNs - HANDLED IN HTML (index.html)
+  // Static preconnects are faster and avoid the "more than 4 connections" warning
 
   // Initialize font loading (prevents CLS from font swap)
   initFontLoading().catch(() => {
