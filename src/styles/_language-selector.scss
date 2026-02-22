@@ -7,7 +7,7 @@
   position: relative;
   display: flex;
   align-items: center;
-  z-index: 1001; // Higher than nav (1000)
+  z-index: 1200; // Higher than comparison bar (1100)
 
   // Current language button
   &__current {
@@ -62,6 +62,7 @@
     position: absolute;
     top: calc(100% + 0.5rem);
     right: 0;
+    z-index: 1250; // Above parent and comparison bar
     min-width: 160px;
     padding: 0.5rem;
     background: var(--c-surface);

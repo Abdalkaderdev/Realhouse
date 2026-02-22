@@ -338,6 +338,7 @@ em {
   z-index: 1000;
   padding: var(--space-6) 0;
   transition: background 0.4s, padding 0.4s, backdrop-filter 0.4s;
+  overflow-x: hidden; // Prevent horizontal scrollbar
 
   &.scrolled {
     padding: var(--space-3) 0;
@@ -1027,6 +1028,10 @@ em {
   align-items: center;
   justify-content: center;
   overflow: hidden;
+
+  @media (max-width: 640px) and (max-height: 700px) {
+    min-height: 400px;
+  }
 
   &__background {
     position: absolute;
