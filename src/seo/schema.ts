@@ -60,7 +60,7 @@ const COMPANY_INFO = {
   legalName: 'Real House Real Estate LLC',
   url: BASE_URL,
   logo: `${BASE_URL}/logo.png`,
-  foundingDate: '2018',
+  foundingDate: '2020',
   founders: ['Abdalkader', 'Mahmood'],
   numberOfEmployees: '10-50',
   slogan: 'Your Trusted Partner in Luxury Real Estate',
@@ -68,7 +68,7 @@ const COMPANY_INFO = {
   telephone: ['+964-750-792-2138', '+964-751-441-5003'],
   email: 'info@realhouseiq.com',
   address: {
-    streetAddress: 'Dream City',
+    streetAddress: 'Queen Tower, Erbil',
     addressLocality: 'Erbil',
     addressRegion: 'Kurdistan Region',
     postalCode: '44001',
