@@ -25,7 +25,8 @@ import { initHorizontalScroll, initVelocitySkew } from './animations/horizontal-
 import { initAllMarquees } from './animations/marquee';
 import { initImageDistortion, destroyImageDistortion } from './animations/image-distortion';
 import { CursorTrail, initMagneticGlow, initRippleEffect } from './animations/cursor-trail';
-import { renderHomePage, renderPropertiesPage, renderAboutPage, renderContactPage, renderPropertyDetailPage, renderPrivacyPage, renderTermsPage, renderFAQPage, renderComparisonPage, renderFavoritesPage, savePropertiesScrollPosition, getPropertiesScrollPosition, parseFiltersFromURL, render404Page } from './pages';
+import { renderHomePage, renderPropertiesPage, renderAboutPage, renderContactPage, renderPrivacyPage, renderTermsPage, renderFAQPage, renderComparisonPage, renderFavoritesPage, savePropertiesScrollPosition, getPropertiesScrollPosition, parseFiltersFromURL, render404Page } from './pages';
+import { renderPropertyDetailPage, setupPropertyDetailSEO } from './pages/property-detail';
 import { renderEnhanced404Page, initGlobalErrorHandler, setup404PageSEO, logError } from './pages/404';
 import { renderProjectsPage, renderProjectDetailPage } from './pages/projects';
 import { renderComprehensiveProjectDetailPage } from './pages/project-detail';
@@ -33,13 +34,21 @@ import { renderProjectComparePage, setupProjectComparePageSEO } from './pages/co
 import { initProjectComparisonBar, updateProjectComparisonBar } from './components/project-compare';
 import { renderBlogPage, renderBlogPostPage, setupBlogPageSEO, setupBlogPostSEO } from './pages/blog';
 import { renderServicesPage, renderServiceDetailPage, setupServicesPageSEO, setupServiceDetailPageSEO } from './pages/services';
+import { renderServicesDirectoryPage, renderServiceCategoryPage, setupServicesDirectoryPageSEO, setupServiceCategoryPageSEO, getCategoryBySlug } from './pages/services-directory';
 import { renderLocationsPage, renderDistrictPage } from './pages/locations';
 import { renderAreaPage, getAllAreaSlugs, setupAreaPageSEO } from './pages/areas';
 import { renderBuyPage, renderRentPage, renderInvestPage, renderLuxuryPage, setupBuyPageSEO, setupRentPageSEO, setupInvestPageSEO, setupLuxuryPageSEO } from './pages/hub-pages';
 import { renderSitemapPage, setupSitemapPageSEO } from './pages/sitemap-page';
 import { renderGalleryPage, setupGalleryPageSEO } from './pages/gallery';
+import { renderNeighborhoodsPage, renderNeighborhoodDetailPage, getAllNeighborhoodSlugs, getNeighborhoodBySlug, setupNeighborhoodsPageSEO, setupNeighborhoodDetailPageSEO } from './pages/neighborhood-guide';
+import { renderGuidePage, setupGuidePageSEO } from './pages/guides';
+import { renderMarketReportPage, setupMarketReportPageSEO } from './pages/market-report';
+import { renderDevelopersPage, renderDeveloperDetailPage, setupDevelopersPageSEO, setupDeveloperDetailPageSEO, getAllDeveloperSlugs } from './pages/developers';
+import { renderListPropertyPage, setupListPropertyPageSEO } from './pages/list-property';
+import { getGuideBySlug, getMarketReportBySlug } from './data/guides';
+import { getDeveloperBySlug } from './data/developers';
 import { getDistrictBySlug, getPropertyCountByDistrict, getAllDistrictSlugs } from './data/locations';
-import { getPropertyById } from './data/properties';
+import { getPropertyById, getPropertyBySlug, generatePropertySlug } from './data/properties';
 import { getServiceBySlug } from './data/services';
 import { getBlogPostBySlug } from './data/blog';
 import { getProjectById } from './data/projects';
@@ -429,8 +438,39 @@ export class App {
     } else if (path.startsWith('/services/')) {
       const slug = path.replace('/services/', '');
       return renderServiceDetailPage(slug);
+    } else if (path === '/services-directory') {
+      return renderServicesDirectoryPage();
+    } else if (path.startsWith('/services-directory/')) {
+      const slug = path.replace('/services-directory/', '');
+      return renderServiceCategoryPage(slug);
     } else if (path === '/gallery') {
       return renderGalleryPage();
+    } else if (path === '/neighborhoods') {
+      return renderNeighborhoodsPage();
+    } else if (path.startsWith('/neighborhoods/')) {
+      const slug = path.replace('/neighborhoods/', '');
+      const neighborhoodSlugs = getAllNeighborhoodSlugs();
+      if (neighborhoodSlugs.includes(slug)) {
+        return renderNeighborhoodDetailPage(slug);
+      }
+      return renderEnhanced404Page();
+    } else if (path.startsWith('/guides/')) {
+      const slug = path.replace('/guides/', '');
+      return renderGuidePage(slug);
+    } else if (path.startsWith('/market-report/')) {
+      const slug = path.replace('/market-report/', '');
+      return renderMarketReportPage(slug);
+    } else if (path === '/developers') {
+      return renderDevelopersPage();
+    } else if (path.startsWith('/developers/')) {
+      const slug = path.replace('/developers/', '');
+      const developerSlugs = getAllDeveloperSlugs();
+      if (developerSlugs.includes(slug)) {
+        return renderDeveloperDetailPage(slug);
+      }
+      return renderEnhanced404Page();
+    } else if (path === '/list-property') {
+      return renderListPropertyPage();
     }
     // 404 for unknown routes - use enhanced version with error logging
     return renderEnhanced404Page();
@@ -454,6 +494,7 @@ export class App {
       '/compare': 'Compare Properties Erbil | Side-by-Side Analysis',
       '/blog': 'Erbil Real Estate Blog | Market Insights, Buying Guides',
       '/services': 'Premium Real Estate Services Erbil | Expert Agents',
+      '/services-directory': 'Home Services Directory Erbil | Find Trusted Providers',
       '/services/property-sales': 'Sell Property Erbil | Get Top Value for Your Home',
       '/services/property-buying': 'Buy Property Erbil | Expert Real Estate Agents Kurdistan',
       '/services/property-management': 'Property Management Erbil | Trusted Rental Services',
@@ -464,8 +505,19 @@ export class App {
       '/rent': 'Rent Property Erbil | Premium Apartments & Villas',
       '/invest': 'Investment Properties Erbil | High ROI Opportunities',
       '/luxury': 'Luxury Properties Erbil | Exclusive Villas & Penthouses',
-      '/sitemap': 'Site Map | Real House Erbil | All Properties & Pages'
+      '/sitemap': 'Site Map | Real House Erbil | All Properties & Pages',
+      '/neighborhoods': 'Erbil Neighborhood Guides | Find Your Perfect Area | Real House',
+      '/developers': 'Real Estate Developers Erbil | Kurdistan Property Companies',
+      '/list-property': 'List Your Property | Sell or Rent Property Erbil | Real House'
     };
+    if (path.startsWith('/neighborhoods/')) {
+      const slug = path.replace('/neighborhoods/', '');
+      const neighborhood = getNeighborhoodBySlug(slug);
+      if (neighborhood) {
+        return neighborhood.metaTitle;
+      }
+      return 'Erbil Neighborhood Guide | Real House';
+    }
     if (path.startsWith('/services/')) {
       const slug = path.replace('/services/', '');
       const service = getServiceBySlug(slug);
@@ -473,6 +525,14 @@ export class App {
         return service.metaTitle;
       }
       return 'Premium Real Estate Service | Real House Erbil';
+    }
+    if (path.startsWith('/services-directory/')) {
+      const slug = path.replace('/services-directory/', '');
+      const category = getCategoryBySlug(slug);
+      if (category) {
+        return category.metaTitle;
+      }
+      return 'Home Services Directory | Real House Erbil';
     }
     if (path.startsWith('/areas/')) {
       const slug = path.replace('/areas/', '');
@@ -491,8 +551,8 @@ export class App {
         const count = getPropertyCountByDistrict(district.name);
         return `${district.name} Properties Erbil | ${count}+ Listings | Real House`;
       }
-      // Otherwise it's a property detail page
-      const property = getPropertyById(idOrSlug);
+      // Otherwise it's a property detail page - support both ID and slug lookup
+      const property = getPropertyBySlug(idOrSlug) || getPropertyById(idOrSlug);
       if (property) {
         // Dynamic title: Property Type + Location + Price (max 60 chars)
         // Use power words and location for CTR
@@ -524,6 +584,30 @@ export class App {
       }
       return 'Erbil Real Estate Insights | Real House Blog';
     }
+    if (path.startsWith('/guides/')) {
+      const slug = path.replace('/guides/', '');
+      const guide = getGuideBySlug(slug);
+      if (guide) {
+        return guide.metaTitle;
+      }
+      return 'Property Guide | Real House Erbil Kurdistan';
+    }
+    if (path.startsWith('/market-report/')) {
+      const slug = path.replace('/market-report/', '');
+      const report = getMarketReportBySlug(slug);
+      if (report) {
+        return report.metaTitle;
+      }
+      return 'Market Report | Real House Erbil Kurdistan';
+    }
+    if (path.startsWith('/developers/')) {
+      const slug = path.replace('/developers/', '');
+      const developer = getDeveloperBySlug(slug);
+      if (developer) {
+        return developer.metaTitle;
+      }
+      return 'Developer Profile | Real House Erbil Kurdistan';
+    }
     // Return 404 title for unknown routes
     return titles[path] || 'Page Not Found | Real House Erbil Kurdistan';
   }
@@ -545,12 +629,24 @@ export class App {
       '/compare': 'Compare Erbil properties side-by-side: prices, sizes, features & locations. Make confident decisions with Real House comparison tool. Try it free!',
       '/blog': 'Expert Erbil real estate insights: 2025 market trends, buying guides, investment tips & neighborhood reviews. Stay informed with Real House professionals.',
       '/services': 'Premium real estate services in Erbil: buying, selling, renting & property management. Expert agents, proven results. Get your free consultation today!',
+      '/services-directory': 'Find trusted home service providers in Erbil: interior design, cleaning, electrical, plumbing, landscaping, moving, security & more. Get free quotes today!',
       '/buy': 'Find your dream property in Erbil. Luxury villas, modern apartments & penthouses for sale in Kurdistan. Expert buying guidance. Schedule free viewing now!',
       '/rent': 'Rent premium apartments & villas in Erbil. Furnished & unfurnished options in top Kurdistan locations. Trusted by 500+ tenants. Inquire today!',
       '/invest': 'High ROI investment properties in Erbil. Off-plan developments & rental income opportunities in Kurdistan. Expert advice for smart investors. Learn more!',
       '/luxury': 'Exclusive luxury properties in Erbil. Premium villas, penthouses & apartments in Kurdistan\'s finest locations. Experience elite living. Book private viewing!',
-      '/sitemap': 'Navigate Real House Erbil website. Find all properties, projects, services & blog articles. Your complete guide to Kurdistan real estate.'
+      '/sitemap': 'Navigate Real House Erbil website. Find all properties, projects, services & blog articles. Your complete guide to Kurdistan real estate.',
+      '/neighborhoods': 'Explore Erbil\'s premier neighborhoods. Comprehensive guides to Empire World, Dream City, Ankawa, Gulan & more. Find your perfect area with Real House experts.',
+      '/developers': 'Discover leading real estate developers in Erbil, Kurdistan. From Empire World (DAMAC) to local pioneers. Compare developers, projects, and find your ideal property partner.',
+      '/list-property': 'List your property for free on Real House Erbil. Sell or rent apartments, villas, land in Kurdistan. Reach thousands of buyers. Submit your listing today!'
     };
+    if (path.startsWith('/neighborhoods/')) {
+      const slug = path.replace('/neighborhoods/', '');
+      const neighborhood = getNeighborhoodBySlug(slug);
+      if (neighborhood) {
+        return neighborhood.metaDescription;
+      }
+      return 'Comprehensive neighborhood guide for Erbil, Kurdistan. Property prices, amenities, lifestyle & featured listings. Expert local knowledge from Real House.';
+    }
     if (path.startsWith('/services/')) {
       const slug = path.replace('/services/', '');
       const service = getServiceBySlug(slug);
@@ -558,6 +654,14 @@ export class App {
         return service.metaDescription;
       }
       return 'Premium real estate services in Erbil from Real House. Expert guidance for buyers, sellers & investors in Kurdistan. Get your free consultation today!';
+    }
+    if (path.startsWith('/services-directory/')) {
+      const slug = path.replace('/services-directory/', '');
+      const category = getCategoryBySlug(slug);
+      if (category) {
+        return category.metaDescription;
+      }
+      return 'Find trusted home service providers in Erbil. Quality professionals for your property needs in Kurdistan. Get free quotes today!';
     }
     if (path.startsWith('/properties/')) {
       const idOrSlug = path.replace('/properties/', '');
@@ -567,7 +671,8 @@ export class App {
         const count = getPropertyCountByDistrict(district.name);
         return `Discover ${count}+ properties in ${district.name}, Erbil. Luxury villas, apartments & penthouses. Trusted by 500+ buyers. Schedule your free viewing today!`;
       }
-      const property = getPropertyById(idOrSlug);
+      // Support both ID and slug lookup
+      const property = getPropertyBySlug(idOrSlug) || getPropertyById(idOrSlug);
       if (property) {
         // Dynamic description with price, location, bedrooms, size (150-160 chars with CTA)
         const price = property.price > 0 ? `$${property.price.toLocaleString()}` : 'Price on request';
@@ -606,6 +711,30 @@ export class App {
       }
       return 'Expert Erbil real estate insights from Real House professionals. Market trends, buying guides & investment tips. Stay informed!';
     }
+    if (path.startsWith('/guides/')) {
+      const slug = path.replace('/guides/', '');
+      const guide = getGuideBySlug(slug);
+      if (guide) {
+        return guide.metaDescription;
+      }
+      return 'Comprehensive property guides for Erbil, Kurdistan. Expert advice for buyers, investors & renters from Real House.';
+    }
+    if (path.startsWith('/market-report/')) {
+      const slug = path.replace('/market-report/', '');
+      const report = getMarketReportBySlug(slug);
+      if (report) {
+        return report.metaDescription;
+      }
+      return 'Erbil real estate market analysis and reports from Real House. Data-driven insights for property investors.';
+    }
+    if (path.startsWith('/developers/')) {
+      const slug = path.replace('/developers/', '');
+      const developer = getDeveloperBySlug(slug);
+      if (developer) {
+        return developer.metaDescription;
+      }
+      return 'Discover real estate developers in Erbil, Kurdistan. Company profiles, project portfolios, and contact information. Partner with Real House for expert guidance.';
+    }
     return descriptions[path] || descriptions['/'];
   }
 
@@ -613,8 +742,9 @@ export class App {
     // Handle property detail pages with comprehensive SEO for maximum rich results
     // Includes: RealEstateListing, Residence, Product, Offer, ImageGallery, VideoObject, Place schemas
     if (path.startsWith('/properties/')) {
-      const propertyId = path.replace('/properties/', '');
-      const property = getPropertyById(propertyId);
+      const idOrSlug = path.replace('/properties/', '');
+      // Support both ID and slug lookup
+      const property = getPropertyBySlug(idOrSlug) || getPropertyById(idOrSlug);
 
       if (property) {
         // Use comprehensive SEO with all schema types
@@ -623,6 +753,8 @@ export class App {
         applyPropertySocialMeta(property);
         // Add additional meta tags
         this.updatePropertyMeta(property);
+        // Setup property detail specific SEO
+        setupPropertyDetailSEO(idOrSlug);
         return;
       }
     }
@@ -707,6 +839,15 @@ export class App {
       applyPageSocialMeta('blog');
     } else if (path === '/services') {
       setupServicesPageSEO();
+    } else if (path === '/services-directory') {
+      setupServicesDirectoryPageSEO();
+    } else if (path.startsWith('/services-directory/')) {
+      const slug = path.replace('/services-directory/', '');
+      const category = getCategoryBySlug(slug);
+      if (category) {
+        setupServiceCategoryPageSEO(category);
+        return;
+      }
     } else if (path === '/projects') {
       applyPageSocialMeta('projects');
     } else if (path === '/favorites') {
@@ -714,6 +855,42 @@ export class App {
     } else if (path === '/gallery') {
       // Gallery page with ImageGallery and CollectionPage schemas
       setupGalleryPageSEO();
+    } else if (path === '/neighborhoods') {
+      setupNeighborhoodsPageSEO();
+    } else if (path.startsWith('/neighborhoods/')) {
+      const slug = path.replace('/neighborhoods/', '');
+      const neighborhood = getNeighborhoodBySlug(slug);
+      if (neighborhood) {
+        setupNeighborhoodDetailPageSEO(neighborhood);
+        return;
+      }
+    } else if (path.startsWith('/guides/')) {
+      // Guide pages with Article and FAQ schemas
+      const slug = path.replace('/guides/', '');
+      const guide = getGuideBySlug(slug);
+      if (guide) {
+        setupGuidePageSEO(guide);
+        return;
+      }
+    } else if (path.startsWith('/market-report/')) {
+      // Market report pages with Report schema
+      const slug = path.replace('/market-report/', '');
+      const report = getMarketReportBySlug(slug);
+      if (report) {
+        setupMarketReportPageSEO(report);
+        return;
+      }
+    } else if (path === '/developers') {
+      setupDevelopersPageSEO();
+    } else if (path.startsWith('/developers/')) {
+      const slug = path.replace('/developers/', '');
+      const developer = getDeveloperBySlug(slug);
+      if (developer) {
+        setupDeveloperDetailPageSEO(developer);
+        return;
+      }
+    } else if (path === '/list-property') {
+      setupListPropertyPageSEO();
     } else {
       // Clear dynamic schemas for other pages
       clearDynamicSchemas();
@@ -858,8 +1035,9 @@ export class App {
     // Robots directive
     this.updateOrCreateMeta('name', 'robots', 'index, follow, max-image-preview:large');
 
-    // Canonical URL
-    const canonicalUrl = `https://realhouseiq.com/properties/${property.id}`;
+    // Canonical URL using slug for SEO-friendly URLs
+    const slug = generatePropertySlug(property);
+    const canonicalUrl = `https://realhouseiq.com/properties/${slug}`;
     this.updateOrCreateLink('canonical', canonicalUrl);
   }
 
@@ -1079,6 +1257,76 @@ export class App {
       scrollReveal('.property-card', { y: 60, stagger: 0.1, trigger: '.area-page__properties-grid' });
       scrollReveal('.area-page__sidebar', { y: 40 });
       scrollReveal('.area-page__bottom-cta', { y: 40 });
+    } else if (path === '/neighborhoods') {
+      // Neighborhoods listing page animations
+      scrollReveal('.neighborhoods-page__hero-content', { y: 40 });
+      scrollReveal('.neighborhoods-page__intro', { y: 40 });
+      scrollReveal('.neighborhood-card', { y: 60, stagger: 0.1, trigger: '.neighborhoods-page__grid' });
+      scrollReveal('.neighborhoods-page__cta', { y: 40 });
+    } else if (path.startsWith('/neighborhoods/')) {
+      // Neighborhood detail page animations
+      scrollReveal('.neighborhood-detail__hero-content', { y: 40 });
+      scrollReveal('.neighborhood-detail__overview', { y: 40 });
+      scrollReveal('.neighborhood-detail__highlights', { y: 40 });
+      scrollReveal('.neighborhood-detail__price-card', { y: 40, stagger: 0.1 });
+      scrollReveal('.neighborhood-detail__amenity-card', { y: 40, stagger: 0.1 });
+      scrollReveal('.neighborhood-detail__transport-card', { y: 40, stagger: 0.1 });
+      scrollReveal('.neighborhood-detail__lifestyle', { y: 40 });
+      scrollReveal('.neighborhood-detail__map', { y: 40 });
+      scrollReveal('.property-card--compact', { y: 60, stagger: 0.1 });
+      scrollReveal('.project-card--compact', { y: 60, stagger: 0.1 });
+      scrollReveal('.neighborhood-detail__sidebar', { y: 40 });
+      scrollReveal('.neighborhood-detail__cta', { y: 40 });
+      scrollReveal('.neighborhood-detail__other', { y: 40 });
+    } else if (path.startsWith('/guides/')) {
+      // Guide page animations
+      scrollReveal('.guide-page__hero-content', { y: 40 });
+      scrollReveal('.guide-page__intro', { y: 40 });
+      scrollReveal('.guide-page__section', { y: 40, stagger: 0.1 });
+      scrollReveal('.guide-page__faq', { y: 40 });
+      scrollReveal('.guide-page__related', { y: 40 });
+      scrollReveal('.guide-page__sidebar', { y: 40 });
+      scrollReveal('.guide-page__bottom-cta', { y: 40 });
+    } else if (path.startsWith('/market-report/')) {
+      // Market report page animations
+      scrollReveal('.market-report__hero-content', { y: 40 });
+      scrollReveal('.market-report__intro', { y: 40 });
+      scrollReveal('.market-report__section', { y: 40, stagger: 0.1 });
+      scrollReveal('.market-report__key-findings', { y: 40 });
+      scrollReveal('.market-report__outlook', { y: 40 });
+      scrollReveal('.market-report__sidebar', { y: 40 });
+      scrollReveal('.market-report__bottom-cta', { y: 40 });
+    } else if (path === '/developers') {
+      // Developers listing page animations
+      scrollReveal('.developers-page__header', { y: 40 });
+      scrollReveal('.developers-page__stats', { y: 40 });
+      scrollReveal('.developer-card', { y: 60, stagger: 0.1, trigger: '.developers-page__grid' });
+      scrollReveal('.developers-page__cta', { y: 40 });
+    } else if (path.startsWith('/developers/')) {
+      // Developer detail page animations
+      scrollReveal('.developer-detail__hero-content', { y: 40 });
+      scrollReveal('.developer-detail__section', { y: 40, stagger: 0.1 });
+      scrollReveal('.developer-detail__achievement', { y: 30, stagger: 0.1 });
+      scrollReveal('.developer-detail__project-card', { y: 40, stagger: 0.1 });
+      scrollReveal('.developer-detail__sidebar', { y: 40 });
+      scrollReveal('.developer-detail__back', { y: 30 });
+    } else if (path === '/services-directory') {
+      // Services directory page animations
+      scrollReveal('.services-dir__hero-content', { y: 40 });
+      scrollReveal('.services-dir__category-card', { y: 60, stagger: 0.1, trigger: '.services-dir__categories-grid' });
+      scrollReveal('.services-dir__featured-providers', { y: 40 });
+      scrollReveal('.services-dir__provider-card', { y: 40, stagger: 0.1 });
+      scrollReveal('.services-dir__cta', { y: 40 });
+    } else if (path.startsWith('/services-directory/')) {
+      // Service category page animations
+      scrollReveal('.services-dir__hero-content', { y: 40 });
+      scrollReveal('.services-dir__why-need', { y: 40 });
+      scrollReveal('.services-dir__benefits-list', { y: 40 });
+      scrollReveal('.services-dir__provider-card', { y: 40, stagger: 0.1 });
+      scrollReveal('.services-dir__faq-item', { y: 30, stagger: 0.08 });
+      scrollReveal('.services-dir__quote-form', { y: 40 });
+      scrollReveal('.services-dir__sidebar', { y: 40 });
+      scrollReveal('.services-dir__related-services', { y: 40 });
     }
   }
 

@@ -1,0 +1,1424 @@
+// ===============================================================================
+// Neighborhood Guide Pages Styles
+// Comprehensive area information pages with local SEO optimization
+// ===============================================================================
+
+// ─── Variables ───────────────────────────────────────────────────────────────
+$neighborhoods-card-radius: 16px;
+$neighborhoods-section-spacing: 4rem;
+
+// ═══════════════════════════════════════════════════════════════════════════
+// Neighborhoods Listing Page - /neighborhoods
+// ═══════════════════════════════════════════════════════════════════════════
+
+.neighborhoods-page {
+  min-height: 100vh;
+
+  // ─── Hero Section ────────────────────────────────────────────────────────
+  &__hero {
+    position: relative;
+    min-height: 60vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-size: cover;
+    background-position: center;
+    padding: 6rem var(--container-pad) 4rem;
+    text-align: center;
+    color: #fff;
+
+    @media (min-width: 768px) {
+      min-height: 50vh;
+    }
+  }
+
+  &__hero-content {
+    max-width: 800px;
+  }
+
+  &__badge {
+    display: inline-block;
+    padding: 0.5rem 1rem;
+    background: rgba(255, 255, 255, 0.15);
+    backdrop-filter: blur(8px);
+    border-radius: 100px;
+    font-size: 0.875rem;
+    font-weight: 500;
+    margin-bottom: 1.5rem;
+  }
+
+  &__title {
+    font-family: var(--font-serif);
+    font-size: clamp(2rem, 5vw, 3.5rem);
+    font-weight: 600;
+    line-height: 1.1;
+    margin-bottom: 1rem;
+  }
+
+  &__subtitle {
+    font-size: 1.125rem;
+    opacity: 0.9;
+    line-height: 1.6;
+    max-width: 600px;
+    margin: 0 auto 2rem;
+
+    @media (min-width: 768px) {
+      font-size: 1.25rem;
+    }
+  }
+
+  &__stats {
+    display: flex;
+    justify-content: center;
+    gap: 2rem;
+    flex-wrap: wrap;
+  }
+
+  &__stat {
+    text-align: center;
+  }
+
+  &__stat-value {
+    display: block;
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: var(--c-gold);
+
+    @media (min-width: 768px) {
+      font-size: 2rem;
+    }
+  }
+
+  &__stat-label {
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    opacity: 0.8;
+  }
+
+  // ─── Breadcrumb ──────────────────────────────────────────────────────────
+  &__breadcrumb {
+    padding: 1rem var(--container-pad);
+    background: var(--c-surface-1);
+    border-bottom: 1px solid var(--c-border);
+
+    .breadcrumb {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      font-size: 0.875rem;
+      max-width: var(--container-max);
+      margin: 0 auto;
+
+      li {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+
+        &::after {
+          content: '/';
+          color: var(--c-text-muted);
+        }
+
+        &:last-child::after {
+          display: none;
+        }
+      }
+
+      a {
+        color: var(--c-text-muted);
+        text-decoration: none;
+        transition: color 0.2s;
+
+        &:hover {
+          color: var(--c-gold);
+        }
+      }
+
+      span[aria-current] {
+        color: var(--c-text);
+      }
+    }
+  }
+
+  // ─── Main Content ────────────────────────────────────────────────────────
+  &__main {
+    padding: 3rem var(--container-pad);
+
+    .container {
+      max-width: var(--container-max);
+      margin: 0 auto;
+    }
+  }
+
+  &__intro {
+    text-align: center;
+    max-width: 700px;
+    margin: 0 auto 3rem;
+  }
+
+  &__intro-title {
+    font-family: var(--font-serif);
+    font-size: clamp(1.5rem, 3vw, 2rem);
+    margin-bottom: 0.75rem;
+  }
+
+  &__intro-text {
+    color: var(--c-text-muted);
+    line-height: 1.7;
+  }
+
+  // ─── Neighborhoods Grid ──────────────────────────────────────────────────
+  &__grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 2rem;
+
+    @media (min-width: 640px) {
+      grid-template-columns: repeat(2, 1fr);
+    }
+
+    @media (min-width: 1024px) {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+
+  // ─── CTA Section ─────────────────────────────────────────────────────────
+  &__cta {
+    background: linear-gradient(135deg, var(--c-gold) 0%, var(--c-gold-dark) 100%);
+    padding: 4rem var(--container-pad);
+    text-align: center;
+    color: var(--c-bg);
+    margin-top: 4rem;
+  }
+
+  &__cta-content {
+    max-width: 600px;
+    margin: 0 auto;
+
+    h2 {
+      font-family: var(--font-serif);
+      font-size: clamp(1.5rem, 3vw, 2rem);
+      margin-bottom: 1rem;
+    }
+
+    p {
+      opacity: 0.9;
+      margin-bottom: 2rem;
+    }
+  }
+
+  &__cta-buttons {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    justify-content: center;
+
+    @media (min-width: 640px) {
+      flex-direction: row;
+    }
+
+    .btn--primary {
+      background: var(--c-bg);
+      color: var(--c-gold);
+
+      &:hover {
+        background: #fff;
+      }
+    }
+
+    .btn--secondary {
+      background: transparent;
+      border: 2px solid var(--c-bg);
+      color: var(--c-bg);
+
+      svg {
+        width: 20px;
+        height: 20px;
+      }
+
+      &:hover {
+        background: rgba(0, 0, 0, 0.1);
+      }
+    }
+  }
+}
+
+// ═══════════════════════════════════════════════════════════════════════════
+// Neighborhood Card Component
+// ═══════════════════════════════════════════════════════════════════════════
+
+.neighborhood-card {
+  background: var(--c-surface-2);
+  border-radius: $neighborhoods-card-radius;
+  overflow: hidden;
+  border: 1px solid var(--c-border);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+
+  &:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 16px 48px rgba(0, 0, 0, 0.2);
+
+    .neighborhood-card__image {
+      transform: scale(1.05);
+    }
+
+    .neighborhood-card__cta-icon {
+      transform: translateX(4px);
+    }
+  }
+
+  &__link {
+    display: block;
+    text-decoration: none;
+    color: inherit;
+  }
+
+  &__image-wrapper {
+    position: relative;
+    height: 200px;
+    overflow: hidden;
+  }
+
+  &__image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.6s ease;
+  }
+
+  &__overlay {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding: 1rem;
+    background: linear-gradient(transparent, rgba(0, 0, 0, 0.8));
+  }
+
+  &__price {
+    display: inline-block;
+    padding: 0.375rem 0.75rem;
+    background: var(--c-gold);
+    color: var(--c-bg);
+    font-size: 0.875rem;
+    font-weight: 600;
+    border-radius: 4px;
+  }
+
+  &__content {
+    padding: 1.5rem;
+  }
+
+  &__header {
+    margin-bottom: 0.75rem;
+  }
+
+  &__name {
+    font-family: var(--font-serif);
+    font-size: 1.25rem;
+    font-weight: 600;
+    margin-bottom: 0.25rem;
+    color: var(--c-text);
+  }
+
+  &__tagline {
+    font-size: 0.875rem;
+    color: var(--c-gold);
+    margin: 0;
+  }
+
+  &__description {
+    font-size: 0.875rem;
+    color: var(--c-text-muted);
+    line-height: 1.6;
+    margin-bottom: 1rem;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
+  &__features {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-bottom: 1rem;
+  }
+
+  &__feature {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.25rem;
+    font-size: 0.75rem;
+    color: var(--c-text-muted);
+    background: var(--c-surface-1);
+    padding: 0.25rem 0.5rem;
+    border-radius: 4px;
+  }
+
+  &__feature-icon {
+    width: 14px;
+    height: 14px;
+    color: var(--c-gold);
+  }
+
+  &__footer {
+    display: flex;
+    justify-content: flex-end;
+    padding-top: 1rem;
+    border-top: 1px solid var(--c-border);
+  }
+
+  &__cta {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: var(--c-gold);
+  }
+
+  &__cta-icon {
+    width: 16px;
+    height: 16px;
+    transition: transform 0.2s;
+  }
+}
+
+// ═══════════════════════════════════════════════════════════════════════════
+// Neighborhood Detail Page - /neighborhoods/:slug
+// ═══════════════════════════════════════════════════════════════════════════
+
+.neighborhood-detail {
+  min-height: 100vh;
+
+  // ─── Hero Section ────────────────────────────────────────────────────────
+  &__hero {
+    position: relative;
+    min-height: 70vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+    padding: 6rem var(--container-pad) 4rem;
+    color: #fff;
+
+    @media (max-width: 768px) {
+      background-attachment: scroll;
+      min-height: 60vh;
+    }
+  }
+
+  &__hero-content {
+    text-align: center;
+    max-width: 900px;
+  }
+
+  &__badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.5rem 1rem;
+    background: rgba(255, 255, 255, 0.15);
+    backdrop-filter: blur(8px);
+    border-radius: 100px;
+    font-size: 0.875rem;
+    margin-bottom: 1.5rem;
+  }
+
+  &__badge-icon {
+    width: 16px;
+    height: 16px;
+    color: var(--c-gold);
+  }
+
+  &__title {
+    font-family: var(--font-serif);
+    font-size: clamp(2.5rem, 6vw, 4rem);
+    font-weight: 600;
+    line-height: 1.1;
+    margin-bottom: 1.5rem;
+  }
+
+  &__title-sub {
+    display: block;
+    font-size: 0.4em;
+    font-weight: 400;
+    opacity: 0.9;
+    margin-top: 0.5rem;
+  }
+
+  &__hero-desc {
+    font-size: 1.125rem;
+    opacity: 0.9;
+    line-height: 1.6;
+    max-width: 700px;
+    margin: 0 auto 2rem;
+
+    @media (min-width: 768px) {
+      font-size: 1.25rem;
+    }
+  }
+
+  &__hero-stats {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1rem;
+    max-width: 700px;
+    margin: 0 auto 2rem;
+
+    @media (min-width: 768px) {
+      grid-template-columns: repeat(4, 1fr);
+    }
+  }
+
+  &__hero-stat {
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(8px);
+    border-radius: 12px;
+    padding: 1rem;
+    text-align: center;
+  }
+
+  &__hero-stat-value {
+    display: block;
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: var(--c-gold);
+    margin-bottom: 0.25rem;
+
+    @media (min-width: 768px) {
+      font-size: 1.5rem;
+    }
+  }
+
+  &__hero-stat-label {
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    opacity: 0.8;
+  }
+
+  &__hero-buttons {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    justify-content: center;
+
+    @media (min-width: 640px) {
+      flex-direction: row;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+
+      svg {
+        width: 20px;
+        height: 20px;
+      }
+    }
+  }
+
+  // ─── Breadcrumb ──────────────────────────────────────────────────────────
+  &__breadcrumb {
+    padding: 1rem var(--container-pad);
+    background: var(--c-surface-1);
+    border-bottom: 1px solid var(--c-border);
+
+    .breadcrumb {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      font-size: 0.875rem;
+      max-width: var(--container-max);
+      margin: 0 auto;
+
+      li {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+
+        &::after {
+          content: '/';
+          color: var(--c-text-muted);
+        }
+
+        &:last-child::after {
+          display: none;
+        }
+      }
+
+      a {
+        color: var(--c-text-muted);
+        text-decoration: none;
+        transition: color 0.2s;
+
+        &:hover {
+          color: var(--c-gold);
+        }
+      }
+
+      span[aria-current] {
+        color: var(--c-text);
+      }
+    }
+  }
+
+  // ─── Main Content ────────────────────────────────────────────────────────
+  &__main {
+    padding: $neighborhoods-section-spacing var(--container-pad);
+
+    .container {
+      max-width: 900px;
+      margin: 0 auto;
+    }
+  }
+
+  // ─── Section Styling ─────────────────────────────────────────────────────
+  &__section-header {
+    margin-bottom: 2rem;
+  }
+
+  &__section-title {
+    font-family: var(--font-serif);
+    font-size: clamp(1.5rem, 3vw, 2rem);
+    margin-bottom: 0.5rem;
+    color: var(--c-text);
+  }
+
+  &__section-subtitle {
+    color: var(--c-text-muted);
+    font-size: 1rem;
+  }
+
+  &__view-all {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: var(--c-gold);
+    text-decoration: none;
+    margin-top: 0.5rem;
+    transition: gap 0.2s;
+
+    &:hover {
+      gap: 0.75rem;
+    }
+  }
+
+  &__view-all-icon {
+    width: 16px;
+    height: 16px;
+  }
+
+  // ─── Overview Section ────────────────────────────────────────────────────
+  &__overview {
+    margin-bottom: $neighborhoods-section-spacing;
+  }
+
+  &__overview-content {
+    margin-bottom: 2rem;
+  }
+
+  &__text {
+    color: var(--c-text);
+    line-height: 1.8;
+    margin-bottom: 1.5rem;
+
+    &:last-child {
+      margin-bottom: 0;
+    }
+  }
+
+  &__highlights {
+    background: var(--c-surface-1);
+    border-radius: $neighborhoods-card-radius;
+    padding: 2rem;
+  }
+
+  &__highlights-title {
+    font-family: var(--font-serif);
+    font-size: 1.25rem;
+    margin-bottom: 1.5rem;
+    color: var(--c-gold);
+  }
+
+  &__highlights-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 0.75rem;
+
+    @media (min-width: 640px) {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  &__highlight {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.75rem;
+    background: var(--c-surface-2);
+    border-radius: 8px;
+  }
+
+  &__highlight-icon {
+    width: 20px;
+    height: 20px;
+    flex-shrink: 0;
+    color: var(--c-gold);
+  }
+
+  // ─── Price Section ───────────────────────────────────────────────────────
+  &__prices {
+    margin-bottom: $neighborhoods-section-spacing;
+  }
+
+  &__price-overview {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1rem;
+    margin-bottom: 2rem;
+
+    @media (min-width: 768px) {
+      grid-template-columns: repeat(4, 1fr);
+    }
+  }
+
+  &__price-card {
+    background: var(--c-surface-1);
+    border-radius: 12px;
+    padding: 1.5rem;
+    text-align: center;
+  }
+
+  &__price-label {
+    display: block;
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--c-text-muted);
+    margin-bottom: 0.5rem;
+  }
+
+  &__price-value {
+    display: block;
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: var(--c-gold);
+
+    @media (min-width: 768px) {
+      font-size: 1.5rem;
+    }
+  }
+
+  &__table-wrapper {
+    overflow-x: auto;
+    border-radius: 12px;
+    border: 1px solid var(--c-border);
+  }
+
+  &__price-table {
+    width: 100%;
+    border-collapse: collapse;
+
+    th, td {
+      padding: 1rem;
+      text-align: left;
+      border-bottom: 1px solid var(--c-border);
+    }
+
+    th {
+      background: var(--c-surface-1);
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--c-text-muted);
+      font-weight: 600;
+    }
+
+    td {
+      font-size: 0.875rem;
+    }
+
+    tr:last-child td {
+      border-bottom: none;
+    }
+
+    tr:hover td {
+      background: var(--c-surface-1);
+    }
+  }
+
+  &__availability {
+    display: inline-block;
+    padding: 0.25rem 0.5rem;
+    border-radius: 4px;
+    font-size: 0.75rem;
+    font-weight: 500;
+
+    &--available {
+      background: rgba(34, 197, 94, 0.15);
+      color: #22c55e;
+    }
+
+    &--limited {
+      background: rgba(234, 179, 8, 0.15);
+      color: #eab308;
+    }
+
+    &--exclusive, &--rare {
+      background: rgba(168, 144, 102, 0.15);
+      color: var(--c-gold);
+    }
+  }
+
+  // ─── Amenities Section ───────────────────────────────────────────────────
+  &__amenities {
+    margin-bottom: $neighborhoods-section-spacing;
+  }
+
+  &__amenities-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+
+    @media (min-width: 640px) {
+      grid-template-columns: repeat(2, 1fr);
+    }
+
+    @media (min-width: 1024px) {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+
+  &__amenity-card {
+    background: var(--c-surface-1);
+    border-radius: $neighborhoods-card-radius;
+    padding: 1.5rem;
+    border: 1px solid var(--c-border);
+  }
+
+  &__amenity-header {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    margin-bottom: 1rem;
+  }
+
+  &__amenity-icon {
+    width: 24px;
+    height: 24px;
+    color: var(--c-gold);
+  }
+
+  &__amenity-title {
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--c-text);
+  }
+
+  &__amenity-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  &__amenity-item {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: 0.5rem;
+    padding: 0.5rem 0;
+    border-bottom: 1px solid var(--c-border);
+
+    &:last-child {
+      border-bottom: none;
+    }
+  }
+
+  &__amenity-name {
+    font-size: 0.875rem;
+    color: var(--c-text);
+    flex: 1;
+  }
+
+  &__amenity-distance {
+    font-size: 0.75rem;
+    color: var(--c-gold);
+    font-weight: 500;
+  }
+
+  &__amenity-desc {
+    font-size: 0.75rem;
+    color: var(--c-text-muted);
+    width: 100%;
+  }
+
+  // ─── Transportation Section ──────────────────────────────────────────────
+  &__transport {
+    margin-bottom: $neighborhoods-section-spacing;
+  }
+
+  &__transport-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1rem;
+
+    @media (min-width: 640px) {
+      grid-template-columns: repeat(2, 1fr);
+    }
+
+    @media (min-width: 1024px) {
+      grid-template-columns: repeat(4, 1fr);
+    }
+  }
+
+  &__transport-card {
+    display: flex;
+    align-items: flex-start;
+    gap: 1rem;
+    background: var(--c-surface-1);
+    border-radius: 12px;
+    padding: 1.5rem;
+  }
+
+  &__transport-icon-wrapper {
+    width: 48px;
+    height: 48px;
+    border-radius: 12px;
+    background: var(--c-gold);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+
+  &__transport-icon {
+    width: 24px;
+    height: 24px;
+    color: var(--c-bg);
+  }
+
+  &__transport-content {
+    flex: 1;
+  }
+
+  &__transport-name {
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: var(--c-text);
+    margin-bottom: 0.25rem;
+  }
+
+  &__transport-distance {
+    display: block;
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--c-gold);
+    margin-bottom: 0.25rem;
+  }
+
+  &__transport-details {
+    font-size: 0.75rem;
+    color: var(--c-text-muted);
+    margin: 0;
+  }
+
+  // ─── Lifestyle Section ───────────────────────────────────────────────────
+  &__lifestyle {
+    margin-bottom: $neighborhoods-section-spacing;
+  }
+
+  &__lifestyle-content {
+    background: var(--c-surface-1);
+    border-radius: $neighborhoods-card-radius;
+    padding: 2rem;
+  }
+
+  &__lifestyle-desc {
+    font-size: 1.125rem;
+    line-height: 1.7;
+    color: var(--c-text);
+    margin-bottom: 2rem;
+  }
+
+  &__lifestyle-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+
+    @media (min-width: 768px) {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+
+  &__lifestyle-card {
+    h4 {
+      font-size: 0.875rem;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--c-text-muted);
+      margin-bottom: 0.75rem;
+    }
+
+    p {
+      font-size: 1rem;
+      color: var(--c-text);
+    }
+  }
+
+  &__lifestyle-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+
+    li {
+      padding: 0.375rem 0;
+      font-size: 0.875rem;
+      color: var(--c-text);
+      border-bottom: 1px solid var(--c-border);
+
+      &:last-child {
+        border-bottom: none;
+      }
+    }
+  }
+
+  &__lifestyle-features {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.75rem;
+  }
+
+  &__lifestyle-feature {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+  }
+
+  &__lifestyle-feature-label {
+    font-size: 0.75rem;
+    color: var(--c-text-muted);
+  }
+
+  &__lifestyle-feature-value {
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: var(--c-text);
+
+    &--positive {
+      color: #22c55e;
+    }
+  }
+
+  // ─── Map Section ─────────────────────────────────────────────────────────
+  &__map {
+    margin-bottom: $neighborhoods-section-spacing;
+  }
+
+  &__map-container {
+    border-radius: $neighborhoods-card-radius;
+    overflow: hidden;
+    border: 1px solid var(--c-border);
+  }
+
+  &__map-iframe {
+    display: block;
+    width: 100%;
+  }
+
+  &__directions {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin: 1rem;
+    padding: 0.75rem 1.5rem;
+    background: var(--c-gold);
+    color: var(--c-bg);
+    font-weight: 500;
+    font-size: 0.875rem;
+    border-radius: 8px;
+    text-decoration: none;
+    transition: background-color 0.2s, transform 0.2s;
+
+    &:hover {
+      background: var(--c-gold-dark);
+      transform: translateY(-2px);
+    }
+  }
+
+  &__directions-icon {
+    width: 18px;
+    height: 18px;
+  }
+
+  // ─── Properties Section ──────────────────────────────────────────────────
+  &__properties, &__projects {
+    margin-bottom: $neighborhoods-section-spacing;
+  }
+
+  &__properties-grid, &__projects-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+
+    @media (min-width: 640px) {
+      grid-template-columns: repeat(2, 1fr);
+    }
+
+    @media (min-width: 1024px) {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+
+  // ─── Sidebar ─────────────────────────────────────────────────────────────
+  &__sidebar {
+    position: fixed;
+    right: 2rem;
+    top: 120px;
+    width: 280px;
+    max-height: calc(100vh - 140px);
+    overflow-y: auto;
+    display: none;
+
+    @media (min-width: 1280px) {
+      display: block;
+    }
+  }
+
+  &__sidebar-card {
+    background: var(--c-surface-2);
+    border-radius: 12px;
+    padding: 1.5rem;
+    margin-bottom: 1rem;
+    border: 1px solid var(--c-border);
+  }
+
+  &__sidebar-title {
+    font-size: 1rem;
+    font-weight: 600;
+    margin-bottom: 1rem;
+    color: var(--c-text);
+  }
+
+  &__sidebar-list {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 0.5rem 1rem;
+
+    dt {
+      font-size: 0.75rem;
+      color: var(--c-text-muted);
+    }
+
+    dd {
+      font-size: 0.875rem;
+      color: var(--c-text);
+      text-align: right;
+      margin: 0;
+    }
+  }
+
+  &__sidebar-text {
+    font-size: 0.875rem;
+    color: var(--c-text-muted);
+    margin-bottom: 1rem;
+  }
+
+  &__sidebar-phone {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    margin-top: 1rem;
+    padding: 0.75rem;
+    color: var(--c-gold);
+    text-decoration: none;
+    font-weight: 500;
+    background: var(--c-surface-1);
+    border-radius: 8px;
+    transition: background-color 0.2s;
+
+    &:hover {
+      background: var(--c-border);
+    }
+  }
+
+  &__sidebar-phone-icon {
+    width: 18px;
+    height: 18px;
+  }
+
+  // ─── CTA Section ─────────────────────────────────────────────────────────
+  &__cta {
+    background: linear-gradient(135deg, var(--c-gold) 0%, var(--c-gold-dark) 100%);
+    padding: 4rem var(--container-pad);
+    text-align: center;
+    color: var(--c-bg);
+  }
+
+  &__cta-content {
+    max-width: 600px;
+    margin: 0 auto;
+
+    h2 {
+      font-family: var(--font-serif);
+      font-size: clamp(1.5rem, 3vw, 2rem);
+      margin-bottom: 1rem;
+    }
+
+    p {
+      opacity: 0.9;
+      margin-bottom: 2rem;
+    }
+  }
+
+  &__cta-buttons {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    justify-content: center;
+
+    @media (min-width: 640px) {
+      flex-direction: row;
+    }
+
+    .btn--primary {
+      background: var(--c-bg);
+      color: var(--c-gold);
+
+      &:hover {
+        background: #fff;
+      }
+    }
+
+    .btn--secondary {
+      background: transparent;
+      border: 2px solid var(--c-bg);
+      color: var(--c-bg);
+
+      &:hover {
+        background: rgba(0, 0, 0, 0.1);
+      }
+    }
+  }
+
+  // ─── Other Neighborhoods Section ─────────────────────────────────────────
+  &__other {
+    padding: 4rem var(--container-pad);
+    background: var(--c-surface-1);
+  }
+
+  &__other-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1rem;
+    max-width: 1000px;
+    margin: 0 auto 2rem;
+
+    @media (min-width: 768px) {
+      grid-template-columns: repeat(4, 1fr);
+    }
+  }
+
+  &__other-card {
+    position: relative;
+    border-radius: 12px;
+    overflow: hidden;
+    aspect-ratio: 3/4;
+    display: block;
+
+    &:hover {
+      .neighborhood-detail__other-image {
+        transform: scale(1.1);
+      }
+    }
+  }
+
+  &__other-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.4s ease;
+  }
+
+  &__other-overlay {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding: 1rem;
+    background: linear-gradient(transparent, rgba(0, 0, 0, 0.8));
+    color: #fff;
+  }
+
+  &__other-name {
+    font-size: 1rem;
+    font-weight: 600;
+    margin-bottom: 0.25rem;
+  }
+
+  &__other-price {
+    font-size: 0.75rem;
+    color: var(--c-gold);
+  }
+
+  &__other-view-all {
+    display: block;
+    text-align: center;
+    margin: 0 auto;
+    width: fit-content;
+  }
+
+  // ─── 404 State ───────────────────────────────────────────────────────────
+  &--404 {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 60vh;
+    padding: 4rem var(--container-pad);
+  }
+
+  &__404 {
+    text-align: center;
+    max-width: 500px;
+
+    h1 {
+      font-size: 2rem;
+      margin-bottom: 1rem;
+    }
+
+    p {
+      color: var(--c-text-muted);
+      margin-bottom: 2rem;
+    }
+  }
+
+  &__404-buttons {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    justify-content: center;
+
+    @media (min-width: 640px) {
+      flex-direction: row;
+    }
+  }
+}
+
+// ═══════════════════════════════════════════════════════════════════════════
+// Compact Property & Project Cards for Neighborhood Pages
+// ═══════════════════════════════════════════════════════════════════════════
+
+.property-card--compact,
+.project-card--compact {
+  background: var(--c-surface-2);
+  border-radius: 12px;
+  overflow: hidden;
+  border: 1px solid var(--c-border);
+  transition: transform 0.2s, box-shadow 0.2s;
+
+  &:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+  }
+
+  .property-card__link,
+  .project-card__link {
+    display: block;
+    text-decoration: none;
+    color: inherit;
+  }
+
+  .property-card__media,
+  .project-card__media {
+    position: relative;
+    height: 160px;
+    overflow: hidden;
+  }
+
+  .property-card__image,
+  .project-card__image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .project-card__status {
+    position: absolute;
+    top: 0.75rem;
+    left: 0.75rem;
+    padding: 0.25rem 0.5rem;
+    font-size: 0.7rem;
+    font-weight: 600;
+    border-radius: 4px;
+    text-transform: uppercase;
+
+    &--ready {
+      background: #22c55e;
+      color: #fff;
+    }
+
+    &--under-construction {
+      background: #eab308;
+      color: #000;
+    }
+
+    &--coming-soon {
+      background: var(--c-gold);
+      color: var(--c-bg);
+    }
+  }
+
+  .property-card__content,
+  .project-card__content {
+    padding: 1rem;
+  }
+
+  .property-card__type {
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--c-gold);
+    margin-bottom: 0.25rem;
+    display: block;
+  }
+
+  .property-card__title,
+  .project-card__title {
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: var(--c-text);
+    margin-bottom: 0.25rem;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .property-card__price,
+  .project-card__price {
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: var(--c-gold);
+  }
+
+  .project-card__location {
+    font-size: 0.75rem;
+    color: var(--c-text-muted);
+    margin-bottom: 0.25rem;
+  }
+}

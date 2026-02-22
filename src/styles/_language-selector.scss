@@ -1,0 +1,438 @@
+// =============================================================================
+// LANGUAGE SELECTOR STYLES
+// Multi-language support with RTL compatibility
+// =============================================================================
+
+.language-selector {
+  position: relative;
+  display: flex;
+  align-items: center;
+  z-index: 100;
+
+  // Current language button
+  &__current {
+    display: flex;
+    align-items: center;
+    gap: 0.375rem;
+    padding: 0.5rem 0.75rem;
+    background: transparent;
+    border: 1px solid rgba(var(--c-text-rgb), 0.15);
+    border-radius: 8px;
+    color: var(--c-text);
+    font-family: inherit;
+    font-size: 0.875rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s ease;
+
+    &:hover {
+      background: rgba(var(--c-gold-rgb), 0.1);
+      border-color: var(--c-gold);
+    }
+
+    &:focus-visible {
+      outline: 2px solid var(--c-gold);
+      outline-offset: 2px;
+    }
+  }
+
+  &__flag {
+    font-size: 1rem;
+    line-height: 1;
+  }
+
+  &__code {
+    font-size: 0.75rem;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+  }
+
+  &__chevron {
+    width: 14px;
+    height: 14px;
+    transition: transform 0.2s ease;
+
+    .language-selector--open & {
+      transform: rotate(180deg);
+    }
+  }
+
+  // Dropdown menu
+  &__dropdown {
+    position: absolute;
+    top: calc(100% + 0.5rem);
+    right: 0;
+    min-width: 160px;
+    padding: 0.5rem;
+    background: var(--c-surface);
+    border: 1px solid rgba(var(--c-text-rgb), 0.1);
+    border-radius: 12px;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
+    list-style: none;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(-8px);
+    transition: all 0.2s ease;
+
+    // RTL support - dropdown opens to the left
+    [dir="rtl"] & {
+      right: auto;
+      left: 0;
+    }
+
+    .language-selector--open & {
+      opacity: 1;
+      visibility: visible;
+      transform: translateY(0);
+    }
+  }
+
+  &__option {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.625rem 0.875rem;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.15s ease;
+
+    &:hover {
+      background: rgba(var(--c-gold-rgb), 0.1);
+    }
+
+    &:focus-visible {
+      outline: 2px solid var(--c-gold);
+      outline-offset: -2px;
+    }
+
+    &--active {
+      background: rgba(var(--c-gold-rgb), 0.15);
+      color: var(--c-gold);
+
+      &:hover {
+        background: rgba(var(--c-gold-rgb), 0.2);
+      }
+    }
+  }
+
+  &__name {
+    font-size: 0.875rem;
+    font-weight: 500;
+  }
+
+  // Mobile version
+  &--mobile {
+    margin-top: 2rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid rgba(var(--c-text-rgb), 0.1);
+
+    .language-selector__current {
+      width: 100%;
+      justify-content: center;
+      padding: 0.75rem 1rem;
+      background: rgba(var(--c-gold-rgb), 0.1);
+      border-color: var(--c-gold);
+    }
+
+    .language-selector__dropdown {
+      position: static;
+      width: 100%;
+      margin-top: 0.75rem;
+      opacity: 1;
+      visibility: visible;
+      transform: none;
+      display: none;
+      background: rgba(var(--c-surface-rgb), 0.5);
+
+      .language-selector--open & {
+        display: block;
+      }
+    }
+
+    .language-selector__option {
+      padding: 0.875rem 1rem;
+    }
+  }
+}
+
+// =============================================================================
+// RTL GLOBAL STYLES
+// Applied when html[dir="rtl"]
+// =============================================================================
+
+html[dir="rtl"] {
+  // Text alignment
+  body {
+    text-align: right;
+  }
+
+  // Navigation adjustments
+  .nav {
+    &__container {
+      flex-direction: row-reverse;
+    }
+
+    &__logo {
+      flex-direction: row-reverse;
+    }
+
+    &__list {
+      flex-direction: row-reverse;
+    }
+
+    &__link {
+      flex-direction: row-reverse;
+    }
+
+    &__dropdown-menu {
+      right: auto;
+      left: 0;
+    }
+
+    &__actions {
+      flex-direction: row-reverse;
+    }
+  }
+
+  // Buttons with icons
+  .btn {
+    flex-direction: row-reverse;
+
+    svg {
+      margin-left: 0;
+      margin-right: 0.5rem;
+    }
+  }
+
+  // Cards
+  .property-card,
+  .project-card,
+  .blog-card {
+    &__meta {
+      flex-direction: row-reverse;
+    }
+
+    &__badges {
+      right: auto;
+      left: 1rem;
+    }
+
+    &__favorite {
+      right: auto;
+      left: 1rem;
+    }
+  }
+
+  // Forms
+  .form-group {
+    &__label {
+      text-align: right;
+    }
+  }
+
+  // Lists
+  ul, ol {
+    padding-right: 1.5rem;
+    padding-left: 0;
+  }
+
+  // Flexbox utilities for RTL
+  .flex-row {
+    flex-direction: row-reverse;
+  }
+
+  // Grid adjustments
+  .footer__links {
+    direction: rtl;
+  }
+
+  // Icon positioning
+  .icon-left {
+    order: 1;
+    margin-right: 0;
+    margin-left: 0.5rem;
+  }
+
+  .icon-right {
+    order: -1;
+    margin-left: 0;
+    margin-right: 0.5rem;
+  }
+
+  // Arrow icons
+  .arrow-icon,
+  .icon-arrow-right {
+    transform: scaleX(-1);
+  }
+
+  // Back buttons
+  .back-link,
+  .btn--back {
+    flex-direction: row-reverse;
+
+    svg {
+      transform: scaleX(-1);
+    }
+  }
+
+  // Breadcrumbs
+  .breadcrumb {
+    &__separator {
+      transform: scaleX(-1);
+    }
+
+    &__list {
+      flex-direction: row-reverse;
+    }
+  }
+
+  // Hero section
+  .hero {
+    &__content {
+      text-align: right;
+    }
+  }
+
+  // Stats
+  .stats {
+    &__item {
+      text-align: right;
+    }
+  }
+
+  // Process steps
+  .process {
+    &__step {
+      flex-direction: row-reverse;
+    }
+  }
+
+  // Testimonials
+  .testimonial-card {
+    text-align: right;
+
+    &__quote {
+      text-align: right;
+    }
+  }
+
+  // Filter sidebar
+  .filters {
+    border-right: none;
+    border-left: 1px solid rgba(var(--c-text-rgb), 0.1);
+  }
+
+  // Scroll progress
+  .scroll-progress {
+    &__bar {
+      transform-origin: right;
+    }
+  }
+
+  // Mobile menu
+  .mobile-menu {
+    right: auto;
+    left: 0;
+    transform: translateX(-100%);
+
+    &.active {
+      transform: translateX(0);
+    }
+  }
+
+  // Comparison bar
+  .comparison-bar {
+    flex-direction: row-reverse;
+  }
+
+  // Price display
+  .price {
+    direction: ltr; // Keep numbers in LTR
+    display: inline-block;
+  }
+
+  // Phone numbers
+  .phone-number {
+    direction: ltr;
+    display: inline-block;
+    unicode-bidi: embed;
+  }
+}
+
+// =============================================================================
+// FONT ADJUSTMENTS FOR RTL LANGUAGES
+// =============================================================================
+
+html[lang="ar"],
+html[lang="ckb"] {
+  // Arabic/Kurdish fonts
+  --font-heading: 'Noto Kufi Arabic', 'Cormorant', serif;
+  --font-body: 'Noto Sans Arabic', 'Inter', system-ui, sans-serif;
+
+  // Slightly larger font sizes for Arabic/Kurdish readability
+  body {
+    font-size: 1.0625rem; // 17px
+    line-height: 1.7;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    line-height: 1.4;
+  }
+
+  // Adjust letter spacing for Arabic/Kurdish
+  .nav__link,
+  .btn,
+  .property-card__title {
+    letter-spacing: 0;
+  }
+}
+
+// =============================================================================
+// BIDIRECTIONAL TEXT HANDLING
+// =============================================================================
+
+// Force LTR for specific content
+.ltr-content,
+.price,
+.phone,
+.email,
+.url,
+.code,
+.number {
+  direction: ltr;
+  unicode-bidi: embed;
+  display: inline-block;
+}
+
+// Force RTL for specific content
+.rtl-content {
+  direction: rtl;
+  unicode-bidi: embed;
+  display: inline-block;
+}
+
+// Isolate bidirectional text
+.bidi-isolate {
+  unicode-bidi: isolate;
+}
+
+// =============================================================================
+// RESPONSIVE ADJUSTMENTS
+// =============================================================================
+
+@media (max-width: 768px) {
+  .language-selector {
+    &:not(.language-selector--mobile) {
+      // Hide in nav on mobile - show in mobile menu
+      display: none;
+    }
+  }
+}
+
+@media (min-width: 769px) {
+  .language-selector {
+    &--mobile {
+      display: none;
+    }
+  }
+}

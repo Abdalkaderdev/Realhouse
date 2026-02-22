@@ -9,6 +9,9 @@ import './styles/main.scss';
 // Import app
 import { App } from './app';
 
+// Import i18n
+import { initI18n, getCurrentLanguage, updateDocumentLanguage } from './i18n';
+
 // Import performance modules
 import {
   initWebVitals,
@@ -31,6 +34,10 @@ import {
 import { initMobileSchemas } from './seo/mobile-schema';
 
 // Initialize critical performance optimizations immediately (before anything else)
+// 0. Initialize language/RTL direction early to prevent layout shift
+const currentLang = getCurrentLanguage();
+updateDocumentLanguage(currentLang);
+
 // 1. Add fonts-loading class for FOUT prevention
 document.documentElement.classList.add('fonts-loading');
 
@@ -159,6 +166,9 @@ scheduleIdleTask(() => {
 
 // Initialize app when DOM is ready
 document.addEventListener('DOMContentLoaded', () => {
+  // Initialize i18n (language selector and hreflang tags)
+  initI18n();
+
   const app = new App();
   app.init();
 

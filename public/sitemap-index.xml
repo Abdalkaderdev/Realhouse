@@ -9,16 +9,38 @@
   Search engines use this to discover and crawl all site content efficiently.
 
   Sitemaps included:
+  - sitemap.xml          : Main sitemap (English - default)
+  - sitemap-ar.xml       : Arabic language pages
+  - sitemap-ckb.xml      : Kurdish (Sorani) language pages
   - sitemap-pages.xml    : Static pages (Home, About, Contact, FAQ, etc.)
   - sitemap-properties.xml: All property listings with images
   - sitemap-projects.xml  : All development projects with images
   - sitemap-blog.xml      : All blog posts with news markup
+  - sitemap-neighborhoods.xml: Neighborhood guide pages with local SEO
   - sitemap-images.xml    : Dedicated image sitemap for Google Images
 
-  Last Updated: 2026-02-21
+  Last Updated: 2026-02-22
   ===============================================================================
 -->
 <sitemapindex xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+
+  <!-- Main Sitemap - English (default) with all pages -->
+  <sitemap>
+    <loc>https://realhouseiq.com/sitemap.xml</loc>
+    <lastmod>2026-02-22</lastmod>
+  </sitemap>
+
+  <!-- Arabic Language Sitemap -->
+  <sitemap>
+    <loc>https://realhouseiq.com/sitemap-ar.xml</loc>
+    <lastmod>2026-02-22</lastmod>
+  </sitemap>
+
+  <!-- Kurdish (Sorani) Language Sitemap -->
+  <sitemap>
+    <loc>https://realhouseiq.com/sitemap-ckb.xml</loc>
+    <lastmod>2026-02-22</lastmod>
+  </sitemap>
 
   <!-- Main Pages Sitemap - Static pages, navigation, and filter pages -->
   <sitemap>
@@ -42,6 +64,12 @@
   <sitemap>
     <loc>https://realhouseiq.com/sitemap-blog.xml</loc>
     <lastmod>2026-02-21</lastmod>
+  </sitemap>
+
+  <!-- Neighborhoods Sitemap - Comprehensive neighborhood guides for local SEO -->
+  <sitemap>
+    <loc>https://realhouseiq.com/sitemap-neighborhoods.xml</loc>
+    <lastmod>2026-02-22</lastmod>
   </sitemap>
 
   <!-- Images Sitemap - All property and project images for Google Images -->

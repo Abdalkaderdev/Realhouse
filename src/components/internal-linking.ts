@@ -3,7 +3,7 @@
 // Breadcrumbs, Related Content, Hub Pages, Sitemap
 // ═══════════════════════════════════════════════════════════════════════════
 
-import { properties, type Property } from '../data/properties';
+import { properties, type Property, generatePropertySlug } from '../data/properties';
 import { projects, type Project } from '../data/projects';
 import { blogPosts, type BlogPost } from '../data/blog';
 
@@ -176,11 +176,12 @@ export function getPropertiesBreadcrumbs(): BreadcrumbItem[] {
 }
 
 export function getPropertyDetailBreadcrumbs(property: Property): BreadcrumbItem[] {
+  const slug = generatePropertySlug(property);
   return [
     { name: 'Home', url: '/' },
     { name: 'Properties', url: '/properties' },
     { name: `${property.type}s in ${property.location.district}`, url: `/properties?type=${property.type}` },
-    { name: property.title, url: `/properties/${property.id}`, current: true }
+    { name: property.title, url: `/properties/${slug}`, current: true }
   ];
 }
 

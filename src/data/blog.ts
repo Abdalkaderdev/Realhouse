@@ -8326,6 +8326,1871 @@ export const blogPosts: BlogPost[] = [
     tags: ['Golden Visa', 'Kurdistan Residency', 'Investment Residency', 'Property Investment', 'Immigration', 'Investor Visa', 'Residency Permit'],
     readTime: 12,
     isFeatured: true
+  },
+
+  // ═══════════════════════════════════════════════════════════════════════════
+  // NEW SEO-TARGETED BLOG POSTS - February 2025
+  // ═══════════════════════════════════════════════════════════════════════════
+
+  {
+    id: 'top-10-luxury-apartments-erbil-2025',
+    title: 'Top 10 Luxury Apartments in Erbil 2025: Premium Living in Kurdistan',
+    slug: 'top-10-luxury-apartments-erbil-2025',
+    excerpt: 'Discover the most prestigious luxury apartments in Erbil for 2025. From stunning penthouses to designer residences, explore premium living options in Kurdistan\'s capital.',
+    content: `
+<p>Erbil has emerged as a premier destination for luxury living in the Middle East, offering world-class apartment developments that rival those in Dubai and other major cities. This guide showcases the top 10 luxury apartments available in Erbil for 2025, each offering exceptional quality, amenities, and lifestyle benefits.</p>
+
+<h2>What Defines Luxury in Erbil?</h2>
+<p>Luxury apartments in Erbil are characterized by premium finishes, modern amenities, prime locations, and exceptional service. Key features include:</p>
+<ul>
+  <li>High-end imported fixtures and finishes</li>
+  <li>Smart home technology integration</li>
+  <li>24/7 security and concierge services</li>
+  <li>Resort-style amenities including pools and fitness centers</li>
+  <li>Panoramic city and mountain views</li>
+</ul>
+
+<h2>1. Empire World Tower Penthouses</h2>
+<p><a href="/projects/empire-world" data-route>Empire World</a> represents the pinnacle of luxury living in Erbil. The penthouses feature floor-to-ceiling windows, private terraces, and access to exclusive amenities including rooftop pools and private dining.</p>
+<ul>
+  <li><strong>Location:</strong> Empire World Complex, Central Erbil</li>
+  <li><strong>Size:</strong> 300-500 sqm</li>
+  <li><strong>Price Range:</strong> $600,000 - $1,500,000</li>
+  <li><strong>Key Features:</strong> Private elevator, smart home, concierge service</li>
+</ul>
+
+<h2>2. Queen Towers Executive Suites</h2>
+<p>Queen Towers in Gulan offers sophisticated apartment living with stunning city views and immediate access to Family Mall and premium dining options.</p>
+<ul>
+  <li><strong>Location:</strong> Gulan District</li>
+  <li><strong>Size:</strong> 150-280 sqm</li>
+  <li><strong>Price Range:</strong> $280,000 - $550,000</li>
+  <li><strong>Key Features:</strong> Rooftop pool, gym, 24/7 security</li>
+</ul>
+
+<h2>3. The Boulevard Residences</h2>
+<p><a href="/projects/the-boulevard-tower" data-route>The Boulevard Tower</a> combines retail therapy with luxury living. Residents enjoy direct access to premier shopping and dining while returning to beautifully appointed apartments.</p>
+<ul>
+  <li><strong>Location:</strong> Gulan, adjacent to major malls</li>
+  <li><strong>Size:</strong> 120-220 sqm</li>
+  <li><strong>Price Range:</strong> $220,000 - $450,000</li>
+  <li><strong>Key Features:</strong> Retail access, modern design, parking</li>
+</ul>
+
+<h2>4. Pavilion Waterfront Apartments</h2>
+<p><a href="/projects/pavilion-erbil" data-route>Pavilion Erbil</a> offers unique lagoon-side living with water views rarely found in the region. These apartments feature modern Mediterranean architecture and resort amenities.</p>
+<ul>
+  <li><strong>Location:</strong> Pavilion Development</li>
+  <li><strong>Size:</strong> 140-250 sqm</li>
+  <li><strong>Price Range:</strong> $250,000 - $480,000</li>
+  <li><strong>Key Features:</strong> Lagoon views, beach club access, marina</li>
+</ul>
+
+<h2>5. Gulan Premium Towers</h2>
+<p>Several premium towers in Gulan offer luxury apartments with excellent locations and comprehensive amenities for discerning buyers.</p>
+<ul>
+  <li><strong>Location:</strong> Gulan District</li>
+  <li><strong>Size:</strong> 100-200 sqm</li>
+  <li><strong>Price Range:</strong> $180,000 - $380,000</li>
+  <li><strong>Key Features:</strong> Central location, modern finishes, parking</li>
+</ul>
+
+<h2>Investment Potential</h2>
+<p>Luxury apartments in Erbil offer strong investment fundamentals:</p>
+<ul>
+  <li><strong>Rental yields:</strong> 6-9% gross for premium properties</li>
+  <li><strong>Tenant demand:</strong> Consistent from diplomats and executives</li>
+  <li><strong>Capital appreciation:</strong> 5-10% annually in top locations</li>
+</ul>
+
+<h2>View Luxury Apartments Today</h2>
+<p>Ready to explore luxury living in Erbil? <a href="/properties?type=apartment" data-route>Browse our premium apartment listings</a> or <a href="/contact" data-route>contact Real House</a> to schedule private viewings of these exceptional properties.</p>
+    `,
+    author: blogAuthors.abdalkader,
+    date: '2025-02-18',
+    image: 'https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?w=1200&q=80&fm=webp',
+    category: 'Lifestyle',
+    tags: ['Luxury Apartments', 'Erbil', 'Premium Living', 'High-End Properties', 'Kurdistan', '2025', 'Penthouses', 'Investment'],
+    readTime: 8,
+    isFeatured: true
+  },
+  {
+    id: 'empire-world-erbil-complete-guide',
+    title: 'Empire World Erbil: Complete Guide to Kurdistan\'s Largest Development',
+    slug: 'empire-world-erbil-complete-guide',
+    excerpt: 'Everything you need to know about Empire World, Kurdistan\'s largest mixed-use development. Explore residential options, commercial spaces, amenities, and investment opportunities.',
+    content: `
+<p>Empire World stands as the most ambitious development project in Kurdistan's history, transforming Erbil's skyline and setting new standards for mixed-use living. This comprehensive guide covers everything buyers and investors need to know about this landmark development.</p>
+
+<h2>What is Empire World?</h2>
+<p><a href="/projects/empire-world" data-route>Empire World</a> is a massive mixed-use development spanning over 2 million square meters, featuring residential towers, commercial spaces, retail areas, hotels, and entertainment facilities. The project represents billions of dollars in investment and aims to create a city-within-a-city experience.</p>
+
+<h2>Project Overview</h2>
+<ul>
+  <li><strong>Total Area:</strong> 2+ million square meters</li>
+  <li><strong>Development Type:</strong> Mixed-use mega-development</li>
+  <li><strong>Residential Units:</strong> Thousands of apartments across multiple towers</li>
+  <li><strong>Commercial:</strong> Office towers, retail spaces, hospitality</li>
+  <li><strong>Developer:</strong> Emaar Properties partnership</li>
+  <li><strong>Status:</strong> Multiple phases, ongoing development</li>
+</ul>
+
+<h2>Residential Options</h2>
+
+<h3>Apartment Types</h3>
+<ul>
+  <li><strong>Studios:</strong> 45-60 sqm, ideal for young professionals</li>
+  <li><strong>1-Bedroom:</strong> 70-95 sqm, urban living</li>
+  <li><strong>2-Bedroom:</strong> 110-150 sqm, family apartments</li>
+  <li><strong>3-Bedroom:</strong> 160-220 sqm, spacious family living</li>
+  <li><strong>Penthouses:</strong> 280-500 sqm, ultimate luxury</li>
+</ul>
+
+<h3>Price Ranges (2025)</h3>
+<ul>
+  <li>Studios: $85,000 - $120,000</li>
+  <li>1-Bedroom: $130,000 - $180,000</li>
+  <li>2-Bedroom: $200,000 - $320,000</li>
+  <li>3-Bedroom: $350,000 - $550,000</li>
+  <li>Penthouses: $600,000 - $1,500,000+</li>
+</ul>
+
+<h2>Amenities and Facilities</h2>
+<p>Empire World offers comprehensive amenities rivaling the finest developments worldwide:</p>
+<ul>
+  <li>Multiple swimming pools and fitness centers</li>
+  <li>Landscaped parks and green spaces</li>
+  <li>International retail brands and shopping</li>
+  <li>Fine dining restaurants and cafes</li>
+  <li>Business centers and co-working spaces</li>
+  <li>24/7 security and concierge services</li>
+  <li>Underground parking facilities</li>
+  <li>Children's play areas and family zones</li>
+</ul>
+
+<h2>Location Benefits</h2>
+<p>Empire World's strategic location offers excellent connectivity:</p>
+<ul>
+  <li>15 minutes to Erbil International Airport</li>
+  <li>Close to major highways and arterial roads</li>
+  <li>Near international schools and hospitals</li>
+  <li>Adjacent to Erbil's commercial center</li>
+</ul>
+
+<h2>Investment Analysis</h2>
+
+<h3>Why Invest in Empire World?</h3>
+<ul>
+  <li><strong>Developer reputation:</strong> Partnership with Emaar, proven track record</li>
+  <li><strong>Scale advantage:</strong> Comprehensive development attracts premium tenants</li>
+  <li><strong>Rental demand:</strong> Corporate and diplomatic tenant base</li>
+  <li><strong>Capital growth:</strong> Early phases have shown strong appreciation</li>
+</ul>
+
+<h3>Expected Returns</h3>
+<ul>
+  <li><strong>Rental yield:</strong> 7-10% gross for residential units</li>
+  <li><strong>Commercial yield:</strong> 10-14% for retail/office spaces</li>
+  <li><strong>Capital appreciation:</strong> 8-12% projected annually</li>
+</ul>
+
+<h2>Buying Process</h2>
+<p>Purchasing at Empire World follows a straightforward process:</p>
+<ol>
+  <li>Select unit type and phase preference</li>
+  <li>Review payment plans (typically 30-40% down, balance over 3-5 years)</li>
+  <li>Reserve unit with deposit</li>
+  <li>Complete legal documentation</li>
+  <li>Make payments per schedule</li>
+  <li>Receive keys upon completion</li>
+</ol>
+
+<h2>Explore Empire World Properties</h2>
+<p>Ready to invest in Kurdistan's premier development? <a href="/projects/empire-world" data-route>View Empire World listings</a> or <a href="/contact" data-route>contact our Empire World specialists</a> for exclusive access and investment guidance.</p>
+    `,
+    author: blogAuthors.mahmood,
+    date: '2025-02-15',
+    image: 'https://images.unsplash.com/photo-1486325212027-8081e485255e?w=1200&q=80&fm=webp',
+    category: 'Neighborhoods',
+    tags: ['Empire World', 'Erbil', 'Mixed-Use Development', 'Investment', 'Luxury', 'Kurdistan', 'Mega Project', 'Emaar'],
+    readTime: 10,
+    isFeatured: true
+  },
+  {
+    id: 'best-areas-live-erbil-families',
+    title: 'Best Areas to Live in Erbil for Families: 2025 Neighborhood Guide',
+    slug: 'best-areas-live-erbil-families',
+    excerpt: 'Find the perfect family-friendly neighborhood in Erbil. Compare Dream City, Italian Village, Ankawa, and more for schools, safety, and community amenities.',
+    content: `
+<p>Choosing where to live in Erbil is one of the most important decisions for families relocating to Kurdistan. This guide compares the best family-friendly neighborhoods, helping you find the perfect home base for your family.</p>
+
+<h2>Key Factors for Family Living</h2>
+<p>When evaluating neighborhoods for families, consider these essential factors:</p>
+<ul>
+  <li>Safety and security features</li>
+  <li>Proximity to quality schools</li>
+  <li>Parks and outdoor spaces for children</li>
+  <li>Healthcare access</li>
+  <li>Family-friendly amenities and services</li>
+  <li>Community atmosphere and social opportunities</li>
+</ul>
+
+<h2>1. Dream City - Top Choice for Families</h2>
+<p><a href="/projects/dream-city" data-route>Dream City</a> consistently ranks as Erbil's premier family neighborhood, offering the ideal combination of security, space, and community.</p>
+
+<h3>Why Families Love Dream City</h3>
+<ul>
+  <li><strong>Security:</strong> 24/7 gated community with controlled access</li>
+  <li><strong>Space:</strong> Spacious villas with private gardens</li>
+  <li><strong>Schools:</strong> Near International School of Choueifat and British International School</li>
+  <li><strong>Community:</strong> Large expat family population</li>
+  <li><strong>Infrastructure:</strong> Wide, safe streets for children</li>
+</ul>
+
+<h3>Property Options</h3>
+<ul>
+  <li>4-bedroom villas: $320,000 - $480,000</li>
+  <li>5-6 bedroom villas: $450,000 - $700,000</li>
+  <li>Rentals: $2,500 - $5,000/month</li>
+</ul>
+
+<h2>2. Italian Village - Character and Community</h2>
+<p><a href="/projects/italian-village" data-route>Italian Village</a> offers distinctive Mediterranean-style homes in a close-knit community setting.</p>
+
+<h3>Family Benefits</h3>
+<ul>
+  <li>Unique European architecture children love</li>
+  <li>Strong sense of community</li>
+  <li>Secure gated environment</li>
+  <li>Close to international schools</li>
+  <li>Quiet, peaceful atmosphere</li>
+</ul>
+
+<h3>Property Options</h3>
+<ul>
+  <li>Townhouses: $280,000 - $400,000</li>
+  <li>Villas: $380,000 - $580,000</li>
+  <li>Rentals: $2,000 - $4,000/month</li>
+</ul>
+
+<h2>3. English Village - Exclusive Living</h2>
+<p>English Village provides British colonial-style homes in an exclusive, smaller community perfect for families seeking privacy.</p>
+
+<h3>Family Benefits</h3>
+<ul>
+  <li>Smaller, more intimate community</li>
+  <li>High-quality construction</li>
+  <li>Generous garden spaces</li>
+  <li>Excellent security</li>
+</ul>
+
+<h2>4. Ankawa - Cultural Diversity</h2>
+<p>Ankawa offers a different family experience with its diverse, cosmopolitan atmosphere and established neighborhood character.</p>
+
+<h3>Family Benefits</h3>
+<ul>
+  <li>Diverse international community</li>
+  <li>Walking distance to restaurants and cafes</li>
+  <li>Several international schools nearby</li>
+  <li>More affordable than gated communities</li>
+  <li>Active social scene for parents</li>
+</ul>
+
+<h2>5. Gulan District - Urban Family Living</h2>
+<p>For families preferring apartment living with urban convenience, Gulan offers premium options.</p>
+
+<h3>Family Benefits</h3>
+<ul>
+  <li>Walking distance to malls and entertainment</li>
+  <li>Modern apartment buildings with pools</li>
+  <li>24/7 building security</li>
+  <li>Easy access to schools via main roads</li>
+</ul>
+
+<h2>School Proximity Comparison</h2>
+<p>Access to quality education is crucial for families:</p>
+<ul>
+  <li><strong>Dream City:</strong> 10-15 min to major international schools</li>
+  <li><strong>Italian Village:</strong> 10-20 min to international schools</li>
+  <li><strong>Ankawa:</strong> 5-15 min to various schools</li>
+  <li><strong>Gulan:</strong> 10-20 min depending on school</li>
+</ul>
+
+<h2>Find Your Family's Perfect Home</h2>
+<p>Ready to explore family-friendly properties in Erbil? <a href="/properties" data-route>Browse our listings</a> filtered by your preferred neighborhood, or <a href="/contact" data-route>contact Real House</a> for personalized family relocation assistance.</p>
+    `,
+    author: blogAuthors.abdalkader,
+    date: '2025-02-12',
+    image: 'https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=1200&q=80&fm=webp',
+    category: 'Neighborhoods',
+    tags: ['Family Living', 'Erbil Neighborhoods', 'Dream City', 'Italian Village', 'Schools', 'Expat Families', 'Kurdistan'],
+    readTime: 9,
+    isFeatured: false
+  },
+  {
+    id: 'erbil-real-estate-market-trends-analysis-2025',
+    title: 'Erbil Real Estate Market Trends 2025: Complete Analysis and Forecast',
+    slug: 'erbil-real-estate-market-trends-analysis-2025',
+    excerpt: 'In-depth analysis of Erbil\'s 2025 real estate market trends. Expert insights on price movements, demand patterns, and investment opportunities in Kurdistan.',
+    content: `
+<p>The Erbil real estate market continues to mature as Kurdistan's capital solidifies its position as a regional hub. This comprehensive analysis examines current trends, price movements, and forecasts for the 2025 market.</p>
+
+<h2>Market Overview 2025</h2>
+<p>Erbil's property market demonstrates resilience and steady growth, supported by economic stability and increasing international interest.</p>
+
+<h3>Key Market Indicators</h3>
+<ul>
+  <li><strong>Average price appreciation:</strong> 5-10% annually in premium areas</li>
+  <li><strong>Rental yields:</strong> 6-10% gross in prime locations</li>
+  <li><strong>Transaction volume:</strong> Stable with growth in premium segment</li>
+  <li><strong>Foreign investment:</strong> Increasing from diaspora and international buyers</li>
+</ul>
+
+<h2>Price Trends by Area</h2>
+
+<h3>Gulan District</h3>
+<ul>
+  <li>Price per sqm: $1,500 - $2,400</li>
+  <li>Trend: 6-8% annual appreciation</li>
+  <li>Demand: High from professionals and investors</li>
+</ul>
+
+<h3>Dream City</h3>
+<ul>
+  <li>Villa prices: $320,000 - $700,000</li>
+  <li>Trend: 5-7% annual appreciation</li>
+  <li>Demand: Strong from families and diplomats</li>
+</ul>
+
+<h3>Empire World</h3>
+<ul>
+  <li>Apartment prices: $85,000 - $1,500,000</li>
+  <li>Trend: 8-12% appreciation (new development premium)</li>
+  <li>Demand: Growing as phases complete</li>
+</ul>
+
+<h2>Demand Drivers</h2>
+
+<h3>Local Demand</h3>
+<ul>
+  <li>Growing middle class seeking quality housing</li>
+  <li>Young professionals entering property market</li>
+  <li>Families upgrading to larger homes</li>
+</ul>
+
+<h3>International Demand</h3>
+<ul>
+  <li>Diaspora Kurds investing from abroad</li>
+  <li>Regional investors from Gulf countries</li>
+  <li>Corporate housing for international companies</li>
+  <li>Diplomatic missions requiring quality properties</li>
+</ul>
+
+<h2>Rental Market Analysis</h2>
+<p>The rental market remains robust with consistent demand:</p>
+<ul>
+  <li><strong>Premium apartments:</strong> $1,500 - $4,000/month</li>
+  <li><strong>Luxury villas:</strong> $2,500 - $6,000/month</li>
+  <li><strong>Commercial retail:</strong> $30 - $80/sqm/month in prime areas</li>
+  <li><strong>Office space:</strong> $20 - $50/sqm/month</li>
+</ul>
+
+<h2>Investment Outlook</h2>
+
+<h3>Positive Factors</h3>
+<ul>
+  <li>Political stability in Kurdistan Region</li>
+  <li>Infrastructure development continues</li>
+  <li>Economic diversification efforts</li>
+  <li>Growing tourism sector</li>
+</ul>
+
+<h3>Considerations</h3>
+<ul>
+  <li>Oil price fluctuations affect broader economy</li>
+  <li>New supply from major developments</li>
+  <li>Regional geopolitical factors</li>
+</ul>
+
+<h2>2025-2026 Forecast</h2>
+<ul>
+  <li><strong>Premium segment:</strong> 5-8% appreciation expected</li>
+  <li><strong>Mid-range:</strong> 3-5% growth projected</li>
+  <li><strong>Rental yields:</strong> Maintained at 6-10%</li>
+  <li><strong>Overall outlook:</strong> Positive with steady growth</li>
+</ul>
+
+<h2>Market Opportunities</h2>
+<p>Current opportunities for buyers and investors include:</p>
+<ul>
+  <li>Off-plan purchases at favorable pricing</li>
+  <li>Established properties in premium areas</li>
+  <li>Commercial spaces in high-traffic locations</li>
+  <li>Rental properties targeting corporate tenants</li>
+</ul>
+
+<p><a href="/properties" data-route>Explore current listings</a> or <a href="/contact" data-route>consult with our market experts</a> to capitalize on Erbil's real estate opportunities.</p>
+    `,
+    author: blogAuthors.mahmood,
+    date: '2025-02-08',
+    image: 'https://images.unsplash.com/photo-1560520653-9e0e4c89eb11?w=1200&q=80&fm=webp',
+    category: 'Market Trends',
+    tags: ['Market Trends', 'Erbil', 'Real Estate Analysis', '2025 Forecast', 'Investment', 'Kurdistan', 'Property Prices'],
+    readTime: 10,
+    isFeatured: false
+  },
+  {
+    id: 'how-to-buy-property-kurdistan-complete-guide',
+    title: 'How to Buy Property in Kurdistan: A Complete Guide for Foreign Buyers',
+    slug: 'how-to-buy-property-kurdistan-complete-guide',
+    excerpt: 'Step-by-step guide to purchasing real estate in Kurdistan. Learn about legal requirements, documentation, payment options, and tips for foreign property buyers.',
+    content: `
+<p>Kurdistan, particularly Erbil, has become increasingly accessible for foreign property buyers. This comprehensive guide walks you through every step of the buying process, ensuring a smooth and secure transaction.</p>
+
+<h2>Can Foreigners Buy Property in Kurdistan?</h2>
+<p>Yes, foreign nationals can legally purchase property in the Kurdistan Region of Iraq. The Kurdistan Regional Government (KRG) welcomes foreign investment and has established clear procedures for international buyers.</p>
+
+<h2>Step-by-Step Buying Process</h2>
+
+<h3>Step 1: Define Your Requirements</h3>
+<ul>
+  <li>Determine budget (including purchase costs)</li>
+  <li>Choose property type (apartment, villa, commercial)</li>
+  <li>Select preferred location/neighborhood</li>
+  <li>Clarify purpose (residence, investment, or both)</li>
+</ul>
+
+<h3>Step 2: Engage a Real Estate Agent</h3>
+<p>Working with a reputable agent like Real House provides:</p>
+<ul>
+  <li>Access to verified listings</li>
+  <li>Local market expertise</li>
+  <li>Legal compliance guidance</li>
+  <li>Negotiation support</li>
+  <li>After-sale assistance</li>
+</ul>
+
+<h3>Step 3: Property Search and Viewings</h3>
+<ul>
+  <li><a href="/properties" data-route>Browse available properties</a> matching your criteria</li>
+  <li>Schedule viewings at different times of day</li>
+  <li>Assess neighborhood, amenities, and accessibility</li>
+  <li>Compare multiple options</li>
+</ul>
+
+<h3>Step 4: Due Diligence</h3>
+<p>Essential verification before purchase:</p>
+<ul>
+  <li>Verify property ownership and title</li>
+  <li>Check for liens or encumbrances</li>
+  <li>Confirm building permits and approvals</li>
+  <li>Review maintenance records (for existing properties)</li>
+  <li>Assess construction quality</li>
+</ul>
+
+<h3>Step 5: Negotiate and Agree Terms</h3>
+<ul>
+  <li>Make offer through your agent</li>
+  <li>Negotiate price and conditions</li>
+  <li>Agree on payment schedule</li>
+  <li>Sign preliminary agreement</li>
+</ul>
+
+<h3>Step 6: Legal Documentation</h3>
+<p>Engage a qualified lawyer to:</p>
+<ul>
+  <li>Review all contracts</li>
+  <li>Ensure legal compliance</li>
+  <li>Prepare transfer documents</li>
+  <li>Represent your interests</li>
+</ul>
+
+<h3>Step 7: Payment</h3>
+<p>Common payment methods:</p>
+<ul>
+  <li><strong>Cash:</strong> Most common, typically in USD</li>
+  <li><strong>Installments:</strong> For off-plan properties (30-40% down, balance over time)</li>
+  <li><strong>Bank transfer:</strong> International transfers accepted</li>
+</ul>
+
+<h3>Step 8: Title Transfer</h3>
+<ul>
+  <li>Register transfer with Real Estate Registration Department</li>
+  <li>Pay registration fees</li>
+  <li>Receive official title deed (Tapu)</li>
+</ul>
+
+<h2>Required Documentation</h2>
+<ul>
+  <li>Valid passport</li>
+  <li>Entry visa or residency permit</li>
+  <li>Proof of funds</li>
+  <li>Power of attorney (if using representative)</li>
+</ul>
+
+<h2>Costs to Budget</h2>
+<ul>
+  <li><strong>Agent commission:</strong> 2-3% of purchase price</li>
+  <li><strong>Registration fees:</strong> 2-3% of declared value</li>
+  <li><strong>Legal fees:</strong> 1-2%</li>
+  <li><strong>Total additional costs:</strong> 5-8% above property price</li>
+</ul>
+
+<h2>Tips for Success</h2>
+<ol>
+  <li>Always work with established, reputable agents</li>
+  <li>Never skip due diligence</li>
+  <li>Visit properties multiple times</li>
+  <li>Understand all costs upfront</li>
+  <li>Keep copies of all documentation</li>
+</ol>
+
+<h2>Start Your Property Journey</h2>
+<p>Ready to buy property in Kurdistan? <a href="/contact" data-route>Contact Real House</a> for expert guidance through every step of your purchase.</p>
+    `,
+    author: blogAuthors.karwan,
+    date: '2025-02-05',
+    image: 'https://images.unsplash.com/photo-1560518883-ce09059eeffa?w=1200&q=80&fm=webp',
+    category: 'Buying Guide',
+    tags: ['Buying Guide', 'Foreign Buyers', 'Kurdistan', 'Property Purchase', 'Legal Guide', 'Documentation', 'Erbil'],
+    readTime: 11,
+    isFeatured: false
+  },
+  {
+    id: 'ankawa-neighborhood-guide-erbil',
+    title: 'Ankawa Neighborhood Guide: Living in Erbil\'s Christian Quarter',
+    slug: 'ankawa-neighborhood-guide-erbil',
+    excerpt: 'Discover Ankawa, Erbil\'s vibrant Christian quarter known for its diverse community, restaurants, nightlife, and welcoming atmosphere for expatriates.',
+    content: `
+<p>Ankawa (also spelled Ainkawa) is one of Erbil's most distinctive and beloved neighborhoods, known for its Christian heritage, diverse international community, and vibrant social scene. This guide explores what makes Ankawa special and why it's a top choice for expatriates.</p>
+
+<h2>About Ankawa</h2>
+<p>Located in northern Erbil, Ankawa has been a Christian community for centuries and today serves as a hub for the city's international population. The neighborhood offers a unique blend of traditional character and cosmopolitan living.</p>
+
+<h3>Key Characteristics</h3>
+<ul>
+  <li>Historic Christian community with churches and cultural sites</li>
+  <li>Large expatriate population from various countries</li>
+  <li>Diverse dining scene with international cuisines</li>
+  <li>Active nightlife with bars and entertainment venues</li>
+  <li>More relaxed social atmosphere than other areas</li>
+  <li>Walking-friendly streets with shops and cafes</li>
+</ul>
+
+<h2>Living in Ankawa</h2>
+
+<h3>Property Types</h3>
+<ul>
+  <li><strong>Apartments:</strong> Various sizes in mid-rise buildings</li>
+  <li><strong>Houses:</strong> Traditional and modern styles</li>
+  <li><strong>Villas:</strong> Standalone homes with gardens</li>
+</ul>
+
+<h3>Price Ranges</h3>
+<ul>
+  <li>2-bedroom apartments: $100,000 - $180,000 (purchase) / $800 - $1,500 (rent)</li>
+  <li>3-bedroom houses: $180,000 - $350,000 (purchase) / $1,200 - $2,500 (rent)</li>
+  <li>Villas: $300,000 - $550,000 (purchase) / $2,000 - $4,000 (rent)</li>
+</ul>
+
+<h2>Lifestyle and Amenities</h2>
+
+<h3>Dining</h3>
+<p>Ankawa boasts Erbil's most diverse restaurant scene:</p>
+<ul>
+  <li>Italian, French, and Mediterranean cuisine</li>
+  <li>Middle Eastern and Kurdish restaurants</li>
+  <li>Asian options including Chinese and Indian</li>
+  <li>Cafes and bakeries on every corner</li>
+</ul>
+
+<h3>Entertainment</h3>
+<ul>
+  <li>Bars and lounges with live music</li>
+  <li>Coffee shops and hookah lounges</li>
+  <li>Art galleries and cultural venues</li>
+  <li>Weekend markets and community events</li>
+</ul>
+
+<h3>Shopping</h3>
+<ul>
+  <li>Local boutiques and shops</li>
+  <li>Grocery stores including international products</li>
+  <li>Close proximity to major malls</li>
+</ul>
+
+<h2>Schools Near Ankawa</h2>
+<p>Several international schools are accessible from Ankawa:</p>
+<ul>
+  <li>International School of Choueifat (15 min drive)</li>
+  <li>British International School Erbil (15 min)</li>
+  <li>Various local schools in the area</li>
+</ul>
+
+<h2>Who Should Live in Ankawa?</h2>
+
+<h3>Ideal For:</h3>
+<ul>
+  <li>Single professionals and young couples</li>
+  <li>Expatriates seeking social community</li>
+  <li>Those who enjoy dining and nightlife</li>
+  <li>Buyers wanting character over uniformity</li>
+  <li>Budget-conscious buyers and renters</li>
+</ul>
+
+<h3>Consider Alternatives If:</h3>
+<ul>
+  <li>Security and gated living is top priority</li>
+  <li>You need large villa with extensive garden</li>
+  <li>You prefer quieter residential environment</li>
+</ul>
+
+<h2>Pros and Cons</h2>
+
+<h3>Pros</h3>
+<ul>
+  <li>Vibrant community atmosphere</li>
+  <li>Best dining and nightlife in Erbil</li>
+  <li>More affordable than gated communities</li>
+  <li>Walking-friendly neighborhood</li>
+  <li>Strong expat support network</li>
+</ul>
+
+<h3>Cons</h3>
+<ul>
+  <li>Not gated like Dream City or Italian Village</li>
+  <li>Can be noisy in entertainment areas</li>
+  <li>Parking can be challenging</li>
+  <li>Less modern than new developments</li>
+</ul>
+
+<h2>Explore Ankawa Properties</h2>
+<p><a href="/properties?location=ankawa" data-route>Browse Ankawa listings</a> or <a href="/contact" data-route>contact Real House</a> for neighborhood tours and property viewings.</p>
+    `,
+    author: blogAuthors.abdalkader,
+    date: '2025-01-28',
+    image: 'https://images.unsplash.com/photo-1449824913935-59a10b8d2000?w=1200&q=80&fm=webp',
+    category: 'Neighborhoods',
+    tags: ['Ankawa', 'Erbil Neighborhoods', 'Christian Quarter', 'Expat Living', 'Nightlife', 'Dining', 'Kurdistan'],
+    readTime: 8,
+    isFeatured: false
+  },
+  {
+    id: 'investment-opportunities-erbil-real-estate',
+    title: 'Investment Opportunities in Erbil Real Estate: 2025 Guide',
+    slug: 'investment-opportunities-erbil-real-estate',
+    excerpt: 'Discover the best real estate investment opportunities in Erbil for 2025. Analysis of residential, commercial, and off-plan options with expected returns.',
+    content: `
+<p>Erbil's real estate market offers compelling investment opportunities for both local and international investors. This guide analyzes current opportunities, expected returns, and strategies for successful property investment in Kurdistan.</p>
+
+<h2>Why Invest in Erbil Real Estate?</h2>
+<ul>
+  <li><strong>Stability:</strong> Kurdistan Region offers relative security and stability</li>
+  <li><strong>Growth:</strong> Consistent market appreciation in quality properties</li>
+  <li><strong>Yields:</strong> Attractive rental returns compared to regional markets</li>
+  <li><strong>Entry prices:</strong> More accessible than Gulf markets</li>
+  <li><strong>Foreign ownership:</strong> Straightforward process for international buyers</li>
+</ul>
+
+<h2>Investment Categories</h2>
+
+<h3>1. Residential Rentals</h3>
+<p>Rental properties offer steady income from Erbil's strong tenant base:</p>
+
+<h4>Premium Apartments (Gulan)</h4>
+<ul>
+  <li>Investment: $150,000 - $400,000</li>
+  <li>Monthly rent: $1,200 - $3,500</li>
+  <li>Gross yield: 8-10%</li>
+  <li>Tenants: Diplomats, executives, professionals</li>
+</ul>
+
+<h4>Luxury Villas (Dream City, Italian Village)</h4>
+<ul>
+  <li>Investment: $350,000 - $700,000</li>
+  <li>Monthly rent: $2,500 - $5,500</li>
+  <li>Gross yield: 6-8%</li>
+  <li>Tenants: Diplomatic families, corporate executives</li>
+</ul>
+
+<h3>2. Off-Plan Investments</h3>
+<p>Early-stage purchases offer capital appreciation potential:</p>
+
+<h4><a href="/projects/empire-world" data-route>Empire World</a></h4>
+<ul>
+  <li>Entry from: $85,000</li>
+  <li>Payment plans: 30-40% down, balance over 3-5 years</li>
+  <li>Expected appreciation: 8-15% upon completion</li>
+</ul>
+
+<h4><a href="/projects/pavilion-erbil" data-route>Pavilion Erbil</a></h4>
+<ul>
+  <li>Unique waterfront positioning</li>
+  <li>Strong differentiation in market</li>
+  <li>Premium pricing potential</li>
+</ul>
+
+<h3>3. Commercial Properties</h3>
+<p>Higher yields available in commercial segment:</p>
+
+<h4>Retail Spaces</h4>
+<ul>
+  <li>Investment: $100,000 - $500,000</li>
+  <li>Gross yield: 10-14%</li>
+  <li>Best locations: High-traffic areas, near malls</li>
+</ul>
+
+<h4>Office Spaces</h4>
+<ul>
+  <li>Investment: $80,000 - $300,000</li>
+  <li>Gross yield: 8-12%</li>
+  <li>Demand: Growing from local and international companies</li>
+</ul>
+
+<h2>Investment Strategies</h2>
+
+<h3>Buy-to-Let Strategy</h3>
+<ul>
+  <li>Focus on high-demand areas (Gulan, Dream City)</li>
+  <li>Choose furnished options for higher rents</li>
+  <li>Target corporate/diplomatic tenant market</li>
+  <li>Engage professional property management</li>
+</ul>
+
+<h3>Capital Growth Strategy</h3>
+<ul>
+  <li>Purchase off-plan in quality developments</li>
+  <li>Hold through development completion</li>
+  <li>Benefit from construction-phase appreciation</li>
+  <li>Option to sell or rent upon completion</li>
+</ul>
+
+<h3>Hybrid Strategy</h3>
+<ul>
+  <li>Mix of rental properties and off-plan</li>
+  <li>Rental income covers holding costs</li>
+  <li>Off-plan provides growth upside</li>
+  <li>Diversified risk profile</li>
+</ul>
+
+<h2>Expected Returns Summary</h2>
+<ul>
+  <li><strong>Rental yields:</strong> 6-14% depending on property type</li>
+  <li><strong>Capital appreciation:</strong> 5-12% annually in quality properties</li>
+  <li><strong>Total returns:</strong> 12-20% per annum for well-selected investments</li>
+</ul>
+
+<h2>Risk Considerations</h2>
+<ul>
+  <li>Oil price impact on regional economy</li>
+  <li>Geopolitical factors affecting sentiment</li>
+  <li>Developer track record for off-plan</li>
+  <li>Currency considerations (USD-based market)</li>
+</ul>
+
+<h2>Start Investing Today</h2>
+<p><a href="/properties" data-route>Browse investment properties</a> or <a href="/contact" data-route>consult our investment specialists</a> to build your Erbil real estate portfolio.</p>
+    `,
+    author: blogAuthors.mahmood,
+    date: '2025-01-25',
+    image: 'https://images.unsplash.com/photo-1560520653-9e0e4c89eb11?w=1200&q=80&fm=webp',
+    category: 'Investment',
+    tags: ['Investment', 'Erbil', 'Real Estate Investment', 'ROI', 'Rental Yields', 'Off-Plan', 'Kurdistan'],
+    readTime: 10,
+    isFeatured: false
+  },
+  {
+    id: 'new-construction-projects-erbil-2025',
+    title: 'New Construction Projects in Erbil: What\'s Coming in 2025',
+    slug: 'new-construction-projects-erbil-2025',
+    excerpt: 'Overview of major new construction and development projects launching in Erbil in 2025. Explore upcoming residential, commercial, and mixed-use opportunities.',
+    content: `
+<p>Erbil's skyline continues to transform with ambitious new construction projects. This guide provides an overview of major developments underway and launching in 2025, offering early-stage investment opportunities.</p>
+
+<h2>Major Projects Overview</h2>
+
+<h3><a href="/projects/empire-world" data-route>Empire World - Ongoing Phases</a></h3>
+<p>Kurdistan's largest mixed-use development continues expansion:</p>
+<ul>
+  <li><strong>Status:</strong> Multiple phases in progress</li>
+  <li><strong>New in 2025:</strong> Additional residential towers, retail expansion</li>
+  <li><strong>Investment entry:</strong> From $85,000</li>
+  <li><strong>Expected completion:</strong> Phased through 2027</li>
+</ul>
+
+<h3><a href="/projects/pavilion-erbil" data-route>Pavilion Erbil - Waterfront Living</a></h3>
+<p>Unique lagoon-side development brings Mediterranean living to Erbil:</p>
+<ul>
+  <li><strong>Status:</strong> Active construction</li>
+  <li><strong>Features:</strong> Crystal lagoon, beach club, marina</li>
+  <li><strong>Units:</strong> Apartments and waterfront villas</li>
+  <li><strong>Investment entry:</strong> From $250,000</li>
+</ul>
+
+<h3>New Tower Developments in Gulan</h3>
+<p>Several new residential towers adding to Gulan's premium inventory:</p>
+<ul>
+  <li>Modern designs with enhanced amenities</li>
+  <li>Smart home features becoming standard</li>
+  <li>Premium positioning with city views</li>
+  <li>Launch pricing offering value opportunity</li>
+</ul>
+
+<h2>Types of New Projects</h2>
+
+<h3>Residential Towers</h3>
+<ul>
+  <li>Focus on 1-3 bedroom apartments</li>
+  <li>Enhanced amenity packages (pools, gyms, concierge)</li>
+  <li>Smart home integration</li>
+  <li>Targeting professionals and investors</li>
+</ul>
+
+<h3>Mixed-Use Developments</h3>
+<ul>
+  <li>Residential above retail/commercial</li>
+  <li>Lifestyle convenience built-in</li>
+  <li>Higher rental premiums</li>
+  <li>Strong investor appeal</li>
+</ul>
+
+<h3>Villa Communities</h3>
+<ul>
+  <li>Expansion of gated community concept</li>
+  <li>Family-oriented amenities</li>
+  <li>Green spaces and parks</li>
+  <li>Security as core feature</li>
+</ul>
+
+<h2>Benefits of New Construction</h2>
+<ul>
+  <li><strong>Modern design:</strong> Latest architectural and interior trends</li>
+  <li><strong>Better specifications:</strong> Higher quality materials and finishes</li>
+  <li><strong>Energy efficiency:</strong> Newer systems reduce operating costs</li>
+  <li><strong>Warranty:</strong> Developer warranties on construction</li>
+  <li><strong>Payment plans:</strong> Spread purchase over construction period</li>
+  <li><strong>Capital gains:</strong> Potential appreciation during construction</li>
+</ul>
+
+<h2>Off-Plan Buying Considerations</h2>
+
+<h3>Due Diligence</h3>
+<ul>
+  <li>Verify developer track record and completed projects</li>
+  <li>Understand payment schedule and milestones</li>
+  <li>Review contract terms carefully with legal counsel</li>
+  <li>Confirm project approvals and permits</li>
+</ul>
+
+<h3>Risk Management</h3>
+<ul>
+  <li>Choose established developers with completion history</li>
+  <li>Understand delay provisions in contracts</li>
+  <li>Consider escrow arrangements where available</li>
+  <li>Diversify across multiple projects if investing heavily</li>
+</ul>
+
+<h2>Investment Timing</h2>
+<p>Optimal entry points for new construction:</p>
+<ul>
+  <li><strong>Pre-launch:</strong> Best pricing but highest risk</li>
+  <li><strong>Launch:</strong> Good pricing with project momentum</li>
+  <li><strong>Mid-construction:</strong> Reduced risk, moderate appreciation left</li>
+  <li><strong>Near completion:</strong> Lowest risk, premium pricing</li>
+</ul>
+
+<h2>Explore New Projects</h2>
+<p><a href="/projects" data-route>View all development projects</a> or <a href="/contact" data-route>contact Real House</a> for early access to new launches and off-plan opportunities.</p>
+    `,
+    author: blogAuthors.mahmood,
+    date: '2025-01-20',
+    image: 'https://images.unsplash.com/photo-1541888946425-d81bb19240f5?w=1200&q=80&fm=webp',
+    category: 'News',
+    tags: ['New Construction', 'Erbil', 'Development Projects', 'Off-Plan', '2025', 'Investment', 'Kurdistan'],
+    readTime: 9,
+    isFeatured: false
+  },
+  {
+    id: 'comparing-erbil-top-residential-compounds',
+    title: 'Comparing Erbil\'s Top Residential Compounds: Dream City vs Italian Village vs English Village',
+    slug: 'comparing-erbil-top-residential-compounds',
+    excerpt: 'Detailed comparison of Erbil\'s premier gated communities. Compare Dream City, Italian Village, and English Village on price, amenities, security, and lifestyle.',
+    content: `
+<p>Erbil's gated residential compounds offer secure, family-friendly living with modern amenities. This detailed comparison helps you choose between the city's top three villa communities: Dream City, Italian Village, and English Village.</p>
+
+<h2>Quick Comparison Overview</h2>
+
+<h3>Dream City</h3>
+<ul>
+  <li><strong>Style:</strong> Modern Mediterranean</li>
+  <li><strong>Size:</strong> Largest compound in Erbil</li>
+  <li><strong>Price range:</strong> $320,000 - $700,000</li>
+  <li><strong>Best for:</strong> Families seeking space and community</li>
+</ul>
+
+<h3>Italian Village</h3>
+<ul>
+  <li><strong>Style:</strong> Italian/Mediterranean architecture</li>
+  <li><strong>Size:</strong> Medium-sized, established community</li>
+  <li><strong>Price range:</strong> $280,000 - $580,000</li>
+  <li><strong>Best for:</strong> Those seeking character and community bonds</li>
+</ul>
+
+<h3>English Village</h3>
+<ul>
+  <li><strong>Style:</strong> British colonial architecture</li>
+  <li><strong>Size:</strong> Smaller, more exclusive</li>
+  <li><strong>Price range:</strong> $300,000 - $550,000</li>
+  <li><strong>Best for:</strong> Buyers preferring exclusivity and privacy</li>
+</ul>
+
+<h2>Detailed Comparison</h2>
+
+<h3>Security</h3>
+<p>All three compounds offer excellent security:</p>
+<ul>
+  <li><strong>Dream City:</strong> 24/7 guards, CCTV, controlled gates, patrol services</li>
+  <li><strong>Italian Village:</strong> Gated access, security personnel, neighborhood watch</li>
+  <li><strong>English Village:</strong> Single entry point, rigorous access control</li>
+  <li><strong>Winner:</strong> Tie - all provide premium security</li>
+</ul>
+
+<h3>Property Size</h3>
+<ul>
+  <li><strong>Dream City:</strong> Villas 250-450 sqm, plots 400-800 sqm</li>
+  <li><strong>Italian Village:</strong> Townhouses 180-280 sqm, Villas 250-380 sqm</li>
+  <li><strong>English Village:</strong> Villas 230-400 sqm</li>
+  <li><strong>Winner:</strong> Dream City for larger properties</li>
+</ul>
+
+<h3>Community Amenities</h3>
+<ul>
+  <li><strong>Dream City:</strong> Parks, playgrounds, planned community center, restaurants</li>
+  <li><strong>Italian Village:</strong> Central plaza, community spaces, planned retail</li>
+  <li><strong>English Village:</strong> Green spaces, club facilities</li>
+  <li><strong>Winner:</strong> Dream City for variety</li>
+</ul>
+
+<h3>Location and Access</h3>
+<ul>
+  <li><strong>Dream City:</strong> East of center, 15-20 min to downtown, near airport road</li>
+  <li><strong>Italian Village:</strong> Southwest, 15-20 min to center, near schools</li>
+  <li><strong>English Village:</strong> Southwest, adjacent to Italian Village</li>
+  <li><strong>Winner:</strong> Depends on your work/school locations</li>
+</ul>
+
+<h3>School Proximity</h3>
+<ul>
+  <li><strong>Dream City:</strong> 10-15 min to major international schools</li>
+  <li><strong>Italian Village:</strong> 10-15 min, closest to some international schools</li>
+  <li><strong>English Village:</strong> Similar to Italian Village</li>
+  <li><strong>Winner:</strong> Italian/English Village slightly closer to some schools</li>
+</ul>
+
+<h3>Investment Value</h3>
+<ul>
+  <li><strong>Dream City:</strong> Strong rental demand, consistent appreciation</li>
+  <li><strong>Italian Village:</strong> Unique character commands premium</li>
+  <li><strong>English Village:</strong> Exclusivity supports value</li>
+  <li><strong>Winner:</strong> Dream City for rental; all strong for appreciation</li>
+</ul>
+
+<h2>Price Comparison</h2>
+
+<h3>4-Bedroom Villa</h3>
+<ul>
+  <li>Dream City: $350,000 - $480,000</li>
+  <li>Italian Village: $340,000 - $450,000</li>
+  <li>English Village: $320,000 - $420,000</li>
+</ul>
+
+<h3>Monthly Rental</h3>
+<ul>
+  <li>Dream City: $3,000 - $4,500</li>
+  <li>Italian Village: $2,500 - $3,800</li>
+  <li>English Village: $2,500 - $4,000</li>
+</ul>
+
+<h2>Our Recommendations</h2>
+
+<h3>Choose Dream City If:</h3>
+<ul>
+  <li>You have a larger family needing more space</li>
+  <li>Community activities and neighbors are important</li>
+  <li>You prefer modern architecture</li>
+  <li>Investment with strong rental market appeals</li>
+</ul>
+
+<h3>Choose Italian Village If:</h3>
+<ul>
+  <li>Distinctive architecture attracts you</li>
+  <li>You value close-knit community bonds</li>
+  <li>Quieter environment is preferred</li>
+  <li>Budget is a consideration</li>
+</ul>
+
+<h3>Choose English Village If:</h3>
+<ul>
+  <li>Privacy and exclusivity are priorities</li>
+  <li>You prefer smaller community settings</li>
+  <li>British colonial style appeals</li>
+</ul>
+
+<h2>Schedule Compound Tours</h2>
+<p><a href="/contact" data-route>Contact Real House</a> to arrange tours of all three compounds and find your perfect community.</p>
+    `,
+    author: blogAuthors.abdalkader,
+    date: '2025-01-15',
+    image: 'https://images.unsplash.com/photo-1512917774080-9991f1c4c750?w=1200&q=80&fm=webp',
+    category: 'Comparison',
+    tags: ['Dream City', 'Italian Village', 'English Village', 'Gated Communities', 'Comparison', 'Erbil', 'Villas'],
+    readTime: 10,
+    isFeatured: false
+  },
+  {
+    id: 'renting-vs-buying-erbil-which-better',
+    title: 'Renting vs Buying in Erbil: Which is Better for You?',
+    slug: 'renting-vs-buying-erbil-which-better',
+    excerpt: 'Should you rent or buy property in Erbil? Compare costs, benefits, and considerations to make the right decision for your situation in Kurdistan.',
+    content: `
+<p>The decision to rent or buy property in Erbil depends on your personal circumstances, financial situation, and plans for the future. This guide helps you evaluate both options to make the best choice.</p>
+
+<h2>Overview: Rent vs Buy in Erbil</h2>
+
+<h3>Current Market Snapshot</h3>
+<ul>
+  <li><strong>Average apartment purchase:</strong> $150,000 - $350,000</li>
+  <li><strong>Average apartment rent:</strong> $1,000 - $2,500/month</li>
+  <li><strong>Average villa purchase:</strong> $350,000 - $700,000</li>
+  <li><strong>Average villa rent:</strong> $2,500 - $5,000/month</li>
+</ul>
+
+<h2>Benefits of Buying</h2>
+
+<h3>Financial Benefits</h3>
+<ul>
+  <li><strong>Asset building:</strong> Monthly payments build equity, not landlord's wealth</li>
+  <li><strong>Appreciation:</strong> Property values in prime Erbil areas grow 5-10% annually</li>
+  <li><strong>Rental income:</strong> Can rent out if you relocate, generating passive income</li>
+  <li><strong>No rent increases:</strong> Fixed housing costs (excluding maintenance)</li>
+</ul>
+
+<h3>Lifestyle Benefits</h3>
+<ul>
+  <li>Freedom to renovate and personalize</li>
+  <li>Stability and security of ownership</li>
+  <li>No landlord restrictions</li>
+  <li>Pride of homeownership</li>
+</ul>
+
+<h3>Ideal Buying Scenarios</h3>
+<ul>
+  <li>Planning to stay in Erbil 3+ years</li>
+  <li>Have capital for down payment (30-50%+)</li>
+  <li>Seeking long-term investment</li>
+  <li>Family stability is priority</li>
+</ul>
+
+<h2>Benefits of Renting</h2>
+
+<h3>Financial Benefits</h3>
+<ul>
+  <li><strong>Lower upfront costs:</strong> No large down payment required</li>
+  <li><strong>Flexibility:</strong> Can move without selling process</li>
+  <li><strong>Maintenance included:</strong> Landlord handles major repairs</li>
+  <li><strong>Capital free:</strong> Invest savings elsewhere</li>
+</ul>
+
+<h3>Lifestyle Benefits</h3>
+<ul>
+  <li>Try neighborhoods before committing</li>
+  <li>Access to premium properties without purchase</li>
+  <li>Flexibility for job changes or relocation</li>
+  <li>No long-term commitment</li>
+</ul>
+
+<h3>Ideal Renting Scenarios</h3>
+<ul>
+  <li>Staying in Erbil less than 2-3 years</li>
+  <li>Uncertain about long-term plans</li>
+  <li>Prefer capital flexibility</li>
+  <li>New to the city and exploring</li>
+</ul>
+
+<h2>Financial Comparison</h2>
+
+<h3>Example: $200,000 Apartment</h3>
+
+<h4>If Buying:</h4>
+<ul>
+  <li>Down payment: $100,000 (50%)</li>
+  <li>Additional costs: $15,000 (fees, registration)</li>
+  <li>Monthly: Maintenance ~$200</li>
+  <li>3-year appreciation: +$30,000-$60,000</li>
+</ul>
+
+<h4>If Renting Equivalent:</h4>
+<ul>
+  <li>Monthly rent: ~$1,500</li>
+  <li>3-year rent total: $54,000</li>
+  <li>Deposit: $3,000 (refundable)</li>
+  <li>No equity built</li>
+</ul>
+
+<h3>Break-Even Analysis</h3>
+<p>In most Erbil scenarios, buying becomes financially advantageous if staying 3+ years, considering appreciation and equity building.</p>
+
+<h2>Questions to Ask Yourself</h2>
+<ol>
+  <li>How long will I stay in Erbil?</li>
+  <li>Do I have capital for down payment?</li>
+  <li>Is my income stable?</li>
+  <li>Do I want to build equity?</li>
+  <li>Am I comfortable with ownership responsibilities?</li>
+  <li>Do I have investment alternatives for my capital?</li>
+</ol>
+
+<h2>Hybrid Approach</h2>
+<p>Some buyers combine strategies:</p>
+<ul>
+  <li>Rent where you live, buy as investment property</li>
+  <li>Rent initially while learning the market, then buy</li>
+  <li>Buy primary residence, rent additional investment units</li>
+</ul>
+
+<h2>Get Expert Advice</h2>
+<p>Whether you choose to rent or buy, Real House can help. <a href="/properties" data-route>Browse our listings</a> for both purchase and rental options, or <a href="/contact" data-route>consult our team</a> for personalized guidance.</p>
+    `,
+    author: blogAuthors.karwan,
+    date: '2025-01-10',
+    image: 'https://images.unsplash.com/photo-1560518883-ce09059eeffa?w=1200&q=80&fm=webp',
+    category: 'Buying Guide',
+    tags: ['Renting', 'Buying', 'Erbil', 'Property Decision', 'Financial Planning', 'Real Estate', 'Kurdistan'],
+    readTime: 9,
+    isFeatured: false
+  },
+  {
+    id: 'understanding-property-prices-erbil-neighborhood',
+    title: 'Understanding Property Prices in Erbil by Neighborhood: 2025 Guide',
+    slug: 'understanding-property-prices-erbil-neighborhood',
+    excerpt: 'Comprehensive breakdown of property prices across Erbil\'s neighborhoods. Compare costs in Gulan, Dream City, Ankawa, and other areas for informed decisions.',
+    content: `
+<p>Understanding property prices by neighborhood is essential for buyers and investors in Erbil. This comprehensive guide breaks down current pricing across the city's key areas, helping you budget appropriately and identify value opportunities.</p>
+
+<h2>Price Overview by Area</h2>
+
+<h3>Gulan District (Premium Urban)</h3>
+<p>Erbil's premier commercial and residential district commands top prices:</p>
+
+<h4>Apartments</h4>
+<ul>
+  <li>Price per sqm: $1,500 - $2,400</li>
+  <li>1-bedroom: $120,000 - $180,000</li>
+  <li>2-bedroom: $180,000 - $300,000</li>
+  <li>3-bedroom: $280,000 - $450,000</li>
+  <li>Penthouses: $400,000 - $800,000+</li>
+</ul>
+
+<h4>Rental Range</h4>
+<ul>
+  <li>1-bedroom: $1,000 - $1,800/month</li>
+  <li>2-bedroom: $1,500 - $2,800/month</li>
+  <li>3-bedroom: $2,500 - $4,000/month</li>
+</ul>
+
+<h3>Dream City (Premium Villa Community)</h3>
+<p>Family-oriented gated community with spacious villas:</p>
+
+<h4>Villas</h4>
+<ul>
+  <li>Price per sqm: $1,200 - $1,800</li>
+  <li>3-bedroom: $280,000 - $400,000</li>
+  <li>4-bedroom: $350,000 - $520,000</li>
+  <li>5-6 bedroom: $480,000 - $700,000</li>
+</ul>
+
+<h4>Rental Range</h4>
+<ul>
+  <li>3-bedroom: $2,200 - $3,200/month</li>
+  <li>4-bedroom: $3,000 - $4,500/month</li>
+  <li>5-6 bedroom: $4,000 - $6,000/month</li>
+</ul>
+
+<h3>Italian Village</h3>
+<p>Distinctive Mediterranean-style community:</p>
+
+<h4>Properties</h4>
+<ul>
+  <li>Townhouses: $250,000 - $400,000</li>
+  <li>Villas: $350,000 - $580,000</li>
+</ul>
+
+<h4>Rental Range</h4>
+<ul>
+  <li>Townhouses: $1,800 - $2,800/month</li>
+  <li>Villas: $2,500 - $4,200/month</li>
+</ul>
+
+<h3>Ankawa</h3>
+<p>Established neighborhood with diverse options and moderate pricing:</p>
+
+<h4>Apartments</h4>
+<ul>
+  <li>Price per sqm: $900 - $1,400</li>
+  <li>2-bedroom: $90,000 - $160,000</li>
+  <li>3-bedroom: $140,000 - $240,000</li>
+</ul>
+
+<h4>Houses/Villas</h4>
+<ul>
+  <li>Houses: $180,000 - $350,000</li>
+  <li>Villas: $300,000 - $500,000</li>
+</ul>
+
+<h4>Rental Range</h4>
+<ul>
+  <li>2-bedroom apt: $700 - $1,200/month</li>
+  <li>House: $1,200 - $2,500/month</li>
+</ul>
+
+<h3>Empire World</h3>
+<p>New mixed-use development with range of options:</p>
+
+<h4>Apartments</h4>
+<ul>
+  <li>Studios: $75,000 - $110,000</li>
+  <li>1-bedroom: $110,000 - $170,000</li>
+  <li>2-bedroom: $170,000 - $300,000</li>
+  <li>3-bedroom: $280,000 - $500,000</li>
+  <li>Penthouses: $500,000 - $1,500,000+</li>
+</ul>
+
+<h2>Factors Affecting Price</h2>
+<ul>
+  <li><strong>Location:</strong> Proximity to amenities, malls, main roads</li>
+  <li><strong>View:</strong> City views, park views command premiums</li>
+  <li><strong>Floor level:</strong> Higher floors typically more expensive</li>
+  <li><strong>Condition:</strong> New/renovated vs. older properties</li>
+  <li><strong>Amenities:</strong> Building facilities (pool, gym, security)</li>
+  <li><strong>Parking:</strong> Dedicated parking adds value</li>
+</ul>
+
+<h2>Value Opportunities</h2>
+
+<h3>Best Value Areas</h3>
+<ul>
+  <li>Ankawa for established neighborhood at moderate prices</li>
+  <li>Empire World for new construction with payment plans</li>
+  <li>Emerging areas along new roads with growth potential</li>
+</ul>
+
+<h3>Premium Areas Worth the Investment</h3>
+<ul>
+  <li>Gulan for rental income and liquidity</li>
+  <li>Dream City for family lifestyle and appreciation</li>
+</ul>
+
+<h2>Budget Planning Guide</h2>
+<p>Beyond purchase price, budget for:</p>
+<ul>
+  <li>Registration fees: 2-3%</li>
+  <li>Agent commission: 2-3%</li>
+  <li>Legal fees: 1-2%</li>
+  <li>Renovation (if needed): varies</li>
+  <li><strong>Total: Add 6-10% to purchase price</strong></li>
+</ul>
+
+<h2>Get Current Pricing</h2>
+<p>Prices fluctuate with market conditions. <a href="/properties" data-route>Browse current listings</a> for up-to-date pricing or <a href="/contact" data-route>contact Real House</a> for detailed market valuations.</p>
+    `,
+    author: blogAuthors.mahmood,
+    date: '2025-01-05',
+    image: 'https://images.unsplash.com/photo-1560520653-9e0e4c89eb11?w=1200&q=80&fm=webp',
+    category: 'Market Trends',
+    tags: ['Property Prices', 'Erbil', 'Neighborhoods', 'Market Analysis', 'Gulan', 'Dream City', 'Ankawa', 'Kurdistan'],
+    readTime: 10,
+    isFeatured: false
+  },
+  {
+    id: 'dream-city-erbil-complete-guide',
+    title: 'Dream City Erbil: Everything You Need to Know',
+    slug: 'dream-city-erbil-complete-guide',
+    excerpt: 'Complete guide to Dream City, Erbil\'s premier gated villa community. Explore property types, prices, amenities, schools nearby, and lifestyle benefits.',
+    content: `
+<p><a href="/projects/dream-city" data-route>Dream City</a> is Erbil's most sought-after residential community, offering families a secure, spacious, and modern living environment. This complete guide covers everything you need to know about buying or renting in Dream City.</p>
+
+<h2>What is Dream City?</h2>
+<p>Dream City is a large, master-planned gated community located east of Erbil city center. Developed as a premium residential neighborhood, it features hundreds of villas, modern infrastructure, and comprehensive security.</p>
+
+<h3>Community Overview</h3>
+<ul>
+  <li><strong>Type:</strong> Gated residential community</li>
+  <li><strong>Property types:</strong> Villas and townhouses</li>
+  <li><strong>Total units:</strong> Hundreds of homes</li>
+  <li><strong>Residents:</strong> Mix of local families, diplomats, expats</li>
+  <li><strong>Security:</strong> 24/7 guards, controlled access, CCTV</li>
+</ul>
+
+<h2>Property Types and Sizes</h2>
+
+<h3>Standard Villas</h3>
+<ul>
+  <li><strong>3-bedroom:</strong> 200-280 sqm built area</li>
+  <li><strong>4-bedroom:</strong> 280-380 sqm built area</li>
+  <li><strong>5-bedroom:</strong> 350-450 sqm built area</li>
+  <li><strong>Plot sizes:</strong> 400-800 sqm typically</li>
+</ul>
+
+<h3>Premium Villas</h3>
+<ul>
+  <li>Larger plots up to 1,000+ sqm</li>
+  <li>Custom designs and upgrades</li>
+  <li>Premium locations within community</li>
+</ul>
+
+<h2>Current Pricing (2025)</h2>
+
+<h3>Purchase Prices</h3>
+<ul>
+  <li>3-bedroom villa: $280,000 - $380,000</li>
+  <li>4-bedroom villa: $350,000 - $500,000</li>
+  <li>5-bedroom villa: $450,000 - $650,000</li>
+  <li>Premium/corner units: Add 10-20%</li>
+</ul>
+
+<h3>Rental Prices</h3>
+<ul>
+  <li>3-bedroom: $2,200 - $3,200/month</li>
+  <li>4-bedroom: $3,000 - $4,500/month</li>
+  <li>5-bedroom: $4,000 - $5,500/month</li>
+  <li>Furnished premium: Up to $6,500/month</li>
+</ul>
+
+<h2>Amenities and Facilities</h2>
+
+<h3>Security</h3>
+<ul>
+  <li>24/7 security personnel at all gates</li>
+  <li>CCTV monitoring throughout</li>
+  <li>Visitor registration and access control</li>
+  <li>Security patrols</li>
+</ul>
+
+<h3>Community Facilities</h3>
+<ul>
+  <li>Parks and green spaces</li>
+  <li>Children's playgrounds</li>
+  <li>Walking and jogging paths</li>
+  <li>Restaurants and cafes</li>
+  <li>Convenience stores</li>
+</ul>
+
+<h3>Infrastructure</h3>
+<ul>
+  <li>Wide, well-maintained roads</li>
+  <li>Street lighting</li>
+  <li>Underground utilities</li>
+  <li>Reliable power supply</li>
+</ul>
+
+<h2>Schools Near Dream City</h2>
+<ul>
+  <li><strong>International School of Choueifat:</strong> 10-15 minutes</li>
+  <li><strong>British International School:</strong> 15 minutes</li>
+  <li><strong>Various local schools:</strong> Within 10-20 minutes</li>
+</ul>
+
+<h2>Lifestyle in Dream City</h2>
+
+<h3>Who Lives Here?</h3>
+<ul>
+  <li>Local professional families</li>
+  <li>Diplomatic personnel and families</li>
+  <li>International company executives</li>
+  <li>Expat families from various countries</li>
+</ul>
+
+<h3>Daily Life</h3>
+<ul>
+  <li>Children can play safely in the community</li>
+  <li>Morning walks and evening jogs on safe paths</li>
+  <li>Community events and social gatherings</li>
+  <li>Easy access to shopping (15-20 min to malls)</li>
+</ul>
+
+<h2>Investment Value</h2>
+<ul>
+  <li><strong>Appreciation:</strong> 5-8% annually in recent years</li>
+  <li><strong>Rental yield:</strong> 6-8% gross</li>
+  <li><strong>Demand:</strong> Consistently strong from quality tenants</li>
+  <li><strong>Liquidity:</strong> Good resale market</li>
+</ul>
+
+<h2>Pros and Cons</h2>
+
+<h3>Pros</h3>
+<ul>
+  <li>Excellent security and peace of mind</li>
+  <li>Spacious properties with gardens</li>
+  <li>Strong community atmosphere</li>
+  <li>Quality tenant/buyer pool</li>
+  <li>Good investment fundamentals</li>
+</ul>
+
+<h3>Cons</h3>
+<ul>
+  <li>Distance from city center (15-20 min drive)</li>
+  <li>Car required for daily activities</li>
+  <li>Premium pricing vs. non-gated areas</li>
+</ul>
+
+<h2>View Dream City Properties</h2>
+<p><a href="/projects/dream-city" data-route>Browse Dream City listings</a> or <a href="/contact" data-route>schedule a tour</a> to experience this exceptional community firsthand.</p>
+    `,
+    author: blogAuthors.abdalkader,
+    date: '2024-12-28',
+    image: 'https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=1200&q=80&fm=webp',
+    category: 'Neighborhoods',
+    tags: ['Dream City', 'Erbil', 'Gated Community', 'Villas', 'Family Living', 'Kurdistan', 'Luxury'],
+    readTime: 10,
+    isFeatured: false
+  },
+  {
+    id: 'best-schools-near-erbil-residential-areas',
+    title: 'Best Schools Near Erbil\'s Top Residential Areas: Parent\'s Guide',
+    slug: 'best-schools-near-erbil-residential-areas',
+    excerpt: 'Guide to international and private schools near Erbil\'s best neighborhoods. Compare schools, curricula, and proximity to residential areas for family planning.',
+    content: `
+<p>Access to quality education is a top priority for families relocating to Erbil. This guide covers the best international and private schools in Erbil and their proximity to major residential neighborhoods.</p>
+
+<h2>International Schools Overview</h2>
+
+<h3>International School of Choueifat - Erbil (ISC-Erbil)</h3>
+<p>One of Erbil's most established international schools offering comprehensive education.</p>
+<ul>
+  <li><strong>Curriculum:</strong> SABIS Educational System, American-style</li>
+  <li><strong>Grades:</strong> KG through Grade 12</li>
+  <li><strong>Languages:</strong> English primary, Arabic offered</li>
+  <li><strong>Location:</strong> Near Dream City area</li>
+</ul>
+
+<h4>Distance from Neighborhoods:</h4>
+<ul>
+  <li>Dream City: 10-15 minutes</li>
+  <li>Italian Village: 15-20 minutes</li>
+  <li>Gulan: 15-20 minutes</li>
+  <li>Ankawa: 20-25 minutes</li>
+</ul>
+
+<h3>British International School Erbil (BISE)</h3>
+<p>Offering British curriculum education in a modern campus.</p>
+<ul>
+  <li><strong>Curriculum:</strong> British National Curriculum, IGCSE, A-Levels</li>
+  <li><strong>Grades:</strong> Foundation through Year 13</li>
+  <li><strong>Languages:</strong> English, Arabic, Kurdish</li>
+  <li><strong>Features:</strong> Modern facilities, sports programs</li>
+</ul>
+
+<h4>Distance from Neighborhoods:</h4>
+<ul>
+  <li>Dream City: 15-20 minutes</li>
+  <li>Italian Village: 15 minutes</li>
+  <li>Gulan: 20 minutes</li>
+  <li>Ankawa: 15-20 minutes</li>
+</ul>
+
+<h3>SABIS International School Erbil</h3>
+<p>Part of the global SABIS network with proven educational methodology.</p>
+<ul>
+  <li><strong>Curriculum:</strong> SABIS Educational System</li>
+  <li><strong>Grades:</strong> KG through Grade 12</li>
+  <li><strong>Features:</strong> Standardized testing, university prep</li>
+</ul>
+
+<h3>Cambridge International School</h3>
+<p>Offering Cambridge Assessment education.</p>
+<ul>
+  <li><strong>Curriculum:</strong> Cambridge Primary, IGCSE</li>
+  <li><strong>Grades:</strong> Primary through Secondary</li>
+  <li><strong>Features:</strong> Globally recognized qualifications</li>
+</ul>
+
+<h2>Schools by Neighborhood</h2>
+
+<h3>Best for Dream City Residents</h3>
+<ul>
+  <li>International School of Choueifat (closest)</li>
+  <li>British International School</li>
+  <li>Various private schools en route to city</li>
+</ul>
+
+<h3>Best for Italian/English Village Residents</h3>
+<ul>
+  <li>British International School (very close)</li>
+  <li>International School of Choueifat</li>
+  <li>Cambridge schools in the area</li>
+</ul>
+
+<h3>Best for Gulan Residents</h3>
+<ul>
+  <li>Easy access to multiple schools via main roads</li>
+  <li>Several options within 15-25 minute drive</li>
+</ul>
+
+<h3>Best for Ankawa Residents</h3>
+<ul>
+  <li>Multiple school options accessible</li>
+  <li>Local private schools in Ankawa</li>
+  <li>International schools 15-25 minutes away</li>
+</ul>
+
+<h2>School Selection Considerations</h2>
+
+<h3>Curriculum Choice</h3>
+<ul>
+  <li><strong>American:</strong> Good for US university applications</li>
+  <li><strong>British:</strong> IGCSE/A-Levels recognized globally</li>
+  <li><strong>IB:</strong> Some schools offer International Baccalaureate</li>
+</ul>
+
+<h3>Practical Factors</h3>
+<ul>
+  <li>Commute time during school hours</li>
+  <li>Bus service availability</li>
+  <li>After-school activity options</li>
+  <li>Fee structure and payment terms</li>
+  <li>Class sizes and teacher quality</li>
+</ul>
+
+<h2>School Fees Guide</h2>
+<p>International school fees in Erbil typically range:</p>
+<ul>
+  <li><strong>KG-Primary:</strong> $5,000 - $12,000/year</li>
+  <li><strong>Middle School:</strong> $8,000 - $15,000/year</li>
+  <li><strong>High School:</strong> $10,000 - $18,000/year</li>
+</ul>
+<p>Fees vary by school and may include additional costs for activities, uniforms, and materials.</p>
+
+<h2>Planning Your Move</h2>
+<p>When choosing your Erbil neighborhood, consider:</p>
+<ol>
+  <li>Which schools match your educational preferences?</li>
+  <li>What is the acceptable commute time?</li>
+  <li>Are school buses available from your area?</li>
+  <li>What are the total education costs?</li>
+</ol>
+
+<h2>Find Family-Friendly Properties</h2>
+<p><a href="/properties" data-route>Browse properties near top schools</a> or <a href="/contact" data-route>consult Real House</a> about family relocation assistance including school proximity guidance.</p>
+    `,
+    author: blogAuthors.abdalkader,
+    date: '2024-12-20',
+    image: 'https://images.unsplash.com/photo-1580582932707-520aed937b7b?w=1200&q=80&fm=webp',
+    category: 'Lifestyle',
+    tags: ['Schools', 'Education', 'Erbil', 'International Schools', 'Family', 'Expat', 'Kurdistan'],
+    readTime: 9,
+    isFeatured: false
+  },
+  {
+    id: 'erbil-property-investment-returns-roi',
+    title: 'Erbil Property Investment: Expected Returns and ROI Analysis',
+    slug: 'erbil-property-investment-returns-roi',
+    excerpt: 'Detailed ROI analysis for Erbil real estate investments. Understand expected rental yields, capital appreciation, and total returns by property type.',
+    content: `
+<p>Understanding potential returns is crucial for property investment decisions. This analysis examines expected ROI across different property types in Erbil, helping investors make informed choices.</p>
+
+<h2>Components of Property Returns</h2>
+<p>Total property investment returns come from two sources:</p>
+<ul>
+  <li><strong>Rental yield:</strong> Annual rental income as percentage of property value</li>
+  <li><strong>Capital appreciation:</strong> Increase in property value over time</li>
+  <li><strong>Total return:</strong> Combined rental yield + appreciation</li>
+</ul>
+
+<h2>Rental Yields by Property Type</h2>
+
+<h3>Premium Apartments (Gulan)</h3>
+<ul>
+  <li><strong>Purchase price:</strong> $180,000 - $400,000</li>
+  <li><strong>Monthly rent:</strong> $1,500 - $3,500</li>
+  <li><strong>Gross yield:</strong> 8-11%</li>
+  <li><strong>Net yield:</strong> 6-9% (after expenses)</li>
+</ul>
+
+<h3>Luxury Villas (Dream City)</h3>
+<ul>
+  <li><strong>Purchase price:</strong> $350,000 - $700,000</li>
+  <li><strong>Monthly rent:</strong> $2,800 - $5,500</li>
+  <li><strong>Gross yield:</strong> 6-9%</li>
+  <li><strong>Net yield:</strong> 5-7%</li>
+</ul>
+
+<h3>Mid-Range Apartments</h3>
+<ul>
+  <li><strong>Purchase price:</strong> $80,000 - $150,000</li>
+  <li><strong>Monthly rent:</strong> $600 - $1,200</li>
+  <li><strong>Gross yield:</strong> 8-10%</li>
+  <li><strong>Net yield:</strong> 6-8%</li>
+</ul>
+
+<h3>Commercial Retail</h3>
+<ul>
+  <li><strong>Purchase price:</strong> $100,000 - $400,000</li>
+  <li><strong>Monthly rent:</strong> $1,500 - $6,000</li>
+  <li><strong>Gross yield:</strong> 10-16%</li>
+  <li><strong>Net yield:</strong> 8-13%</li>
+</ul>
+
+<h2>Capital Appreciation Expectations</h2>
+
+<h3>Premium Locations</h3>
+<ul>
+  <li><strong>Gulan:</strong> 6-10% annual appreciation</li>
+  <li><strong>Dream City:</strong> 5-8% annual appreciation</li>
+  <li><strong>Empire World:</strong> 8-15% (new development premium)</li>
+</ul>
+
+<h3>Mid-Range Areas</h3>
+<ul>
+  <li><strong>Ankawa:</strong> 4-7% annual appreciation</li>
+  <li><strong>Other established areas:</strong> 3-6%</li>
+</ul>
+
+<h3>Emerging Areas</h3>
+<ul>
+  <li>Higher risk but 8-15% potential</li>
+  <li>Requires careful due diligence</li>
+</ul>
+
+<h2>Total Return Analysis</h2>
+
+<h3>Conservative Scenario (Premium established)</h3>
+<ul>
+  <li>Rental yield: 6-7%</li>
+  <li>Appreciation: 5-6%</li>
+  <li><strong>Total return: 11-13% annually</strong></li>
+</ul>
+
+<h3>Balanced Scenario (Mix of areas)</h3>
+<ul>
+  <li>Rental yield: 7-9%</li>
+  <li>Appreciation: 6-8%</li>
+  <li><strong>Total return: 13-17% annually</strong></li>
+</ul>
+
+<h3>Growth Scenario (New developments)</h3>
+<ul>
+  <li>Rental yield: 8-10%</li>
+  <li>Appreciation: 8-12%</li>
+  <li><strong>Total return: 16-22% annually</strong></li>
+</ul>
+
+<h2>ROI Calculation Example</h2>
+
+<h3>Investment: $300,000 Gulan Apartment</h3>
+<ul>
+  <li>Purchase: $300,000</li>
+  <li>Additional costs: $25,000</li>
+  <li><strong>Total investment: $325,000</strong></li>
+</ul>
+
+<h3>Annual Returns</h3>
+<ul>
+  <li>Monthly rent: $2,500</li>
+  <li>Annual rent: $30,000</li>
+  <li>Expenses (10%): -$3,000</li>
+  <li><strong>Net rental income: $27,000</strong></li>
+</ul>
+
+<h3>5-Year Projection</h3>
+<ul>
+  <li>Rental income (5 years): $135,000</li>
+  <li>Property appreciation (7% avg): $110,000</li>
+  <li><strong>Total returns: $245,000</strong></li>
+  <li><strong>ROI: 75% over 5 years (15%/year)</strong></li>
+</ul>
+
+<h2>Maximizing Returns</h2>
+
+<h3>Strategies for Better ROI</h3>
+<ul>
+  <li>Target high-demand tenant segments (diplomats, executives)</li>
+  <li>Furnish properties for rental premium</li>
+  <li>Choose locations with strong fundamentals</li>
+  <li>Buy at favorable pricing (off-plan, motivated sellers)</li>
+  <li>Maintain properties well to command top rents</li>
+</ul>
+
+<h3>Common Mistakes to Avoid</h3>
+<ul>
+  <li>Overpaying in hot market moments</li>
+  <li>Underestimating expenses and vacancy</li>
+  <li>Poor tenant selection</li>
+  <li>Neglecting maintenance</li>
+  <li>Wrong location choice</li>
+</ul>
+
+<h2>Start Your Investment</h2>
+<p>Ready to invest in Erbil real estate? <a href="/properties" data-route>Browse investment properties</a> or <a href="/contact" data-route>consult our investment team</a> for personalized ROI analysis on specific properties.</p>
+    `,
+    author: blogAuthors.mahmood,
+    date: '2024-12-15',
+    image: 'https://images.unsplash.com/photo-1560520653-9e0e4c89eb11?w=1200&q=80&fm=webp',
+    category: 'Investment',
+    tags: ['ROI', 'Investment Returns', 'Rental Yield', 'Capital Appreciation', 'Erbil', 'Real Estate Investment', 'Kurdistan'],
+    readTime: 11,
+    isFeatured: false
+  },
+  {
+    id: 'moving-to-erbil-essential-guide-expats',
+    title: 'Moving to Erbil: Essential Guide for Expats',
+    slug: 'moving-to-erbil-essential-guide-expats',
+    excerpt: 'Complete relocation guide for expatriates moving to Erbil, Kurdistan. Covers visas, housing, cost of living, healthcare, safety, and settling in tips.',
+    content: `
+<p>Relocating to Erbil offers exciting opportunities but requires careful planning. This comprehensive guide covers everything expatriates need to know about moving to and settling in Kurdistan's capital.</p>
+
+<h2>Why Move to Erbil?</h2>
+<ul>
+  <li><strong>Career opportunities:</strong> Growing economy, international companies</li>
+  <li><strong>Safety:</strong> One of the safest cities in the region</li>
+  <li><strong>Quality of life:</strong> Modern amenities, good weather, friendly people</li>
+  <li><strong>Cost of living:</strong> Lower than Gulf cities for similar lifestyle</li>
+  <li><strong>Cultural experience:</strong> Rich Kurdish heritage, welcoming community</li>
+</ul>
+
+<h2>Visa and Entry Requirements</h2>
+
+<h3>Visa Options</h3>
+<ul>
+  <li><strong>Tourist visa:</strong> Many nationalities get visa on arrival (30 days)</li>
+  <li><strong>Business visa:</strong> Sponsored by local company</li>
+  <li><strong>Work permit:</strong> Required for employment, employer arranges</li>
+  <li><strong>Residency:</strong> Available through employment or property investment</li>
+</ul>
+
+<h3>Key Requirements</h3>
+<ul>
+  <li>Valid passport (6+ months validity)</li>
+  <li>Return ticket (for tourist visa)</li>
+  <li>Proof of accommodation</li>
+  <li>Sponsorship letter (for work)</li>
+</ul>
+
+<h2>Finding Housing</h2>
+
+<h3>Popular Expat Neighborhoods</h3>
+<ul>
+  <li><strong><a href="/projects/dream-city" data-route>Dream City</a>:</strong> Family-friendly gated community</li>
+  <li><strong>Ankawa:</strong> Diverse, social, restaurant scene</li>
+  <li><strong>Italian Village:</strong> European-style living</li>
+  <li><strong>Gulan:</strong> Urban apartments, convenience</li>
+</ul>
+
+<h3>Housing Costs (Monthly Rent)</h3>
+<ul>
+  <li>2-bedroom apartment: $800 - $2,000</li>
+  <li>3-bedroom apartment: $1,200 - $3,000</li>
+  <li>Villa: $2,500 - $5,500</li>
+</ul>
+
+<h3>Finding Property</h3>
+<p><a href="/properties" data-route>Browse our listings</a> or <a href="/contact" data-route>contact Real House</a> for expat relocation assistance. We help with:</p>
+<ul>
+  <li>Property search matching your needs</li>
+  <li>Neighborhood tours</li>
+  <li>Lease negotiation</li>
+  <li>Move-in coordination</li>
+</ul>
+
+<h2>Cost of Living</h2>
+
+<h3>Monthly Budget Guide</h3>
+<ul>
+  <li><strong>Housing:</strong> $1,500 - $4,000 (major expense)</li>
+  <li><strong>Utilities:</strong> $150 - $400</li>
+  <li><strong>Groceries:</strong> $400 - $800</li>
+  <li><strong>Dining out:</strong> $300 - $800</li>
+  <li><strong>Transportation:</strong> $200 - $500</li>
+  <li><strong>Healthcare:</strong> $100 - $300</li>
+  <li><strong>Entertainment:</strong> $200 - $500</li>
+</ul>
+
+<h3>Typical Single Professional</h3>
+<ul>
+  <li>Comfortable lifestyle: $2,500 - $4,000/month</li>
+</ul>
+
+<h3>Typical Family (2 adults, 2 children)</h3>
+<ul>
+  <li>Comfortable lifestyle: $5,000 - $10,000/month</li>
+  <li>(Includes international school fees)</li>
+</ul>
+
+<h2>Healthcare</h2>
+
+<h3>Medical Facilities</h3>
+<ul>
+  <li>Modern private hospitals available</li>
+  <li>International-standard clinics</li>
+  <li>Specialist care for most needs</li>
+</ul>
+
+<h3>Health Insurance</h3>
+<ul>
+  <li>International health insurance recommended</li>
+  <li>Many employers provide coverage</li>
+  <li>Private care is affordable even without insurance</li>
+</ul>
+
+<h2>Education</h2>
+<p>International schools offer quality education:</p>
+<ul>
+  <li>International School of Choueifat</li>
+  <li>British International School Erbil</li>
+  <li>Various private schools</li>
+  <li>Fees: $5,000 - $18,000/year</li>
+</ul>
+
+<h2>Transportation</h2>
+
+<h3>Getting Around</h3>
+<ul>
+  <li><strong>Car:</strong> Most expats drive; roads are good</li>
+  <li><strong>Taxi:</strong> Abundant and affordable</li>
+  <li><strong>Ride apps:</strong> Available in Erbil</li>
+  <li><strong>Driver hire:</strong> Common for families</li>
+</ul>
+
+<h2>Safety and Security</h2>
+<p>Erbil is notably safe:</p>
+<ul>
+  <li>Low crime rates</li>
+  <li>Visible security presence</li>
+  <li>Safe for walking and daily activities</li>
+  <li>Family-friendly environment</li>
+</ul>
+
+<h2>Settling In Tips</h2>
+<ol>
+  <li>Join expat groups and communities</li>
+  <li>Learn basic Kurdish greetings</li>
+  <li>Explore Ankawa's restaurant scene</li>
+  <li>Visit the historic Citadel</li>
+  <li>Try local Kurdish cuisine</li>
+  <li>Attend cultural events and festivals</li>
+  <li>Be patient with administrative processes</li>
+</ol>
+
+<h2>Ready to Make the Move?</h2>
+<p>Real House specializes in helping expatriates find the perfect home in Erbil. <a href="/contact" data-route>Contact us</a> for personalized relocation assistance.</p>
+    `,
+    author: blogAuthors.karwan,
+    date: '2024-12-10',
+    image: 'https://images.unsplash.com/photo-1512917774080-9991f1c4c750?w=1200&q=80&fm=webp',
+    category: 'Lifestyle',
+    tags: ['Expat Guide', 'Moving to Erbil', 'Relocation', 'Kurdistan', 'Cost of Living', 'Visa', 'Expat Life'],
+    readTime: 12,
+    isFeatured: false
   }
 ];
 

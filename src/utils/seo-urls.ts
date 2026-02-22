@@ -70,10 +70,18 @@ export function generatePropertyUrl(property: Property): string {
 }
 
 /**
- * Generate canonical URL for a property (shorter, cleaner)
+ * Generate canonical URL for a property (using slug)
  */
-export function generatePropertyCanonicalUrl(propertyId: string): string {
-  return `https://realhouseiq.com/properties/${propertyId}`;
+export function generatePropertyCanonicalUrl(property: Property): string {
+  const slug = generateSlug(property.title);
+  return `https://realhouseiq.com/properties/${slug}`;
+}
+
+/**
+ * Generate canonical URL for a property by slug string
+ */
+export function generatePropertyCanonicalUrlBySlug(slug: string): string {
+  return `https://realhouseiq.com/properties/${slug}`;
 }
 
 /**

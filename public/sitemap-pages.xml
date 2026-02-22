@@ -89,6 +89,125 @@
     <priority>0.75</priority>
   </url>
 
+  <!-- Developers Directory -->
+  <url>
+    <loc>https://realhouseiq.com/developers</loc>
+    <lastmod>2026-02-22</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.85</priority>
+  </url>
+
+  <!-- Developer Detail Pages -->
+  <url>
+    <loc>https://realhouseiq.com/developers/empire-world</loc>
+    <lastmod>2026-02-22</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <url>
+    <loc>https://realhouseiq.com/developers/qaiwan-group</loc>
+    <lastmod>2026-02-22</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <url>
+    <loc>https://realhouseiq.com/developers/darin-group</loc>
+    <lastmod>2026-02-22</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <url>
+    <loc>https://realhouseiq.com/developers/kar-group</loc>
+    <lastmod>2026-02-22</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <url>
+    <loc>https://realhouseiq.com/developers/faruk-group</loc>
+    <lastmod>2026-02-22</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <url>
+    <loc>https://realhouseiq.com/developers/naz-city-developers</loc>
+    <lastmod>2026-02-22</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <url>
+    <loc>https://realhouseiq.com/developers/cihan-group</loc>
+    <lastmod>2026-02-22</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <url>
+    <loc>https://realhouseiq.com/developers/rotana-developers</loc>
+    <lastmod>2026-02-22</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <url>
+    <loc>https://realhouseiq.com/developers/royal-developers</loc>
+    <lastmod>2026-02-22</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <url>
+    <loc>https://realhouseiq.com/developers/elite-homes</loc>
+    <lastmod>2026-02-22</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <!-- ═══════════════════════════════════════════════════════════════════════════ -->
+  <!-- Guide Pages - SEO Informational Content -->
+  <!-- ═══════════════════════════════════════════════════════════════════════════ -->
+
+  <!-- Buyer's Guide -->
+  <url>
+    <loc>https://realhouseiq.com/guides/buying-property-erbil</loc>
+    <lastmod>2026-02-22</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.85</priority>
+  </url>
+
+  <!-- Investor's Guide -->
+  <url>
+    <loc>https://realhouseiq.com/guides/real-estate-investment-erbil</loc>
+    <lastmod>2026-02-22</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.85</priority>
+  </url>
+
+  <!-- Renter's Guide -->
+  <url>
+    <loc>https://realhouseiq.com/guides/renting-in-erbil</loc>
+    <lastmod>2026-02-22</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <!-- ═══════════════════════════════════════════════════════════════════════════ -->
+  <!-- Market Reports -->
+  <!-- ═══════════════════════════════════════════════════════════════════════════ -->
+
+  <!-- Market Report 2025 -->
+  <url>
+    <loc>https://realhouseiq.com/market-report/erbil-2025</loc>
+    <lastmod>2026-02-22</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.85</priority>
+  </url>
+
   <!-- Service Detail Pages -->
   <url>
     <loc>https://realhouseiq.com/services/property-sales</loc>

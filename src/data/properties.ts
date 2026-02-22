@@ -552,3 +552,80 @@ export const districts = [
   'Kasnazan',
   'Nawroz'
 ] as const;
+
+// ═══════════════════════════════════════════════════════════════════════════
+// Slug Generation for SEO-friendly URLs
+// ═══════════════════════════════════════════════════════════════════════════
+
+/**
+ * Generate a URL-safe slug from property title
+ * Format: property-type-location-beds-sqm (e.g., "the-boulevard-1br-apartment-floor-13")
+ */
+export function generatePropertySlug(property: Property): string {
+  return property.title
+    .toLowerCase()
+    .trim()
+    .replace(/[^\w\s-]/g, '') // Remove special characters except hyphens
+    .replace(/\s+/g, '-')     // Replace spaces with hyphens
+    .replace(/-+/g, '-')      // Remove multiple consecutive hyphens
+    .replace(/^-|-$/g, '');   // Remove leading/trailing hyphens
+}
+
+/**
+ * Get property by slug (matches against generated slug or property ID)
+ */
+export function getPropertyBySlug(slug: string): Property | undefined {
+  // First try exact ID match
+  const byId = properties.find(p => p.id === slug);
+  if (byId) return byId;
+
+  // Then try slug match
+  return properties.find(p => generatePropertySlug(p) === slug);
+}
+
+/**
+ * Get all property slugs for sitemap generation
+ */
+export function getAllPropertySlugs(): string[] {
+  return properties.map(p => generatePropertySlug(p));
+}
+
+/**
+ * Get similar properties based on type, location, and price range
+ */
+export function getSimilarProperties(property: Property, limit: number = 4): Property[] {
+  return properties
+    .filter(p => p.id !== property.id)
+    .map(p => {
+      let score = 0;
+
+      // Same type gets highest priority
+      if (p.type === property.type) score += 4;
+
+      // Same district
+      if (p.location.district === property.location.district) score += 3;
+
+      // Same status
+      if (p.status === property.status) score += 2;
+
+      // Similar price range (within 30%)
+      if (property.price > 0 && p.price > 0) {
+        const priceDiff = Math.abs(p.price - property.price) / property.price;
+        if (priceDiff < 0.3) score += 2;
+        else if (priceDiff < 0.5) score += 1;
+      }
+
+      // Similar size (within 20%)
+      const sizeDiff = Math.abs(p.specs.sqm - property.specs.sqm) / property.specs.sqm;
+      if (sizeDiff < 0.2) score += 1;
+
+      // Same number of bedrooms
+      if (p.specs.beds === property.specs.beds) score += 1;
+
+      return { property: p, score };
+    })
+    .filter(item => item.score > 0)
+    .sort((a, b) => b.score - a.score)
+    .slice(0, limit)
+    .map(item => item.property);
+}

@@ -3,9 +3,10 @@
 // Human-readable sitemap with links to all pages
 // ═══════════════════════════════════════════════════════════════════════════
 
-import { properties } from '../data/properties';
+import { properties, generatePropertySlug } from '../data/properties';
 import { projects } from '../data/projects';
 import { blogPosts, blogCategories } from '../data/blog';
+import { developers } from '../data/developers';
 import {
   createBreadcrumbs,
   injectBreadcrumbSchema,
@@ -64,6 +65,7 @@ export function renderSitemapPage(): DocumentFragment {
     { name: 'Investment Properties', url: '/invest', desc: 'Investment opportunities' },
     { name: 'Luxury Properties', url: '/luxury', desc: 'Premium luxury homes' },
     { name: 'Development Projects', url: '/projects', desc: 'New development projects' },
+    { name: 'Property Developers', url: '/developers', desc: 'Real estate development companies' },
     { name: 'Blog & Insights', url: '/blog', desc: 'Real estate articles and tips' },
     { name: 'About Us', url: '/about', desc: 'Learn about Real House' },
     { name: 'Contact Us', url: '/contact', desc: 'Get in touch' },
@@ -146,6 +148,25 @@ export function renderSitemapPage(): DocumentFragment {
   projSection.appendChild(projList);
   grid.appendChild(projSection);
 
+  // ─── Developers Section ─────────────────────────────────────────────────
+  const devSection = createElement('section', 'sitemap-page__section');
+  const devTitle = createElement('h2', 'sitemap-page__section-title', 'Real Estate Developers');
+  devSection.appendChild(devTitle);
+
+  const devList = createElement('ul', 'sitemap-page__list');
+  developers.forEach(developer => {
+    const li = createElement('li', 'sitemap-page__item');
+    const link = createElement('a', 'sitemap-page__link', developer.name);
+    link.href = `/developers/${developer.slug}`;
+    link.setAttribute('data-route', '');
+    li.appendChild(link);
+    const desc = createElement('span', 'sitemap-page__desc', ` - ${developer.totalProjects} projects, ${developer.totalUnitsDelivered.toLocaleString()} units`);
+    li.appendChild(desc);
+    devList.appendChild(li);
+  });
+  devSection.appendChild(devList);
+  grid.appendChild(devSection);
+
   // ─── All Properties Section ─────────────────────────────────────────────
   const propsSection = createElement('section', 'sitemap-page__section sitemap-page__section--wide');
   const propsTitle = createElement('h2', 'sitemap-page__section-title', `All Properties (${properties.length})`);
@@ -155,7 +176,8 @@ export function renderSitemapPage(): DocumentFragment {
   properties.forEach(property => {
     const li = createElement('li', 'sitemap-page__item');
     const link = createElement('a', 'sitemap-page__link', property.title);
-    link.href = `/properties/${property.id}`;
+    const slug = generatePropertySlug(property);
+    link.href = `/properties/${slug}`;
     link.setAttribute('data-route', '');
     li.appendChild(link);
     const desc = createElement('span', 'sitemap-page__desc', ` - ${property.type} in ${property.location.district}`);

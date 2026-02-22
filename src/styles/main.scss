@@ -6,6 +6,7 @@
 @use 'projects';
 @use 'project-detail';
 @use 'project-compare';
+@use 'property-detail';
 @use 'print';
 @use 'map';
 @use 'blog';
@@ -17,6 +18,12 @@
 @use 'about-eeat';
 @use 'areas';
 @use 'inquiry-form';
+@use 'guides';
+@use 'neighborhoods';
+@use 'developers';
+@use 'language-selector';
+@use 'list-property';
+@use 'services-directory';
 
 // ═══════════════════════════════════════════════════════════════════════════
 // Real House - Main Styles
