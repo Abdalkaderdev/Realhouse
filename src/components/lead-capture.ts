@@ -39,6 +39,7 @@ export function createLeadCaptureSection(): HTMLElement {
   emailInput.name = 'newsletter-email';
   emailInput.placeholder = 'Enter your email address';
   emailInput.required = true;
+  emailInput.autocomplete = 'email';
   emailInput.setAttribute('aria-label', 'Email address for newsletter');
   formRow.appendChild(emailInput);
 

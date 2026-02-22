@@ -372,6 +372,20 @@
     min-height: 80px;
     resize: vertical;
   }
+
+  &__error {
+    padding: var(--space-3);
+    margin-bottom: var(--space-4);
+    font-size: var(--text-sm);
+    color: var(--c-error);
+    background: rgba(224, 82, 82, 0.1);
+    border: 1px solid rgba(224, 82, 82, 0.3);
+    border-radius: var(--radius-md);
+
+    &:empty {
+      display: none;
+    }
+  }
 }
 
 // ─── Confirmation ──────────────────────────────────────────────────────────

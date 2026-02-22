@@ -245,6 +245,7 @@ export function createAppointmentScheduler(property: Property): HTMLElement {
   nameInput.name = 'name';
   nameInput.placeholder = 'John Doe';
   nameInput.required = true;
+  nameInput.autocomplete = 'name';
   nameGroup.appendChild(nameLabel);
   nameGroup.appendChild(nameInput);
   form.appendChild(nameGroup);
@@ -259,6 +260,7 @@ export function createAppointmentScheduler(property: Property): HTMLElement {
   emailInput.name = 'email';
   emailInput.placeholder = 'john@example.com';
   emailInput.required = true;
+  emailInput.autocomplete = 'email';
   emailGroup.appendChild(emailLabel);
   emailGroup.appendChild(emailInput);
   form.appendChild(emailGroup);
@@ -273,6 +275,7 @@ export function createAppointmentScheduler(property: Property): HTMLElement {
   phoneInput.name = 'phone';
   phoneInput.placeholder = '+1 (555) 000-0000';
   phoneInput.required = true;
+  phoneInput.autocomplete = 'tel';
   phoneGroup.appendChild(phoneLabel);
   phoneGroup.appendChild(phoneInput);
   form.appendChild(phoneGroup);
@@ -290,12 +293,19 @@ export function createAppointmentScheduler(property: Property): HTMLElement {
   notesGroup.appendChild(notesInput);
   form.appendChild(notesGroup);
 
+  // Error message container
+  const formError = createElement('div', 'appointment-form__error');
+  formError.setAttribute('role', 'alert');
+  formError.setAttribute('aria-live', 'polite');
+  form.appendChild(formError);
+
   const submitBtn = createElement('button', 'btn btn--primary btn--full', 'Confirm Appointment');
   submitBtn.type = 'submit';
   form.appendChild(submitBtn);
 
   form.addEventListener('submit', (e) => {
     e.preventDefault();
+    formError.textContent = ''; // Clear previous errors
     submitAppointment();
   });
 
@@ -474,12 +484,28 @@ export function createAppointmentScheduler(property: Property): HTMLElement {
     const phone = phoneInput.value.trim();
     const notes = notesInput.value.trim();
 
-    // Validate
+    // Validate required fields
     if (!name || !email || !phone) {
+      formError.textContent = 'Please fill in all required fields.';
+      return;
+    }
+
+    // Validate email format
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(email)) {
+      formError.textContent = 'Please enter a valid email address.';
+      return;
+    }
+
+    // Validate phone format
+    const phoneRegex = /^[\d\s\-+()]{7,20}$/;
+    if (!phoneRegex.test(phone)) {
+      formError.textContent = 'Please enter a valid phone number.';
       return;
     }
 
     if (!selectedDate || !selectedTime) {
+      formError.textContent = 'Please select a date and time.';
       return;
     }
 
