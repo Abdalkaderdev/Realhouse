@@ -326,8 +326,8 @@ Available for sale at $100,000 or for rent - contact us for rental pricing.`,
       floor: 0
     },
     images: [
-      'https://images.unsplash.com/photo-1604719312566-8912e9227c6a?w=800&q=80&fm=webp',
-      'https://images.unsplash.com/photo-1582037928769-181f2644ecb7?w=800&q=80&fm=webp'
+      '/images/properties/queen-towers-store/1.jpg',
+      '/images/properties/queen-towers-store/2.jpg'
     ],
     description: `Prime commercial space available for rent in Queen Towers, one of Erbil's most prestigious mixed-use developments. This 128 sqm store offers excellent visibility and foot traffic.
 
@@ -378,8 +378,7 @@ Contact us for rental pricing and available lease terms.`,
       floor: 0
     },
     images: [
-      'https://images.unsplash.com/photo-1604719312566-8912e9227c6a?w=800&q=80&fm=webp',
-      'https://images.unsplash.com/photo-1582037928769-181f2644ecb7?w=800&q=80&fm=webp'
+      '/images/properties/queen-towers-store/3.jpg'
     ],
     description: `Compact commercial space in Queen Towers, perfect for boutique retail, café, or professional services. This 81 sqm unit offers efficient use of space with excellent location benefits.
 
@@ -429,8 +428,9 @@ Contact us for rental pricing and available lease terms.`,
       floor: 0
     },
     images: [
-      'https://images.unsplash.com/photo-1604719312566-8912e9227c6a?w=800&q=80&fm=webp',
-      'https://images.unsplash.com/photo-1582037928769-181f2644ecb7?w=800&q=80&fm=webp'
+      '/images/properties/queen-towers-store/4.jpg',
+      '/images/properties/queen-towers-store/5.jpg',
+      '/images/properties/queen-towers-store/6.jpg'
     ],
     description: `Large premium commercial space in Queen Towers - the largest available unit at 182 sqm. Ideal for flagship stores, restaurants, or showrooms requiring maximum visibility and space.
 
