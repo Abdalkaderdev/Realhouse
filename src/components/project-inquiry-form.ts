@@ -628,7 +628,9 @@ export function openInquiryModal(project: Project): void {
 // ─── Create Inquiry Button ───────────────────────────────────────────────────
 
 export function createInquiryButton(project: Project, variant: 'primary' | 'ghost' | 'sm' = 'ghost'): HTMLButtonElement {
-  const btn = createElement('button', `btn btn--${variant === 'sm' ? 'ghost btn--sm' : variant} inquiry-btn`);
+  // For sm variant, use primary styling instead of ghost for better visual distinction
+  const btnClass = variant === 'sm' ? 'btn btn--sm inquiry-btn' : `btn btn--${variant} inquiry-btn`;
+  const btn = createElement('button', btnClass);
   btn.type = 'button';
   btn.setAttribute('aria-label', `Inquire about ${project.name}`);
 
