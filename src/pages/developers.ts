@@ -440,7 +440,7 @@ export function renderDeveloperDetailPage(slug: string): DocumentFragment {
 
   // WhatsApp Button
   if (developer.contact.whatsapp) {
-    const whatsappBtn = createElement('a', 'btn btn--whatsapp btn--full');
+    const whatsappBtn = createElement('a', 'btn btn--whatsapp btn--sm');
     whatsappBtn.href = `https://wa.me/${developer.contact.whatsapp.replace(/[^0-9]/g, '')}`;
     whatsappBtn.target = '_blank';
     whatsappBtn.rel = 'noopener noreferrer';
