@@ -3,7 +3,7 @@
   ===============================================================================
   Real House - Blog Sitemap
   All blog posts and articles with Google News markup
-  Last Updated: 2025-02-22
+  Last Updated: 2026-02-22
   ===============================================================================
 -->
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
@@ -501,52 +501,6 @@
       <image:loc>https://images.unsplash.com/photo-1497366216548-37526070297c?w=1200&amp;q=80&amp;fm=webp</image:loc>
       <image:title>Commercial Real Estate in Erbil</image:title>
       <image:caption>Retail and office space opportunities in Erbil's commercial market</image:caption>
-    </image:image>
-  </url>
-
-  <!-- ═══════════════════════════════════════════════════════════════════════════ -->
-  <!-- EXISTING BLOG POSTS - Project-Specific Articles -->
-  <!-- ═══════════════════════════════════════════════════════════════════════════ -->
-
-  <url>
-    <loc>https://realhouseiq.com/blog/pavilion-erbil-lagoon-living</loc>
-    <lastmod>2025-01-20</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.75</priority>
-    <news:news>
-      <news:publication>
-        <news:name>Real House Blog</news:name>
-        <news:language>en</news:language>
-      </news:publication>
-      <news:publication_date>2025-01-20</news:publication_date>
-      <news:title>Pavilion Erbil: Lagoon Living in Kurdistan</news:title>
-      <news:keywords>pavilion erbil, lagoon, waterfront, luxury villas, kurdistan</news:keywords>
-    </news:news>
-    <image:image>
-      <image:loc>https://images.unsplash.com/photo-1613490493576-7fde63acd811?w=1200&amp;q=80&amp;fm=webp</image:loc>
-      <image:title>Pavilion Erbil Lagoon Living</image:title>
-      <image:caption>Discover lagoon living at Pavilion Erbil</image:caption>
-    </image:image>
-  </url>
-
-  <url>
-    <loc>https://realhouseiq.com/blog/dream-city-vs-italian-village-comparison</loc>
-    <lastmod>2025-01-08</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-    <news:news>
-      <news:publication>
-        <news:name>Real House Blog</news:name>
-        <news:language>en</news:language>
-      </news:publication>
-      <news:publication_date>2025-01-08</news:publication_date>
-      <news:title>Dream City vs Italian Village: Which Community is Right for You?</news:title>
-      <news:keywords>dream city, italian village, comparison, gated community, erbil</news:keywords>
-    </news:news>
-    <image:image>
-      <image:loc>https://images.unsplash.com/photo-1512917774080-9991f1c4c750?w=1200&amp;q=80&amp;fm=webp</image:loc>
-      <image:title>Dream City vs Italian Village Comparison</image:title>
-      <image:caption>Comparing Erbil's top residential communities</image:caption>
     </image:image>
   </url>
 
