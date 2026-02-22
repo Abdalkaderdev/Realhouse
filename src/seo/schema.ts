@@ -3471,8 +3471,8 @@ export function setupComprehensiveHomePageSEO(): void {
     generateHowToSellPropertySchema(),
     generateServicesSchema(),
     generateComprehensiveReviewSchema(),
-    generateFeaturedPropertiesListSchema(),
-    generateNeighborhoodsListSchema()
+    generateFeaturedPropertiesListSchema()
+    // Note: NeighborhoodsListSchema removed to avoid multiple ItemList conflict
   ];
   injectSchemaGraph(schemas, 'schema-home-comprehensive');
 }
@@ -4497,9 +4497,8 @@ export function setupAllHomePageSchemas(): void {
     generateComprehensiveReviewSchema(),
     generateAggregateRatingSchema(),
 
-    // Property Lists
+    // Property Lists (only one ItemList to avoid Google validation errors)
     generateFeaturedPropertiesListSchema(),
-    generateNeighborhoodsListSchema(),
 
     // Navigation for Sitelinks
     generateSiteNavigationSchema(),
@@ -5243,7 +5242,6 @@ export function setupMaximumHomePageSEO(): void {
     generateHowToFirstTimeBuyerSchema(),
     generateEnhancedAggregateRatingSchema(),
     generateFeaturedPropertiesListSchema(),
-    generateNeighborhoodsListSchema(),
     generateUpcomingOpenHousesSchema()
   ];
 
