@@ -1020,86 +1020,29 @@ em {
 // ─── Hero Section ─────────────────────────────────────────────────────────
 .hero {
   position: relative;
-  height: 55vh; // Shorter hero to fully crop RETRO watermark
-  min-height: 380px;
-  max-height: 550px;
+  height: 70vh;
+  min-height: 500px;
+  max-height: 700px;
   display: flex;
   align-items: center;
   justify-content: center;
   overflow: hidden;
 
-  &__video-background {
+  &__background {
     position: absolute;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
     z-index: 0;
-    pointer-events: none;
     overflow: hidden;
-    // Fallback background for slow connections - elegant gradient with subtle texture
-    background:
-      linear-gradient(135deg, rgba(10, 10, 15, 0.9) 0%, rgba(20, 20, 30, 0.95) 50%, rgba(10, 10, 15, 0.9) 100%),
-      linear-gradient(45deg, var(--c-surface) 25%, transparent 25%, transparent 75%, var(--c-surface) 75%);
-    background-size: 100% 100%, 4px 4px;
-    background-color: var(--c-bg);
   }
 
-  &__video-iframe {
-    position: absolute;
-    top: 0;
-    left: 50%;
-    width: 300vw;
-    height: 300vh;
-    transform: translateX(-50%); // Only center horizontally, top aligned - bottom gets cut
-    border: none;
-
-    @media (max-width: 768px) {
-      width: 400vw;
-      height: 250vh;
-    }
-
-    @media (max-width: 480px) {
-      width: 500vw;
-      height: 300vh;
-    }
-  }
-
-  &__video-overlay {
-    position: absolute;
-    top: 0;
-    left: 0;
+  &__image {
     width: 100%;
     height: 100%;
-    // Very light overlay - preserves original video colors
-    background: linear-gradient(
-      to bottom,
-      rgba(10, 10, 15, 0.25) 0%,
-      rgba(10, 10, 15, 0.1) 50%,
-      rgba(10, 10, 15, 0.3) 100%
-    );
-    z-index: 1;
-  }
-
-  &__video-container {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    z-index: 0;
-    pointer-events: none;
-
-    iframe {
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      width: 100vw;
-      height: 56.25vw; // 16:9 aspect ratio
-      min-height: 140vh; // Scale up to allow more cropping
-      min-width: 200vh; // Scale up to allow more cropping
-      transform: translate(-50%, -35%); // Move down to cut bottom (hide metro text)
-    }
+    object-fit: cover;
+    object-position: center;
   }
 
   &__overlay {
@@ -1108,7 +1051,12 @@ em {
     left: 0;
     width: 100%;
     height: 100%;
-    background: rgba(0, 0, 0, 0.5);
+    background: linear-gradient(
+      to bottom,
+      rgba(10, 10, 15, 0.6) 0%,
+      rgba(10, 10, 15, 0.4) 50%,
+      rgba(10, 10, 15, 0.7) 100%
+    );
     z-index: 1;
   }
 

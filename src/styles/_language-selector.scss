@@ -7,7 +7,7 @@
   position: relative;
   display: flex;
   align-items: center;
-  z-index: 100;
+  z-index: 1001; // Higher than nav (1000)
 
   // Current language button
   &__current {

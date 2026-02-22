@@ -648,42 +648,39 @@ export function renderHomePage(): DocumentFragment {
   hero.id = 'hero';
   hero.setAttribute('aria-label', 'Welcome to Real House - Luxury Real Estate');
 
-  // YouTube Video Background
-  const videoBackground = createElement('div', 'hero__video-background');
-  videoBackground.setAttribute('aria-hidden', 'true'); // Decorative video
-  const videoIframe = document.createElement('iframe');
-  videoIframe.src = 'https://www.youtube.com/embed/N2nROpXXG88?autoplay=1&mute=1&loop=1&playlist=N2nROpXXG88&controls=0&showinfo=0&rel=0&modestbranding=1&playsinline=1&start=0&end=60';
-  videoIframe.className = 'hero__video-iframe';
-  videoIframe.setAttribute('frameborder', '0');
-  videoIframe.setAttribute('allow', 'autoplay; encrypted-media');
-  videoIframe.setAttribute('allowfullscreen', '');
-  videoIframe.setAttribute('loading', 'lazy');
-  videoIframe.setAttribute('title', 'Real House promotional video background');
-  videoBackground.appendChild(videoIframe);
-  hero.appendChild(videoBackground);
+  // Static Image Background
+  const heroBackground = createElement('div', 'hero__background');
+  heroBackground.setAttribute('aria-hidden', 'true');
+  const heroImage = document.createElement('img');
+  heroImage.src = 'https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=1920&q=80&fm=webp';
+  heroImage.alt = '';
+  heroImage.className = 'hero__image';
+  heroImage.loading = 'eager';
+  heroBackground.appendChild(heroImage);
+  hero.appendChild(heroBackground);
 
-  // Video Overlay for text readability
-  const videoOverlay = createElement('div', 'hero__video-overlay');
-  videoOverlay.setAttribute('aria-hidden', 'true');
-  hero.appendChild(videoOverlay);
+  // Overlay for text readability
+  const heroOverlay = createElement('div', 'hero__overlay');
+  heroOverlay.setAttribute('aria-hidden', 'true');
+  hero.appendChild(heroOverlay);
 
   const heroContent = createElement('div', 'hero__content container');
 
-  // Headline - Primary keyword in H1 (only one h1 per page)
-  const headline = createElement('h1', 'hero__headline', 'Real Estate Erbil — Houses for Sale Erbil & Apartments Erbil Iraq');
+  // Headline
+  const headline = createElement('h1', 'hero__headline', 'Find Your Dream Home in Erbil');
   heroContent.appendChild(headline);
 
-  // Subline with LSI keywords
-  const subline = createElement('p', 'hero__subline', 'The most trusted property Erbil agency for luxury homes Kurdistan, apartments Erbil Iraq, villas Erbil Iraq, and penthouse Erbil. Best real estate agent Erbil helping you buy house Erbil in the Erbil property market.');
+  // Subline
+  const subline = createElement('p', 'hero__subline', 'Discover luxury apartments, villas, and commercial properties in Kurdistan\'s most prestigious neighborhoods.');
   heroContent.appendChild(subline);
 
   // CTA
   const cta = createElement('div', 'hero__cta');
-  const primaryBtn = createElement('a', 'btn btn--primary btn--large', 'Houses for Sale Erbil');
+  const primaryBtn = createElement('a', 'btn btn--primary btn--large', 'Browse Properties');
   primaryBtn.href = '/properties';
   primaryBtn.setAttribute('data-route', '');
   cta.appendChild(primaryBtn);
-  const consultationBtn = createElement('a', 'btn btn--ghost btn--large', 'Best Real Estate Agent Erbil');
+  const consultationBtn = createElement('a', 'btn btn--ghost btn--large', 'Contact Us');
   consultationBtn.href = '/contact';
   consultationBtn.setAttribute('data-route', '');
   cta.appendChild(consultationBtn);
