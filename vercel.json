@@ -3,6 +3,7 @@
   "buildCommand": "npm run build",
   "outputDirectory": "dist",
   "redirects": [
+    { "source": "/sitmap.xml", "destination": "/sitemap.xml", "permanent": true },
     { "source": "/wishlist", "destination": "/favorites", "permanent": true },
     { "source": "/property/:path*", "destination": "/properties/:path*", "permanent": true },
     { "source": "/project/:path*", "destination": "/projects/:path*", "permanent": true },
