@@ -117,7 +117,7 @@ export function generateSpeakableSchema(page: 'home' | 'properties' | 'about' | 
       cssSelector: ['.about-page__story', '.about-page__mission']
     },
     contact: {
-      summary: 'Contact Real House at +964 750 792 2138 or email info@realhouseiq.com. Visit us at Dream City, Erbil, Kurdistan. We are open Saturday through Thursday, 9 AM to 6 PM.',
+      summary: 'Contact Real House at +964 750 792 2138 or email info@realhouseiq.com. Visit us at Dream City, Erbil, Kurdistan. We are open Saturday through Thursday, 10 AM to 6 PM.',
       cssSelector: ['.contact-page__info', '.contact-page__address']
     },
     property: {

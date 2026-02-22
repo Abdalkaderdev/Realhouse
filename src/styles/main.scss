@@ -843,7 +843,32 @@ em {
     }
   }
 
-  &--large {
+  &--outline {
+    background: transparent;
+    border: 2px solid var(--c-gold);
+    color: var(--c-gold);
+
+    &:hover {
+      background: var(--c-gold);
+      color: var(--c-bg);
+      transform: translateY(-2px);
+    }
+  }
+
+  &--whatsapp {
+    background: #25D366;
+    border-color: #25D366;
+    color: white;
+
+    &:hover {
+      background: #1DA851;
+      border-color: #1DA851;
+      transform: translateY(-1px);
+    }
+  }
+
+  &--large,
+  &--lg {
     padding: var(--space-4) var(--space-8);
     font-size: var(--text-base);
     min-height: 56px;
@@ -919,6 +944,23 @@ em {
     color: var(--c-text-2);
     font-size: var(--text-sm);
     line-height: 1.7;
+    margin-bottom: var(--space-4);
+  }
+
+  &__contact {
+    font-style: normal;
+    font-size: var(--text-sm);
+    color: var(--c-text-2);
+    line-height: 1.8;
+
+    a {
+      color: var(--c-text-2);
+      transition: color var(--transition-fast);
+
+      &:hover {
+        color: var(--c-gold);
+      }
+    }
   }
 
   &__links {

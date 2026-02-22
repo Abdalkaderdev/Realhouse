@@ -556,7 +556,7 @@ export function generateContactFAQSchema(): object {
   const contactFaqs = [
     {
       question: 'What are Real House\'s office hours?',
-      answer: 'Real House is open Saturday through Thursday from 9:00 AM to 6:00 PM (Iraq Standard Time). Friday hours are by appointment only. We can also arrange viewings and meetings outside regular hours for clients with busy schedules.'
+      answer: 'Real House is open Saturday through Thursday from 10:00 AM to 6:00 PM (Iraq Standard Time). Friday hours are by appointment only. We can also arrange viewings and meetings outside regular hours for clients with busy schedules.'
     },
     {
       question: 'Where is the Real House office located?',
@@ -1327,7 +1327,7 @@ export function generateLocalBusinessSchema(): object {
       {
         '@type': 'OpeningHoursSpecification',
         'dayOfWeek': ['Saturday', 'Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday'],
-        'opens': '09:00',
+        'opens': '10:00',
         'closes': '18:00'
       },
       {
@@ -2818,7 +2818,7 @@ export function generateEnhancedLocalBusinessSchema(): object {
       {
         '@type': 'OpeningHoursSpecification',
         'dayOfWeek': ['Saturday', 'Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday'],
-        'opens': '09:00',
+        'opens': '10:00',
         'closes': '18:00'
       },
       {
@@ -3254,7 +3254,7 @@ export function generateRealEstateAgentSchema(): object {
     'address': { '@type': 'PostalAddress', 'streetAddress': 'Dream City Main Boulevard, Building A3', 'addressLocality': 'Erbil', 'addressRegion': 'Kurdistan Region', 'postalCode': '44001', 'addressCountry': 'IQ' },
     'geo': { '@type': 'GeoCoordinates', 'latitude': '36.1901', 'longitude': '44.0091' },
     'openingHoursSpecification': [
-      { '@type': 'OpeningHoursSpecification', 'dayOfWeek': ['Saturday', 'Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday'], 'opens': '09:00', 'closes': '18:00' },
+      { '@type': 'OpeningHoursSpecification', 'dayOfWeek': ['Saturday', 'Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday'], 'opens': '10:00', 'closes': '18:00' },
       { '@type': 'OpeningHoursSpecification', 'dayOfWeek': 'Friday', 'description': 'By Appointment Only' }
     ],
     'priceRange': '$$$',
@@ -3912,7 +3912,7 @@ export function generateCompleteOrganizationSchema(): object {
         'hoursAvailable': {
           '@type': 'OpeningHoursSpecification',
           'dayOfWeek': ['Saturday', 'Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday'],
-          'opens': '09:00',
+          'opens': '10:00',
           'closes': '18:00'
         }
       },
@@ -4985,7 +4985,7 @@ export function generateMaxLocalBusinessSchema(): object {
     'geo': { '@type': 'GeoCoordinates', 'latitude': '36.1901', 'longitude': '44.0091', 'address': 'Dream City, Erbil, Kurdistan' },
     'hasMap': 'https://maps.google.com/?q=36.1901,44.0091',
     'openingHoursSpecification': [
-      { '@type': 'OpeningHoursSpecification', 'dayOfWeek': ['Saturday', 'Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday'], 'opens': '09:00', 'closes': '18:00', 'validFrom': '2025-01-01', 'validThrough': '2025-12-31' },
+      { '@type': 'OpeningHoursSpecification', 'dayOfWeek': ['Saturday', 'Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday'], 'opens': '10:00', 'closes': '18:00', 'validFrom': '2025-01-01', 'validThrough': '2025-12-31' },
       { '@type': 'OpeningHoursSpecification', 'dayOfWeek': 'Friday', 'opens': '10:00', 'closes': '14:00', 'description': 'By Appointment Only' }
     ],
     'specialOpeningHoursSpecification': [
@@ -5020,7 +5020,7 @@ export function generateMaxLocalBusinessSchema(): object {
       { '@type': 'Language', 'name': 'Kurdish (Sorani)', 'alternateName': 'ku' }
     ],
     'contactPoint': [
-      { '@type': 'ContactPoint', 'telephone': '+964-750-792-2138', 'contactType': 'sales', 'areaServed': ['IQ', 'Kurdistan Region'], 'availableLanguage': ['English', 'Arabic', 'Kurdish'], 'hoursAvailable': { '@type': 'OpeningHoursSpecification', 'dayOfWeek': ['Saturday', 'Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday'], 'opens': '09:00', 'closes': '18:00' } },
+      { '@type': 'ContactPoint', 'telephone': '+964-750-792-2138', 'contactType': 'sales', 'areaServed': ['IQ', 'Kurdistan Region'], 'availableLanguage': ['English', 'Arabic', 'Kurdish'], 'hoursAvailable': { '@type': 'OpeningHoursSpecification', 'dayOfWeek': ['Saturday', 'Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday'], 'opens': '10:00', 'closes': '18:00' } },
       { '@type': 'ContactPoint', 'telephone': '+964-751-441-5003', 'contactType': 'customer service', 'areaServed': ['IQ', 'Kurdistan Region'], 'availableLanguage': ['English', 'Arabic', 'Kurdish'] },
       { '@type': 'ContactPoint', 'email': 'info@realhouseiq.com', 'contactType': 'customer service', 'contactOption': 'TollFree' }
     ],

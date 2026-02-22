@@ -1386,7 +1386,7 @@ export function renderComprehensiveProjectDetailPage(projectId: string): Documen
   officeHours.appendChild(hoursTitle);
   const hoursList = createElement('ul', 'project-contact__hours-list');
   const hours = [
-    { day: 'Saturday - Thursday', time: '9:00 AM - 6:00 PM' },
+    { day: 'Saturday - Thursday', time: '10:00 AM - 6:00 PM' },
     { day: 'Friday', time: 'Closed' }
   ];
   hours.forEach(h => {

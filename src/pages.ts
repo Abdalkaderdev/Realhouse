@@ -2592,7 +2592,7 @@ export function renderContactPage(): DocumentFragment {
   const hoursList = document.createElement('dl');
   hoursList.className = 'contact-page__hours';
   const hoursData = [
-    { days: 'Saturday - Thursday', time: '9:00 AM - 6:00 PM' },
+    { days: 'Saturday - Thursday', time: '10:00 AM - 6:00 PM' },
     { days: 'Friday', time: 'By Appointment' }
   ];
   hoursData.forEach(hour => {
@@ -2672,7 +2672,7 @@ export function renderContactPage(): DocumentFragment {
   const napPhones = createElement('div', 'contact-page__nap-phones');
   napPhones.innerHTML = `
     <a href="tel:+9647507922138" itemprop="telephone">+964 750 792 2138</a> (Abdalkader - Sales)<br>
-    <a href="tel:+9647514415003" itemprop="telephone">+964 751 441 5003</a> (Mahmood - Support)
+    <a href="tel:+9647514415003" itemprop="telephone">+964 751 441 5003</a> (Mahmood - Sales)
   `;
   napSection.appendChild(napPhones);
 

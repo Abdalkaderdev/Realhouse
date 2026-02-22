@@ -363,7 +363,7 @@ export interface ContactFAQ {
 export const contactFAQs: ContactFAQ[] = [
   {
     question: 'What are your office hours?',
-    answer: 'Our headquarters is open Saturday through Thursday from 9:00 AM to 6:00 PM. Friday visits are by appointment only. Our Gulan office operates 10:00 AM to 7:00 PM, Saturday through Thursday.'
+    answer: 'Our headquarters is open Saturday through Thursday from 10:00 AM to 6:00 PM. Friday visits are by appointment only.'
   },
   {
     question: 'Do you offer virtual consultations?',

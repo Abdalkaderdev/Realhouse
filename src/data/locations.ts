@@ -584,7 +584,7 @@ export const businessNAP = {
   openingHours: {
     weekdays: {
       days: ['Saturday', 'Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday'],
-      open: '09:00',
+      open: '10:00',
       close: '18:00'
     },
     friday: {
