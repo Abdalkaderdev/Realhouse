@@ -1,0 +1,1095 @@
+// ═══════════════════════════════════════════════════════════════════════════
+// MORTGAGE CALCULATOR STYLES
+// Component and Page Styles for Real House Mortgage Calculator
+// ═══════════════════════════════════════════════════════════════════════════
+
+// ─── Calculator Component ────────────────────────────────────────────────────
+
+.mortgage-calc {
+  background: var(--c-surface);
+  border: 1px solid var(--c-border);
+  border-radius: var(--radius-lg);
+  padding: var(--space-6);
+
+  @media (max-width: 768px) {
+    padding: var(--space-4);
+    border-radius: var(--radius-md);
+  }
+
+  // Header
+  &__header {
+    display: flex;
+    align-items: center;
+    gap: var(--space-3);
+    margin-bottom: var(--space-6);
+    padding-bottom: var(--space-4);
+    border-bottom: 1px solid var(--c-border);
+  }
+
+  &__icon {
+    width: 28px;
+    height: 28px;
+    color: var(--c-gold);
+    flex-shrink: 0;
+  }
+
+  &__title {
+    font-family: var(--font-serif);
+    font-size: var(--text-2xl);
+    font-weight: 500;
+    color: var(--c-text);
+    margin: 0;
+  }
+
+  // Form
+  &__form {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-5);
+  }
+
+  &__form-group {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
+  }
+
+  &__label-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-2);
+  }
+
+  &__label {
+    font-size: var(--text-sm);
+    font-weight: 500;
+    color: var(--c-text-2);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+
+  &__input-wrapper {
+    position: relative;
+    display: flex;
+    align-items: center;
+  }
+
+  &__currency {
+    position: absolute;
+    left: var(--space-4);
+    font-size: var(--text-base);
+    font-weight: 500;
+    color: var(--c-text-3);
+    pointer-events: none;
+
+    &--right {
+      left: auto;
+      right: var(--space-4);
+    }
+  }
+
+  &__input {
+    width: 100%;
+    padding: var(--space-4);
+    padding-left: var(--space-10);
+    font-family: inherit;
+    font-size: var(--text-lg);
+    color: var(--c-text);
+    background: var(--c-surface-2);
+    border: 1px solid var(--c-border);
+    border-radius: var(--radius-md);
+    transition: border-color 0.2s, box-shadow 0.2s;
+
+    &::placeholder {
+      color: var(--c-text-4);
+    }
+
+    &:focus {
+      outline: none;
+      border-color: var(--c-gold);
+      box-shadow: 0 0 0 3px rgba(201, 168, 76, 0.15);
+    }
+
+    &::-webkit-inner-spin-button,
+    &::-webkit-outer-spin-button {
+      -webkit-appearance: none;
+      margin: 0;
+    }
+  }
+
+  &__select {
+    width: 100%;
+    padding: var(--space-4);
+    font-family: inherit;
+    font-size: var(--text-lg);
+    color: var(--c-text);
+    background: var(--c-surface-2);
+    border: 1px solid var(--c-border);
+    border-radius: var(--radius-md);
+    cursor: pointer;
+    transition: border-color 0.2s, box-shadow 0.2s;
+    appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%238a8a8a' stroke-width='2'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right var(--space-4) center;
+    padding-right: var(--space-12);
+
+    &:focus {
+      outline: none;
+      border-color: var(--c-gold);
+      box-shadow: 0 0 0 3px rgba(201, 168, 76, 0.15);
+    }
+  }
+
+  // Toggle
+  &__toggle {
+    display: flex;
+    gap: var(--space-1);
+    background: var(--c-surface-2);
+    padding: var(--space-1);
+    border-radius: var(--radius-sm);
+  }
+
+  &__toggle-btn {
+    padding: var(--space-1) var(--space-3);
+    font-size: var(--text-sm);
+    font-weight: 500;
+    color: var(--c-text-3);
+    background: transparent;
+    border: none;
+    border-radius: var(--radius-xs);
+    cursor: pointer;
+    transition: all 0.2s;
+
+    &:hover {
+      color: var(--c-text-2);
+    }
+
+    &.active {
+      background: var(--c-gold);
+      color: var(--c-bg);
+    }
+  }
+
+  // Toggle container for amortization
+  &__toggle-container {
+    display: flex;
+    gap: var(--space-2);
+    margin-bottom: var(--space-4);
+  }
+
+  // Tooltip
+  &__tooltip {
+    position: relative;
+    display: inline-flex;
+    cursor: help;
+  }
+
+  &__info-icon {
+    width: 16px;
+    height: 16px;
+    color: var(--c-text-3);
+  }
+
+  &__tooltip-text {
+    position: absolute;
+    bottom: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    padding: var(--space-2) var(--space-3);
+    font-size: var(--text-xs);
+    color: var(--c-bg);
+    background: var(--c-text);
+    border-radius: var(--radius-sm);
+    white-space: nowrap;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.2s, visibility 0.2s;
+    z-index: 10;
+
+    &::after {
+      content: '';
+      position: absolute;
+      top: 100%;
+      left: 50%;
+      transform: translateX(-50%);
+      border: 5px solid transparent;
+      border-top-color: var(--c-text);
+    }
+  }
+
+  &__tooltip:hover &__tooltip-text {
+    opacity: 1;
+    visibility: visible;
+  }
+
+  // Buttons
+  &__buttons {
+    display: flex;
+    gap: var(--space-3);
+    margin-top: var(--space-2);
+  }
+
+  &__submit {
+    flex: 1;
+  }
+
+  &__reset {
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+
+    svg {
+      width: 18px;
+      height: 18px;
+    }
+  }
+
+  // Error
+  &__error {
+    padding: var(--space-3) var(--space-4);
+    font-size: var(--text-sm);
+    color: #fff;
+    background: var(--c-error);
+    border-radius: var(--radius-sm);
+    animation: shake 0.3s ease;
+  }
+
+  @keyframes shake {
+    0%, 100% { transform: translateX(0); }
+    25% { transform: translateX(-5px); }
+    75% { transform: translateX(5px); }
+  }
+
+  // Results Container
+  &__results-container {
+    margin-top: var(--space-6);
+  }
+
+  &__results {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-6);
+  }
+
+  // Result Card
+  &__result-card {
+    padding: var(--space-6);
+    background: var(--c-surface-2);
+    border-radius: var(--radius-md);
+    text-align: center;
+
+    &--main {
+      background: linear-gradient(135deg, var(--c-gold), var(--c-gold-dark, #B8973D));
+    }
+  }
+
+  &__result-label {
+    display: block;
+    font-size: var(--text-sm);
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    margin-bottom: var(--space-2);
+
+    .mortgage-calc__result-card--main & {
+      color: rgba(0, 0, 0, 0.7);
+    }
+  }
+
+  &__result-value {
+    font-family: var(--font-serif);
+    font-size: var(--text-2xl);
+    font-weight: 600;
+    color: var(--c-text);
+
+    &--large {
+      font-size: var(--text-4xl);
+
+      @media (max-width: 480px) {
+        font-size: var(--text-3xl);
+      }
+    }
+
+    .mortgage-calc__result-card--main & {
+      color: var(--c-bg);
+    }
+  }
+
+  // Summary Grid
+  &__summary-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+    gap: var(--space-3);
+  }
+
+  &__summary-item {
+    padding: var(--space-4);
+    background: var(--c-surface-2);
+    border-radius: var(--radius-md);
+    text-align: center;
+  }
+
+  &__summary-label {
+    display: block;
+    font-size: var(--text-xs);
+    color: var(--c-text-3);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-bottom: var(--space-1);
+  }
+
+  &__summary-value {
+    font-size: var(--text-base);
+    font-weight: 600;
+    color: var(--c-text);
+  }
+
+  // Chart
+  &__chart {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--space-4);
+    padding: var(--space-6);
+    background: var(--c-surface-2);
+    border-radius: var(--radius-md);
+  }
+
+  &__pie-chart {
+    width: 160px;
+    height: 160px;
+  }
+
+  &__pie-segment {
+    transition: opacity 0.3s;
+  }
+
+  &__chart-legend {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: var(--space-4);
+  }
+
+  &__legend-item {
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+  }
+
+  &__legend-dot {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+
+    &--principal {
+      background: var(--c-gold);
+    }
+
+    &--interest {
+      background: var(--c-text-3);
+    }
+  }
+
+  &__legend-label {
+    font-size: var(--text-sm);
+    color: var(--c-text-2);
+  }
+
+  // Section Title
+  &__section-title {
+    font-family: var(--font-serif);
+    font-size: var(--text-xl);
+    font-weight: 500;
+    color: var(--c-text);
+    margin-bottom: var(--space-4);
+  }
+
+  // Amortization
+  &__amortization {
+    padding: var(--space-4);
+    background: var(--c-surface-2);
+    border-radius: var(--radius-md);
+  }
+
+  &__table-wrapper {
+    overflow-x: auto;
+    margin: 0 calc(var(--space-4) * -1);
+    padding: 0 var(--space-4);
+  }
+
+  &__table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: var(--text-sm);
+
+    th, td {
+      padding: var(--space-3);
+      text-align: right;
+      border-bottom: 1px solid var(--c-border);
+    }
+
+    th {
+      font-weight: 600;
+      color: var(--c-text-2);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      font-size: var(--text-xs);
+    }
+
+    td {
+      color: var(--c-text);
+    }
+
+    th:first-child,
+    td:first-child {
+      text-align: left;
+    }
+
+    tbody tr:hover {
+      background: var(--c-surface-3);
+    }
+  }
+
+  &__expand-row {
+    td {
+      text-align: center;
+      border-bottom: none;
+    }
+  }
+
+  &__expand-btn {
+    padding: var(--space-2) var(--space-4);
+    font-size: var(--text-sm);
+    color: var(--c-gold);
+    background: transparent;
+    border: 1px solid var(--c-gold);
+    border-radius: var(--radius-sm);
+    cursor: pointer;
+    transition: all 0.2s;
+
+    &:hover {
+      background: var(--c-gold);
+      color: var(--c-bg);
+    }
+  }
+
+  // Actions
+  &__actions {
+    display: flex;
+    justify-content: center;
+    gap: var(--space-3);
+    margin-top: var(--space-6);
+    padding-top: var(--space-4);
+    border-top: 1px solid var(--c-border);
+  }
+
+  &__print {
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+
+    svg {
+      width: 18px;
+      height: 18px;
+    }
+  }
+
+  // Compact variant
+  &--compact {
+    padding: var(--space-4);
+
+    .mortgage-calc__header {
+      margin-bottom: var(--space-4);
+      padding-bottom: var(--space-3);
+    }
+
+    .mortgage-calc__title {
+      font-size: var(--text-lg);
+    }
+
+    .mortgage-calc__form {
+      gap: var(--space-3);
+    }
+
+    .mortgage-calc__input,
+    .mortgage-calc__select {
+      padding: var(--space-3);
+      font-size: var(--text-base);
+    }
+
+    .mortgage-calc__result-value--large {
+      font-size: var(--text-2xl);
+    }
+
+    .mortgage-calc__summary-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  // Widget variant
+  &--widget {
+    position: sticky;
+    top: calc(76px + var(--space-4));
+  }
+}
+
+// ═══════════════════════════════════════════════════════════════════════════
+// MORTGAGE CALCULATOR PAGE STYLES
+// ═══════════════════════════════════════════════════════════════════════════
+
+.mortgage-page {
+  min-height: 100vh;
+  padding-bottom: 0;
+
+  // Breadcrumbs
+  &__breadcrumbs {
+    padding: var(--space-4) 0;
+    margin: 0 auto;
+    max-width: 1400px;
+    padding-left: clamp(1.5rem, 5vw, 4rem);
+    padding-right: clamp(1.5rem, 5vw, 4rem);
+  }
+
+  // Hero
+  &__hero {
+    padding: var(--space-16) 0 var(--space-8);
+    background: linear-gradient(
+      135deg,
+      var(--c-surface) 0%,
+      var(--c-bg) 100%
+    );
+
+    @media (max-width: 768px) {
+      padding: var(--space-12) 0 var(--space-6);
+    }
+  }
+
+  &__hero-content {
+    max-width: 700px;
+  }
+
+  &__hero-title {
+    font-family: var(--font-serif);
+    font-size: var(--text-hero);
+    font-weight: 400;
+    line-height: 1.1;
+    color: var(--c-text);
+    margin-bottom: var(--space-4);
+
+    @media (max-width: 768px) {
+      font-size: var(--text-4xl);
+    }
+  }
+
+  &__hero-subtitle {
+    font-size: var(--text-lg);
+    color: var(--c-text-2);
+    line-height: 1.6;
+  }
+
+  // Main content
+  &__main {
+    padding: var(--space-12) 0;
+
+    @media (max-width: 768px) {
+      padding: var(--space-6) 0;
+    }
+  }
+
+  &__grid {
+    display: grid;
+    grid-template-columns: 1fr 340px;
+    gap: var(--space-8);
+    align-items: start;
+
+    @media (max-width: 1024px) {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  &__calc-column {
+    min-width: 0;
+  }
+
+  &__calc-card {
+    background: var(--c-surface);
+    border: 1px solid var(--c-border);
+    border-radius: var(--radius-xl);
+    padding: var(--space-8);
+
+    @media (max-width: 768px) {
+      padding: var(--space-4);
+      border-radius: var(--radius-lg);
+    }
+
+    .mortgage-calc {
+      background: transparent;
+      border: none;
+      padding: 0;
+    }
+  }
+
+  // Sidebar
+  &__sidebar {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-6);
+    position: sticky;
+    top: calc(76px + var(--space-4));
+
+    @media (max-width: 1024px) {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      position: static;
+    }
+  }
+
+  &__card {
+    padding: var(--space-6);
+    background: var(--c-surface);
+    border: 1px solid var(--c-border);
+    border-radius: var(--radius-lg);
+
+    &--cta {
+      background: linear-gradient(135deg, var(--c-gold), var(--c-gold-dark, #B8973D));
+      border: none;
+
+      .mortgage-page__card-title,
+      .mortgage-page__cta-text {
+        color: var(--c-bg);
+      }
+
+      .mortgage-page__cta-text {
+        opacity: 0.9;
+      }
+    }
+  }
+
+  &__card-title {
+    font-family: var(--font-serif);
+    font-size: var(--text-xl);
+    font-weight: 500;
+    color: var(--c-text);
+    margin-bottom: var(--space-4);
+  }
+
+  &__quick-tips {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-3);
+  }
+
+  &__quick-tip {
+    position: relative;
+    padding-left: var(--space-5);
+    font-size: var(--text-sm);
+    color: var(--c-text-2);
+    line-height: 1.5;
+
+    &::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 8px;
+      width: 6px;
+      height: 6px;
+      background: var(--c-gold);
+      border-radius: 50%;
+    }
+  }
+
+  &__cta-text {
+    font-size: var(--text-sm);
+    line-height: 1.6;
+    margin-bottom: var(--space-4);
+  }
+
+  &__cta-btn {
+    width: 100%;
+    background: var(--c-bg);
+    color: var(--c-gold);
+
+    &:hover {
+      background: var(--c-surface);
+    }
+  }
+
+  // Section styles
+  &__section-title {
+    font-family: var(--font-serif);
+    font-size: var(--text-4xl);
+    font-weight: 400;
+    color: var(--c-text);
+    margin-bottom: var(--space-3);
+    text-align: center;
+
+    @media (max-width: 768px) {
+      font-size: var(--text-3xl);
+    }
+  }
+
+  &__section-subtitle {
+    font-size: var(--text-lg);
+    color: var(--c-text-2);
+    max-width: 600px;
+    margin: 0 auto var(--space-10);
+    text-align: center;
+
+    @media (max-width: 768px) {
+      font-size: var(--text-base);
+      margin-bottom: var(--space-8);
+    }
+  }
+
+  // Tips Section
+  &__tips {
+    padding: var(--space-16) 0;
+    background: var(--c-surface);
+
+    @media (max-width: 768px) {
+      padding: var(--space-10) 0;
+    }
+  }
+
+  &__tips-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--space-6);
+
+    @media (max-width: 1024px) {
+      grid-template-columns: repeat(2, 1fr);
+    }
+
+    @media (max-width: 640px) {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  &__tip-card {
+    padding: var(--space-6);
+    background: var(--c-bg);
+    border: 1px solid var(--c-border);
+    border-radius: var(--radius-lg);
+    transition: transform 0.3s, box-shadow 0.3s;
+
+    &:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 12px 40px rgba(0, 0, 0, 0.15);
+    }
+  }
+
+  &__tip-header {
+    display: flex;
+    align-items: center;
+    gap: var(--space-3);
+    margin-bottom: var(--space-4);
+  }
+
+  &__tip-icon {
+    width: 32px;
+    height: 32px;
+    color: var(--c-gold);
+    flex-shrink: 0;
+  }
+
+  &__tip-title {
+    font-family: var(--font-serif);
+    font-size: var(--text-lg);
+    font-weight: 500;
+    color: var(--c-text);
+    margin: 0;
+  }
+
+  &__tip-content {
+    font-size: var(--text-sm);
+    color: var(--c-text-2);
+    line-height: 1.7;
+    margin: 0;
+  }
+
+  // Banks Section
+  &__banks {
+    padding: var(--space-16) 0;
+
+    @media (max-width: 768px) {
+      padding: var(--space-10) 0;
+    }
+  }
+
+  &__banks-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--space-6);
+
+    @media (max-width: 1024px) {
+      grid-template-columns: repeat(2, 1fr);
+    }
+
+    @media (max-width: 640px) {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  &__bank-card {
+    padding: var(--space-6);
+    background: var(--c-surface);
+    border: 1px solid var(--c-border);
+    border-radius: var(--radius-lg);
+    display: flex;
+    flex-direction: column;
+    transition: transform 0.3s, box-shadow 0.3s;
+
+    &:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 12px 40px rgba(0, 0, 0, 0.15);
+    }
+  }
+
+  &__bank-header {
+    display: flex;
+    align-items: center;
+    gap: var(--space-4);
+    margin-bottom: var(--space-4);
+  }
+
+  &__bank-logo {
+    width: 56px;
+    height: 56px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--c-gold);
+    border-radius: var(--radius-md);
+    flex-shrink: 0;
+  }
+
+  &__bank-logo-text {
+    font-family: var(--font-serif);
+    font-size: var(--text-2xl);
+    font-weight: 600;
+    color: var(--c-bg);
+  }
+
+  &__bank-name {
+    font-family: var(--font-serif);
+    font-size: var(--text-lg);
+    font-weight: 500;
+    color: var(--c-text);
+    margin: 0;
+  }
+
+  &__bank-desc {
+    font-size: var(--text-sm);
+    color: var(--c-text-2);
+    line-height: 1.6;
+    margin-bottom: var(--space-4);
+  }
+
+  &__bank-stats {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--space-3);
+    padding: var(--space-4);
+    background: var(--c-surface-2);
+    border-radius: var(--radius-md);
+    margin-bottom: var(--space-4);
+  }
+
+  &__bank-stat {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-1);
+    text-align: center;
+  }
+
+  &__bank-stat-label {
+    font-size: var(--text-xs);
+    color: var(--c-text-3);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+
+  &__bank-stat-value {
+    font-size: var(--text-lg);
+    font-weight: 600;
+    color: var(--c-gold);
+  }
+
+  &__bank-features {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 var(--space-4);
+    flex-grow: 1;
+
+    li {
+      position: relative;
+      padding-left: var(--space-5);
+      font-size: var(--text-sm);
+      color: var(--c-text-2);
+      margin-bottom: var(--space-2);
+
+      &::before {
+        content: '\2713';
+        position: absolute;
+        left: 0;
+        color: var(--c-success);
+        font-weight: bold;
+      }
+    }
+  }
+
+  &__bank-cta {
+    width: 100%;
+    margin-top: auto;
+  }
+
+  // FAQ Section
+  &__faq {
+    padding: var(--space-16) 0;
+    background: var(--c-surface);
+
+    @media (max-width: 768px) {
+      padding: var(--space-10) 0;
+    }
+  }
+
+  &__faq-list {
+    max-width: 800px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-3);
+  }
+
+  &__faq-item {
+    background: var(--c-bg);
+    border: 1px solid var(--c-border);
+    border-radius: var(--radius-md);
+    overflow: hidden;
+
+    &.active {
+      .mortgage-page__faq-answer {
+        max-height: 500px;
+        padding: 0 var(--space-5) var(--space-5);
+      }
+
+      .mortgage-page__faq-chevron {
+        transform: rotate(180deg);
+      }
+    }
+  }
+
+  &__faq-question {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-4);
+    padding: var(--space-5);
+    font-family: inherit;
+    font-size: var(--text-base);
+    font-weight: 500;
+    text-align: left;
+    color: var(--c-text);
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    transition: color 0.2s;
+
+    &:hover {
+      color: var(--c-gold);
+    }
+  }
+
+  &__faq-chevron {
+    width: 20px;
+    height: 20px;
+    flex-shrink: 0;
+    color: var(--c-text-3);
+    transition: transform 0.3s;
+  }
+
+  &__faq-answer {
+    max-height: 0;
+    padding: 0 var(--space-5);
+    overflow: hidden;
+    transition: max-height 0.3s, padding 0.3s;
+
+    p {
+      font-size: var(--text-sm);
+      color: var(--c-text-2);
+      line-height: 1.7;
+      margin: 0;
+    }
+  }
+
+  // Final CTA Section
+  &__final-cta {
+    padding: var(--space-20) 0;
+    background: linear-gradient(
+      135deg,
+      var(--c-gold) 0%,
+      var(--c-gold-dark, #B8973D) 100%
+    );
+    text-align: center;
+
+    @media (max-width: 768px) {
+      padding: var(--space-12) 0;
+    }
+  }
+
+  &__final-cta-content {
+    max-width: 600px;
+    margin: 0 auto;
+  }
+
+  &__final-cta-title {
+    font-family: var(--font-serif);
+    font-size: var(--text-4xl);
+    font-weight: 400;
+    color: var(--c-bg);
+    margin-bottom: var(--space-4);
+
+    @media (max-width: 768px) {
+      font-size: var(--text-3xl);
+    }
+  }
+
+  &__final-cta-text {
+    font-size: var(--text-lg);
+    color: rgba(10, 10, 15, 0.8);
+    margin-bottom: var(--space-8);
+  }
+
+  &__final-cta-buttons {
+    display: flex;
+    justify-content: center;
+    gap: var(--space-4);
+    flex-wrap: wrap;
+
+    .btn--gold {
+      background: var(--c-bg);
+      color: var(--c-gold);
+
+      &:hover {
+        background: var(--c-text);
+      }
+    }
+
+    .btn--light {
+      border-color: var(--c-bg);
+      color: var(--c-bg);
+
+      &:hover {
+        background: var(--c-bg);
+        color: var(--c-gold);
+      }
+    }
+  }
+}

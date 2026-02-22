@@ -263,6 +263,23 @@ $property-detail-radius: var(--radius-lg);
   }
 }
 
+// Wishlist/Save button on property detail gallery
+.property-detail__wishlist-btn {
+  position: absolute;
+  top: var(--space-md);
+  right: var(--space-md);
+  width: 48px;
+  height: 48px;
+  z-index: 10;
+
+  @media (max-width: 768px) {
+    width: 44px;
+    height: 44px;
+    top: var(--space-sm);
+    right: var(--space-sm);
+  }
+}
+
 // Thumbnails
 .property-detail__thumbnails {
   display: flex;
@@ -946,6 +963,21 @@ $property-detail-radius: var(--radius-lg);
   color: var(--c-text-muted);
 }
 
+.property-detail__agent-link {
+  text-decoration: none;
+  transition: color var(--transition-fast);
+
+  &:hover {
+    color: var(--c-gold);
+  }
+}
+
+.property-detail__agent-btn {
+  margin-top: var(--space-md);
+  width: 100%;
+  text-align: center;
+}
+
 // ─── Similar Properties ──────────────────────────────────────────────────────
 
 .property-detail__similar {
@@ -1217,6 +1249,7 @@ $property-detail-radius: var(--radius-lg);
 @media print {
   .property-detail__gallery-controls,
   .property-detail__fullscreen-btn,
+  .property-detail__wishlist-btn,
   .property-detail__share,
   .property-detail__sidebar,
   .property-detail__similar {

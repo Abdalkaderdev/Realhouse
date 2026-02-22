@@ -1,14 +1,23 @@
 // ═══════════════════════════════════════════════════════════════════════════
-// Property Map Component - Leaflet.js Integration
+// Property Map Component - Leaflet.js Integration with Marker Clustering
 // ═══════════════════════════════════════════════════════════════════════════
 
-import L from 'leaflet';
+import * as L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
+import 'leaflet.markercluster';
+import 'leaflet.markercluster/dist/MarkerCluster.css';
+import 'leaflet.markercluster/dist/MarkerCluster.Default.css';
 import { properties, getDisplayPrice, type Property } from '../data/properties';
 
-// Erbil city center coordinates
-const ERBIL_CENTER: [number, number] = [36.1901, 44.0091];
+// Erbil city center coordinates (used for centering map on Erbil, Kurdistan)
+const ERBIL_CENTER: [number, number] = [36.191113, 44.009167];
 const DEFAULT_ZOOM = 13;
+
+// View mode type for the properties page
+export type ViewMode = 'grid' | 'list' | 'map';
+
+// LocalStorage key for view preference
+const VIEW_PREFERENCE_KEY = 'realhouse-properties-view';
 
 // Dark theme tile layer (CartoDB Dark Matter)
 const DARK_TILE_URL = 'https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png';
@@ -74,7 +83,32 @@ function createPopupContent(property: Property): string {
   `;
 }
 
-// Initialize map for properties page
+// Get saved view preference from localStorage
+export function getSavedViewPreference(): ViewMode {
+  try {
+    const saved = localStorage.getItem(VIEW_PREFERENCE_KEY);
+    if (saved === 'grid' || saved === 'list' || saved === 'map') {
+      return saved;
+    }
+  } catch (e) {
+    // localStorage not available
+  }
+  return 'grid'; // Default to grid view
+}
+
+// Save view preference to localStorage
+export function saveViewPreference(view: ViewMode): void {
+  try {
+    localStorage.setItem(VIEW_PREFERENCE_KEY, view);
+  } catch (e) {
+    // localStorage not available
+  }
+}
+
+// Store for marker cluster group
+let markerClusterGroup: L.MarkerClusterGroup | null = null;
+
+// Initialize map for properties page with marker clustering
 export function initPropertiesMap(
   containerId: string,
   filteredProperties: Property[] = properties,
@@ -83,13 +117,17 @@ export function initPropertiesMap(
   const container = document.getElementById(containerId);
   if (!container) return null;
 
-  // Create map
+  // Create map with touch-friendly controls for mobile
   const map = L.map(containerId, {
     center: ERBIL_CENTER,
     zoom: DEFAULT_ZOOM,
     zoomControl: true,
     scrollWheelZoom: true,
-    attributionControl: true
+    attributionControl: true,
+    // Mobile-friendly options
+    touchZoom: true,
+    dragging: true,
+    doubleClickZoom: true
   });
 
   // Add dark tile layer
@@ -99,8 +137,37 @@ export function initPropertiesMap(
     subdomains: 'abcd'
   }).addTo(map);
 
+  // Create marker cluster group with custom styling
+  markerClusterGroup = L.markerClusterGroup({
+    showCoverageOnHover: false,
+    zoomToBoundsOnClick: true,
+    spiderfyOnMaxZoom: true,
+    removeOutsideVisibleBounds: true,
+    maxClusterRadius: 60,
+    // Custom cluster icon
+    iconCreateFunction: (cluster) => {
+      const count = cluster.getChildCount();
+      let size = 'small';
+      let diameter = 40;
+
+      if (count >= 10) {
+        size = 'medium';
+        diameter = 50;
+      }
+      if (count >= 25) {
+        size = 'large';
+        diameter = 60;
+      }
+
+      return L.divIcon({
+        html: `<div class="property-cluster property-cluster--${size}"><span>${count}</span></div>`,
+        className: 'property-cluster-icon',
+        iconSize: L.point(diameter, diameter)
+      });
+    }
+  });
+
   // Add markers for properties with coordinates
-  const markers: L.Marker[] = [];
   const bounds = L.latLngBounds([]);
 
   filteredProperties.forEach(property => {
@@ -127,7 +194,7 @@ export function initPropertiesMap(
         }
       });
 
-      // Highlight marker on hover
+      // Highlight marker on hover (desktop only)
       marker.on('mouseover', function(this: L.Marker) {
         this.setIcon(createCustomIcon(true));
       });
@@ -138,14 +205,17 @@ export function initPropertiesMap(
         }
       });
 
-      marker.addTo(map);
-      markers.push(marker);
+      // Add to cluster group instead of map directly
+      markerClusterGroup!.addLayer(marker);
       bounds.extend([lat, lng]);
     }
   });
 
+  // Add cluster group to map
+  map.addLayer(markerClusterGroup);
+
   // Fit map to show all markers if there are any
-  if (markers.length > 0 && bounds.isValid()) {
+  if (bounds.isValid()) {
     map.fitBounds(bounds, { padding: [50, 50], maxZoom: 15 });
   }
 
@@ -167,20 +237,48 @@ export function initPropertiesMap(
   return map;
 }
 
-// Update map with filtered properties
+// Update map with filtered properties (using marker clustering)
 export function updateMapMarkers(
   map: L.Map,
   filteredProperties: Property[],
   onMarkerClick?: (propertyId: string) => void
 ): void {
-  // Remove all existing markers
-  map.eachLayer(layer => {
-    if (layer instanceof L.Marker) {
-      map.removeLayer(layer);
-    }
-  });
+  // Clear existing marker cluster group
+  if (markerClusterGroup) {
+    markerClusterGroup.clearLayers();
+  } else {
+    // Create new cluster group if it doesn't exist
+    markerClusterGroup = L.markerClusterGroup({
+      showCoverageOnHover: false,
+      zoomToBoundsOnClick: true,
+      spiderfyOnMaxZoom: true,
+      removeOutsideVisibleBounds: true,
+      maxClusterRadius: 60,
+      iconCreateFunction: (cluster) => {
+        const count = cluster.getChildCount();
+        let size = 'small';
+        let diameter = 40;
 
-  // Add new markers
+        if (count >= 10) {
+          size = 'medium';
+          diameter = 50;
+        }
+        if (count >= 25) {
+          size = 'large';
+          diameter = 60;
+        }
+
+        return L.divIcon({
+          html: `<div class="property-cluster property-cluster--${size}"><span>${count}</span></div>`,
+          className: 'property-cluster-icon',
+          iconSize: L.point(diameter, diameter)
+        });
+      }
+    });
+    map.addLayer(markerClusterGroup);
+  }
+
+  // Add new markers to cluster group
   const bounds = L.latLngBounds([]);
 
   filteredProperties.forEach(property => {
@@ -215,7 +313,7 @@ export function updateMapMarkers(
         }
       });
 
-      marker.addTo(map);
+      markerClusterGroup!.addLayer(marker);
       bounds.extend([lat, lng]);
     }
   });

@@ -1,0 +1,840 @@
+// ═══════════════════════════════════════════════════════════════════════════
+// WISHLIST PAGE STYLES
+// Features: Saved properties grid, empty state, share banner, recently viewed
+// ═══════════════════════════════════════════════════════════════════════════
+
+// ─── Wishlist Page Container ──────────────────────────────────────────────────
+
+.wishlist-page {
+  position: relative;
+  z-index: 1;
+  padding: var(--space-32) 0 var(--space-16);
+  background: var(--c-bg);
+  min-height: 100vh;
+
+  &__breadcrumbs {
+    margin-bottom: var(--space-6);
+    padding-top: var(--space-16);
+  }
+
+  &__header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: var(--space-6);
+    margin-bottom: var(--space-10);
+
+    @media (max-width: 768px) {
+      flex-direction: column;
+      gap: var(--space-4);
+    }
+  }
+
+  &__title-wrapper {
+    flex: 1;
+  }
+
+  &__title {
+    display: flex;
+    align-items: center;
+    gap: var(--space-3);
+    font-size: var(--text-4xl);
+    font-weight: 600;
+    margin-bottom: var(--space-2);
+
+    @media (max-width: 768px) {
+      font-size: var(--text-3xl);
+    }
+  }
+
+  &__heart-icon {
+    width: 36px;
+    height: 36px;
+    color: var(--c-gold);
+    flex-shrink: 0;
+
+    @media (max-width: 768px) {
+      width: 28px;
+      height: 28px;
+    }
+  }
+
+  &__subtitle {
+    font-size: var(--text-lg);
+    color: var(--c-text-2);
+  }
+
+  &__header-actions {
+    display: flex;
+    gap: var(--space-3);
+    flex-shrink: 0;
+
+    @media (max-width: 768px) {
+      width: 100%;
+    }
+  }
+
+  &__share-btn,
+  &__clear-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-2);
+
+    svg {
+      width: 18px;
+      height: 18px;
+    }
+
+    @media (max-width: 768px) {
+      flex: 1;
+      justify-content: center;
+    }
+  }
+
+  &__content {
+    min-height: 400px;
+  }
+
+  &__grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--space-6);
+
+    @media (max-width: 1200px) {
+      grid-template-columns: repeat(2, 1fr);
+    }
+
+    @media (max-width: 768px) {
+      grid-template-columns: 1fr;
+    }
+  }
+}
+
+// ─── Shared Wishlist Banner ───────────────────────────────────────────────────
+
+.wishlist-page__shared-banner {
+  display: flex;
+  align-items: center;
+  gap: var(--space-4);
+  padding: var(--space-4) var(--space-6);
+  background: linear-gradient(135deg, rgba(201, 168, 76, 0.15), rgba(201, 168, 76, 0.05));
+  border: 1px solid var(--c-gold);
+  border-radius: var(--radius-lg);
+  margin-bottom: var(--space-8);
+
+  @media (max-width: 768px) {
+    flex-direction: column;
+    text-align: center;
+    gap: var(--space-3);
+  }
+}
+
+.wishlist-page__shared-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 48px;
+  height: 48px;
+  background: var(--c-gold);
+  border-radius: 50%;
+  flex-shrink: 0;
+
+  svg {
+    width: 24px;
+    height: 24px;
+    color: var(--c-bg);
+  }
+}
+
+.wishlist-page__shared-text {
+  flex: 1;
+  font-size: var(--text-base);
+  color: var(--c-text);
+
+  strong {
+    color: var(--c-gold);
+  }
+
+  span {
+    color: var(--c-text-2);
+  }
+}
+
+.wishlist-page__shared-actions {
+  display: flex;
+  gap: var(--space-3);
+
+  @media (max-width: 768px) {
+    width: 100%;
+    justify-content: center;
+  }
+}
+
+// ─── Empty State ──────────────────────────────────────────────────────────────
+
+.wishlist-page__empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: var(--space-16) var(--space-6);
+  min-height: 400px;
+}
+
+.wishlist-page__empty-icon {
+  width: 120px;
+  height: 120px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--c-surface);
+  border-radius: 50%;
+  margin-bottom: var(--space-6);
+
+  svg {
+    width: 60px;
+    height: 60px;
+    color: var(--c-text-2);
+    opacity: 0.5;
+  }
+}
+
+.wishlist-page__empty-title {
+  font-size: var(--text-2xl);
+  font-weight: 600;
+  margin-bottom: var(--space-3);
+  color: var(--c-text);
+}
+
+.wishlist-page__empty-text {
+  font-size: var(--text-base);
+  color: var(--c-text-2);
+  max-width: 400px;
+  margin-bottom: var(--space-8);
+  line-height: 1.6;
+}
+
+.wishlist-page__empty-btn {
+  min-width: 200px;
+}
+
+// ─── Wishlist Property Card ───────────────────────────────────────────────────
+
+.wishlist-card {
+  display: flex;
+  flex-direction: column;
+  background: var(--c-surface);
+  border: 1px solid var(--c-glass-border);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  transition: all var(--transition-base);
+
+  &:hover {
+    border-color: var(--c-gold);
+    transform: translateY(-4px);
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.15);
+  }
+
+  &--removing {
+    opacity: 0;
+    transform: scale(0.95);
+    transition: all 0.3s ease;
+  }
+
+  &__image {
+    position: relative;
+    display: block;
+    aspect-ratio: 3 / 2;
+    overflow: hidden;
+  }
+
+  &__img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform var(--transition-base);
+
+    .wishlist-card:hover & {
+      transform: scale(1.05);
+    }
+  }
+
+  &__status {
+    position: absolute;
+    top: var(--space-3);
+    left: var(--space-3);
+    padding: var(--space-1) var(--space-3);
+    font-size: var(--text-xs);
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    border-radius: var(--radius-sm);
+    background: var(--c-gold);
+    color: var(--c-bg);
+
+    &--for-rent {
+      background: var(--c-accent, #3b82f6);
+      color: white;
+    }
+
+    &--off-plan {
+      background: var(--c-success, #22c55e);
+      color: white;
+    }
+  }
+
+  &__content {
+    padding: var(--space-5);
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
+  }
+
+  &__type {
+    display: inline-block;
+    font-size: var(--text-xs);
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--c-gold);
+    width: fit-content;
+  }
+
+  &__title {
+    font-size: var(--text-lg);
+    font-weight: 600;
+    color: var(--c-text);
+    text-decoration: none;
+    line-height: 1.3;
+    transition: color var(--transition-fast);
+
+    &:hover {
+      color: var(--c-gold);
+    }
+  }
+
+  &__location {
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+    font-size: var(--text-sm);
+    color: var(--c-text-2);
+
+    .icon {
+      width: 14px;
+      height: 14px;
+      flex-shrink: 0;
+    }
+  }
+
+  &__specs {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-4);
+    margin-top: var(--space-2);
+  }
+
+  &__spec {
+    display: flex;
+    align-items: center;
+    gap: var(--space-1);
+    font-size: var(--text-sm);
+    color: var(--c-text-2);
+
+    .icon {
+      width: 16px;
+      height: 16px;
+      opacity: 0.7;
+    }
+  }
+
+  &__price {
+    font-size: var(--text-xl);
+    font-weight: 700;
+    color: var(--c-gold);
+    margin-top: auto;
+  }
+
+  &__actions {
+    display: flex;
+    gap: var(--space-3);
+    padding: var(--space-4) var(--space-5);
+    border-top: 1px solid var(--c-glass-border);
+    background: rgba(0, 0, 0, 0.02);
+
+    [data-theme="dark"] & {
+      background: rgba(255, 255, 255, 0.02);
+    }
+  }
+
+  &__btn {
+    flex: 1;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--space-2);
+
+    svg {
+      width: 16px;
+      height: 16px;
+    }
+
+    &--remove {
+      color: var(--c-text-2);
+
+      &:hover {
+        color: var(--c-error, #ef4444);
+        background: rgba(239, 68, 68, 0.1);
+        border-color: rgba(239, 68, 68, 0.3);
+      }
+    }
+  }
+}
+
+// ─── Recently Viewed Section (on Wishlist Page) ───────────────────────────────
+
+.wishlist-page__recently-viewed {
+  margin-top: var(--space-16);
+  padding-top: var(--space-12);
+  border-top: 1px solid var(--c-glass-border);
+}
+
+.wishlist-page__recent-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: var(--space-6);
+}
+
+.wishlist-page__recent-title {
+  font-size: var(--text-2xl);
+  font-weight: 600;
+}
+
+.wishlist-page__recent-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: var(--space-5);
+
+  @media (max-width: 1200px) {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  @media (max-width: 900px) {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  @media (max-width: 600px) {
+    grid-template-columns: 1fr;
+  }
+}
+
+// ─── Recently Viewed Card (Compact) ───────────────────────────────────────────
+
+.recently-viewed-card {
+  display: flex;
+  gap: var(--space-4);
+  padding: var(--space-4);
+  background: var(--c-surface);
+  border: 1px solid var(--c-glass-border);
+  border-radius: var(--radius-md);
+  text-decoration: none;
+  transition: all var(--transition-fast);
+
+  &:hover {
+    border-color: var(--c-gold);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+  }
+
+  &__image {
+    width: 80px;
+    height: 60px;
+    border-radius: var(--radius-sm);
+    overflow: hidden;
+    flex-shrink: 0;
+
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+  }
+
+  &__content {
+    flex: 1;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-1);
+  }
+
+  &__title {
+    font-size: var(--text-sm);
+    font-weight: 600;
+    color: var(--c-text);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    margin: 0;
+  }
+
+  &__location {
+    font-size: var(--text-xs);
+    color: var(--c-text-2);
+    margin: 0;
+  }
+
+  &__price {
+    font-size: var(--text-sm);
+    font-weight: 600;
+    color: var(--c-gold);
+    margin-top: auto;
+  }
+}
+
+// ─── Wishlist Button (Heart Icon on Property Cards) ──────────────────────────
+
+.wishlist-btn {
+  position: absolute;
+  top: var(--space-3);
+  right: var(--space-3);
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(8px);
+  border: none;
+  border-radius: 50%;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  z-index: 10;
+
+  &:hover {
+    background: rgba(0, 0, 0, 0.7);
+    transform: scale(1.1);
+  }
+
+  &__icon {
+    width: 20px;
+    height: 20px;
+    color: white;
+    transition: all var(--transition-fast);
+
+    &--outline {
+      display: block;
+    }
+
+    &--filled {
+      display: none;
+      color: var(--c-gold);
+    }
+  }
+
+  &.active {
+    background: var(--c-gold);
+
+    .wishlist-btn__icon--outline {
+      display: none;
+    }
+
+    .wishlist-btn__icon--filled {
+      display: block;
+    }
+
+    &:hover {
+      background: var(--c-gold-hover, #b8973f);
+    }
+  }
+
+  &.animate {
+    animation: wishlist-pop 0.3s ease;
+  }
+}
+
+@keyframes wishlist-pop {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.3);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+// ─── Wishlist Toast Notification ──────────────────────────────────────────────
+
+.wishlist-toast {
+  position: fixed;
+  bottom: var(--space-8);
+  left: 50%;
+  transform: translateX(-50%) translateY(100px);
+  padding: var(--space-3) var(--space-6);
+  background: var(--c-surface);
+  border: 1px solid var(--c-gold);
+  border-radius: var(--radius-pill);
+  font-size: var(--text-sm);
+  font-weight: 500;
+  color: var(--c-text);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+  z-index: 10000;
+  opacity: 0;
+  transition: all 0.3s ease;
+
+  &--visible {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+  }
+}
+
+// ─── Wishlist Badge in Navigation ─────────────────────────────────────────────
+
+.nav__wishlist {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  color: var(--c-text);
+  transition: color var(--transition-fast);
+
+  &:hover {
+    color: var(--c-gold);
+  }
+
+  svg {
+    width: 22px;
+    height: 22px;
+  }
+}
+
+.nav__wishlist-badge {
+  position: absolute;
+  top: 2px;
+  right: 2px;
+  min-width: 18px;
+  height: 18px;
+  padding: 0 5px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--c-gold);
+  color: var(--c-bg);
+  font-size: 10px;
+  font-weight: 700;
+  border-radius: 9px;
+  line-height: 1;
+}
+
+// ─── Recently Viewed Section (Homepage) ───────────────────────────────────────
+
+.recently-viewed {
+  padding: var(--space-16) 0;
+  background: var(--c-surface);
+
+  &__header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    margin-bottom: var(--space-8);
+
+    @media (max-width: 768px) {
+      flex-direction: column;
+      gap: var(--space-4);
+    }
+  }
+
+  &__title-wrapper {
+    flex: 1;
+  }
+
+  &__title {
+    font-size: var(--text-3xl);
+    font-weight: 600;
+    margin-bottom: var(--space-2);
+  }
+
+  &__subtitle {
+    font-size: var(--text-base);
+    color: var(--c-text-2);
+  }
+
+  &__clear {
+    flex-shrink: 0;
+  }
+
+  &__grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: var(--space-6);
+
+    @media (max-width: 1200px) {
+      grid-template-columns: repeat(3, 1fr);
+    }
+
+    @media (max-width: 900px) {
+      grid-template-columns: repeat(2, 1fr);
+    }
+
+    @media (max-width: 600px) {
+      grid-template-columns: 1fr;
+    }
+  }
+}
+
+// ─── Recently Viewed Widget (Sidebar) ─────────────────────────────────────────
+
+.recently-viewed-widget {
+  background: var(--c-surface);
+  border: 1px solid var(--c-glass-border);
+  border-radius: var(--radius-lg);
+  padding: var(--space-5);
+
+  &__title {
+    font-size: var(--text-lg);
+    font-weight: 600;
+    margin-bottom: var(--space-4);
+    padding-bottom: var(--space-3);
+    border-bottom: 1px solid var(--c-glass-border);
+  }
+
+  &__list {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-3);
+  }
+
+  &__item {
+    display: flex;
+    gap: var(--space-3);
+    text-decoration: none;
+    padding: var(--space-2);
+    margin: calc(var(--space-2) * -1);
+    border-radius: var(--radius-sm);
+    transition: background var(--transition-fast);
+
+    &:hover {
+      background: rgba(201, 168, 76, 0.1);
+    }
+  }
+
+  &__image {
+    width: 60px;
+    height: 45px;
+    border-radius: var(--radius-sm);
+    overflow: hidden;
+    flex-shrink: 0;
+
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+  }
+
+  &__info {
+    flex: 1;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+
+  &__name {
+    font-size: var(--text-sm);
+    font-weight: 500;
+    color: var(--c-text);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  &__details {
+    font-size: var(--text-xs);
+    color: var(--c-text-2);
+  }
+
+  &__price {
+    font-size: var(--text-sm);
+    font-weight: 600;
+    color: var(--c-gold);
+  }
+
+  &__clear {
+    display: block;
+    width: 100%;
+    margin-top: var(--space-4);
+    padding-top: var(--space-3);
+    border: none;
+    border-top: 1px solid var(--c-glass-border);
+    background: none;
+    font-size: var(--text-sm);
+    color: var(--c-text-2);
+    cursor: pointer;
+    transition: color var(--transition-fast);
+
+    &:hover {
+      color: var(--c-gold);
+    }
+  }
+}
+
+// ─── Recently Viewed Bar (Mobile) ─────────────────────────────────────────────
+
+.recently-viewed-bar {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  padding: var(--space-3) var(--space-4);
+  background: var(--c-surface);
+  border-top: 1px solid var(--c-glass-border);
+  overflow: hidden;
+
+  &__label {
+    font-size: var(--text-sm);
+    font-weight: 500;
+    color: var(--c-text-2);
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+
+  &__scroll {
+    display: flex;
+    gap: var(--space-2);
+    overflow-x: auto;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+
+    &::-webkit-scrollbar {
+      display: none;
+    }
+  }
+
+  &__thumb {
+    width: 48px;
+    height: 48px;
+    border-radius: var(--radius-sm);
+    overflow: hidden;
+    flex-shrink: 0;
+    border: 2px solid transparent;
+    transition: border-color var(--transition-fast);
+
+    &:hover {
+      border-color: var(--c-gold);
+    }
+
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+  }
+}

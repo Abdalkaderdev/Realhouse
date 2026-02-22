@@ -3,7 +3,7 @@
 // Using Safe DOM Methods
 // ═══════════════════════════════════════════════════════════════════════════
 
-import { properties, featuredProperties, getDisplayPrice, getPropertyById, formatPrice, type Property } from './data/properties';
+import { properties, featuredProperties, getDisplayPrice, getPropertyById, formatPrice, type Property, type PropertyFeature, PROPERTY_FEATURES } from './data/properties';
 import { testimonials } from './data/testimonials';
 import { agents, trustBadges, enhancedStats, featuredInMedia, partnerLogos } from './data/agents';
 import { projects, getProjectById, formatPriceRange, type Project, type ProjectStatus } from './data/projects';
@@ -15,7 +15,7 @@ import { getAmenitiesForDistrict, getCategoryIcon, getCategoryLabel, type Amenit
 import { openAppointmentScheduler } from './components/appointment-scheduler';
 import { openVirtualTourModal, injectVirtualTourStyles } from './components/virtual-tour-modal';
 import { openFloorPlanModal, injectFloorPlanStyles } from './components/floor-plan-modal';
-import { initPropertiesMap, updateMapMarkers, initPropertyDetailMap } from './components/property-map';
+import { initPropertiesMap, updateMapMarkers, initPropertyDetailMap, getSavedViewPreference, saveViewPreference, type ViewMode } from './components/property-map';
 import { createPropertyShareButtons, createProjectShareButtons, createFloatingShareButton } from './components/share-buttons';
 import {
   generatePropertyAltText,
@@ -124,6 +124,14 @@ interface FilterState {
   minYearBuilt: number;
   maxYearBuilt: number;
   district: string;
+  // New advanced filters
+  minPrice: number;
+  maxPrice: number;
+  furnishing: string;
+  propertyFeatures: string[];
+  viewType: string;
+  minFloors: number;
+  maxFloors: number;
 }
 
 // Current filter state
@@ -139,7 +147,15 @@ let currentFilterState: FilterState = {
   badges: [],
   minYearBuilt: 2000,
   maxYearBuilt: new Date().getFullYear(),
-  district: 'All'
+  district: 'All',
+  // New advanced filters
+  minPrice: 0,
+  maxPrice: 10000000,
+  furnishing: 'All',
+  propertyFeatures: [],
+  viewType: 'All',
+  minFloors: 0,
+  maxFloors: 20
 };
 
 // Store scroll position for properties page
@@ -162,7 +178,15 @@ export function parseFiltersFromURL(): FilterState {
     badges: params.get('badges') ? params.get('badges')!.split(',') : [],
     minYearBuilt: parseInt(params.get('minYear') || '2000', 10),
     maxYearBuilt: parseInt(params.get('maxYear') || currentYear.toString(), 10),
-    district: params.get('district') || 'All'
+    district: params.get('district') || 'All',
+    // New advanced filters
+    minPrice: parseInt(params.get('minPrice') || '0', 10),
+    maxPrice: parseInt(params.get('maxPrice') || '10000000', 10),
+    furnishing: params.get('furnishing') || 'All',
+    propertyFeatures: params.get('features') ? params.get('features')!.split(',') : [],
+    viewType: params.get('viewType') || 'All',
+    minFloors: parseInt(params.get('minFloors') || '0', 10),
+    maxFloors: parseInt(params.get('maxFloors') || '20', 10)
   };
 }
 
@@ -182,6 +206,14 @@ function updateURLWithFilters(state: FilterState, replace: boolean = false): voi
   if (state.minYearBuilt > 2000) params.set('minYear', state.minYearBuilt.toString());
   if (state.maxYearBuilt < currentYear) params.set('maxYear', state.maxYearBuilt.toString());
   if (state.district !== 'All') params.set('district', state.district);
+  // New advanced filters
+  if (state.minPrice > 0) params.set('minPrice', state.minPrice.toString());
+  if (state.maxPrice < 10000000) params.set('maxPrice', state.maxPrice.toString());
+  if (state.furnishing !== 'All') params.set('furnishing', state.furnishing);
+  if (state.propertyFeatures.length > 0) params.set('features', state.propertyFeatures.join(','));
+  if (state.viewType !== 'All') params.set('viewType', state.viewType);
+  if (state.minFloors > 0) params.set('minFloors', state.minFloors.toString());
+  if (state.maxFloors < 20) params.set('maxFloors', state.maxFloors.toString());
 
   const queryString = params.toString();
   const newURL = queryString ? `/properties?${queryString}` : '/properties';
@@ -205,7 +237,14 @@ function hasActiveFilters(state: FilterState): boolean {
          state.badges.length > 0 ||
          state.minYearBuilt > 2000 ||
          state.maxYearBuilt < currentYear ||
-         state.district !== 'All';
+         state.district !== 'All' ||
+         state.minPrice > 0 ||
+         state.maxPrice < 10000000 ||
+         state.furnishing !== 'All' ||
+         state.propertyFeatures.length > 0 ||
+         state.viewType !== 'All' ||
+         state.minFloors > 0 ||
+         state.maxFloors < 20;
 }
 
 function hasAdvancedFiltersActive(state: FilterState): boolean {
@@ -215,7 +254,14 @@ function hasAdvancedFiltersActive(state: FilterState): boolean {
          state.badges.length > 0 ||
          state.minYearBuilt > 2000 ||
          state.maxYearBuilt < currentYear ||
-         state.district !== 'All';
+         state.district !== 'All' ||
+         state.minPrice > 0 ||
+         state.maxPrice < 10000000 ||
+         state.furnishing !== 'All' ||
+         state.propertyFeatures.length > 0 ||
+         state.viewType !== 'All' ||
+         state.minFloors > 0 ||
+         state.maxFloors < 20;
 }
 
 function countActiveAdvancedFilters(state: FilterState): number {
@@ -225,6 +271,11 @@ function countActiveAdvancedFilters(state: FilterState): number {
   if (state.badges.length > 0) count++;
   if (state.minYearBuilt > 2000 || state.maxYearBuilt < currentYear) count++;
   if (state.district !== 'All') count++;
+  if (state.minPrice > 0 || state.maxPrice < 10000000) count++;
+  if (state.furnishing !== 'All') count++;
+  if (state.propertyFeatures.length > 0) count++;
+  if (state.viewType !== 'All') count++;
+  if (state.minFloors > 0 || state.maxFloors < 20) count++;
   return count;
 }
 
@@ -344,6 +395,61 @@ function filterProperties(props: Property[], state: FilterState): Property[] {
     // District filter
     if (state.district !== 'All' && property.location.district !== state.district) {
       return false;
+    }
+
+    // ─── New Advanced Filters ─────────────────────────────────────────────────
+
+    // Price slider filter (min/max numeric values)
+    const price = property.price;
+    if (state.minPrice > 0 && price < state.minPrice) {
+      return false;
+    }
+    if (state.maxPrice < 10000000 && price > state.maxPrice) {
+      return false;
+    }
+
+    // Furnishing status filter
+    if (state.furnishing !== 'All') {
+      // Check both the furnishing field and features array for furnishing info
+      const hasFurnishing = property.furnishing === state.furnishing ||
+        property.features.some(f => f.toLowerCase().includes(state.furnishing.toLowerCase()));
+      if (!hasFurnishing) {
+        return false;
+      }
+    }
+
+    // Property features filter (must have ALL selected features)
+    if (state.propertyFeatures.length > 0) {
+      const propertyFeaturesList = property.propertyFeatures || [];
+      const allFeaturesText = [...property.features, ...propertyFeaturesList].join(' ').toLowerCase();
+      const hasAllFeatures = state.propertyFeatures.every(feature => {
+        // Check in propertyFeatures array first, then in features text
+        return propertyFeaturesList.includes(feature as any) ||
+               allFeaturesText.includes(feature.toLowerCase());
+      });
+      if (!hasAllFeatures) {
+        return false;
+      }
+    }
+
+    // View type filter
+    if (state.viewType !== 'All') {
+      const hasView = property.viewType === state.viewType ||
+        property.features.some(f => f.toLowerCase().includes(state.viewType.toLowerCase().replace(' view', '')));
+      if (!hasView) {
+        return false;
+      }
+    }
+
+    // Number of floors filter (for villas/buildings)
+    const numberOfFloors = property.specs.numberOfFloors || property.specs.totalFloors;
+    if (numberOfFloors) {
+      if (state.minFloors > 0 && numberOfFloors < state.minFloors) {
+        return false;
+      }
+      if (state.maxFloors < 20 && numberOfFloors > state.maxFloors) {
+        return false;
+      }
     }
 
     return true;
@@ -912,6 +1018,31 @@ export function renderHomePage(): DocumentFragment {
   });
 
   testimonialsContainer.appendChild(testimonialsGrid);
+
+  // View All Testimonials link
+  const testimonialsViewAll = createElement('div', 'testimonials__view-all');
+  const testimonialsLink = createElement('a', 'testimonials__view-all-link');
+  testimonialsLink.href = '/testimonials';
+  testimonialsLink.setAttribute('data-route', '');
+  testimonialsLink.textContent = 'Read All Client Reviews';
+  // Add arrow icon
+  const testimonialsArrowSvg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+  testimonialsArrowSvg.setAttribute('viewBox', '0 0 24 24');
+  testimonialsArrowSvg.setAttribute('fill', 'none');
+  testimonialsArrowSvg.setAttribute('stroke', 'currentColor');
+  testimonialsArrowSvg.setAttribute('stroke-width', '2');
+  testimonialsArrowSvg.setAttribute('stroke-linecap', 'round');
+  testimonialsArrowSvg.setAttribute('stroke-linejoin', 'round');
+  const testimonialsArrowPath1 = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+  testimonialsArrowPath1.setAttribute('d', 'M5 12h14');
+  const testimonialsArrowPath2 = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+  testimonialsArrowPath2.setAttribute('d', 'M12 5l7 7-7 7');
+  testimonialsArrowSvg.appendChild(testimonialsArrowPath1);
+  testimonialsArrowSvg.appendChild(testimonialsArrowPath2);
+  testimonialsLink.appendChild(testimonialsArrowSvg);
+  testimonialsViewAll.appendChild(testimonialsLink);
+  testimonialsContainer.appendChild(testimonialsViewAll);
+
   testimonialsSection.appendChild(testimonialsContainer);
   fragment.appendChild(testimonialsSection);
 
@@ -1034,8 +1165,8 @@ export function renderPropertiesPage(): DocumentFragment {
   // Read filters from URL on page load
   currentFilterState = parseFiltersFromURL();
 
-  // Track view mode and map instance
-  let currentViewMode: 'list' | 'map' = 'list';
+  // Track view mode and map instance - load from localStorage
+  let currentViewMode: ViewMode = getSavedViewPreference();
   let mapInstance: ReturnType<typeof initPropertiesMap> = null;
 
   // Main section for properties listing
@@ -1053,22 +1184,35 @@ export function renderPropertiesPage(): DocumentFragment {
   headerContent.appendChild(subtitle);
   header.appendChild(headerContent);
 
-  // View Toggle Buttons with proper ARIA
+  // View Toggle Buttons with proper ARIA - Grid | List | Map
   const viewToggle = createElement('div', 'properties-page__view-toggle');
   viewToggle.setAttribute('role', 'group');
   viewToggle.setAttribute('aria-label', 'View mode');
-  const listBtn = createElement('button', 'properties-page__view-btn properties-page__view-btn--active');
+
+  // Grid View Button
+  const gridBtn = createElement('button', `properties-page__view-btn${currentViewMode === 'grid' ? ' properties-page__view-btn--active' : ''}`);
+  gridBtn.setAttribute('data-view', 'grid');
+  gridBtn.setAttribute('aria-label', 'View properties as grid');
+  gridBtn.setAttribute('aria-pressed', currentViewMode === 'grid' ? 'true' : 'false');
+  gridBtn.innerHTML = '<svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg><span>Grid</span>';
+  viewToggle.appendChild(gridBtn);
+
+  // List View Button
+  const listBtn = createElement('button', `properties-page__view-btn${currentViewMode === 'list' ? ' properties-page__view-btn--active' : ''}`);
   listBtn.setAttribute('data-view', 'list');
   listBtn.setAttribute('aria-label', 'View properties as list');
-  listBtn.setAttribute('aria-pressed', 'true');
+  listBtn.setAttribute('aria-pressed', currentViewMode === 'list' ? 'true' : 'false');
   listBtn.innerHTML = '<svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2"><line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><line x1="3" y1="6" x2="3.01" y2="6"/><line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/></svg><span>List</span>';
   viewToggle.appendChild(listBtn);
-  const mapBtn = createElement('button', 'properties-page__view-btn');
+
+  // Map View Button
+  const mapBtn = createElement('button', `properties-page__view-btn${currentViewMode === 'map' ? ' properties-page__view-btn--active' : ''}`);
   mapBtn.setAttribute('data-view', 'map');
   mapBtn.setAttribute('aria-label', 'View properties on map');
-  mapBtn.setAttribute('aria-pressed', 'false');
+  mapBtn.setAttribute('aria-pressed', currentViewMode === 'map' ? 'true' : 'false');
   mapBtn.innerHTML = '<svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2"><polygon points="1 6 1 22 8 18 16 22 23 18 23 2 16 6 8 2 1 6"/><line x1="8" y1="2" x2="8" y2="18"/><line x1="16" y1="6" x2="16" y2="22"/></svg><span>Map</span>';
   viewToggle.appendChild(mapBtn);
+
   header.appendChild(viewToggle);
   container.appendChild(header);
 
@@ -1135,11 +1279,11 @@ export function renderPropertiesPage(): DocumentFragment {
   });
   container.appendChild(bedsFilterGroup);
 
-  // Status Filters (For Sale / For Rent)
+  // Status Filters (For Sale / For Rent / Daily Rent)
   const statusFilterGroup = createElement('div', 'properties-page__filter-group');
   const statusLabel = createElement('span', 'properties-page__filter-label', 'Status:');
   statusFilterGroup.appendChild(statusLabel);
-  const statusOptions = ['All', 'For Sale', 'For Rent'];
+  const statusOptions = ['All', 'For Sale', 'For Rent', 'Daily Rent'];
   statusOptions.forEach((status) => {
     const isActive = currentFilterState.status === status;
     const btn = createElement('button', `properties-page__filter${isActive ? ' active' : ''}`, status);
@@ -1165,7 +1309,43 @@ export function renderPropertiesPage(): DocumentFragment {
   advancedPanel.id = 'advanced-filters-panel';
   const advancedContent = createElement('div', 'properties-page__advanced-content');
 
-  // Row 1: Area Range & Year Built
+  // Row 1: Price Range Slider
+  const advRowPrice = createElement('div', 'properties-page__advanced-row properties-page__advanced-row--full');
+  const priceSliderWrapper = createElement('div', 'advanced-filter__slider-group');
+  priceSliderWrapper.appendChild(createElement('label', 'advanced-filter__label', 'Price Range (USD)'));
+  const priceSliderContainer = createElement('div', 'advanced-filter__dual-slider');
+
+  // Price display
+  const priceDisplay = createElement('div', 'advanced-filter__price-display');
+  const minPriceDisplay = createElement('span', 'advanced-filter__price-value', '$0');
+  minPriceDisplay.id = 'min-price-display';
+  const priceDisplaySep = createElement('span', 'advanced-filter__price-separator', ' - ');
+  const maxPriceDisplay = createElement('span', 'advanced-filter__price-value', '$10M+');
+  maxPriceDisplay.id = 'max-price-display';
+  priceDisplay.appendChild(minPriceDisplay);
+  priceDisplay.appendChild(priceDisplaySep);
+  priceDisplay.appendChild(maxPriceDisplay);
+  priceSliderWrapper.appendChild(priceDisplay);
+
+  // Price slider track and inputs
+  const priceSliderTrack = createElement('div', 'advanced-filter__slider-track');
+  const priceSliderProgress = createElement('div', 'advanced-filter__slider-progress');
+  priceSliderProgress.id = 'price-slider-progress';
+  priceSliderTrack.appendChild(priceSliderProgress);
+
+  const minPriceSlider = createElement('input', 'advanced-filter__slider') as HTMLInputElement;
+  minPriceSlider.type = 'range'; minPriceSlider.min = '0'; minPriceSlider.max = '10000000'; minPriceSlider.step = '10000'; minPriceSlider.value = '0'; minPriceSlider.id = 'min-price-slider';
+  const maxPriceSlider = createElement('input', 'advanced-filter__slider') as HTMLInputElement;
+  maxPriceSlider.type = 'range'; maxPriceSlider.min = '0'; maxPriceSlider.max = '10000000'; maxPriceSlider.step = '10000'; maxPriceSlider.value = '10000000'; maxPriceSlider.id = 'max-price-slider';
+
+  priceSliderTrack.appendChild(minPriceSlider);
+  priceSliderTrack.appendChild(maxPriceSlider);
+  priceSliderWrapper.appendChild(priceSliderTrack);
+  priceSliderContainer.appendChild(priceSliderWrapper);
+  advRowPrice.appendChild(priceSliderContainer);
+  advancedContent.appendChild(advRowPrice);
+
+  // Row 2: Area Range & Year Built
   const advRow1 = createElement('div', 'properties-page__advanced-row');
   const areaWrapper = createElement('div', 'advanced-filter__range');
   areaWrapper.appendChild(createElement('label', 'advanced-filter__label', 'Area (sqm)'));
@@ -1194,7 +1374,7 @@ export function renderPropertiesPage(): DocumentFragment {
   advRow1.appendChild(yearWrapper);
   advancedContent.appendChild(advRow1);
 
-  // Row 2: District Dropdown
+  // Row 3: District & Furnishing Status
   const advRow2 = createElement('div', 'properties-page__advanced-row');
   const districtWrapper = createElement('div', 'advanced-filter__dropdown');
   const districtLbl = createElement('label', 'advanced-filter__label', 'District/Neighborhood');
@@ -1210,11 +1390,78 @@ export function renderPropertiesPage(): DocumentFragment {
   Array.from(uniqueDistricts).sort().forEach(d => { const opt = createElement('option', undefined, d); opt.value = d; districtSelect.appendChild(opt); });
   districtWrapper.appendChild(districtSelect);
   advRow2.appendChild(districtWrapper);
-  advRow2.appendChild(createElement('div'));
+
+  // Furnishing Status Dropdown
+  const furnishingWrapper = createElement('div', 'advanced-filter__dropdown');
+  const furnishingLbl = createElement('label', 'advanced-filter__label', 'Furnishing Status');
+  furnishingLbl.setAttribute('for', 'furnishing-filter');
+  furnishingWrapper.appendChild(furnishingLbl);
+  const furnishingSelect = createElement('select', 'advanced-filter__select') as HTMLSelectElement;
+  furnishingSelect.id = 'furnishing-filter';
+  const furnishingOptions = ['All', 'Fully Furnished', 'Semi-Furnished', 'Unfurnished'];
+  furnishingOptions.forEach(opt => {
+    const option = createElement('option', undefined, opt === 'All' ? 'Any Furnishing' : opt);
+    option.value = opt;
+    furnishingSelect.appendChild(option);
+  });
+  furnishingWrapper.appendChild(furnishingSelect);
+  advRow2.appendChild(furnishingWrapper);
   advancedContent.appendChild(advRow2);
 
-  // Row 3: Badges
-  const advRow3 = createElement('div', 'properties-page__advanced-row properties-page__advanced-row--full');
+  // Row 4: View Type & Number of Floors
+  const advRow3 = createElement('div', 'properties-page__advanced-row');
+
+  // View Type Dropdown
+  const viewWrapper = createElement('div', 'advanced-filter__dropdown');
+  const viewLbl = createElement('label', 'advanced-filter__label', 'View Type');
+  viewLbl.setAttribute('for', 'view-filter');
+  viewWrapper.appendChild(viewLbl);
+  const viewSelect = createElement('select', 'advanced-filter__select') as HTMLSelectElement;
+  viewSelect.id = 'view-filter';
+  const viewOptions = ['All', 'City View', 'Garden View', 'Pool View', 'Street View', 'Mountain View', 'Park View'];
+  viewOptions.forEach(opt => {
+    const option = createElement('option', undefined, opt === 'All' ? 'Any View' : opt);
+    option.value = opt;
+    viewSelect.appendChild(option);
+  });
+  viewWrapper.appendChild(viewSelect);
+  advRow3.appendChild(viewWrapper);
+
+  // Number of Floors
+  const floorsWrapper = createElement('div', 'advanced-filter__range');
+  floorsWrapper.appendChild(createElement('label', 'advanced-filter__label', 'Number of Floors'));
+  const floorsSliderContainer = createElement('div', 'advanced-filter__slider-container');
+  const minFloorsInput = createElement('input', 'advanced-filter__range-input') as HTMLInputElement;
+  minFloorsInput.type = 'number'; minFloorsInput.min = '0'; minFloorsInput.max = '20'; minFloorsInput.placeholder = 'Min'; minFloorsInput.id = 'min-floors-input';
+  const maxFloorsInput = createElement('input', 'advanced-filter__range-input') as HTMLInputElement;
+  maxFloorsInput.type = 'number'; maxFloorsInput.min = '0'; maxFloorsInput.max = '20'; maxFloorsInput.placeholder = 'Max'; maxFloorsInput.id = 'max-floors-input';
+  floorsSliderContainer.appendChild(minFloorsInput);
+  floorsSliderContainer.appendChild(createElement('span', 'advanced-filter__separator', 'to'));
+  floorsSliderContainer.appendChild(maxFloorsInput);
+  floorsWrapper.appendChild(floorsSliderContainer);
+  advRow3.appendChild(floorsWrapper);
+  advancedContent.appendChild(advRow3);
+
+  // Row 5: Property Features (checkboxes)
+  const advRowFeatures = createElement('div', 'properties-page__advanced-row properties-page__advanced-row--full');
+  const featuresWrapper = createElement('div', 'advanced-filter__checkbox-group');
+  featuresWrapper.appendChild(createElement('label', 'advanced-filter__label', 'Property Features'));
+  const featuresOpts = createElement('div', 'advanced-filter__options advanced-filter__options--features');
+  const propertyFeaturesList = ['Central AC', 'Balcony', 'Parking', 'Security', 'Pool', 'Gym', 'Garden', 'Elevator', 'Smart Home', "Maid's Room", 'Storage', 'Pet Friendly'];
+  propertyFeaturesList.forEach(feature => {
+    const optLbl = createElement('label', 'advanced-filter__option');
+    const cb = createElement('input') as HTMLInputElement;
+    cb.type = 'checkbox'; cb.className = 'advanced-filter__feature-checkbox'; cb.value = feature; cb.id = 'feature-' + feature.toLowerCase().replace(/[^a-z0-9]/g, '-');
+    optLbl.appendChild(cb);
+    optLbl.appendChild(createElement('span', 'advanced-filter__option-label', feature));
+    featuresOpts.appendChild(optLbl);
+  });
+  featuresWrapper.appendChild(featuresOpts);
+  advRowFeatures.appendChild(featuresWrapper);
+  advancedContent.appendChild(advRowFeatures);
+
+  // Row 6: Badges
+  const advRowBadges = createElement('div', 'properties-page__advanced-row properties-page__advanced-row--full');
   const badgesWrapper = createElement('div', 'advanced-filter__checkbox-group');
   badgesWrapper.appendChild(createElement('label', 'advanced-filter__label', 'Property Badges'));
   const badgesOpts = createElement('div', 'advanced-filter__options');
@@ -1227,11 +1474,14 @@ export function renderPropertiesPage(): DocumentFragment {
     badgesOpts.appendChild(optLbl);
   });
   badgesWrapper.appendChild(badgesOpts);
-  advRow3.appendChild(badgesWrapper);
-  advancedContent.appendChild(advRow3);
+  advRowBadges.appendChild(badgesWrapper);
+  advancedContent.appendChild(advRowBadges);
 
-  // Reset Advanced Filters
+  // Clear All & Reset Advanced Filters
   const resetRow = createElement('div', 'properties-page__advanced-row properties-page__advanced-reset');
+  const clearAllBtn = createElement('button', 'btn btn--primary btn--sm', 'Clear All Filters');
+  clearAllBtn.id = 'clear-all-filters';
+  resetRow.appendChild(clearAllBtn);
   const resetAdvBtn = createElement('button', 'btn btn--ghost btn--sm', 'Reset Advanced Filters');
   resetAdvBtn.id = 'reset-advanced-filters';
   resetRow.appendChild(resetAdvBtn);
@@ -1330,9 +1580,65 @@ export function renderPropertiesPage(): DocumentFragment {
     updateFilterButtonsUI(); updateURLWithFilters(currentFilterState); updateBreadcrumbs(); renderGrid();
   }
   function clearAllFilters() {
-    currentFilterState = { type: 'All', priceRange: 'All', minBeds: 0, searchQuery: '', status: 'All', minArea: 0, maxArea: 1000, badges: [], minYearBuilt: 2000, maxYearBuilt: new Date().getFullYear(), district: 'All' };
+    const currentYear = new Date().getFullYear();
+    currentFilterState = {
+      type: 'All', priceRange: 'All', minBeds: 0, searchQuery: '', status: 'All',
+      minArea: 0, maxArea: 1000, badges: [], minYearBuilt: 2000, maxYearBuilt: currentYear, district: 'All',
+      minPrice: 0, maxPrice: 10000000, furnishing: 'All', propertyFeatures: [], viewType: 'All', minFloors: 0, maxFloors: 20
+    };
     const s = document.querySelector('.properties-page__search-input') as HTMLInputElement; if (s) s.value = '';
+    resetAllAdvancedFilterInputs();
     updateFilterButtonsUI(); updateURLWithFilters(currentFilterState); updateBreadcrumbs(); renderGrid();
+  }
+  function resetAllAdvancedFilterInputs() {
+    const minAreaEl = document.getElementById('min-area-input') as HTMLInputElement;
+    const maxAreaEl = document.getElementById('max-area-input') as HTMLInputElement;
+    const minYearEl = document.getElementById('min-year-input') as HTMLInputElement;
+    const maxYearEl = document.getElementById('max-year-input') as HTMLInputElement;
+    const districtEl = document.getElementById('district-filter') as HTMLSelectElement;
+    const furnishingEl = document.getElementById('furnishing-filter') as HTMLSelectElement;
+    const viewEl = document.getElementById('view-filter') as HTMLSelectElement;
+    const minFloorsEl = document.getElementById('min-floors-input') as HTMLInputElement;
+    const maxFloorsEl = document.getElementById('max-floors-input') as HTMLInputElement;
+    const minPriceSliderEl = document.getElementById('min-price-slider') as HTMLInputElement;
+    const maxPriceSliderEl = document.getElementById('max-price-slider') as HTMLInputElement;
+    if (minAreaEl) minAreaEl.value = '';
+    if (maxAreaEl) maxAreaEl.value = '';
+    if (minYearEl) minYearEl.value = '';
+    if (maxYearEl) maxYearEl.value = '';
+    if (districtEl) districtEl.value = 'All';
+    if (furnishingEl) furnishingEl.value = 'All';
+    if (viewEl) viewEl.value = 'All';
+    if (minFloorsEl) minFloorsEl.value = '';
+    if (maxFloorsEl) maxFloorsEl.value = '';
+    if (minPriceSliderEl) minPriceSliderEl.value = '0';
+    if (maxPriceSliderEl) maxPriceSliderEl.value = '10000000';
+    updatePriceSliderDisplay();
+    document.querySelectorAll('.advanced-filter__checkbox').forEach(c => { (c as HTMLInputElement).checked = false; });
+    document.querySelectorAll('.advanced-filter__feature-checkbox').forEach(c => { (c as HTMLInputElement).checked = false; });
+  }
+  function updatePriceSliderDisplay() {
+    const minPriceSlider = document.getElementById('min-price-slider') as HTMLInputElement;
+    const maxPriceSlider = document.getElementById('max-price-slider') as HTMLInputElement;
+    const minDisplay = document.getElementById('min-price-display');
+    const maxDisplay = document.getElementById('max-price-display');
+    const progress = document.getElementById('price-slider-progress');
+    if (minPriceSlider && maxPriceSlider && minDisplay && maxDisplay && progress) {
+      const minVal = parseInt(minPriceSlider.value, 10);
+      const maxVal = parseInt(maxPriceSlider.value, 10);
+      const maxLimit = 10000000;
+      const formatPrice = (val: number) => {
+        if (val >= 1000000) return `$${(val / 1000000).toFixed(1)}M`;
+        if (val >= 1000) return `$${(val / 1000).toFixed(0)}K`;
+        return `$${val}`;
+      };
+      minDisplay.textContent = formatPrice(minVal);
+      maxDisplay.textContent = maxVal >= maxLimit ? '$10M+' : formatPrice(maxVal);
+      const minPercent = (minVal / maxLimit) * 100;
+      const maxPercent = (maxVal / maxLimit) * 100;
+      progress.style.left = `${minPercent}%`;
+      progress.style.width = `${maxPercent - minPercent}%`;
+    }
   }
   function updateFilterButtonsUI() {
     document.querySelectorAll('[data-filter-type="type"]').forEach(b => b.classList.toggle('active', b.getAttribute('data-filter-value') === currentFilterState.type));
@@ -1341,20 +1647,33 @@ export function renderPropertiesPage(): DocumentFragment {
     document.querySelectorAll('[data-filter-type="status"]').forEach(b => b.classList.toggle('active', b.getAttribute('data-filter-value') === currentFilterState.status));
   }
 
-  // Toggle between list and map views
-  function toggleView(view: 'list' | 'map') {
+  // Toggle between grid, list, and map views
+  function toggleView(view: ViewMode) {
     if (view === currentViewMode) return;
     const gridEl = document.getElementById('properties-grid');
     const mapContainerEl = document.getElementById('properties-map-container');
+    const gridBtnEl = document.querySelector('[data-view="grid"]');
     const listBtnEl = document.querySelector('[data-view="list"]');
     const mapBtnEl = document.querySelector('[data-view="map"]');
     if (!gridEl || !mapContainerEl) return;
+
     currentViewMode = view;
+    // Save preference to localStorage
+    saveViewPreference(view);
+
+    // Update all button states
+    gridBtnEl?.classList.remove('properties-page__view-btn--active');
+    listBtnEl?.classList.remove('properties-page__view-btn--active');
+    mapBtnEl?.classList.remove('properties-page__view-btn--active');
+    gridBtnEl?.setAttribute('aria-pressed', 'false');
+    listBtnEl?.setAttribute('aria-pressed', 'false');
+    mapBtnEl?.setAttribute('aria-pressed', 'false');
+
     if (view === 'map') {
       gridEl.style.display = 'none';
       mapContainerEl.style.display = 'block';
-      listBtnEl?.classList.remove('properties-page__view-btn--active');
       mapBtnEl?.classList.add('properties-page__view-btn--active');
+      mapBtnEl?.setAttribute('aria-pressed', 'true');
       if (!mapInstance) {
         const filteredProps = filterProperties(properties, currentFilterState);
         mapInstance = initPropertiesMap('properties-map', filteredProps, (id) => {
@@ -1365,11 +1684,19 @@ export function renderPropertiesPage(): DocumentFragment {
         updateMapMarkers(mapInstance, filterProperties(properties, currentFilterState));
       }
       setTimeout(() => { if (mapInstance) mapInstance.invalidateSize(); }, 100);
-    } else {
+    } else if (view === 'list') {
       gridEl.style.display = '';
+      gridEl.classList.add('properties-page__grid--list');
       mapContainerEl.style.display = 'none';
       listBtnEl?.classList.add('properties-page__view-btn--active');
-      mapBtnEl?.classList.remove('properties-page__view-btn--active');
+      listBtnEl?.setAttribute('aria-pressed', 'true');
+    } else {
+      // Grid view (default)
+      gridEl.style.display = '';
+      gridEl.classList.remove('properties-page__grid--list');
+      mapContainerEl.style.display = 'none';
+      gridBtnEl?.classList.add('properties-page__view-btn--active');
+      gridBtnEl?.setAttribute('aria-pressed', 'true');
     }
   }
 
@@ -1412,10 +1739,33 @@ export function renderPropertiesPage(): DocumentFragment {
 
   // Add event listeners after the fragment is appended to DOM
   setTimeout(() => {
+    // Apply initial view state from localStorage
+    const gridEl = document.getElementById('properties-grid');
+    const mapContainerEl = document.getElementById('properties-map-container');
+    if (gridEl && mapContainerEl) {
+      if (currentViewMode === 'map') {
+        gridEl.style.display = 'none';
+        mapContainerEl.style.display = 'block';
+        const filteredProps = filterProperties(properties, currentFilterState);
+        mapInstance = initPropertiesMap('properties-map', filteredProps, (id) => {
+          window.history.pushState({}, '', `/properties/${id}`);
+          window.dispatchEvent(new PopStateEvent('popstate'));
+        });
+        setTimeout(() => { if (mapInstance) mapInstance.invalidateSize(); }, 100);
+      } else if (currentViewMode === 'list') {
+        gridEl.classList.add('properties-page__grid--list');
+        mapContainerEl.style.display = 'none';
+      } else {
+        // Grid view (default)
+        gridEl.classList.remove('properties-page__grid--list');
+        mapContainerEl.style.display = 'none';
+      }
+    }
+
     // View toggle handlers
     document.querySelectorAll('.properties-page__view-btn').forEach(btn => {
       btn.addEventListener('click', () => {
-        const view = btn.getAttribute('data-view') as 'list' | 'map';
+        const view = btn.getAttribute('data-view') as ViewMode;
         if (view) toggleView(view);
       });
     });
@@ -1486,16 +1836,25 @@ export function renderPropertiesPage(): DocumentFragment {
         if (panel && icon) {
           panel.classList.toggle('expanded');
           icon.textContent = panel.classList.contains('expanded') ? '-' : '+';
+          advToggleBtnEl.setAttribute('aria-expanded', panel.classList.contains('expanded') ? 'true' : 'false');
         }
       });
     }
 
+    // Get all advanced filter elements
     const minAreaEl = document.getElementById('min-area-input') as HTMLInputElement;
     const maxAreaEl = document.getElementById('max-area-input') as HTMLInputElement;
     const minYearEl = document.getElementById('min-year-input') as HTMLInputElement;
     const maxYearEl = document.getElementById('max-year-input') as HTMLInputElement;
     const districtEl = document.getElementById('district-filter') as HTMLSelectElement;
+    const furnishingEl = document.getElementById('furnishing-filter') as HTMLSelectElement;
+    const viewEl = document.getElementById('view-filter') as HTMLSelectElement;
+    const minFloorsEl = document.getElementById('min-floors-input') as HTMLInputElement;
+    const maxFloorsEl = document.getElementById('max-floors-input') as HTMLInputElement;
+    const minPriceSliderEl = document.getElementById('min-price-slider') as HTMLInputElement;
+    const maxPriceSliderEl = document.getElementById('max-price-slider') as HTMLInputElement;
     const badgeCheckboxes = document.querySelectorAll('.advanced-filter__checkbox');
+    const featureCheckboxes = document.querySelectorAll('.advanced-filter__feature-checkbox');
 
     let advDebounce: ReturnType<typeof setTimeout>;
     function updateAdvancedFiltersAndRender() {
@@ -1506,9 +1865,18 @@ export function renderPropertiesPage(): DocumentFragment {
         currentFilterState.minYearBuilt = parseInt(minYearEl?.value || '2000', 10);
         currentFilterState.maxYearBuilt = parseInt(maxYearEl?.value || new Date().getFullYear().toString(), 10);
         currentFilterState.district = districtEl?.value || 'All';
+        currentFilterState.furnishing = furnishingEl?.value || 'All';
+        currentFilterState.viewType = viewEl?.value || 'All';
+        currentFilterState.minFloors = parseInt(minFloorsEl?.value || '0', 10);
+        currentFilterState.maxFloors = parseInt(maxFloorsEl?.value || '20', 10);
+        currentFilterState.minPrice = parseInt(minPriceSliderEl?.value || '0', 10);
+        currentFilterState.maxPrice = parseInt(maxPriceSliderEl?.value || '10000000', 10);
         const selectedBadges: string[] = [];
         document.querySelectorAll('.advanced-filter__checkbox:checked').forEach(c => selectedBadges.push((c as HTMLInputElement).value));
         currentFilterState.badges = selectedBadges;
+        const selectedFeatures: string[] = [];
+        document.querySelectorAll('.advanced-filter__feature-checkbox:checked').forEach(c => selectedFeatures.push((c as HTMLInputElement).value));
+        currentFilterState.propertyFeatures = selectedFeatures;
         updateURLWithFilters(currentFilterState, true);
         renderGrid();
         updateFiltersCountDisplay();
@@ -1516,41 +1884,76 @@ export function renderPropertiesPage(): DocumentFragment {
       }, 300);
     }
 
+    // Bind event listeners to all advanced filter inputs
     if (minAreaEl) minAreaEl.addEventListener('input', updateAdvancedFiltersAndRender);
     if (maxAreaEl) maxAreaEl.addEventListener('input', updateAdvancedFiltersAndRender);
     if (minYearEl) minYearEl.addEventListener('input', updateAdvancedFiltersAndRender);
     if (maxYearEl) maxYearEl.addEventListener('input', updateAdvancedFiltersAndRender);
-    if (districtEl) districtEl.addEventListener('change', () => { currentFilterState.district = districtEl.value; updateURLWithFilters(currentFilterState, true); renderGrid(); updateFiltersCountDisplay(); updateAdvancedFilterCountBadge(); });
-    badgeCheckboxes.forEach(cb => cb.addEventListener('change', () => {
-      const selectedBadges: string[] = [];
-      document.querySelectorAll('.advanced-filter__checkbox:checked').forEach(c => selectedBadges.push((c as HTMLInputElement).value));
-      currentFilterState.badges = selectedBadges;
-      updateURLWithFilters(currentFilterState, true);
-      renderGrid();
-      updateFiltersCountDisplay();
-      updateAdvancedFilterCountBadge();
-    }));
+    if (minFloorsEl) minFloorsEl.addEventListener('input', updateAdvancedFiltersAndRender);
+    if (maxFloorsEl) maxFloorsEl.addEventListener('input', updateAdvancedFiltersAndRender);
+    if (districtEl) districtEl.addEventListener('change', updateAdvancedFiltersAndRender);
+    if (furnishingEl) furnishingEl.addEventListener('change', updateAdvancedFiltersAndRender);
+    if (viewEl) viewEl.addEventListener('change', updateAdvancedFiltersAndRender);
 
+    // Price slider event handlers
+    if (minPriceSliderEl && maxPriceSliderEl) {
+      const handlePriceSlider = () => {
+        let minVal = parseInt(minPriceSliderEl.value, 10);
+        let maxVal = parseInt(maxPriceSliderEl.value, 10);
+        // Ensure min doesn't exceed max
+        if (minVal > maxVal) {
+          if (document.activeElement === minPriceSliderEl) {
+            minPriceSliderEl.value = maxVal.toString();
+            minVal = maxVal;
+          } else {
+            maxPriceSliderEl.value = minVal.toString();
+            maxVal = minVal;
+          }
+        }
+        updatePriceSliderDisplay();
+        updateAdvancedFiltersAndRender();
+      };
+      minPriceSliderEl.addEventListener('input', handlePriceSlider);
+      maxPriceSliderEl.addEventListener('input', handlePriceSlider);
+      // Initialize price slider display
+      updatePriceSliderDisplay();
+    }
+
+    // Badge checkboxes
+    badgeCheckboxes.forEach(cb => cb.addEventListener('change', updateAdvancedFiltersAndRender));
+    // Feature checkboxes
+    featureCheckboxes.forEach(cb => cb.addEventListener('change', updateAdvancedFiltersAndRender));
+
+    // Reset Advanced Filters button
     const resetAdvBtnEl = document.getElementById('reset-advanced-filters');
     if (resetAdvBtnEl) {
       resetAdvBtnEl.addEventListener('click', () => {
+        const currentYear = new Date().getFullYear();
         currentFilterState.minArea = 0;
         currentFilterState.maxArea = 1000;
         currentFilterState.badges = [];
         currentFilterState.minYearBuilt = 2000;
-        currentFilterState.maxYearBuilt = new Date().getFullYear();
+        currentFilterState.maxYearBuilt = currentYear;
         currentFilterState.district = 'All';
-        if (minAreaEl) minAreaEl.value = '';
-        if (maxAreaEl) maxAreaEl.value = '';
-        if (minYearEl) minYearEl.value = '';
-        if (maxYearEl) maxYearEl.value = '';
-        if (districtEl) districtEl.value = 'All';
-        badgeCheckboxes.forEach(c => { (c as HTMLInputElement).checked = false; });
+        currentFilterState.minPrice = 0;
+        currentFilterState.maxPrice = 10000000;
+        currentFilterState.furnishing = 'All';
+        currentFilterState.propertyFeatures = [];
+        currentFilterState.viewType = 'All';
+        currentFilterState.minFloors = 0;
+        currentFilterState.maxFloors = 20;
+        resetAllAdvancedFilterInputs();
         updateURLWithFilters(currentFilterState, true);
         renderGrid();
         updateFiltersCountDisplay();
         updateAdvancedFilterCountBadge();
       });
+    }
+
+    // Clear All Filters button
+    const clearAllBtnEl = document.getElementById('clear-all-filters');
+    if (clearAllBtnEl) {
+      clearAllBtnEl.addEventListener('click', clearAllFilters);
     }
 
     function updateFiltersCountDisplay() {
@@ -1574,6 +1977,7 @@ export function renderPropertiesPage(): DocumentFragment {
     }
 
     updateFiltersCountDisplay();
+    updateAdvancedFilterCountBadge();
 
     // Initialize comparison bar
     initComparisonBar();

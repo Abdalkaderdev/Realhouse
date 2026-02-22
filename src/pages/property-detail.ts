@@ -13,6 +13,7 @@ import {
   getSimilarProperties,
   getDisplayPrice
 } from '../data/properties';
+import { agents as fullAgents } from '../data/agents';
 import {
   createBreadcrumbs,
   injectBreadcrumbSchema,
@@ -25,6 +26,11 @@ import {
   IMAGE_DIMENSIONS,
   updateImageMetaTags
 } from '../utils/image-seo';
+import { createMortgageWidget } from '../components/mortgage-calculator';
+import { createPrintButton } from '../components/print-property';
+import { createVideoTourSection } from '../components/video-tour';
+import { trackPropertyView } from '../components/recently-viewed';
+import { createWishlistButton } from '../components/wishlist';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -356,6 +362,9 @@ export function renderPropertyDetailPage(slug: string): DocumentFragment {
     return renderNotFoundPage(slug);
   }
 
+  // Track this property view for "Recently Viewed" feature
+  trackPropertyView(property.id);
+
   const page = createElement('article', 'property-detail');
   page.setAttribute('itemscope', '');
   page.setAttribute('itemtype', 'https://schema.org/RealEstateListing');
@@ -433,6 +442,11 @@ export function renderPropertyDetailPage(slug: string): DocumentFragment {
   fullscreenBtn.setAttribute('aria-label', 'View fullscreen gallery');
   fullscreenBtn.appendChild(createExpandSVG());
   mainImageWrapper.appendChild(fullscreenBtn);
+
+  // Wishlist/Save button
+  const wishlistBtn = createWishlistButton(property.id);
+  wishlistBtn.classList.add('property-detail__wishlist-btn');
+  mainImageWrapper.appendChild(wishlistBtn);
 
   galleryWrapper.appendChild(mainImageWrapper);
 
@@ -546,6 +560,11 @@ export function renderPropertyDetailPage(slug: string): DocumentFragment {
     }
   });
   shareButtons.appendChild(copyBtn);
+
+  // Print/PDF button
+  const printBtn = createPrintButton(property, 'icon');
+  printBtn.classList.add('property-detail__share-btn');
+  shareButtons.appendChild(printBtn);
 
   shareSection.appendChild(shareButtons);
   header.appendChild(shareSection);
@@ -688,6 +707,16 @@ export function renderPropertyDetailPage(slug: string): DocumentFragment {
     }
 
     mainColumn.appendChild(featuresSection);
+  }
+
+  // Video Tour Section (if property has video)
+  if (property.videoTourUrl) {
+    const videoSection = createVideoTourSection({
+      videoUrl: property.videoTourUrl,
+      propertyTitle: property.title,
+      thumbnailUrl: property.images[0]
+    });
+    mainColumn.appendChild(videoSection);
   }
 
   // Location Map Section
@@ -864,13 +893,19 @@ export function renderPropertyDetailPage(slug: string): DocumentFragment {
     const agentTitle = createElement('h4', 'property-detail__agent-title', 'Listed By');
     agentCard.appendChild(agentTitle);
 
+    // Find full agent profile by matching name
+    const fullAgent = fullAgents.find(a =>
+      a.name.toLowerCase().includes(property.agent!.name.toLowerCase()) ||
+      property.agent!.name.toLowerCase().includes(a.name.split(' ')[0].toLowerCase())
+    );
+
     const agentInfo = createElement('div', 'property-detail__agent-info');
 
     const agentAvatar = createElement('div', 'property-detail__agent-avatar');
     if (property.agent.image) {
       const agentImg = createElement('img');
-      agentImg.src = property.agent.image;
-      agentImg.alt = property.agent.name;
+      agentImg.src = fullAgent?.image || property.agent.image;
+      agentImg.alt = fullAgent?.name || property.agent.name;
       agentImg.loading = 'lazy';
       agentAvatar.appendChild(agentImg);
     } else {
@@ -879,14 +914,40 @@ export function renderPropertyDetailPage(slug: string): DocumentFragment {
     agentInfo.appendChild(agentAvatar);
 
     const agentDetails = createElement('div', 'property-detail__agent-details');
-    const agentName = createElement('span', 'property-detail__agent-name', property.agent.name);
-    agentDetails.appendChild(agentName);
-    const agentRole = createElement('span', 'property-detail__agent-role', 'Real Estate Agent');
+
+    // Make agent name a link if full profile exists
+    if (fullAgent) {
+      const agentNameLink = createElement('a', 'property-detail__agent-name property-detail__agent-link');
+      agentNameLink.href = `/agents/${fullAgent.slug}`;
+      agentNameLink.setAttribute('data-route', '');
+      agentNameLink.textContent = fullAgent.name;
+      agentDetails.appendChild(agentNameLink);
+    } else {
+      const agentName = createElement('span', 'property-detail__agent-name', property.agent.name);
+      agentDetails.appendChild(agentName);
+    }
+
+    const agentRole = createElement('span', 'property-detail__agent-role', fullAgent?.role || 'Real Estate Agent');
     agentDetails.appendChild(agentRole);
     agentInfo.appendChild(agentDetails);
 
     agentCard.appendChild(agentInfo);
+
+    // Add View Profile button if full agent exists
+    if (fullAgent) {
+      const viewProfileBtn = createElement('a', 'btn btn--ghost btn--sm property-detail__agent-btn', 'View Profile');
+      viewProfileBtn.href = `/agents/${fullAgent.slug}`;
+      viewProfileBtn.setAttribute('data-route', '');
+      agentCard.appendChild(viewProfileBtn);
+    }
+
     sidebar.appendChild(agentCard);
+  }
+
+  // Mortgage Calculator Widget (for sale properties only)
+  if (property.status === 'For Sale' && property.price > 0) {
+    const mortgageWidget = createMortgageWidget(property.price);
+    sidebar.appendChild(mortgageWidget);
   }
 
   contentGrid.appendChild(sidebar);

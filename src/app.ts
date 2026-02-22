@@ -554,8 +554,21 @@ export class App {
       '/list-property': 'List Your Property | Sell or Rent Property Erbil | Real House',
       '/agents': 'Real Estate Agents Erbil | Expert Property Consultants Kurdistan',
       '/careers': 'Careers at Real House | Join Our Team | Erbil Real Estate Jobs',
-      '/testimonials': 'Client Testimonials & Reviews | Real House Erbil | 4.9/5 Rating'
+      '/testimonials': 'Client Testimonials & Reviews | Real House Erbil | 4.9/5 Rating',
+      '/offers': 'Special Offers & Deals | Property Discounts Erbil Kurdistan'
     };
+    if (path === '/offers') {
+      const count = getActiveOffersCount();
+      return `Special Offers & Deals | ${count} Active | Real House Erbil`;
+    }
+    if (path.startsWith('/offers/')) {
+      const slug = path.replace('/offers/', '');
+      const offer = getOfferBySlug(slug);
+      if (offer) {
+        return `${offer.title} | Special Offer | Real House Erbil`;
+      }
+      return 'Special Offer | Real House Erbil Kurdistan';
+    }
     if (path.startsWith('/neighborhoods/')) {
       const slug = path.replace('/neighborhoods/', '');
       const neighborhood = getNeighborhoodBySlug(slug);
@@ -695,8 +708,21 @@ export class App {
       '/list-property': 'List your property for free on Real House Erbil. Sell or rent apartments, villas, land in Kurdistan. Reach thousands of buyers. Submit your listing today!',
       '/agents': 'Meet our expert real estate agents in Erbil, Kurdistan. Licensed professionals specializing in luxury villas, apartments, commercial properties, and investment. Contact us today!',
       '/careers': 'Join Real House, Kurdistan\'s leading real estate agency. Explore career opportunities in sales, marketing, operations, and IT. Competitive benefits and growth opportunities. Apply now!',
-      '/testimonials': 'Read 15+ verified client reviews for Real House Erbil. 4.9/5 average rating with 100% satisfaction. See why clients trust us for buying, selling, renting, and investment in Kurdistan.'
+      '/testimonials': 'Read 15+ verified client reviews for Real House Erbil. 4.9/5 average rating with 100% satisfaction. See why clients trust us for buying, selling, renting, and investment in Kurdistan.',
+      '/offers': 'Discover exclusive property offers in Erbil, Kurdistan. Up to 20% discounts, flexible payment plans, and limited-time deals on luxury villas, apartments, and more. Act now!'
     };
+    if (path === '/offers') {
+      const count = getActiveOffersCount();
+      return `Discover ${count} exclusive property offers in Erbil, Kurdistan. Up to 20% discounts, flexible payment plans, and limited-time deals on luxury villas, apartments, and more.`;
+    }
+    if (path.startsWith('/offers/')) {
+      const slug = path.replace('/offers/', '');
+      const offer = getOfferBySlug(slug);
+      if (offer) {
+        return `${offer.shortDescription} Valid until ${new Date(offer.endDate).toLocaleDateString()}. Contact Real House now!`;
+      }
+      return 'Exclusive property offer in Erbil, Kurdistan. Limited time deal with special pricing. Contact Real House for details.';
+    }
     if (path.startsWith('/neighborhoods/')) {
       const slug = path.replace('/neighborhoods/', '');
       const neighborhood = getNeighborhoodBySlug(slug);
@@ -987,6 +1013,15 @@ export class App {
       }
     } else if (path === '/testimonials') {
       setupTestimonialsPageSEO();
+    } else if (path === '/offers') {
+      setupOffersPageSEO();
+    } else if (path.startsWith('/offers/')) {
+      const slug = path.replace('/offers/', '');
+      const offer = getOfferBySlug(slug);
+      if (offer) {
+        setupOfferDetailPageSEO(offer);
+        return;
+      }
     } else {
       // Clear dynamic schemas for other pages
       clearDynamicSchemas();
@@ -1456,6 +1491,32 @@ export class App {
       scrollReveal('.job-detail__section', { y: 40, stagger: 0.1 });
       scrollReveal('.application-form', { y: 40 });
       scrollReveal('.job-detail__back', { y: 30 });
+    } else if (path === '/testimonials') {
+      // Testimonials page animations
+      scrollReveal('.testimonials-page__hero', { y: 40 });
+      scrollReveal('.testimonials-page__stats-card', { y: 40 });
+      scrollReveal('.testimonials-page__video-section', { y: 40 });
+      scrollReveal('.testimonial-card--video-featured', { y: 60, stagger: 0.1 });
+      scrollReveal('.testimonials-page__filter-section', { y: 40 });
+      scrollReveal('.testimonial-card', { y: 60, stagger: 0.1, trigger: '.testimonials-page__grid' });
+      scrollReveal('.testimonials-page__cta', { y: 40 });
+    } else if (path === '/offers') {
+      // Offers page animations
+      scrollReveal('.offers-page__hero', { y: 40 });
+      scrollReveal('.offers-page__stats', { y: 40 });
+      scrollReveal('.offers-page__filters', { y: 30 });
+      scrollReveal('.offer-card', { y: 60, stagger: 0.1, trigger: '.offers-page__grid' });
+      scrollReveal('.internal-cta', { y: 40 });
+    } else if (path.startsWith('/offers/')) {
+      // Offer detail page animations
+      scrollReveal('.offer-detail__hero-content', { y: 40 });
+      scrollReveal('.offer-detail__countdown-section', { y: 40 });
+      scrollReveal('.offer-detail__price-section', { y: 40 });
+      scrollReveal('.offer-detail__description-section', { y: 40 });
+      scrollReveal('.offer-detail__highlights-section', { y: 40 });
+      scrollReveal('.offer-detail__terms-section', { y: 40 });
+      scrollReveal('.offer-detail__contact-card', { y: 40 });
+      scrollReveal('.offer-detail__back', { y: 30 });
     }
   }
 

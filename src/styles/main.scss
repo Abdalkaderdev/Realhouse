@@ -9,6 +9,7 @@
 @use 'property-detail';
 @use 'print';
 @use 'map';
+@use 'property-map';
 @use 'blog';
 @use 'mobile';
 @use 'share-buttons';
@@ -24,6 +25,14 @@
 @use 'language-selector';
 @use 'list-property';
 @use 'services-directory';
+@use 'mortgage-calculator';
+@use 'agent-profile';
+@use 'wishlist';
+@use 'print-property';
+@use 'video-tour';
+@use 'offers';
+@use 'testimonials';
+@use 'careers';
 
 // ═══════════════════════════════════════════════════════════════════════════
 // Real House - Main Styles

@@ -147,6 +147,145 @@
   </url>
 
   <!-- ═══════════════════════════════════════════════════════════════════════════ -->
+  <!-- Special Offers - Property Deals and Discounts -->
+  <!-- Format: /offers and /offers/{offer-slug} -->
+  <!-- ═══════════════════════════════════════════════════════════════════════════ -->
+
+  <url>
+    <loc>https://realhouseiq.com/offers</loc>
+    <lastmod>2026-02-22</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.9</priority>
+    <image:image>
+      <image:loc>https://realhouseiq.com/og-image.jpg</image:loc>
+      <image:title>Special Property Offers Erbil - Discounts and Deals Kurdistan</image:title>
+      <image:caption>Exclusive property offers in Erbil. Up to 20% discounts, flexible payment plans, and limited-time deals on luxury real estate in Kurdistan.</image:caption>
+    </image:image>
+  </url>
+
+  <url>
+    <loc>https://realhouseiq.com/offers/empire-world-launch-discount</loc>
+    <lastmod>2026-02-22</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <url>
+    <loc>https://realhouseiq.com/offers/dream-city-payment-plan</loc>
+    <lastmod>2026-02-22</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <url>
+    <loc>https://realhouseiq.com/offers/boulevard-free-furniture</loc>
+    <lastmod>2026-02-22</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <url>
+    <loc>https://realhouseiq.com/offers/italian-village-cashback</loc>
+    <lastmod>2026-02-22</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <url>
+    <loc>https://realhouseiq.com/offers/gulan-towers-early-bird</loc>
+    <lastmod>2026-02-22</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <url>
+    <loc>https://realhouseiq.com/offers/english-village-bundle</loc>
+    <lastmod>2026-02-22</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <url>
+    <loc>https://realhouseiq.com/offers/cavally-tower-discount</loc>
+    <lastmod>2026-02-22</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <url>
+    <loc>https://realhouseiq.com/offers/mnw-towers-flexible-payment</loc>
+    <lastmod>2026-02-22</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <!-- ═══════════════════════════════════════════════════════════════════════════ -->
+  <!-- Our Agents - Real Estate Agent Profiles -->
+  <!-- Format: /agents and /agents/{agent-slug} -->
+  <!-- ═══════════════════════════════════════════════════════════════════════════ -->
+
+  <url>
+    <loc>https://realhouseiq.com/agents</loc>
+    <lastmod>2026-02-22</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.85</priority>
+    <image:image>
+      <image:loc>https://realhouseiq.com/og-image.jpg</image:loc>
+      <image:title>Real Estate Agents Erbil - Expert Property Consultants</image:title>
+      <image:caption>Meet our licensed real estate professionals in Kurdistan. Find the perfect agent for your property needs.</image:caption>
+    </image:image>
+  </url>
+
+  <url>
+    <loc>https://realhouseiq.com/agents/abdalkader-hussein</loc>
+    <lastmod>2026-02-22</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+
+  <url>
+    <loc>https://realhouseiq.com/agents/mahmood-ali</loc>
+    <lastmod>2026-02-22</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+
+  <url>
+    <loc>https://realhouseiq.com/agents/sara-ahmed</loc>
+    <lastmod>2026-02-22</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+
+  <url>
+    <loc>https://realhouseiq.com/agents/karwan-rashid</loc>
+    <lastmod>2026-02-22</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+
+  <url>
+    <loc>https://realhouseiq.com/agents/hana-jalal</loc>
+    <lastmod>2026-02-22</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+
+  <url>
+    <loc>https://realhouseiq.com/agents/karwan-hassan</loc>
+    <lastmod>2026-02-22</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.75</priority>
+  </url>
+
+  <url>
+    <loc>https://realhouseiq.com/agents/ahmad-mahmoud</loc>
+    <lastmod>2026-02-22</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.75</priority>
+  </url>
+
+  <!-- ═══════════════════════════════════════════════════════════════════════════ -->
   <!-- Home Services Directory - Property Owner Service Providers -->
   <!-- Format: /services-directory and /services-directory/{category-slug} -->
   <!-- ═══════════════════════════════════════════════════════════════════════════ -->
@@ -269,10 +408,29 @@
   </url>
 
   <url>
+    <loc>https://realhouseiq.com/wishlist</loc>
+    <lastmod>2026-02-22</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.5</priority>
+  </url>
+
+  <url>
     <loc>https://realhouseiq.com/compare</loc>
     <lastmod>2026-02-19</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
+  </url>
+
+  <url>
+    <loc>https://realhouseiq.com/mortgage-calculator</loc>
+    <lastmod>2026-02-22</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <image:image>
+      <image:loc>https://realhouseiq.com/og-image.jpg</image:loc>
+      <image:title>Mortgage Calculator Erbil - Property Payment Calculator Kurdistan</image:title>
+      <image:caption>Calculate monthly mortgage payments for properties in Erbil, Kurdistan. Free mortgage calculator with amortization schedule and tips for getting financing in Iraq.</image:caption>
+    </image:image>
   </url>
 
   <!-- ═══════════════════════════════════════════════════════════════════════════ -->

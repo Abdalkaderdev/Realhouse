@@ -7,6 +7,7 @@ import { properties, generatePropertySlug } from '../data/properties';
 import { projects } from '../data/projects';
 import { blogPosts, blogCategories } from '../data/blog';
 import { developers } from '../data/developers';
+import { agents } from '../data/agents';
 import {
   createBreadcrumbs,
   injectBreadcrumbSchema,
@@ -166,6 +167,25 @@ export function renderSitemapPage(): DocumentFragment {
   });
   devSection.appendChild(devList);
   grid.appendChild(devSection);
+
+  // ─── Our Agents Section ─────────────────────────────────────────────────
+  const agentsSection = createElement('section', 'sitemap-page__section');
+  const agentsTitle = createElement('h2', 'sitemap-page__section-title', 'Our Agents');
+  agentsSection.appendChild(agentsTitle);
+
+  const agentsList = createElement('ul', 'sitemap-page__list');
+  agents.forEach(agent => {
+    const li = createElement('li', 'sitemap-page__item');
+    const link = createElement('a', 'sitemap-page__link', agent.name);
+    link.href = `/agents/${agent.slug}`;
+    link.setAttribute('data-route', '');
+    li.appendChild(link);
+    const desc = createElement('span', 'sitemap-page__desc', ` - ${agent.role}, ${agent.yearsExperience}+ years`);
+    li.appendChild(desc);
+    agentsList.appendChild(li);
+  });
+  agentsSection.appendChild(agentsList);
+  grid.appendChild(agentsSection);
 
   // ─── All Properties Section ─────────────────────────────────────────────
   const propsSection = createElement('section', 'sitemap-page__section sitemap-page__section--wide');
