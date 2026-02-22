@@ -45,6 +45,15 @@ import { renderGuidePage, setupGuidePageSEO } from './pages/guides';
 import { renderMarketReportPage, setupMarketReportPageSEO } from './pages/market-report';
 import { renderDevelopersPage, renderDeveloperDetailPage, setupDevelopersPageSEO, setupDeveloperDetailPageSEO, getAllDeveloperSlugs } from './pages/developers';
 import { renderListPropertyPage, setupListPropertyPageSEO } from './pages/list-property';
+import { renderMortgageCalculatorPage, getMortgageCalculatorPageMeta } from './pages/mortgage-calculator';
+import { renderAgentsPage, setupAgentsPageSEO } from './pages/agents';
+import { renderAgentProfilePage, setupAgentProfilePageSEO } from './pages/agent-profile';
+import { renderWishlistPage, setupWishlistPageSEO } from './pages/wishlist';
+import { renderTestimonialsPage, setupTestimonialsPageSEO } from './pages/testimonials';
+import { renderCareersPage, renderJobDetailPage, setupCareersPageSEO, setupJobDetailPageSEO, getJobBySlug, getAllJobSlugs } from './pages/careers';
+import { renderOffersPage, renderOfferDetailPage, setupOffersPageSEO, setupOfferDetailPageSEO, getActiveOffersCount } from './pages/offers';
+import { getOfferBySlug } from './data/offers';
+import { getAgentBySlug, getAllAgentSlugs } from './data/agents';
 import { getGuideBySlug, getMarketReportBySlug } from './data/guides';
 import { getDeveloperBySlug } from './data/developers';
 import { getDistrictBySlug, getPropertyCountByDistrict, getAllDistrictSlugs } from './data/locations';
@@ -54,6 +63,7 @@ import { getBlogPostBySlug } from './data/blog';
 import { getProjectById } from './data/projects';
 import { initComparisonBar, updateComparisonBar } from './comparison';
 import { initFavoritesUI } from './utils/favorites';
+import { initWishlistUI } from './components/wishlist';
 import {
   setupPropertyPageSEO,
   setupPropertiesPageSEO,
@@ -142,6 +152,9 @@ export class App {
 
     // Initialize favorites UI (badge count)
     initFavoritesUI();
+
+    // Initialize wishlist UI (badge count)
+    initWishlistUI();
 
     // Load initial page
     await this.navigate(window.location.pathname, false);
@@ -406,6 +419,8 @@ export class App {
       return renderTermsPage();
     } else if (path === '/faq') {
       return renderFAQPage();
+    } else if (path === '/mortgage-calculator') {
+      return renderMortgageCalculatorPage();
     } else if (path === '/projects') {
       return renderProjectsPage();
     } else if (path === '/projects/compare') {
@@ -418,6 +433,8 @@ export class App {
       return renderComparisonPage();
     } else if (path === '/favorites') {
       return renderFavoritesPage();
+    } else if (path === '/wishlist') {
+      return renderWishlistPage();
     } else if (path === '/blog') {
       return renderBlogPage();
     } else if (path.startsWith('/blog/')) {
@@ -471,6 +488,31 @@ export class App {
       return renderEnhanced404Page();
     } else if (path === '/list-property') {
       return renderListPropertyPage();
+    } else if (path === '/agents') {
+      return renderAgentsPage();
+    } else if (path.startsWith('/agents/')) {
+      const slug = path.replace('/agents/', '');
+      const agentSlugs = getAllAgentSlugs();
+      if (agentSlugs.includes(slug)) {
+        return renderAgentProfilePage(slug);
+      }
+      return renderEnhanced404Page();
+    } else if (path === '/careers') {
+      return renderCareersPage();
+    } else if (path.startsWith('/careers/')) {
+      const slug = path.replace('/careers/', '');
+      const jobSlugs = getAllJobSlugs();
+      if (jobSlugs.includes(slug)) {
+        return renderJobDetailPage(slug);
+      }
+      return renderEnhanced404Page();
+    } else if (path === '/offers') {
+      return renderOffersPage();
+    } else if (path.startsWith('/offers/')) {
+      const slug = path.replace('/offers/', '');
+      return renderOfferDetailPage(slug);
+    } else if (path === '/testimonials') {
+      return renderTestimonialsPage();
     }
     // 404 for unknown routes - use enhanced version with error logging
     return renderEnhanced404Page();
@@ -491,6 +533,7 @@ export class App {
       '/projects': 'New Development Projects Erbil 2025 | Off-Plan Kurdistan',
       '/projects/compare': 'Compare Development Projects Erbil | Side-by-Side',
       '/favorites': 'Saved Properties | Real House Erbil Kurdistan',
+      '/wishlist': 'My Wishlist | Saved Properties | Real House Erbil',
       '/compare': 'Compare Properties Erbil | Side-by-Side Analysis',
       '/blog': 'Erbil Real Estate Blog | Market Insights, Buying Guides',
       '/services': 'Premium Real Estate Services Erbil | Expert Agents',
@@ -508,7 +551,10 @@ export class App {
       '/sitemap': 'Site Map | Real House Erbil | All Properties & Pages',
       '/neighborhoods': 'Erbil Neighborhood Guides | Find Your Perfect Area | Real House',
       '/developers': 'Real Estate Developers Erbil | Kurdistan Property Companies',
-      '/list-property': 'List Your Property | Sell or Rent Property Erbil | Real House'
+      '/list-property': 'List Your Property | Sell or Rent Property Erbil | Real House',
+      '/agents': 'Real Estate Agents Erbil | Expert Property Consultants Kurdistan',
+      '/careers': 'Careers at Real House | Join Our Team | Erbil Real Estate Jobs',
+      '/testimonials': 'Client Testimonials & Reviews | Real House Erbil | 4.9/5 Rating'
     };
     if (path.startsWith('/neighborhoods/')) {
       const slug = path.replace('/neighborhoods/', '');
@@ -608,6 +654,14 @@ export class App {
       }
       return 'Developer Profile | Real House Erbil Kurdistan';
     }
+    if (path.startsWith('/agents/')) {
+      const slug = path.replace('/agents/', '');
+      const agent = getAgentBySlug(slug);
+      if (agent) {
+        return `${agent.name} - ${agent.role} | Real House Erbil`;
+      }
+      return 'Real Estate Agent | Real House Erbil Kurdistan';
+    }
     // Return 404 title for unknown routes
     return titles[path] || 'Page Not Found | Real House Erbil Kurdistan';
   }
@@ -626,6 +680,7 @@ export class App {
       '/projects': 'Explore new development projects in Erbil 2025. Off-plan properties with flexible payment plans from $85K. Book your exclusive site tour today!',
       '/projects/compare': 'Compare Erbil development projects side-by-side: pricing, amenities, completion dates & availability. Make informed investment decisions. Free tool!',
       '/favorites': 'Your saved properties at Real House Erbil. Compare villas, apartments & land side-by-side. Share your shortlist or schedule viewings with one click.',
+      '/wishlist': 'View and manage your saved properties on Real House. Share your wishlist with friends and family. Find your dream home in Erbil, Kurdistan.',
       '/compare': 'Compare Erbil properties side-by-side: prices, sizes, features & locations. Make confident decisions with Real House comparison tool. Try it free!',
       '/blog': 'Expert Erbil real estate insights: 2025 market trends, buying guides, investment tips & neighborhood reviews. Stay informed with Real House professionals.',
       '/services': 'Premium real estate services in Erbil: buying, selling, renting & property management. Expert agents, proven results. Get your free consultation today!',
@@ -637,7 +692,10 @@ export class App {
       '/sitemap': 'Navigate Real House Erbil website. Find all properties, projects, services & blog articles. Your complete guide to Kurdistan real estate.',
       '/neighborhoods': 'Explore Erbil\'s premier neighborhoods. Comprehensive guides to Empire World, Dream City, Ankawa, Gulan & more. Find your perfect area with Real House experts.',
       '/developers': 'Discover leading real estate developers in Erbil, Kurdistan. From Empire World (DAMAC) to local pioneers. Compare developers, projects, and find your ideal property partner.',
-      '/list-property': 'List your property for free on Real House Erbil. Sell or rent apartments, villas, land in Kurdistan. Reach thousands of buyers. Submit your listing today!'
+      '/list-property': 'List your property for free on Real House Erbil. Sell or rent apartments, villas, land in Kurdistan. Reach thousands of buyers. Submit your listing today!',
+      '/agents': 'Meet our expert real estate agents in Erbil, Kurdistan. Licensed professionals specializing in luxury villas, apartments, commercial properties, and investment. Contact us today!',
+      '/careers': 'Join Real House, Kurdistan\'s leading real estate agency. Explore career opportunities in sales, marketing, operations, and IT. Competitive benefits and growth opportunities. Apply now!',
+      '/testimonials': 'Read 15+ verified client reviews for Real House Erbil. 4.9/5 average rating with 100% satisfaction. See why clients trust us for buying, selling, renting, and investment in Kurdistan.'
     };
     if (path.startsWith('/neighborhoods/')) {
       const slug = path.replace('/neighborhoods/', '');
@@ -734,6 +792,14 @@ export class App {
         return developer.metaDescription;
       }
       return 'Discover real estate developers in Erbil, Kurdistan. Company profiles, project portfolios, and contact information. Partner with Real House for expert guidance.';
+    }
+    if (path.startsWith('/agents/')) {
+      const slug = path.replace('/agents/', '');
+      const agent = getAgentBySlug(slug);
+      if (agent) {
+        return `${agent.name} is a ${agent.role} at Real House with ${agent.yearsExperience}+ years experience. Specializing in ${agent.specialization}. ${agent.propertiesSold} properties sold. Contact today!`;
+      }
+      return 'Meet our expert real estate agents in Erbil, Kurdistan. Licensed professionals with years of experience. Contact Real House today!';
     }
     return descriptions[path] || descriptions['/'];
   }
@@ -834,6 +900,14 @@ export class App {
       applyPageSocialMeta('about');
     } else if (path === '/faq') {
       setupFAQPageSEO();
+    } else if (path === '/mortgage-calculator') {
+      // Mortgage calculator page SEO
+      const meta = getMortgageCalculatorPageMeta();
+      document.title = meta.title;
+      const descMeta = document.querySelector('meta[name="description"]');
+      if (descMeta) descMeta.setAttribute('content', meta.description);
+      const keywordsMeta = document.querySelector('meta[name="keywords"]');
+      if (keywordsMeta) keywordsMeta.setAttribute('content', meta.keywords);
     } else if (path === '/blog') {
       setupBlogPageSEO();
       applyPageSocialMeta('blog');
@@ -852,6 +926,8 @@ export class App {
       applyPageSocialMeta('projects');
     } else if (path === '/favorites') {
       applyPageSocialMeta('favorites');
+    } else if (path === '/wishlist') {
+      setupWishlistPageSEO();
     } else if (path === '/gallery') {
       // Gallery page with ImageGallery and CollectionPage schemas
       setupGalleryPageSEO();
@@ -891,6 +967,26 @@ export class App {
       }
     } else if (path === '/list-property') {
       setupListPropertyPageSEO();
+    } else if (path === '/agents') {
+      setupAgentsPageSEO();
+    } else if (path.startsWith('/agents/')) {
+      const slug = path.replace('/agents/', '');
+      const agent = getAgentBySlug(slug);
+      if (agent) {
+        setupAgentProfilePageSEO(agent);
+        return;
+      }
+    } else if (path === '/careers') {
+      setupCareersPageSEO();
+    } else if (path.startsWith('/careers/')) {
+      const slug = path.replace('/careers/', '');
+      const job = getJobBySlug(slug);
+      if (job) {
+        setupJobDetailPageSEO(job);
+        return;
+      }
+    } else if (path === '/testimonials') {
+      setupTestimonialsPageSEO();
     } else {
       // Clear dynamic schemas for other pages
       clearDynamicSchemas();
@@ -968,7 +1064,7 @@ export class App {
 
   private getRobotsDirective(path: string): string {
     // Noindex user-specific/utility pages
-    const noindexPaths = ['/favorites', '/compare'];
+    const noindexPaths = ['/favorites', '/compare', '/wishlist'];
     if (noindexPaths.includes(path)) {
       return 'noindex, follow';
     }
@@ -1108,7 +1204,7 @@ export class App {
     await new Promise(resolve => requestAnimationFrame(resolve));
 
     // Initialize comparison bar for pages with property cards
-    if (path === '/' || path === '/properties' || path === '/compare' || path === '/favorites' || path.startsWith('/areas/')) {
+    if (path === '/' || path === '/properties' || path === '/compare' || path === '/favorites' || path === '/wishlist' || path.startsWith('/areas/')) {
       initComparisonBar();
       updateComparisonBar();
     }
@@ -1131,15 +1227,11 @@ export class App {
     // Initialize marquees
     initAllMarquees();
 
-    // Initialize property card hover effects with 3D tilt
+    // Initialize simple property card hover effects (no tilt/distortion)
     document.querySelectorAll('.property-card').forEach(card => {
       initPropertyCardHover(card as HTMLElement);
     });
-    initCardTilt('.property-card');
-    initImageParallax('.property-card__media');
-
-    // Initialize image distortion on property images
-    initImageDistortion('.property-card__media', 0.8);
+    // Removed aggressive animations: initCardTilt, initImageParallax, initImageDistortion
 
     // Page-specific animations
     if (path === '/') {
@@ -1198,6 +1290,11 @@ export class App {
       scrollReveal('.faq-page__header', { y: 40 });
       scrollReveal('.faq-page__item', { y: 30, stagger: 0.08 });
       scrollReveal('.faq-page__cta', { y: 40 });
+    } else if (path === '/mortgage-calculator') {
+      // Mortgage calculator page animations are handled internally via GSAP
+      scrollReveal('.mortgage-page__tip-card', { y: 40, stagger: 0.1 });
+      scrollReveal('.mortgage-page__bank-card', { y: 40, stagger: 0.15 });
+      scrollReveal('.mortgage-page__faq-item', { y: 30, stagger: 0.08 });
     } else if (path === '/projects') {
       scrollReveal('.projects-page__header', { y: 40 });
       scrollReveal('.project-card', { y: 60, stagger: 0.1, trigger: '.projects-page__grid' });
@@ -1220,6 +1317,10 @@ export class App {
     } else if (path === '/favorites') {
       scrollReveal('.favorites-page__header', { y: 40 });
       scrollReveal('.property-card', { y: 60, stagger: 0.1, trigger: '.favorites-page__grid' });
+    } else if (path === '/wishlist') {
+      scrollReveal('.wishlist-page__header', { y: 40 });
+      scrollReveal('.wishlist-card', { y: 60, stagger: 0.1, trigger: '.wishlist-page__grid' });
+      scrollReveal('.wishlist-page__recently-viewed', { y: 40 });
     } else if (path === '/blog') {
       scrollReveal('.blog-page__header', { y: 40 });
       scrollReveal('.blog-page__featured', { y: 40 });
@@ -1327,6 +1428,34 @@ export class App {
       scrollReveal('.services-dir__quote-form', { y: 40 });
       scrollReveal('.services-dir__sidebar', { y: 40 });
       scrollReveal('.services-dir__related-services', { y: 40 });
+    } else if (path === '/agents') {
+      // Agents listing page animations
+      scrollReveal('.agents-page__header', { y: 40 });
+      scrollReveal('.agents-page__stats', { y: 40 });
+      scrollReveal('.agent-card', { y: 60, stagger: 0.1, trigger: '.agents-page__grid' });
+      scrollReveal('.agents-page__cta', { y: 40 });
+    } else if (path.startsWith('/agents/')) {
+      // Agent profile page animations
+      scrollReveal('.agent-profile__hero-content', { y: 40 });
+      scrollReveal('.agent-profile__section', { y: 40, stagger: 0.1 });
+      scrollReveal('.agent-profile__testimonial', { y: 30, stagger: 0.1 });
+      scrollReveal('.agent-profile__property-card', { y: 40, stagger: 0.1 });
+      scrollReveal('.agent-profile__sidebar', { y: 40 });
+      scrollReveal('.agent-profile__back', { y: 30 });
+    } else if (path === '/careers') {
+      // Careers page animations
+      scrollReveal('.careers-hero__content', { y: 40 });
+      scrollReveal('.careers-benefits__card', { y: 60, stagger: 0.1, trigger: '.careers-benefits__grid' });
+      scrollReveal('.careers-culture__card', { y: 40, stagger: 0.08, trigger: '.careers-culture__grid' });
+      scrollReveal('.careers-culture__team', { y: 40 });
+      scrollReveal('.job-card', { y: 60, stagger: 0.1, trigger: '.careers-openings__grid' });
+      scrollReveal('.careers-general__content', { y: 40 });
+    } else if (path.startsWith('/careers/')) {
+      // Job detail page animations
+      scrollReveal('.job-detail__hero-content', { y: 40 });
+      scrollReveal('.job-detail__section', { y: 40, stagger: 0.1 });
+      scrollReveal('.application-form', { y: 40 });
+      scrollReveal('.job-detail__back', { y: 30 });
     }
   }
 

@@ -431,7 +431,7 @@ export const en: TranslationStrings = {
   },
 
   footer: {
-    tagline: 'Real estate Erbil leaders. Property Erbil specialists offering houses for sale Erbil, apartments Erbil Iraq, villas Erbil Iraq, penthouse Erbil, and luxury homes Kurdistan. Best real estate agent Erbil for buy house Erbil and property investment Kurdistan Iraq in the Erbil property market.',
+    tagline: 'Your trusted partner for luxury real estate in Erbil, Kurdistan. We help you find the perfect home, apartment, or investment property with personalized service and local expertise.',
     quickLinks: 'Quick Links',
     propertyTypes: 'Property Types',
     browseProperties: 'Browse Properties',

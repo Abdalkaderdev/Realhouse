@@ -600,38 +600,20 @@
         <ul class="nav__list">
           <li><a href="/" class="nav__link" data-route aria-current="page">Home</a></li>
           <li><a href="/properties" class="nav__link" data-route>Properties</a></li>
+          <li><a href="/projects" class="nav__link" data-route>Projects</a></li>
           <li class="nav__dropdown">
             <a href="/services" class="nav__link nav__link--dropdown" data-route>
-              Services
+              More
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="nav__dropdown-icon" aria-hidden="true">
                 <path d="M6 9l6 6 6-6"/>
               </svg>
             </a>
             <ul class="nav__dropdown-menu" role="menu">
-              <li role="none"><a href="/services/property-sales" class="nav__dropdown-link" data-route role="menuitem">Sell Property</a></li>
-              <li role="none"><a href="/services/property-buying" class="nav__dropdown-link" data-route role="menuitem">Buy Property</a></li>
-              <li role="none"><a href="/services/property-management" class="nav__dropdown-link" data-route role="menuitem">Property Management</a></li>
-              <li role="none"><a href="/services/property-valuation" class="nav__dropdown-link" data-route role="menuitem">Free Valuation</a></li>
-              <li role="none"><a href="/services/investment-consulting" class="nav__dropdown-link" data-route role="menuitem">Investment Consulting</a></li>
-              <li role="none"><a href="/services/legal-assistance" class="nav__dropdown-link" data-route role="menuitem">Legal Assistance</a></li>
-              <li role="none"><a href="/services-directory" class="nav__dropdown-link" data-route role="menuitem">Home Services Directory</a></li>
-            </ul>
-          </li>
-          <li><a href="/projects" class="nav__link" data-route>Projects</a></li>
-          <li><a href="/developers" class="nav__link" data-route>Developers</a></li>
-          <li class="nav__dropdown">
-            <a href="/blog" class="nav__link nav__link--dropdown" data-route>
-              Resources
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="nav__dropdown-icon" aria-hidden="true">
-                <path d="M6 9l6 6 6-6"/>
-              </svg>
-            </a>
-            <ul class="nav__dropdown-menu" role="menu">
+              <li role="none"><a href="/services" class="nav__dropdown-link" data-route role="menuitem">Our Services</a></li>
+              <li role="none"><a href="/developers" class="nav__dropdown-link" data-route role="menuitem">Developers</a></li>
               <li role="none"><a href="/blog" class="nav__dropdown-link" data-route role="menuitem">Blog</a></li>
               <li role="none"><a href="/guides/buying-property-erbil" class="nav__dropdown-link" data-route role="menuitem">Buyer's Guide</a></li>
-              <li role="none"><a href="/guides/real-estate-investment-erbil" class="nav__dropdown-link" data-route role="menuitem">Investor's Guide</a></li>
-              <li role="none"><a href="/guides/renting-in-erbil" class="nav__dropdown-link" data-route role="menuitem">Renter's Guide</a></li>
-              <li role="none"><a href="/market-report/erbil-2025" class="nav__dropdown-link" data-route role="menuitem">Market Report 2025</a></li>
+              <li role="none"><a href="/mortgage-calculator" class="nav__dropdown-link" data-route role="menuitem">Mortgage Calculator</a></li>
               <li role="none"><a href="/faq" class="nav__dropdown-link" data-route role="menuitem">FAQ</a></li>
             </ul>
           </li>
@@ -646,6 +628,12 @@
             <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
           </svg>
           <span class="nav__favorites-badge" id="favorites-badge" style="display: none;" aria-live="polite">0</span>
+        </a>
+        <a href="/wishlist" class="nav__wishlist" data-route aria-label="View wishlist (saved properties)">
+          <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+            <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
+          </svg>
+          <span class="nav__wishlist-badge" id="wishlist-badge" style="display: none;" aria-live="polite">0</span>
         </a>
         <button class="nav__theme-toggle" id="theme-toggle" aria-label="Toggle dark/light theme" aria-pressed="true">
           <svg class="nav__theme-icon nav__theme-icon--sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
@@ -674,43 +662,25 @@
       <ul class="mobile-menu__list">
         <li><a href="/" class="mobile-menu__link" data-route>Home</a></li>
         <li><a href="/properties" class="mobile-menu__link" data-route>Properties</a></li>
-        <li class="mobile-menu__dropdown">
-          <button class="mobile-menu__link mobile-menu__link--dropdown" aria-expanded="false">
-            Services
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="mobile-menu__dropdown-icon" aria-hidden="true">
-              <path d="M6 9l6 6 6-6"/>
-            </svg>
-          </button>
-          <ul class="mobile-menu__submenu" aria-hidden="true">
-            <li><a href="/services" class="mobile-menu__sublink" data-route>All Services</a></li>
-            <li><a href="/services/property-sales" class="mobile-menu__sublink" data-route>Sell Property</a></li>
-            <li><a href="/services/property-buying" class="mobile-menu__sublink" data-route>Buy Property</a></li>
-            <li><a href="/services/property-management" class="mobile-menu__sublink" data-route>Property Management</a></li>
-            <li><a href="/services/property-valuation" class="mobile-menu__sublink" data-route>Free Valuation</a></li>
-            <li><a href="/services/investment-consulting" class="mobile-menu__sublink" data-route>Investment Consulting</a></li>
-            <li><a href="/services/legal-assistance" class="mobile-menu__sublink" data-route>Legal Assistance</a></li>
-            <li><a href="/services-directory" class="mobile-menu__sublink" data-route>Home Services Directory</a></li>
-          </ul>
-        </li>
         <li><a href="/projects" class="mobile-menu__link" data-route>Projects</a></li>
-        <li><a href="/developers" class="mobile-menu__link" data-route>Developers</a></li>
         <li class="mobile-menu__dropdown">
           <button class="mobile-menu__link mobile-menu__link--dropdown" aria-expanded="false">
-            Resources
+            More
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="mobile-menu__dropdown-icon" aria-hidden="true">
               <path d="M6 9l6 6 6-6"/>
             </svg>
           </button>
           <ul class="mobile-menu__submenu" aria-hidden="true">
+            <li><a href="/services" class="mobile-menu__sublink" data-route>Our Services</a></li>
+            <li><a href="/developers" class="mobile-menu__sublink" data-route>Developers</a></li>
             <li><a href="/blog" class="mobile-menu__sublink" data-route>Blog</a></li>
             <li><a href="/guides/buying-property-erbil" class="mobile-menu__sublink" data-route>Buyer's Guide</a></li>
-            <li><a href="/guides/real-estate-investment-erbil" class="mobile-menu__sublink" data-route>Investor's Guide</a></li>
-            <li><a href="/guides/renting-in-erbil" class="mobile-menu__sublink" data-route>Renter's Guide</a></li>
-            <li><a href="/market-report/erbil-2025" class="mobile-menu__sublink" data-route>Market Report 2025</a></li>
+            <li><a href="/mortgage-calculator" class="mobile-menu__sublink" data-route>Mortgage Calculator</a></li>
             <li><a href="/faq" class="mobile-menu__sublink" data-route>FAQ</a></li>
           </ul>
         </li>
         <li><a href="/favorites" class="mobile-menu__link" data-route>Favorites</a></li>
+        <li><a href="/wishlist" class="mobile-menu__link" data-route>Wishlist</a></li>
         <li><a href="/list-property" class="mobile-menu__link mobile-menu__link--highlight" data-route>List Property</a></li>
         <li><a href="/about" class="mobile-menu__link" data-route>About</a></li>
         <li><a href="/contact" class="mobile-menu__link" data-route>Contact</a></li>
@@ -727,15 +697,6 @@
   </main>
 
   <!-- Site Footer -->
-  <!-- SEO Content Section - Visually Hidden but Search Engine Visible -->
-  <aside class="seo-content visually-hidden" aria-hidden="true">
-    <h2>Real Estate Erbil - Property Erbil Market Leader</h2>
-    <p>Welcome to Real House, the premier real estate Erbil agency specializing in property Erbil listings. We offer the finest houses for sale Erbil, apartments Erbil Iraq, and luxury homes Kurdistan. As the best real estate agent Erbil, we help clients buy house Erbil with confidence and expertise in the Erbil property market.</p>
-    <h3>Villas Erbil Iraq and Apartments Erbil Iraq</h3>
-    <p>Our extensive portfolio includes villas Erbil Iraq, penthouse Erbil options, and exclusive apartments Erbil Iraq. Whether you seek real estate Kurdistan investments or property investment Kurdistan Iraq, our Erbil property market experts guide you through every step of the buying process.</p>
-    <h3>Buy House Erbil - Property Investment Kurdistan Iraq</h3>
-    <p>Real House provides unparalleled property investment Kurdistan Iraq services. From houses for sale Erbil to premium apartments Erbil Iraq, our real estate Erbil team ensures you find the perfect property Erbil match. Explore penthouse Erbil, villas Erbil Iraq, and luxury homes Kurdistan in the growing real estate Kurdistan market.</p>
-  </aside>
 
   <footer id="footer" class="footer" itemscope itemtype="https://schema.org/WPFooter">
     <div class="footer__container">
@@ -755,7 +716,7 @@
             </span>
             <span class="footer__logo-text" itemprop="name" id="footer-brand-title">Real House</span>
           </div>
-          <p class="footer__tagline" itemprop="description">Real estate Erbil leaders. Property Erbil specialists offering houses for sale Erbil, apartments Erbil Iraq, villas Erbil Iraq, penthouse Erbil, and luxury homes Kurdistan. Best real estate agent Erbil for buy house Erbil and property investment Kurdistan Iraq in the Erbil property market.</p>
+          <p class="footer__tagline" itemprop="description">Your trusted partner for luxury real estate in Erbil, Kurdistan. We help you find the perfect home, apartment, or investment property with personalized service and local expertise.</p>
 
           <!-- Contact Information with address element -->
           <address class="footer__contact" itemscope itemtype="https://schema.org/PostalAddress">
@@ -779,6 +740,7 @@
               <li><a href="/blog" data-route>Real Estate Blog</a></li>
               <li><a href="/about" data-route>About Us</a></li>
               <li><a href="/contact" data-route>Contact Us</a></li>
+              <li><a href="/careers" data-route>Careers</a></li>
               <li><a href="/faq" data-route>FAQ</a></li>
               <li><a href="/sitemap" data-route>Site Map</a></li>
             </ul>
@@ -826,6 +788,7 @@
               <li><a href="/guides/real-estate-investment-erbil" data-route>Investor's Guide</a></li>
               <li><a href="/guides/renting-in-erbil" data-route>Renter's Guide</a></li>
               <li><a href="/market-report/erbil-2025" data-route>Market Report 2025</a></li>
+              <li><a href="/mortgage-calculator" data-route>Mortgage Calculator</a></li>
               <li><a href="/locations" data-route>Erbil Neighborhoods</a></li>
               <li><a href="/gallery" data-route>Photo Gallery</a></li>
             </ul>

@@ -15,8 +15,28 @@ export interface Neighborhood {
   description?: string;
 }
 
-export type PropertyStatus = 'For Sale' | 'For Rent' | 'Off Plan' | 'Ready' | 'Sold';
+export type PropertyStatus = 'For Sale' | 'For Rent' | 'Daily Rent' | 'Off Plan' | 'Ready' | 'Sold';
 export type PropertyBadge = 'Hot' | 'New' | 'Discount' | 'Installment' | 'Exclusive';
+export type FurnishingStatus = 'Fully Furnished' | 'Semi-Furnished' | 'Unfurnished';
+export type ViewType = 'City View' | 'Garden View' | 'Pool View' | 'Street View' | 'Mountain View' | 'Park View';
+
+// Property features that can be filtered
+export const PROPERTY_FEATURES = [
+  'Central AC',
+  'Balcony',
+  'Parking',
+  'Security',
+  'Pool',
+  'Gym',
+  'Garden',
+  'Elevator',
+  'Smart Home',
+  "Maid's Room",
+  'Storage',
+  'Pet Friendly'
+] as const;
+
+export type PropertyFeature = typeof PROPERTY_FEATURES[number];
 
 export interface Property {
   id: string;
@@ -27,6 +47,7 @@ export interface Property {
   price: number; // Price in USD
   priceIQD?: number; // Price in Iraqi Dinar
   rentPrice?: number; // Monthly rent in USD
+  dailyRentPrice?: number; // Daily rent in USD (for daily rentals)
   location: {
     address: string;
     city: string;
@@ -45,19 +66,25 @@ export interface Property {
     yearBuilt?: number;
     floor?: number;
     totalFloors?: number;
+    numberOfFloors?: number; // For villas/buildings - how many floors the property has
   };
   images: string[];
   description: string;
   features: string[];
+  propertyFeatures?: PropertyFeature[]; // Structured features for filtering
+  furnishing?: FurnishingStatus;
+  viewType?: ViewType;
   isFeatured: boolean;
   isNew: boolean;
   status: PropertyStatus;
   badges: PropertyBadge[];
   virtualTourUrl?: string;
+  videoTourUrl?: string; // YouTube video tour URL
   floorPlanUrl?: string;
   lotSize?: number;
   neighborhood?: Neighborhood;
   agent: Agent;
+  agents?: Agent[]; // Multiple agents for commercial properties
   projectName?: string; // For off-plan properties
   completionDate?: string; // For off-plan properties
   paymentPlan?: string; // For installment properties
@@ -79,6 +106,12 @@ export const agents: Agent[] = [
     phone: '+964 751 441 5003',
     email: 'info@realhouseiq.com',
     image: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&q=80&fm=webp'
+  },
+  {
+    name: 'Tareq',
+    phone: '+964 750 445 5822',
+    email: 'info@realhouseiq.com',
+    image: 'https://images.unsplash.com/photo-1560250097-0b93528c311a?w=400&q=80&fm=webp'
   }
 ];
 
@@ -141,6 +174,7 @@ Available for sale at $100,000 or for rent - contact us for rental pricing.`,
     isFeatured: true,
     isNew: true,
     virtualTourUrl: 'https://my.matterport.com/show/?m=SxQL3iGyvAk',
+    videoTourUrl: 'https://www.youtube.com/watch?v=dQw4w9WgXcQ',
     floorPlanUrl: 'https://images.unsplash.com/photo-1580219015423-3e2b6a92f9c5?w=1200&q=80&fm=webp',
     neighborhood: {
       name: 'Gulan',
@@ -198,6 +232,7 @@ Available for sale at $100,000 or for rent - contact us for rental pricing.`,
     isFeatured: true,
     isNew: true,
     virtualTourUrl: 'https://my.matterport.com/show/?m=SxQL3iGyvAk',
+    videoTourUrl: 'https://www.youtube.com/watch?v=ScMzIvxBSi4',
     floorPlanUrl: 'https://images.unsplash.com/photo-1580219015423-3e2b6a92f9c5?w=1200&q=80&fm=webp',
     neighborhood: {
       name: 'Gulan',
@@ -256,6 +291,7 @@ Available for sale at $100,000 or for rent - contact us for rental pricing.`,
     isFeatured: true,
     isNew: true,
     virtualTourUrl: 'https://my.matterport.com/show/?m=SxQL3iGyvAk',
+    videoTourUrl: 'https://www.youtube.com/watch?v=LXb3EKWsInQ',
     floorPlanUrl: 'https://images.unsplash.com/photo-1580219015423-3e2b6a92f9c5?w=1200&q=80&fm=webp',
     neighborhood: {
       name: 'Gulan',
@@ -315,7 +351,8 @@ Contact us for rental pricing and available lease terms.`,
       walkScore: 90,
       description: 'High-traffic commercial area with excellent visibility and access.'
     },
-    agent: agents[1]
+    agent: agents[2],
+    agents: [agents[0], agents[1], agents[2]]
   },
   {
     id: 'queen-towers-store-2',
@@ -365,7 +402,8 @@ Contact us for rental pricing and available lease terms.`,
       walkScore: 90,
       description: 'High-traffic commercial area with excellent visibility and access.'
     },
-    agent: agents[1]
+    agent: agents[2],
+    agents: [agents[0], agents[1], agents[2]]
   },
   {
     id: 'queen-towers-store-3',
@@ -416,7 +454,8 @@ Contact us for rental pricing and available lease terms.`,
       walkScore: 90,
       description: 'High-traffic commercial area with excellent visibility and access.'
     },
-    agent: agents[1]
+    agent: agents[2],
+    agents: [agents[0], agents[1], agents[2]]
   },
   {
     id: 'queen-towers-store-4',
@@ -466,7 +505,8 @@ Contact us for rental pricing and available lease terms.`,
       walkScore: 90,
       description: 'High-traffic commercial area with excellent visibility and access.'
     },
-    agent: agents[1]
+    agent: agents[2],
+    agents: [agents[0], agents[1], agents[2]]
   }
 ];
 
@@ -536,8 +576,10 @@ export function filterProperties(options: {
 }
 
 export const propertyTypes = ['Villa', 'Apartment', 'Penthouse', 'Townhouse', 'Land', 'Commercial', 'Duplex'] as const;
-export const propertyStatuses = ['For Sale', 'For Rent', 'Off Plan', 'Ready', 'Sold'] as const;
+export const propertyStatuses = ['For Sale', 'For Rent', 'Daily Rent', 'Off Plan', 'Ready', 'Sold'] as const;
 export const propertyBadges = ['Hot', 'New', 'Discount', 'Installment', 'Exclusive'] as const;
+export const furnishingStatuses = ['Fully Furnished', 'Semi-Furnished', 'Unfurnished'] as const;
+export const viewTypes = ['City View', 'Garden View', 'Pool View', 'Street View', 'Mountain View', 'Park View'] as const;
 export const districts = [
   'Gulan',
   'Dream City',
