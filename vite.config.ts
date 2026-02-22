@@ -43,9 +43,14 @@ export default defineConfig({
     // Rollup options for optimized code splitting
     rollupOptions: {
       output: {
-        // Let Vite handle chunking automatically for optimal bundle splitting
-        // Manual chunks can cause issues with small bundles creating HTTP overhead
-        // Vite's default behavior with tree-shaking produces efficient bundles
+        // Manual chunks for better caching and smaller initial bundle
+        manualChunks: {
+          // Core vendor libraries (cached separately)
+          'vendor-gsap': ['gsap'],
+          'vendor-lenis': ['lenis'],
+          // Leaflet is heavy - load separately
+          'vendor-leaflet': ['leaflet']
+        },
 
         // Asset file naming with content hash for cache busting
         assetFileNames: (assetInfo) => {

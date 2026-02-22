@@ -33,12 +33,7 @@
   <!-- Canonical URL (no trailing slash for consistency) -->
   <link rel="canonical" href="https://realhouseiq.com" />
 
-  <!-- Alternate Language Links (no trailing slashes) -->
-  <!-- Note: These are dynamically updated by the i18n system based on current page -->
-  <link rel="alternate" hreflang="en" href="https://realhouseiq.com" />
-  <link rel="alternate" hreflang="ar" href="https://realhouseiq.com/ar" />
-  <link rel="alternate" hreflang="ku" href="https://realhouseiq.com/ckb" />
-  <link rel="alternate" hreflang="x-default" href="https://realhouseiq.com" />
+  <!-- Language is English only (no alternate language versions) -->
 
   <!-- ═══════════════════════════════════════════════════════════════════════════ -->
   <!-- Theme Color & Mobile - Mobile-First Indexing Optimized -->
@@ -180,32 +175,13 @@
   <link rel="me" href="https://youtube.com/@realhouseiq" />
 
   <!-- ═══════════════════════════════════════════════════════════════════════════ -->
-  <!-- Resource Hints for Core Web Vitals (LCP, FID, CLS) Optimization -->
+  <!-- Resource Hints - Limited to 4 most critical connections -->
   <!-- ═══════════════════════════════════════════════════════════════════════════ -->
 
-  <!-- DNS Prefetch - Reduces DNS lookup time for external domains -->
-  <link rel="dns-prefetch" href="https://fonts.googleapis.com" />
-  <link rel="dns-prefetch" href="https://fonts.gstatic.com" />
-  <link rel="dns-prefetch" href="https://images.unsplash.com" />
-  <link rel="dns-prefetch" href="https://www.google-analytics.com" />
-  <link rel="dns-prefetch" href="https://www.googletagmanager.com" />
-
-  <!-- Preconnect - Establishes early connection to critical origins -->
+  <!-- Preconnect only to the 3 most critical origins (fonts + images) -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link rel="preconnect" href="https://images.unsplash.com" crossorigin />
-
-  <!-- Preload Critical Fonts (woff2 for best compression) - Improves LCP -->
-  <link rel="preload" href="https://fonts.gstatic.com/s/cormorant/v21/H4c2BXOCl9bbnla_nHIiRPmvgoq5.woff2" as="font" type="font/woff2" crossorigin fetchpriority="high" />
-  <link rel="preload" href="https://fonts.gstatic.com/s/inter/v18/UcCO3FwrK3iLTeHuS_nVMrMxCp50SjIw2boKoduKmMEVuLyfAZ9hjQ.woff2" as="font" type="font/woff2" crossorigin fetchpriority="high" />
-
-  <!-- Preload Critical Assets -->
-  <link rel="preload" href="/favicon.svg" as="image" type="image/svg+xml" />
-
-  <!-- Prefetch Likely Next Pages - Enables instant navigation -->
-  <link rel="prefetch" href="/properties" as="document" />
-  <link rel="prefetch" href="/about" as="document" />
-  <link rel="prefetch" href="/contact" as="document" />
 
   <!-- Non-blocking Font Stylesheet Loading - Improves FID -->
   <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Cormorant:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Inter:wght@300;400;500;600&display=swap" />
