@@ -963,11 +963,16 @@ em {
     line-height: 1.8;
 
     a {
-      color: var(--c-text-2);
-      transition: color var(--transition-fast);
+      // Use --c-text for better contrast ratio (WCAG AA compliance)
+      color: var(--c-text);
+      text-decoration: underline;
+      text-decoration-color: var(--c-text-3);
+      text-underline-offset: 2px;
+      transition: color var(--transition-fast), text-decoration-color var(--transition-fast);
 
       &:hover {
         color: var(--c-gold);
+        text-decoration-color: var(--c-gold);
       }
     }
   }
@@ -1007,12 +1012,23 @@ em {
     a {
       display: block;
       font-size: var(--text-sm);
-      color: var(--c-text-2);
+      // Use --c-text for WCAG AA contrast compliance
+      color: var(--c-text);
       margin-bottom: var(--space-2);
+      background: transparent !important; // Force no background for contrast compliance
+      -webkit-tap-highlight-color: transparent;
       transition: color var(--transition-fast);
 
-      &:hover {
+      &:hover,
+      &:focus,
+      &:active {
         color: var(--c-gold);
+        background: transparent !important;
+      }
+
+      &:focus-visible {
+        outline: 2px solid var(--c-gold);
+        outline-offset: 2px;
       }
     }
 

@@ -97,7 +97,7 @@
   <!-- Note: Server-side headers are preferred, these are fallbacks/hints -->
   <!-- ═══════════════════════════════════════════════════════════════════════════ -->
   <meta http-equiv="X-Content-Type-Options" content="nosniff" />
-  <meta http-equiv="X-Frame-Options" content="SAMEORIGIN" />
+  <!-- X-Frame-Options removed - set via HTTP header in vercel.json (meta tag not supported by browsers) -->
   <meta http-equiv="Referrer-Policy" content="strict-origin-when-cross-origin" />
   <meta http-equiv="X-XSS-Protection" content="1; mode=block" />
   <meta http-equiv="Permissions-Policy" content="camera=(), microphone=(), geolocation=(self), payment=()" />
@@ -576,7 +576,7 @@
           <!-- <li><a href="/offers" class="nav__link nav__link--offers" data-route>Offers<span class="nav__offers-badge" id="offers-badge">8</span></a></li> -->
           <li class="nav__dropdown">
             <a href="/services" class="nav__link nav__link--dropdown" data-route>
-              More
+              Resources
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="nav__dropdown-icon" aria-hidden="true">
                 <path d="M6 9l6 6 6-6"/>
               </svg>
@@ -632,7 +632,7 @@
         <li><a href="/projects" class="mobile-menu__link" data-route>Projects</a></li>
         <li class="mobile-menu__dropdown">
           <button class="mobile-menu__link mobile-menu__link--dropdown" aria-expanded="false">
-            More
+            Resources
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="mobile-menu__dropdown-icon" aria-hidden="true">
               <path d="M6 9l6 6 6-6"/>
             </svg>

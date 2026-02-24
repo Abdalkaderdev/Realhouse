@@ -350,16 +350,28 @@
     align-items: center;
     gap: var(--space-2);
     font-size: var(--text-sm);
-    color: var(--c-text-2);
+    // Use --c-text for WCAG AA contrast compliance
+    color: var(--c-text);
+    background: transparent !important; // Force no background for contrast compliance
+    -webkit-tap-highlight-color: transparent;
     transition: color var(--transition-fast);
 
-    &:hover {
+    &:hover,
+    &:focus,
+    &:active {
       color: var(--c-gold);
+      background: transparent !important;
+    }
+
+    &:focus-visible {
+      outline: 2px solid var(--c-gold);
+      outline-offset: 2px;
     }
 
     svg {
       width: 16px;
       height: 16px;
+      color: var(--c-text-2);
     }
   }
 }
