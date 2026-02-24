@@ -391,7 +391,7 @@
     align-items: center;
     justify-content: center;
     background: rgba(201, 168, 76, 0.1);
-    border-radius: var(--radius-full);
+    border-radius: var(--radius-pill);
 
     svg {
       width: 32px;
@@ -695,7 +695,7 @@
     align-items: center;
     justify-content: center;
     background: linear-gradient(135deg, var(--c-gold-dark), var(--c-gold));
-    border-radius: var(--radius-full);
+    border-radius: var(--radius-pill);
 
     svg {
       width: 32px;
@@ -1065,7 +1065,7 @@
   &__avatar {
     width: 48px;
     height: 48px;
-    border-radius: var(--radius-full);
+    border-radius: var(--radius-pill);
     object-fit: cover;
   }
 

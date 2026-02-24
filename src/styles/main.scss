@@ -4226,7 +4226,7 @@ em {
     color: var(--c-text-2);
     background: var(--c-surface);
     border: 1px solid var(--c-glass-border);
-    border-radius: var(--radius-full);
+    border-radius: var(--radius-pill);
     text-decoration: none;
     white-space: nowrap;
     transition: all var(--transition-fast);
@@ -4248,7 +4248,7 @@ em {
     padding: var(--space-3) var(--space-6);
     background: linear-gradient(135deg, rgba(212, 175, 55, 0.1), rgba(212, 175, 55, 0.05));
     border: 1px solid rgba(212, 175, 55, 0.3);
-    border-radius: var(--radius-full);
+    border-radius: var(--radius-pill);
     width: fit-content;
     margin-left: auto;
     margin-right: auto;
@@ -4771,7 +4771,7 @@ em {
     font-size: clamp(6rem, 15vw, 12rem);
     font-weight: 700;
     line-height: 1;
-    background: linear-gradient(135deg, var(--c-accent), var(--c-accent-light));
+    background: linear-gradient(135deg, var(--c-gold), var(--c-gold-light));
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
@@ -4830,7 +4830,7 @@ em {
     transition: border-color 0.3s, box-shadow 0.3s;
 
     &:focus-within {
-      border-color: var(--c-accent);
+      border-color: var(--c-gold);
       box-shadow: 0 0 0 3px rgba(201, 168, 76, 0.15);
     }
   }
@@ -4854,7 +4854,7 @@ em {
     align-items: center;
     justify-content: center;
     width: 52px;
-    background: var(--c-accent);
+    background: var(--c-gold);
     border: none;
     cursor: pointer;
     transition: background 0.3s;
@@ -4866,7 +4866,7 @@ em {
     }
 
     &:hover {
-      background: var(--c-accent-light);
+      background: var(--c-gold-light);
     }
   }
 
@@ -4945,12 +4945,12 @@ em {
     svg {
       width: 16px;
       height: 16px;
-      color: var(--c-accent);
+      color: var(--c-gold);
       flex-shrink: 0;
     }
 
     &:hover {
-      background: var(--c-accent);
+      background: var(--c-gold);
       color: var(--c-bg);
 
       svg {
@@ -4993,13 +4993,13 @@ em {
     text-align: center;
 
     a {
-      color: var(--c-accent);
+      color: var(--c-gold);
       text-decoration: underline;
       text-underline-offset: 3px;
       transition: color 0.3s;
 
       &:hover {
-        color: var(--c-accent-light);
+        color: var(--c-gold-light);
       }
     }
   }
@@ -5041,7 +5041,7 @@ em {
           transition: color 0.3s;
 
           &:hover {
-            color: var(--c-accent);
+            color: var(--c-gold);
           }
         }
 
@@ -5090,7 +5090,7 @@ em {
   &__line {
     height: 4px;
     width: 100px;
-    background: linear-gradient(90deg, var(--c-accent), var(--c-accent-light));
+    background: linear-gradient(90deg, var(--c-gold), var(--c-gold-light));
     border-radius: 2px;
     margin: var(--space-6) auto;
   }
@@ -5142,7 +5142,7 @@ em {
     }
 
     &:focus {
-      border-color: var(--c-accent);
+      border-color: var(--c-gold);
       box-shadow: 0 0 0 3px rgba(201, 168, 76, 0.15);
     }
   }
@@ -5163,15 +5163,15 @@ em {
 
   &__suggest-link {
     font-size: var(--text-sm);
-    color: var(--c-accent);
+    color: var(--c-gold);
     text-decoration: none;
     padding: var(--space-1) var(--space-3);
     background: var(--c-surface);
-    border-radius: var(--radius-full);
+    border-radius: var(--radius-pill);
     transition: all 0.3s;
 
     &:hover {
-      background: var(--c-accent);
+      background: var(--c-gold);
       color: var(--c-bg);
     }
   }
@@ -5209,7 +5209,7 @@ em {
     transition: all 0.3s;
 
     &:hover {
-      border-color: var(--c-accent);
+      border-color: var(--c-gold);
       transform: translateY(-4px);
       box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
     }
@@ -5221,7 +5221,7 @@ em {
     display: flex;
     align-items: center;
     justify-content: center;
-    background: linear-gradient(135deg, var(--c-accent), var(--c-accent-light));
+    background: linear-gradient(135deg, var(--c-gold), var(--c-gold-light));
     border-radius: var(--radius-md);
 
     svg {
@@ -5269,12 +5269,12 @@ em {
     svg {
       width: 20px;
       height: 20px;
-      color: var(--c-accent);
+      color: var(--c-gold);
     }
 
     &:hover {
-      border-color: var(--c-accent);
-      background: var(--c-accent);
+      border-color: var(--c-gold);
+      background: var(--c-gold);
       color: var(--c-bg);
 
       svg {

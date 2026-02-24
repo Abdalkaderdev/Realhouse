@@ -6,7 +6,7 @@
 .gallery-page {
   padding: 8rem 0 4rem;
   min-height: 100vh;
-  background: var(--color-bg);
+  background: var(--c-bg);
 
   &__header {
     text-align: center;
@@ -17,18 +17,18 @@
     font-family: var(--font-serif);
     font-size: clamp(2.5rem, 5vw, 4rem);
     font-weight: 500;
-    color: var(--color-text);
+    color: var(--c-text);
     margin-bottom: 1rem;
 
     em {
-      color: var(--color-gold);
+      color: var(--c-gold);
       font-style: normal;
     }
   }
 
   &__subtitle {
     font-size: 1.125rem;
-    color: var(--color-text-muted);
+    color: var(--c-text-2);
     max-width: 600px;
     margin: 0 auto;
     line-height: 1.7;
@@ -45,23 +45,23 @@
   &__filter-btn {
     padding: 0.75rem 1.5rem;
     background: transparent;
-    border: 1px solid var(--color-border);
+    border: 1px solid var(--c-border);
     border-radius: 2rem;
-    color: var(--color-text-muted);
+    color: var(--c-text-2);
     font-size: 0.9rem;
     font-weight: 500;
     cursor: pointer;
     transition: all 0.3s ease;
 
     &:hover {
-      border-color: var(--color-gold);
-      color: var(--color-gold);
+      border-color: var(--c-gold);
+      color: var(--c-gold);
     }
 
     &.active {
-      background: var(--color-gold);
-      border-color: var(--color-gold);
-      color: var(--color-bg);
+      background: var(--c-gold);
+      border-color: var(--c-gold);
+      color: var(--c-bg);
     }
   }
 
@@ -87,12 +87,12 @@
     h3 {
       font-family: var(--font-serif);
       font-size: 1.5rem;
-      color: var(--color-text);
+      color: var(--c-text);
       margin-bottom: 0.5rem;
     }
 
     p {
-      color: var(--color-text-muted);
+      color: var(--c-text-2);
     }
   }
 }
@@ -102,7 +102,7 @@
   position: relative;
   border-radius: 1rem;
   overflow: hidden;
-  background: var(--color-surface);
+  background: var(--c-surface);
   cursor: pointer;
   transition: transform 0.3s ease, box-shadow 0.3s ease;
 
@@ -121,7 +121,7 @@
   }
 
   &:focus-visible {
-    outline: 2px solid var(--color-gold);
+    outline: 2px solid var(--c-gold);
     outline-offset: 2px;
   }
 
@@ -172,26 +172,26 @@
   &__view-btn {
     align-self: flex-start;
     padding: 0.5rem 1rem;
-    background: var(--color-gold);
+    background: var(--c-gold);
     border: none;
     border-radius: 0.5rem;
-    color: var(--color-bg);
+    color: var(--c-bg);
     font-size: 0.875rem;
     font-weight: 500;
     cursor: pointer;
     transition: background 0.3s ease;
 
     &:hover {
-      background: var(--color-gold-dark);
+      background: var(--c-gold-dark);
     }
   }
 
   &__caption {
     padding: 1rem;
     font-size: 0.875rem;
-    color: var(--color-text-muted);
+    color: var(--c-text-2);
     line-height: 1.5;
-    border-top: 1px solid var(--color-border);
+    border-top: 1px solid var(--c-border);
   }
 }
 
@@ -248,9 +248,9 @@
     justify-content: center;
 
     &:hover {
-      background: var(--color-gold);
-      border-color: var(--color-gold);
-      color: var(--color-bg);
+      background: var(--c-gold);
+      border-color: var(--c-gold);
+      color: var(--c-bg);
     }
   }
 
@@ -307,9 +307,9 @@
     justify-content: center;
 
     &:hover {
-      background: var(--color-gold);
-      border-color: var(--color-gold);
-      color: var(--color-bg);
+      background: var(--c-gold);
+      border-color: var(--c-gold);
+      color: var(--c-bg);
     }
 
     &--prev {
