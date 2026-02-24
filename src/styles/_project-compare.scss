@@ -468,10 +468,13 @@
     display: grid;
     grid-template-columns: repeat(var(--compare-count, 2), 1fr);
     gap: var(--space-6);
+    align-items: stretch;
+    margin-bottom: var(--space-8);
 
     @media (max-width: 768px) {
       grid-template-columns: 1fr;
       gap: var(--space-4);
+      margin-bottom: var(--space-6);
     }
   }
 }
@@ -480,9 +483,12 @@
 .project-compare-card {
   background: var(--c-surface);
   border-radius: var(--radius-lg);
-  border: 1px solid var(--c-glass-border);
+  border: 2px solid var(--c-glass-border);
   overflow: hidden;
   transition: all 0.3s var(--ease-out);
+  display: flex;
+  flex-direction: column;
+  height: 100%;
 
   &:hover {
     border-color: var(--c-gold);
@@ -493,6 +499,7 @@
     position: relative;
     aspect-ratio: 16 / 10;
     overflow: hidden;
+    flex-shrink: 0;
 
     img {
       width: 100%;
@@ -595,26 +602,33 @@
 .project-compare-table {
   background: var(--c-surface);
   border-radius: var(--radius-lg);
-  border: 1px solid var(--c-glass-border);
+  border: 2px solid var(--c-glass-border);
   overflow: hidden;
+  box-shadow: var(--shadow-sm);
 }
 
 .project-compare-section {
-  border-bottom: 1px solid var(--c-glass-border);
+  border-bottom: 2px solid var(--c-glass-border);
 
   &:last-child {
     border-bottom: none;
   }
 
   &__title {
-    font-size: var(--text-base);
-    font-weight: 600;
+    font-size: var(--text-sm);
+    font-weight: 700;
     color: var(--c-gold);
     padding: var(--space-4) var(--space-6);
     background: var(--c-surface-2);
     margin: 0;
     text-transform: uppercase;
-    letter-spacing: 0.05em;
+    letter-spacing: 0.08em;
+    border-bottom: 1px solid var(--c-glass-border);
+
+    @media (max-width: 768px) {
+      padding: var(--space-3) var(--space-4);
+      font-size: var(--text-xs);
+    }
   }
 }
 
@@ -667,6 +681,8 @@
     font-size: var(--text-base);
     border-left: 1px solid var(--c-glass-border);
     position: relative;
+    min-height: 60px;
+    background: var(--c-bg);
 
     &:first-child {
       border-left: none;
@@ -675,10 +691,12 @@
     @media (max-width: 768px) {
       padding: var(--space-3) var(--space-2);
       font-size: var(--text-sm);
+      min-height: 50px;
     }
 
     &--best {
-      background: rgba(82, 201, 138, 0.1);
+      background: rgba(82, 201, 138, 0.15);
+      border-left-color: var(--c-success);
 
       .project-compare-indicator {
         background: var(--c-success);
@@ -741,15 +759,24 @@
 
 .project-compare-indicator {
   position: absolute;
-  top: var(--space-1);
-  right: var(--space-1);
-  padding: 2px var(--space-2);
+  top: var(--space-2);
+  right: var(--space-2);
+  padding: 4px var(--space-3);
   border-radius: var(--radius-pill);
   font-size: 10px;
-  font-weight: 600;
+  font-weight: 700;
   text-transform: uppercase;
+  letter-spacing: 0.03em;
   color: white;
-  background: var(--c-gold);
+  background: var(--c-success);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+
+  @media (max-width: 768px) {
+    padding: 2px var(--space-2);
+    font-size: 9px;
+    top: var(--space-1);
+    right: var(--space-1);
+  }
 }
 
 // ─── Responsive Adjustments ───────────────────────────────────────────────────
