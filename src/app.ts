@@ -306,8 +306,19 @@ export class App {
       app.removeChild(app.firstChild);
     }
 
-    // Render new content using DOM
-    const content = this.getPageContent(cleanPath);
+    // Render new content using DOM with error boundary
+    let content: DocumentFragment;
+    try {
+      content = this.getPageContent(cleanPath);
+    } catch (error) {
+      // Log the error for debugging
+      const errorMessage = error instanceof Error ? error.message : String(error);
+      logError('js-error', `Page rendering error at ${cleanPath}: ${errorMessage}`);
+      console.error('Page rendering error:', error);
+      // Render error page
+      content = renderEnhanced404Page();
+      setup404PageSEO();
+    }
     app.appendChild(content);
 
     this.currentPage = cleanPath;

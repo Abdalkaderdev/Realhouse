@@ -37,6 +37,7 @@ let currentGalleryCategory: GalleryCategory = 'all';
 let lightboxOpen = false;
 let currentLightboxIndex = 0;
 let filteredImages: GalleryImage[] = [];
+let previouslyFocusedElement: HTMLElement | null = null;
 
 // ─── Gallery Card Component ───────────────────────────────────────────────
 function createGalleryCard(image: GalleryImage, index: number): HTMLElement {
@@ -107,6 +108,9 @@ function createGalleryCard(image: GalleryImage, index: number): HTMLElement {
 
 // ─── Lightbox Component ───────────────────────────────────────────────────
 function openLightbox(index: number): void {
+  // Store previously focused element for restoration on close
+  previouslyFocusedElement = document.activeElement as HTMLElement;
+
   currentLightboxIndex = index;
   lightboxOpen = true;
 
@@ -117,7 +121,7 @@ function openLightbox(index: number): void {
     lightbox.id = 'gallery-lightbox';
     lightbox.setAttribute('role', 'dialog');
     lightbox.setAttribute('aria-modal', 'true');
-    lightbox.setAttribute('aria-label', 'Image lightbox');
+    lightbox.setAttribute('aria-labelledby', 'lightbox-title');
 
     // Backdrop
     const backdrop = createElement('div', 'gallery-lightbox__backdrop');
@@ -172,13 +176,19 @@ function openLightbox(index: number): void {
     lightbox.appendChild(content);
     document.body.appendChild(lightbox);
 
-    // Keyboard navigation
+    // Keyboard navigation and focus trap
     document.addEventListener('keydown', handleLightboxKeydown);
   }
 
   updateLightboxContent();
   lightbox.classList.add('active');
   document.body.style.overflow = 'hidden';
+
+  // Focus the close button for accessibility
+  const closeBtn = lightbox.querySelector('.gallery-lightbox__close') as HTMLElement;
+  if (closeBtn) {
+    setTimeout(() => closeBtn.focus(), 100);
+  }
 }
 
 function closeLightbox(): void {
@@ -187,6 +197,12 @@ function closeLightbox(): void {
     lightbox.classList.remove('active');
     document.body.style.overflow = '';
     lightboxOpen = false;
+
+    // Restore focus to previously focused element
+    if (previouslyFocusedElement && typeof previouslyFocusedElement.focus === 'function') {
+      previouslyFocusedElement.focus();
+    }
+    previouslyFocusedElement = null;
   }
 }
 
@@ -232,6 +248,43 @@ function handleLightboxKeydown(e: KeyboardEvent): void {
     case 'ArrowRight':
       navigateLightbox(1);
       break;
+    case 'Tab':
+      handleFocusTrap(e);
+      break;
+  }
+}
+
+/**
+ * Handle focus trap within the lightbox
+ * Prevents focus from escaping to elements outside the dialog
+ */
+function handleFocusTrap(e: KeyboardEvent): void {
+  const lightbox = document.getElementById('gallery-lightbox');
+  if (!lightbox) return;
+
+  // Get all focusable elements within the lightbox
+  const focusableElements = lightbox.querySelectorAll<HTMLElement>(
+    'button:not([disabled]), [href], input:not([disabled]), select:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex="-1"])'
+  );
+
+  if (focusableElements.length === 0) return;
+
+  const firstElement = focusableElements[0];
+  const lastElement = focusableElements[focusableElements.length - 1];
+  const activeElement = document.activeElement;
+
+  if (e.shiftKey) {
+    // Shift+Tab: moving backwards
+    if (activeElement === firstElement || !lightbox.contains(activeElement)) {
+      e.preventDefault();
+      lastElement.focus();
+    }
+  } else {
+    // Tab: moving forwards
+    if (activeElement === lastElement || !lightbox.contains(activeElement)) {
+      e.preventDefault();
+      firstElement.focus();
+    }
   }
 }
 

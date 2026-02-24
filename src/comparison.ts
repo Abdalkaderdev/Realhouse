@@ -48,6 +48,41 @@ export function isInCompare(id: string): boolean {
   return getCompareIds().includes(id);
 }
 
+/**
+ * Toggle compare with loading state support
+ * Provides visual feedback during the operation
+ */
+export function toggleCompareWithLoading(
+  propertyId: string,
+  button: HTMLElement
+): boolean {
+  // Set loading state
+  button.classList.add('loading');
+  button.setAttribute('aria-busy', 'true');
+
+  let success = true;
+  let newState: boolean;
+
+  if (isInCompare(propertyId)) {
+    removeFromCompare(propertyId);
+    newState = false;
+  } else {
+    success = addToCompare(propertyId);
+    newState = success;
+  }
+
+  // Update button aria-pressed
+  button.setAttribute('aria-pressed', newState ? 'true' : 'false');
+
+  // Remove loading state after a brief delay for visual feedback
+  setTimeout(() => {
+    button.classList.remove('loading');
+    button.setAttribute('aria-busy', 'false');
+  }, 150);
+
+  return success;
+}
+
 export function clearCompare(): void {
   setCompareIds([]);
 }

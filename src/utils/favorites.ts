@@ -58,6 +58,35 @@ export function toggleFavorite(propertyId: string): boolean {
 }
 
 /**
+ * Toggle favorite with loading state support
+ * Provides visual feedback during the operation
+ */
+export function toggleFavoriteWithLoading(
+  propertyId: string,
+  button: HTMLElement
+): boolean {
+  // Set loading state
+  button.classList.add('loading');
+  button.setAttribute('aria-busy', 'true');
+  button.setAttribute('disabled', '');
+
+  // Perform the toggle (synchronous but we add visual feedback)
+  const newState = toggleFavorite(propertyId);
+
+  // Update button state
+  updateFavoriteButton(button, newState);
+
+  // Remove loading state after a brief delay for visual feedback
+  setTimeout(() => {
+    button.classList.remove('loading');
+    button.setAttribute('aria-busy', 'false');
+    button.removeAttribute('disabled');
+  }, 150);
+
+  return newState;
+}
+
+/**
  * Check if a property is in favorites
  */
 export function isFavorite(propertyId: string): boolean {
@@ -141,9 +170,11 @@ export function updateFavoriteButton(button: HTMLElement, isFav: boolean): void 
   if (isFav) {
     button.classList.add('active');
     button.setAttribute('aria-label', 'Remove from favorites');
+    button.setAttribute('aria-pressed', 'true');
   } else {
     button.classList.remove('active');
     button.setAttribute('aria-label', 'Add to favorites');
+    button.setAttribute('aria-pressed', 'false');
   }
 }
 

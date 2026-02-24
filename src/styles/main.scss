@@ -1409,6 +1409,27 @@ em {
       animation: heartPop 0.3s var(--ease-out);
     }
 
+    // Loading state
+    &.loading {
+      pointer-events: none;
+      opacity: 0.7;
+
+      &::after {
+        content: '';
+        position: absolute;
+        width: 16px;
+        height: 16px;
+        border: 2px solid transparent;
+        border-top-color: var(--c-gold);
+        border-radius: 50%;
+        animation: buttonSpinner 0.6s linear infinite;
+      }
+
+      svg {
+        opacity: 0.3;
+      }
+    }
+
     svg {
       width: 18px;
       height: 18px;
@@ -5524,6 +5545,30 @@ em {
     cursor: not-allowed;
     pointer-events: none;
   }
+
+  // Loading state
+  &.loading {
+    pointer-events: none;
+    opacity: 0.7;
+
+    .compare-checkbox::after {
+      content: '';
+      border: none;
+      width: 12px;
+      height: 12px;
+      border: 2px solid transparent;
+      border-top-color: var(--c-gold);
+      border-radius: 50%;
+      animation: buttonSpinner 0.6s linear infinite;
+      opacity: 1;
+    }
+  }
+}
+
+// Button loading spinner animation
+@keyframes buttonSpinner {
+  0% { transform: translate(-50%, -50%) rotate(0deg); }
+  100% { transform: translate(-50%, -50%) rotate(360deg); }
 }
 
 .compare-checkbox {
