@@ -57,9 +57,12 @@
   --c-gold:         #C9A84C;
   --c-gold-light:   #E8C97A;
   --c-gold-dark:    #9A7A2E;
+  --c-gold-rgb:     201, 168, 76;
   --c-text:         #F0EDE8;
   --c-text-2:       #B8B9C6;
   --c-text-3:       #8E8F9E; // Improved contrast ratio for WCAG AA
+  --c-text-rgb:     240, 237, 232;
+  --c-surface-rgb:  18, 18, 26;
 
   --c-glass-bg:     rgba(255, 255, 255, 0.04);
   --c-glass-border: rgba(255, 255, 255, 0.08);
@@ -159,6 +162,8 @@
   --c-text:         #1A1A2E;
   --c-text-2:       #4A4A5E;
   --c-text-3:       #5A5A6E; // Darkened for WCAG AA contrast (4.5:1) on light backgrounds
+  --c-text-rgb:     26, 26, 46;
+  --c-surface-rgb:  255, 255, 255;
   --c-glass-bg:     rgba(0, 0, 0, 0.03);
   --c-glass-border: rgba(0, 0, 0, 0.08);
   --c-glass-shine:  rgba(255, 255, 255, 0.6);
