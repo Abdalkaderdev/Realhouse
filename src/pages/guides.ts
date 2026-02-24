@@ -557,3 +557,185 @@ export function setupGuidePageSEO(guide: Guide): void {
     document.head.appendChild(faqSchema);
   }
 }
+
+// =============================================================================
+// GUIDES LISTING PAGE (INDEX)
+// =============================================================================
+
+export function renderGuidesListingPage(): DocumentFragment {
+  const fragment = document.createDocumentFragment();
+
+  const page = createElement('div', 'guides-listing-page');
+
+  // Hero Section
+  const hero = createElement('section', 'guides-listing__hero');
+  const heroOverlay = createElement('div', 'guides-listing__hero-overlay');
+  hero.appendChild(heroOverlay);
+
+  const heroContainer = createElement('div', 'container');
+  const heroContent = createElement('div', 'guides-listing__hero-content');
+
+  // Breadcrumbs
+  const breadcrumbItems: BreadcrumbItem[] = [
+    { name: 'Home', url: '/' },
+    { name: 'Guides', url: '/guides' }
+  ];
+  heroContent.appendChild(createBreadcrumbs(breadcrumbItems));
+  injectBreadcrumbSchema(breadcrumbItems);
+
+  const heroTitle = createElement('h1', 'guides-listing__hero-title', 'Property Guides & Resources');
+  heroContent.appendChild(heroTitle);
+
+  const heroSubtitle = createElement('p', 'guides-listing__hero-subtitle', 'Expert advice for buying, investing, and renting property in Erbil, Kurdistan. Comprehensive guides to help you make informed decisions.');
+  heroContent.appendChild(heroSubtitle);
+
+  heroContainer.appendChild(heroContent);
+  hero.appendChild(heroContainer);
+  page.appendChild(hero);
+
+  // Guides Grid Section
+  const guidesSection = createElement('section', 'guides-listing__section');
+  const guidesContainer = createElement('div', 'container');
+
+  const guidesGrid = createElement('div', 'guides-listing__grid');
+
+  allGuides.forEach(guide => {
+    const card = createElement('a', 'guides-listing__card');
+    card.href = `/guides/${guide.slug}`;
+    card.setAttribute('data-route', '');
+
+    // Card Icon
+    const cardIcon = createElement('div', 'guides-listing__card-icon');
+    let iconSvg: SVGSVGElement;
+    if (guide.slug.includes('buying')) {
+      iconSvg = createSVG(['M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6']);
+    } else if (guide.slug.includes('invest')) {
+      iconSvg = createSVG(['M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z']);
+    } else {
+      iconSvg = createSVG(['M8 14v3m4-3v3m4-3v3M3 21h18M3 10h18M3 7l9-4 9 4M4 10h16v11H4V10z']);
+    }
+    cardIcon.appendChild(iconSvg);
+    card.appendChild(cardIcon);
+
+    // Card Content
+    const cardContent = createElement('div', 'guides-listing__card-content');
+
+    const cardTitle = createElement('h2', 'guides-listing__card-title', guide.title);
+    cardContent.appendChild(cardTitle);
+
+    const cardDescription = createElement('p', 'guides-listing__card-description', guide.introduction.substring(0, 150) + '...');
+    cardContent.appendChild(cardDescription);
+
+    // Card Meta
+    const cardMeta = createElement('div', 'guides-listing__card-meta');
+
+    const metaTime = createElement('span', 'guides-listing__card-meta-item');
+    metaTime.appendChild(createSVGUse('icon-clock'));
+    metaTime.appendChild(document.createTextNode(`${guide.readTime} min read`));
+    cardMeta.appendChild(metaTime);
+
+    const metaSections = createElement('span', 'guides-listing__card-meta-item');
+    metaSections.appendChild(document.createTextNode(`${guide.sections.length} sections`));
+    cardMeta.appendChild(metaSections);
+
+    cardContent.appendChild(cardMeta);
+
+    // Read More Link
+    const readMore = createElement('span', 'guides-listing__card-link');
+    readMore.textContent = 'Read Guide';
+    readMore.appendChild(createSVGUse('icon-arrow-right'));
+    cardContent.appendChild(readMore);
+
+    card.appendChild(cardContent);
+    guidesGrid.appendChild(card);
+  });
+
+  guidesContainer.appendChild(guidesGrid);
+  guidesSection.appendChild(guidesContainer);
+  page.appendChild(guidesSection);
+
+  // Additional Resources Section
+  const resourcesSection = createElement('section', 'guides-listing__resources');
+  const resourcesContainer = createElement('div', 'container');
+
+  const resourcesHeader = createElement('div', 'guides-listing__resources-header');
+  const resourcesTitle = createElement('h2', 'guides-listing__resources-title', 'Additional Resources');
+  resourcesHeader.appendChild(resourcesTitle);
+  resourcesContainer.appendChild(resourcesHeader);
+
+  const resourcesGrid = createElement('div', 'guides-listing__resources-grid');
+
+  const resources = [
+    { title: 'Market Report 2025', description: 'Latest market trends and property prices in Erbil', url: '/market-report/erbil-2025', icon: 'icon-chart' },
+    { title: 'Mortgage Calculator', description: 'Calculate your monthly payments and affordability', url: '/mortgage-calculator', icon: 'icon-building' },
+    { title: 'FAQ', description: 'Answers to common questions about property in Erbil', url: '/faq', icon: 'icon-info' },
+    { title: 'Contact Us', description: 'Speak with our expert agents today', url: '/contact', icon: 'icon-phone' }
+  ];
+
+  resources.forEach(resource => {
+    const resourceCard = createElement('a', 'guides-listing__resource-card');
+    resourceCard.href = resource.url;
+    resourceCard.setAttribute('data-route', '');
+
+    const resourceIcon = createElement('div', 'guides-listing__resource-icon');
+    resourceIcon.appendChild(createSVGUse(resource.icon));
+    resourceCard.appendChild(resourceIcon);
+
+    const resourceContent = createElement('div', 'guides-listing__resource-content');
+    const resourceTitle = createElement('h3', 'guides-listing__resource-title', resource.title);
+    resourceContent.appendChild(resourceTitle);
+    const resourceDesc = createElement('p', 'guides-listing__resource-description', resource.description);
+    resourceContent.appendChild(resourceDesc);
+    resourceCard.appendChild(resourceContent);
+
+    resourcesGrid.appendChild(resourceCard);
+  });
+
+  resourcesContainer.appendChild(resourcesGrid);
+  resourcesSection.appendChild(resourcesContainer);
+  page.appendChild(resourcesSection);
+
+  // CTA Section
+  const ctaSection = createElement('section', 'guides-listing__cta');
+  const ctaContainer = createElement('div', 'container');
+  const ctaContent = createElement('div', 'guides-listing__cta-content');
+
+  const ctaTitle = createElement('h2', 'guides-listing__cta-title', 'Need Personalized Advice?');
+  ctaContent.appendChild(ctaTitle);
+
+  const ctaText = createElement('p', 'guides-listing__cta-text', 'Our expert team is here to help you navigate the Erbil property market with confidence. Get personalized guidance for your unique situation.');
+  ctaContent.appendChild(ctaText);
+
+  const ctaActions = createElement('div', 'guides-listing__cta-actions');
+  const ctaBtn = createElement('a', 'btn btn--primary btn--lg', 'Schedule Free Consultation');
+  ctaBtn.href = '/contact';
+  ctaBtn.setAttribute('data-route', '');
+  ctaActions.appendChild(ctaBtn);
+
+  const ctaPhone = createElement('a', 'guides-listing__cta-phone', '+964 750 792 2138');
+  ctaPhone.href = 'tel:+9647507922138';
+  ctaActions.appendChild(ctaPhone);
+
+  ctaContent.appendChild(ctaActions);
+  ctaContainer.appendChild(ctaContent);
+  ctaSection.appendChild(ctaContainer);
+  page.appendChild(ctaSection);
+
+  fragment.appendChild(page);
+  return fragment;
+}
+
+// SEO Setup for Guides Listing Page
+export function setupGuidesListingPageSEO(): void {
+  document.title = 'Property Guides Erbil | Buying, Investing & Renting | Real House';
+
+  const metaDescription = document.querySelector('meta[name="description"]');
+  if (metaDescription) {
+    metaDescription.setAttribute('content', 'Comprehensive property guides for Erbil, Kurdistan. Expert advice for buying, investing, and renting property. Step-by-step guides from Real House professionals.');
+  }
+
+  const canonical = document.querySelector('link[rel="canonical"]');
+  if (canonical) {
+    canonical.setAttribute('href', 'https://realhouseiq.com/guides');
+  }
+}

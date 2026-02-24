@@ -42,7 +42,7 @@ import { renderBuyPage, renderRentPage, renderInvestPage, renderLuxuryPage, setu
 import { renderSitemapPage, setupSitemapPageSEO } from './pages/sitemap-page';
 import { renderGalleryPage, setupGalleryPageSEO } from './pages/gallery';
 import { renderNeighborhoodsPage, renderNeighborhoodDetailPage, getAllNeighborhoodSlugs, getNeighborhoodBySlug, setupNeighborhoodsPageSEO, setupNeighborhoodDetailPageSEO } from './pages/neighborhood-guide';
-import { renderGuidePage, setupGuidePageSEO } from './pages/guides';
+import { renderGuidePage, setupGuidePageSEO, renderGuidesListingPage, setupGuidesListingPageSEO } from './pages/guides';
 import { renderMarketReportPage, setupMarketReportPageSEO } from './pages/market-report';
 import { renderDevelopersPage, renderDeveloperDetailPage, setupDevelopersPageSEO, setupDeveloperDetailPageSEO, getAllDeveloperSlugs } from './pages/developers';
 import { renderListPropertyPage, setupListPropertyPageSEO } from './pages/list-property';
@@ -480,6 +480,8 @@ export class App {
         return renderNeighborhoodDetailPage(slug);
       }
       return renderEnhanced404Page();
+    } else if (path === '/guides') {
+      return renderGuidesListingPage();
     } else if (path.startsWith('/guides/')) {
       const slug = path.replace('/guides/', '');
       return renderGuidePage(slug);
@@ -974,6 +976,8 @@ export class App {
         setupNeighborhoodDetailPageSEO(neighborhood);
         return;
       }
+    } else if (path === '/guides') {
+      setupGuidesListingPageSEO();
     } else if (path.startsWith('/guides/')) {
       // Guide pages with Article and FAQ schemas
       const slug = path.replace('/guides/', '');
