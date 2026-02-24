@@ -67,7 +67,13 @@
 
   --c-error:        #E05252;
   --c-success:      #52C98A;
+  --c-warning:      #f97316;
+  --c-info:         #3b82f6;
   --c-border:       rgba(255, 255, 255, 0.12);
+
+  // Social/Brand Colors (not theme-specific)
+  --c-whatsapp:     #25D366;
+  --c-whatsapp-dark: #1DA851;
 
   // ─── Z-Index Scale ─────────────────────────────────────────────────────
   --z-base:         1;

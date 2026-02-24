@@ -4,6 +4,17 @@
 // ═══════════════════════════════════════════════════════════════════════════
 
 import type { Project } from '../data/projects';
+import {
+  getCSRFToken,
+  validateCSRFToken,
+  regenerateCSRFToken,
+  sanitizeName,
+  sanitizeEmail,
+  sanitizePhone,
+  sanitizeMessage,
+  isRateLimited,
+  secureStore
+} from '../utils/security';
 
 // ─── Types ───────────────────────────────────────────────────────────────────
 
@@ -200,6 +211,13 @@ function createInquiryForm(project: Project, onClose: () => void): HTMLElement {
   const form = createElement('form', 'inquiry-form');
   form.setAttribute('novalidate', '');
 
+  // CSRF Token (hidden field for security)
+  const csrfInput = createElement('input', '');
+  csrfInput.type = 'hidden';
+  csrfInput.name = '_csrf';
+  csrfInput.value = getCSRFToken();
+  form.appendChild(csrfInput);
+
   // Project Info Header
   const projectInfo = createElement('div', 'inquiry-form__project');
   const projectName = createElement('p', 'inquiry-form__project-name', project.name);
@@ -224,7 +242,9 @@ function createInquiryForm(project: Project, onClose: () => void): HTMLElement {
   nameInput.required = true;
   nameInput.autocomplete = 'name';
   nameInput.setAttribute('aria-required', 'true');
+  nameInput.setAttribute('aria-describedby', 'inquiry-name-error');
   const nameError = createElement('span', 'inquiry-form__error');
+  nameError.id = 'inquiry-name-error';
   nameError.setAttribute('role', 'alert');
   nameError.setAttribute('aria-live', 'polite');
   nameGroup.appendChild(nameLabel);
@@ -244,7 +264,9 @@ function createInquiryForm(project: Project, onClose: () => void): HTMLElement {
   phoneInput.required = true;
   phoneInput.autocomplete = 'tel';
   phoneInput.setAttribute('aria-required', 'true');
+  phoneInput.setAttribute('aria-describedby', 'inquiry-phone-error');
   const phoneError = createElement('span', 'inquiry-form__error');
+  phoneError.id = 'inquiry-phone-error';
   phoneError.setAttribute('role', 'alert');
   phoneError.setAttribute('aria-live', 'polite');
   phoneGroup.appendChild(phoneLabel);
@@ -264,7 +286,9 @@ function createInquiryForm(project: Project, onClose: () => void): HTMLElement {
   emailInput.required = true;
   emailInput.autocomplete = 'email';
   emailInput.setAttribute('aria-required', 'true');
+  emailInput.setAttribute('aria-describedby', 'inquiry-email-error');
   const emailError = createElement('span', 'inquiry-form__error');
+  emailError.id = 'inquiry-email-error';
   emailError.setAttribute('role', 'alert');
   emailError.setAttribute('aria-live', 'polite');
   emailGroup.appendChild(emailLabel);
@@ -420,20 +444,38 @@ function createInquiryForm(project: Project, onClose: () => void): HTMLElement {
   form.addEventListener('submit', async (e) => {
     e.preventDefault();
 
-    // Clear previous errors
+    // Rate limiting check
+    if (isRateLimited('inquiry_form', 3, 60000)) {
+      errorMessage.textContent = 'Too many attempts. Please wait a minute before trying again.';
+      form.classList.add('inquiry-form--error');
+      return;
+    }
+
+    // CSRF token validation
+    const csrfToken = csrfInput.value;
+    if (!validateCSRFToken(csrfToken)) {
+      errorMessage.textContent = 'Session expired. Please refresh the page and try again.';
+      form.classList.add('inquiry-form--error');
+      return;
+    }
+
+    // Clear previous errors and aria-invalid states
     form.querySelectorAll('.inquiry-form__group--error').forEach(group => {
       group.classList.remove('inquiry-form__group--error');
     });
     form.querySelectorAll('.inquiry-form__error').forEach(error => {
       error.textContent = '';
     });
+    [nameInput, phoneInput, emailInput].forEach(input => {
+      input.setAttribute('aria-invalid', 'false');
+    });
 
-    // Gather form data
+    // Gather and SANITIZE form data
     const formData: Partial<InquiryFormData> = {
-      name: nameInput.value.trim(),
-      phone: phoneInput.value.trim(),
-      email: emailInput.value.trim(),
-      message: messageTextarea.value.trim(),
+      name: sanitizeName(nameInput.value),
+      phone: sanitizePhone(phoneInput.value),
+      email: sanitizeEmail(emailInput.value),
+      message: sanitizeMessage(messageTextarea.value),
       preferredContact: (form.querySelector('input[name="preferredContact"]:checked') as HTMLInputElement)?.value as 'phone' | 'whatsapp' | 'email',
       projectId: project.id,
       projectName: project.name,
@@ -444,12 +486,14 @@ function createInquiryForm(project: Project, onClose: () => void): HTMLElement {
     const validation = validateForm(formData);
 
     if (!validation.isValid) {
-      // Show errors
+      // Show errors and set aria-invalid
       Object.entries(validation.errors).forEach(([field, message]) => {
-        const group = form.querySelector(`#inquiry-${field}`)?.parentElement;
+        const input = form.querySelector(`#inquiry-${field}`) as HTMLInputElement;
+        const group = input?.parentElement;
         const errorEl = group?.querySelector('.inquiry-form__error');
         if (group) group.classList.add('inquiry-form__group--error');
         if (errorEl) errorEl.textContent = message;
+        if (input) input.setAttribute('aria-invalid', 'true');
       });
 
       // Focus first error field
@@ -462,13 +506,17 @@ function createInquiryForm(project: Project, onClose: () => void): HTMLElement {
     // Submit
     form.classList.add('inquiry-form--submitting');
     submitBtn.disabled = true;
+    submitBtn.setAttribute('aria-busy', 'true');
 
     try {
       // Simulate API call (replace with actual API endpoint)
       await new Promise(resolve => setTimeout(resolve, 1500));
 
-      // Save to localStorage for demo
-      saveInquiryToStorage(formData as InquiryFormData);
+      // Save to sessionStorage (more secure than localStorage for PII)
+      secureStore(STORAGE_KEY, formData);
+
+      // Regenerate CSRF token after successful submission
+      csrfInput.value = regenerateCSRFToken();
 
       // Update WhatsApp follow-up link with form data
       whatsappFollowUp.href = generateWhatsAppLink(project, formData);
@@ -480,10 +528,11 @@ function createInquiryForm(project: Project, onClose: () => void): HTMLElement {
       form.classList.add('inquiry-form--error');
     } finally {
       submitBtn.disabled = false;
+      submitBtn.setAttribute('aria-busy', 'false');
     }
   });
 
-  // Real-time validation
+  // Real-time validation with aria-invalid
   [nameInput, phoneInput, emailInput].forEach(input => {
     input.addEventListener('blur', () => {
       const group = input.parentElement;
@@ -492,15 +541,19 @@ function createInquiryForm(project: Project, onClose: () => void): HTMLElement {
       if (input.required && !input.value.trim()) {
         group?.classList.add('inquiry-form__group--error');
         if (errorEl) errorEl.textContent = `${input.placeholder || 'This field'} is required`;
+        input.setAttribute('aria-invalid', 'true');
       } else if (input.type === 'email' && input.value && !validateEmail(input.value)) {
         group?.classList.add('inquiry-form__group--error');
         if (errorEl) errorEl.textContent = 'Please enter a valid email';
+        input.setAttribute('aria-invalid', 'true');
       } else if (input.type === 'tel' && input.value && !validatePhone(input.value)) {
         group?.classList.add('inquiry-form__group--error');
         if (errorEl) errorEl.textContent = 'Please enter a valid phone number';
+        input.setAttribute('aria-invalid', 'true');
       } else {
         group?.classList.remove('inquiry-form__group--error');
         if (errorEl) errorEl.textContent = '';
+        input.setAttribute('aria-invalid', 'false');
       }
     });
 
