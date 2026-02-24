@@ -481,8 +481,8 @@ export function initI18n(): void {
   // Update hreflang tags
   updateHreflangTags(window.location.pathname);
 
-  // Initialize language selector
-  initLanguageSelector();
+  // Language selector hidden - site is currently English-only
+  // initLanguageSelector();
 
   // Listen for route changes to update hreflang tags
   window.addEventListener('popstate', () => {
