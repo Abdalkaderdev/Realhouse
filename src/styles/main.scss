@@ -144,6 +144,40 @@ img, video {
   display: block;
 }
 
+// ─── Global Scrollbar Styling ─────────────────────────────────────────────
+// Hide scrollbar arrows and style scrollbars across all browsers (Windows fix)
+html, body {
+  // Firefox
+  scrollbar-width: thin;
+  scrollbar-color: var(--c-gold) transparent;
+}
+
+// Webkit (Chrome, Safari, Edge Chromium)
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--c-gold);
+  border-radius: 4px;
+
+  &:hover {
+    background: var(--c-gold-light);
+  }
+}
+
+// Hide scrollbar button arrows (Windows)
+::-webkit-scrollbar-button {
+  display: none;
+  width: 0;
+  height: 0;
+}
+
 // ─── Typography ───────────────────────────────────────────────────────────
 h1, h2, h3, h4, h5, h6 {
   font-family: var(--font-serif);
@@ -338,7 +372,7 @@ em {
   z-index: 1000;
   padding: var(--space-6) 0;
   transition: background 0.4s, padding 0.4s, backdrop-filter 0.4s;
-  overflow-x: hidden; // Prevent horizontal scrollbar
+  overflow: visible; // Allow dropdowns to extend beyond nav
 
   &.scrolled {
     padding: var(--space-3) 0;
