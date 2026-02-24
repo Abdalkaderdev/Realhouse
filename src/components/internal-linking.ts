@@ -452,7 +452,7 @@ export function createRelatedProjectsSection(relatedProjs: Project[]): HTMLEleme
     content.appendChild(location);
 
     const stats = createElement('div', 'related-projects__stats');
-    stats.textContent = `${project.availableUnits} units available | Completion: ${project.completionDate}`;
+    stats.textContent = `${project.totalUnits} total units | Completion: ${project.completionDate}`;
     content.appendChild(stats);
 
     card.appendChild(content);
@@ -1314,7 +1314,7 @@ export function createPropertyCrossLinks(property: Property): HTMLElement {
       url: `/projects/${project.id}`,
       type: 'project',
       image: project.images[0],
-      subtitle: `${project.status} - ${project.availableUnits} units available`
+      subtitle: `${project.status} - ${project.totalUnits} units`
     });
   }
 

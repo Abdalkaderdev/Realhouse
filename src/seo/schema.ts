@@ -2544,7 +2544,7 @@ export function setupProjectPageSEO(project: Project): void {
     const priceMin = project.priceRange.min >= 1000000
       ? `$${(project.priceRange.min / 1000000).toFixed(1)}M`
       : `$${(project.priceRange.min / 1000).toFixed(0)}K`;
-    const desc = `${project.name} in ${project.location.district}, Erbil. ${project.status}. ${project.availableUnits} units from ${priceMin}. Flexible payment plans. Book your site tour today!`;
+    const desc = `${project.name} in ${project.location.district}, Erbil. ${project.status}. ${project.totalUnits} units from ${priceMin}. Flexible payment plans. Book your site tour today!`;
     metaDescription.setAttribute('content', desc.length <= 160 ? desc : desc.substring(0, 157) + '...');
   }
 

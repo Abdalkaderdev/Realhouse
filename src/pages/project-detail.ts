@@ -35,7 +35,6 @@ interface FloorPlan {
   bathrooms: number;
   size: string;
   priceFrom: number;
-  available: number;
 }
 
 interface PaymentPlan {
@@ -342,17 +341,14 @@ function generateFloorPlans(project: Project): FloorPlan[] {
   const plans: FloorPlan[] = [];
   const basePrice = project.priceRange.min;
   const maxPrice = project.priceRange.max;
-  const totalUnits = project.totalUnits;
-  const availableUnits = project.availableUnits;
 
   if (maxPrice - basePrice < 100000) {
     plans.push({
       name: 'Standard Unit',
       bedrooms: 2,
       bathrooms: 2,
-      size: '120-150 m\u00B2',
-      priceFrom: basePrice,
-      available: availableUnits
+      size: '120-150 m²',
+      priceFrom: basePrice
     });
   } else {
     const priceDiff = maxPrice - basePrice;
@@ -362,9 +358,8 @@ function generateFloorPlans(project: Project): FloorPlan[] {
         name: 'Studio Apartment',
         bedrooms: 0,
         bathrooms: 1,
-        size: '45-65 m\u00B2',
-        priceFrom: basePrice,
-        available: Math.round(availableUnits * 0.15)
+        size: '45-65 m²',
+        priceFrom: basePrice
       });
     }
 
@@ -372,27 +367,24 @@ function generateFloorPlans(project: Project): FloorPlan[] {
       name: '1 Bedroom Apartment',
       bedrooms: 1,
       bathrooms: 1,
-      size: '65-85 m\u00B2',
-      priceFrom: basePrice + priceDiff * 0.1,
-      available: Math.round(availableUnits * 0.2)
+      size: '65-85 m²',
+      priceFrom: basePrice + priceDiff * 0.1
     });
 
     plans.push({
       name: '2 Bedroom Apartment',
       bedrooms: 2,
       bathrooms: 2,
-      size: '100-140 m\u00B2',
-      priceFrom: basePrice + priceDiff * 0.25,
-      available: Math.round(availableUnits * 0.3)
+      size: '100-140 m²',
+      priceFrom: basePrice + priceDiff * 0.25
     });
 
     plans.push({
       name: '3 Bedroom Apartment',
       bedrooms: 3,
       bathrooms: 2,
-      size: '150-200 m\u00B2',
-      priceFrom: basePrice + priceDiff * 0.5,
-      available: Math.round(availableUnits * 0.2)
+      size: '150-200 m²',
+      priceFrom: basePrice + priceDiff * 0.5
     });
 
     if (maxPrice > 500000) {
@@ -400,9 +392,8 @@ function generateFloorPlans(project: Project): FloorPlan[] {
         name: 'Penthouse Suite',
         bedrooms: 4,
         bathrooms: 4,
-        size: '250-400 m\u00B2',
-        priceFrom: basePrice + priceDiff * 0.8,
-        available: Math.round(availableUnits * 0.05) || 1
+        size: '250-400 m²',
+        priceFrom: basePrice + priceDiff * 0.8
       });
     }
 
@@ -412,9 +403,8 @@ function generateFloorPlans(project: Project): FloorPlan[] {
         name: 'Duplex Villa',
         bedrooms: 5,
         bathrooms: 5,
-        size: '350-500 m\u00B2',
-        priceFrom: maxPrice * 0.7,
-        available: Math.round(availableUnits * 0.1) || 1
+        size: '350-500 m²',
+        priceFrom: maxPrice * 0.7
       });
     }
   }
@@ -501,7 +491,6 @@ function generateProjectSchema(project: Project): string {
     'image': project.images,
     'datePosted': new Date().toISOString(),
     'numberOfRooms': project.totalUnits,
-    'numberOfAvailableAccommodationUnits': project.availableUnits,
     'address': {
       '@type': 'PostalAddress',
       'streetAddress': project.location.address,
@@ -519,9 +508,7 @@ function generateProjectSchema(project: Project): string {
       'lowPrice': project.priceRange.min,
       'highPrice': project.priceRange.max,
       'priceCurrency': project.priceRange.currency,
-      'availability': project.availableUnits > 0
-        ? 'https://schema.org/InStock'
-        : 'https://schema.org/SoldOut',
+      'availability': 'https://schema.org/InStock',
       'seller': {
         '@type': 'RealEstateAgent',
         'name': 'Real House',
@@ -720,7 +707,7 @@ function createSimilarProjectCard(project: Project): HTMLElement {
   content.appendChild(price);
 
   const stats = createElement('div', 'similar-project-card__stats');
-  stats.textContent = `${project.availableUnits} units available`;
+  stats.textContent = `${project.totalUnits} total units`;
   content.appendChild(stats);
 
   card.appendChild(content);
@@ -811,7 +798,6 @@ export function renderComprehensiveProjectDetailPage(projectId: string): Documen
 
   const statsData = [
     { label: 'Total Units', value: project.totalUnits.toLocaleString(), icon: 'icon-building' },
-    { label: 'Available', value: project.availableUnits.toLocaleString(), icon: 'icon-key' },
     { label: 'Price From', value: formatCurrency(project.priceRange.min), icon: 'icon-price' },
     { label: 'Completion', value: project.completionDate, icon: 'icon-calendar' }
   ];
@@ -889,7 +875,6 @@ export function renderComprehensiveProjectDetailPage(projectId: string): Documen
     { label: 'Location', value: `${project.location.district}, ${project.location.city}` },
     { label: 'Status', value: project.status },
     { label: 'Total Units', value: project.totalUnits.toLocaleString() },
-    { label: 'Available Units', value: project.availableUnits.toLocaleString() },
     { label: 'Price Range', value: formatPriceRange(project) },
     { label: 'Completion', value: project.completionDate }
   ];
@@ -1061,14 +1046,6 @@ export function renderComprehensiveProjectDetailPage(projectId: string): Documen
     planPricing.appendChild(priceLabel);
     planPricing.appendChild(priceValue);
     planCard.appendChild(planPricing);
-
-    const planAvailability = createElement('div', 'project-floor-plans__availability');
-    const availabilityBadge = createElement('span',
-      `project-floor-plans__availability-badge ${plan.available > 0 ? '' : 'project-floor-plans__availability-badge--sold'}`,
-      plan.available > 0 ? `${plan.available} units available` : 'Sold out'
-    );
-    planAvailability.appendChild(availabilityBadge);
-    planCard.appendChild(planAvailability);
 
     const planCta = createElement('a', 'btn btn--ghost btn--sm btn--full', 'Request Floor Plan');
     planCta.href = '/contact';

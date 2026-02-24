@@ -431,7 +431,7 @@ export function renderInvestPage(): DocumentFragment {
     content.appendChild(projectLocation);
     const projectPrice = createElement('p', 'hub-page__project-price', `From ${formatPriceRange(project)}`);
     content.appendChild(projectPrice);
-    const projectUnits = createElement('p', 'hub-page__project-units', `${project.availableUnits} units available`);
+    const projectUnits = createElement('p', 'hub-page__project-units', `${project.totalUnits} total units`);
     content.appendChild(projectUnits);
     card.appendChild(content);
 

@@ -788,7 +788,7 @@ export class App {
         const priceMin = project.priceRange.min >= 1000000
           ? `$${(project.priceRange.min / 1000000).toFixed(1)}M`
           : `$${(project.priceRange.min / 1000).toFixed(0)}K`;
-        const desc = `${project.name} in ${project.location.district}, Erbil. ${status}. ${project.availableUnits} units from ${priceMin}. Flexible payment plans. Book your site tour today!`;
+        const desc = `${project.name} in ${project.location.district}, Erbil. ${status}. ${project.totalUnits} units from ${priceMin}. Flexible payment plans. Book your site tour today!`;
         return desc.length <= 160 ? desc : desc.substring(0, 157) + '...';
       }
       return 'Off-plan development in Erbil with flexible payment plans. Premium amenities & prime location. Book your exclusive site tour with Real House today!';
@@ -1194,7 +1194,7 @@ export class App {
     const priceMin = project.priceRange.min >= 1000000
       ? `$${(project.priceRange.min / 1000000).toFixed(1)}M`
       : `$${(project.priceRange.min / 1000).toFixed(0)}K`;
-    const desc = `${project.name} in ${project.location.district}, Erbil. ${status}. ${project.availableUnits}/${project.totalUnits} units from ${priceMin}. Completion: ${project.completionDate}. Contact Real House.`;
+    const desc = `${project.name} in ${project.location.district}, Erbil. ${status}. ${project.totalUnits} units from ${priceMin}. Completion: ${project.completionDate}. Contact Real House.`;
     this.updateOrCreateMeta('name', 'description', desc.length <= 160 ? desc : desc.substring(0, 157) + '...');
 
     // Project-specific keywords

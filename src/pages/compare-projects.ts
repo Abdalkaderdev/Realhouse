@@ -62,7 +62,7 @@ export function setupProjectComparePageSEO(): void {
           lowPrice: project.priceRange.min,
           highPrice: project.priceRange.max,
           priceCurrency: project.priceRange.currency,
-          offerCount: project.availableUnits
+          offerCount: project.totalUnits
         }
       }
     }))

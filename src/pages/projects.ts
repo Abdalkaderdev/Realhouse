@@ -371,8 +371,8 @@ function createProjectCard(project: Project): HTMLElement {
   const stats = createElement('div', 'project-card__stats');
 
   const unitsInfo = createElement('div', 'project-card__stat');
-  const unitsLabel = createElement('span', 'project-card__stat-label', 'Available Units');
-  const unitsValue = createElement('span', 'project-card__stat-value', `${project.availableUnits.toLocaleString()} / ${project.totalUnits.toLocaleString()}`);
+  const unitsLabel = createElement('span', 'project-card__stat-label', 'Total Units');
+  const unitsValue = createElement('span', 'project-card__stat-value', project.totalUnits.toLocaleString());
   unitsInfo.appendChild(unitsLabel);
   unitsInfo.appendChild(unitsValue);
   stats.appendChild(unitsInfo);
@@ -692,7 +692,6 @@ export function renderProjectDetailPage(projectId: string): DocumentFragment {
 
   const statsData = [
     { label: 'Total Units', value: project.totalUnits.toLocaleString() },
-    { label: 'Available Units', value: project.availableUnits.toLocaleString() },
     { label: 'Price Range', value: formatPriceRange(project) },
     { label: 'Completion', value: project.completionDate }
   ];

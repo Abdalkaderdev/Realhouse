@@ -109,13 +109,6 @@ function compareAmenitiesCount(projects: Project[]): ComparisonIndicator[] {
   );
 }
 
-function compareAvailability(projects: Project[]): ComparisonIndicator[] {
-  return compareNumericValues(
-    projects,
-    p => (p.availableUnits / p.totalUnits) * 100,
-    'higher'
-  );
-}
 
 function comparePriceMin(projects: Project[]): ComparisonIndicator[] {
   return compareNumericValues(
@@ -546,17 +539,6 @@ export function renderProjectComparisonContent(projectsList: Project[]): HTMLEle
       const el = createElement('span');
       el.textContent = p.totalUnits.toLocaleString();
       return { element: el };
-    })
-  ));
-
-  const availabilityIndicators = compareAvailability(projectsList);
-  unitsSection.appendChild(createProjectCompareRow(
-    'Available Units',
-    projectsList.map((p, i) => {
-      const el = createElement('span');
-      const percentage = ((p.availableUnits / p.totalUnits) * 100).toFixed(0);
-      el.textContent = `${p.availableUnits.toLocaleString()} (${percentage}%)`;
-      return { element: el, indicator: availabilityIndicators[i] };
     })
   ));
 

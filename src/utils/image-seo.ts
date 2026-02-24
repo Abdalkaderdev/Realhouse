@@ -179,7 +179,7 @@ export function generateProjectAltText(
   context: 'card' | 'detail' | 'gallery' = 'card'
 ): string {
   const baseInfo = `${project.name} - ${project.status} real estate Erbil development with houses for sale Erbil and apartments Erbil in ${project.location.district}, ${project.location.city}`;
-  const unitInfo = `${project.availableUnits} of ${project.totalUnits} units available`;
+  const unitInfo = `${project.totalUnits} total units`;
 
   if (context === 'card') {
     return `${baseInfo}. Property Erbil ${unitInfo}. Real estate Kurdistan completion: ${project.completionDate}. Villas Erbil Iraq.`;

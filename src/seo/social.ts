@@ -206,7 +206,7 @@ export function generateProjectSocialMeta(project: Project): SocialMetaConfig {
   const title = `${project.name} | ${project.status} | Real Estate Development in ${project.location.district}, Erbil`;
 
   const description = `${project.name} - ${project.status} real estate development in ${project.location.district}, ${project.location.city}. ` +
-    `${project.availableUnits} of ${project.totalUnits} units available. ` +
+    `${project.totalUnits} total units. ` +
     `Prices from ${priceRange}. ` +
     `Amenities: ${project.amenities.slice(0, 4).join(', ')}. Completion: ${project.completionDate}.`;
 
@@ -221,7 +221,7 @@ export function generateProjectSocialMeta(project: Project): SocialMetaConfig {
     type: 'place',
     price: project.priceRange.min,
     currency: 'USD',
-    availability: project.availableUnits > 0 ? 'in stock' : 'out of stock',
+    availability: 'in stock',
   };
 }
 

@@ -22,7 +22,6 @@ export interface Project {
   };
   status: ProjectStatus;
   totalUnits: number;
-  availableUnits: number;
   priceRange: {
     min: number;
     max: number;
@@ -55,14 +54,13 @@ export const projects: Project[] = [
       country: 'Iraq'
     },
     status: 'Under Construction',
-    totalUnits: 2500,
-    availableUnits: 850,
+    totalUnits: 6000,
     priceRange: {
       min: 150000,
       max: 2500000,
       currency: 'USD'
     },
-    completionDate: '2027',
+    completionDate: '2028',
     amenities: [
       'Shopping Mall',
       'Five-Star Hotel',
@@ -120,14 +118,13 @@ Empire World represents the future of urban living in Iraq, combining internatio
       country: 'Iraq'
     },
     status: 'Ready',
-    totalUnits: 3200,
-    availableUnits: 420,
+    totalUnits: 1000,
     priceRange: {
-      min: 85000,
-      max: 450000,
+      min: 380000,
+      max: 2400000,
       currency: 'USD'
     },
-    completionDate: '2023',
+    completionDate: '2007',
     amenities: [
       'Gated Community',
       'Central Park',
@@ -185,14 +182,13 @@ Dream City represents the ideal blend of privacy, security, and community living
       country: 'Iraq'
     },
     status: 'Ready',
-    totalUnits: 1800,
-    availableUnits: 180,
+    totalUnits: 2200,
     priceRange: {
-      min: 120000,
-      max: 380000,
+      min: 150000,
+      max: 450000,
       currency: 'USD'
     },
-    completionDate: '2022',
+    completionDate: '2015',
     amenities: [
       'Italian-Style Architecture',
       'Central Piazza',
@@ -243,14 +239,13 @@ Each residence is crafted with attention to detail, featuring terracotta roofs, 
       country: 'Iraq'
     },
     status: 'Ready',
-    totalUnits: 1200,
-    availableUnits: 95,
+    totalUnits: 458,
     priceRange: {
       min: 180000,
       max: 550000,
       currency: 'USD'
     },
-    completionDate: '2021',
+    completionDate: '2010',
     amenities: [
       'British Colonial Architecture',
       'Private Gardens',
@@ -301,14 +296,13 @@ Each residence offers generous living spaces, quality craftsmanship, and private
       country: 'Iraq'
     },
     status: 'Ready',
-    totalUnits: 500,
-    availableUnits: 85,
+    totalUnits: 1300,
     priceRange: {
       min: 95000,
       max: 350000,
       currency: 'USD'
     },
-    completionDate: '2024',
+    completionDate: '2023',
     amenities: [
       'Modern Architecture',
       'Rooftop Garden',
@@ -360,7 +354,6 @@ The Boulevard is perfectly located near shopping centers, restaurants, and enter
     },
     status: 'Ready',
     totalUnits: 350,
-    availableUnits: 45,
     priceRange: {
       min: 110000,
       max: 420000,
@@ -417,8 +410,7 @@ Cavally Tower represents the pinnacle of vertical living in Erbil, combining sop
       country: 'Iraq'
     },
     status: 'Ready',
-    totalUnits: 600,
-    availableUnits: 120,
+    totalUnits: 1220,
     priceRange: {
       min: 85000,
       max: 280000,
@@ -426,7 +418,7 @@ Cavally Tower represents the pinnacle of vertical living in Erbil, combining sop
     },
     completionDate: '2022',
     amenities: [
-      'Twin Tower Design',
+      'Four Tower Design',
       'Central Garden',
       'Swimming Pool',
       'Fitness Center',
@@ -458,7 +450,7 @@ Cavally Tower represents the pinnacle of vertical living in Erbil, combining sop
       'https://images.unsplash.com/photo-1503387837-b154d5074bd2?w=800&q=80&fm=webp',
       'https://images.unsplash.com/photo-1600585152220-90363fe7e115?w=800&q=80&fm=webp'
     ],
-    description: `Tulip Towers is a distinctive twin-tower residential complex offering modern apartments in the heart of Gulan. The iconic design features two elegant towers connected by landscaped gardens and shared amenities.
+    description: `Tulip Towers is a distinctive four-tower residential complex offering modern apartments in the heart of Gulan. The iconic design features four elegant towers connected by landscaped gardens and shared amenities.
 
 Residents enjoy a variety of apartment sizes to suit different lifestyles, from cozy studios to spacious family apartments. The development includes a swimming pool, fitness center, children's play areas, and a shopping arcade at ground level.
 
@@ -471,18 +463,17 @@ Tulip Towers combines affordability with quality, making it an excellent choice 
     location: {
       address: 'London Towers',
       city: 'Erbil',
-      district: 'Gulan',
+      district: 'Waziran',
       country: 'Iraq'
     },
-    status: 'Ready',
+    status: 'Under Construction',
     totalUnits: 400,
-    availableUnits: 60,
     priceRange: {
       min: 130000,
       max: 380000,
       currency: 'USD'
     },
-    completionDate: '2023',
+    completionDate: '2026',
     amenities: [
       'British-Inspired Design',
       'Rooftop Terrace',
@@ -534,7 +525,6 @@ London Towers is ideal for those seeking a sophisticated lifestyle in one of Erb
     },
     status: 'Under Construction',
     totalUnits: 800,
-    availableUnits: 650,
     priceRange: {
       min: 90000,
       max: 320000,
@@ -578,7 +568,6 @@ Early buyers can take advantage of attractive pre-construction pricing and flexi
     },
     status: 'Under Construction',
     totalUnits: 2800,
-    availableUnits: 1450,
     priceRange: {
       min: 250000,
       max: 3500000,
@@ -636,7 +625,6 @@ Pavilion Erbil represents a radically new offer to contemporary luxury living, c
     },
     status: 'Ready',
     totalUnits: 3400,
-    availableUnits: 380,
     priceRange: {
       min: 65000,
       max: 420000,
@@ -680,7 +668,6 @@ Residents enjoy comprehensive amenities including a health club, swimming pool, 
     },
     status: 'Under Construction',
     totalUnits: 4500,
-    availableUnits: 3200,
     priceRange: {
       min: 200000,
       max: 5000000,
@@ -738,7 +725,6 @@ Downtown Erbil is designed to create up to 45,000 jobs and will become a major e
     },
     status: 'Ready',
     totalUnits: 1224,
-    availableUnits: 185,
     priceRange: {
       min: 120000,
       max: 480000,
@@ -782,7 +768,6 @@ Sky Towers combines strategic location with premium living standards, making it 
     },
     status: 'Ready',
     totalUnits: 1600,
-    availableUnits: 220,
     priceRange: {
       min: 95000,
       max: 380000,
@@ -826,7 +811,6 @@ Zaniary Towers represents a milestone in Kurdistan's architectural landscape, of
     },
     status: 'Ready',
     totalUnits: 850,
-    availableUnits: 45,
     priceRange: {
       min: 280000,
       max: 1200000,
@@ -870,7 +854,6 @@ American Village is home to the International School of Choueifat and enjoys spe
     },
     status: 'Ready',
     totalUnits: 240,
-    availableUnits: 35,
     priceRange: {
       min: 85000,
       max: 320000,
@@ -914,7 +897,6 @@ Residents enjoy comprehensive amenities including a sports complex, gym, swimmin
     },
     status: 'Ready',
     totalUnits: 700,
-    availableUnits: 55,
     priceRange: {
       min: 180000,
       max: 350000,
@@ -958,7 +940,6 @@ Naz City offers a perfect balance of urban convenience and residential tranquili
     },
     status: 'Ready',
     totalUnits: 450,
-    availableUnits: 40,
     priceRange: {
       min: 150000,
       max: 850000,
@@ -1002,7 +983,6 @@ This landmark project represents the pinnacle of mixed-use urban living in Kurdi
     },
     status: 'Ready',
     totalUnits: 1180,
-    availableUnits: 145,
     priceRange: {
       min: 95000,
       max: 340000,
@@ -1046,7 +1026,6 @@ Roya Towers combines vertical living convenience with community amenities, offer
     },
     status: 'Under Construction',
     totalUnits: 1240,
-    availableUnits: 680,
     priceRange: {
       min: 110000,
       max: 420000,
@@ -1090,7 +1069,6 @@ Quattro Towers represents an excellent investment opportunity with its prime loc
     },
     status: 'Ready',
     totalUnits: 602,
-    availableUnits: 75,
     priceRange: {
       min: 85000,
       max: 280000,
@@ -1134,7 +1112,6 @@ Star Towers provides excellent value for buyers seeking quality residential unit
     },
     status: 'Ready',
     totalUnits: 1850,
-    availableUnits: 165,
     priceRange: {
       min: 120000,
       max: 480000,
@@ -1178,7 +1155,6 @@ Garden City lives up to its name with beautifully landscaped gardens and green s
     },
     status: 'Ready',
     totalUnits: 2400,
-    availableUnits: 280,
     priceRange: {
       min: 150000,
       max: 650000,
@@ -1222,7 +1198,6 @@ Ganjan City represents suburban living at its finest in Kurdistan, combining spa
     },
     status: 'Under Construction',
     totalUnits: 2200,
-    availableUnits: 520,
     priceRange: {
       min: 95000,
       max: 380000,
@@ -1266,7 +1241,6 @@ Hiwa City is famous in Erbil for its exceptional quality, comprehensive services
     },
     status: 'Under Construction',
     totalUnits: 1500,
-    availableUnits: 890,
     priceRange: {
       min: 85000,
       max: 320000,
@@ -1310,7 +1284,6 @@ Majidi View represents an excellent opportunity to own property in one of Erbil'
     },
     status: 'Ready',
     totalUnits: 772,
-    availableUnits: 45,
     priceRange: {
       min: 110000,
       max: 280000,
@@ -1354,7 +1327,6 @@ Kurdistan City offers proven quality and an established community atmosphere, ma
     },
     status: 'Ready',
     totalUnits: 680,
-    availableUnits: 85,
     priceRange: {
       min: 125000,
       max: 450000,
@@ -1398,7 +1370,6 @@ Signature Towers represents sophisticated urban living in central Erbil, offerin
     },
     status: 'Ready',
     totalUnits: 280,
-    availableUnits: 45,
     priceRange: {
       min: 180000,
       max: 650000,
@@ -1456,7 +1427,6 @@ This is ideal for investors seeking hassle-free luxury living with the option of
     },
     status: 'Ready',
     totalUnits: 220,
-    availableUnits: 35,
     priceRange: {
       min: 200000,
       max: 580000,
@@ -1514,7 +1484,6 @@ Divan Erbil is perfect for discerning buyers who appreciate refined living with 
     },
     status: 'Under Construction',
     totalUnits: 350,
-    availableUnits: 280,
     priceRange: {
       min: 250000,
       max: 850000,
@@ -1558,7 +1527,6 @@ This is a rare opportunity to own a Marriott-branded residence in Erbil's most p
     },
     status: 'Ready',
     totalUnits: 180,
-    availableUnits: 25,
     priceRange: {
       min: 280000,
       max: 920000,
@@ -1602,7 +1570,6 @@ Kempinski Erbil is reserved for those who accept nothing but the finest, offerin
     },
     status: 'Ready',
     totalUnits: 1200,
-    availableUnits: 95,
     priceRange: {
       min: 150000,
       max: 520000,
@@ -1646,7 +1613,6 @@ Royal City provides an exceptional family living environment with privacy, secur
     },
     status: 'Ready',
     totalUnits: 480,
-    availableUnits: 65,
     priceRange: {
       min: 95000,
       max: 320000,
@@ -1690,7 +1656,6 @@ Sarbast Heights offers excellent value in a prime location, making it ideal for 
     },
     status: 'Under Construction',
     totalUnits: 2800,
-    availableUnits: 1650,
     priceRange: {
       min: 80000,
       max: 380000,
@@ -1734,7 +1699,6 @@ Early buyers benefit from attractive pre-construction pricing and flexible payme
     },
     status: 'Ready',
     totalUnits: 320,
-    availableUnits: 40,
     priceRange: {
       min: 120000,
       max: 420000,
@@ -1778,7 +1742,6 @@ Classy Tower is perfectly positioned for urban professionals seeking a stylish a
     },
     status: 'Ready',
     totalUnits: 560,
-    availableUnits: 75,
     priceRange: {
       min: 110000,
       max: 380000,
@@ -1822,7 +1785,6 @@ Royal Towers provides excellent value in Ankawa, close to restaurants, entertain
     },
     status: 'Under Construction',
     totalUnits: 650,
-    availableUnits: 520,
     priceRange: {
       min: 95000,
       max: 350000,
@@ -1866,7 +1828,6 @@ This unique development appeals to those who appreciate history and culture, off
     },
     status: 'Ready',
     totalUnits: 850,
-    availableUnits: 65,
     priceRange: {
       min: 120000,
       max: 420000,
@@ -1910,7 +1871,6 @@ Family Village has earned its reputation as one of Erbil's premier family commun
     },
     status: 'Coming Soon',
     totalUnits: 420,
-    availableUnits: 420,
     priceRange: {
       min: 200000,
       max: 680000,
@@ -1954,7 +1914,6 @@ This rare opportunity to live beside Erbil's premier public park makes these res
     },
     status: 'Ready',
     totalUnits: 380,
-    availableUnits: 50,
     priceRange: {
       min: 100000,
       max: 340000,
@@ -1998,7 +1957,6 @@ Naz Towers appeals to buyers seeking a prestigious address with reliable infrast
     },
     status: 'Ready',
     totalUnits: 290,
-    availableUnits: 35,
     priceRange: {
       min: 130000,
       max: 450000,
@@ -2042,7 +2000,6 @@ Park View is perfect for health-conscious residents and families who value outdo
     },
     status: 'Ready',
     totalUnits: 240,
-    availableUnits: 30,
     priceRange: {
       min: 140000,
       max: 480000,
@@ -2086,7 +2043,6 @@ Ster Tower attracts discerning buyers who appreciate distinctive architecture an
     },
     status: 'Ready',
     totalUnits: 310,
-    availableUnits: 45,
     priceRange: {
       min: 115000,
       max: 390000,
@@ -2130,7 +2086,6 @@ Cihan Tower is ideal for professionals and families seeking a well-located, well
     },
     status: 'Under Construction',
     totalUnits: 1800,
-    availableUnits: 1200,
     priceRange: {
       min: 75000,
       max: 320000,
@@ -2174,7 +2129,6 @@ Asia City represents accessible home ownership in Erbil with pre-construction pr
     },
     status: 'Ready',
     totalUnits: 1450,
-    availableUnits: 180,
     priceRange: {
       min: 90000,
       max: 380000,
@@ -2218,7 +2172,6 @@ Hawler City has matured into a vibrant neighborhood with an active community lif
     },
     status: 'Ready',
     totalUnits: 260,
-    availableUnits: 35,
     priceRange: {
       min: 105000,
       max: 360000,
@@ -2262,7 +2215,6 @@ Venus Tower attracts buyers who appreciate understated elegance and solid constr
     },
     status: 'Ready',
     totalUnits: 340,
-    availableUnits: 55,
     priceRange: {
       min: 125000,
       max: 450000,
@@ -2306,7 +2258,6 @@ Crystal Tower is perfect for design-conscious buyers seeking a contemporary livi
     },
     status: 'Ready',
     totalUnits: 1200,
-    availableUnits: 185,
     priceRange: {
       min: 85000,
       max: 320000,
@@ -2350,7 +2301,6 @@ New Eskan represents excellent value in a mature neighborhood with established i
     },
     status: 'Ready',
     totalUnits: 2800,
-    availableUnits: 320,
     priceRange: {
       min: 95000,
       max: 450000,
@@ -2394,7 +2344,6 @@ Cihan City represents the vision of modern suburban living in Kurdistan, combini
     },
     status: 'Under Construction',
     totalUnits: 650,
-    availableUnits: 480,
     priceRange: {
       min: 120000,
       max: 420000,
@@ -2438,7 +2387,6 @@ MRF Towers represents an excellent investment opportunity in Erbil's most desira
     },
     status: 'Ready',
     totalUnits: 420,
-    availableUnits: 55,
     priceRange: {
       min: 145000,
       max: 520000,
@@ -2482,7 +2430,6 @@ The Atlantic appeals to discerning buyers seeking a unique residential experienc
     },
     status: 'Under Construction',
     totalUnits: 3200,
-    availableUnits: 2100,
     priceRange: {
       min: 75000,
       max: 350000,
@@ -2526,7 +2473,6 @@ Nawroz City offers accessible home ownership with attractive pre-construction pr
     },
     status: 'Ready',
     totalUnits: 380,
-    availableUnits: 45,
     priceRange: {
       min: 110000,
       max: 380000,
@@ -2570,7 +2516,6 @@ MSY Nefes is ideal for buyers who appreciate thoughtful design and quality const
     },
     status: 'Ready',
     totalUnits: 950,
-    availableUnits: 85,
     priceRange: {
       min: 180000,
       max: 520000,
@@ -2614,7 +2559,6 @@ Aram Village is perfect for families seeking tranquil living away from the city 
     },
     status: 'Under Construction',
     totalUnits: 280,
-    availableUnits: 220,
     priceRange: {
       min: 150000,
       max: 550000,
@@ -2658,7 +2602,6 @@ Early investors benefit from attractive pre-construction pricing for this landma
     },
     status: 'Ready',
     totalUnits: 320,
-    availableUnits: 40,
     priceRange: {
       min: 135000,
       max: 480000,
@@ -2702,7 +2645,6 @@ Erbil One Tower appeals to buyers seeking a prestigious single-tower address wit
     },
     status: 'Ready',
     totalUnits: 290,
-    availableUnits: 35,
     priceRange: {
       min: 105000,
       max: 360000,
@@ -2746,7 +2688,6 @@ Life Tower attracts buyers who value health and wellness as core aspects of thei
     },
     status: 'Ready',
     totalUnits: 1800,
-    availableUnits: 220,
     priceRange: {
       min: 100000,
       max: 420000,
@@ -2790,7 +2731,6 @@ Miran City has matured into a vibrant neighborhood with strong community bonds, 
     },
     status: 'Ready',
     totalUnits: 520,
-    availableUnits: 65,
     priceRange: {
       min: 115000,
       max: 400000,
@@ -2834,7 +2774,6 @@ Four Towers appeals to buyers seeking community-oriented living in a modern towe
     },
     status: 'Ready',
     totalUnits: 680,
-    availableUnits: 55,
     priceRange: {
       min: 200000,
       max: 650000,
@@ -2878,7 +2817,6 @@ Zanko Village is reserved for those seeking prestigious suburban living with exc
     },
     status: 'Ready',
     totalUnits: 280,
-    availableUnits: 30,
     priceRange: {
       min: 180000,
       max: 600000,
@@ -2922,7 +2860,6 @@ Diplomati Safiran provides peace of mind with its secure location and comprehens
     },
     status: 'Under Construction',
     totalUnits: 2200,
-    availableUnits: 1650,
     priceRange: {
       min: 70000,
       max: 320000,
@@ -2966,7 +2903,6 @@ Lana City offers an excellent entry point to home ownership with flexible paymen
     },
     status: 'Ready',
     totalUnits: 750,
-    availableUnits: 65,
     priceRange: {
       min: 150000,
       max: 480000,
@@ -3010,7 +2946,6 @@ Mnara Village appeals to families seeking suburban tranquility with a distinctiv
     },
     status: 'Ready',
     totalUnits: 1400,
-    availableUnits: 145,
     priceRange: {
       min: 85000,
       max: 350000,
@@ -3054,7 +2989,6 @@ Zaner City offers proven quality and an active community life, making it popular
     },
     status: 'Under Construction',
     totalUnits: 1900,
-    availableUnits: 1350,
     priceRange: {
       min: 80000,
       max: 340000,
@@ -3098,7 +3032,6 @@ Zilan City offers attractive pre-construction pricing and payment plans for earl
     },
     status: 'Ready',
     totalUnits: 450,
-    availableUnits: 55,
     priceRange: {
       min: 125000,
       max: 450000,
@@ -3142,7 +3075,6 @@ Z Center Towers is perfect for urban professionals seeking walkable lifestyle wi
     },
     status: 'Ready',
     totalUnits: 1600,
-    availableUnits: 185,
     priceRange: {
       min: 95000,
       max: 380000,
@@ -3186,7 +3118,6 @@ Safiran City offers proven quality with an active community, making it ideal for
     },
     status: 'Ready',
     totalUnits: 380,
-    availableUnits: 45,
     priceRange: {
       min: 130000,
       max: 480000,
@@ -3230,7 +3161,6 @@ Ruby Towers attracts discerning buyers who appreciate distinctive design and pre
     },
     status: 'Ready',
     totalUnits: 1100,
-    availableUnits: 95,
     priceRange: {
       min: 140000,
       max: 520000,
@@ -3274,7 +3204,6 @@ Four Season Park is ideal for families and nature lovers seeking a serene living
     },
     status: 'Ready',
     totalUnits: 920,
-    availableUnits: 75,
     priceRange: {
       min: 120000,
       max: 420000,
@@ -3318,7 +3247,6 @@ Family Land creates lasting memories with regular community events and activitie
     },
     status: 'Ready',
     totalUnits: 2100,
-    availableUnits: 240,
     priceRange: {
       min: 90000,
       max: 380000,
@@ -3362,7 +3290,6 @@ Firdaws City appeals to families seeking a serene, garden-filled living environm
     },
     status: 'Under Construction',
     totalUnits: 2500,
-    availableUnits: 1800,
     priceRange: {
       min: 100000,
       max: 500000,
@@ -3406,7 +3333,6 @@ Dubai City represents the future of urban development in Kurdistan with attracti
     },
     status: 'Ready',
     totalUnits: 420,
-    availableUnits: 50,
     priceRange: {
       min: 140000,
       max: 520000,
@@ -3450,7 +3376,6 @@ Bakhtyari Twin Towers attracts buyers seeking an iconic address with distinctive
     },
     status: 'Ready',
     totalUnits: 360,
-    availableUnits: 40,
     priceRange: {
       min: 125000,
       max: 450000,
@@ -3494,7 +3419,6 @@ Queen Towers is perfect for those who appreciate elegant living with a touch of 
     },
     status: 'Ready',
     totalUnits: 1350,
-    availableUnits: 155,
     priceRange: {
       min: 85000,
       max: 340000,
@@ -3538,7 +3462,6 @@ Hana City appeals to families seeking a positive, supportive community environme
     },
     status: 'Ready',
     totalUnits: 1100,
-    availableUnits: 120,
     priceRange: {
       min: 90000,
       max: 360000,
@@ -3582,7 +3505,6 @@ Asuda City is ideal for families, retirees, and professionals seeking peaceful l
     },
     status: 'Ready',
     totalUnits: 850,
-    availableUnits: 70,
     priceRange: {
       min: 130000,
       max: 450000,
