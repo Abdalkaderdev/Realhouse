@@ -32,7 +32,7 @@
   }
 
   p {
-    color: var(--c-text-muted);
+    color: var(--c-text-2);
     margin-bottom: var(--space-8);
   }
 }
@@ -40,7 +40,7 @@
 // --- Hero Section ---
 .guide-page__hero {
   position: relative;
-  background: linear-gradient(135deg, var(--c-surface-1) 0%, var(--c-surface-2) 100%);
+  background: linear-gradient(135deg, var(--c-surface) 0%, var(--c-surface-2) 100%);
   padding: var(--space-20) 0 var(--space-16);
   border-bottom: 1px solid var(--c-border);
 
@@ -78,7 +78,7 @@
   display: flex;
   flex-wrap: wrap;
   gap: var(--space-4);
-  color: var(--c-text-muted);
+  color: var(--c-text-2);
   font-size: var(--text-sm);
 }
 
@@ -126,7 +126,7 @@
 
 // --- Table of Contents ---
 .guide-page__toc {
-  background: var(--c-surface-1);
+  background: var(--c-surface);
   border-radius: var(--radius-lg);
   padding: var(--space-6);
   border: 1px solid var(--c-border);
@@ -173,7 +173,7 @@
   display: block;
   padding: var(--space-2) var(--space-3);
   font-size: var(--text-sm);
-  color: var(--c-text-muted);
+  color: var(--c-text-2);
   text-decoration: none;
   border-radius: var(--radius-sm);
   transition: all 0.2s ease;
@@ -367,7 +367,7 @@
 
   &.active {
     .guide-page__faq-question {
-      background: var(--c-surface-1);
+      background: var(--c-surface);
     }
 
     .guide-page__faq-icon svg {
@@ -390,7 +390,7 @@
   transition: background 0.2s ease;
 
   &:hover {
-    background: var(--c-surface-1);
+    background: var(--c-surface);
   }
 }
 
@@ -421,7 +421,7 @@
 
   p {
     padding: 0 var(--space-5) var(--space-5);
-    color: var(--c-text-muted);
+    color: var(--c-text-2);
     line-height: 1.7;
   }
 }
@@ -448,7 +448,7 @@
 .guide-page__related-card {
   display: block;
   padding: var(--space-5);
-  background: var(--c-surface-1);
+  background: var(--c-surface);
   border: 1px solid var(--c-border);
   border-radius: var(--radius-md);
   text-decoration: none;
@@ -469,7 +469,7 @@
 
 .guide-page__related-card-meta {
   font-size: var(--text-sm);
-  color: var(--c-text-muted);
+  color: var(--c-text-2);
 }
 
 // --- Sidebar ---
@@ -526,7 +526,7 @@
 }
 
 .guide-page__quick-links {
-  background: var(--c-surface-1);
+  background: var(--c-surface);
   border-radius: var(--radius-lg);
   padding: var(--space-5);
   border: 1px solid var(--c-border);
@@ -549,7 +549,7 @@
   a {
     display: block;
     padding: var(--space-2) 0;
-    color: var(--c-text-muted);
+    color: var(--c-text-2);
     font-size: var(--text-sm);
     text-decoration: none;
     transition: color 0.2s ease;
@@ -564,7 +564,7 @@
 .guide-page__bottom-cta {
   margin-top: var(--space-12);
   padding: var(--space-12);
-  background: linear-gradient(135deg, var(--c-surface-1) 0%, var(--c-surface-2) 100%);
+  background: linear-gradient(135deg, var(--c-surface) 0%, var(--c-surface-2) 100%);
   border-radius: var(--radius-xl);
   text-align: center;
 
@@ -592,7 +592,7 @@
 }
 
 .guide-page__bottom-cta-text {
-  color: var(--c-text-muted);
+  color: var(--c-text-2);
   margin-bottom: var(--space-8);
   line-height: 1.6;
 }
@@ -634,7 +634,7 @@
   }
 
   p {
-    color: var(--c-text-muted);
+    color: var(--c-text-2);
     margin-bottom: var(--space-8);
   }
 }
@@ -642,7 +642,7 @@
 // --- Hero Section ---
 .market-report__hero {
   position: relative;
-  background: linear-gradient(135deg, var(--c-surface-1) 0%, var(--c-surface-2) 100%);
+  background: linear-gradient(135deg, var(--c-surface) 0%, var(--c-surface-2) 100%);
   padding: var(--space-20) 0 var(--space-16);
   border-bottom: 1px solid var(--c-border);
 
@@ -691,7 +691,7 @@
   display: flex;
   flex-wrap: wrap;
   gap: var(--space-4);
-  color: var(--c-text-muted);
+  color: var(--c-text-2);
   font-size: var(--text-sm);
 }
 
@@ -739,7 +739,7 @@
 
 // --- Table of Contents ---
 .market-report__toc {
-  background: var(--c-surface-1);
+  background: var(--c-surface);
   border-radius: var(--radius-lg);
   padding: var(--space-6);
   border: 1px solid var(--c-border);
@@ -786,7 +786,7 @@
   display: block;
   padding: var(--space-2) var(--space-3);
   font-size: var(--text-sm);
-  color: var(--c-text-muted);
+  color: var(--c-text-2);
   text-decoration: none;
   border-radius: var(--radius-sm);
   transition: all 0.2s ease;
@@ -855,7 +855,7 @@
 }
 
 .market-report__stat-card {
-  background: var(--c-surface-1);
+  background: var(--c-surface);
   border: 1px solid var(--c-border);
   border-radius: var(--radius-md);
   padding: var(--space-5);
@@ -873,7 +873,7 @@
 .market-report__stat-label {
   display: block;
   font-size: var(--text-sm);
-  color: var(--c-text-muted);
+  color: var(--c-text-2);
   margin-bottom: var(--space-2);
 }
 
@@ -898,7 +898,7 @@
 // --- Price Chart ---
 .market-report__chart {
   margin-top: var(--space-6);
-  background: var(--c-surface-1);
+  background: var(--c-surface);
   border-radius: var(--radius-lg);
   padding: var(--space-6);
   border: 1px solid var(--c-border);
@@ -1061,7 +1061,7 @@
 // --- Methodology ---
 .market-report__methodology {
   padding: var(--space-6);
-  background: var(--c-surface-1);
+  background: var(--c-surface);
   border-radius: var(--radius-lg);
   border: 1px solid var(--c-border);
   margin-bottom: var(--space-8);
@@ -1076,7 +1076,7 @@
 
 .market-report__methodology-text {
   font-size: var(--text-sm);
-  color: var(--c-text-muted);
+  color: var(--c-text-2);
   line-height: 1.6;
 }
 
@@ -1088,7 +1088,7 @@
 }
 
 .market-report__download-card {
-  background: var(--c-surface-1);
+  background: var(--c-surface);
   border: 2px solid var(--c-gold);
   border-radius: var(--radius-lg);
   padding: var(--space-6);
@@ -1105,13 +1105,13 @@
 
 .market-report__download-text {
   font-size: var(--text-sm);
-  color: var(--c-text-muted);
+  color: var(--c-text-2);
   margin-bottom: var(--space-4);
   line-height: 1.6;
 }
 
 .market-report__cta-card {
-  background: var(--c-surface-1);
+  background: var(--c-surface);
   border-radius: var(--radius-lg);
   padding: var(--space-6);
   border: 1px solid var(--c-border);
@@ -1127,7 +1127,7 @@
 
 .market-report__cta-text {
   font-size: var(--text-sm);
-  color: var(--c-text-muted);
+  color: var(--c-text-2);
   margin-bottom: var(--space-4);
   line-height: 1.6;
 }
@@ -1146,7 +1146,7 @@
 }
 
 .market-report__related-links {
-  background: var(--c-surface-1);
+  background: var(--c-surface);
   border-radius: var(--radius-lg);
   padding: var(--space-5);
   border: 1px solid var(--c-border);
@@ -1169,7 +1169,7 @@
   a {
     display: block;
     padding: var(--space-2) 0;
-    color: var(--c-text-muted);
+    color: var(--c-text-2);
     font-size: var(--text-sm);
     text-decoration: none;
     transition: color 0.2s ease;
@@ -1184,7 +1184,7 @@
 .market-report__bottom-cta {
   margin-top: var(--space-12);
   padding: var(--space-12);
-  background: linear-gradient(135deg, var(--c-surface-1) 0%, var(--c-surface-2) 100%);
+  background: linear-gradient(135deg, var(--c-surface) 0%, var(--c-surface-2) 100%);
   border-radius: var(--radius-xl);
   text-align: center;
 
@@ -1212,7 +1212,7 @@
 }
 
 .market-report__bottom-cta-text {
-  color: var(--c-text-muted);
+  color: var(--c-text-2);
   margin-bottom: var(--space-8);
   line-height: 1.6;
 }

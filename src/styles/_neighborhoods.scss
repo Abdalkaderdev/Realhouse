@@ -99,7 +99,7 @@ $neighborhoods-section-spacing: 4rem;
   // ─── Breadcrumb ──────────────────────────────────────────────────────────
   &__breadcrumb {
     padding: 1rem var(--container-pad);
-    background: var(--c-surface-1);
+    background: var(--c-surface);
     border-bottom: 1px solid var(--c-border);
 
     .breadcrumb {
@@ -120,7 +120,7 @@ $neighborhoods-section-spacing: 4rem;
 
         &::after {
           content: '/';
-          color: var(--c-text-muted);
+          color: var(--c-text-2);
         }
 
         &:last-child::after {
@@ -129,7 +129,7 @@ $neighborhoods-section-spacing: 4rem;
       }
 
       a {
-        color: var(--c-text-muted);
+        color: var(--c-text-2);
         text-decoration: none;
         transition: color 0.2s;
 
@@ -167,7 +167,7 @@ $neighborhoods-section-spacing: 4rem;
   }
 
   &__intro-text {
-    color: var(--c-text-muted);
+    color: var(--c-text-2);
     line-height: 1.7;
   }
 
@@ -333,7 +333,7 @@ $neighborhoods-section-spacing: 4rem;
 
   &__description {
     font-size: 0.875rem;
-    color: var(--c-text-muted);
+    color: var(--c-text-2);
     line-height: 1.6;
     margin-bottom: 1rem;
     display: -webkit-box;
@@ -354,8 +354,8 @@ $neighborhoods-section-spacing: 4rem;
     align-items: center;
     gap: 0.25rem;
     font-size: 0.75rem;
-    color: var(--c-text-muted);
-    background: var(--c-surface-1);
+    color: var(--c-text-2);
+    background: var(--c-surface);
     padding: 0.25rem 0.5rem;
     border-radius: 4px;
   }
@@ -531,7 +531,7 @@ $neighborhoods-section-spacing: 4rem;
   // ─── Breadcrumb ──────────────────────────────────────────────────────────
   &__breadcrumb {
     padding: 1rem var(--container-pad);
-    background: var(--c-surface-1);
+    background: var(--c-surface);
     border-bottom: 1px solid var(--c-border);
 
     .breadcrumb {
@@ -552,7 +552,7 @@ $neighborhoods-section-spacing: 4rem;
 
         &::after {
           content: '/';
-          color: var(--c-text-muted);
+          color: var(--c-text-2);
         }
 
         &:last-child::after {
@@ -561,7 +561,7 @@ $neighborhoods-section-spacing: 4rem;
       }
 
       a {
-        color: var(--c-text-muted);
+        color: var(--c-text-2);
         text-decoration: none;
         transition: color 0.2s;
 
@@ -599,7 +599,7 @@ $neighborhoods-section-spacing: 4rem;
   }
 
   &__section-subtitle {
-    color: var(--c-text-muted);
+    color: var(--c-text-2);
     font-size: 1rem;
   }
 
@@ -644,7 +644,7 @@ $neighborhoods-section-spacing: 4rem;
   }
 
   &__highlights {
-    background: var(--c-surface-1);
+    background: var(--c-surface);
     border-radius: $neighborhoods-card-radius;
     padding: 2rem;
   }
@@ -699,7 +699,7 @@ $neighborhoods-section-spacing: 4rem;
   }
 
   &__price-card {
-    background: var(--c-surface-1);
+    background: var(--c-surface);
     border-radius: 12px;
     padding: 1.5rem;
     text-align: center;
@@ -710,7 +710,7 @@ $neighborhoods-section-spacing: 4rem;
     font-size: 0.75rem;
     text-transform: uppercase;
     letter-spacing: 0.05em;
-    color: var(--c-text-muted);
+    color: var(--c-text-2);
     margin-bottom: 0.5rem;
   }
 
@@ -742,11 +742,11 @@ $neighborhoods-section-spacing: 4rem;
     }
 
     th {
-      background: var(--c-surface-1);
+      background: var(--c-surface);
       font-size: 0.75rem;
       text-transform: uppercase;
       letter-spacing: 0.05em;
-      color: var(--c-text-muted);
+      color: var(--c-text-2);
       font-weight: 600;
     }
 
@@ -759,7 +759,7 @@ $neighborhoods-section-spacing: 4rem;
     }
 
     tr:hover td {
-      background: var(--c-surface-1);
+      background: var(--c-surface);
     }
   }
 
@@ -806,7 +806,7 @@ $neighborhoods-section-spacing: 4rem;
   }
 
   &__amenity-card {
-    background: var(--c-surface-1);
+    background: var(--c-surface);
     border-radius: $neighborhoods-card-radius;
     padding: 1.5rem;
     border: 1px solid var(--c-border);
@@ -864,7 +864,7 @@ $neighborhoods-section-spacing: 4rem;
 
   &__amenity-desc {
     font-size: 0.75rem;
-    color: var(--c-text-muted);
+    color: var(--c-text-2);
     width: 100%;
   }
 
@@ -891,7 +891,7 @@ $neighborhoods-section-spacing: 4rem;
     display: flex;
     align-items: flex-start;
     gap: 1rem;
-    background: var(--c-surface-1);
+    background: var(--c-surface);
     border-radius: 12px;
     padding: 1.5rem;
   }
@@ -934,7 +934,7 @@ $neighborhoods-section-spacing: 4rem;
 
   &__transport-details {
     font-size: 0.75rem;
-    color: var(--c-text-muted);
+    color: var(--c-text-2);
     margin: 0;
   }
 
@@ -944,7 +944,7 @@ $neighborhoods-section-spacing: 4rem;
   }
 
   &__lifestyle-content {
-    background: var(--c-surface-1);
+    background: var(--c-surface);
     border-radius: $neighborhoods-card-radius;
     padding: 2rem;
   }
@@ -971,7 +971,7 @@ $neighborhoods-section-spacing: 4rem;
       font-size: 0.875rem;
       text-transform: uppercase;
       letter-spacing: 0.05em;
-      color: var(--c-text-muted);
+      color: var(--c-text-2);
       margin-bottom: 0.75rem;
     }
 
@@ -1012,7 +1012,7 @@ $neighborhoods-section-spacing: 4rem;
 
   &__lifestyle-feature-label {
     font-size: 0.75rem;
-    color: var(--c-text-muted);
+    color: var(--c-text-2);
   }
 
   &__lifestyle-feature-value {
@@ -1122,7 +1122,7 @@ $neighborhoods-section-spacing: 4rem;
 
     dt {
       font-size: 0.75rem;
-      color: var(--c-text-muted);
+      color: var(--c-text-2);
     }
 
     dd {
@@ -1135,7 +1135,7 @@ $neighborhoods-section-spacing: 4rem;
 
   &__sidebar-text {
     font-size: 0.875rem;
-    color: var(--c-text-muted);
+    color: var(--c-text-2);
     margin-bottom: 1rem;
   }
 
@@ -1149,7 +1149,7 @@ $neighborhoods-section-spacing: 4rem;
     color: var(--c-gold);
     text-decoration: none;
     font-weight: 500;
-    background: var(--c-surface-1);
+    background: var(--c-surface);
     border-radius: 8px;
     transition: background-color 0.2s;
 
@@ -1220,7 +1220,7 @@ $neighborhoods-section-spacing: 4rem;
   // ─── Other Neighborhoods Section ─────────────────────────────────────────
   &__other {
     padding: 4rem var(--container-pad);
-    background: var(--c-surface-1);
+    background: var(--c-surface);
   }
 
   &__other-grid {
@@ -1303,7 +1303,7 @@ $neighborhoods-section-spacing: 4rem;
     }
 
     p {
-      color: var(--c-text-muted);
+      color: var(--c-text-2);
       margin-bottom: 2rem;
     }
   }
@@ -1418,7 +1418,7 @@ $neighborhoods-section-spacing: 4rem;
 
   .project-card__location {
     font-size: 0.75rem;
-    color: var(--c-text-muted);
+    color: var(--c-text-2);
     margin-bottom: 0.25rem;
   }
 }

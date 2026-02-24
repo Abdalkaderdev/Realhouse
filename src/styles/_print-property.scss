@@ -11,8 +11,8 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  gap: var(--space-xs);
-  padding: var(--space-sm) var(--space-md);
+  gap: var(--space-1);
+  padding: var(--space-2) var(--space-4);
   background: var(--c-surface);
   border: 1px solid var(--c-border);
   border-radius: var(--radius-md);
@@ -31,7 +31,7 @@
   &:hover {
     background: var(--c-gold);
     border-color: var(--c-gold);
-    color: var(--c-background);
+    color: var(--c-bg);
   }
 
   &:focus-visible {
@@ -40,7 +40,7 @@
   }
 
   &--icon {
-    padding: var(--space-sm);
+    padding: var(--space-2);
     width: 40px;
     height: 40px;
 
@@ -52,7 +52,7 @@
   &--download {
     background: var(--c-gold);
     border-color: var(--c-gold);
-    color: var(--c-background);
+    color: var(--c-bg);
 
     &:hover {
       background: var(--c-gold-light);
@@ -65,7 +65,7 @@
 
 .print-property-actions {
   display: flex;
-  gap: var(--space-sm);
+  gap: var(--space-2);
   align-items: center;
 }
 
