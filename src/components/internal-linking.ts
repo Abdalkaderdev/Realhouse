@@ -6,6 +6,7 @@
 import { properties, type Property, generatePropertySlug } from '../data/properties';
 import { projects, type Project } from '../data/projects';
 import { blogPosts, type BlogPost } from '../data/blog';
+import { t } from '../i18n';
 
 // ─── Helper Functions ─────────────────────────────────────────────────────
 function createElement<K extends keyof HTMLElementTagNameMap>(
@@ -334,10 +335,10 @@ export function createRelatedPropertiesSection(relatedProps: Property[]): HTMLEl
   const container = createElement('div', 'container');
 
   const header = createElement('div', 'related-properties__header');
-  const title = createElement('h2', 'related-properties__title', 'Similar Properties You May Like');
+  const title = createElement('h2', 'related-properties__title', t('property.similarProperties'));
   header.appendChild(title);
 
-  const viewAllLink = createElement('a', 'related-properties__view-all', 'View All Properties');
+  const viewAllLink = createElement('a', 'related-properties__view-all', t('buttons.viewAll'));
   viewAllLink.href = '/properties';
   viewAllLink.setAttribute('data-route', '');
   viewAllLink.appendChild(createSVGUse('icon-arrow-right'));
@@ -382,7 +383,7 @@ export function createRelatedPropertiesSection(relatedProps: Property[]): HTMLEl
         ? `$${(property.price / 1000000).toFixed(2)}M`
         : `$${property.price.toLocaleString()}`;
     } else {
-      price.textContent = 'Contact for Price';
+      price.textContent = t('mortgage.contactForPrice');
     }
     content.appendChild(price);
 
@@ -414,10 +415,10 @@ export function createRelatedProjectsSection(relatedProjs: Project[]): HTMLEleme
   const container = createElement('div', 'container');
 
   const header = createElement('div', 'related-projects__header');
-  const title = createElement('h2', 'related-projects__title', 'Explore More Development Projects');
+  const title = createElement('h2', 'related-projects__title', t('cta.viewDevelopmentProjects'));
   header.appendChild(title);
 
-  const viewAllLink = createElement('a', 'related-projects__view-all', 'View All Projects');
+  const viewAllLink = createElement('a', 'related-projects__view-all', t('buttons.viewAll'));
   viewAllLink.href = '/projects';
   viewAllLink.setAttribute('data-route', '');
   viewAllLink.appendChild(createSVGUse('icon-arrow-right'));
@@ -509,7 +510,7 @@ export function createEnhancedFooter(): HTMLElement {
 
   // Main Pages Column
   const mainPagesCol = createElement('div', 'footer__col');
-  mainPagesCol.appendChild(createElement('h4', undefined, 'Quick Links'));
+  mainPagesCol.appendChild(createElement('h4', undefined, t('footer.quickLinks')));
 
   const mainPages = [
     { name: 'Home', url: '/' },
@@ -533,7 +534,7 @@ export function createEnhancedFooter(): HTMLElement {
 
   // Property Types Column
   const typesCol = createElement('div', 'footer__col');
-  typesCol.appendChild(createElement('h4', undefined, 'Property Types'));
+  typesCol.appendChild(createElement('h4', undefined, t('footer.propertyTypes')));
 
   const propertyTypes = [
     { name: 'Apartments for Sale', url: '/properties?type=Apartment' },
@@ -556,7 +557,7 @@ export function createEnhancedFooter(): HTMLElement {
 
   // Browse By Column (Hub Pages)
   const browseCol = createElement('div', 'footer__col');
-  browseCol.appendChild(createElement('h4', undefined, 'Browse Properties'));
+  browseCol.appendChild(createElement('h4', undefined, t('footer.browseProperties')));
 
   const browseLinks = [
     { name: 'Properties for Sale', url: '/buy' },
@@ -579,7 +580,7 @@ export function createEnhancedFooter(): HTMLElement {
 
   // Locations Column
   const locationsCol = createElement('div', 'footer__col');
-  locationsCol.appendChild(createElement('h4', undefined, 'Popular Locations'));
+  locationsCol.appendChild(createElement('h4', undefined, t('footer.popularLocations')));
 
   const locations = [
     { name: 'Properties in Gulan', url: '/properties?district=Gulan' },
@@ -636,7 +637,7 @@ export function createEnhancedFooter(): HTMLElement {
   const middle = createElement('div', 'footer__middle');
 
   const social = createElement('div', 'footer__social');
-  const socialTitle = createElement('h4', undefined, 'Follow Us');
+  const socialTitle = createElement('h4', undefined, t('common.followUs'));
   social.appendChild(socialTitle);
 
   const socialLinks = createElement('div', 'footer__social-links');
@@ -669,17 +670,17 @@ export function createEnhancedFooter(): HTMLElement {
 
   const legal = createElement('div', 'footer__legal');
 
-  const privacyLink = createElement('a', undefined, 'Privacy Policy');
+  const privacyLink = createElement('a', undefined, t('common.privacyPolicy'));
   privacyLink.href = '/privacy';
   privacyLink.setAttribute('data-route', '');
   legal.appendChild(privacyLink);
 
-  const termsLink = createElement('a', undefined, 'Terms of Service');
+  const termsLink = createElement('a', undefined, t('common.termsOfService'));
   termsLink.href = '/terms';
   termsLink.setAttribute('data-route', '');
   legal.appendChild(termsLink);
 
-  const sitemapLink = createElement('a', undefined, 'Sitemap');
+  const sitemapLink = createElement('a', undefined, t('common.sitemap'));
   sitemapLink.href = '/sitemap';
   sitemapLink.setAttribute('data-route', '');
   legal.appendChild(sitemapLink);

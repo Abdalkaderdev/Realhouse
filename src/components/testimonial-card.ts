@@ -4,6 +4,7 @@
 // ═══════════════════════════════════════════════════════════════════════════
 
 import type { Testimonial } from '../data/testimonials';
+import { t } from '../i18n';
 
 // ─── Helper Functions ─────────────────────────────────────────────────────
 function createElement<K extends keyof HTMLElementTagNameMap>(
@@ -184,7 +185,7 @@ export function createTestimonialCard(
   if (testimonial.isVerifiedBuyer) {
     const verifiedBadge = createElement('span', 'testimonial-card__verified');
     verifiedBadge.appendChild(createVerifiedIcon());
-    verifiedBadge.setAttribute('title', 'Verified Buyer');
+    verifiedBadge.setAttribute('title', t('testimonials.verifiedBuyer'));
     avatarWrapper.appendChild(verifiedBadge);
   }
   header.appendChild(avatarWrapper);
@@ -330,7 +331,7 @@ export function createVideoTestimonialCard(testimonial: Testimonial): HTMLElemen
   playButton.setAttribute('data-video-url', testimonial.videoUrl || '');
   playButton.appendChild(createPlayIcon());
 
-  const playText = createElement('span', 'testimonial-card__play-text', 'Watch Video');
+  const playText = createElement('span', 'testimonial-card__play-text', t('testimonials.watchVideo'));
   playButton.appendChild(playText);
   videoSection.appendChild(playButton);
 
@@ -371,7 +372,7 @@ export function createVideoTestimonialCard(testimonial: Testimonial): HTMLElemen
   if (testimonial.isVerifiedBuyer) {
     const badge = createElement('span', 'testimonial-card__verified-badge');
     badge.appendChild(createVerifiedIcon());
-    badge.appendChild(document.createTextNode('Verified'));
+    badge.appendChild(document.createTextNode(t('testimonials.verified')));
     author.appendChild(badge);
   }
 
@@ -404,7 +405,7 @@ export function createTestimonialWidget(testimonials: Testimonial[], limit: numb
 
   // View all link
   const viewAll = createElement('div', 'testimonial-widget__footer');
-  const viewAllLink = createElement('a', 'testimonial-widget__view-all', 'Read All Reviews');
+  const viewAllLink = createElement('a', 'testimonial-widget__view-all', t('common.viewAll'));
   viewAllLink.href = '/testimonials';
   viewAllLink.setAttribute('data-route', '');
 

@@ -4,6 +4,7 @@
 // =============================================================================
 
 import { getShareUrl } from '../seo/social';
+import { t } from '../i18n';
 
 // =============================================================================
 // Types
@@ -29,47 +30,50 @@ export type SharePlatform = 'facebook' | 'twitter' | 'linkedin' | 'pinterest' | 
 
 const DEFAULT_PLATFORMS: SharePlatform[] = ['facebook', 'twitter', 'linkedin', 'whatsapp', 'copy'];
 
-const PLATFORM_CONFIG: Record<SharePlatform, {
+// Platform config getter function to enable dynamic translation
+function getPlatformConfig(): Record<SharePlatform, {
   name: string;
   color: string;
   ariaLabel: string;
-}> = {
-  facebook: {
-    name: 'Facebook',
-    color: '#1877F2',
-    ariaLabel: 'Share on Facebook',
-  },
-  twitter: {
-    name: 'X',
-    color: '#000000',
-    ariaLabel: 'Share on X (Twitter)',
-  },
-  linkedin: {
-    name: 'LinkedIn',
-    color: '#0A66C2',
-    ariaLabel: 'Share on LinkedIn',
-  },
-  pinterest: {
-    name: 'Pinterest',
-    color: '#E60023',
-    ariaLabel: 'Save to Pinterest',
-  },
-  whatsapp: {
-    name: 'WhatsApp',
-    color: '#25D366',
-    ariaLabel: 'Share on WhatsApp',
-  },
-  telegram: {
-    name: 'Telegram',
-    color: '#0088CC',
-    ariaLabel: 'Share on Telegram',
-  },
-  copy: {
-    name: 'Copy Link',
-    color: '#6B7280',
-    ariaLabel: 'Copy link to clipboard',
-  },
-};
+}> {
+  return {
+    facebook: {
+      name: 'Facebook',
+      color: '#1877F2',
+      ariaLabel: t('share.shareOnFacebook'),
+    },
+    twitter: {
+      name: 'X',
+      color: '#000000',
+      ariaLabel: t('share.shareOnTwitter'),
+    },
+    linkedin: {
+      name: 'LinkedIn',
+      color: '#0A66C2',
+      ariaLabel: t('share.shareOnLinkedIn'),
+    },
+    pinterest: {
+      name: 'Pinterest',
+      color: '#E60023',
+      ariaLabel: t('share.shareOnPinterest'),
+    },
+    whatsapp: {
+      name: 'WhatsApp',
+      color: '#25D366',
+      ariaLabel: t('share.shareOnWhatsApp'),
+    },
+    telegram: {
+      name: 'Telegram',
+      color: '#0088CC',
+      ariaLabel: t('share.shareOnTelegram'),
+    },
+    copy: {
+      name: t('share.copyLink'),
+      color: '#6B7280',
+      ariaLabel: t('share.copyLink'),
+    },
+  };
+}
 
 // =============================================================================
 // SVG Icon Creators (Safe DOM-based approach)
@@ -253,16 +257,17 @@ export function createShareButtons(config: ShareButtonsConfig): HTMLElement {
   const style = config.style || 'horizontal';
   const size = config.size || 'md';
   const showLabels = config.showLabels ?? false;
+  const PLATFORM_CONFIG = getPlatformConfig();
 
   const container = document.createElement('div');
   container.className = `share-buttons share-buttons--${style} share-buttons--${size}`;
   container.setAttribute('role', 'group');
-  container.setAttribute('aria-label', 'Share this content');
+  container.setAttribute('aria-label', t('share.shareThis'));
 
   // Create share label
   const label = document.createElement('span');
   label.className = 'share-buttons__label';
-  label.textContent = 'Share:';
+  label.textContent = t('share.share') + ':';
   container.appendChild(label);
 
   // Create buttons container
@@ -483,16 +488,17 @@ export function createBlogShareButtons(post: {
  * Create a floating share button that expands on hover/click
  */
 export function createFloatingShareButton(config: ShareButtonsConfig): HTMLElement {
+  const PLATFORM_CONFIG = getPlatformConfig();
   const container = document.createElement('div');
   container.className = 'floating-share';
   container.setAttribute('role', 'group');
-  container.setAttribute('aria-label', 'Share options');
+  container.setAttribute('aria-label', t('share.shareOptions'));
 
   // Main toggle button
   const toggleBtn = document.createElement('button');
   toggleBtn.type = 'button';
   toggleBtn.className = 'floating-share__toggle';
-  toggleBtn.setAttribute('aria-label', 'Open share menu');
+  toggleBtn.setAttribute('aria-label', t('share.openShareMenu'));
   toggleBtn.setAttribute('aria-expanded', 'false');
   toggleBtn.appendChild(createShareIcon());
 
@@ -555,6 +561,7 @@ export function createInlineShareLinks(config: {
   title: string;
   platforms?: SharePlatform[];
 }): HTMLElement {
+  const PLATFORM_CONFIG = getPlatformConfig();
   const platforms = config.platforms || ['twitter', 'facebook', 'linkedin'];
   const container = document.createElement('div');
   container.className = 'inline-share-links';

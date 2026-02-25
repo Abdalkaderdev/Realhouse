@@ -348,6 +348,7 @@ export interface CoreTranslations {
     print: string;
     loanSummary: string;
     amortizationSchedule: string;
+    yearlyAmortization: string;
     monthly: string;
     yearly: string;
     year: string;
@@ -358,6 +359,92 @@ export interface CoreTranslations {
     years: string;
     perAnnum: string;
     downPaymentError: string;
+    showAllMonths: string;
+    typicalRates: string;
+    resultsTitle: string;
+    generatedOn: string;
+    disclaimer: string;
+    poweredBy: string;
+    contactForPrice: string;
+  };
+
+  servicesPage: {
+    heroTitle: string;
+    heroBadge: string;
+    heroSubtitle: string;
+    whyChooseTitle: string;
+    whyChooseSubtitle: string;
+    testimonialsTitle: string;
+    ctaTitle: string;
+    ctaText: string;
+    viewProperties: string;
+    viewAllServices: string;
+    serviceNotFound: string;
+    serviceNotFoundText: string;
+    serviceFeatures: string;
+    howItWorks: string;
+    keyBenefits: string;
+    relatedServices: string;
+    featuredProperties: string;
+    viewAllProperties: string;
+    whatClientsSay: string;
+    readyToStart: string;
+    contactForAssistance: string;
+    propertiesListed: string;
+    happyClients: string;
+    yearsExperience: string;
+    clientSatisfaction: string;
+  };
+
+  faqPage: {
+    title: string;
+    subtitle: string;
+    searchPlaceholder: string;
+    searchAriaLabel: string;
+    questionsAnswered: string;
+    stillHaveQuestions: string;
+    expertTeamReady: string;
+    viewAllFaqs: string;
+  };
+
+  share: {
+    share: string;
+    shareThis: string;
+    shareOptions: string;
+    openShareMenu: string;
+    shareOnFacebook: string;
+    shareOnTwitter: string;
+    shareOnLinkedIn: string;
+    shareOnPinterest: string;
+    shareOnWhatsApp: string;
+    shareOnTelegram: string;
+    copyLink: string;
+    linkCopied: string;
+  };
+
+  testimonials: {
+    verifiedBuyer: string;
+    verified: string;
+    watchVideo: string;
+  };
+
+  errors: {
+    pageNotFound: string;
+    serviceNotFound: string;
+    propertyNotFound: string;
+    goBack: string;
+    backToHome: string;
+  };
+
+  breadcrumbs: {
+    home: string;
+    services: string;
+    properties: string;
+    projects: string;
+    blog: string;
+    faq: string;
+    about: string;
+    contact: string;
   };
 }
 

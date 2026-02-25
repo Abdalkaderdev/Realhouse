@@ -234,7 +234,7 @@ function createPaymentChart(principal: number, interest: number): HTMLElement {
   const principalItem = createElement('div', 'mortgage-calc__legend-item');
   const principalDot = createElement('span', 'mortgage-calc__legend-dot mortgage-calc__legend-dot--principal');
   const principalLabel = createElement('span', 'mortgage-calc__legend-label');
-  principalLabel.textContent = `Principal: ${formatCurrency(principal)} (${principalPercent.toFixed(1)}%)`;
+  principalLabel.textContent = `${t('mortgage.principal')}: ${formatCurrency(principal)} (${principalPercent.toFixed(1)}%)`;
   principalItem.appendChild(principalDot);
   principalItem.appendChild(principalLabel);
   legend.appendChild(principalItem);
@@ -242,7 +242,7 @@ function createPaymentChart(principal: number, interest: number): HTMLElement {
   const interestItem = createElement('div', 'mortgage-calc__legend-item');
   const interestDot = createElement('span', 'mortgage-calc__legend-dot mortgage-calc__legend-dot--interest');
   const interestLabel = createElement('span', 'mortgage-calc__legend-label');
-  interestLabel.textContent = `Interest: ${formatCurrency(interest)} (${interestPercent.toFixed(1)}%)`;
+  interestLabel.textContent = `${t('mortgage.interest')}: ${formatCurrency(interest)} (${interestPercent.toFixed(1)}%)`;
   interestItem.appendChild(interestDot);
   interestItem.appendChild(interestLabel);
   legend.appendChild(interestItem);
@@ -257,14 +257,14 @@ function createPaymentChart(principal: number, interest: number): HTMLElement {
 function createAmortizationTable(breakdown: MonthlyBreakdown[], showYearly: boolean = true): HTMLElement {
   const container = createElement('div', 'mortgage-calc__amortization');
 
-  const header = createElement('h4', 'mortgage-calc__section-title', 'Amortization Schedule');
+  const header = createElement('h4', 'mortgage-calc__section-title', t('mortgage.amortizationSchedule'));
   container.appendChild(header);
 
   // Toggle between monthly and yearly view
   const toggleContainer = createElement('div', 'mortgage-calc__toggle-container');
 
   const monthlyBtn = createElement('button', `mortgage-calc__toggle-btn ${!showYearly ? 'active' : ''}`, t('mortgage.monthly'));
-  const yearlyBtn = createElement('button', `mortgage-calc__toggle-btn ${showYearly ? 'active' : ''}`, 'Yearly');
+  const yearlyBtn = createElement('button', `mortgage-calc__toggle-btn ${showYearly ? 'active' : ''}`, t('mortgage.yearly'));
 
   toggleContainer.appendChild(monthlyBtn);
   toggleContainer.appendChild(yearlyBtn);
@@ -277,8 +277,8 @@ function createAmortizationTable(breakdown: MonthlyBreakdown[], showYearly: bool
   const thead = createElement('thead');
   const headerRow = createElement('tr');
   const headers = showYearly
-    ? ['Year', 'Principal', 'Interest', 'Balance']
-    : ['Month', 'Principal', 'Interest', 'Balance'];
+    ? [t('mortgage.year'), t('mortgage.principal'), t('mortgage.interest'), t('mortgage.balance')]
+    : [t('mortgage.month'), t('mortgage.principal'), t('mortgage.interest'), t('mortgage.balance')];
 
   headers.forEach(h => {
     const th = createElement('th', '', h);
@@ -334,7 +334,7 @@ function createAmortizationTable(breakdown: MonthlyBreakdown[], showYearly: bool
       const expandRow = createElement('tr', 'mortgage-calc__expand-row');
       const expandCell = createElement('td');
       expandCell.setAttribute('colspan', '4');
-      const expandBtn = createElement('button', 'mortgage-calc__expand-btn', `Show all ${breakdown.length} months`);
+      const expandBtn = createElement('button', 'mortgage-calc__expand-btn', t('mortgage.showAllMonths', { count: breakdown.length }));
       expandCell.appendChild(expandBtn);
       expandRow.appendChild(expandCell);
       tbody.appendChild(expandRow);
@@ -369,13 +369,13 @@ function createResultsSection(result: MortgageResult, input: MortgageInput): HTM
   const summaryGrid = createElement('div', 'mortgage-calc__summary-grid');
 
   const summaryItems = [
-    { label: 'Property Price', value: formatCurrency(input.propertyPrice) },
-    { label: 'Down Payment', value: `${formatCurrency(input.downPayment)} (${input.downPaymentPercent.toFixed(0)}%)` },
-    { label: 'Loan Amount', value: formatCurrency(result.loanAmount) },
-    { label: 'Loan Term', value: `${input.loanTerm} years` },
-    { label: 'Interest Rate', value: `${input.interestRate}% p.a.` },
-    { label: 'Total Payment', value: formatCurrency(result.totalPayment) },
-    { label: 'Total Interest', value: formatCurrency(result.totalInterest) }
+    { label: t('mortgage.propertyPrice'), value: formatCurrency(input.propertyPrice) },
+    { label: t('mortgage.downPayment'), value: `${formatCurrency(input.downPayment)} (${input.downPaymentPercent.toFixed(0)}%)` },
+    { label: t('mortgage.loanAmount'), value: formatCurrency(result.loanAmount) },
+    { label: t('mortgage.loanTerm'), value: `${input.loanTerm} ${t('mortgage.years')}` },
+    { label: t('mortgage.interestRateShort'), value: `${input.interestRate}% ${t('mortgage.perAnnum')}` },
+    { label: t('mortgage.totalPayment'), value: formatCurrency(result.totalPayment) },
+    { label: t('mortgage.totalInterest'), value: formatCurrency(result.totalInterest) }
   ];
 
   summaryItems.forEach(item => {
@@ -428,7 +428,7 @@ export function createMortgageCalculator(options: MortgageCalculatorOptions = {}
   if (showTitle) {
     const header = createElement('div', 'mortgage-calc__header');
     header.appendChild(createCalculatorIcon());
-    const title = createElement('h3', 'mortgage-calc__title', 'Mortgage Calculator');
+    const title = createElement('h3', 'mortgage-calc__title', t('mortgage.title'));
     header.appendChild(title);
     container.appendChild(header);
   }
@@ -538,7 +538,7 @@ export function createMortgageCalculator(options: MortgageCalculatorOptions = {}
 
   const terms = [5, 10, 15, 20, 25, 30];
   terms.forEach(term => {
-    const option = createElement('option', '', `${term} years`);
+    const option = createElement('option', '', `${term} ${t('mortgage.years')}`);
     option.value = String(term);
     if (term === 20) option.selected = true;
     termSelect.appendChild(option);
@@ -556,7 +556,7 @@ export function createMortgageCalculator(options: MortgageCalculatorOptions = {}
   // Info tooltip
   const rateInfo = createElement('span', 'mortgage-calc__tooltip');
   rateInfo.appendChild(createInfoIcon());
-  const rateTooltip = createElement('span', 'mortgage-calc__tooltip-text', 'Typical Iraq mortgage rates: 8-12%');
+  const rateTooltip = createElement('span', 'mortgage-calc__tooltip-text', t('mortgage.typicalRates'));
   rateInfo.appendChild(rateTooltip);
   rateLabelWrapper.appendChild(rateInfo);
   rateGroup.appendChild(rateLabelWrapper);
@@ -608,7 +608,7 @@ export function createMortgageCalculator(options: MortgageCalculatorOptions = {}
   const printBtn = createElement('button', 'btn btn--outline mortgage-calc__print');
   printBtn.type = 'button';
   printBtn.appendChild(createPrintIcon());
-  const printText = document.createTextNode(' Print Results');
+  const printText = document.createTextNode(` ${t('mortgage.print')}`);
   printBtn.appendChild(printText);
   actionsContainer.appendChild(printBtn);
 
@@ -736,18 +736,18 @@ export function createMortgageCalculator(options: MortgageCalculatorOptions = {}
     const body = doc.createElement('body');
 
     const h1 = doc.createElement('h1');
-    h1.textContent = 'Mortgage Calculator Results';
+    h1.textContent = t('mortgage.resultsTitle');
     body.appendChild(h1);
 
     const datePara = doc.createElement('p');
-    datePara.textContent = 'Generated on ' + new Date().toLocaleDateString('en-US', { dateStyle: 'full' });
+    datePara.textContent = t('mortgage.generatedOn') + ' ' + new Date().toLocaleDateString('en-US', { dateStyle: 'full' });
     body.appendChild(datePara);
 
     const mainResult = doc.createElement('div');
     mainResult.className = 'main-result';
     const mainLabel = doc.createElement('div');
     mainLabel.className = 'label';
-    mainLabel.textContent = 'Monthly Payment';
+    mainLabel.textContent = t('mortgage.monthlyPayment');
     mainResult.appendChild(mainLabel);
     const mainValue = doc.createElement('div');
     mainValue.className = 'value';
@@ -756,23 +756,23 @@ export function createMortgageCalculator(options: MortgageCalculatorOptions = {}
     body.appendChild(mainResult);
 
     const summaryTitle = doc.createElement('h2');
-    summaryTitle.textContent = 'Loan Summary';
+    summaryTitle.textContent = t('mortgage.loanSummary');
     body.appendChild(summaryTitle);
 
     const grid = doc.createElement('div');
     grid.className = 'result-grid';
 
-    const summaryItems = [
-      { label: 'Property Price', value: formatCurrency(currentInput.propertyPrice) },
-      { label: 'Down Payment', value: formatCurrency(currentInput.downPayment) + ' (' + currentInput.downPaymentPercent.toFixed(0) + '%)' },
-      { label: 'Loan Amount', value: formatCurrency(currentResult.loanAmount) },
-      { label: 'Loan Term', value: currentInput.loanTerm + ' years' },
-      { label: 'Interest Rate', value: currentInput.interestRate + '% p.a.' },
-      { label: 'Total Payment', value: formatCurrency(currentResult.totalPayment) },
-      { label: 'Total Interest', value: formatCurrency(currentResult.totalInterest) }
+    const printSummaryItems = [
+      { label: t('mortgage.propertyPrice'), value: formatCurrency(currentInput.propertyPrice) },
+      { label: t('mortgage.downPayment'), value: formatCurrency(currentInput.downPayment) + ' (' + currentInput.downPaymentPercent.toFixed(0) + '%)' },
+      { label: t('mortgage.loanAmount'), value: formatCurrency(currentResult.loanAmount) },
+      { label: t('mortgage.loanTerm'), value: currentInput.loanTerm + ' ' + t('mortgage.years') },
+      { label: t('mortgage.interestRateShort'), value: currentInput.interestRate + '% ' + t('mortgage.perAnnum') },
+      { label: t('mortgage.totalPayment'), value: formatCurrency(currentResult.totalPayment) },
+      { label: t('mortgage.totalInterest'), value: formatCurrency(currentResult.totalInterest) }
     ];
 
-    summaryItems.forEach(item => {
+    printSummaryItems.forEach(item => {
       const itemDiv = doc.createElement('div');
       itemDiv.className = 'result-item';
       const labelDiv = doc.createElement('div');
@@ -788,21 +788,21 @@ export function createMortgageCalculator(options: MortgageCalculatorOptions = {}
     body.appendChild(grid);
 
     const amortTitle = doc.createElement('h2');
-    amortTitle.textContent = 'Yearly Amortization Schedule';
+    amortTitle.textContent = t('mortgage.yearlyAmortization');
     body.appendChild(amortTitle);
 
     const table = doc.createElement('table');
     const thead = doc.createElement('thead');
-    const headerRow = doc.createElement('tr');
-    ['Year', 'Principal', 'Interest', 'Balance'].forEach(h => {
+    const printHeaderRow = doc.createElement('tr');
+    [t('mortgage.year'), t('mortgage.principal'), t('mortgage.interest'), t('mortgage.balance')].forEach(h => {
       const th = doc.createElement('th');
       th.textContent = h;
-      headerRow.appendChild(th);
+      printHeaderRow.appendChild(th);
     });
-    thead.appendChild(headerRow);
+    thead.appendChild(printHeaderRow);
     table.appendChild(thead);
 
-    const tbody = doc.createElement('tbody');
+    const printTbody = doc.createElement('tbody');
     const years = Math.ceil(currentResult.monthlyBreakdown.length / 12);
     for (let year = 1; year <= years; year++) {
       const startMonth = (year - 1) * 12;
@@ -813,24 +813,24 @@ export function createMortgageCalculator(options: MortgageCalculatorOptions = {}
       const yearInterest = yearData.reduce((sum, m) => sum + m.interest, 0);
       const endBalance = yearData[yearData.length - 1]?.balance || 0;
 
-      const row = doc.createElement('tr');
+      const printRow = doc.createElement('tr');
       [String(year), formatCurrency(yearPrincipal), formatCurrency(yearInterest), formatCurrency(endBalance)].forEach(val => {
         const td = doc.createElement('td');
         td.textContent = val;
-        row.appendChild(td);
+        printRow.appendChild(td);
       });
-      tbody.appendChild(row);
+      printTbody.appendChild(printRow);
     }
-    table.appendChild(tbody);
+    table.appendChild(printTbody);
     body.appendChild(table);
 
     const footer = doc.createElement('div');
     footer.className = 'footer';
     const footerP1 = doc.createElement('p');
-    footerP1.textContent = 'This calculation is for illustrative purposes only. Actual rates and terms may vary.';
+    footerP1.textContent = t('mortgage.disclaimer');
     footer.appendChild(footerP1);
     const footerP2 = doc.createElement('p');
-    footerP2.textContent = 'Powered by Real House - realhouseiq.com';
+    footerP2.textContent = t('mortgage.poweredBy');
     footer.appendChild(footerP2);
     body.appendChild(footer);
 

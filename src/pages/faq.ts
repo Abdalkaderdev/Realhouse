@@ -916,8 +916,8 @@ export function renderComprehensiveFAQPage(): DocumentFragment {
 
   const searchInput = createElement('input', 'faq-page__search-input');
   searchInput.type = 'text';
-  searchInput.placeholder = 'Search FAQs...';
-  searchInput.setAttribute('aria-label', 'Search frequently asked questions');
+  searchInput.placeholder = t('faqPage.searchPlaceholder');
+  searchInput.setAttribute('aria-label', t('faqPage.searchAriaLabel'));
   searchWrapper.appendChild(searchInput);
   header.appendChild(searchWrapper);
 
@@ -950,7 +950,7 @@ export function renderComprehensiveFAQPage(): DocumentFragment {
   const countBadge = createElement('div', 'faq-page__count');
   const totalFAQs = getAllFAQs().length;
   const countNumber = createElement('span', 'faq-page__count-number', `${totalFAQs}+`);
-  const countText = createElement('span', 'faq-page__count-text', 'Questions Answered');
+  const countText = createElement('span', 'faq-page__count-text', t('faqPage.questionsAnswered'));
   countBadge.appendChild(countNumber);
   countBadge.appendChild(countText);
   container.appendChild(countBadge);
@@ -1001,8 +1001,8 @@ export function renderComprehensiveFAQPage(): DocumentFragment {
   const cta = createElement('div', 'faq-page__cta');
   const ctaContent = createElement('div', 'faq-page__cta-content');
 
-  const ctaTitle = createElement('h3', 'faq-page__cta-title', 'Still Have Questions?');
-  const ctaText = createElement('p', 'faq-page__cta-text', 'Our expert team is ready to provide personalized assistance for your property needs in Erbil.');
+  const ctaTitle = createElement('h3', 'faq-page__cta-title', t('faqPage.stillHaveQuestions'));
+  const ctaText = createElement('p', 'faq-page__cta-text', t('faqPage.expertTeamReady'));
 
   const ctaActions = createElement('div', 'faq-page__cta-actions');
 
@@ -1035,9 +1035,11 @@ export function renderComprehensiveFAQPage(): DocumentFragment {
 
 export function createInlineFAQSection(
   faqs: FAQ[],
-  title: string = 'Frequently Asked Questions',
+  title: string = '',
   showViewAll: boolean = true
 ): HTMLElement {
+  // Use translation if no title provided
+  const sectionTitleText = title || t('faqPage.title');
   const section = createElement('section', 'inline-faq');
   section.setAttribute('itemscope', '');
   section.setAttribute('itemtype', 'https://schema.org/FAQPage');
@@ -1045,11 +1047,11 @@ export function createInlineFAQSection(
   const container = createElement('div', 'container');
 
   const header = createElement('div', 'inline-faq__header');
-  const sectionTitle = createElement('h2', 'inline-faq__title', title);
-  header.appendChild(sectionTitle);
+  const sectionTitleEl = createElement('h2', 'inline-faq__title', sectionTitleText);
+  header.appendChild(sectionTitleEl);
 
   if (showViewAll) {
-    const viewAllLink = createElement('a', 'inline-faq__view-all', 'View All FAQs');
+    const viewAllLink = createElement('a', 'inline-faq__view-all', t('faqPage.viewAllFaqs'));
     viewAllLink.href = '/faq';
     viewAllLink.setAttribute('data-route', '');
     const arrowSvg = createSVG(['M5 12h14', 'M12 5l7 7-7 7']);

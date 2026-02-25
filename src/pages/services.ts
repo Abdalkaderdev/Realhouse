@@ -222,7 +222,7 @@ function createPropertyCardMini(property: typeof properties[0]): HTMLElement {
   if (property.price > 0) {
     price.textContent = `$${property.price.toLocaleString()}`;
   } else {
-    price.textContent = 'Contact for Price';
+    price.textContent = t('mortgage.contactForPrice');
   }
   content.appendChild(price);
 
@@ -282,10 +282,10 @@ export function renderServicesPage(): DocumentFragment {
   const statsGrid = createElement('div', 'services-page__stats');
 
   const stats = [
-    { value: '500+', label: 'Properties Listed' },
-    { value: '200+', label: 'Happy Clients' },
-    { value: '15+', label: 'Years Experience' },
-    { value: '98%', label: 'Client Satisfaction' }
+    { value: '500+', label: t('servicesPage.propertiesListed') },
+    { value: '200+', label: t('servicesPage.happyClients') },
+    { value: '15+', label: t('servicesPage.yearsExperience') },
+    { value: '98%', label: t('servicesPage.clientSatisfaction') }
   ];
 
   stats.forEach(stat => {
@@ -338,7 +338,7 @@ export function renderServicesPage(): DocumentFragment {
   ctaBtn1.setAttribute('data-route', '');
   ctaBtns.appendChild(ctaBtn1);
 
-  const ctaBtn2 = createElement('a', 'btn btn--ghost', 'View Properties');
+  const ctaBtn2 = createElement('a', 'btn btn--ghost', t('servicesPage.viewProperties'));
   ctaBtn2.href = '/properties';
   ctaBtn2.setAttribute('data-route', '');
   ctaBtns.appendChild(ctaBtn2);
@@ -363,11 +363,11 @@ export function renderServiceDetailPage(slug: string): DocumentFragment {
     const container = createElement('div', 'container');
 
     const errorContent = createElement('div', 'service-detail-page__error');
-    const errorTitle = createElement('h1', undefined, 'Service Not Found');
+    const errorTitle = createElement('h1', undefined, t('servicesPage.serviceNotFound'));
     errorContent.appendChild(errorTitle);
-    const errorText = createElement('p', undefined, 'The service you\'re looking for doesn\'t exist or has been moved.');
+    const errorText = createElement('p', undefined, t('servicesPage.serviceNotFoundText'));
     errorContent.appendChild(errorText);
-    const backLink = createElement('a', 'btn btn--primary', 'View All Services');
+    const backLink = createElement('a', 'btn btn--primary', t('servicesPage.viewAllServices'));
     backLink.href = '/services';
     backLink.setAttribute('data-route', '');
     errorContent.appendChild(backLink);
@@ -397,14 +397,14 @@ export function renderServiceDetailPage(slug: string): DocumentFragment {
   const breadcrumbList = createElement('ol', 'breadcrumb');
 
   const homeCrumb = createElement('li', 'breadcrumb__item');
-  const homeLink = createElement('a', undefined, 'Home');
+  const homeLink = createElement('a', undefined, t('breadcrumbs.home'));
   homeLink.href = '/';
   homeLink.setAttribute('data-route', '');
   homeCrumb.appendChild(homeLink);
   breadcrumbList.appendChild(homeCrumb);
 
   const servicesCrumb = createElement('li', 'breadcrumb__item');
-  const servicesLink = createElement('a', undefined, 'Services');
+  const servicesLink = createElement('a', undefined, t('breadcrumbs.services'));
   servicesLink.href = '/services';
   servicesLink.setAttribute('data-route', '');
   servicesCrumb.appendChild(servicesLink);
@@ -455,7 +455,7 @@ export function renderServiceDetailPage(slug: string): DocumentFragment {
 
   // Features Section
   const featuresSection = createElement('div', 'service-detail-page__features');
-  const featuresTitle = createElement('h2', 'service-detail-page__features-title', 'Service Features');
+  const featuresTitle = createElement('h2', 'service-detail-page__features-title', t('servicesPage.serviceFeatures'));
   featuresSection.appendChild(featuresTitle);
 
   const featuresGrid = createElement('div', 'service-detail-page__features-grid');
@@ -475,7 +475,7 @@ export function renderServiceDetailPage(slug: string): DocumentFragment {
 
   // Process Section
   const processSection = createElement('div', 'service-detail-page__process');
-  const processTitle = createElement('h2', 'service-detail-page__process-title', 'How It Works');
+  const processTitle = createElement('h2', 'service-detail-page__process-title', t('servicesPage.howItWorks'));
   processSection.appendChild(processTitle);
 
   const processSteps = createElement('div', 'service-detail-page__process-steps');
@@ -496,7 +496,7 @@ export function renderServiceDetailPage(slug: string): DocumentFragment {
 
   // Benefits Section
   const benefitsSection = createElement('div', 'service-detail-page__benefits');
-  const benefitsTitle = createElement('h2', 'service-detail-page__benefits-title', 'Key Benefits');
+  const benefitsTitle = createElement('h2', 'service-detail-page__benefits-title', t('servicesPage.keyBenefits'));
   benefitsSection.appendChild(benefitsTitle);
 
   const benefitsList = createElement('ul', 'service-detail-page__benefits-list');
@@ -511,7 +511,7 @@ export function renderServiceDetailPage(slug: string): DocumentFragment {
 
   // FAQs Section
   const faqSection = createElement('div', 'service-detail-page__faqs');
-  const faqTitle = createElement('h2', 'service-detail-page__faqs-title', 'Frequently Asked Questions');
+  const faqTitle = createElement('h2', 'service-detail-page__faqs-title', t('faqPage.title'));
   faqSection.appendChild(faqTitle);
 
   const faqList = createElement('div', 'service-detail-page__faq-list');
@@ -567,7 +567,7 @@ export function renderServiceDetailPage(slug: string): DocumentFragment {
   const relatedServices = getRelatedServices(service);
   if (relatedServices.length > 0) {
     const relatedSection = createElement('div', 'service-detail-page__related');
-    const relatedTitle = createElement('h3', 'service-detail-page__related-title', 'Related Services');
+    const relatedTitle = createElement('h3', 'service-detail-page__related-title', t('servicesPage.relatedServices'));
     relatedSection.appendChild(relatedTitle);
 
     const relatedList = createElement('div', 'service-detail-page__related-list');
@@ -594,7 +594,7 @@ export function renderServiceDetailPage(slug: string): DocumentFragment {
   // Featured Properties (for relevant services)
   if (['buy', 'sell', 'rent', 'investment-consulting'].includes(service.id)) {
     const propertiesSection = createElement('div', 'service-detail-page__properties');
-    const propertiesTitle = createElement('h3', 'service-detail-page__properties-title', 'Featured Properties');
+    const propertiesTitle = createElement('h3', 'service-detail-page__properties-title', t('servicesPage.featuredProperties'));
     propertiesSection.appendChild(propertiesTitle);
 
     const propertiesList = createElement('div', 'service-detail-page__properties-list');
@@ -603,7 +603,7 @@ export function renderServiceDetailPage(slug: string): DocumentFragment {
     });
     propertiesSection.appendChild(propertiesList);
 
-    const viewAllLink = createElement('a', 'service-detail-page__view-all', 'View All Properties');
+    const viewAllLink = createElement('a', 'service-detail-page__view-all', t('servicesPage.viewAllProperties'));
     viewAllLink.href = '/properties';
     viewAllLink.setAttribute('data-route', '');
     propertiesSection.appendChild(viewAllLink);
@@ -621,7 +621,7 @@ export function renderServiceDetailPage(slug: string): DocumentFragment {
   const testimonialsContainer = createElement('div', 'container');
 
   const testimonialsHeader = createElement('div', 'service-detail-page__testimonials-header');
-  const testimonialsTitle = createElement('h2', undefined, 'What Our Clients Say');
+  const testimonialsTitle = createElement('h2', undefined, t('servicesPage.whatClientsSay'));
   testimonialsHeader.appendChild(testimonialsTitle);
   testimonialsContainer.appendChild(testimonialsHeader);
 
@@ -645,9 +645,9 @@ export function renderServiceDetailPage(slug: string): DocumentFragment {
   const bottomCtaContainer = createElement('div', 'container');
   const bottomCtaContent = createElement('div', 'service-detail-page__bottom-cta-content');
 
-  const bottomCtaTitle = createElement('h2', undefined, 'Ready to Get Started?');
+  const bottomCtaTitle = createElement('h2', undefined, t('servicesPage.readyToStart'));
   bottomCtaContent.appendChild(bottomCtaTitle);
-  const bottomCtaText = createElement('p', undefined, 'Contact our expert team today for personalized assistance.');
+  const bottomCtaText = createElement('p', undefined, t('servicesPage.contactForAssistance'));
   bottomCtaContent.appendChild(bottomCtaText);
 
   const bottomCtaBtns = createElement('div', 'service-detail-page__bottom-cta-btns');
@@ -655,7 +655,7 @@ export function renderServiceDetailPage(slug: string): DocumentFragment {
   bottomCtaBtn1.href = '/contact';
   bottomCtaBtn1.setAttribute('data-route', '');
   bottomCtaBtns.appendChild(bottomCtaBtn1);
-  const bottomCtaBtn2 = createElement('a', 'btn btn--ghost btn--lg', 'View All Services');
+  const bottomCtaBtn2 = createElement('a', 'btn btn--ghost btn--lg', t('servicesPage.viewAllServices'));
   bottomCtaBtn2.href = '/services';
   bottomCtaBtn2.setAttribute('data-route', '');
   bottomCtaBtns.appendChild(bottomCtaBtn2);
