@@ -41,6 +41,7 @@ import {
   createLocationLinks
 } from '../components/internal-linking';
 import { createInquiryButton } from '../components/project-inquiry-form';
+import { t } from '../i18n';
 
 // ─── Helper Functions ─────────────────────────────────────────────────────
 function createElement<K extends keyof HTMLElementTagNameMap>(
@@ -121,7 +122,7 @@ function createProgressIndicator(project: Project): HTMLElement | null {
 
   // Info section
   const info = createElement('div', 'construction-progress__info');
-  const label = createElement('span', 'construction-progress__label', 'Construction');
+  const label = createElement('span', 'construction-progress__label', t('projectsPage.construction'));
   info.appendChild(label);
 
   const milestoneText = createElement('span', 'construction-progress__milestone', currentMilestone.title);
@@ -131,7 +132,7 @@ function createProgressIndicator(project: Project): HTMLElement | null {
 
   // Tooltip with milestones
   const tooltip = createElement('div', 'construction-progress__tooltip');
-  const tooltipTitle = createElement('div', 'construction-progress__tooltip-title', 'Construction Milestones');
+  const tooltipTitle = createElement('div', 'construction-progress__tooltip-title', t('projectsPage.constructionMilestones'));
   tooltip.appendChild(tooltipTitle);
 
   const milestonesContainer = createElement('div', 'construction-progress__milestones');
@@ -243,7 +244,7 @@ function createDetailProgressSection(project: Project): HTMLElement {
   const percentageContainer = createElement('div', 'progress-detail__percentage-container');
   const percentageValue = createElement('span', 'progress-detail__percentage', `${progress}`);
   const percentageSymbol = createElement('span', 'progress-detail__percentage-symbol', '%');
-  const percentageLabel = createElement('span', 'progress-detail__percentage-label', 'Complete');
+  const percentageLabel = createElement('span', 'progress-detail__percentage-label', t('projectsPage.complete'));
   percentageContainer.appendChild(percentageValue);
   percentageContainer.appendChild(percentageSymbol);
   percentageContainer.appendChild(percentageLabel);
@@ -371,14 +372,14 @@ function createProjectCard(project: Project): HTMLElement {
   const stats = createElement('div', 'project-card__stats');
 
   const unitsInfo = createElement('div', 'project-card__stat');
-  const unitsLabel = createElement('span', 'project-card__stat-label', 'Total Units');
+  const unitsLabel = createElement('span', 'project-card__stat-label', t('projectsPage.totalUnits'));
   const unitsValue = createElement('span', 'project-card__stat-value', project.totalUnits.toLocaleString());
   unitsInfo.appendChild(unitsLabel);
   unitsInfo.appendChild(unitsValue);
   stats.appendChild(unitsInfo);
 
   const priceInfo = createElement('div', 'project-card__stat');
-  const priceLabel = createElement('span', 'project-card__stat-label', 'Price Range');
+  const priceLabel = createElement('span', 'project-card__stat-label', t('projectsPage.priceRange'));
   const priceValue = createElement('span', 'project-card__stat-value', formatPriceRange(project));
   priceInfo.appendChild(priceLabel);
   priceInfo.appendChild(priceValue);
@@ -391,7 +392,7 @@ function createProjectCard(project: Project): HTMLElement {
 
   const completion = createElement('span', 'project-card__completion');
   completion.appendChild(createSVGUse('icon-calendar'));
-  completion.appendChild(document.createTextNode(`Completion: ${project.completionDate}`));
+  completion.appendChild(document.createTextNode(`${t('projectsPage.completion')}: ${project.completionDate}`));
   footer.appendChild(completion);
 
   // Action buttons container
@@ -402,7 +403,7 @@ function createProjectCard(project: Project): HTMLElement {
   footerActions.appendChild(inquiryBtn);
 
   // View Project button
-  const viewBtn = createElement('a', 'btn btn--ghost btn--sm', 'View Project');
+  const viewBtn = createElement('a', 'btn btn--ghost btn--sm', t('projectsPage.viewProject'));
   viewBtn.href = `/projects/${project.id}`;
   viewBtn.setAttribute('data-route', '');
   footerActions.appendChild(viewBtn);
@@ -435,22 +436,27 @@ export function renderProjectsPage(): DocumentFragment {
   // Header
   const header = createElement('div', 'projects-page__header');
   const title = createElement('h1', 'projects-page__title');
-  title.textContent = 'Real Estate Erbil Development — Houses for Sale Erbil & Apartments Erbil Iraq ';
-  const em = createElement('em', undefined, 'Projects');
+  title.textContent = t('projectsPage.title');
+  const em = createElement('em', undefined, t('projectsPage.titleEmphasis'));
   title.appendChild(em);
   header.appendChild(title);
-  const subtitle = createElement('p', 'projects-page__subtitle', 'Explore premier property Erbil developments including houses for sale Erbil, apartments Erbil Iraq, penthouse Erbil, and luxury homes Kurdistan. Best real estate agent Erbil for property investment Kurdistan Iraq opportunities. Browse villas Erbil Iraq and real estate Kurdistan in the growing Erbil property market.');
+  const subtitle = createElement('p', 'projects-page__subtitle', t('projectsPage.subtitle'));
   header.appendChild(subtitle);
   container.appendChild(header);
 
   // Status Filter
   const filterGroup = createElement('div', 'projects-page__filter-group');
-  const filterLabel = createElement('span', 'projects-page__filter-label', 'Status:');
+  const filterLabel = createElement('span', 'projects-page__filter-label', t('projectsPage.status'));
   filterGroup.appendChild(filterLabel);
-  const statuses = ['All', 'Ready', 'Under Construction', 'Coming Soon'];
+  const statuses = [
+    { value: 'All', label: t('projectsPage.all') },
+    { value: 'Ready', label: t('projectsPage.ready') },
+    { value: 'Under Construction', label: t('projectsPage.underConstruction') },
+    { value: 'Coming Soon', label: t('projectsPage.comingSoon') }
+  ];
   statuses.forEach((status, index) => {
-    const btn = createElement('button', `projects-page__filter${index === 0 ? ' active' : ''}`, status);
-    btn.setAttribute('data-filter-status', status);
+    const btn = createElement('button', `projects-page__filter${index === 0 ? ' active' : ''}`, status.label);
+    btn.setAttribute('data-filter-status', status.value);
     filterGroup.appendChild(btn);
   });
   container.appendChild(filterGroup);
@@ -471,10 +477,10 @@ export function renderProjectsPage(): DocumentFragment {
 
   // ─── Internal CTA for Projects Page ─────────────────────────────────────
   const listingCta = createInternalCTA(
-    'Need Help Finding the Right Project?',
-    'Our property experts can guide you to the perfect investment opportunity based on your goals and budget.',
-    { text: 'Contact Our Team', url: '/contact' },
-    { text: 'Browse Properties', url: '/properties' }
+    t('projectsPage.ctaTitle'),
+    t('projectsPage.ctaText'),
+    { text: t('projectsPage.contactOurTeam'), url: '/contact' },
+    { text: t('projectsPage.browseProperties'), url: '/properties' }
   );
   page.appendChild(listingCta);
 
@@ -500,8 +506,8 @@ export function renderProjectsPage(): DocumentFragment {
 
     if (filteredProjects.length === 0) {
       const noResults = createElement('div', 'projects-page__no-results');
-      const noResultsTitle = createElement('h3', undefined, 'No projects found');
-      const noResultsText = createElement('p', undefined, 'Try selecting a different status filter.');
+      const noResultsTitle = createElement('h3', undefined, t('projectsPage.noProjectsFound'));
+      const noResultsText = createElement('p', undefined, t('projectsPage.tryDifferentFilter'));
       noResults.appendChild(noResultsTitle);
       noResults.appendChild(noResultsText);
       gridEl.appendChild(noResults);
@@ -554,9 +560,9 @@ export function renderProjectDetailPage(projectId: string): DocumentFragment {
     const container = createElement('div', 'container');
 
     const content = createElement('div', 'project-detail-page__not-found');
-    const title = createElement('h1', undefined, 'Project Not Found');
-    const message = createElement('p', undefined, 'The project you are looking for does not exist or has been removed.');
-    const backLink = createElement('a', 'btn btn--primary', 'Browse All Projects');
+    const title = createElement('h1', undefined, t('projectsPage.projectNotFound'));
+    const message = createElement('p', undefined, t('projectsPage.projectNotFoundMessage'));
+    const backLink = createElement('a', 'btn btn--primary', t('projectsPage.browseAllProjects'));
     backLink.href = '/projects';
     backLink.setAttribute('data-route', '');
 
@@ -685,15 +691,15 @@ export function renderProjectDetailPage(projectId: string): DocumentFragment {
 
   // Key Stats
   const statsSection = createElement('div', 'project-detail__stats');
-  const statsTitle = createElement('h3', 'project-detail__section-title', 'Project Overview');
+  const statsTitle = createElement('h3', 'project-detail__section-title', t('projectsPage.projectOverview'));
   statsSection.appendChild(statsTitle);
 
   const statsGrid = createElement('div', 'project-detail__stats-grid');
 
   const statsData = [
-    { label: 'Total Units', value: project.totalUnits.toLocaleString() },
-    { label: 'Price Range', value: formatPriceRange(project) },
-    { label: 'Completion', value: project.completionDate }
+    { label: t('projectsPage.totalUnits'), value: project.totalUnits.toLocaleString() },
+    { label: t('projectsPage.priceRange'), value: formatPriceRange(project) },
+    { label: t('projectsPage.completion'), value: project.completionDate }
   ];
 
   statsData.forEach(stat => {
@@ -710,7 +716,7 @@ export function renderProjectDetailPage(projectId: string): DocumentFragment {
   // Add construction progress section for non-ready projects
   if (project.status !== 'Ready') {
     const progressSection = createElement('div', 'project-detail__progress-section');
-    const progressTitle = createElement('h4', 'project-detail__progress-title', 'Construction Progress');
+    const progressTitle = createElement('h4', 'project-detail__progress-title', t('projectsPage.constructionProgress'));
     progressSection.appendChild(progressTitle);
 
     // Create detailed progress component
@@ -724,7 +730,7 @@ export function renderProjectDetailPage(projectId: string): DocumentFragment {
 
   // Description
   const descSection = createElement('div', 'project-detail__description');
-  const descTitle = createElement('h3', 'project-detail__section-title', 'About This Project');
+  const descTitle = createElement('h3', 'project-detail__section-title', t('projectsPage.aboutThisProject'));
   descSection.appendChild(descTitle);
 
   const descParagraphs = project.description.split('\n\n');
@@ -738,7 +744,7 @@ export function renderProjectDetailPage(projectId: string): DocumentFragment {
 
   // Amenities
   const amenitiesSection = createElement('div', 'project-detail__amenities');
-  const amenitiesTitle = createElement('h3', 'project-detail__section-title', 'Amenities & Features');
+  const amenitiesTitle = createElement('h3', 'project-detail__section-title', t('projectsPage.amenitiesFeatures'));
   amenitiesSection.appendChild(amenitiesTitle);
 
   const amenitiesList = createElement('ul', 'project-detail__amenities-list');
@@ -758,10 +764,10 @@ export function renderProjectDetailPage(projectId: string): DocumentFragment {
 
   // Contact Card
   const contactCard = createElement('div', 'project-detail__contact-card');
-  const contactTitle = createElement('h3', 'project-detail__contact-title', 'Interested in This Property Erbil Project?');
+  const contactTitle = createElement('h3', 'project-detail__contact-title', t('projectsPage.interestedInProject'));
   contactCard.appendChild(contactTitle);
 
-  const contactText = createElement('p', 'project-detail__contact-text', 'Contact our best real estate agent Erbil team for available units, luxury villa Erbil price details, and payment plans. We help you buy house in Erbil Iraq with flexible property investment Kurdistan Iraq options.');
+  const contactText = createElement('p', 'project-detail__contact-text', t('projectsPage.contactForUnits'));
   contactCard.appendChild(contactText);
 
   const contactActions = createElement('div', 'project-detail__contact-actions');
@@ -770,10 +776,10 @@ export function renderProjectDetailPage(projectId: string): DocumentFragment {
   const quickInquiryBtn = createInquiryButton(project, 'primary');
   quickInquiryBtn.classList.add('btn--full');
   const inquiryBtnText = quickInquiryBtn.querySelector('.inquiry-btn__text');
-  if (inquiryBtnText) inquiryBtnText.textContent = 'Quick Inquiry';
+  if (inquiryBtnText) inquiryBtnText.textContent = t('inquiry.quickInquiry');
   contactActions.appendChild(quickInquiryBtn);
 
-  const callBtn = createElement('a', 'btn btn--ghost btn--full', 'Call +964 750 792 2138');
+  const callBtn = createElement('a', 'btn btn--ghost btn--full', t('projectsPage.callUs'));
   callBtn.href = 'tel:+9647507922138';
   contactActions.appendChild(callBtn);
 
@@ -784,7 +790,7 @@ export function renderProjectDetailPage(projectId: string): DocumentFragment {
   whatsappBtn.rel = 'noopener noreferrer';
   const whatsappIcon = createSVGUse('icon-whatsapp');
   whatsappBtn.appendChild(whatsappIcon);
-  whatsappBtn.appendChild(document.createTextNode(' WhatsApp Us'));
+  whatsappBtn.appendChild(document.createTextNode(' ' + t('projectsPage.whatsappUs')));
   contactActions.appendChild(whatsappBtn);
 
   contactCard.appendChild(contactActions);
@@ -792,7 +798,7 @@ export function renderProjectDetailPage(projectId: string): DocumentFragment {
 
   // Location Info Card
   const locationCard = createElement('div', 'project-detail__location-card');
-  const locationCardTitle = createElement('h3', 'project-detail__location-title', 'Location');
+  const locationCardTitle = createElement('h3', 'project-detail__location-title', t('projectsPage.location'));
   locationCard.appendChild(locationCardTitle);
 
   const addressInfo = createElement('div', 'project-detail__address-info');
@@ -813,7 +819,7 @@ export function renderProjectDetailPage(projectId: string): DocumentFragment {
 
   // ─── Social Share Section ─────────────────────────────────────────────────
   const shareSection = createElement('div', 'project-share');
-  const shareTitle = createElement('h4', 'project-share__title', 'Share This Project');
+  const shareTitle = createElement('h4', 'project-share__title', t('projectsPage.shareThisProject'));
   shareSection.appendChild(shareTitle);
   const shareButtons = createProjectShareButtons(project);
   shareSection.appendChild(shareButtons);
@@ -839,17 +845,17 @@ export function renderProjectDetailPage(projectId: string): DocumentFragment {
 
   // ─── Internal CTA ─────────────────────────────────────────────────────────
   const ctaSection = createInternalCTA(
-    'Looking for Similar Properties?',
-    'Browse our complete collection of luxury properties in Erbil, or contact our experts for personalized recommendations.',
-    { text: 'View All Properties', url: '/properties' },
-    { text: 'Contact Us', url: '/contact' }
+    t('projectsPage.lookingForSimilar'),
+    t('projectsPage.browseCollection'),
+    { text: t('projectsPage.viewAllProperties'), url: '/properties' },
+    { text: t('common.contactUs'), url: '/contact' }
   );
   page.appendChild(ctaSection);
 
   // ─── Back Link ───────────────────────────────────────────────────────────
   const backSection = createElement('section', 'project-detail__back');
   const backContainer = createElement('div', 'container');
-  const backLink = createElement('a', 'project-detail__back-link', 'Back to Projects');
+  const backLink = createElement('a', 'project-detail__back-link', t('projectsPage.backToProjects'));
   backLink.href = '/projects';
   backLink.setAttribute('data-route', '');
   const backIcon = createSVGUse('icon-arrow-left');
