@@ -552,6 +552,75 @@ export interface CoreTranslations {
     enterValidEmail: string;
     enterValidPhone: string;
   };
+
+  agentsPage: {
+    title: string;
+    subtitle: string;
+    breadcrumbAgents: string;
+    leadership: string;
+    yearsExp: string;
+    propertiesSold: string;
+    languages: string;
+    viewProfile: string;
+    specialization: string;
+    allSpecializations: string;
+    luxuryVillas: string;
+    investment: string;
+    commercial: string;
+    penthousesApartments: string;
+    newDevelopments: string;
+    sortBy: string;
+    experienceHighToLow: string;
+    propertiesSoldSort: string;
+    nameAZ: string;
+    expertAgents: string;
+    totalSales: string;
+    avgYearsExperience: string;
+    leadershipTeam: string;
+    propertyConsultants: string;
+    ctaTitle: string;
+    ctaText: string;
+  };
+
+  projectsPage: {
+    title: string;
+    titleEmphasis: string;
+    subtitle: string;
+    construction: string;
+    constructionMilestones: string;
+    complete: string;
+    all: string;
+    ready: string;
+    underConstruction: string;
+    comingSoon: string;
+    totalUnits: string;
+    priceRange: string;
+    viewProject: string;
+    status: string;
+    ctaTitle: string;
+    ctaText: string;
+    contactTeam: string;
+    browseProperties: string;
+    noProjectsFound: string;
+    tryDifferentFilter: string;
+    projectNotFound: string;
+    projectNotFoundText: string;
+    browseAllProjects: string;
+    projectOverview: string;
+    constructionProgress: string;
+    aboutProject: string;
+    amenitiesFeatures: string;
+    interestedTitle: string;
+    interestedText: string;
+    quickInquiry: string;
+    location: string;
+    shareProject: string;
+    similarPropertiesTitle: string;
+    similarPropertiesText: string;
+    viewAllProperties: string;
+    backToProjects: string;
+    completion: string;
+  };
 }
 
 /**
