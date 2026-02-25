@@ -4,6 +4,8 @@
 // Monthly Payment, Total Payment, Interest Paid, Amortization, Chart, Print
 // ═══════════════════════════════════════════════════════════════════════════
 
+import { t } from '../i18n';
+
 // ─── Types ───────────────────────────────────────────────────────────────────
 
 export interface MortgageInput {
@@ -261,7 +263,7 @@ function createAmortizationTable(breakdown: MonthlyBreakdown[], showYearly: bool
   // Toggle between monthly and yearly view
   const toggleContainer = createElement('div', 'mortgage-calc__toggle-container');
 
-  const monthlyBtn = createElement('button', `mortgage-calc__toggle-btn ${!showYearly ? 'active' : ''}`, 'Monthly');
+  const monthlyBtn = createElement('button', `mortgage-calc__toggle-btn ${!showYearly ? 'active' : ''}`, t('mortgage.monthly'));
   const yearlyBtn = createElement('button', `mortgage-calc__toggle-btn ${showYearly ? 'active' : ''}`, 'Yearly');
 
   toggleContainer.appendChild(monthlyBtn);
@@ -354,7 +356,7 @@ function createResultsSection(result: MortgageResult, input: MortgageInput): HTM
   // Main result card
   const mainCard = createElement('div', 'mortgage-calc__result-card mortgage-calc__result-card--main');
 
-  const monthlyLabel = createElement('span', 'mortgage-calc__result-label', 'Monthly Payment');
+  const monthlyLabel = createElement('span', 'mortgage-calc__result-label', t('mortgage.monthlyPayment'));
   mainCard.appendChild(monthlyLabel);
 
   const monthlyValue = createElement('span', 'mortgage-calc__result-value mortgage-calc__result-value--large');
@@ -437,7 +439,7 @@ export function createMortgageCalculator(options: MortgageCalculatorOptions = {}
 
   // Property Price
   const priceGroup = createElement('div', 'mortgage-calc__form-group');
-  const priceLabel = createElement('label', 'mortgage-calc__label', 'Property Price');
+  const priceLabel = createElement('label', 'mortgage-calc__label', t('mortgage.propertyPrice'));
   priceLabel.setAttribute('for', 'mortgage-price');
   priceGroup.appendChild(priceLabel);
 
@@ -461,7 +463,7 @@ export function createMortgageCalculator(options: MortgageCalculatorOptions = {}
   // Down Payment
   const downGroup = createElement('div', 'mortgage-calc__form-group');
   const downLabelWrapper = createElement('div', 'mortgage-calc__label-wrapper');
-  const downLabel = createElement('label', 'mortgage-calc__label', 'Down Payment');
+  const downLabel = createElement('label', 'mortgage-calc__label', t('mortgage.downPayment'));
   downLabel.setAttribute('for', 'mortgage-down');
   downLabelWrapper.appendChild(downLabel);
 
@@ -526,7 +528,7 @@ export function createMortgageCalculator(options: MortgageCalculatorOptions = {}
 
   // Loan Term
   const termGroup = createElement('div', 'mortgage-calc__form-group');
-  const termLabel = createElement('label', 'mortgage-calc__label', 'Loan Term');
+  const termLabel = createElement('label', 'mortgage-calc__label', t('mortgage.loanTerm'));
   termLabel.setAttribute('for', 'mortgage-term');
   termGroup.appendChild(termLabel);
 
@@ -547,7 +549,7 @@ export function createMortgageCalculator(options: MortgageCalculatorOptions = {}
   // Interest Rate
   const rateGroup = createElement('div', 'mortgage-calc__form-group');
   const rateLabelWrapper = createElement('div', 'mortgage-calc__label-wrapper');
-  const rateLabel = createElement('label', 'mortgage-calc__label', 'Interest Rate (Annual)');
+  const rateLabel = createElement('label', 'mortgage-calc__label', t('mortgage.interestRate'));
   rateLabel.setAttribute('for', 'mortgage-rate');
   rateLabelWrapper.appendChild(rateLabel);
 
@@ -580,7 +582,7 @@ export function createMortgageCalculator(options: MortgageCalculatorOptions = {}
   // Buttons
   const buttonsGroup = createElement('div', 'mortgage-calc__buttons');
 
-  const calculateBtn = createElement('button', 'btn btn--gold mortgage-calc__submit', 'Calculate');
+  const calculateBtn = createElement('button', 'btn btn--gold mortgage-calc__submit', t('mortgage.calculate'));
   calculateBtn.type = 'submit';
   buttonsGroup.appendChild(calculateBtn);
 
@@ -639,7 +641,7 @@ export function createMortgageCalculator(options: MortgageCalculatorOptions = {}
     }
 
     if (downPayment >= propertyPrice) {
-      showError('Down payment cannot be equal to or greater than property price');
+      showError(t('mortgage.downPaymentError'));
       return;
     }
 

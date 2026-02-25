@@ -331,6 +331,34 @@ export interface CoreTranslations {
     contactOurExperts: string;
     viewDevelopmentProjects: string;
   };
+
+  mortgage: {
+    title: string;
+    propertyPrice: string;
+    downPayment: string;
+    loanAmount: string;
+    loanTerm: string;
+    interestRate: string;
+    interestRateShort: string;
+    monthlyPayment: string;
+    totalPayment: string;
+    totalInterest: string;
+    calculate: string;
+    recalculate: string;
+    print: string;
+    loanSummary: string;
+    amortizationSchedule: string;
+    monthly: string;
+    yearly: string;
+    year: string;
+    month: string;
+    principal: string;
+    interest: string;
+    balance: string;
+    years: string;
+    perAnnum: string;
+    downPaymentError: string;
+  };
 }
 
 /**
