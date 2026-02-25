@@ -3,6 +3,8 @@
 // Features: Heart icon toggle, localStorage persistence, share wishlist
 // ═══════════════════════════════════════════════════════════════════════════
 
+import { t } from '../i18n';
+
 const WISHLIST_STORAGE_KEY = 'rh-wishlist';
 
 export interface WishlistItem {
@@ -191,11 +193,11 @@ export function updateAllWishlistButtons(): void {
 export function updateWishlistButton(button: HTMLElement, isInList: boolean): void {
   if (isInList) {
     button.classList.add('active');
-    button.setAttribute('aria-label', 'Remove from wishlist');
+    button.setAttribute('aria-label', t('buttons.removeFromFavorites'));
     button.setAttribute('aria-pressed', 'true');
   } else {
     button.classList.remove('active');
-    button.setAttribute('aria-label', 'Add to wishlist');
+    button.setAttribute('aria-label', t('buttons.addToFavorites'));
     button.setAttribute('aria-pressed', 'false');
   }
 }
@@ -211,7 +213,7 @@ export function createWishlistButton(propertyId: string): HTMLButtonElement {
   button.setAttribute('type', 'button');
 
   const isInList = isInWishlist(propertyId);
-  button.setAttribute('aria-label', isInList ? 'Remove from wishlist' : 'Add to wishlist');
+  button.setAttribute('aria-label', isInList ? t('buttons.removeFromFavorites') : t('buttons.addToFavorites'));
   button.setAttribute('aria-pressed', isInList ? 'true' : 'false');
 
   if (isInList) {
@@ -259,7 +261,7 @@ export function createWishlistButton(propertyId: string): HTMLButtonElement {
     }, 300);
 
     // Show toast notification
-    showWishlistToast(newState ? 'Added to wishlist' : 'Removed from wishlist');
+    showWishlistToast(newState ? t('buttons.addToFavorites') : t('buttons.removeFromFavorites'));
   });
 
   return button;

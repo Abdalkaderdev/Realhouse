@@ -34,6 +34,7 @@ import {
   getMainOffice
 } from '../data/contact';
 import { injectSchema } from '../seo/schema';
+import { t } from '../i18n';
 
 // ─── Helper Functions ────────────────────────────────────────────────────────
 
@@ -127,31 +128,28 @@ function createHeroSection(): HTMLElement {
 
   const content = createElement('div', 'about-hero__content');
 
-  const badge = createElement('span', 'about-hero__badge', `Est. ${companyHistory.foundedYear} - ${companyHistory.yearsInBusiness} Years of Excellence`);
+  const badge = createElement('span', 'about-hero__badge', `Est. ${companyHistory.foundedYear} - ${companyHistory.yearsInBusiness} ${t('about.yearsExperience')}`);
   content.appendChild(badge);
 
   const title = createElement('h1', 'about-hero__title');
-  title.textContent = 'Real Estate Erbil — ';
-  const em = createElement('em', undefined, 'Best Real Estate Agent Erbil');
-  title.appendChild(em);
-  title.appendChild(document.createTextNode(' for Luxury Homes Kurdistan'));
+  title.textContent = t('about.title');
   content.appendChild(title);
 
-  const subtitle = createElement('p', 'about-hero__subtitle', companyHistory.mission);
+  const subtitle = createElement('p', 'about-hero__subtitle', t('about.subtitle'));
   content.appendChild(subtitle);
 
   // Quick stats
   const quickStats = createElement('div', 'about-hero__quick-stats');
   const statsData = [
-    { value: `${companyStats.totalTransactions}+`, label: 'Transactions' },
-    { value: formatCurrency(companyStats.totalSalesVolume), label: 'Sales Volume' },
-    { value: `${companyStats.clientSatisfactionRate}%`, label: 'Satisfaction' },
-    { value: `${companyStats.yearsInBusiness}`, label: 'Years' }
+    { value: `${companyStats.totalTransactions}+`, label: t('about.propertiesSold') },
+    { value: formatCurrency(companyStats.totalSalesVolume), label: t('common.ourProjects') },
+    { value: `${companyStats.clientSatisfactionRate}%`, label: t('about.happyClients') },
+    { value: `${companyStats.yearsInBusiness}`, label: t('about.experience') }
   ];
 
   statsData.forEach(stat => {
     const statEl = createElement('div', 'about-hero__stat');
-    const value = createElement('span', 'about-hero__stat-value', stat.value);
+    const value = createElement('span', 'about-hero__stat-value ltr-content', stat.value);
     const label = createElement('span', 'about-hero__stat-label', stat.label);
     statEl.appendChild(value);
     statEl.appendChild(label);
@@ -214,12 +212,9 @@ function createStorySection(): HTMLElement {
   const container = createElement('div', 'container');
 
   const header = createElement('div', 'section-header');
-  const headerTitle = createElement('h2', 'section-title');
-  headerTitle.textContent = 'Our ';
-  const em = createElement('em', undefined, 'Story');
-  headerTitle.appendChild(em);
+  const headerTitle = createElement('h2', 'section-title', t('about.ourStory'));
   header.appendChild(headerTitle);
-  const headerSubtitle = createElement('p', 'section-subtitle', `${companyHistory.yearsInBusiness} years of trusted real estate Erbil service - houses for sale Erbil and property Erbil`);
+  const headerSubtitle = createElement('p', 'section-subtitle', t('about.subtitle'));
   header.appendChild(headerSubtitle);
   container.appendChild(header);
 
@@ -249,14 +244,14 @@ function createStorySection(): HTMLElement {
   const visionMission = createElement('div', 'about-story__vision-mission');
 
   const missionCard = createElement('div', 'about-story__card');
-  const missionTitle = createElement('h3', undefined, 'Our Mission');
+  const missionTitle = createElement('h3', undefined, t('about.ourMission'));
   missionCard.appendChild(missionTitle);
   const missionText = createElement('p', undefined, companyHistory.mission);
   missionCard.appendChild(missionText);
   visionMission.appendChild(missionCard);
 
   const visionCard = createElement('div', 'about-story__card');
-  const visionTitle = createElement('h3', undefined, 'Our Vision');
+  const visionTitle = createElement('h3', undefined, t('about.ourVision'));
   visionCard.appendChild(visionTitle);
   const visionText = createElement('p', undefined, companyHistory.vision);
   visionCard.appendChild(visionText);
@@ -315,12 +310,9 @@ function createValuesSection(): HTMLElement {
   const container = createElement('div', 'container');
 
   const header = createElement('div', 'section-header');
-  const headerTitle = createElement('h2', 'section-title');
-  headerTitle.textContent = 'Our ';
-  const em = createElement('em', undefined, 'Values');
-  headerTitle.appendChild(em);
+  const headerTitle = createElement('h2', 'section-title', t('about.ourValues'));
   header.appendChild(headerTitle);
-  const headerSubtitle = createElement('p', 'section-subtitle', 'The principles that guide everything we do');
+  const headerSubtitle = createElement('p', 'section-subtitle', t('common.whyChooseUs'));
   header.appendChild(headerSubtitle);
   container.appendChild(header);
 
@@ -355,12 +347,9 @@ function createLeadershipSection(): HTMLElement {
   const container = createElement('div', 'container');
 
   const header = createElement('div', 'section-header');
-  const headerTitle = createElement('h2', 'section-title');
-  headerTitle.textContent = 'Our ';
-  const em = createElement('em', undefined, 'Leadership');
-  headerTitle.appendChild(em);
+  const headerTitle = createElement('h2', 'section-title', t('about.meetTheTeam'));
   header.appendChild(headerTitle);
-  const headerSubtitle = createElement('p', 'section-subtitle', 'Meet the best real estate agent Erbil team guiding property Erbil transactions');
+  const headerSubtitle = createElement('p', 'section-subtitle', t('common.ourTeam'));
   header.appendChild(headerSubtitle);
   container.appendChild(header);
 

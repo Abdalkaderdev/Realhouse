@@ -437,3 +437,787 @@ html[lang="ckb"] {
     }
   }
 }
+
+// =============================================================================
+// ADDITIONAL RTL COMPONENT OVERRIDES
+// Comprehensive RTL support for all positioned elements
+// =============================================================================
+
+html[dir="rtl"] {
+  // ─── Property Detail Page ────────────────────────────────────────────────────
+
+  // Status badge - move from left to right
+  .property-detail__status {
+    left: auto;
+    right: var(--space-4);
+  }
+
+  // Property badges container - move from right to left
+  .property-detail__badges {
+    right: auto;
+    left: var(--space-4);
+  }
+
+  // Fullscreen button
+  .property-detail__fullscreen-btn {
+    right: auto;
+    left: var(--space-4);
+  }
+
+  // Gallery navigation arrows
+  .property-detail__gallery-nav {
+    &--prev {
+      left: auto;
+      right: var(--space-3);
+    }
+
+    &--next {
+      right: auto;
+      left: var(--space-3);
+    }
+  }
+
+  // Photo counter
+  .property-detail__photo-count {
+    right: auto;
+    left: var(--space-4);
+  }
+
+  // Property info header
+  .property-detail__header {
+    text-align: right;
+  }
+
+  // Property specs
+  .property-detail__specs {
+    flex-direction: row-reverse;
+  }
+
+  .property-detail__spec {
+    flex-direction: row-reverse;
+  }
+
+  // Property features list
+  .property-detail__features-list {
+    li {
+      flex-direction: row-reverse;
+      text-align: right;
+
+      svg {
+        margin-right: 0;
+        margin-left: var(--space-2);
+      }
+    }
+  }
+
+  // Property actions
+  .property-detail__actions {
+    flex-direction: row-reverse;
+  }
+
+  // ─── Floating Share Button ───────────────────────────────────────────────────
+
+  .floating-share {
+    right: auto;
+    left: 1.5rem;
+  }
+
+  .floating-share__dropdown {
+    right: auto;
+    left: 0;
+  }
+
+  // ─── Share Buttons ───────────────────────────────────────────────────────────
+
+  .share-buttons {
+    flex-direction: row-reverse;
+  }
+
+  // ─── Map Popup ───────────────────────────────────────────────────────────────
+
+  .leaflet-popup-close-button {
+    right: auto !important;
+    left: 8px !important;
+  }
+
+  .leaflet-popup-content {
+    text-align: right;
+  }
+
+  .map-popup {
+    &__content {
+      flex-direction: row-reverse;
+    }
+
+    &__info {
+      text-align: right;
+    }
+  }
+
+  // Leaflet controls positioning
+  .leaflet-control-zoom {
+    margin-right: 0;
+    margin-left: 10px;
+  }
+
+  .leaflet-right {
+    right: auto;
+    left: 0;
+  }
+
+  .leaflet-left {
+    left: auto;
+    right: 0;
+  }
+
+  // ─── Progress Bars ───────────────────────────────────────────────────────────
+
+  .loader__progress-bar {
+    transform-origin: right;
+  }
+
+  .scroll-progress__bar {
+    transform-origin: right;
+  }
+
+  // ─── Gallery Lightbox ────────────────────────────────────────────────────────
+
+  .gallery-lightbox {
+    &__close {
+      right: auto;
+      left: var(--space-4);
+    }
+
+    &__nav {
+      &--prev {
+        left: auto;
+        right: var(--space-4);
+
+        svg {
+          transform: scaleX(-1);
+        }
+      }
+
+      &--next {
+        right: auto;
+        left: var(--space-4);
+
+        svg {
+          transform: scaleX(-1);
+        }
+      }
+    }
+
+    &__counter {
+      right: auto;
+      left: 50%;
+      transform: translateX(50%);
+    }
+
+    &__thumbnails {
+      flex-direction: row-reverse;
+    }
+  }
+
+  // ─── Blog Cards ──────────────────────────────────────────────────────────────
+
+  .blog-card {
+    &__category {
+      right: auto;
+      left: var(--space-4);
+    }
+
+    &__content {
+      text-align: right;
+    }
+
+    &__meta {
+      flex-direction: row-reverse;
+    }
+
+    &__author {
+      flex-direction: row-reverse;
+    }
+
+    &__read-more {
+      flex-direction: row-reverse;
+
+      svg {
+        transform: scaleX(-1);
+      }
+    }
+  }
+
+  // ─── Testimonials ────────────────────────────────────────────────────────────
+
+  .testimonial-card {
+    &__header {
+      flex-direction: row-reverse;
+    }
+
+    &__avatar {
+      margin-right: 0;
+      margin-left: var(--space-4);
+    }
+
+    &__info {
+      text-align: right;
+    }
+
+    &__rating {
+      flex-direction: row-reverse;
+    }
+  }
+
+  .testimonials-slider {
+    &__nav--prev {
+      left: auto;
+      right: calc(-1 * var(--space-4));
+
+      svg {
+        transform: scaleX(-1);
+      }
+    }
+
+    &__nav--next {
+      right: auto;
+      left: calc(-1 * var(--space-4));
+
+      svg {
+        transform: scaleX(-1);
+      }
+    }
+  }
+
+  // ─── Mortgage Calculator ─────────────────────────────────────────────────────
+
+  .mortgage-calc {
+    &__header {
+      flex-direction: row-reverse;
+    }
+
+    &__label-wrapper {
+      flex-direction: row-reverse;
+    }
+
+    &__currency {
+      left: auto;
+      right: var(--space-4);
+
+      &--right {
+        right: auto;
+        left: var(--space-4);
+      }
+    }
+
+    &__input {
+      padding-left: var(--space-4);
+      padding-right: var(--space-10);
+      text-align: right;
+    }
+
+    &__slider {
+      direction: rtl;
+    }
+
+    &__result-row {
+      flex-direction: row-reverse;
+    }
+
+    &__chart-legend {
+      flex-direction: row-reverse;
+    }
+  }
+
+  // ─── Agent Cards ─────────────────────────────────────────────────────────────
+
+  .agent-card {
+    &__content {
+      text-align: right;
+    }
+
+    &__contact {
+      flex-direction: row-reverse;
+    }
+
+    &__stats {
+      flex-direction: row-reverse;
+    }
+
+    &__stat {
+      flex-direction: row-reverse;
+      text-align: right;
+
+      svg {
+        margin-right: 0;
+        margin-left: var(--space-2);
+      }
+    }
+
+    &__actions {
+      flex-direction: row-reverse;
+    }
+  }
+
+  // ─── Wishlist Page ───────────────────────────────────────────────────────────
+
+  .wishlist-page {
+    &__header {
+      flex-direction: row-reverse;
+    }
+
+    &__title {
+      flex-direction: row-reverse;
+    }
+
+    &__header-actions {
+      flex-direction: row-reverse;
+    }
+  }
+
+  .wishlist-item {
+    &__remove-btn {
+      right: auto;
+      left: var(--space-2);
+    }
+
+    &__content {
+      text-align: right;
+    }
+  }
+
+  // ─── Inquiry Form ────────────────────────────────────────────────────────────
+
+  .inquiry-form {
+    &__header {
+      text-align: right;
+    }
+
+    &__agent-info {
+      flex-direction: row-reverse;
+      text-align: right;
+    }
+
+    &__agent-avatar {
+      margin-right: 0;
+      margin-left: var(--space-4);
+    }
+
+    &__checkbox-label {
+      flex-direction: row-reverse;
+
+      input {
+        margin-right: 0;
+        margin-left: var(--space-2);
+      }
+    }
+  }
+
+  // ─── Advanced Filters ────────────────────────────────────────────────────────
+
+  .advanced-filters {
+    &__header {
+      flex-direction: row-reverse;
+    }
+
+    &__close-btn {
+      margin-right: auto;
+      margin-left: 0;
+    }
+
+    &__group-header {
+      flex-direction: row-reverse;
+    }
+
+    &__range-inputs {
+      flex-direction: row-reverse;
+    }
+
+    &__checkbox-group {
+      label {
+        flex-direction: row-reverse;
+
+        input {
+          margin-right: 0;
+          margin-left: var(--space-2);
+        }
+      }
+    }
+  }
+
+  // ─── Search Box ──────────────────────────────────────────────────────────────
+
+  .search-box {
+    &__input {
+      padding-left: var(--space-4);
+      padding-right: var(--space-12);
+      text-align: right;
+    }
+
+    &__icon {
+      left: auto;
+      right: var(--space-4);
+    }
+
+    &__clear {
+      right: auto;
+      left: var(--space-4);
+    }
+  }
+
+  // ─── Project Cards ───────────────────────────────────────────────────────────
+
+  .project-card {
+    &__badge {
+      right: auto;
+      left: var(--space-4);
+    }
+
+    &__content {
+      text-align: right;
+    }
+
+    &__location {
+      flex-direction: row-reverse;
+
+      svg {
+        margin-right: 0;
+        margin-left: var(--space-1);
+      }
+    }
+
+    &__stats {
+      flex-direction: row-reverse;
+    }
+
+    &__stat {
+      flex-direction: row-reverse;
+
+      svg {
+        margin-right: 0;
+        margin-left: var(--space-1);
+      }
+    }
+  }
+
+  // ─── Services Cards ──────────────────────────────────────────────────────────
+
+  .service-card {
+    &__icon {
+      margin-right: 0;
+      margin-left: auto;
+    }
+
+    &__content {
+      text-align: right;
+    }
+
+    &__link {
+      flex-direction: row-reverse;
+
+      svg {
+        transform: scaleX(-1);
+      }
+    }
+  }
+
+  // ─── Neighborhood Cards ──────────────────────────────────────────────────────
+
+  .neighborhood-card {
+    &__badge {
+      right: auto;
+      left: var(--space-4);
+    }
+
+    &__content {
+      text-align: right;
+    }
+
+    &__stats {
+      flex-direction: row-reverse;
+    }
+  }
+
+  // ─── Guide Cards ─────────────────────────────────────────────────────────────
+
+  .guide-card {
+    &__content {
+      text-align: right;
+    }
+
+    &__meta {
+      flex-direction: row-reverse;
+    }
+
+    &__cta {
+      flex-direction: row-reverse;
+
+      svg {
+        transform: scaleX(-1);
+      }
+    }
+  }
+
+  // ─── FAQ Accordion ───────────────────────────────────────────────────────────
+
+  .faq-item {
+    &__question {
+      flex-direction: row-reverse;
+      text-align: right;
+    }
+
+    &__icon {
+      margin-left: 0;
+      margin-right: var(--space-4);
+    }
+
+    &__answer {
+      text-align: right;
+    }
+  }
+
+  // ─── Tabs Component ──────────────────────────────────────────────────────────
+
+  .tabs {
+    &__list {
+      flex-direction: row-reverse;
+    }
+
+    &__content {
+      text-align: right;
+    }
+  }
+
+  // ─── Pagination ──────────────────────────────────────────────────────────────
+
+  .pagination {
+    flex-direction: row-reverse;
+
+    &__prev svg,
+    &__next svg {
+      transform: scaleX(-1);
+    }
+  }
+
+  // ─── Alert / Toast Messages ──────────────────────────────────────────────────
+
+  .alert,
+  .toast {
+    flex-direction: row-reverse;
+    text-align: right;
+
+    &__icon {
+      margin-right: 0;
+      margin-left: var(--space-3);
+    }
+
+    &__close {
+      margin-left: 0;
+      margin-right: auto;
+    }
+  }
+
+  // ─── Modal ───────────────────────────────────────────────────────────────────
+
+  .modal {
+    &__close {
+      right: auto;
+      left: var(--space-4);
+    }
+
+    &__header {
+      text-align: right;
+    }
+
+    &__footer {
+      flex-direction: row-reverse;
+    }
+  }
+
+  // ─── Dropdown Menus ──────────────────────────────────────────────────────────
+
+  .dropdown {
+    &__menu {
+      right: auto;
+      left: 0;
+    }
+
+    &__item {
+      flex-direction: row-reverse;
+      text-align: right;
+
+      svg {
+        margin-right: 0;
+        margin-left: var(--space-2);
+      }
+    }
+  }
+
+  // ─── Input Groups ────────────────────────────────────────────────────────────
+
+  .input-group {
+    &__icon {
+      left: auto;
+      right: var(--space-4);
+    }
+
+    &__input {
+      padding-left: var(--space-4);
+      padding-right: var(--space-12);
+    }
+  }
+
+  // ─── Comparison Bar ──────────────────────────────────────────────────────────
+
+  .comparison-bar {
+    &__items {
+      flex-direction: row-reverse;
+    }
+
+    &__item-remove {
+      right: auto;
+      left: var(--space-1);
+    }
+
+    &__actions {
+      flex-direction: row-reverse;
+    }
+  }
+
+  // ─── Loading States ──────────────────────────────────────────────────────────
+
+  .skeleton {
+    &--text {
+      margin-left: auto;
+      margin-right: 0;
+    }
+  }
+
+  // ─── Social Links ────────────────────────────────────────────────────────────
+
+  .social-links {
+    flex-direction: row-reverse;
+  }
+
+  // ─── Contact Info ────────────────────────────────────────────────────────────
+
+  .contact-info {
+    &__item {
+      flex-direction: row-reverse;
+      text-align: right;
+
+      svg {
+        margin-right: 0;
+        margin-left: var(--space-3);
+      }
+    }
+  }
+
+  // ─── Footer ──────────────────────────────────────────────────────────────────
+
+  .footer {
+    &__logo {
+      margin-right: 0;
+      margin-left: auto;
+    }
+
+    &__column {
+      text-align: right;
+    }
+
+    &__social {
+      flex-direction: row-reverse;
+    }
+
+    &__bottom {
+      flex-direction: row-reverse;
+    }
+  }
+
+  // ─── Swiper / Carousel Overrides ─────────────────────────────────────────────
+
+  .swiper-button-prev,
+  .swiper-button-next {
+    svg {
+      transform: scaleX(-1);
+    }
+  }
+
+  .swiper-pagination-bullets {
+    direction: rtl;
+  }
+
+  // ─── Video Tour ──────────────────────────────────────────────────────────────
+
+  .video-tour {
+    &__play-btn {
+      // Centered, no change needed
+    }
+
+    &__controls {
+      flex-direction: row-reverse;
+    }
+
+    &__progress {
+      transform-origin: right;
+    }
+  }
+
+  // ─── Trust Signals / Badges ──────────────────────────────────────────────────
+
+  .trust-signals {
+    &__item {
+      flex-direction: row-reverse;
+      text-align: right;
+
+      svg {
+        margin-right: 0;
+        margin-left: var(--space-3);
+      }
+    }
+  }
+
+  // ─── Timeline / Process Steps ────────────────────────────────────────────────
+
+  .timeline {
+    &::before {
+      left: auto;
+      right: 0;
+    }
+
+    &__item {
+      padding-left: 0;
+      padding-right: var(--space-8);
+
+      &::before {
+        left: auto;
+        right: 0;
+      }
+    }
+
+    &__content {
+      text-align: right;
+    }
+  }
+
+  // ─── Appointments ────────────────────────────────────────────────────────────
+
+  .appointment {
+    &__time-slots {
+      flex-direction: row-reverse;
+    }
+
+    &__summary-row {
+      flex-direction: row-reverse;
+    }
+  }
+
+  // ─── Print Styles ────────────────────────────────────────────────────────────
+
+  @media print {
+    body {
+      direction: rtl;
+      text-align: right;
+    }
+  }
+}

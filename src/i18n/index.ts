@@ -2,6 +2,8 @@
 // i18n Utility Functions - Real House Multi-language Support
 // =============================================================================
 
+// Import from legacy translations.ts for backward compatibility
+// TODO: Migrate to new structure in translations/index.ts
 import {
   translations,
   RTL_LANGUAGES,
@@ -22,6 +24,11 @@ export {
   type TranslationStrings,
   type LanguageInfo,
 };
+
+// Export from new modular structure
+export * from './types';
+export * from './config';
+export * from './helpers';
 
 // =============================================================================
 // CONSTANTS
@@ -109,15 +116,40 @@ export function getTextDirection(lang?: Language): 'ltr' | 'rtl' {
 // =============================================================================
 
 /**
- * Get a translation string by dot-notation key
+ * Variable interpolation options for translation strings
+ */
+export interface TranslationOptions {
+  /** Variables to interpolate into the string (e.g., { count: 5, name: 'John' }) */
+  [key: string]: string | number | boolean | undefined;
+}
+
+/**
+ * Get a translation string by dot-notation key with optional interpolation
  * Example: t('nav.home') -> 'Home' (in English)
+ * Example with interpolation: t('property.bedroomCount', { count: 3 }) -> '3 Bedrooms'
  *
  * @param key - Dot-notation key (e.g., 'nav.home', 'buttons.submit')
- * @param lang - Optional language override
+ * @param optionsOrLang - Optional interpolation variables or language override
+ * @param lang - Optional language override when options are provided
  * @returns Translated string or the key if not found
  */
-export function t(key: string, lang?: Language): string {
-  const currentLang = lang || getCurrentLanguage();
+export function t(
+  key: string,
+  optionsOrLang?: TranslationOptions | Language,
+  lang?: Language
+): string {
+  // Determine if second arg is options or language
+  let options: TranslationOptions | undefined;
+  let targetLang: Language | undefined;
+
+  if (typeof optionsOrLang === 'string') {
+    targetLang = optionsOrLang as Language;
+  } else if (optionsOrLang && typeof optionsOrLang === 'object') {
+    options = optionsOrLang;
+    targetLang = lang;
+  }
+
+  const currentLang = targetLang || getCurrentLanguage();
   const translationSet = translations[currentLang];
 
   if (!translationSet) {
@@ -135,7 +167,7 @@ export function t(key: string, lang?: Language): string {
     } else {
       // Key not found - try fallback to English
       if (currentLang !== 'en') {
-        return t(key, 'en');
+        return t(key, options, 'en');
       }
       console.warn(`Translation key not found: ${key}`);
       return key;
@@ -143,11 +175,110 @@ export function t(key: string, lang?: Language): string {
   }
 
   if (typeof result === 'string') {
+    // Apply interpolation if options provided
+    if (options) {
+      return interpolate(result, options);
+    }
     return result;
   }
 
   console.warn(`Translation key "${key}" did not resolve to a string`);
   return key;
+}
+
+/**
+ * Interpolate variables into a translation string
+ * Supports {{variable}} syntax
+ * Example: interpolate('Hello {{name}}!', { name: 'John' }) -> 'Hello John!'
+ */
+function interpolate(str: string, options: TranslationOptions): string {
+  return str.replace(/\{\{(\w+)\}\}/g, (match, varName) => {
+    const value = options[varName];
+    if (value !== undefined) {
+      return String(value);
+    }
+    console.warn(`Missing interpolation variable: ${varName}`);
+    return match;
+  });
+}
+
+/**
+ * Pluralization helper for translation strings
+ * Automatically selects between singular and plural forms based on count
+ *
+ * @param key - Base translation key (e.g., 'property.bedroom')
+ * @param count - The count to determine singular/plural
+ * @param lang - Optional language override
+ * @returns Pluralized translation string with count
+ *
+ * Expected keys in translations:
+ * - {key}.zero (optional) - for count === 0
+ * - {key}.one - for count === 1
+ * - {key}.other - for count > 1
+ */
+export function tp(key: string, count: number, lang?: Language): string {
+  const currentLang = lang || getCurrentLanguage();
+
+  // Arabic has special plural rules (0, 1, 2, few, many, other)
+  // Kurdish (Sorani) is simpler (1, other)
+  // For now, implement basic plural forms
+
+  let pluralKey: string;
+
+  if (count === 0) {
+    // Try zero form first, fall back to other
+    pluralKey = `${key}.zero`;
+    const zeroResult = t(pluralKey, { count }, currentLang);
+    if (zeroResult !== pluralKey) {
+      return zeroResult;
+    }
+    pluralKey = `${key}.other`;
+  } else if (count === 1) {
+    pluralKey = `${key}.one`;
+  } else {
+    pluralKey = `${key}.other`;
+  }
+
+  return t(pluralKey, { count }, currentLang);
+}
+
+/**
+ * Get a translated array of strings
+ * Useful for lists of features, amenities, etc.
+ *
+ * @param key - Dot-notation key pointing to an array
+ * @param lang - Optional language override
+ * @returns Array of translated strings, or empty array if not found
+ */
+export function ta(key: string, lang?: Language): string[] {
+  const currentLang = lang || getCurrentLanguage();
+  const translationSet = translations[currentLang];
+
+  if (!translationSet) {
+    return [];
+  }
+
+  // Parse dot notation key
+  const keys = key.split('.');
+  let result: unknown = translationSet;
+
+  for (const k of keys) {
+    if (result && typeof result === 'object' && k in result) {
+      result = (result as Record<string, unknown>)[k];
+    } else {
+      // Key not found - try fallback to English
+      if (currentLang !== 'en') {
+        return ta(key, 'en');
+      }
+      return [];
+    }
+  }
+
+  if (Array.isArray(result)) {
+    return result.filter((item): item is string => typeof item === 'string');
+  }
+
+  return [];
 }
 
 /**
@@ -481,8 +612,8 @@ export function initI18n(): void {
   // Update hreflang tags
   updateHreflangTags(window.location.pathname);
 
-  // Language selector hidden - site is currently English-only
-  // initLanguageSelector();
+  // Initialize language selector for multi-language support
+  initLanguageSelector();
 
   // Listen for route changes to update hreflang tags
   window.addEventListener('popstate', () => {
@@ -564,10 +695,98 @@ export function getOppositeDirection(lang?: Language): 'ltr' | 'rtl' {
 }
 
 // =============================================================================
-// AUTO-INITIALIZE ON LOAD (Optional - can be called manually)
+// DATA LOCALIZATION HELPERS
 // =============================================================================
 
-// Uncomment to auto-initialize when script loads
-// if (typeof window !== 'undefined') {
-//   window.addEventListener('DOMContentLoaded', initI18n);
-// }
+/**
+ * Interface for items with localized name fields
+ */
+export interface LocalizedItem {
+  name: string;
+  nameAr?: string;
+  nameKu?: string;
+}
+
+/**
+ * Interface for items with localized description fields
+ */
+export interface LocalizedDescriptionItem extends LocalizedItem {
+  description?: string;
+  descriptionAr?: string;
+  descriptionKu?: string;
+}
+
+/**
+ * Get the localized name from an item with name/nameAr/nameKu fields
+ *
+ * @param item - Object with localized name fields
+ * @param lang - Optional language override
+ * @returns Localized name string
+ */
+export function getLocalizedName(item: LocalizedItem, lang?: Language): string {
+  const currentLang = lang || getCurrentLanguage();
+
+  if (currentLang === 'ar' && item.nameAr) {
+    return item.nameAr;
+  }
+  if (currentLang === 'ckb' && item.nameKu) {
+    return item.nameKu;
+  }
+  return item.name;
+}
+
+/**
+ * Get the localized description from an item with description/descriptionAr/descriptionKu fields
+ *
+ * @param item - Object with localized description fields
+ * @param lang - Optional language override
+ * @returns Localized description string or undefined
+ */
+export function getLocalizedDescription(
+  item: LocalizedDescriptionItem,
+  lang?: Language
+): string | undefined {
+  const currentLang = lang || getCurrentLanguage();
+
+  if (currentLang === 'ar' && item.descriptionAr) {
+    return item.descriptionAr;
+  }
+  if (currentLang === 'ckb' && item.descriptionKu) {
+    return item.descriptionKu;
+  }
+  return item.description;
+}
+
+/**
+ * Get a localized field from a data namespace
+ * Useful for accessing translated content from data files
+ *
+ * @param namespace - The data namespace (e.g., 'services', 'neighborhoods')
+ * @param id - The item identifier
+ * @param field - The field name to retrieve
+ * @param lang - Optional language override
+ * @returns Localized field value or the key if not found
+ */
+export function getLocalizedField(
+  namespace: string,
+  id: string,
+  field: string,
+  lang?: Language
+): string {
+  return t(`data.${namespace}.${id}.${field}`, undefined, lang);
+}
+
+/**
+ * Create a localized getter function for a specific data item
+ * Returns a function that retrieves localized fields for that item
+ *
+ * @param namespace - The data namespace
+ * @param id - The item identifier
+ * @returns Function that takes a field name and returns the localized value
+ */
+export function createLocalizedGetter(
+  namespace: string,
+  id: string
+): (field: string, lang?: Language) => string {
+  return (field: string, lang?: Language) => getLocalizedField(namespace, id, field, lang);
+}
