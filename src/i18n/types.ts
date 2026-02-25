@@ -261,6 +261,76 @@ export interface CoreTranslations {
     selectLanguage: string;
     currentLanguage: string;
   };
+
+  filters: {
+    viewMode: string;
+    grid: string;
+    list: string;
+    map: string;
+    viewAsGrid: string;
+    viewAsList: string;
+    viewOnMap: string;
+    all: string;
+    any: string;
+    bedrooms: string;
+    status: string;
+    advancedFilters: string;
+    priceRange: string;
+    priceRangeUSD: string;
+    areaSqm: string;
+    yearBuilt: string;
+    district: string;
+    allDistricts: string;
+    furnishingStatus: string;
+    anyFurnishing: string;
+    fullyFurnished: string;
+    semiFurnished: string;
+    unfurnished: string;
+    viewType: string;
+    anyView: string;
+    cityView: string;
+    gardenView: string;
+    poolView: string;
+    streetView: string;
+    mountainView: string;
+    parkView: string;
+    numberOfFloors: string;
+    propertyFeatures: string;
+    centralAC: string;
+    balcony: string;
+    parking: string;
+    security: string;
+    pool: string;
+    gym: string;
+    garden: string;
+    elevator: string;
+    smartHome: string;
+    maidsRoom: string;
+    storage: string;
+    petFriendly: string;
+    propertyBadges: string;
+    hot: string;
+    new: string;
+    exclusive: string;
+    discount: string;
+    installment: string;
+    clearAllFilters: string;
+    resetAdvancedFilters: string;
+    propertiesFound: string;
+    noPropertiesFound: string;
+    tryAdjustingFilters: string;
+    min: string;
+    max: string;
+    to: string;
+    dailyRent: string;
+  };
+
+  cta: {
+    needHelpFinding: string;
+    ourExpertsHelp: string;
+    contactOurExperts: string;
+    viewDevelopmentProjects: string;
+  };
 }
 
 /**

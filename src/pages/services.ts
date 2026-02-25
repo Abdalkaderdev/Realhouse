@@ -13,6 +13,7 @@ import {
 } from '../data/services';
 import { properties, featuredProperties } from '../data/properties';
 import { testimonials, type Testimonial } from '../data/testimonials';
+import { t } from '../i18n';
 
 const BASE_URL = 'https://realhouseiq.com';
 
@@ -112,7 +113,7 @@ function createServiceCard(service: Service): HTMLElement {
   content.appendChild(features);
 
   // CTA
-  const cta = createElement('a', 'service-card__cta', 'Learn More');
+  const cta = createElement('a', 'service-card__cta', t('common.learnMore'));
   cta.href = `/services/${service.slug}`;
   cta.setAttribute('data-route', '');
   cta.appendChild(createSVGUse('icon-arrow-right'));
@@ -238,7 +239,7 @@ export function renderServicesPage(): DocumentFragment {
   const hero = createElement('section', 'services-page__hero');
   const heroContainer = createElement('div', 'container');
 
-  const heroBadge = createElement('span', 'services-page__badge', 'Our Services');
+  const heroBadge = createElement('span', 'services-page__badge', t('common.ourServices'));
   heroContainer.appendChild(heroBadge);
 
   const heroTitle = createElement('h1', 'services-page__title');
@@ -332,7 +333,7 @@ export function renderServicesPage(): DocumentFragment {
 
   const ctaBtns = createElement('div', 'services-page__cta-btns');
 
-  const ctaBtn1 = createElement('a', 'btn btn--primary', 'Contact Us');
+  const ctaBtn1 = createElement('a', 'btn btn--primary', t('common.contactUs'));
   ctaBtn1.href = '/contact';
   ctaBtn1.setAttribute('data-route', '');
   ctaBtns.appendChild(ctaBtn1);
@@ -430,7 +431,7 @@ export function renderServiceDetailPage(slug: string): DocumentFragment {
   const heroSubtitle = createElement('p', 'service-detail-page__subtitle', service.shortDescription);
   heroContent.appendChild(heroSubtitle);
 
-  const heroCta = createElement('a', 'btn btn--primary btn--lg', 'Get Started');
+  const heroCta = createElement('a', 'btn btn--primary btn--lg', t('common.getStarted'));
   heroCta.href = '/contact';
   heroCta.setAttribute('data-route', '');
   heroContent.appendChild(heroCta);
@@ -548,7 +549,7 @@ export function renderServiceDetailPage(slug: string): DocumentFragment {
   ctaCard.appendChild(ctaCardTitle);
   const ctaCardText = createElement('p', 'service-detail-page__cta-card-text', service.ctaDescription);
   ctaCard.appendChild(ctaCardText);
-  const ctaCardBtn = createElement('a', 'btn btn--primary btn--block', 'Contact Us');
+  const ctaCardBtn = createElement('a', 'btn btn--primary btn--block', t('common.contactUs'));
   ctaCardBtn.href = '/contact';
   ctaCardBtn.setAttribute('data-route', '');
   ctaCard.appendChild(ctaCardBtn);
@@ -650,7 +651,7 @@ export function renderServiceDetailPage(slug: string): DocumentFragment {
   bottomCtaContent.appendChild(bottomCtaText);
 
   const bottomCtaBtns = createElement('div', 'service-detail-page__bottom-cta-btns');
-  const bottomCtaBtn1 = createElement('a', 'btn btn--primary btn--lg', 'Contact Us');
+  const bottomCtaBtn1 = createElement('a', 'btn btn--primary btn--lg', t('common.contactUs'));
   bottomCtaBtn1.href = '/contact';
   bottomCtaBtn1.setAttribute('data-route', '');
   bottomCtaBtns.appendChild(bottomCtaBtn1);

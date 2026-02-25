@@ -49,6 +49,7 @@ import {
   createRecentBlogWidget,
   type BreadcrumbItem
 } from './components/internal-linking';
+import { t } from './i18n';
 
 // ─── Mortgage Calculator Interface ─────────────────────────────────────────
 interface MortgageCalculation {
@@ -531,11 +532,11 @@ function createPropertyCard(property: Property): HTMLElement {
   if (property.isFeatured || property.isNew) {
     const badge = createElement('div', 'property-card__badge');
     if (property.isFeatured) {
-      const tag = createElement('span', 'property-card__tag', 'Featured');
+      const tag = createElement('span', 'property-card__tag', t('property.featured'));
       badge.appendChild(tag);
     }
     if (property.isNew) {
-      const tag = createElement('span', 'property-card__tag property-card__tag--new', 'New');
+      const tag = createElement('span', 'property-card__tag property-card__tag--new', t('property.newListing'));
       badge.appendChild(tag);
     }
     media.appendChild(badge);
@@ -667,20 +668,20 @@ export function renderHomePage(): DocumentFragment {
   const heroContent = createElement('div', 'hero__content container');
 
   // Headline
-  const headline = createElement('h1', 'hero__headline', 'Find Your Dream Home in Erbil');
+  const headline = createElement('h1', 'hero__headline', t('hero.title'));
   heroContent.appendChild(headline);
 
   // Subline
-  const subline = createElement('p', 'hero__subline', 'Discover luxury apartments, villas, and commercial properties in Kurdistan\'s most prestigious neighborhoods.');
+  const subline = createElement('p', 'hero__subline', t('hero.subtitle'));
   heroContent.appendChild(subline);
 
   // CTA
   const cta = createElement('div', 'hero__cta');
-  const primaryBtn = createElement('a', 'btn btn--primary btn--large', 'Browse Properties');
+  const primaryBtn = createElement('a', 'btn btn--primary btn--large', t('hero.cta'));
   primaryBtn.href = '/properties';
   primaryBtn.setAttribute('data-route', '');
   cta.appendChild(primaryBtn);
-  const consultationBtn = createElement('a', 'btn btn--ghost btn--large', 'Contact Us');
+  const consultationBtn = createElement('a', 'btn btn--ghost btn--large', t('common.contactUs'));
   consultationBtn.href = '/contact';
   consultationBtn.setAttribute('data-route', '');
   cta.appendChild(consultationBtn);
@@ -724,10 +725,10 @@ export function renderHomePage(): DocumentFragment {
   statsGrid.setAttribute('role', 'list');
 
   const statsData = [
-    { number: 2400, suffix: '+', label: 'Properties Sold' },
-    { number: 98, suffix: '%', label: 'Client Satisfaction' },
-    { number: 24, suffix: '+', label: 'Years Experience' },
-    { number: 15, suffix: '', label: 'Global Markets' }
+    { number: 2400, suffix: '+', label: t('about.propertiesSold') },
+    { number: 98, suffix: '%', label: t('about.happyClients') },
+    { number: 24, suffix: '+', label: t('about.yearsExperience') },
+    { number: 15, suffix: '', label: t('common.popularLocations') }
   ];
 
   statsData.forEach(stat => {
@@ -754,12 +755,10 @@ export function renderHomePage(): DocumentFragment {
   const featuredHeader = createElement('header', 'featured__header');
   const featuredTitle = createElement('h2', 'featured__title');
   featuredTitle.id = 'featured-title';
-  featuredTitle.textContent = 'Featured Property Erbil — ';
-  const em = createElement('em', undefined, 'Luxury Homes Kurdistan');
-  featuredTitle.appendChild(em);
+  featuredTitle.textContent = t('property.featured');
   featuredHeader.appendChild(featuredTitle);
 
-  const viewAllLink = createElement('a', 'featured__link', 'View all houses for sale Erbil');
+  const viewAllLink = createElement('a', 'featured__link', t('buttons.viewAll'));
   viewAllLink.href = '/properties';
   viewAllLink.setAttribute('data-route', '');
   viewAllLink.appendChild(createSVGUse('icon-arrow-right'));
@@ -781,7 +780,7 @@ export function renderHomePage(): DocumentFragment {
   // Load More button (only show if there are more properties)
   if (featuredProperties.length > initialCount) {
     const loadMoreContainer = createElement('div', 'featured__load-more');
-    const loadMoreBtn = createElement('button', 'btn btn--outline btn--lg', 'Load More Properties');
+    const loadMoreBtn = createElement('button', 'btn btn--outline btn--lg', t('buttons.loadMore'));
     loadMoreBtn.setAttribute('data-load-more', '');
 
     loadMoreBtn.addEventListener('click', () => {
@@ -1174,9 +1173,9 @@ export function renderPropertiesPage(): DocumentFragment {
   // Header with view toggle - only ONE h1 per page
   const header = createElement('header', 'properties-page__header');
   const headerContent = createElement('div', 'properties-page__header-content');
-  const title = createElement('h1', 'properties-page__title', 'Property Erbil — Houses for Sale Erbil, Apartments Erbil Iraq & Luxury Homes Kurdistan');
+  const title = createElement('h1', 'properties-page__title', t('nav.properties'));
   title.id = 'properties-title';
-  const subtitle = createElement('p', 'properties-page__subtitle', 'Discover exceptional real estate Erbil listings. Browse villas Erbil Iraq, penthouse Erbil, apartments Erbil Iraq, and luxury homes Kurdistan. Best real estate agent Erbil for buy house Erbil and real estate Kurdistan property investment Kurdistan Iraq.');
+  const subtitle = createElement('p', 'properties-page__subtitle', t('common.findYourHome'));
   headerContent.appendChild(title);
   headerContent.appendChild(subtitle);
   header.appendChild(headerContent);
@@ -1184,7 +1183,7 @@ export function renderPropertiesPage(): DocumentFragment {
   // View Toggle Buttons with proper ARIA - Grid | List | Map
   const viewToggle = createElement('div', 'properties-page__view-toggle');
   viewToggle.setAttribute('role', 'group');
-  viewToggle.setAttribute('aria-label', 'View mode');
+  viewToggle.setAttribute('aria-label', t('filters.viewMode'));
 
   // Grid View Button
   const gridBtn = createElement('button', `properties-page__view-btn${currentViewMode === 'grid' ? ' properties-page__view-btn--active' : ''}`);
@@ -1197,17 +1196,17 @@ export function renderPropertiesPage(): DocumentFragment {
   // List View Button
   const listBtn = createElement('button', `properties-page__view-btn${currentViewMode === 'list' ? ' properties-page__view-btn--active' : ''}`);
   listBtn.setAttribute('data-view', 'list');
-  listBtn.setAttribute('aria-label', 'View properties as list');
+  listBtn.setAttribute('aria-label', t('filters.viewAsList'));
   listBtn.setAttribute('aria-pressed', currentViewMode === 'list' ? 'true' : 'false');
-  listBtn.innerHTML = '<svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><line x1="3" y1="6" x2="3.01" y2="6"/><line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/></svg><span>List</span>';
+  listBtn.innerHTML = `<svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><line x1="3" y1="6" x2="3.01" y2="6"/><line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/></svg><span>${t('filters.list')}</span>`;
   viewToggle.appendChild(listBtn);
 
   // Map View Button
   const mapBtn = createElement('button', `properties-page__view-btn${currentViewMode === 'map' ? ' properties-page__view-btn--active' : ''}`);
   mapBtn.setAttribute('data-view', 'map');
-  mapBtn.setAttribute('aria-label', 'View properties on map');
+  mapBtn.setAttribute('aria-label', t('filters.viewOnMap'));
   mapBtn.setAttribute('aria-pressed', currentViewMode === 'map' ? 'true' : 'false');
-  mapBtn.innerHTML = '<svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><polygon points="1 6 1 22 8 18 16 22 23 18 23 2 16 6 8 2 1 6"/><line x1="8" y1="2" x2="8" y2="18"/><line x1="16" y1="6" x2="16" y2="22"/></svg><span>Map</span>';
+  mapBtn.innerHTML = `<svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><polygon points="1 6 1 22 8 18 16 22 23 18 23 2 16 6 8 2 1 6"/><line x1="8" y1="2" x2="8" y2="18"/><line x1="16" y1="6" x2="16" y2="22"/></svg><span>${t('filters.map')}</span>`;
   viewToggle.appendChild(mapBtn);
 
   header.appendChild(viewToggle);
@@ -1222,15 +1221,15 @@ export function renderPropertiesPage(): DocumentFragment {
   const searchSection = createElement('div', 'properties-page__search');
   const searchInput = createElement('input', 'properties-page__search-input');
   searchInput.type = 'text';
-  searchInput.placeholder = 'Search properties by location, type, or features...';
-  searchInput.setAttribute('aria-label', 'Search properties');
+  searchInput.placeholder = t('buttons.search') + '...';
+  searchInput.setAttribute('aria-label', t('buttons.search'));
   searchInput.value = currentFilterState.searchQuery;
   searchSection.appendChild(searchInput);
   container.appendChild(searchSection);
 
   // Property Type Filters
   const typeFilterGroup = createElement('div', 'properties-page__filter-group');
-  const typeLabel = createElement('span', 'properties-page__filter-label', 'Type:');
+  const typeLabel = createElement('span', 'properties-page__filter-label', t('forms.propertyType') + ':');
   typeFilterGroup.appendChild(typeLabel);
   const filterTypes = ['All', 'Villa', 'Apartment', 'Penthouse', 'Townhouse', 'Duplex', 'Land', 'Commercial'];
   filterTypes.forEach((type) => {
@@ -1244,7 +1243,7 @@ export function renderPropertiesPage(): DocumentFragment {
 
   // Price Range Filters
   const priceFilterGroup = createElement('div', 'properties-page__filter-group');
-  const priceLabel = createElement('span', 'properties-page__filter-label', 'Price:');
+  const priceLabel = createElement('span', 'properties-page__filter-label', t('property.price') + ':');
   priceFilterGroup.appendChild(priceLabel);
   const priceRanges = ['All', 'Under $200K', '$200K-$400K', '$400K-$700K', '$700K+'];
   priceRanges.forEach((range) => {
@@ -1258,7 +1257,7 @@ export function renderPropertiesPage(): DocumentFragment {
 
   // Beds Filters
   const bedsFilterGroup = createElement('div', 'properties-page__filter-group');
-  const bedsLabel = createElement('span', 'properties-page__filter-label', 'Bedrooms:');
+  const bedsLabel = createElement('span', 'properties-page__filter-label', t('filters.bedrooms') + ':');
   bedsFilterGroup.appendChild(bedsLabel);
   const bedOptions = [
     { label: 'Any', value: 0 },
@@ -1278,7 +1277,7 @@ export function renderPropertiesPage(): DocumentFragment {
 
   // Status Filters (For Sale / For Rent / Daily Rent)
   const statusFilterGroup = createElement('div', 'properties-page__filter-group');
-  const statusLabel = createElement('span', 'properties-page__filter-label', 'Status:');
+  const statusLabel = createElement('span', 'properties-page__filter-label', t('filters.status') + ':');
   statusFilterGroup.appendChild(statusLabel);
   const statusOptions = ['All', 'For Sale', 'For Rent', 'Daily Rent'];
   statusOptions.forEach((status) => {
@@ -1295,7 +1294,7 @@ export function renderPropertiesPage(): DocumentFragment {
   const advToggleBtn = createElement('button', 'properties-page__advanced-toggle-btn');
   advToggleBtn.setAttribute('aria-expanded', 'false');
   advToggleBtn.setAttribute('aria-controls', 'advanced-filters-panel');
-  const advToggleText = createElement('span', 'properties-page__advanced-toggle-text', 'Advanced Filters');
+  const advToggleText = createElement('span', 'properties-page__advanced-toggle-text', t('filters.advancedFilters'));
   advToggleBtn.appendChild(advToggleText);
   const advToggleIcon = createElement('span', 'properties-page__advanced-toggle-icon', '+');
   advToggleBtn.appendChild(advToggleIcon);
@@ -1309,7 +1308,7 @@ export function renderPropertiesPage(): DocumentFragment {
   // Row 1: Price Range Slider
   const advRowPrice = createElement('div', 'properties-page__advanced-row properties-page__advanced-row--full');
   const priceSliderWrapper = createElement('div', 'advanced-filter__slider-group');
-  priceSliderWrapper.appendChild(createElement('label', 'advanced-filter__label', 'Price Range (USD)'));
+  priceSliderWrapper.appendChild(createElement('label', 'advanced-filter__label', t('filters.priceRangeUSD')));
   const priceSliderContainer = createElement('div', 'advanced-filter__dual-slider');
 
   // Price display
@@ -1345,27 +1344,27 @@ export function renderPropertiesPage(): DocumentFragment {
   // Row 2: Area Range & Year Built
   const advRow1 = createElement('div', 'properties-page__advanced-row');
   const areaWrapper = createElement('div', 'advanced-filter__range');
-  areaWrapper.appendChild(createElement('label', 'advanced-filter__label', 'Area (sqm)'));
+  areaWrapper.appendChild(createElement('label', 'advanced-filter__label', t('filters.areaSqm')));
   const areaSliderContainer = createElement('div', 'advanced-filter__slider-container');
   const minAreaInput = createElement('input', 'advanced-filter__range-input') as HTMLInputElement;
   minAreaInput.type = 'number'; minAreaInput.min = '0'; minAreaInput.placeholder = 'Min'; minAreaInput.id = 'min-area-input';
   const maxAreaInput = createElement('input', 'advanced-filter__range-input') as HTMLInputElement;
   maxAreaInput.type = 'number'; maxAreaInput.min = '0'; maxAreaInput.placeholder = 'Max (1000+)'; maxAreaInput.id = 'max-area-input';
   areaSliderContainer.appendChild(minAreaInput);
-  areaSliderContainer.appendChild(createElement('span', 'advanced-filter__separator', 'to'));
+  areaSliderContainer.appendChild(createElement('span', 'advanced-filter__separator', t('filters.to')));
   areaSliderContainer.appendChild(maxAreaInput);
   areaWrapper.appendChild(areaSliderContainer);
   advRow1.appendChild(areaWrapper);
 
   const yearWrapper = createElement('div', 'advanced-filter__range');
-  yearWrapper.appendChild(createElement('label', 'advanced-filter__label', 'Year Built'));
+  yearWrapper.appendChild(createElement('label', 'advanced-filter__label', t('filters.yearBuilt')));
   const yearSliderContainer = createElement('div', 'advanced-filter__slider-container');
   const minYearInput = createElement('input', 'advanced-filter__range-input') as HTMLInputElement;
   minYearInput.type = 'number'; minYearInput.min = '2000'; minYearInput.placeholder = 'Min Year'; minYearInput.id = 'min-year-input';
   const maxYearInput = createElement('input', 'advanced-filter__range-input') as HTMLInputElement;
   maxYearInput.type = 'number'; maxYearInput.min = '2000'; maxYearInput.placeholder = 'Max Year'; maxYearInput.id = 'max-year-input';
   yearSliderContainer.appendChild(minYearInput);
-  yearSliderContainer.appendChild(createElement('span', 'advanced-filter__separator', 'to'));
+  yearSliderContainer.appendChild(createElement('span', 'advanced-filter__separator', t('filters.to')));
   yearSliderContainer.appendChild(maxYearInput);
   yearWrapper.appendChild(yearSliderContainer);
   advRow1.appendChild(yearWrapper);
@@ -1374,12 +1373,12 @@ export function renderPropertiesPage(): DocumentFragment {
   // Row 3: District & Furnishing Status
   const advRow2 = createElement('div', 'properties-page__advanced-row');
   const districtWrapper = createElement('div', 'advanced-filter__dropdown');
-  const districtLbl = createElement('label', 'advanced-filter__label', 'District/Neighborhood');
+  const districtLbl = createElement('label', 'advanced-filter__label', t('filters.district'));
   districtLbl.setAttribute('for', 'district-filter');
   districtWrapper.appendChild(districtLbl);
   const districtSelect = createElement('select', 'advanced-filter__select') as HTMLSelectElement;
   districtSelect.id = 'district-filter';
-  const allDistOpt = createElement('option', undefined, 'All Districts');
+  const allDistOpt = createElement('option', undefined, t('filters.allDistricts'));
   allDistOpt.value = 'All';
   districtSelect.appendChild(allDistOpt);
   const uniqueDistricts = new Set<string>();
@@ -1390,7 +1389,7 @@ export function renderPropertiesPage(): DocumentFragment {
 
   // Furnishing Status Dropdown
   const furnishingWrapper = createElement('div', 'advanced-filter__dropdown');
-  const furnishingLbl = createElement('label', 'advanced-filter__label', 'Furnishing Status');
+  const furnishingLbl = createElement('label', 'advanced-filter__label', t('filters.furnishingStatus'));
   furnishingLbl.setAttribute('for', 'furnishing-filter');
   furnishingWrapper.appendChild(furnishingLbl);
   const furnishingSelect = createElement('select', 'advanced-filter__select') as HTMLSelectElement;
@@ -1410,7 +1409,7 @@ export function renderPropertiesPage(): DocumentFragment {
 
   // View Type Dropdown
   const viewWrapper = createElement('div', 'advanced-filter__dropdown');
-  const viewLbl = createElement('label', 'advanced-filter__label', 'View Type');
+  const viewLbl = createElement('label', 'advanced-filter__label', t('filters.viewType'));
   viewLbl.setAttribute('for', 'view-filter');
   viewWrapper.appendChild(viewLbl);
   const viewSelect = createElement('select', 'advanced-filter__select') as HTMLSelectElement;
@@ -1426,14 +1425,14 @@ export function renderPropertiesPage(): DocumentFragment {
 
   // Number of Floors
   const floorsWrapper = createElement('div', 'advanced-filter__range');
-  floorsWrapper.appendChild(createElement('label', 'advanced-filter__label', 'Number of Floors'));
+  floorsWrapper.appendChild(createElement('label', 'advanced-filter__label', t('filters.numberOfFloors')));
   const floorsSliderContainer = createElement('div', 'advanced-filter__slider-container');
   const minFloorsInput = createElement('input', 'advanced-filter__range-input') as HTMLInputElement;
   minFloorsInput.type = 'number'; minFloorsInput.min = '0'; minFloorsInput.max = '20'; minFloorsInput.placeholder = 'Min'; minFloorsInput.id = 'min-floors-input';
   const maxFloorsInput = createElement('input', 'advanced-filter__range-input') as HTMLInputElement;
   maxFloorsInput.type = 'number'; maxFloorsInput.min = '0'; maxFloorsInput.max = '20'; maxFloorsInput.placeholder = 'Max'; maxFloorsInput.id = 'max-floors-input';
   floorsSliderContainer.appendChild(minFloorsInput);
-  floorsSliderContainer.appendChild(createElement('span', 'advanced-filter__separator', 'to'));
+  floorsSliderContainer.appendChild(createElement('span', 'advanced-filter__separator', t('filters.to')));
   floorsSliderContainer.appendChild(maxFloorsInput);
   floorsWrapper.appendChild(floorsSliderContainer);
   advRow3.appendChild(floorsWrapper);
@@ -1442,7 +1441,7 @@ export function renderPropertiesPage(): DocumentFragment {
   // Row 5: Property Features (checkboxes)
   const advRowFeatures = createElement('div', 'properties-page__advanced-row properties-page__advanced-row--full');
   const featuresWrapper = createElement('div', 'advanced-filter__checkbox-group');
-  featuresWrapper.appendChild(createElement('label', 'advanced-filter__label', 'Property Features'));
+  featuresWrapper.appendChild(createElement('label', 'advanced-filter__label', t('filters.propertyFeatures')));
   const featuresOpts = createElement('div', 'advanced-filter__options advanced-filter__options--features');
   const propertyFeaturesList = ['Central AC', 'Balcony', 'Parking', 'Security', 'Pool', 'Gym', 'Garden', 'Elevator', 'Smart Home', "Maid's Room", 'Storage', 'Pet Friendly'];
   propertyFeaturesList.forEach(feature => {
@@ -1460,7 +1459,7 @@ export function renderPropertiesPage(): DocumentFragment {
   // Row 6: Badges
   const advRowBadges = createElement('div', 'properties-page__advanced-row properties-page__advanced-row--full');
   const badgesWrapper = createElement('div', 'advanced-filter__checkbox-group');
-  badgesWrapper.appendChild(createElement('label', 'advanced-filter__label', 'Property Badges'));
+  badgesWrapper.appendChild(createElement('label', 'advanced-filter__label', t('filters.propertyBadges')));
   const badgesOpts = createElement('div', 'advanced-filter__options');
   ['Hot', 'New', 'Exclusive', 'Discount', 'Installment'].forEach(badge => {
     const optLbl = createElement('label', 'advanced-filter__option');
@@ -1476,10 +1475,10 @@ export function renderPropertiesPage(): DocumentFragment {
 
   // Clear All & Reset Advanced Filters
   const resetRow = createElement('div', 'properties-page__advanced-row properties-page__advanced-reset');
-  const clearAllBtn = createElement('button', 'btn btn--primary btn--sm', 'Clear All Filters');
+  const clearAllBtn = createElement('button', 'btn btn--primary btn--sm', t('filters.clearAllFilters'));
   clearAllBtn.id = 'clear-all-filters';
   resetRow.appendChild(clearAllBtn);
-  const resetAdvBtn = createElement('button', 'btn btn--ghost btn--sm', 'Reset Advanced Filters');
+  const resetAdvBtn = createElement('button', 'btn btn--ghost btn--sm', t('filters.resetAdvancedFilters'));
   resetAdvBtn.id = 'reset-advanced-filters';
   resetRow.appendChild(resetAdvBtn);
   advancedContent.appendChild(resetRow);
@@ -1492,7 +1491,7 @@ export function renderPropertiesPage(): DocumentFragment {
   filtersSummary.id = 'filters-summary';
   const filtersCount = createElement('span', 'properties-page__filters-count');
   filtersCount.id = 'filters-count';
-  filtersCount.textContent = properties.length + ' properties found';
+  filtersCount.textContent = t('filters.propertiesFound', { count: properties.length });
   filtersSummary.appendChild(filtersCount);
   container.appendChild(filtersSummary);
 
@@ -1503,8 +1502,8 @@ export function renderPropertiesPage(): DocumentFragment {
   const initialFilteredProps = filterProperties(properties, currentFilterState);
   if (initialFilteredProps.length === 0) {
     const noResults = createElement('div', 'properties-page__no-results');
-    const noResultsTitle = createElement('h3', undefined, 'No properties found');
-    const noResultsText = createElement('p', undefined, 'Try adjusting your filters.');
+    const noResultsTitle = createElement('h3', undefined, t('filters.noPropertiesFound'));
+    const noResultsText = createElement('p', undefined, t('filters.tryAdjustingFilters'));
     noResults.appendChild(noResultsTitle);
     noResults.appendChild(noResultsText);
     grid.appendChild(noResults);
@@ -1531,10 +1530,10 @@ export function renderPropertiesPage(): DocumentFragment {
 
   // ─── Internal CTA ─────────────────────────────────────────────────────────
   const listingCta = createInternalCTA(
-    'Need Help Finding Your Perfect Property?',
-    'Our experienced real estate consultants are here to help you find the ideal property that matches your lifestyle and budget.',
-    { text: 'Contact Our Experts', url: '/contact' },
-    { text: 'View Development Projects', url: '/projects' }
+    t('cta.needHelpFinding'),
+    t('cta.ourExpertsHelp'),
+    { text: t('cta.contactOurExperts'), url: '/contact' },
+    { text: t('cta.viewDevelopmentProjects'), url: '/projects' }
   );
   page.appendChild(listingCta);
 
@@ -1547,13 +1546,13 @@ export function renderPropertiesPage(): DocumentFragment {
     while (el.firstChild) el.removeChild(el.firstChild);
     if (!hasActiveFilters(currentFilterState)) { el.style.display = 'none'; return; }
     el.style.display = 'flex';
-    el.appendChild(createElement('span', 'properties-page__breadcrumb-base', 'Properties'));
+    el.appendChild(createElement('span', 'properties-page__breadcrumb-base', t('nav.properties')));
     if (currentFilterState.type !== 'All') el.appendChild(createFilterChip(currentFilterState.type, 'type'));
     if (currentFilterState.minBeds > 0) el.appendChild(createFilterChip(formatBedsForBreadcrumb(currentFilterState.minBeds), 'beds'));
     if (currentFilterState.priceRange !== 'All') el.appendChild(createFilterChip(formatPriceForBreadcrumb(currentFilterState.priceRange), 'price'));
     if (currentFilterState.status !== 'All') el.appendChild(createFilterChip(currentFilterState.status, 'status'));
     if (currentFilterState.searchQuery.trim()) el.appendChild(createFilterChip(`"${currentFilterState.searchQuery}"`, 'search'));
-    const clearBtn = createElement('button', 'properties-page__clear-filters', 'Clear All Filters');
+    const clearBtn = createElement('button', 'properties-page__clear-filters', t('filters.clearAllFilters'));
     clearBtn.setAttribute('type', 'button');
     clearBtn.addEventListener('click', clearAllFilters);
     el.appendChild(clearBtn);
@@ -2154,8 +2153,8 @@ export function renderContactPage(): DocumentFragment {
 
   // Header section with h1
   const header = createElement('header', 'contact-page__header');
-  const title = createElement('h1', 'contact-page__title', 'Contact Real Estate Erbil — Best Real Estate Agent Erbil for Houses for Sale Erbil');
-  const subtitle = createElement('p', 'contact-page__subtitle', 'Ready to find your dream property Erbil? Looking for houses for sale Erbil, apartments Erbil Iraq, penthouse Erbil, or villas Erbil Iraq? Our real estate Kurdistan experts and best real estate agent Erbil team help you buy house Erbil in the Erbil property market.');
+  const title = createElement('h1', 'contact-page__title', t('contact.title'));
+  const subtitle = createElement('p', 'contact-page__subtitle', t('contact.subtitle'));
   header.appendChild(title);
   header.appendChild(subtitle);
   container.appendChild(header);
@@ -2232,7 +2231,7 @@ export function renderContactPage(): DocumentFragment {
   // Success message container (fallback)
   const successMessage = createElement('div', 'form__success');
   successMessage.style.display = 'none';
-  successMessage.textContent = 'Thank you for your inquiry! We will contact you shortly.';
+  successMessage.textContent = t('contact.messageSent');
   successMessage.setAttribute('role', 'status');
   successMessage.setAttribute('aria-live', 'polite');
 
@@ -2253,9 +2252,9 @@ export function renderContactPage(): DocumentFragment {
     modal.appendChild(iconWrapper);
 
     // Title
-    const title = createElement('h3', 'form__modal-title', 'Message Sent Successfully!');
-    title.id = 'success-modal-title';
-    modal.appendChild(title);
+    const modalTitle = createElement('h3', 'form__modal-title', t('contact.messageSent'));
+    modalTitle.id = 'success-modal-title';
+    modal.appendChild(modalTitle);
 
     // Message
     const msgText = createElement('p', 'form__modal-message', message);
@@ -2280,7 +2279,7 @@ export function renderContactPage(): DocumentFragment {
     modal.appendChild(nextSteps);
 
     // Close button
-    const closeBtn = createElement('button', 'form__modal-close', 'Continue Browsing');
+    const closeBtn = createElement('button', 'form__modal-close', t('buttons.close'));
     closeBtn.type = 'button';
     closeBtn.addEventListener('click', () => {
       overlay.classList.add('form__modal-overlay--closing');
@@ -2407,9 +2406,9 @@ export function renderContactPage(): DocumentFragment {
   }
 
   const fields = [
-    { label: 'Full Name', type: 'text', name: 'name', placeholder: 'Ahmed Mohammed' },
-    { label: 'Email Address', type: 'email', name: 'email', placeholder: 'ahmed@example.com' },
-    { label: 'Phone Number', type: 'tel', name: 'phone', placeholder: '+964 750 123 4567' }
+    { label: t('forms.fullName'), type: 'text', name: 'name', placeholder: 'Ahmed Mohammed' },
+    { label: t('forms.email'), type: 'email', name: 'email', placeholder: 'ahmed@example.com' },
+    { label: t('forms.phone'), type: 'tel', name: 'phone', placeholder: '+964 750 123 4567' }
   ];
 
   fields.forEach(field => {
@@ -2454,7 +2453,7 @@ export function renderContactPage(): DocumentFragment {
 
   // Message field
   const msgGroup = createElement('div', 'form__group');
-  const msgLabel = createElement('label', 'form__label', 'Message');
+  const msgLabel = createElement('label', 'form__label', t('forms.message'));
   msgLabel.setAttribute('for', 'message');
   const textarea = createElement('textarea', 'form__textarea');
   textarea.name = 'message';
@@ -2499,7 +2498,7 @@ export function renderContactPage(): DocumentFragment {
   // Submit button with spinner
   const submit = createElement('button', 'form__submit');
   submit.type = 'submit';
-  const submitText = createElement('span', 'form__submit-text', 'Send Message');
+  const submitText = createElement('span', 'form__submit-text', t('buttons.sendMessage'));
   const submitSpinner = createElement('span', 'form__submit-spinner');
   submitSpinner.setAttribute('aria-hidden', 'true');
   submit.appendChild(submitText);
@@ -3051,7 +3050,7 @@ export function renderPropertyDetailPage(propertyId: string): DocumentFragment {
   tourIconSvg.appendChild(tourEllipse);
   virtualTourBtn.appendChild(tourIconSvg);
   const tourBtnContent = createElement('div', 'property-detail__tour-btn-content');
-  const tourBtnTitle = createElement('span', 'property-detail__tour-btn-title', 'Virtual Tour');
+  const tourBtnTitle = createElement('span', 'property-detail__tour-btn-title', t('property.virtualTour'));
   const tourBtnSubtitle = createElement('span', 'property-detail__tour-btn-subtitle', property.virtualTourUrl ? 'Explore in 3D' : 'Demo Available');
   tourBtnContent.appendChild(tourBtnTitle);
   tourBtnContent.appendChild(tourBtnSubtitle);
@@ -3092,7 +3091,7 @@ export function renderPropertyDetailPage(propertyId: string): DocumentFragment {
   planIconSvg.appendChild(planLine2);
   floorPlanBtn.appendChild(planIconSvg);
   const planBtnContent = createElement('div', 'property-detail__tour-btn-content');
-  const planBtnTitle = createElement('span', 'property-detail__tour-btn-title', 'Floor Plan');
+  const planBtnTitle = createElement('span', 'property-detail__tour-btn-title', t('property.floorPlan'));
   const planBtnSubtitle = createElement('span', 'property-detail__tour-btn-subtitle', property.floorPlanUrl ? 'View Layout' : 'Sample Plan');
   planBtnContent.appendChild(planBtnTitle);
   planBtnContent.appendChild(planBtnSubtitle);
@@ -3111,7 +3110,7 @@ export function renderPropertyDetailPage(propertyId: string): DocumentFragment {
 
   // Description
   const descSection = createElement('div', 'property-detail__description');
-  const descTitle = createElement('h3', 'property-detail__section-title', 'Description');
+  const descTitle = createElement('h3', 'property-detail__section-title', t('property.description'));
   const descText = createElement('p', 'property-detail__description-text', property.description);
   descSection.appendChild(descTitle);
   descSection.appendChild(descText);
@@ -3276,7 +3275,7 @@ export function renderPropertyDetailPage(propertyId: string): DocumentFragment {
   // Contact buttons
   const agentActions = createElement('div', 'property-detail__agent-actions');
 
-  const scheduleBtn = createElement('button', 'btn btn--primary btn--full', 'Schedule Viewing');
+  const scheduleBtn = createElement('button', 'btn btn--primary btn--full', t('buttons.scheduleViewing'));
   scheduleBtn.addEventListener('click', () => {
     openAppointmentScheduler(property);
   });
@@ -3291,7 +3290,7 @@ export function renderPropertyDetailPage(propertyId: string): DocumentFragment {
 
   // Location Card
   const locationCard = createElement('div', 'property-detail__location-card');
-  const locationTitle = createElement('h3', 'property-detail__location-title', 'Location');
+  const locationTitle = createElement('h3', 'property-detail__location-title', t('property.location'));
   locationCard.appendChild(locationTitle);
 
   const addressInfo = createElement('div', 'property-detail__address-info');
@@ -3638,7 +3637,7 @@ export function renderPrivacyPage(): DocumentFragment {
 
   // Contact
   const contact = createElement('section', 'privacy-page__section');
-  const contactTitle = createElement('h2', undefined, 'Contact Us');
+  const contactTitle = createElement('h2', undefined, t('common.contactUs'));
   const contactP = createElement('p', undefined, 'If you have any questions about this Privacy Policy or our data practices, please contact us at:');
   const contactInfo = createElement('div', 'privacy-page__contact');
   const contactEmail = createElement('p');
@@ -3808,7 +3807,7 @@ export function renderTermsPage(): DocumentFragment {
 
   // Contact
   const contact = createElement('section', 'terms-page__section');
-  const contactTitle = createElement('h2', undefined, 'Contact Us');
+  const contactTitle = createElement('h2', undefined, t('common.contactUs'));
   const contactP = createElement('p', undefined, 'If you have any questions about these Terms of Service, please contact us at:');
   const contactInfo = createElement('div', 'terms-page__contact');
   const contactEmail = createElement('p');

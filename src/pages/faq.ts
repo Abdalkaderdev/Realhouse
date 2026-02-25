@@ -4,6 +4,8 @@
 // Targets keywords: buy property erbil, foreigners buy property kurdistan, etc.
 // ═══════════════════════════════════════════════════════════════════════════
 
+import { t } from '../i18n';
+
 // ─── Helper Functions ─────────────────────────────────────────────────────
 function createElement<K extends keyof HTMLElementTagNameMap>(
   tag: K,
@@ -1004,7 +1006,7 @@ export function renderComprehensiveFAQPage(): DocumentFragment {
 
   const ctaActions = createElement('div', 'faq-page__cta-actions');
 
-  const ctaBtn = createElement('a', 'btn btn--primary', 'Contact Us');
+  const ctaBtn = createElement('a', 'btn btn--primary', t('common.contactUs'));
   ctaBtn.href = '/contact';
   ctaBtn.setAttribute('data-route', '');
 
