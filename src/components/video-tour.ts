@@ -3,6 +3,8 @@
 // Video player for property video tours with YouTube embed support
 // ═══════════════════════════════════════════════════════════════════════════
 
+import { t } from '../i18n';
+
 // ─── Types ───────────────────────────────────────────────────────────────────
 
 export interface VideoTourOptions {
@@ -212,15 +214,15 @@ export function createVideoTourCard(options: VideoTourOptions): HTMLElement {
   thumbnailWrapper.appendChild(playOverlay);
 
   // Duration badge (placeholder - could be fetched from YouTube API)
-  const badge = createElement('span', 'video-tour-card__badge', 'Video Tour');
+  const badge = createElement('span', 'video-tour-card__badge', t('modals.videoTour'));
   thumbnailWrapper.appendChild(badge);
 
   card.appendChild(thumbnailWrapper);
 
   // Info section
   const info = createElement('div', 'video-tour-card__info');
-  const title = createElement('span', 'video-tour-card__title', 'Property Video Tour');
-  const subtitle = createElement('span', 'video-tour-card__subtitle', 'Click to watch full tour');
+  const title = createElement('span', 'video-tour-card__title', t('modals.propertyVideoTour'));
+  const subtitle = createElement('span', 'video-tour-card__subtitle', t('modals.clickToWatch'));
   info.appendChild(title);
   info.appendChild(subtitle);
   card.appendChild(info);
@@ -242,7 +244,7 @@ export function createVideoTourSection(options: VideoTourOptions): HTMLElement {
   const header = createElement('div', 'video-tour-section__header');
   const icon = createElement('span', 'video-tour-section__icon');
   icon.appendChild(createVideoSVG());
-  const title = createElement('h2', 'property-detail__section-title', 'Video Tour');
+  const title = createElement('h2', 'property-detail__section-title', t('modals.videoTour'));
   header.appendChild(icon);
   header.appendChild(title);
   section.appendChild(header);
@@ -278,14 +280,14 @@ export function openVideoModal(options: VideoTourOptions): void {
   const header = createElement('div', 'video-tour-modal__header');
 
   const titleWrapper = createElement('div', 'video-tour-modal__title-wrapper');
-  const title = createElement('h2', 'video-tour-modal__title', 'Video Tour');
+  const title = createElement('h2', 'video-tour-modal__title', t('modals.videoTour'));
   const subtitle = createElement('span', 'video-tour-modal__subtitle', propertyTitle);
   titleWrapper.appendChild(title);
   titleWrapper.appendChild(subtitle);
   header.appendChild(titleWrapper);
 
   const closeBtn = createElement('button', 'video-tour-modal__close-btn');
-  closeBtn.setAttribute('aria-label', 'Close video');
+  closeBtn.setAttribute('aria-label', t('modals.closeVideo'));
   closeBtn.appendChild(createCloseSVG());
   header.appendChild(closeBtn);
 
@@ -366,7 +368,7 @@ export function createVideoTourButton(options: VideoTourOptions): HTMLButtonElem
 
   btn.appendChild(createPlaySVG());
 
-  const text = createElement('span', 'video-tour-btn__text', 'Video Tour');
+  const text = createElement('span', 'video-tour-btn__text', t('modals.videoTour'));
   btn.appendChild(text);
 
   btn.addEventListener('click', () => {

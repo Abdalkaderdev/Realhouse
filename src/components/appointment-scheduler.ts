@@ -3,6 +3,7 @@
 // ═══════════════════════════════════════════════════════════════════════════
 
 import { Property } from '../data/properties';
+import { t } from '../i18n';
 
 export interface Appointment {
   id: string;
@@ -115,12 +116,12 @@ export function createAppointmentScheduler(property: Property): HTMLElement {
 
   // Header
   const header = createElement('div', 'appointment-modal__header');
-  const title = createElement('h2', 'appointment-modal__title', 'Schedule Viewing');
+  const title = createElement('h2', 'appointment-modal__title', t('appointment.scheduleViewing'));
   title.id = 'appointment-modal-title';
   header.appendChild(title);
 
   const closeBtn = createElement('button', 'appointment-modal__close');
-  closeBtn.setAttribute('aria-label', 'Close modal');
+  closeBtn.setAttribute('aria-label', t('appointment.closeModal'));
   closeBtn.textContent = '\u00D7'; // multiplication sign as close icon
   closeBtn.addEventListener('click', () => closeModal());
   header.appendChild(closeBtn);
@@ -142,7 +143,7 @@ export function createAppointmentScheduler(property: Property): HTMLElement {
   const step1 = createElement('div', 'appointment-modal__step appointment-modal__step--active');
   step1.id = 'appointment-step-1';
 
-  const step1Title = createElement('h3', 'appointment-modal__step-title', 'Select Date');
+  const step1Title = createElement('h3', 'appointment-modal__step-title', t('appointment.selectDate'));
   step1.appendChild(step1Title);
 
   // Calendar
@@ -153,13 +154,13 @@ export function createAppointmentScheduler(property: Property): HTMLElement {
 
   const prevBtn = createElement('button', 'appointment-calendar__nav');
   prevBtn.textContent = '\u2039'; // single left-pointing angle quotation mark
-  prevBtn.setAttribute('aria-label', 'Previous month');
+  prevBtn.setAttribute('aria-label', t('appointment.previousMonth'));
 
   const monthDisplay = createElement('span', 'appointment-calendar__month');
 
   const nextBtn = createElement('button', 'appointment-calendar__nav');
   nextBtn.textContent = '\u203A'; // single right-pointing angle quotation mark
-  nextBtn.setAttribute('aria-label', 'Next month');
+  nextBtn.setAttribute('aria-label', t('appointment.nextMonth'));
 
   calendarHeader.appendChild(prevBtn);
   calendarHeader.appendChild(monthDisplay);
@@ -180,7 +181,7 @@ export function createAppointmentScheduler(property: Property): HTMLElement {
   step1.appendChild(calendarContainer);
 
   // Continue button for step 1
-  const continueBtn1 = createElement('button', 'btn btn--primary btn--full appointment-modal__continue', 'Continue');
+  const continueBtn1 = createElement('button', 'btn btn--primary btn--full appointment-modal__continue', t('appointment.continue'));
   continueBtn1.disabled = true;
   continueBtn1.addEventListener('click', () => goToStep(2));
   step1.appendChild(continueBtn1);
@@ -193,9 +194,9 @@ export function createAppointmentScheduler(property: Property): HTMLElement {
 
   const step2Header = createElement('div', 'appointment-modal__step-header');
   const backBtn2 = createElement('button', 'appointment-modal__back');
-  backBtn2.textContent = '\u2039 Back';
+  backBtn2.textContent = '\u2039 ' + t('appointment.back');
   backBtn2.addEventListener('click', () => goToStep(1));
-  const step2Title = createElement('h3', 'appointment-modal__step-title', 'Select Time');
+  const step2Title = createElement('h3', 'appointment-modal__step-title', t('appointment.selectTime'));
   step2Header.appendChild(backBtn2);
   step2Header.appendChild(step2Title);
   step2.appendChild(step2Header);
@@ -212,7 +213,7 @@ export function createAppointmentScheduler(property: Property): HTMLElement {
   });
   step2.appendChild(timeSlotsContainer);
 
-  const continueBtn2 = createElement('button', 'btn btn--primary btn--full appointment-modal__continue', 'Continue');
+  const continueBtn2 = createElement('button', 'btn btn--primary btn--full appointment-modal__continue', t('appointment.continue'));
   continueBtn2.disabled = true;
   continueBtn2.addEventListener('click', () => goToStep(3));
   step2.appendChild(continueBtn2);
@@ -225,9 +226,9 @@ export function createAppointmentScheduler(property: Property): HTMLElement {
 
   const step3Header = createElement('div', 'appointment-modal__step-header');
   const backBtn3 = createElement('button', 'appointment-modal__back');
-  backBtn3.textContent = '\u2039 Back';
+  backBtn3.textContent = '\u2039 ' + t('appointment.back');
   backBtn3.addEventListener('click', () => goToStep(2));
-  const step3Title = createElement('h3', 'appointment-modal__step-title', 'Your Details');
+  const step3Title = createElement('h3', 'appointment-modal__step-title', t('appointment.yourDetails'));
   step3Header.appendChild(backBtn3);
   step3Header.appendChild(step3Title);
   step3.appendChild(step3Header);
@@ -237,7 +238,7 @@ export function createAppointmentScheduler(property: Property): HTMLElement {
 
   // Name field
   const nameGroup = createElement('div', 'appointment-form__group');
-  const nameLabel = createElement('label', 'appointment-form__label', 'Full Name');
+  const nameLabel = createElement('label', 'appointment-form__label', t('appointment.fullName'));
   nameLabel.setAttribute('for', 'apt-name');
   const nameInput = createElement('input', 'appointment-form__input');
   nameInput.type = 'text';
@@ -252,7 +253,7 @@ export function createAppointmentScheduler(property: Property): HTMLElement {
 
   // Email field
   const emailGroup = createElement('div', 'appointment-form__group');
-  const emailLabel = createElement('label', 'appointment-form__label', 'Email Address');
+  const emailLabel = createElement('label', 'appointment-form__label', t('appointment.emailAddress'));
   emailLabel.setAttribute('for', 'apt-email');
   const emailInput = createElement('input', 'appointment-form__input');
   emailInput.type = 'email';
@@ -267,7 +268,7 @@ export function createAppointmentScheduler(property: Property): HTMLElement {
 
   // Phone field
   const phoneGroup = createElement('div', 'appointment-form__group');
-  const phoneLabel = createElement('label', 'appointment-form__label', 'Phone Number');
+  const phoneLabel = createElement('label', 'appointment-form__label', t('appointment.phoneNumber'));
   phoneLabel.setAttribute('for', 'apt-phone');
   const phoneInput = createElement('input', 'appointment-form__input');
   phoneInput.type = 'tel';
@@ -282,7 +283,7 @@ export function createAppointmentScheduler(property: Property): HTMLElement {
 
   // Notes field
   const notesGroup = createElement('div', 'appointment-form__group');
-  const notesLabel = createElement('label', 'appointment-form__label', 'Notes (optional)');
+  const notesLabel = createElement('label', 'appointment-form__label', t('appointment.notesOptional'));
   notesLabel.setAttribute('for', 'apt-notes');
   const notesInput = createElement('textarea', 'appointment-form__textarea');
   notesInput.id = 'apt-notes';
@@ -299,7 +300,7 @@ export function createAppointmentScheduler(property: Property): HTMLElement {
   formError.setAttribute('aria-live', 'polite');
   form.appendChild(formError);
 
-  const submitBtn = createElement('button', 'btn btn--primary btn--full', 'Confirm Appointment');
+  const submitBtn = createElement('button', 'btn btn--primary btn--full', t('appointment.confirmAppointment'));
   submitBtn.type = 'submit';
   form.appendChild(submitBtn);
 
@@ -321,17 +322,16 @@ export function createAppointmentScheduler(property: Property): HTMLElement {
   checkmark.textContent = '\u2713'; // checkmark
   confirmationContent.appendChild(checkmark);
 
-  const confirmationTitle = createElement('h3', 'appointment-confirmation__title', 'Appointment Confirmed!');
+  const confirmationTitle = createElement('h3', 'appointment-confirmation__title', t('appointment.appointmentConfirmed'));
   confirmationContent.appendChild(confirmationTitle);
 
   const confirmationDetails = createElement('div', 'appointment-confirmation__details');
   confirmationContent.appendChild(confirmationDetails);
 
-  const confirmationNote = createElement('p', 'appointment-confirmation__note',
-    'A confirmation email will be sent to you shortly. Our agent will contact you to confirm the viewing.');
+  const confirmationNote = createElement('p', 'appointment-confirmation__note', t('appointment.confirmationNote'));
   confirmationContent.appendChild(confirmationNote);
 
-  const doneBtn = createElement('button', 'btn btn--primary btn--full', 'Done');
+  const doneBtn = createElement('button', 'btn btn--primary btn--full', t('appointment.done'));
   doneBtn.addEventListener('click', () => closeModal());
   confirmationContent.appendChild(doneBtn);
 
@@ -486,26 +486,26 @@ export function createAppointmentScheduler(property: Property): HTMLElement {
 
     // Validate required fields
     if (!name || !email || !phone) {
-      formError.textContent = 'Please fill in all required fields.';
+      formError.textContent = t('appointment.fillAllFields');
       return;
     }
 
     // Validate email format
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!emailRegex.test(email)) {
-      formError.textContent = 'Please enter a valid email address.';
+      formError.textContent = t('appointment.invalidEmail');
       return;
     }
 
     // Validate phone format
     const phoneRegex = /^[\d\s\-+()]{7,20}$/;
     if (!phoneRegex.test(phone)) {
-      formError.textContent = 'Please enter a valid phone number.';
+      formError.textContent = t('appointment.invalidPhone');
       return;
     }
 
     if (!selectedDate || !selectedTime) {
-      formError.textContent = 'Please select a date and time.';
+      formError.textContent = t('appointment.selectDateTime');
       return;
     }
 
@@ -532,19 +532,19 @@ export function createAppointmentScheduler(property: Property): HTMLElement {
     }
 
     const dateDetail = createElement('p', 'appointment-confirmation__detail');
-    const dateLabel = createElement('strong', undefined, 'Date: ');
+    const dateLabel = createElement('strong', undefined, t('appointment.date') + ': ');
     dateDetail.appendChild(dateLabel);
     dateDetail.appendChild(document.createTextNode(formatDateLong(selectedDate)));
     confirmationDetails.appendChild(dateDetail);
 
     const timeDetail = createElement('p', 'appointment-confirmation__detail');
-    const timeLabel = createElement('strong', undefined, 'Time: ');
+    const timeLabel = createElement('strong', undefined, t('appointment.time') + ': ');
     timeDetail.appendChild(timeLabel);
     timeDetail.appendChild(document.createTextNode(formatTime(selectedTime)));
     confirmationDetails.appendChild(timeDetail);
 
     const propertyDetail = createElement('p', 'appointment-confirmation__detail');
-    const propertyLabel = createElement('strong', undefined, 'Property: ');
+    const propertyLabel = createElement('strong', undefined, t('appointment.property') + ': ');
     propertyDetail.appendChild(propertyLabel);
     propertyDetail.appendChild(document.createTextNode(property.title));
     confirmationDetails.appendChild(propertyDetail);

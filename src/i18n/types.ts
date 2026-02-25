@@ -446,6 +446,112 @@ export interface CoreTranslations {
     about: string;
     contact: string;
   };
+
+  appointment: {
+    scheduleViewing: string;
+    closeModal: string;
+    selectDate: string;
+    selectTime: string;
+    yourDetails: string;
+    continue: string;
+    back: string;
+    fullName: string;
+    emailAddress: string;
+    phoneNumber: string;
+    notesOptional: string;
+    confirmAppointment: string;
+    appointmentConfirmed: string;
+    confirmationNote: string;
+    done: string;
+    date: string;
+    time: string;
+    property: string;
+    previousMonth: string;
+    nextMonth: string;
+    fillAllFields: string;
+    invalidEmail: string;
+    invalidPhone: string;
+    selectDateTime: string;
+  };
+
+  modals: {
+    videoTour: string;
+    propertyVideoTour: string;
+    clickToWatch: string;
+    closeVideo: string;
+    playVideoTour: string;
+    watchVideoTour: string;
+    floorPlan: string;
+    samplePlan: string;
+    zoomIn: string;
+    zoomOut: string;
+    resetView: string;
+    downloadPdf: string;
+    toggleFullscreen: string;
+    closeFloorPlan: string;
+    loadingFloorPlan: string;
+    floorPlanInstructions: string;
+    virtualTour: string;
+    demoTour: string;
+    closeVirtualTour: string;
+    loading3DTour: string;
+    virtualTourInstructions: string;
+  };
+
+  leadCapture: {
+    title: string;
+    subtitle: string;
+    emailPlaceholder: string;
+    emailAriaLabel: string;
+    subscribe: string;
+    subscribing: string;
+    subscribed: string;
+    enterEmail: string;
+    invalidEmail: string;
+    successMessage: string;
+    privacyNote: string;
+    scheduleConsultation: string;
+    scheduleConsultationAria: string;
+  };
+
+  inquiry: {
+    quickInquiry: string;
+    closeForm: string;
+    fullName: string;
+    enterFullName: string;
+    phoneNumber: string;
+    phonePlaceholder: string;
+    emailAddress: string;
+    emailPlaceholder: string;
+    message: string;
+    optional: string;
+    messagePlaceholder: string;
+    preferredContact: string;
+    phoneCall: string;
+    whatsapp: string;
+    email: string;
+    sendInquiry: string;
+    contactViaWhatsApp: string;
+    callNow: string;
+    callUsDirectly: string;
+    inquirySent: string;
+    thankYouMessage: string;
+    continueOnWhatsApp: string;
+    close: string;
+    somethingWentWrong: string;
+    tryAgainMessage: string;
+    tryAgain: string;
+    tooManyAttempts: string;
+    sessionExpired: string;
+    inquire: string;
+    getInfo: string;
+    invalidName: string;
+    invalidPhone: string;
+    invalidEmailAddress: string;
+    fieldRequired: string;
+    enterValidEmail: string;
+    enterValidPhone: string;
+  };
 }
 
 /**

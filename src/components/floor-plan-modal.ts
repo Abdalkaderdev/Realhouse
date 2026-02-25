@@ -3,6 +3,8 @@
 // Zoomable floor plan viewer with download functionality
 // ═══════════════════════════════════════════════════════════════════════════
 
+import { t } from '../i18n';
+
 export interface FloorPlanModalOptions {
   imageUrl: string;
   propertyTitle: string;
@@ -212,13 +214,13 @@ export function openFloorPlanModal(options: FloorPlanModalOptions): void {
   const header = createElement('div', 'floor-plan-modal__header');
 
   const titleWrapper = createElement('div', 'floor-plan-modal__title-wrapper');
-  const title = createElement('h2', 'floor-plan-modal__title', 'Floor Plan');
+  const title = createElement('h2', 'floor-plan-modal__title', t('modals.floorPlan'));
   const subtitle = createElement('span', 'floor-plan-modal__subtitle', propertyTitle);
   titleWrapper.appendChild(title);
   titleWrapper.appendChild(subtitle);
 
   if (isDemo) {
-    const demoBadge = createElement('span', 'floor-plan-modal__demo-badge', 'Sample Plan');
+    const demoBadge = createElement('span', 'floor-plan-modal__demo-badge', t('modals.samplePlan'));
     titleWrapper.appendChild(demoBadge);
   }
 
@@ -228,17 +230,17 @@ export function openFloorPlanModal(options: FloorPlanModalOptions): void {
   const zoomControls = createElement('div', 'floor-plan-modal__zoom-controls');
 
   const zoomInBtn = createElement('button', 'floor-plan-modal__zoom-btn');
-  zoomInBtn.setAttribute('aria-label', 'Zoom in');
+  zoomInBtn.setAttribute('aria-label', t('modals.zoomIn'));
   zoomInBtn.appendChild(createZoomInIcon());
   zoomControls.appendChild(zoomInBtn);
 
   const zoomOutBtn = createElement('button', 'floor-plan-modal__zoom-btn');
-  zoomOutBtn.setAttribute('aria-label', 'Zoom out');
+  zoomOutBtn.setAttribute('aria-label', t('modals.zoomOut'));
   zoomOutBtn.appendChild(createZoomOutIcon());
   zoomControls.appendChild(zoomOutBtn);
 
   const resetBtn = createElement('button', 'floor-plan-modal__zoom-btn');
-  resetBtn.setAttribute('aria-label', 'Reset view');
+  resetBtn.setAttribute('aria-label', t('modals.resetView'));
   resetBtn.appendChild(createResetIcon());
   zoomControls.appendChild(resetBtn);
 
@@ -254,7 +256,7 @@ export function openFloorPlanModal(options: FloorPlanModalOptions): void {
   if (pdfUrl || imageUrl) {
     const downloadBtn = createElement('button', 'floor-plan-modal__download-btn');
     downloadBtn.appendChild(createDownloadIcon());
-    downloadBtn.appendChild(document.createTextNode('Download PDF'));
+    downloadBtn.appendChild(document.createTextNode(t('modals.downloadPdf')));
     downloadBtn.addEventListener('click', () => {
       const link = createElement('a');
       link.href = pdfUrl || planUrl;
@@ -267,7 +269,7 @@ export function openFloorPlanModal(options: FloorPlanModalOptions): void {
 
   // Fullscreen button
   const fullscreenBtn = createElement('button', 'floor-plan-modal__action-btn');
-  fullscreenBtn.setAttribute('aria-label', 'Toggle fullscreen');
+  fullscreenBtn.setAttribute('aria-label', t('modals.toggleFullscreen'));
   fullscreenBtn.appendChild(createSVGIcon('M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3'));
   fullscreenBtn.addEventListener('click', () => {
     if (document.fullscreenElement) {
@@ -282,7 +284,7 @@ export function openFloorPlanModal(options: FloorPlanModalOptions): void {
 
   // Close button
   const closeBtn = createElement('button', 'floor-plan-modal__close-btn');
-  closeBtn.setAttribute('aria-label', 'Close floor plan');
+  closeBtn.setAttribute('aria-label', t('modals.closeFloorPlan'));
   closeBtn.appendChild(createCloseIcon());
   actions.appendChild(closeBtn);
 
@@ -295,7 +297,7 @@ export function openFloorPlanModal(options: FloorPlanModalOptions): void {
   // Loading spinner
   const loader = createElement('div', 'floor-plan-modal__loader');
   const spinner = createElement('div', 'floor-plan-modal__spinner');
-  const loadingText = createElement('span', 'floor-plan-modal__loading-text', 'Loading Floor Plan...');
+  const loadingText = createElement('span', 'floor-plan-modal__loading-text', t('modals.loadingFloorPlan'));
   loader.appendChild(spinner);
   loader.appendChild(loadingText);
   imageContainer.appendChild(loader);
@@ -320,7 +322,7 @@ export function openFloorPlanModal(options: FloorPlanModalOptions): void {
 
   // Instructions
   const instructions = createElement('div', 'floor-plan-modal__instructions');
-  const instructionText = createElement('p', undefined, 'Scroll to zoom. Click and drag to pan. Double-click to reset.');
+  const instructionText = createElement('p', undefined, t('modals.floorPlanInstructions'));
   instructions.appendChild(instructionText);
   modal.appendChild(instructions);
 

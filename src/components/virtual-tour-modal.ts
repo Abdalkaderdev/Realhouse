@@ -3,6 +3,8 @@
 // Supports Matterport embeds and 3D tour iframes
 // ═══════════════════════════════════════════════════════════════════════════
 
+import { t } from '../i18n';
+
 export interface VirtualTourModalOptions {
   url: string;
   propertyTitle: string;
@@ -82,13 +84,13 @@ export function openVirtualTourModal(options: VirtualTourModalOptions): void {
   const header = createElement('div', 'virtual-tour-modal__header');
 
   const titleWrapper = createElement('div', 'virtual-tour-modal__title-wrapper');
-  const title = createElement('h2', 'virtual-tour-modal__title', 'Virtual Tour');
+  const title = createElement('h2', 'virtual-tour-modal__title', t('modals.virtualTour'));
   const subtitle = createElement('span', 'virtual-tour-modal__subtitle', propertyTitle);
   titleWrapper.appendChild(title);
   titleWrapper.appendChild(subtitle);
 
   if (isDemo) {
-    const demoBadge = createElement('span', 'virtual-tour-modal__demo-badge', 'Demo Tour');
+    const demoBadge = createElement('span', 'virtual-tour-modal__demo-badge', t('modals.demoTour'));
     titleWrapper.appendChild(demoBadge);
   }
 
@@ -99,7 +101,7 @@ export function openVirtualTourModal(options: VirtualTourModalOptions): void {
 
   // Fullscreen button
   const fullscreenBtn = createElement('button', 'virtual-tour-modal__action-btn');
-  fullscreenBtn.setAttribute('aria-label', 'Toggle fullscreen');
+  fullscreenBtn.setAttribute('aria-label', t('modals.toggleFullscreen'));
   fullscreenBtn.appendChild(createSVGIcon('M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3'));
   fullscreenBtn.addEventListener('click', () => {
     if (document.fullscreenElement) {
@@ -114,7 +116,7 @@ export function openVirtualTourModal(options: VirtualTourModalOptions): void {
 
   // Close button
   const closeBtn = createElement('button', 'virtual-tour-modal__close-btn');
-  closeBtn.setAttribute('aria-label', 'Close virtual tour');
+  closeBtn.setAttribute('aria-label', t('modals.closeVirtualTour'));
   closeBtn.appendChild(createCloseIcon());
   actions.appendChild(closeBtn);
 
@@ -127,7 +129,7 @@ export function openVirtualTourModal(options: VirtualTourModalOptions): void {
   // Loading spinner
   const loader = createElement('div', 'virtual-tour-modal__loader');
   const spinner = createElement('div', 'virtual-tour-modal__spinner');
-  const loadingText = createElement('span', 'virtual-tour-modal__loading-text', 'Loading 3D Tour...');
+  const loadingText = createElement('span', 'virtual-tour-modal__loading-text', t('modals.loading3DTour'));
   loader.appendChild(spinner);
   loader.appendChild(loadingText);
   iframeContainer.appendChild(loader);
@@ -150,7 +152,7 @@ export function openVirtualTourModal(options: VirtualTourModalOptions): void {
 
   // Instructions
   const instructions = createElement('div', 'virtual-tour-modal__instructions');
-  const instructionText = createElement('p', undefined, 'Use mouse to look around. Click and drag to navigate. Scroll to zoom.');
+  const instructionText = createElement('p', undefined, t('modals.virtualTourInstructions'));
   instructions.appendChild(instructionText);
   modal.appendChild(instructions);
 

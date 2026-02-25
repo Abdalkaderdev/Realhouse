@@ -3,6 +3,8 @@
 // Newsletter signup and floating CTA
 // ═══════════════════════════════════════════════════════════════════════════
 
+import { t } from '../i18n';
+
 // ─── Helper Function ──────────────────────────────────────────────────────
 function createElement<K extends keyof HTMLElementTagNameMap>(
   tag: K,
@@ -23,8 +25,8 @@ export function createLeadCaptureSection(): HTMLElement {
 
   // Content
   const leadCaptureContent = createElement('div', 'lead-capture__content');
-  const leadCaptureTitle = createElement('h2', 'lead-capture__title', 'Get Exclusive Property Alerts');
-  const leadCaptureSubtitle = createElement('p', 'lead-capture__subtitle', 'Be the first to know about new luxury listings and exclusive off-market opportunities.');
+  const leadCaptureTitle = createElement('h2', 'lead-capture__title', t('leadCapture.title'));
+  const leadCaptureSubtitle = createElement('p', 'lead-capture__subtitle', t('leadCapture.subtitle'));
   leadCaptureContent.appendChild(leadCaptureTitle);
   leadCaptureContent.appendChild(leadCaptureSubtitle);
   leadCaptureCard.appendChild(leadCaptureContent);
@@ -37,13 +39,13 @@ export function createLeadCaptureSection(): HTMLElement {
   const emailInput = createElement('input', 'lead-capture__input');
   emailInput.type = 'email';
   emailInput.name = 'newsletter-email';
-  emailInput.placeholder = 'Enter your email address';
+  emailInput.placeholder = t('leadCapture.emailPlaceholder');
   emailInput.required = true;
   emailInput.autocomplete = 'email';
-  emailInput.setAttribute('aria-label', 'Email address for newsletter');
+  emailInput.setAttribute('aria-label', t('leadCapture.emailAriaLabel'));
   formRow.appendChild(emailInput);
 
-  const subscribeBtn = createElement('button', 'btn btn--primary lead-capture__submit', 'Subscribe');
+  const subscribeBtn = createElement('button', 'btn btn--primary lead-capture__submit', t('leadCapture.subscribe'));
   subscribeBtn.type = 'submit';
   formRow.appendChild(subscribeBtn);
   leadCaptureForm.appendChild(formRow);
@@ -60,7 +62,7 @@ export function createLeadCaptureSection(): HTMLElement {
 
   // Privacy note
   const privacyNote = createElement('p', 'lead-capture__privacy');
-  privacyNote.textContent = 'We respect your privacy. Unsubscribe at any time.';
+  privacyNote.textContent = t('leadCapture.privacyNote');
   leadCaptureForm.appendChild(privacyNote);
 
   // Form submission handler
@@ -77,21 +79,21 @@ export function createLeadCaptureSection(): HTMLElement {
 
     // Validate email
     if (!email) {
-      formError.textContent = 'Please enter your email address.';
+      formError.textContent = t('leadCapture.enterEmail');
       formError.style.display = 'block';
       emailInput.classList.add('error');
       return;
     }
 
     if (!emailPattern.test(email)) {
-      formError.textContent = 'Please enter a valid email address.';
+      formError.textContent = t('leadCapture.invalidEmail');
       formError.style.display = 'block';
       emailInput.classList.add('error');
       return;
     }
 
     // Show loading state
-    subscribeBtn.textContent = 'Subscribing...';
+    subscribeBtn.textContent = t('leadCapture.subscribing');
     (subscribeBtn as HTMLButtonElement).disabled = true;
 
     // Simulate API call (in production, send to your API)
@@ -105,14 +107,14 @@ export function createLeadCaptureSection(): HTMLElement {
       localStorage.setItem('rh-newsletter-subscribed', 'true');
 
       // Show success message
-      formSuccess.textContent = "Thank you! You'll receive exclusive property alerts soon.";
+      formSuccess.textContent = t('leadCapture.successMessage');
       formSuccess.style.display = 'block';
       (emailInput as HTMLInputElement).value = '';
 
       // Reset button
-      subscribeBtn.textContent = 'Subscribed!';
+      subscribeBtn.textContent = t('leadCapture.subscribed');
       setTimeout(() => {
-        subscribeBtn.textContent = 'Subscribe';
+        subscribeBtn.textContent = t('leadCapture.subscribe');
         (subscribeBtn as HTMLButtonElement).disabled = false;
       }, 2000);
     }, 800);
@@ -130,10 +132,10 @@ export function createFloatingCTA(): HTMLElement {
   const floatingCta = createElement('div', 'floating-cta');
   floatingCta.id = 'floating-cta';
 
-  const floatingCtaBtn = createElement('a', 'floating-cta__btn', 'Schedule Consultation');
+  const floatingCtaBtn = createElement('a', 'floating-cta__btn', t('leadCapture.scheduleConsultation'));
   floatingCtaBtn.href = '/contact';
   floatingCtaBtn.setAttribute('data-route', '');
-  floatingCtaBtn.setAttribute('aria-label', 'Schedule a free consultation');
+  floatingCtaBtn.setAttribute('aria-label', t('leadCapture.scheduleConsultationAria'));
 
   // Create calendar icon
   const calendarIconSvg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');

@@ -15,6 +15,7 @@ import {
   isRateLimited,
   secureStore
 } from '../utils/security';
+import { t } from '../i18n';
 
 // ─── Types ───────────────────────────────────────────────────────────────────
 
@@ -135,15 +136,15 @@ function validateForm(data: Partial<InquiryFormData>): ValidationResult {
   const errors: Record<string, string> = {};
 
   if (!data.name || data.name.trim().length < 2) {
-    errors.name = 'Please enter your full name';
+    errors.name = t('inquiry.invalidName');
   }
 
   if (!data.phone || !validatePhone(data.phone)) {
-    errors.phone = 'Please enter a valid phone number';
+    errors.phone = t('inquiry.invalidPhone');
   }
 
   if (!data.email || !validateEmail(data.email)) {
-    errors.email = 'Please enter a valid email address';
+    errors.email = t('inquiry.invalidEmailAddress');
   }
 
   return {
@@ -232,13 +233,13 @@ function createInquiryForm(project: Project, onClose: () => void): HTMLElement {
 
   // Name Field
   const nameGroup = createElement('div', 'inquiry-form__group');
-  const nameLabel = createElement('label', 'inquiry-form__label', 'Full Name');
+  const nameLabel = createElement('label', 'inquiry-form__label', t('inquiry.fullName'));
   nameLabel.setAttribute('for', 'inquiry-name');
   const nameInput = createElement('input', 'inquiry-form__input');
   nameInput.type = 'text';
   nameInput.id = 'inquiry-name';
   nameInput.name = 'name';
-  nameInput.placeholder = 'Enter your full name';
+  nameInput.placeholder = t('inquiry.enterFullName');
   nameInput.required = true;
   nameInput.autocomplete = 'name';
   nameInput.setAttribute('aria-required', 'true');
@@ -254,13 +255,13 @@ function createInquiryForm(project: Project, onClose: () => void): HTMLElement {
 
   // Phone Field
   const phoneGroup = createElement('div', 'inquiry-form__group');
-  const phoneLabel = createElement('label', 'inquiry-form__label', 'Phone Number');
+  const phoneLabel = createElement('label', 'inquiry-form__label', t('inquiry.phoneNumber'));
   phoneLabel.setAttribute('for', 'inquiry-phone');
   const phoneInput = createElement('input', 'inquiry-form__input');
   phoneInput.type = 'tel';
   phoneInput.id = 'inquiry-phone';
   phoneInput.name = 'phone';
-  phoneInput.placeholder = '+964 xxx xxx xxxx';
+  phoneInput.placeholder = t('inquiry.phonePlaceholder');
   phoneInput.required = true;
   phoneInput.autocomplete = 'tel';
   phoneInput.setAttribute('aria-required', 'true');
@@ -276,13 +277,13 @@ function createInquiryForm(project: Project, onClose: () => void): HTMLElement {
 
   // Email Field
   const emailGroup = createElement('div', 'inquiry-form__group');
-  const emailLabel = createElement('label', 'inquiry-form__label', 'Email Address');
+  const emailLabel = createElement('label', 'inquiry-form__label', t('inquiry.emailAddress'));
   emailLabel.setAttribute('for', 'inquiry-email');
   const emailInput = createElement('input', 'inquiry-form__input');
   emailInput.type = 'email';
   emailInput.id = 'inquiry-email';
   emailInput.name = 'email';
-  emailInput.placeholder = 'your@email.com';
+  emailInput.placeholder = t('inquiry.emailPlaceholder');
   emailInput.required = true;
   emailInput.autocomplete = 'email';
   emailInput.setAttribute('aria-required', 'true');
@@ -300,14 +301,14 @@ function createInquiryForm(project: Project, onClose: () => void): HTMLElement {
   const messageGroup = createElement('div', 'inquiry-form__group');
   const messageLabel = createElement('label', 'inquiry-form__label');
   messageLabel.setAttribute('for', 'inquiry-message');
-  const messageLabelText = document.createTextNode('Message ');
-  const optionalSpan = createElement('span', 'inquiry-form__optional', '(Optional)');
+  const messageLabelText = document.createTextNode(t('inquiry.message') + ' ');
+  const optionalSpan = createElement('span', 'inquiry-form__optional', t('inquiry.optional'));
   messageLabel.appendChild(messageLabelText);
   messageLabel.appendChild(optionalSpan);
   const messageTextarea = createElement('textarea', 'inquiry-form__textarea');
   messageTextarea.id = 'inquiry-message';
   messageTextarea.name = 'message';
-  messageTextarea.placeholder = 'Tell us about your requirements...';
+  messageTextarea.placeholder = t('inquiry.messagePlaceholder');
   messageTextarea.rows = 3;
   messageGroup.appendChild(messageLabel);
   messageGroup.appendChild(messageTextarea);
@@ -315,17 +316,17 @@ function createInquiryForm(project: Project, onClose: () => void): HTMLElement {
 
   // Preferred Contact Method
   const contactGroup = createElement('div', 'inquiry-form__group');
-  const contactLabel = createElement('p', 'inquiry-form__label', 'Preferred Contact Method');
+  const contactLabel = createElement('p', 'inquiry-form__label', t('inquiry.preferredContact'));
   contactGroup.appendChild(contactLabel);
 
   const radioGroup = createElement('div', 'inquiry-form__radio-group');
   radioGroup.setAttribute('role', 'radiogroup');
-  radioGroup.setAttribute('aria-label', 'Preferred contact method');
+  radioGroup.setAttribute('aria-label', t('inquiry.preferredContact'));
 
   const contactOptions = [
-    { value: 'phone', label: 'Phone Call', icon: 'icon-phone' },
-    { value: 'whatsapp', label: 'WhatsApp', icon: 'icon-whatsapp' },
-    { value: 'email', label: 'Email', icon: 'icon-email' }
+    { value: 'phone', label: t('inquiry.phoneCall'), icon: 'icon-phone' },
+    { value: 'whatsapp', label: t('inquiry.whatsapp'), icon: 'icon-whatsapp' },
+    { value: 'email', label: t('inquiry.email'), icon: 'icon-email' }
   ];
 
   contactOptions.forEach((option, index) => {
@@ -358,7 +359,7 @@ function createInquiryForm(project: Project, onClose: () => void): HTMLElement {
   // Submit Button
   const submitBtn = createElement('button', 'inquiry-form__submit btn btn--primary');
   submitBtn.type = 'submit';
-  const submitText = createElement('span', 'inquiry-form__submit-text', 'Send Inquiry');
+  const submitText = createElement('span', 'inquiry-form__submit-text', t('inquiry.sendInquiry'));
   const submitSpinner = createElement('span', 'inquiry-form__spinner');
   submitSpinner.setAttribute('aria-hidden', 'true');
   submitBtn.appendChild(submitText);
@@ -373,17 +374,17 @@ function createInquiryForm(project: Project, onClose: () => void): HTMLElement {
   whatsappBtn.href = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(`Hi, I'm interested in ${project.name}`)}`;
   whatsappBtn.target = '_blank';
   whatsappBtn.rel = 'noopener noreferrer';
-  whatsappBtn.setAttribute('aria-label', 'Contact via WhatsApp');
+  whatsappBtn.setAttribute('aria-label', t('inquiry.contactViaWhatsApp'));
   whatsappBtn.appendChild(createSVGIcon('icon-whatsapp', 'inquiry-form__action-icon'));
-  whatsappBtn.appendChild(document.createTextNode('WhatsApp'));
+  whatsappBtn.appendChild(document.createTextNode(t('inquiry.whatsapp')));
   quickActions.appendChild(whatsappBtn);
 
   // Call Button
   const callBtn = createElement('a', 'inquiry-form__call');
   callBtn.href = `tel:${PHONE_NUMBER.replace(/\s/g, '')}`;
-  callBtn.setAttribute('aria-label', 'Call us directly');
+  callBtn.setAttribute('aria-label', t('inquiry.callUsDirectly'));
   callBtn.appendChild(createSVGIcon('icon-phone', 'inquiry-form__action-icon'));
-  callBtn.appendChild(document.createTextNode('Call Now'));
+  callBtn.appendChild(document.createTextNode(t('inquiry.callNow')));
   quickActions.appendChild(callBtn);
 
   actions.appendChild(quickActions);
@@ -395,9 +396,9 @@ function createInquiryForm(project: Project, onClose: () => void): HTMLElement {
   successState.setAttribute('aria-live', 'polite');
   const successIcon = createElement('div', 'inquiry-form__success-icon');
   successIcon.appendChild(createSuccessIconSVG());
-  const successTitle = createElement('h3', 'inquiry-form__success-title', 'Inquiry Sent!');
+  const successTitle = createElement('h3', 'inquiry-form__success-title', t('inquiry.inquirySent'));
   const successMessage = createElement('p', 'inquiry-form__success-message');
-  successMessage.textContent = 'Thank you for your interest. Our team will contact you shortly.';
+  successMessage.textContent = t('inquiry.thankYouMessage');
 
   const successActions = createElement('div', 'inquiry-form__success-actions');
 
@@ -406,10 +407,10 @@ function createInquiryForm(project: Project, onClose: () => void): HTMLElement {
   whatsappFollowUp.target = '_blank';
   whatsappFollowUp.rel = 'noopener noreferrer';
   whatsappFollowUp.appendChild(createSVGIcon('icon-whatsapp', 'inquiry-form__action-icon'));
-  whatsappFollowUp.appendChild(document.createTextNode('Continue on WhatsApp'));
+  whatsappFollowUp.appendChild(document.createTextNode(t('inquiry.continueOnWhatsApp')));
   successActions.appendChild(whatsappFollowUp);
 
-  const closeSuccessBtn = createElement('button', 'btn btn--ghost', 'Close');
+  const closeSuccessBtn = createElement('button', 'btn btn--ghost', t('inquiry.close'));
   closeSuccessBtn.type = 'button';
   closeSuccessBtn.addEventListener('click', onClose);
   successActions.appendChild(closeSuccessBtn);
@@ -426,9 +427,9 @@ function createInquiryForm(project: Project, onClose: () => void): HTMLElement {
   errorState.setAttribute('aria-live', 'polite');
   const errorIcon = createElement('div', 'inquiry-form__error-icon');
   errorIcon.appendChild(createErrorIconSVG());
-  const errorTitle = createElement('h3', 'inquiry-form__error-title', 'Something went wrong');
-  const errorMessage = createElement('p', 'inquiry-form__error-message', 'Please try again or contact us directly.');
-  const retryBtn = createElement('button', 'btn btn--primary', 'Try Again');
+  const errorTitle = createElement('h3', 'inquiry-form__error-title', t('inquiry.somethingWentWrong'));
+  const errorMessage = createElement('p', 'inquiry-form__error-message', t('inquiry.tryAgainMessage'));
+  const retryBtn = createElement('button', 'btn btn--primary', t('inquiry.tryAgain'));
   retryBtn.type = 'button';
   retryBtn.addEventListener('click', () => {
     form.classList.remove('inquiry-form--error');
@@ -446,7 +447,7 @@ function createInquiryForm(project: Project, onClose: () => void): HTMLElement {
 
     // Rate limiting check
     if (isRateLimited('inquiry_form', 3, 60000)) {
-      errorMessage.textContent = 'Too many attempts. Please wait a minute before trying again.';
+      errorMessage.textContent = t('inquiry.tooManyAttempts');
       form.classList.add('inquiry-form--error');
       return;
     }
@@ -454,7 +455,7 @@ function createInquiryForm(project: Project, onClose: () => void): HTMLElement {
     // CSRF token validation
     const csrfToken = csrfInput.value;
     if (!validateCSRFToken(csrfToken)) {
-      errorMessage.textContent = 'Session expired. Please refresh the page and try again.';
+      errorMessage.textContent = t('inquiry.sessionExpired');
       form.classList.add('inquiry-form--error');
       return;
     }
@@ -540,15 +541,15 @@ function createInquiryForm(project: Project, onClose: () => void): HTMLElement {
 
       if (input.required && !input.value.trim()) {
         group?.classList.add('inquiry-form__group--error');
-        if (errorEl) errorEl.textContent = `${input.placeholder || 'This field'} is required`;
+        if (errorEl) errorEl.textContent = t('inquiry.fieldRequired');
         input.setAttribute('aria-invalid', 'true');
       } else if (input.type === 'email' && input.value && !validateEmail(input.value)) {
         group?.classList.add('inquiry-form__group--error');
-        if (errorEl) errorEl.textContent = 'Please enter a valid email';
+        if (errorEl) errorEl.textContent = t('inquiry.enterValidEmail');
         input.setAttribute('aria-invalid', 'true');
       } else if (input.type === 'tel' && input.value && !validatePhone(input.value)) {
         group?.classList.add('inquiry-form__group--error');
-        if (errorEl) errorEl.textContent = 'Please enter a valid phone number';
+        if (errorEl) errorEl.textContent = t('inquiry.enterValidPhone');
         input.setAttribute('aria-invalid', 'true');
       } else {
         group?.classList.remove('inquiry-form__group--error');
@@ -588,13 +589,13 @@ export function createInquiryModal(project: Project): HTMLElement {
 
   // Header
   const header = createElement('div', 'inquiry-modal__header');
-  const title = createElement('h2', 'inquiry-modal__title', 'Quick Inquiry');
+  const title = createElement('h2', 'inquiry-modal__title', t('inquiry.quickInquiry'));
   title.id = 'inquiry-modal-title';
   header.appendChild(title);
 
   const closeBtn = createElement('button', 'inquiry-modal__close');
   closeBtn.type = 'button';
-  closeBtn.setAttribute('aria-label', 'Close inquiry form');
+  closeBtn.setAttribute('aria-label', t('inquiry.closeForm'));
   closeBtn.textContent = '\u00D7'; // Unicode multiplication sign (x)
   header.appendChild(closeBtn);
 
@@ -688,7 +689,7 @@ export function createInquiryButton(project: Project, variant: 'primary' | 'ghos
   btn.setAttribute('aria-label', `Inquire about ${project.name}`);
 
   const icon = createSVGIcon('icon-email', 'inquiry-btn__icon');
-  const text = createElement('span', 'inquiry-btn__text', variant === 'sm' ? 'Inquire' : 'Get Info');
+  const text = createElement('span', 'inquiry-btn__text', variant === 'sm' ? t('inquiry.inquire') : t('inquiry.getInfo'));
 
   btn.appendChild(icon);
   btn.appendChild(text);
