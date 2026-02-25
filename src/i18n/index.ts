@@ -628,6 +628,95 @@ export function initI18n(): void {
   }) as EventListener);
 
   console.log(`[i18n] Initialized with language: ${currentLang}, direction: ${getTextDirection()}`);
+
+  // Translate navigation on init
+  translateNavigation();
+
+  // Listen for language changes to retranslate navigation
+  window.addEventListener('languagechange', () => {
+    translateNavigation();
+  });
+}
+
+/**
+ * Translate the navigation menu and mobile menu
+ */
+export function translateNavigation(): void {
+  // Desktop nav links
+  const navLinks = document.querySelectorAll('.nav__link[data-route]');
+  navLinks.forEach(link => {
+    const href = link.getAttribute('href');
+    if (href === '/') link.textContent = t('nav.home');
+    else if (href === '/properties') link.textContent = t('nav.properties');
+    else if (href === '/projects') link.textContent = t('nav.projects');
+    else if (href === '/about') link.textContent = t('nav.about');
+    else if (href === '/contact') link.textContent = t('nav.contact');
+  });
+
+  // Resources dropdown trigger
+  const resourcesDropdown = document.querySelector('.nav__link--dropdown');
+  if (resourcesDropdown) {
+    const textNode = resourcesDropdown.childNodes[0];
+    if (textNode && textNode.nodeType === Node.TEXT_NODE) {
+      textNode.textContent = t('nav.resources') + '\n              ';
+    }
+  }
+
+  // Desktop dropdown links
+  const dropdownLinks = document.querySelectorAll('.nav__dropdown-link');
+  dropdownLinks.forEach(link => {
+    const href = link.getAttribute('href');
+    if (href === '/services') link.textContent = t('common.ourServices');
+    else if (href === '/blog') link.textContent = t('nav.blog');
+    else if (href === '/faq') link.textContent = t('nav.faq');
+  });
+
+  // Mobile menu links
+  const mobileLinks = document.querySelectorAll('.mobile-menu__link[data-route]');
+  mobileLinks.forEach(link => {
+    const href = link.getAttribute('href');
+    if (href === '/') link.textContent = t('nav.home');
+    else if (href === '/properties') link.textContent = t('nav.properties');
+    else if (href === '/projects') link.textContent = t('nav.projects');
+    else if (href === '/about') link.textContent = t('nav.about');
+    else if (href === '/contact') link.textContent = t('nav.contact');
+  });
+
+  // Mobile resources dropdown
+  const mobileResourcesBtn = document.querySelector('.mobile-menu__link--dropdown');
+  if (mobileResourcesBtn) {
+    const textNode = mobileResourcesBtn.childNodes[0];
+    if (textNode && textNode.nodeType === Node.TEXT_NODE) {
+      textNode.textContent = t('nav.resources') + '\n            ';
+    }
+  }
+
+  // Mobile submenu links
+  const mobileSubmenuLinks = document.querySelectorAll('.mobile-menu__submenu .mobile-menu__link');
+  mobileSubmenuLinks.forEach(link => {
+    const href = link.getAttribute('href');
+    if (href === '/services') link.textContent = t('common.ourServices');
+    else if (href === '/blog') link.textContent = t('nav.blog');
+    else if (href === '/faq') link.textContent = t('nav.faq');
+  });
+
+  // "Get in Touch" button
+  const getInTouchBtn = document.querySelector('.btn--nav[href="/contact"]');
+  if (getInTouchBtn) {
+    getInTouchBtn.textContent = t('buttons.getInTouch');
+  }
+
+  // Theme toggle aria-label
+  const themeToggle = document.getElementById('theme-toggle');
+  if (themeToggle) {
+    themeToggle.setAttribute('aria-label', t('a11y.toggleTheme'));
+  }
+
+  // Favorites aria-label
+  const favoritesLink = document.querySelector('.nav__favorites');
+  if (favoritesLink) {
+    favoritesLink.setAttribute('aria-label', t('nav.favorites'));
+  }
 }
 
 // =============================================================================
