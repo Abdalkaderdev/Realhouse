@@ -622,6 +622,33 @@ export interface CoreTranslations {
     backToProjects: string;
     completion: string;
   };
+
+  propertyDetail: {
+    propertyNotFound: string;
+    propertyNotFoundMessage: string;
+    browseAllProperties: string;
+    share: string;
+    monthlyRent: string;
+    askingPrice: string;
+    propertyDetails: string;
+    description: string;
+    featuresAmenities: string;
+    location: string;
+    clickToViewMap: string;
+    mapUponRequest: string;
+    interestedInProperty: string;
+    contactForInfo: string;
+    sendInquiry: string;
+    yourName: string;
+    emailAddress: string;
+    phoneNumber: string;
+    message: string;
+    listedBy: string;
+    realEstateAgent: string;
+    viewProfile: string;
+    similarProperties: string;
+    viewAllProperties: string;
+  };
 }
 
 /**

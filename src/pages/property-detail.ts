@@ -31,6 +31,7 @@ import { createPrintButton } from '../components/print-property';
 import { createVideoTourSection } from '../components/video-tour';
 import { trackPropertyView } from '../components/recently-viewed';
 import { createWishlistButton } from '../components/wishlist';
+import { t } from '../i18n';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -323,21 +324,21 @@ function renderNotFoundPage(slug: string): DocumentFragment {
   icon.textContent = '?';
   content.appendChild(icon);
 
-  const title = createElement('h1', 'property-detail__error-title', 'Property Not Found');
+  const title = createElement('h1', 'property-detail__error-title', t('propertyDetail.propertyNotFound'));
   content.appendChild(title);
 
   const message = createElement('p', 'property-detail__error-message');
-  message.textContent = `We couldn't find the property "${slug}". It may have been sold or removed.`;
+  message.textContent = t('propertyDetail.propertyNotFoundMessage');
   content.appendChild(message);
 
   const actions = createElement('div', 'property-detail__error-actions');
 
-  const browseBtn = createElement('a', 'btn btn--primary', 'Browse All Properties');
+  const browseBtn = createElement('a', 'btn btn--primary', t('propertyDetail.browseAllProperties'));
   browseBtn.href = '/properties';
   browseBtn.setAttribute('data-route', '');
   actions.appendChild(browseBtn);
 
-  const contactBtn = createElement('a', 'btn btn--ghost', 'Contact Us');
+  const contactBtn = createElement('a', 'btn btn--ghost', t('common.contactUs'));
   contactBtn.href = '/contact';
   contactBtn.setAttribute('data-route', '');
   actions.appendChild(contactBtn);
@@ -511,7 +512,7 @@ export function renderPropertyDetailPage(slug: string): DocumentFragment {
 
   // Share buttons
   const shareSection = createElement('div', 'property-detail__share');
-  const shareLabel = createElement('span', 'property-detail__share-label', 'Share:');
+  const shareLabel = createElement('span', 'property-detail__share-label', t('propertyDetail.share'));
   shareSection.appendChild(shareLabel);
 
   const shareButtons = createElement('div', 'property-detail__share-buttons');
@@ -575,7 +576,7 @@ export function renderPropertyDetailPage(slug: string): DocumentFragment {
 
   const priceWrapper = createElement('div', 'property-detail__price-wrapper');
   const priceLabel = createElement('span', 'property-detail__price-label');
-  priceLabel.textContent = property.status === 'For Rent' ? 'Monthly Rent' : 'Asking Price';
+  priceLabel.textContent = property.status === 'For Rent' ? t('propertyDetail.monthlyRent') : t('propertyDetail.askingPrice');
   priceWrapper.appendChild(priceLabel);
 
   const priceValue = createElement('span', 'property-detail__price');
@@ -597,7 +598,7 @@ export function renderPropertyDetailPage(slug: string): DocumentFragment {
 
   // Specs Grid
   const specsSection = createElement('div', 'property-detail__specs');
-  const specsTitle = createElement('h2', 'property-detail__section-title', 'Property Details');
+  const specsTitle = createElement('h2', 'property-detail__section-title', t('propertyDetail.propertyDetails'));
   specsSection.appendChild(specsTitle);
 
   const specsGrid = createElement('div', 'property-detail__specs-grid');
@@ -644,7 +645,7 @@ export function renderPropertyDetailPage(slug: string): DocumentFragment {
   // Description Section
   if (property.description) {
     const descSection = createElement('div', 'property-detail__description');
-    const descTitle = createElement('h2', 'property-detail__section-title', 'Description');
+    const descTitle = createElement('h2', 'property-detail__section-title', t('propertyDetail.description'));
     descSection.appendChild(descTitle);
 
     const descContent = createElement('div', 'property-detail__description-content');
@@ -666,7 +667,7 @@ export function renderPropertyDetailPage(slug: string): DocumentFragment {
   // Features Section
   if (property.features && property.features.length > 0) {
     const featuresSection = createElement('div', 'property-detail__features');
-    const featuresTitle = createElement('h2', 'property-detail__section-title', 'Features & Amenities');
+    const featuresTitle = createElement('h2', 'property-detail__section-title', t('propertyDetail.featuresAmenities'));
     featuresSection.appendChild(featuresTitle);
 
     const categories = categorizeFeatures(property.features);
@@ -721,7 +722,7 @@ export function renderPropertyDetailPage(slug: string): DocumentFragment {
 
   // Location Map Section
   const mapSection = createElement('div', 'property-detail__map');
-  const mapTitle = createElement('h2', 'property-detail__section-title', 'Location');
+  const mapTitle = createElement('h2', 'property-detail__section-title', t('propertyDetail.location'));
   mapSection.appendChild(mapTitle);
 
   const mapInfo = createElement('div', 'property-detail__map-info');
@@ -743,7 +744,7 @@ export function renderPropertyDetailPage(slug: string): DocumentFragment {
     mapIcon.appendChild(createMapPinSVG());
     mapOverlay.appendChild(mapIcon);
 
-    const mapText = createElement('span', 'property-detail__map-text', 'Click to view on Google Maps');
+    const mapText = createElement('span', 'property-detail__map-text', t('propertyDetail.clickToViewMap'));
     mapOverlay.appendChild(mapText);
 
     mapFrame.appendChild(mapOverlay);
@@ -760,7 +761,7 @@ export function renderPropertyDetailPage(slug: string): DocumentFragment {
   } else {
     const noMapMsg = createElement('div', 'property-detail__map-no-coords');
     noMapMsg.appendChild(createMapPinSVG());
-    const noMapText = createElement('p', undefined, 'Map location available upon request');
+    const noMapText = createElement('p', undefined, t('propertyDetail.mapUponRequest'));
     noMapMsg.appendChild(noMapText);
     mapPlaceholder.appendChild(noMapMsg);
   }
@@ -776,10 +777,10 @@ export function renderPropertyDetailPage(slug: string): DocumentFragment {
   // Contact Card
   const contactCard = createElement('div', 'property-detail__contact-card');
 
-  const contactTitle = createElement('h3', 'property-detail__contact-title', 'Interested in this property?');
+  const contactTitle = createElement('h3', 'property-detail__contact-title', t('propertyDetail.interestedInProperty'));
   contactCard.appendChild(contactTitle);
 
-  const contactDesc = createElement('p', 'property-detail__contact-desc', 'Contact us for more information, schedule a viewing, or make an inquiry.');
+  const contactDesc = createElement('p', 'property-detail__contact-desc', t('propertyDetail.contactForInfo'));
   contactCard.appendChild(contactDesc);
 
   // Quick contact buttons
@@ -807,7 +808,7 @@ export function renderPropertyDetailPage(slug: string): DocumentFragment {
   const form = createElement('form', 'property-detail__inquiry-form');
   form.setAttribute('id', 'property-inquiry-form');
 
-  const formTitle = createElement('h4', 'property-detail__form-title', 'Send an Inquiry');
+  const formTitle = createElement('h4', 'property-detail__form-title', t('propertyDetail.sendInquiry'));
   form.appendChild(formTitle);
 
   const hiddenProperty = createElement('input');
@@ -818,7 +819,7 @@ export function renderPropertyDetailPage(slug: string): DocumentFragment {
 
   // Name field
   const nameGroup = createElement('div', 'property-detail__form-group');
-  const nameLabel = createElement('label', 'property-detail__form-label', 'Your Name');
+  const nameLabel = createElement('label', 'property-detail__form-label', t('propertyDetail.yourName'));
   nameLabel.setAttribute('for', 'inquiry-name');
   nameGroup.appendChild(nameLabel);
   const nameInput = createElement('input', 'property-detail__form-input');
@@ -832,7 +833,7 @@ export function renderPropertyDetailPage(slug: string): DocumentFragment {
 
   // Email field
   const emailGroup = createElement('div', 'property-detail__form-group');
-  const emailLabel = createElement('label', 'property-detail__form-label', 'Email Address');
+  const emailLabel = createElement('label', 'property-detail__form-label', t('propertyDetail.emailAddress'));
   emailLabel.setAttribute('for', 'inquiry-email');
   emailGroup.appendChild(emailLabel);
   const emailInput = createElement('input', 'property-detail__form-input');
@@ -846,7 +847,7 @@ export function renderPropertyDetailPage(slug: string): DocumentFragment {
 
   // Phone field
   const phoneGroup = createElement('div', 'property-detail__form-group');
-  const phoneLabel = createElement('label', 'property-detail__form-label', 'Phone Number');
+  const phoneLabel = createElement('label', 'property-detail__form-label', t('propertyDetail.phoneNumber'));
   phoneLabel.setAttribute('for', 'inquiry-phone');
   phoneGroup.appendChild(phoneLabel);
   const phoneInput = createElement('input', 'property-detail__form-input');
@@ -859,7 +860,7 @@ export function renderPropertyDetailPage(slug: string): DocumentFragment {
 
   // Message field
   const messageGroup = createElement('div', 'property-detail__form-group');
-  const messageLabel = createElement('label', 'property-detail__form-label', 'Message');
+  const messageLabel = createElement('label', 'property-detail__form-label', t('propertyDetail.message'));
   messageLabel.setAttribute('for', 'inquiry-message');
   messageGroup.appendChild(messageLabel);
   const messageTextarea = createElement('textarea', 'property-detail__form-textarea');
@@ -873,7 +874,7 @@ export function renderPropertyDetailPage(slug: string): DocumentFragment {
   // Submit button
   const submitBtn = createElement('button', 'btn btn--gold property-detail__form-submit');
   submitBtn.type = 'submit';
-  submitBtn.textContent = 'Send Inquiry';
+  submitBtn.textContent = t('propertyDetail.sendInquiry');
   form.appendChild(submitBtn);
 
   form.addEventListener('submit', (e) => {
@@ -890,7 +891,7 @@ export function renderPropertyDetailPage(slug: string): DocumentFragment {
   // Agent Info
   if (property.agent) {
     const agentCard = createElement('div', 'property-detail__agent-card');
-    const agentTitle = createElement('h4', 'property-detail__agent-title', 'Listed By');
+    const agentTitle = createElement('h4', 'property-detail__agent-title', t('propertyDetail.listedBy'));
     agentCard.appendChild(agentTitle);
 
     // Find full agent profile by matching name
@@ -927,7 +928,7 @@ export function renderPropertyDetailPage(slug: string): DocumentFragment {
       agentDetails.appendChild(agentName);
     }
 
-    const agentRole = createElement('span', 'property-detail__agent-role', fullAgent?.role || 'Real Estate Agent');
+    const agentRole = createElement('span', 'property-detail__agent-role', fullAgent?.role || t('propertyDetail.realEstateAgent'));
     agentDetails.appendChild(agentRole);
     agentInfo.appendChild(agentDetails);
 
@@ -935,7 +936,7 @@ export function renderPropertyDetailPage(slug: string): DocumentFragment {
 
     // Add View Profile button if full agent exists
     if (fullAgent) {
-      const viewProfileBtn = createElement('a', 'btn btn--ghost btn--sm property-detail__agent-btn', 'View Profile');
+      const viewProfileBtn = createElement('a', 'btn btn--ghost btn--sm property-detail__agent-btn', t('propertyDetail.viewProfile'));
       viewProfileBtn.href = `/agents/${fullAgent.slug}`;
       viewProfileBtn.setAttribute('data-route', '');
       agentCard.appendChild(viewProfileBtn);
@@ -964,10 +965,10 @@ export function renderPropertyDetailPage(slug: string): DocumentFragment {
     const similarContainer = createElement('div', 'container');
 
     const similarHeader = createElement('div', 'property-detail__similar-header');
-    const similarTitle = createElement('h2', 'property-detail__section-title', 'Similar Properties');
+    const similarTitle = createElement('h2', 'property-detail__section-title', t('propertyDetail.similarProperties'));
     similarHeader.appendChild(similarTitle);
 
-    const viewAllLink = createElement('a', 'property-detail__view-all', 'View All Properties');
+    const viewAllLink = createElement('a', 'property-detail__view-all', t('propertyDetail.viewAllProperties'));
     viewAllLink.href = '/properties';
     viewAllLink.setAttribute('data-route', '');
     similarHeader.appendChild(viewAllLink);
