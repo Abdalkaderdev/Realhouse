@@ -165,7 +165,7 @@ function createMapPinSVG(): SVGSVGElement {
 function createCloseButton(className: string): HTMLButtonElement {
   const btn = createElement('button', className);
   btn.textContent = '\u00D7';
-  btn.setAttribute('aria-label', 'Close');
+  btn.setAttribute('aria-label', t('buttons.close'));
   return btn;
 }
 
@@ -250,11 +250,11 @@ function injectPropertySchema(property: Property): void {
 
 function categorizeFeatures(features: string[]): FeatureCategory[] {
   const categories: Record<string, string[]> = {
-    'Interior': [],
-    'Exterior': [],
-    'Security': [],
-    'Amenities': [],
-    'Other': []
+    [t('propertyDetail.categories.interior')]: [],
+    [t('propertyDetail.categories.exterior')]: [],
+    [t('propertyDetail.categories.security')]: [],
+    [t('propertyDetail.categories.amenities')]: [],
+    [t('propertyDetail.categories.other')]: []
   };
 
   features.forEach(feature => {
@@ -269,36 +269,36 @@ function categorizeFeatures(features: string[]): FeatureCategory[] {
         lower.includes('tile') || lower.includes('carpet') || lower.includes('appliance') ||
         lower.includes('ac') || lower.includes('heating') || lower.includes('cooling') ||
         lower.includes('smart') || lower.includes('light')) {
-      categories['Interior'].push(feature);
+      categories[t('propertyDetail.categories.interior')].push(feature);
     } else if (lower.includes('garden') || lower.includes('balcony') || lower.includes('terrace') ||
                lower.includes('patio') || lower.includes('pool') || lower.includes('garage') ||
                lower.includes('parking') || lower.includes('driveway') || lower.includes('yard') ||
                lower.includes('outdoor') || lower.includes('view') || lower.includes('landscap') ||
                lower.includes('fence') || lower.includes('gate')) {
-      categories['Exterior'].push(feature);
+      categories[t('propertyDetail.categories.exterior')].push(feature);
     } else if (lower.includes('security') || lower.includes('camera') || lower.includes('alarm') ||
                lower.includes('cctv') || lower.includes('guard') || lower.includes('intercom') ||
                lower.includes('safe') || lower.includes('lock') || lower.includes('24/7') ||
                lower.includes('surveillance') || lower.includes('doorman') || lower.includes('entry')) {
-      categories['Security'].push(feature);
+      categories[t('propertyDetail.categories.security')].push(feature);
     } else if (lower.includes('gym') || lower.includes('fitness') || lower.includes('spa') ||
                lower.includes('sauna') || lower.includes('jacuzzi') || lower.includes('club') ||
                lower.includes('community') || lower.includes('lounge') || lower.includes('rooftop') ||
                lower.includes('elevator') || lower.includes('concierge') || lower.includes('valet') ||
                lower.includes('play') || lower.includes('children') || lower.includes('park') ||
                lower.includes('recreation')) {
-      categories['Amenities'].push(feature);
+      categories[t('propertyDetail.categories.amenities')].push(feature);
     } else {
-      categories['Other'].push(feature);
+      categories[t('propertyDetail.categories.other')].push(feature);
     }
   });
 
   const iconMap: Record<string, string> = {
-    'Interior': 'icon-home',
-    'Exterior': 'icon-area',
-    'Security': 'icon-check',
-    'Amenities': 'icon-check',
-    'Other': 'icon-check'
+    [t('propertyDetail.categories.interior')]: 'icon-home',
+    [t('propertyDetail.categories.exterior')]: 'icon-area',
+    [t('propertyDetail.categories.security')]: 'icon-check',
+    [t('propertyDetail.categories.amenities')]: 'icon-check',
+    [t('propertyDetail.categories.other')]: 'icon-check'
   };
 
   const result: FeatureCategory[] = [];
@@ -604,18 +604,18 @@ export function renderPropertyDetailPage(slug: string): DocumentFragment {
   const specsGrid = createElement('div', 'property-detail__specs-grid');
 
   const specsData: Array<{ icon: string; label: string; value: string; itemprop: string | null }> = [
-    { icon: 'icon-bed', label: 'Bedrooms', value: property.specs.beds.toString(), itemprop: 'numberOfBedrooms' },
-    { icon: 'icon-bath', label: 'Bathrooms', value: property.specs.baths.toString(), itemprop: 'numberOfBathroomsTotal' },
-    { icon: 'icon-area', label: 'Area', value: `${property.specs.sqm.toLocaleString()} m\u00B2`, itemprop: 'floorSize' },
-    { icon: 'icon-building', label: 'Type', value: property.type, itemprop: null }
+    { icon: 'icon-bed', label: t('propertyDetail.bedrooms'), value: property.specs.beds.toString(), itemprop: 'numberOfBedrooms' },
+    { icon: 'icon-bath', label: t('propertyDetail.bathrooms'), value: property.specs.baths.toString(), itemprop: 'numberOfBathroomsTotal' },
+    { icon: 'icon-area', label: t('propertyDetail.area'), value: `${property.specs.sqm.toLocaleString()} m\u00B2`, itemprop: 'floorSize' },
+    { icon: 'icon-building', label: t('propertyDetail.type'), value: property.type, itemprop: null }
   ];
 
   if (property.specs.yearBuilt) {
-    specsData.push({ icon: 'icon-calendar', label: 'Year Built', value: property.specs.yearBuilt.toString(), itemprop: 'yearBuilt' });
+    specsData.push({ icon: 'icon-calendar', label: t('propertyDetail.yearBuilt'), value: property.specs.yearBuilt.toString(), itemprop: 'yearBuilt' });
   }
 
   if (property.specs.totalFloors) {
-    specsData.push({ icon: 'icon-building', label: 'Floors', value: property.specs.totalFloors.toString(), itemprop: null });
+    specsData.push({ icon: 'icon-building', label: t('propertyDetail.floors'), value: property.specs.totalFloors.toString(), itemprop: null });
   }
 
   specsData.forEach(spec => {
@@ -789,7 +789,7 @@ export function renderPropertyDetailPage(slug: string): DocumentFragment {
   const callBtn = createElement('a', 'btn btn--primary property-detail__contact-btn');
   callBtn.href = 'tel:+9647507922138';
   callBtn.appendChild(createPhoneSVG());
-  const callBtnText = document.createTextNode('Call Now');
+  const callBtnText = document.createTextNode(t('propertyDetail.callNow'));
   callBtn.appendChild(callBtnText);
   quickContact.appendChild(callBtn);
 
@@ -798,7 +798,7 @@ export function renderPropertyDetailPage(slug: string): DocumentFragment {
   whatsappContact.target = '_blank';
   whatsappContact.rel = 'noopener noreferrer';
   whatsappContact.appendChild(createWhatsAppSVG());
-  const whatsappText = document.createTextNode('WhatsApp');
+  const whatsappText = document.createTextNode(t('propertyDetail.whatsApp'));
   whatsappContact.appendChild(whatsappText);
   quickContact.appendChild(whatsappContact);
 
@@ -827,7 +827,7 @@ export function renderPropertyDetailPage(slug: string): DocumentFragment {
   nameInput.id = 'inquiry-name';
   nameInput.name = 'name';
   nameInput.required = true;
-  nameInput.placeholder = 'Enter your name';
+  nameInput.placeholder = t('propertyDetail.enterYourName');
   nameGroup.appendChild(nameInput);
   form.appendChild(nameGroup);
 
@@ -841,7 +841,7 @@ export function renderPropertyDetailPage(slug: string): DocumentFragment {
   emailInput.id = 'inquiry-email';
   emailInput.name = 'email';
   emailInput.required = true;
-  emailInput.placeholder = 'Enter your email';
+  emailInput.placeholder = t('propertyDetail.enterYourEmail');
   emailGroup.appendChild(emailInput);
   form.appendChild(emailGroup);
 
@@ -854,7 +854,7 @@ export function renderPropertyDetailPage(slug: string): DocumentFragment {
   phoneInput.type = 'tel';
   phoneInput.id = 'inquiry-phone';
   phoneInput.name = 'phone';
-  phoneInput.placeholder = '+964 XXX XXX XXXX';
+  phoneInput.placeholder = t('propertyDetail.phonePlaceholder');
   phoneGroup.appendChild(phoneInput);
   form.appendChild(phoneGroup);
 
@@ -867,7 +867,7 @@ export function renderPropertyDetailPage(slug: string): DocumentFragment {
   messageTextarea.id = 'inquiry-message';
   messageTextarea.name = 'message';
   messageTextarea.rows = 4;
-  messageTextarea.placeholder = `I'm interested in ${property.title}. Please send me more information.`;
+  messageTextarea.placeholder = t('propertyDetail.messagePlaceholder');
   messageGroup.appendChild(messageTextarea);
   form.appendChild(messageGroup);
 
@@ -881,7 +881,7 @@ export function renderPropertyDetailPage(slug: string): DocumentFragment {
     e.preventDefault();
     const formData = new FormData(form);
     console.log('Inquiry submitted:', Object.fromEntries(formData));
-    showToast('Thank you for your inquiry! We will contact you soon.');
+    showToast(t('propertyDetail.thankYouMessage'));
     form.reset();
   });
 
@@ -1219,7 +1219,7 @@ export function setupPropertyDetailSEO(slug: string): void {
   const property = getPropertyBySlug(slug);
 
   if (!property) {
-    document.title = 'Property Not Found | Real House';
+    document.title = `${t('propertyDetail.propertyNotFound')} | Real House`;
     const meta = document.querySelector('meta[name="description"]');
     if (meta) {
       meta.setAttribute('content', 'The requested property could not be found. Browse our collection of properties in Erbil.');

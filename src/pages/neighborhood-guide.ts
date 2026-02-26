@@ -15,6 +15,7 @@ import {
 import { businessNAP } from '../data/locations';
 import { properties, getDisplayPrice, type Property } from '../data/properties';
 import { projects, type Project } from '../data/projects';
+import { t } from '../i18n';
 
 // ===============================================================================
 // Helper Functions
@@ -96,21 +97,21 @@ export function renderNeighborhoodsPage(): DocumentFragment {
 
   const heroContent = createElement('div', 'neighborhoods-page__hero-content');
 
-  const badge = createElement('span', 'neighborhoods-page__badge', 'Erbil Neighborhood Guides');
+  const badge = createElement('span', 'neighborhoods-page__badge', t('neighborhoodGuide.heroBadge'));
   heroContent.appendChild(badge);
 
-  const h1 = createElement('h1', 'neighborhoods-page__title', 'Explore Erbil\'s Premier Neighborhoods');
+  const h1 = createElement('h1', 'neighborhoods-page__title', t('neighborhoodGuide.heroTitle'));
   heroContent.appendChild(h1);
 
-  const subtitle = createElement('p', 'neighborhoods-page__subtitle', 'Discover the perfect area for your lifestyle. From luxury high-rises to family communities, find your ideal home in Kurdistan\'s capital.');
+  const subtitle = createElement('p', 'neighborhoods-page__subtitle', t('neighborhoodGuide.heroSubtitle'));
   heroContent.appendChild(subtitle);
 
   // Stats
   const stats = createElement('div', 'neighborhoods-page__stats');
   const statsData = [
-    { value: neighborhoods.length.toString(), label: 'Neighborhoods' },
-    { value: '100+', label: 'Properties' },
-    { value: '$50K-$2M', label: 'Price Range' }
+    { value: neighborhoods.length.toString(), label: t('neighborhoodGuide.neighborhoods') },
+    { value: '100+', label: t('neighborhoodGuide.properties') },
+    { value: '$50K-$2M', label: t('neighborhoodGuide.priceRange') }
   ];
   statsData.forEach(stat => {
     const statEl = createElement('div', 'neighborhoods-page__stat');
@@ -131,14 +132,14 @@ export function renderNeighborhoodsPage(): DocumentFragment {
   const ol = createElement('ol', 'breadcrumb');
 
   const li1 = createElement('li');
-  const a1 = createElement('a', undefined, 'Home');
+  const a1 = createElement('a', undefined, t('neighborhoodGuide.home'));
   a1.href = '/';
   a1.setAttribute('data-route', '');
   li1.appendChild(a1);
   ol.appendChild(li1);
 
   const li2 = createElement('li');
-  const span2 = createElement('span', undefined, 'Neighborhoods');
+  const span2 = createElement('span', undefined, t('neighborhoodGuide.neighborhoodsLabel'));
   span2.setAttribute('aria-current', 'page');
   li2.appendChild(span2);
   ol.appendChild(li2);
@@ -151,8 +152,8 @@ export function renderNeighborhoodsPage(): DocumentFragment {
   const container = createElement('div', 'container');
 
   const intro = createElement('div', 'neighborhoods-page__intro');
-  const introTitle = createElement('h2', 'neighborhoods-page__intro-title', 'Find Your Perfect Neighborhood');
-  const introText = createElement('p', 'neighborhoods-page__intro-text', 'Each area in Erbil offers a unique lifestyle, from the cosmopolitan energy of Ankawa to the family-focused community of Dream City. Explore our comprehensive guides to find the neighborhood that matches your needs.');
+  const introTitle = createElement('h2', 'neighborhoods-page__intro-title', t('neighborhoodGuide.findYourPerfectNeighborhood'));
+  const introText = createElement('p', 'neighborhoods-page__intro-text', t('neighborhoodGuide.introText'));
   intro.appendChild(introTitle);
   intro.appendChild(introText);
   container.appendChild(intro);
@@ -172,11 +173,11 @@ export function renderNeighborhoodsPage(): DocumentFragment {
   // CTA Section
   const cta = createElement('section', 'neighborhoods-page__cta');
   const ctaContent = createElement('div', 'neighborhoods-page__cta-content');
-  const ctaTitle = createElement('h2', undefined, 'Need Help Finding the Right Area?');
-  const ctaText = createElement('p', undefined, 'Our local experts know every neighborhood in Erbil. Get personalized recommendations based on your lifestyle and budget.');
+  const ctaTitle = createElement('h2', undefined, t('neighborhoodGuide.needHelpFindingRightArea'));
+  const ctaText = createElement('p', undefined, t('neighborhoodGuide.ctaExpertsText'));
   const ctaButtons = createElement('div', 'neighborhoods-page__cta-buttons');
 
-  const contactBtn = createElement('a', 'btn btn--primary btn--large', 'Get Expert Advice');
+  const contactBtn = createElement('a', 'btn btn--primary btn--large', t('neighborhoodGuide.getExpertAdvice'));
   contactBtn.href = '/contact';
   contactBtn.setAttribute('data-route', '');
   ctaButtons.appendChild(contactBtn);
@@ -222,7 +223,7 @@ function createNeighborhoodCard(neighborhood: Neighborhood): HTMLElement {
 
   // Overlay with price
   const overlay = createElement('div', 'neighborhood-card__overlay');
-  const price = createElement('span', 'neighborhood-card__price', `From ${formatNeighborhoodPrice(neighborhood.priceRange.min)}`);
+  const price = createElement('span', 'neighborhood-card__price', t('neighborhoodGuide.fromPrice', { price: formatNeighborhoodPrice(neighborhood.priceRange.min) }));
   overlay.appendChild(price);
   imageWrapper.appendChild(overlay);
 
@@ -245,8 +246,8 @@ function createNeighborhoodCard(neighborhood: Neighborhood): HTMLElement {
   const features = createElement('div', 'neighborhood-card__features');
   const featuresList = [
     neighborhood.lifestyle.type,
-    `${neighborhood.propertyTypes.length} Property Types`,
-    neighborhood.lifestyle.safetyRating >= 4 ? 'High Security' : 'Good Security'
+    t('neighborhoodGuide.propertyTypesCount', { count: neighborhood.propertyTypes.length.toString() }),
+    neighborhood.lifestyle.safetyRating >= 4 ? t('neighborhoodGuide.highSecurity') : t('neighborhoodGuide.goodSecurity')
   ];
   featuresList.forEach(feature => {
     const featureEl = createElement('span', 'neighborhood-card__feature');
@@ -258,7 +259,7 @@ function createNeighborhoodCard(neighborhood: Neighborhood): HTMLElement {
 
   // Footer
   const footer = createElement('div', 'neighborhood-card__footer');
-  const viewBtn = createElement('span', 'neighborhood-card__cta', 'Explore Area');
+  const viewBtn = createElement('span', 'neighborhood-card__cta', t('neighborhoodGuide.exploreArea'));
   viewBtn.appendChild(createSVG(ICONS.arrow, 'neighborhood-card__cta-icon'));
   footer.appendChild(viewBtn);
   content.appendChild(footer);
@@ -373,7 +374,7 @@ function createHeroSection(neighborhood: Neighborhood): HTMLElement {
   // Location badge
   const badge = createElement('div', 'neighborhood-detail__badge');
   badge.appendChild(createSVG(ICONS.location, 'neighborhood-detail__badge-icon'));
-  const badgeText = createElement('span', undefined, 'Erbil, Kurdistan Region, Iraq');
+  const badgeText = createElement('span', undefined, t('neighborhoodGuide.erbilKurdistanIraq'));
   badge.appendChild(badgeText);
   content.appendChild(badge);
 
@@ -392,10 +393,10 @@ function createHeroSection(neighborhood: Neighborhood): HTMLElement {
   // Stats
   const stats = createElement('div', 'neighborhood-detail__hero-stats');
   const statsData = [
-    { value: getNeighborhoodPriceDisplay(neighborhood), label: 'Price Range' },
-    { value: neighborhood.propertyTypes.length.toString(), label: 'Property Types' },
-    { value: neighborhood.lifestyle.type, label: 'Lifestyle' },
-    { value: `${neighborhood.lifestyle.safetyRating}/5`, label: 'Safety Rating' }
+    { value: getNeighborhoodPriceDisplay(neighborhood), label: t('neighborhoodGuide.priceRange') },
+    { value: neighborhood.propertyTypes.length.toString(), label: t('neighborhoodGuide.propertyTypesLabel') },
+    { value: neighborhood.lifestyle.type, label: t('neighborhoodGuide.lifestyle') },
+    { value: `${neighborhood.lifestyle.safetyRating}/5`, label: t('neighborhoodGuide.safetyRating') }
   ];
   statsData.forEach(stat => {
     const statEl = createElement('div', 'neighborhood-detail__hero-stat');
@@ -410,7 +411,7 @@ function createHeroSection(neighborhood: Neighborhood): HTMLElement {
   // CTA Buttons
   const buttons = createElement('div', 'neighborhood-detail__hero-buttons');
 
-  const viewBtn = createElement('a', 'btn btn--primary btn--large', 'View Properties');
+  const viewBtn = createElement('a', 'btn btn--primary btn--large', t('neighborhoodGuide.viewProperties'));
   viewBtn.href = `/properties?district=${neighborhood.slug}`;
   viewBtn.setAttribute('data-route', '');
   buttons.appendChild(viewBtn);
@@ -436,8 +437,8 @@ function createBreadcrumb(neighborhood: Neighborhood): HTMLElement {
   ol.setAttribute('itemtype', 'https://schema.org/BreadcrumbList');
 
   const items = [
-    { name: 'Home', url: '/' },
-    { name: 'Neighborhoods', url: '/neighborhoods' },
+    { name: t('neighborhoodGuide.home'), url: '/' },
+    { name: t('neighborhoodGuide.neighborhoodsLabel'), url: '/neighborhoods' },
     { name: neighborhood.name, url: null }
   ];
 
@@ -481,7 +482,7 @@ function createOverviewSection(neighborhood: Neighborhood): HTMLElement {
   const section = createElement('section', 'neighborhood-detail__overview');
 
   const header = createElement('div', 'neighborhood-detail__section-header');
-  const title = createElement('h2', 'neighborhood-detail__section-title', `About ${neighborhood.name}`);
+  const title = createElement('h2', 'neighborhood-detail__section-title', t('neighborhoodGuide.aboutNeighborhood', { name: neighborhood.name }));
   header.appendChild(title);
   section.appendChild(header);
 
@@ -500,7 +501,7 @@ function createOverviewSection(neighborhood: Neighborhood): HTMLElement {
 
   // Highlights
   const highlightsSection = createElement('div', 'neighborhood-detail__highlights');
-  const highlightsTitle = createElement('h3', 'neighborhood-detail__highlights-title', `Why Choose ${neighborhood.name}?`);
+  const highlightsTitle = createElement('h3', 'neighborhood-detail__highlights-title', t('neighborhoodGuide.whyChooseNeighborhood', { name: neighborhood.name }));
   highlightsSection.appendChild(highlightsTitle);
 
   const highlightsGrid = createElement('div', 'neighborhood-detail__highlights-grid');
@@ -521,8 +522,8 @@ function createPriceSection(neighborhood: Neighborhood): HTMLElement {
   const section = createElement('section', 'neighborhood-detail__prices');
 
   const header = createElement('div', 'neighborhood-detail__section-header');
-  const title = createElement('h2', 'neighborhood-detail__section-title', 'Property Prices');
-  const subtitle = createElement('p', 'neighborhood-detail__section-subtitle', `Current market prices in ${neighborhood.name}`);
+  const title = createElement('h2', 'neighborhood-detail__section-title', t('neighborhoodGuide.propertyPrices'));
+  const subtitle = createElement('p', 'neighborhood-detail__section-subtitle', t('neighborhoodGuide.currentMarketPrices', { name: neighborhood.name }));
   header.appendChild(title);
   header.appendChild(subtitle);
   section.appendChild(header);
@@ -530,10 +531,10 @@ function createPriceSection(neighborhood: Neighborhood): HTMLElement {
   // Price Overview
   const overview = createElement('div', 'neighborhood-detail__price-overview');
   const overviewData = [
-    { label: 'Starting From', value: formatNeighborhoodPrice(neighborhood.priceRange.min) },
-    { label: 'Up To', value: formatNeighborhoodPrice(neighborhood.priceRange.max) },
-    { label: 'Average Price', value: formatNeighborhoodPrice(neighborhood.priceRange.average) },
-    { label: 'Price/sqm', value: `$${neighborhood.priceRange.pricePerSqm.min} - $${neighborhood.priceRange.pricePerSqm.max}` }
+    { label: t('neighborhoodGuide.startingFrom'), value: formatNeighborhoodPrice(neighborhood.priceRange.min) },
+    { label: t('neighborhoodGuide.upTo'), value: formatNeighborhoodPrice(neighborhood.priceRange.max) },
+    { label: t('neighborhoodGuide.averagePrice'), value: formatNeighborhoodPrice(neighborhood.priceRange.average) },
+    { label: t('neighborhoodGuide.pricePerSqm'), value: `$${neighborhood.priceRange.pricePerSqm.min} - $${neighborhood.priceRange.pricePerSqm.max}` }
   ];
   overviewData.forEach(item => {
     const card = createElement('div', 'neighborhood-detail__price-card');
@@ -551,7 +552,7 @@ function createPriceSection(neighborhood: Neighborhood): HTMLElement {
 
   const thead = createElement('thead');
   const headerRow = createElement('tr');
-  ['Property Type', 'Price Range', 'Availability'].forEach(text => {
+  [t('neighborhoodGuide.propertyType'), t('neighborhoodGuide.priceRangeHeader'), t('neighborhoodGuide.availability')].forEach(text => {
     const th = createElement('th', undefined, text);
     headerRow.appendChild(th);
   });
@@ -586,8 +587,8 @@ function createAmenitiesSection(neighborhood: Neighborhood): HTMLElement {
   const section = createElement('section', 'neighborhood-detail__amenities');
 
   const header = createElement('div', 'neighborhood-detail__section-header');
-  const title = createElement('h2', 'neighborhood-detail__section-title', 'Nearby Amenities');
-  const subtitle = createElement('p', 'neighborhood-detail__section-subtitle', `Schools, hospitals, shopping, and more in ${neighborhood.name}`);
+  const title = createElement('h2', 'neighborhood-detail__section-title', t('neighborhoodGuide.nearbyAmenities'));
+  const subtitle = createElement('p', 'neighborhood-detail__section-subtitle', t('neighborhoodGuide.amenitiesSubtitle', { name: neighborhood.name }));
   header.appendChild(title);
   header.appendChild(subtitle);
   section.appendChild(header);
@@ -595,11 +596,11 @@ function createAmenitiesSection(neighborhood: Neighborhood): HTMLElement {
   const grid = createElement('div', 'neighborhood-detail__amenities-grid');
 
   const categories = [
-    { title: 'Schools & Education', icon: ICONS.school, items: neighborhood.amenities.schools },
-    { title: 'Healthcare', icon: ICONS.hospital, items: neighborhood.amenities.hospitals },
-    { title: 'Shopping', icon: ICONS.shopping, items: neighborhood.amenities.shopping },
-    { title: 'Dining', icon: ICONS.restaurant, items: neighborhood.amenities.restaurants },
-    { title: 'Recreation', icon: ICONS.park, items: neighborhood.amenities.recreation }
+    { title: t('neighborhoodGuide.schoolsEducation'), icon: ICONS.school, items: neighborhood.amenities.schools },
+    { title: t('neighborhoodGuide.healthcare'), icon: ICONS.hospital, items: neighborhood.amenities.hospitals },
+    { title: t('neighborhoodGuide.shopping'), icon: ICONS.shopping, items: neighborhood.amenities.shopping },
+    { title: t('neighborhoodGuide.dining'), icon: ICONS.restaurant, items: neighborhood.amenities.restaurants },
+    { title: t('neighborhoodGuide.recreation'), icon: ICONS.park, items: neighborhood.amenities.recreation }
   ];
 
   categories.forEach(category => {
@@ -639,8 +640,8 @@ function createTransportSection(neighborhood: Neighborhood): HTMLElement {
   const section = createElement('section', 'neighborhood-detail__transport');
 
   const header = createElement('div', 'neighborhood-detail__section-header');
-  const title = createElement('h2', 'neighborhood-detail__section-title', 'Transportation & Accessibility');
-  const subtitle = createElement('p', 'neighborhood-detail__section-subtitle', `Getting around from ${neighborhood.name}`);
+  const title = createElement('h2', 'neighborhood-detail__section-title', t('neighborhoodGuide.transportationAccessibility'));
+  const subtitle = createElement('p', 'neighborhood-detail__section-subtitle', t('neighborhoodGuide.gettingAroundFrom', { name: neighborhood.name }));
   header.appendChild(title);
   header.appendChild(subtitle);
   section.appendChild(header);
@@ -683,8 +684,8 @@ function createLifestyleSection(neighborhood: Neighborhood): HTMLElement {
   const section = createElement('section', 'neighborhood-detail__lifestyle');
 
   const header = createElement('div', 'neighborhood-detail__section-header');
-  const title = createElement('h2', 'neighborhood-detail__section-title', 'Lifestyle & Community');
-  const subtitle = createElement('p', 'neighborhood-detail__section-subtitle', `What it\'s like to live in ${neighborhood.name}`);
+  const title = createElement('h2', 'neighborhood-detail__section-title', t('neighborhoodGuide.lifestyleCommunity'));
+  const subtitle = createElement('p', 'neighborhood-detail__section-subtitle', t('neighborhoodGuide.whatItsLikeToLive', { name: neighborhood.name }));
   header.appendChild(title);
   header.appendChild(subtitle);
   section.appendChild(header);
@@ -700,7 +701,7 @@ function createLifestyleSection(neighborhood: Neighborhood): HTMLElement {
 
   // Vibe
   const vibeCard = createElement('div', 'neighborhood-detail__lifestyle-card');
-  const vibeTitle = createElement('h4', undefined, 'Community Vibe');
+  const vibeTitle = createElement('h4', undefined, t('neighborhoodGuide.communityVibe'));
   const vibeText = createElement('p', undefined, neighborhood.lifestyle.communityVibe);
   vibeCard.appendChild(vibeTitle);
   vibeCard.appendChild(vibeText);
@@ -708,7 +709,7 @@ function createLifestyleSection(neighborhood: Neighborhood): HTMLElement {
 
   // Target Residents
   const targetCard = createElement('div', 'neighborhood-detail__lifestyle-card');
-  const targetTitle = createElement('h4', undefined, 'Ideal For');
+  const targetTitle = createElement('h4', undefined, t('neighborhoodGuide.idealFor'));
   const targetList = createElement('ul', 'neighborhood-detail__lifestyle-list');
   neighborhood.lifestyle.targetResidents.forEach(resident => {
     const li = createElement('li', undefined, resident);
@@ -720,14 +721,14 @@ function createLifestyleSection(neighborhood: Neighborhood): HTMLElement {
 
   // Features
   const featuresCard = createElement('div', 'neighborhood-detail__lifestyle-card');
-  const featuresTitle = createElement('h4', undefined, 'Features');
+  const featuresTitle = createElement('h4', undefined, t('neighborhoodGuide.features'));
   const featuresGrid = createElement('div', 'neighborhood-detail__lifestyle-features');
 
   const features = [
-    { label: 'Safety Rating', value: `${neighborhood.lifestyle.safetyRating}/5`, icon: ICONS.safety },
-    { label: 'Family Friendly', value: neighborhood.lifestyle.familyFriendly ? 'Yes' : 'No', icon: ICONS.family },
-    { label: 'Pet Friendly', value: neighborhood.lifestyle.petFriendly ? 'Yes' : 'No', icon: ICONS.home },
-    { label: 'Expat Friendly', value: neighborhood.lifestyle.expatFriendly ? 'Yes' : 'No', icon: ICONS.star }
+    { label: t('neighborhoodGuide.safetyRating'), value: `${neighborhood.lifestyle.safetyRating}/5`, icon: ICONS.safety },
+    { label: t('neighborhoodGuide.familyFriendly'), value: neighborhood.lifestyle.familyFriendly ? t('neighborhoodGuide.yes') : t('neighborhoodGuide.no'), icon: ICONS.family },
+    { label: t('neighborhoodGuide.petFriendly'), value: neighborhood.lifestyle.petFriendly ? t('neighborhoodGuide.yes') : t('neighborhoodGuide.no'), icon: ICONS.home },
+    { label: t('neighborhoodGuide.expatFriendly'), value: neighborhood.lifestyle.expatFriendly ? t('neighborhoodGuide.yes') : t('neighborhoodGuide.no'), icon: ICONS.star }
   ];
 
   features.forEach(feature => {
@@ -752,8 +753,8 @@ function createMapSection(neighborhood: Neighborhood): HTMLElement {
   const section = createElement('section', 'neighborhood-detail__map');
 
   const header = createElement('div', 'neighborhood-detail__section-header');
-  const title = createElement('h2', 'neighborhood-detail__section-title', `${neighborhood.name} Location`);
-  const subtitle = createElement('p', 'neighborhood-detail__section-subtitle', 'Explore the area on the map');
+  const title = createElement('h2', 'neighborhood-detail__section-title', t('neighborhoodGuide.neighborhoodLocation', { name: neighborhood.name }));
+  const subtitle = createElement('p', 'neighborhood-detail__section-subtitle', t('neighborhoodGuide.exploreAreaOnMap'));
   header.appendChild(title);
   header.appendChild(subtitle);
   section.appendChild(header);
@@ -777,7 +778,7 @@ function createMapSection(neighborhood: Neighborhood): HTMLElement {
   directionsLink.target = '_blank';
   directionsLink.rel = 'noopener noreferrer';
   directionsLink.appendChild(createSVG(ICONS.car, 'neighborhood-detail__directions-icon'));
-  directionsLink.appendChild(document.createTextNode(' Get Driving Directions'));
+  directionsLink.appendChild(document.createTextNode(' ' + t('neighborhoodGuide.getDrivingDirections')));
   mapContainer.appendChild(directionsLink);
 
   section.appendChild(mapContainer);
@@ -789,12 +790,12 @@ function createPropertiesSection(neighborhood: Neighborhood, properties: Propert
   const section = createElement('section', 'neighborhood-detail__properties');
 
   const header = createElement('div', 'neighborhood-detail__section-header');
-  const title = createElement('h2', 'neighborhood-detail__section-title', `Properties in ${neighborhood.name}`);
-  const subtitle = createElement('p', 'neighborhood-detail__section-subtitle', `Featured listings available now`);
+  const title = createElement('h2', 'neighborhood-detail__section-title', t('neighborhoodGuide.propertiesInNeighborhood', { name: neighborhood.name }));
+  const subtitle = createElement('p', 'neighborhood-detail__section-subtitle', t('neighborhoodGuide.featuredListingsAvailable'));
   header.appendChild(title);
   header.appendChild(subtitle);
 
-  const viewAllLink = createElement('a', 'neighborhood-detail__view-all', 'View All Properties');
+  const viewAllLink = createElement('a', 'neighborhood-detail__view-all', t('neighborhoodGuide.viewAllProperties'));
   viewAllLink.href = `/properties?district=${neighborhood.slug}`;
   viewAllLink.setAttribute('data-route', '');
   viewAllLink.appendChild(createSVG(ICONS.arrow, 'neighborhood-detail__view-all-icon'));
@@ -843,12 +844,12 @@ function createProjectsSection(neighborhood: Neighborhood, projectsList: Project
   const section = createElement('section', 'neighborhood-detail__projects');
 
   const header = createElement('div', 'neighborhood-detail__section-header');
-  const title = createElement('h2', 'neighborhood-detail__section-title', `Development Projects in ${neighborhood.name}`);
-  const subtitle = createElement('p', 'neighborhood-detail__section-subtitle', 'New developments and off-plan opportunities');
+  const title = createElement('h2', 'neighborhood-detail__section-title', t('neighborhoodGuide.developmentProjectsIn', { name: neighborhood.name }));
+  const subtitle = createElement('p', 'neighborhood-detail__section-subtitle', t('neighborhoodGuide.newDevelopmentsOpportunities'));
   header.appendChild(title);
   header.appendChild(subtitle);
 
-  const viewAllLink = createElement('a', 'neighborhood-detail__view-all', 'View All Projects');
+  const viewAllLink = createElement('a', 'neighborhood-detail__view-all', t('neighborhoodGuide.viewAllProjects'));
   viewAllLink.href = '/projects';
   viewAllLink.setAttribute('data-route', '');
   viewAllLink.appendChild(createSVG(ICONS.arrow, 'neighborhood-detail__view-all-icon'));
@@ -902,17 +903,17 @@ function createSidebar(neighborhood: Neighborhood): HTMLElement {
 
   // Quick Info Card
   const infoCard = createElement('div', 'neighborhood-detail__sidebar-card');
-  const infoTitle = createElement('h3', 'neighborhood-detail__sidebar-title', `${neighborhood.name} Quick Facts`);
+  const infoTitle = createElement('h3', 'neighborhood-detail__sidebar-title', t('neighborhoodGuide.quickFacts', { name: neighborhood.name }));
   infoCard.appendChild(infoTitle);
 
   const dl = createElement('dl', 'neighborhood-detail__sidebar-list');
   const facts = [
-    ['Lifestyle', neighborhood.lifestyle.type],
-    ['Price Range', getNeighborhoodPriceDisplay(neighborhood)],
-    ['Avg. Price', formatNeighborhoodPrice(neighborhood.priceRange.average)],
-    ['Property Types', neighborhood.propertyTypes.length.toString()],
-    ['Safety Rating', `${neighborhood.lifestyle.safetyRating}/5`],
-    ['Family Friendly', neighborhood.lifestyle.familyFriendly ? 'Yes' : 'No']
+    [t('neighborhoodGuide.lifestyle'), neighborhood.lifestyle.type],
+    [t('neighborhoodGuide.priceRange'), getNeighborhoodPriceDisplay(neighborhood)],
+    [t('neighborhoodGuide.avgPrice'), formatNeighborhoodPrice(neighborhood.priceRange.average)],
+    [t('neighborhoodGuide.propertyTypesLabel'), neighborhood.propertyTypes.length.toString()],
+    [t('neighborhoodGuide.safetyRating'), `${neighborhood.lifestyle.safetyRating}/5`],
+    [t('neighborhoodGuide.familyFriendly'), neighborhood.lifestyle.familyFriendly ? t('neighborhoodGuide.yes') : t('neighborhoodGuide.no')]
   ];
   facts.forEach(([term, def]) => {
     const dt = createElement('dt', undefined, term);
@@ -925,12 +926,12 @@ function createSidebar(neighborhood: Neighborhood): HTMLElement {
 
   // Contact Card
   const contactCard = createElement('div', 'neighborhood-detail__sidebar-card');
-  const contactTitle = createElement('h3', 'neighborhood-detail__sidebar-title', `Interested in ${neighborhood.name}?`);
-  const contactText = createElement('p', 'neighborhood-detail__sidebar-text', 'Our local experts can help you find the perfect property.');
+  const contactTitle = createElement('h3', 'neighborhood-detail__sidebar-title', t('neighborhoodGuide.interestedInNeighborhood', { name: neighborhood.name }));
+  const contactText = createElement('p', 'neighborhood-detail__sidebar-text', t('neighborhoodGuide.localExpertsHelp'));
   contactCard.appendChild(contactTitle);
   contactCard.appendChild(contactText);
 
-  const scheduleBtn = createElement('a', 'btn btn--primary btn--full', 'Schedule Free Consultation');
+  const scheduleBtn = createElement('a', 'btn btn--primary btn--full', t('neighborhoodGuide.scheduleFreeConsultation'));
   scheduleBtn.href = '/contact';
   scheduleBtn.setAttribute('data-route', '');
   contactCard.appendChild(scheduleBtn);
@@ -950,12 +951,12 @@ function createCTASection(neighborhood: Neighborhood): HTMLElement {
   const section = createElement('section', 'neighborhood-detail__cta');
 
   const content = createElement('div', 'neighborhood-detail__cta-content');
-  const title = createElement('h2', undefined, `Ready to Find Your Property in ${neighborhood.name}?`);
-  const text = createElement('p', undefined, `Contact Real House today for expert guidance on buying or renting in ${neighborhood.name}, Erbil.`);
+  const title = createElement('h2', undefined, t('neighborhoodGuide.readyToFindProperty', { name: neighborhood.name }));
+  const text = createElement('p', undefined, t('neighborhoodGuide.contactTodayForGuidance', { name: neighborhood.name }));
 
   const buttons = createElement('div', 'neighborhood-detail__cta-buttons');
 
-  const scheduleBtn = createElement('a', 'btn btn--primary btn--large', 'Schedule Viewing');
+  const scheduleBtn = createElement('a', 'btn btn--primary btn--large', t('neighborhoodGuide.scheduleViewing'));
   scheduleBtn.href = '/contact';
   scheduleBtn.setAttribute('data-route', '');
   buttons.appendChild(scheduleBtn);
@@ -964,7 +965,7 @@ function createCTASection(neighborhood: Neighborhood): HTMLElement {
   whatsappBtn.href = `https://wa.me/${businessNAP.phones[0].number.replace(/[\s+]/g, '')}?text=${encodeURIComponent(`Hi, I'm interested in properties in ${neighborhood.name}, Erbil.`)}`;
   whatsappBtn.target = '_blank';
   whatsappBtn.rel = 'noopener noreferrer';
-  whatsappBtn.textContent = 'WhatsApp Us';
+  whatsappBtn.textContent = t('neighborhoodGuide.whatsappUs');
   buttons.appendChild(whatsappBtn);
 
   content.appendChild(title);
@@ -979,7 +980,7 @@ function createOtherNeighborhoodsSection(currentNeighborhood: Neighborhood): HTM
   const section = createElement('section', 'neighborhood-detail__other');
 
   const header = createElement('div', 'neighborhood-detail__section-header');
-  const title = createElement('h2', 'neighborhood-detail__section-title', 'Explore Other Neighborhoods');
+  const title = createElement('h2', 'neighborhood-detail__section-title', t('neighborhoodGuide.exploreOtherNeighborhoods'));
   header.appendChild(title);
   section.appendChild(header);
 
@@ -1001,7 +1002,7 @@ function createOtherNeighborhoodsSection(currentNeighborhood: Neighborhood): HTM
 
       const overlay = createElement('div', 'neighborhood-detail__other-overlay');
       const name = createElement('h3', 'neighborhood-detail__other-name', neighborhood.name);
-      const price = createElement('span', 'neighborhood-detail__other-price', `From ${formatNeighborhoodPrice(neighborhood.priceRange.min)}`);
+      const price = createElement('span', 'neighborhood-detail__other-price', t('neighborhoodGuide.fromPrice', { price: formatNeighborhoodPrice(neighborhood.priceRange.min) }));
       overlay.appendChild(name);
       overlay.appendChild(price);
       card.appendChild(overlay);
@@ -1011,7 +1012,7 @@ function createOtherNeighborhoodsSection(currentNeighborhood: Neighborhood): HTM
 
   section.appendChild(grid);
 
-  const viewAll = createElement('a', 'neighborhood-detail__other-view-all btn btn--ghost', 'View All Neighborhoods');
+  const viewAll = createElement('a', 'neighborhood-detail__other-view-all btn btn--ghost', t('neighborhoodGuide.viewAllNeighborhoods'));
   viewAll.href = '/neighborhoods';
   viewAll.setAttribute('data-route', '');
   section.appendChild(viewAll);
@@ -1024,17 +1025,17 @@ function render404NeighborhoodPage(slug: string): DocumentFragment {
   const page = createElement('div', 'neighborhood-detail neighborhood-detail--404');
 
   const container = createElement('div', 'neighborhood-detail__404');
-  const title = createElement('h1', undefined, 'Neighborhood Not Found');
-  const text = createElement('p', undefined, `We couldn't find information about "${slug}". Please check our available neighborhoods in Erbil.`);
+  const title = createElement('h1', undefined, t('neighborhoodGuide.neighborhoodNotFound'));
+  const text = createElement('p', undefined, t('neighborhoodGuide.couldntFindNeighborhood', { slug }));
 
   const buttons = createElement('div', 'neighborhood-detail__404-buttons');
 
-  const neighborhoodsBtn = createElement('a', 'btn btn--primary', 'View All Neighborhoods');
+  const neighborhoodsBtn = createElement('a', 'btn btn--primary', t('neighborhoodGuide.viewAllNeighborhoods'));
   neighborhoodsBtn.href = '/neighborhoods';
   neighborhoodsBtn.setAttribute('data-route', '');
   buttons.appendChild(neighborhoodsBtn);
 
-  const propertiesBtn = createElement('a', 'btn btn--secondary', 'Browse Properties');
+  const propertiesBtn = createElement('a', 'btn btn--secondary', t('neighborhoodGuide.browseProperties'));
   propertiesBtn.href = '/properties';
   propertiesBtn.setAttribute('data-route', '');
   buttons.appendChild(propertiesBtn);

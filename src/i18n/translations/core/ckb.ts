@@ -811,6 +811,7 @@ export const ckb: CoreTranslations = {
     viewAllProperties: 'بینینی هەموو خانووبەرەکان',
     backToProjects: 'گەڕانەوە بۆ پڕۆژەکان',
     completion: 'تەواوبوون',
+    keyMilestones: 'قۆناغە سەرەکییەکان',
   },
 
   propertyDetail: {
@@ -1550,5 +1551,87 @@ export const ckb: CoreTranslations = {
     shopping: 'بازاڕکردن',
     dining: 'خواردنەوە',
     recreation: 'ڕامیاری',
+  },
+
+  agentProfile: {
+    // Breadcrumbs
+    home: 'سەرەکی',
+    ourAgents: 'بریکارەکانمان',
+    // 404
+    agentNotFound: 'بریکار نەدۆزرایەوە',
+    agentNotFoundMessage: 'ئەو بریکارەی کە بەدوایدا دەگەڕێیت بوونی نییە یان لابراوە.',
+    viewAllAgents: 'هەموو بریکارەکان ببینە',
+    // Badge
+    leadership: 'سەرکردایەتی',
+    // Stats
+    yearsExperience: 'ساڵی ئەزموون',
+    propertiesSold: 'خانووبەرەی فرۆشراو',
+    totalSales: 'کۆی فرۆشتن',
+    activeListings: 'لیستی چالاک',
+    yearsWithRealHouse: 'ساڵ لەگەڵ ڕیەڵ هاوس',
+    languagesSpoken: 'زمانە قسەکراوەکان',
+    // Labels
+    languages: 'زمانەکان:',
+    // Buttons
+    callNow: 'ئێستا پەیوەندی بکە',
+    whatsApp: 'واتساپ',
+    email: 'ئیمەیڵ',
+    sendMessage: 'پەیام بنێرە',
+    backToAllAgents: 'گەڕانەوە بۆ هەموو بریکارەکان',
+    viewAllProperties: 'هەموو خانووبەرەکان ببینە',
+    // Section titles
+    about: 'دەربارەی {{name}}',
+    specializations: 'پسپۆڕییەکان',
+    featuredAreas: 'ناوچە تایبەتەکان',
+    certificationsAwards: 'بڕوانامە و خەڵاتەکان',
+    certifications: 'بڕوانامەکان',
+    awards: 'خەڵاتەکان',
+    clientReviews: 'هەڵسەنگاندنی کڕیاران',
+    listings: 'خانووبەرەکانی {{name}}',
+    contactInformation: 'زانیاری پەیوەندی',
+    connectOnSocialMedia: 'پەیوەندی لە تۆڕە کۆمەڵایەتییەکان',
+    performanceStats: 'ئاماری ئەدا',
+    // Social
+    linkedin: 'لینکدئین',
+    instagram: 'ئینستاگرام',
+    facebook: 'فەیسبووک',
+    // Form
+    yourName: 'ناوەکەت',
+    enterYourName: 'ناوی تەواوت بنووسە',
+    phoneNumber: 'ژمارەی تەلەفۆن',
+    phonePlaceholder: '+964 XXX XXX XXXX',
+    emailLabel: 'ئیمەیڵ',
+    emailPlaceholder: 'your@email.com',
+    message: 'پەیام',
+    messagePlaceholder: 'سڵاو {{name}}، من حەز دەکەم بە...',
+    // Rating
+    outOf5: '{{rating}} لە 5',
+    reviews: '{{count}} هەڵسەنگاندن',
+    // Property
+    priceOnRequest: 'نرخ بە داواکردن',
+    beds: 'ژووری نووستن',
+    baths: 'حەمام',
+  },
+
+  compareProjects: {
+    home: 'سەرەکی',
+    projects: 'پڕۆژەکان',
+    compareProjects: 'بەراوردی پڕۆژەکان',
+    compareDevelopmentProjects: 'بەراوردی پڕۆژە گەشەپێدانەکان',
+    comparingProjects: 'بەراوردکردنی {{count}} پڕۆژە تەنیشت یەکەوە. نرخ، ئامرازەکان، و بەردەستبوون پێداچوونەوە بکە بۆ دۆزینەوەی وەبەرهێنانی گونجاو.',
+    compareUpTo3: 'هەتا 3 پڕۆژەی گەشەپێدان تەنیشت یەکەوە بەراورد بکە بۆ بڕیاردانی وەبەرهێنانی زانیارانە.',
+    clearAll: 'سڕینەوەی هەموو',
+    contactOurTeam: 'پەیوەندی بە تیمەکەمان بکە',
+    browseMoreProjects: 'پڕۆژەی زیاتر بگەڕێ',
+    backToProjects: 'گەڕانەوە بۆ پڕۆژەکان',
+    needHelpDeciding: 'یارمەتیت پێویستە لە بڕیاردان؟',
+    expertHelpText: 'پسپۆڕەکانی خانووبەرەمان دەتوانن یارمەتیت بدەن لە هەڵبژاردنی پڕۆژەی گەشەپێدانی گونجاو بەپێی ئامانجە وەبەرهێنانەکانت و بودجەکەت.',
+  },
+
+  gallery: {
+    viewFullSize: 'قەبارەی تەواو ببینە',
+    closeLightbox: 'داخستن',
+    pageTitle: 'گەلەری خانووبەرەی هەولێر',
+    pageSubtitle: 'وێنەی سەرنجڕاکێشی ماڵە لوکسەکانی کوردستان، ڤیلای هەولێر عێراق، شوقەی هەولێر عێراق، و پێنتهاوسی هەولێر بگەڕێ. وێنەی کوالیتی بەرز کە باشترین خانووبەرەی هەولێر نیشان دەدەن.',
   },
 };

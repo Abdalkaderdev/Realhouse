@@ -3,6 +3,8 @@
 // Real House IQ - Premium Real Estate Erbil
 // ===============================================================================
 
+import { t } from '../i18n';
+
 const BASE_URL = 'https://realhouseiq.com';
 const STORAGE_KEY = 'realhouse_property_listing';
 
@@ -79,13 +81,15 @@ const INITIAL_LISTING: PropertyListing = {
   currentStep: 1
 };
 
-const PROPERTY_TYPES = [
-  { id: 'apartment', label: 'Apartment', icon: 'icon-building' },
-  { id: 'villa', label: 'Villa', icon: 'icon-home' },
-  { id: 'house', label: 'House', icon: 'icon-home' },
-  { id: 'land', label: 'Land', icon: 'icon-area' },
-  { id: 'commercial', label: 'Commercial', icon: 'icon-shopping' }
-];
+function getPropertyTypes() {
+  return [
+    { id: 'apartment', label: t('listProperty.propertyTypes.apartment'), icon: 'icon-building' },
+    { id: 'villa', label: t('listProperty.propertyTypes.villa'), icon: 'icon-home' },
+    { id: 'house', label: t('listProperty.propertyTypes.house'), icon: 'icon-home' },
+    { id: 'land', label: t('listProperty.propertyTypes.land'), icon: 'icon-area' },
+    { id: 'commercial', label: t('listProperty.propertyTypes.commercial'), icon: 'icon-shopping' }
+  ];
+}
 
 const NEIGHBORHOODS = [
   'Gulan', 'Dream City', 'Ankawa', 'Italian Village', 'English Village',
@@ -93,12 +97,27 @@ const NEIGHBORHOODS = [
   '100 Meter Street', '60 Meter Street', 'Ainkawa', 'Kasnazan', 'Other'
 ];
 
-const FEATURES = [
-  'Central AC', 'Balcony', 'Garden', 'Pool', 'Gym', 'Elevator',
-  'Security', '24/7 Electricity', 'Solar Panels', 'Smart Home',
-  'Storage Room', 'Maid Room', 'Driver Room', 'Rooftop Access',
-  'Sea/Lake View', 'City View', 'Mountain View'
-];
+function getFeatures() {
+  return [
+    { id: 'centralAC', label: t('listProperty.features.centralAC') },
+    { id: 'balcony', label: t('listProperty.features.balcony') },
+    { id: 'garden', label: t('listProperty.features.garden') },
+    { id: 'pool', label: t('listProperty.features.pool') },
+    { id: 'gym', label: t('listProperty.features.gym') },
+    { id: 'elevator', label: t('listProperty.features.elevator') },
+    { id: 'security', label: t('listProperty.features.security') },
+    { id: 'electricity24_7', label: t('listProperty.features.electricity24_7') },
+    { id: 'solarPanels', label: t('listProperty.features.solarPanels') },
+    { id: 'smartHome', label: t('listProperty.features.smartHome') },
+    { id: 'storageRoom', label: t('listProperty.features.storageRoom') },
+    { id: 'maidRoom', label: t('listProperty.features.maidRoom') },
+    { id: 'driverRoom', label: t('listProperty.features.driverRoom') },
+    { id: 'rooftopAccess', label: t('listProperty.features.rooftopAccess') },
+    { id: 'seaLakeView', label: t('listProperty.features.seaLakeView') },
+    { id: 'cityView', label: t('listProperty.features.cityView') },
+    { id: 'mountainView', label: t('listProperty.features.mountainView') }
+  ];
+}
 
 // --- Helper Functions --------------------------------------------------------
 
@@ -223,24 +242,24 @@ function createHeroSection(): HTMLElement {
 
   const content = createElement('div', 'list-property-hero__content');
 
-  const badge = createElement('span', 'list-property-hero__badge', 'Free Listing');
+  const badge = createElement('span', 'list-property-hero__badge', t('listProperty.freeListing'));
   content.appendChild(badge);
 
   const title = createElement('h1', 'list-property-hero__title');
-  title.textContent = 'List Your Property ';
-  const em = createElement('em', undefined, 'With Us');
+  title.textContent = t('listProperty.listYourProperty') + ' ';
+  const em = createElement('em', undefined, t('listProperty.withUs'));
   title.appendChild(em);
   content.appendChild(title);
 
   const subtitle = createElement('p', 'list-property-hero__subtitle');
-  subtitle.textContent = 'Reach thousands of potential buyers and renters in Erbil, Kurdistan. Submit your property details and our expert agents will help you sell or rent faster.';
+  subtitle.textContent = t('listProperty.heroSubtitle');
   content.appendChild(subtitle);
 
   const stats = createElement('div', 'list-property-hero__stats');
   const statsData = [
-    { value: '500+', label: 'Properties Sold' },
-    { value: '48hrs', label: 'Average Response' },
-    { value: '98%', label: 'Client Satisfaction' }
+    { value: '500+', label: t('listProperty.propertiesSold') },
+    { value: '48hrs', label: t('listProperty.averageResponse') },
+    { value: '98%', label: t('listProperty.clientSatisfaction') }
   ];
 
   statsData.forEach(stat => {
@@ -265,13 +284,13 @@ function createProgressIndicator(currentStep: number): HTMLElement {
   const progress = createElement('div', 'list-property-progress');
 
   const steps = [
-    { num: 1, label: 'Type' },
-    { num: 2, label: 'Details' },
-    { num: 3, label: 'Location' },
-    { num: 4, label: 'Pricing' },
-    { num: 5, label: 'Photos' },
-    { num: 6, label: 'Contact' },
-    { num: 7, label: 'Review' }
+    { num: 1, label: t('listProperty.steps.type') },
+    { num: 2, label: t('listProperty.steps.details') },
+    { num: 3, label: t('listProperty.steps.location') },
+    { num: 4, label: t('listProperty.steps.pricing') },
+    { num: 5, label: t('listProperty.steps.photos') },
+    { num: 6, label: t('listProperty.steps.contact') },
+    { num: 7, label: t('listProperty.steps.review') }
   ];
 
   const stepsContainer = createElement('div', 'list-property-progress__steps');
@@ -317,7 +336,7 @@ function createProgressIndicator(currentStep: number): HTMLElement {
   progressBar.appendChild(progressFill);
   progress.appendChild(progressBar);
 
-  const progressText = createElement('span', 'list-property-progress__text', `Step ${currentStep} of 7`);
+  const progressText = createElement('span', 'list-property-progress__text', t('listProperty.stepOf', { current: currentStep.toString(), total: '7' }));
   progress.appendChild(progressText);
 
   return progress;
@@ -368,9 +387,9 @@ function createStep1(data: PropertyListing): HTMLElement {
   const step = createElement('div', 'list-property-step');
 
   const header = createElement('div', 'list-property-step__header');
-  const title = createElement('h2', 'list-property-step__title', 'What type of property are you listing?');
+  const title = createElement('h2', 'list-property-step__title', t('listProperty.step1Title'));
   header.appendChild(title);
-  const subtitle = createElement('p', 'list-property-step__subtitle', 'Select the category that best describes your property');
+  const subtitle = createElement('p', 'list-property-step__subtitle', t('listProperty.step1Subtitle'));
   header.appendChild(subtitle);
   step.appendChild(header);
 
@@ -378,7 +397,7 @@ function createStep1(data: PropertyListing): HTMLElement {
 
   const typeGrid = createElement('div', 'list-property-types');
 
-  PROPERTY_TYPES.forEach(type => {
+  getPropertyTypes().forEach(type => {
     const typeCard = createElement('label', 'list-property-type');
     if (data.propertyType === type.id) {
       typeCard.classList.add('list-property-type--selected');
@@ -427,7 +446,7 @@ function validateStep1(data: PropertyListing): { valid: boolean; errors: string[
   const selected = form?.querySelector('input[name="propertyType"]:checked') as HTMLInputElement;
 
   if (!selected) {
-    return { valid: false, errors: ['Please select a property type'] };
+    return { valid: false, errors: [t('listProperty.errors.selectPropertyType')] };
   }
 
   data.propertyType = selected.value;
@@ -440,9 +459,9 @@ function createStep2(data: PropertyListing): HTMLElement {
   const step = createElement('div', 'list-property-step');
 
   const header = createElement('div', 'list-property-step__header');
-  const title = createElement('h2', 'list-property-step__title', 'Property Details');
+  const title = createElement('h2', 'list-property-step__title', t('listProperty.step2Title'));
   header.appendChild(title);
-  const subtitle = createElement('p', 'list-property-step__subtitle', 'Provide accurate information to attract the right buyers');
+  const subtitle = createElement('p', 'list-property-step__subtitle', t('listProperty.step2Subtitle'));
   header.appendChild(subtitle);
   step.appendChild(header);
 
@@ -452,24 +471,24 @@ function createStep2(data: PropertyListing): HTMLElement {
 
   // Bedrooms (hide for land/commercial)
   if (!['land', 'commercial'].includes(data.propertyType)) {
-    grid.appendChild(createNumberInput('bedrooms', 'Bedrooms', data.bedrooms, 0, 20));
-    grid.appendChild(createNumberInput('bathrooms', 'Bathrooms', data.bathrooms, 0, 15));
+    grid.appendChild(createNumberInput('bedrooms', t('listProperty.bedrooms'), data.bedrooms, 0, 20));
+    grid.appendChild(createNumberInput('bathrooms', t('listProperty.bathrooms'), data.bathrooms, 0, 15));
   }
 
   // Area
-  const areaGroup = createFormGroup('area', 'Area (sqm)', 'number');
+  const areaGroup = createFormGroup('area', t('listProperty.areaSqm'), 'number');
   const areaInput = areaGroup.querySelector('input') as HTMLInputElement;
   areaInput.value = data.area > 0 ? data.area.toString() : '';
-  areaInput.placeholder = 'e.g., 250';
+  areaInput.placeholder = t('listProperty.areaPlaceholder');
   areaInput.min = '1';
   grid.appendChild(areaGroup);
 
   // Year Built (not for land)
   if (data.propertyType !== 'land') {
-    const yearGroup = createFormGroup('yearBuilt', 'Year Built', 'number');
+    const yearGroup = createFormGroup('yearBuilt', t('listProperty.yearBuilt'), 'number');
     const yearInput = yearGroup.querySelector('input') as HTMLInputElement;
     yearInput.value = data.yearBuilt > 0 ? data.yearBuilt.toString() : '';
-    yearInput.placeholder = 'e.g., 2020';
+    yearInput.placeholder = t('listProperty.yearBuiltPlaceholder');
     yearInput.min = '1900';
     yearInput.max = new Date().getFullYear().toString();
     grid.appendChild(yearGroup);
@@ -477,12 +496,12 @@ function createStep2(data: PropertyListing): HTMLElement {
 
   // Floors
   if (!['land'].includes(data.propertyType)) {
-    grid.appendChild(createNumberInput('floors', 'Floors', data.floors, 1, 50));
+    grid.appendChild(createNumberInput('floors', t('listProperty.floors'), data.floors, 1, 50));
   }
 
   // Parking
   if (data.propertyType !== 'land') {
-    grid.appendChild(createNumberInput('parkingSpaces', 'Parking Spaces', data.parkingSpaces, 0, 20));
+    grid.appendChild(createNumberInput('parkingSpaces', t('listProperty.parkingSpaces'), data.parkingSpaces, 0, 20));
   }
 
   content.appendChild(grid);
@@ -490,22 +509,26 @@ function createStep2(data: PropertyListing): HTMLElement {
   // Furnishing (not for land)
   if (data.propertyType !== 'land') {
     const furnishingGroup = createElement('div', 'list-property-form__group list-property-form__group--full');
-    const furnishingLabel = createElement('label', 'list-property-form__label', 'Furnishing Status');
+    const furnishingLabel = createElement('label', 'list-property-form__label', t('listProperty.furnishingStatus'));
     furnishingGroup.appendChild(furnishingLabel);
 
     const furnishingOptions = createElement('div', 'list-property-form__radio-group');
-    ['Unfurnished', 'Semi-Furnished', 'Fully Furnished'].forEach(option => {
-      const value = option.toLowerCase().replace('-', '');
+    const furnishingChoices = [
+      { value: 'unfurnished', label: t('listProperty.furnishing.unfurnished') },
+      { value: 'semifurnished', label: t('listProperty.furnishing.semiFurnished') },
+      { value: 'fullyfurnished', label: t('listProperty.furnishing.fullyFurnished') }
+    ];
+    furnishingChoices.forEach(option => {
       const radioLabel = createElement('label', 'list-property-form__radio');
 
       const input = createElement('input');
       input.type = 'radio';
       input.name = 'furnishing';
-      input.value = value;
-      input.checked = data.furnishing === value;
+      input.value = option.value;
+      input.checked = data.furnishing === option.value;
       radioLabel.appendChild(input);
 
-      const radioText = createElement('span', undefined, option);
+      const radioText = createElement('span', undefined, option.label);
       radioLabel.appendChild(radioText);
 
       furnishingOptions.appendChild(radioLabel);
@@ -517,21 +540,21 @@ function createStep2(data: PropertyListing): HTMLElement {
   // Features
   if (data.propertyType !== 'land') {
     const featuresGroup = createElement('div', 'list-property-form__group list-property-form__group--full');
-    const featuresLabel = createElement('label', 'list-property-form__label', 'Property Features');
+    const featuresLabel = createElement('label', 'list-property-form__label', t('listProperty.propertyFeatures'));
     featuresGroup.appendChild(featuresLabel);
 
     const featuresGrid = createElement('div', 'list-property-features');
-    FEATURES.forEach(feature => {
+    getFeatures().forEach(feature => {
       const featureLabel = createElement('label', 'list-property-feature');
 
       const checkbox = createElement('input');
       checkbox.type = 'checkbox';
       checkbox.name = 'features';
-      checkbox.value = feature;
-      checkbox.checked = data.features.includes(feature);
+      checkbox.value = feature.id;
+      checkbox.checked = data.features.includes(feature.id);
       featureLabel.appendChild(checkbox);
 
-      const featureText = createElement('span', undefined, feature);
+      const featureText = createElement('span', undefined, feature.label);
       featureLabel.appendChild(featureText);
 
       featuresGrid.appendChild(featureLabel);
@@ -627,11 +650,11 @@ function validateStep2(data: PropertyListing): { valid: boolean; errors: string[
 
   // Validation
   if (area <= 0) {
-    errors.push('Please enter a valid area');
+    errors.push(t('listProperty.errors.enterValidArea'));
   }
 
   if (!['land', 'commercial'].includes(data.propertyType) && bedrooms <= 0) {
-    errors.push('Please specify number of bedrooms');
+    errors.push(t('listProperty.errors.specifyBedrooms'));
   }
 
   // Update data
@@ -653,9 +676,9 @@ function createStep3(data: PropertyListing): HTMLElement {
   const step = createElement('div', 'list-property-step');
 
   const header = createElement('div', 'list-property-step__header');
-  const title = createElement('h2', 'list-property-step__title', 'Property Location');
+  const title = createElement('h2', 'list-property-step__title', t('listProperty.step3Title'));
   header.appendChild(title);
-  const subtitle = createElement('p', 'list-property-step__subtitle', 'Accurate location helps buyers find your property');
+  const subtitle = createElement('p', 'list-property-step__subtitle', t('listProperty.step3Subtitle'));
   header.appendChild(subtitle);
   step.appendChild(header);
 
@@ -664,15 +687,15 @@ function createStep3(data: PropertyListing): HTMLElement {
   const grid = createElement('div', 'list-property-form__grid');
 
   // City
-  const cityGroup = createFormGroup('city', 'City', 'text');
+  const cityGroup = createFormGroup('city', t('listProperty.city'), 'text');
   const cityInput = cityGroup.querySelector('input') as HTMLInputElement;
   cityInput.value = data.city || 'Erbil';
-  cityInput.placeholder = 'e.g., Erbil';
+  cityInput.placeholder = t('listProperty.cityPlaceholder');
   grid.appendChild(cityGroup);
 
   // Neighborhood
   const neighborhoodGroup = createElement('div', 'list-property-form__group');
-  const neighborhoodLabel = createElement('label', 'list-property-form__label', 'Neighborhood / District');
+  const neighborhoodLabel = createElement('label', 'list-property-form__label', t('listProperty.neighborhoodDistrict'));
   neighborhoodLabel.setAttribute('for', 'neighborhood');
   neighborhoodGroup.appendChild(neighborhoodLabel);
 
@@ -680,7 +703,7 @@ function createStep3(data: PropertyListing): HTMLElement {
   neighborhoodSelect.id = 'neighborhood';
   neighborhoodSelect.name = 'neighborhood';
 
-  const defaultOption = createElement('option', undefined, 'Select neighborhood');
+  const defaultOption = createElement('option', undefined, t('listProperty.selectNeighborhood'));
   defaultOption.value = '';
   neighborhoodSelect.appendChild(defaultOption);
 
@@ -698,14 +721,14 @@ function createStep3(data: PropertyListing): HTMLElement {
 
   // Address
   const addressGroup = createElement('div', 'list-property-form__group list-property-form__group--full');
-  const addressLabel = createElement('label', 'list-property-form__label', 'Full Address');
+  const addressLabel = createElement('label', 'list-property-form__label', t('listProperty.fullAddress'));
   addressLabel.setAttribute('for', 'address');
   addressGroup.appendChild(addressLabel);
 
   const addressInput = createElement('textarea', 'list-property-form__textarea');
   addressInput.id = 'address';
   addressInput.name = 'address';
-  addressInput.placeholder = 'Street name, building number, floor, etc.';
+  addressInput.placeholder = t('listProperty.addressPlaceholder');
   addressInput.rows = 3;
   addressInput.value = data.address;
   addressGroup.appendChild(addressInput);
@@ -713,14 +736,14 @@ function createStep3(data: PropertyListing): HTMLElement {
 
   // Nearby Landmarks
   const landmarksGroup = createElement('div', 'list-property-form__group list-property-form__group--full');
-  const landmarksLabel = createElement('label', 'list-property-form__label', 'Nearby Landmarks (optional)');
+  const landmarksLabel = createElement('label', 'list-property-form__label', t('listProperty.nearbyLandmarks'));
   landmarksLabel.setAttribute('for', 'nearbyLandmarks');
   landmarksGroup.appendChild(landmarksLabel);
 
   const landmarksInput = createElement('input', 'list-property-form__input');
   landmarksInput.id = 'nearbyLandmarks';
   landmarksInput.name = 'nearbyLandmarks';
-  landmarksInput.placeholder = 'e.g., Near Majidi Mall, 5 min from Airport';
+  landmarksInput.placeholder = t('listProperty.landmarksPlaceholder');
   landmarksInput.value = data.nearbyLandmarks;
   landmarksGroup.appendChild(landmarksInput);
   content.appendChild(landmarksGroup);
@@ -741,15 +764,15 @@ function validateStep3(data: PropertyListing): { valid: boolean; errors: string[
   const nearbyLandmarks = (form.querySelector('[name="nearbyLandmarks"]') as HTMLInputElement)?.value.trim();
 
   if (!city) {
-    errors.push('Please enter the city');
+    errors.push(t('listProperty.errors.enterCity'));
   }
 
   if (!neighborhood) {
-    errors.push('Please select a neighborhood');
+    errors.push(t('listProperty.errors.selectNeighborhood'));
   }
 
   if (!address) {
-    errors.push('Please provide the full address');
+    errors.push(t('listProperty.errors.provideAddress'));
   }
 
   data.city = city;
@@ -766,9 +789,9 @@ function createStep4(data: PropertyListing): HTMLElement {
   const step = createElement('div', 'list-property-step');
 
   const header = createElement('div', 'list-property-step__header');
-  const title = createElement('h2', 'list-property-step__title', 'Pricing Information');
+  const title = createElement('h2', 'list-property-step__title', t('listProperty.step4Title'));
   header.appendChild(title);
-  const subtitle = createElement('p', 'list-property-step__subtitle', 'Set a competitive price based on market trends');
+  const subtitle = createElement('p', 'list-property-step__subtitle', t('listProperty.step4Subtitle'));
   header.appendChild(subtitle);
   step.appendChild(header);
 
@@ -776,7 +799,7 @@ function createStep4(data: PropertyListing): HTMLElement {
 
   // Listing Type
   const listingTypeGroup = createElement('div', 'list-property-form__group list-property-form__group--full');
-  const listingTypeLabel = createElement('label', 'list-property-form__label', 'Listing Type');
+  const listingTypeLabel = createElement('label', 'list-property-form__label', t('listProperty.listingType'));
   listingTypeGroup.appendChild(listingTypeLabel);
 
   const listingTypeOptions = createElement('div', 'list-property-form__toggle-group');
@@ -789,7 +812,7 @@ function createStep4(data: PropertyListing): HTMLElement {
   saleInput.value = 'sale';
   saleInput.checked = data.listingType === 'sale';
   saleOption.appendChild(saleInput);
-  const saleText = createElement('span', undefined, 'For Sale');
+  const saleText = createElement('span', undefined, t('listProperty.forSale'));
   saleOption.appendChild(saleText);
   listingTypeOptions.appendChild(saleOption);
 
@@ -801,7 +824,7 @@ function createStep4(data: PropertyListing): HTMLElement {
   rentInput.value = 'rent';
   rentInput.checked = data.listingType === 'rent';
   rentOption.appendChild(rentInput);
-  const rentText = createElement('span', undefined, 'For Rent');
+  const rentText = createElement('span', undefined, t('listProperty.forRent'));
   rentOption.appendChild(rentText);
   listingTypeOptions.appendChild(rentOption);
 
@@ -822,7 +845,7 @@ function createStep4(data: PropertyListing): HTMLElement {
   const priceGrid = createElement('div', 'list-property-form__grid');
 
   const priceGroup = createElement('div', 'list-property-form__group');
-  const priceLabel = createElement('label', 'list-property-form__label', 'Price');
+  const priceLabel = createElement('label', 'list-property-form__label', t('listProperty.price'));
   priceLabel.setAttribute('for', 'price');
   priceGroup.appendChild(priceLabel);
 
@@ -832,7 +855,7 @@ function createStep4(data: PropertyListing): HTMLElement {
   priceInput.id = 'price';
   priceInput.name = 'price';
   priceInput.value = data.price > 0 ? data.price.toString() : '';
-  priceInput.placeholder = 'e.g., 250000';
+  priceInput.placeholder = t('listProperty.pricePlaceholder');
   priceInput.min = '0';
   priceInputWrapper.appendChild(priceInput);
   priceGroup.appendChild(priceInputWrapper);
@@ -840,7 +863,7 @@ function createStep4(data: PropertyListing): HTMLElement {
 
   // Currency
   const currencyGroup = createElement('div', 'list-property-form__group');
-  const currencyLabel = createElement('label', 'list-property-form__label', 'Currency');
+  const currencyLabel = createElement('label', 'list-property-form__label', t('listProperty.currency'));
   currencyLabel.setAttribute('for', 'currency');
   currencyGroup.appendChild(currencyLabel);
 
@@ -848,10 +871,14 @@ function createStep4(data: PropertyListing): HTMLElement {
   currencySelect.id = 'currency';
   currencySelect.name = 'currency';
 
-  ['USD', 'IQD'].forEach(currency => {
-    const option = createElement('option', undefined, currency);
-    option.value = currency;
-    option.selected = data.currency === currency;
+  const currencies = [
+    { value: 'USD', label: t('listProperty.currencyUSD') },
+    { value: 'IQD', label: t('listProperty.currencyIQD') }
+  ];
+  currencies.forEach(currency => {
+    const option = createElement('option', undefined, currency.label);
+    option.value = currency.value;
+    option.selected = data.currency === currency.value;
     currencySelect.appendChild(option);
   });
 
@@ -862,14 +889,14 @@ function createStep4(data: PropertyListing): HTMLElement {
 
   // Payment Terms
   const termsGroup = createElement('div', 'list-property-form__group list-property-form__group--full');
-  const termsLabel = createElement('label', 'list-property-form__label', 'Payment Terms (optional)');
+  const termsLabel = createElement('label', 'list-property-form__label', t('listProperty.paymentTerms'));
   termsLabel.setAttribute('for', 'paymentTerms');
   termsGroup.appendChild(termsLabel);
 
   const termsInput = createElement('input', 'list-property-form__input');
   termsInput.id = 'paymentTerms';
   termsInput.name = 'paymentTerms';
-  termsInput.placeholder = 'e.g., Cash only, Installments available, 50% upfront';
+  termsInput.placeholder = t('listProperty.paymentTermsPlaceholder');
   termsInput.value = data.paymentTerms;
   termsGroup.appendChild(termsInput);
   content.appendChild(termsGroup);
@@ -884,7 +911,7 @@ function createStep4(data: PropertyListing): HTMLElement {
   negotiableCheckbox.checked = data.negotiable;
   negotiableLabel.appendChild(negotiableCheckbox);
 
-  const negotiableText = createElement('span', undefined, 'Price is negotiable');
+  const negotiableText = createElement('span', undefined, t('listProperty.priceNegotiable'));
   negotiableLabel.appendChild(negotiableText);
   negotiableGroup.appendChild(negotiableLabel);
   content.appendChild(negotiableGroup);
@@ -906,11 +933,11 @@ function validateStep4(data: PropertyListing): { valid: boolean; errors: string[
   const negotiable = (form.querySelector('[name="negotiable"]') as HTMLInputElement)?.checked;
 
   if (!listingType) {
-    errors.push('Please select listing type (sale or rent)');
+    errors.push(t('listProperty.errors.selectListingType'));
   }
 
   if (price <= 0) {
-    errors.push('Please enter a valid price');
+    errors.push(t('listProperty.errors.enterValidPrice'));
   }
 
   data.listingType = listingType;
@@ -928,9 +955,9 @@ function createStep5(data: PropertyListing): HTMLElement {
   const step = createElement('div', 'list-property-step');
 
   const header = createElement('div', 'list-property-step__header');
-  const title = createElement('h2', 'list-property-step__title', 'Property Photos');
+  const title = createElement('h2', 'list-property-step__title', t('listProperty.step5Title'));
   header.appendChild(title);
-  const subtitle = createElement('p', 'list-property-step__subtitle', 'Upload high-quality photos to attract more buyers');
+  const subtitle = createElement('p', 'list-property-step__subtitle', t('listProperty.step5Subtitle'));
   header.appendChild(subtitle);
   step.appendChild(header);
 
@@ -963,14 +990,14 @@ function createStep5(data: PropertyListing): HTMLElement {
   dropzone.appendChild(dropzoneIcon);
 
   const dropzoneText = createElement('div', 'list-property-dropzone__text');
-  const dropzoneTitle = createElement('p', 'list-property-dropzone__title', 'Drag & drop photos here');
+  const dropzoneTitle = createElement('p', 'list-property-dropzone__title', t('listProperty.dragDropPhotos'));
   dropzoneText.appendChild(dropzoneTitle);
-  const dropzoneOr = createElement('p', 'list-property-dropzone__or', 'or');
+  const dropzoneOr = createElement('p', 'list-property-dropzone__or', t('listProperty.or'));
   dropzoneText.appendChild(dropzoneOr);
   dropzone.appendChild(dropzoneText);
 
   const browseBtn = createElement('label', 'btn btn--outline list-property-dropzone__btn');
-  browseBtn.textContent = 'Browse Files';
+  browseBtn.textContent = t('listProperty.browseFiles');
   const fileInput = createElement('input');
   fileInput.type = 'file';
   fileInput.accept = 'image/*';
@@ -980,7 +1007,7 @@ function createStep5(data: PropertyListing): HTMLElement {
   browseBtn.appendChild(fileInput);
   dropzone.appendChild(browseBtn);
 
-  const dropzoneHint = createElement('p', 'list-property-dropzone__hint', 'Supported formats: JPG, PNG, WebP. Max 10MB per file.');
+  const dropzoneHint = createElement('p', 'list-property-dropzone__hint', t('listProperty.supportedFormats'));
   dropzone.appendChild(dropzoneHint);
 
   content.appendChild(dropzone);
@@ -1001,7 +1028,7 @@ function createStep5(data: PropertyListing): HTMLElement {
   const noteIcon = createElement('span', 'list-property-note__icon');
   noteIcon.appendChild(createSVGUse('icon-info'));
   noteBox.appendChild(noteIcon);
-  const noteText = createElement('p', undefined, 'For best results, upload at least 5 photos including exterior, interior rooms, kitchen, bathrooms, and any special features.');
+  const noteText = createElement('p', undefined, t('listProperty.photoNote'));
   noteBox.appendChild(noteText);
   content.appendChild(noteBox);
 
@@ -1034,7 +1061,7 @@ function createPhotoPreview(src: string, index: number): HTMLElement {
   preview.appendChild(removeBtn);
 
   if (index === 0) {
-    const badge = createElement('span', 'list-property-photo__badge', 'Main');
+    const badge = createElement('span', 'list-property-photo__badge', t('listProperty.mainPhoto'));
     preview.appendChild(badge);
   }
 
@@ -1125,9 +1152,9 @@ function createStep6(data: PropertyListing): HTMLElement {
   const step = createElement('div', 'list-property-step');
 
   const header = createElement('div', 'list-property-step__header');
-  const title = createElement('h2', 'list-property-step__title', 'Contact Information');
+  const title = createElement('h2', 'list-property-step__title', t('listProperty.step6Title'));
   header.appendChild(title);
-  const subtitle = createElement('p', 'list-property-step__subtitle', 'How should potential buyers reach you?');
+  const subtitle = createElement('p', 'list-property-step__subtitle', t('listProperty.step6Subtitle'));
   header.appendChild(subtitle);
   step.appendChild(header);
 
@@ -1136,40 +1163,40 @@ function createStep6(data: PropertyListing): HTMLElement {
   const grid = createElement('div', 'list-property-form__grid');
 
   // Owner Name
-  const nameGroup = createFormGroup('ownerName', 'Full Name', 'text');
+  const nameGroup = createFormGroup('ownerName', t('listProperty.fullName'), 'text');
   const nameInput = nameGroup.querySelector('input') as HTMLInputElement;
   nameInput.value = data.ownerName;
-  nameInput.placeholder = 'Your full name';
+  nameInput.placeholder = t('listProperty.fullNamePlaceholder');
   nameInput.required = true;
   grid.appendChild(nameGroup);
 
   // Phone
-  const phoneGroup = createFormGroup('phone', 'Phone Number', 'tel');
+  const phoneGroup = createFormGroup('phone', t('listProperty.phoneNumber'), 'tel');
   const phoneInput = phoneGroup.querySelector('input') as HTMLInputElement;
   phoneInput.value = data.phone;
-  phoneInput.placeholder = '+964 XXX XXX XXXX';
+  phoneInput.placeholder = t('listProperty.phonePlaceholder');
   phoneInput.required = true;
   grid.appendChild(phoneGroup);
 
   // Email
-  const emailGroup = createFormGroup('email', 'Email Address', 'email');
+  const emailGroup = createFormGroup('email', t('listProperty.emailAddress'), 'email');
   const emailInput = emailGroup.querySelector('input') as HTMLInputElement;
   emailInput.value = data.email;
-  emailInput.placeholder = 'your@email.com';
+  emailInput.placeholder = t('listProperty.emailPlaceholder');
   grid.appendChild(emailGroup);
 
   content.appendChild(grid);
 
   // Preferred Contact Method
   const contactMethodGroup = createElement('div', 'list-property-form__group list-property-form__group--full');
-  const contactMethodLabel = createElement('label', 'list-property-form__label', 'Preferred Contact Method');
+  const contactMethodLabel = createElement('label', 'list-property-form__label', t('listProperty.preferredContactMethod'));
   contactMethodGroup.appendChild(contactMethodLabel);
 
   const contactMethodOptions = createElement('div', 'list-property-form__radio-group');
   [
-    { value: 'whatsapp', label: 'WhatsApp' },
-    { value: 'phone', label: 'Phone Call' },
-    { value: 'email', label: 'Email' }
+    { value: 'whatsapp', label: t('listProperty.contactMethods.whatsapp') },
+    { value: 'phone', label: t('listProperty.contactMethods.phone') },
+    { value: 'email', label: t('listProperty.contactMethods.email') }
   ].forEach(option => {
     const radioLabel = createElement('label', 'list-property-form__radio');
 
@@ -1190,14 +1217,14 @@ function createStep6(data: PropertyListing): HTMLElement {
 
   // Available Time
   const timeGroup = createElement('div', 'list-property-form__group list-property-form__group--full');
-  const timeLabel = createElement('label', 'list-property-form__label', 'Best Time to Contact (optional)');
+  const timeLabel = createElement('label', 'list-property-form__label', t('listProperty.bestTimeToContact'));
   timeLabel.setAttribute('for', 'availableTime');
   timeGroup.appendChild(timeLabel);
 
   const timeInput = createElement('input', 'list-property-form__input');
   timeInput.id = 'availableTime';
   timeInput.name = 'availableTime';
-  timeInput.placeholder = 'e.g., Weekdays 9 AM - 6 PM';
+  timeInput.placeholder = t('listProperty.bestTimePlaceholder');
   timeInput.value = data.availableTime;
   timeGroup.appendChild(timeInput);
   content.appendChild(timeGroup);
@@ -1219,15 +1246,15 @@ function validateStep6(data: PropertyListing): { valid: boolean; errors: string[
   const availableTime = (form.querySelector('[name="availableTime"]') as HTMLInputElement)?.value.trim();
 
   if (!ownerName) {
-    errors.push('Please enter your name');
+    errors.push(t('listProperty.errors.enterName'));
   }
 
   if (!phone) {
-    errors.push('Please enter your phone number');
+    errors.push(t('listProperty.errors.enterPhone'));
   }
 
   if (email && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
-    errors.push('Please enter a valid email address');
+    errors.push(t('listProperty.errors.enterValidEmail'));
   }
 
   data.ownerName = ownerName;
@@ -1245,9 +1272,9 @@ function createStep7(data: PropertyListing): HTMLElement {
   const step = createElement('div', 'list-property-step');
 
   const header = createElement('div', 'list-property-step__header');
-  const title = createElement('h2', 'list-property-step__title', 'Review Your Listing');
+  const title = createElement('h2', 'list-property-step__title', t('listProperty.step7Title'));
   header.appendChild(title);
-  const subtitle = createElement('p', 'list-property-step__subtitle', 'Make sure all information is correct before submitting');
+  const subtitle = createElement('p', 'list-property-step__subtitle', t('listProperty.step7Subtitle'));
   header.appendChild(subtitle);
   step.appendChild(header);
 
@@ -1257,52 +1284,57 @@ function createStep7(data: PropertyListing): HTMLElement {
   const reviewSections = createElement('div', 'list-property-review');
 
   // Property Type
-  reviewSections.appendChild(createReviewSection('Property Type', [
-    { label: 'Type', value: PROPERTY_TYPES.find(t => t.id === data.propertyType)?.label || data.propertyType }
+  reviewSections.appendChild(createReviewSection(t('listProperty.propertyType'), [
+    { label: t('listProperty.steps.type'), value: getPropertyTypes().find(pt => pt.id === data.propertyType)?.label || data.propertyType }
   ], 1, data));
 
   // Property Details
   const detailsItems = [
-    { label: 'Area', value: `${data.area} sqm` }
+    { label: t('listProperty.area'), value: `${data.area} sqm` }
   ];
   if (!['land', 'commercial'].includes(data.propertyType)) {
     detailsItems.unshift(
-      { label: 'Bedrooms', value: data.bedrooms.toString() },
-      { label: 'Bathrooms', value: data.bathrooms.toString() }
+      { label: t('listProperty.bedrooms'), value: data.bedrooms.toString() },
+      { label: t('listProperty.bathrooms'), value: data.bathrooms.toString() }
     );
   }
   if (data.propertyType !== 'land') {
     detailsItems.push(
-      { label: 'Year Built', value: data.yearBuilt.toString() },
-      { label: 'Furnishing', value: data.furnishing }
+      { label: t('listProperty.yearBuilt'), value: data.yearBuilt.toString() },
+      { label: t('listProperty.furnishing'), value: data.furnishing }
     );
   }
   if (data.features.length > 0) {
-    detailsItems.push({ label: 'Features', value: data.features.join(', ') });
+    // Map feature IDs to their translated labels
+    const featureLabels = data.features.map(featureId => {
+      const feature = getFeatures().find(f => f.id === featureId);
+      return feature ? feature.label : featureId;
+    });
+    detailsItems.push({ label: t('listProperty.propertyFeatures'), value: featureLabels.join(', ') });
   }
-  reviewSections.appendChild(createReviewSection('Property Details', detailsItems, 2, data));
+  reviewSections.appendChild(createReviewSection(t('listProperty.propertyDetails'), detailsItems, 2, data));
 
   // Location
-  reviewSections.appendChild(createReviewSection('Location', [
-    { label: 'City', value: data.city },
-    { label: 'Neighborhood', value: data.neighborhood },
-    { label: 'Address', value: data.address },
-    ...(data.nearbyLandmarks ? [{ label: 'Landmarks', value: data.nearbyLandmarks }] : [])
+  reviewSections.appendChild(createReviewSection(t('listProperty.location'), [
+    { label: t('listProperty.city'), value: data.city },
+    { label: t('listProperty.neighborhoodDistrict'), value: data.neighborhood },
+    { label: t('listProperty.fullAddress'), value: data.address },
+    ...(data.nearbyLandmarks ? [{ label: t('listProperty.landmarks'), value: data.nearbyLandmarks }] : [])
   ], 3, data));
 
   // Pricing
-  reviewSections.appendChild(createReviewSection('Pricing', [
-    { label: 'Listing Type', value: data.listingType === 'sale' ? 'For Sale' : 'For Rent' },
-    { label: 'Price', value: formatPrice(data.price, data.currency) + (data.negotiable ? ' (Negotiable)' : '') },
-    ...(data.paymentTerms ? [{ label: 'Payment Terms', value: data.paymentTerms }] : [])
+  reviewSections.appendChild(createReviewSection(t('listProperty.pricing'), [
+    { label: t('listProperty.listingType'), value: data.listingType === 'sale' ? t('listProperty.forSale') : t('listProperty.forRent') },
+    { label: t('listProperty.price'), value: formatPrice(data.price, data.currency) + (data.negotiable ? ` (${t('listProperty.negotiable')})` : '') },
+    ...(data.paymentTerms ? [{ label: t('listProperty.paymentTerms'), value: data.paymentTerms }] : [])
   ], 4, data));
 
   // Photos
   const photosSection = createElement('div', 'list-property-review__section');
   const photosHeader = createElement('div', 'list-property-review__header');
-  const photosTitle = createElement('h3', 'list-property-review__title', 'Photos');
+  const photosTitle = createElement('h3', 'list-property-review__title', t('listProperty.photos'));
   photosHeader.appendChild(photosTitle);
-  const photosEdit = createElement('button', 'list-property-review__edit', 'Edit');
+  const photosEdit = createElement('button', 'list-property-review__edit', t('listProperty.edit'));
   photosEdit.type = 'button';
   photosEdit.addEventListener('click', () => goToStep(5, data));
   photosHeader.appendChild(photosEdit);
@@ -1317,23 +1349,23 @@ function createStep7(data: PropertyListing): HTMLElement {
       photosContent.appendChild(img);
     });
     if (data.photos.length > 4) {
-      const more = createElement('span', 'list-property-review__more', `+${data.photos.length - 4} more`);
+      const more = createElement('span', 'list-property-review__more', `+${data.photos.length - 4} ${t('listProperty.more')}`);
       photosContent.appendChild(more);
     }
   } else {
-    const noPhotos = createElement('p', 'list-property-review__empty', 'No photos uploaded');
+    const noPhotos = createElement('p', 'list-property-review__empty', t('listProperty.noPhotosUploaded'));
     photosContent.appendChild(noPhotos);
   }
   photosSection.appendChild(photosContent);
   reviewSections.appendChild(photosSection);
 
   // Contact Info
-  reviewSections.appendChild(createReviewSection('Contact Information', [
-    { label: 'Name', value: data.ownerName },
-    { label: 'Phone', value: data.phone },
-    ...(data.email ? [{ label: 'Email', value: data.email }] : []),
-    { label: 'Preferred Contact', value: data.preferredContact },
-    ...(data.availableTime ? [{ label: 'Available', value: data.availableTime }] : [])
+  reviewSections.appendChild(createReviewSection(t('listProperty.contactInfo'), [
+    { label: t('listProperty.fullName'), value: data.ownerName },
+    { label: t('listProperty.phoneNumber'), value: data.phone },
+    ...(data.email ? [{ label: t('listProperty.emailAddress'), value: data.email }] : []),
+    { label: t('listProperty.preferredContact'), value: data.preferredContact },
+    ...(data.availableTime ? [{ label: t('listProperty.available'), value: data.availableTime }] : [])
   ], 6, data));
 
   content.appendChild(reviewSections);
@@ -1350,13 +1382,13 @@ function createStep7(data: PropertyListing): HTMLElement {
   termsLabel.appendChild(termsCheckbox);
 
   const termsText = createElement('span');
-  termsText.textContent = 'I agree to the ';
-  const termsLink = createElement('a', undefined, 'Terms of Service');
+  termsText.textContent = t('listProperty.termsAgree') + ' ';
+  const termsLink = createElement('a', undefined, t('listProperty.termsOfService'));
   termsLink.href = '/terms';
   termsLink.setAttribute('data-route', '');
   termsText.appendChild(termsLink);
-  termsText.appendChild(document.createTextNode(' and '));
-  const privacyLink = createElement('a', undefined, 'Privacy Policy');
+  termsText.appendChild(document.createTextNode(' ' + t('listProperty.and') + ' '));
+  const privacyLink = createElement('a', undefined, t('listProperty.privacyPolicy'));
   privacyLink.href = '/privacy';
   privacyLink.setAttribute('data-route', '');
   termsText.appendChild(privacyLink);
@@ -1377,7 +1409,7 @@ function createReviewSection(title: string, items: { label: string; value: strin
   const titleEl = createElement('h3', 'list-property-review__title', title);
   header.appendChild(titleEl);
 
-  const editBtn = createElement('button', 'list-property-review__edit', 'Edit');
+  const editBtn = createElement('button', 'list-property-review__edit', t('listProperty.edit'));
   editBtn.type = 'button';
   editBtn.addEventListener('click', () => goToStep(stepNum, data));
   header.appendChild(editBtn);
@@ -1402,7 +1434,7 @@ function validateStep7(data: PropertyListing): { valid: boolean; errors: string[
   const agreeTerms = (form.querySelector('[name="agreeTerms"]') as HTMLInputElement)?.checked;
 
   if (!agreeTerms) {
-    errors.push('Please agree to the Terms of Service and Privacy Policy');
+    errors.push(t('listProperty.errors.agreeTerms'));
   }
 
   return { valid: errors.length === 0, errors };
@@ -1417,28 +1449,28 @@ function createSuccessState(data: PropertyListing): HTMLElement {
   iconWrapper.appendChild(createSVGUse('icon-check'));
   success.appendChild(iconWrapper);
 
-  const title = createElement('h2', 'list-property-success__title', 'Listing Submitted Successfully!');
+  const title = createElement('h2', 'list-property-success__title', t('listProperty.successTitle'));
   success.appendChild(title);
 
   const refNum = createElement('div', 'list-property-success__ref');
-  const refLabel = createElement('span', undefined, 'Reference Number:');
+  const refLabel = createElement('span', undefined, t('listProperty.referenceNumber') + ' ');
   refNum.appendChild(refLabel);
   const refValue = createElement('strong', undefined, data.referenceNumber || '');
   refNum.appendChild(refValue);
   success.appendChild(refNum);
 
   const message = createElement('p', 'list-property-success__message');
-  message.textContent = 'Thank you for submitting your property. Our team will review your listing and contact you within 24-48 hours. Please save your reference number for future inquiries.';
+  message.textContent = t('listProperty.successMessage');
   success.appendChild(message);
 
   const actions = createElement('div', 'list-property-success__actions');
 
-  const homeBtn = createElement('a', 'btn btn--primary', 'Back to Home');
+  const homeBtn = createElement('a', 'btn btn--primary', t('listProperty.backToHome'));
   homeBtn.href = '/';
   homeBtn.setAttribute('data-route', '');
   actions.appendChild(homeBtn);
 
-  const newListingBtn = createElement('button', 'btn btn--outline', 'List Another Property');
+  const newListingBtn = createElement('button', 'btn btn--outline', t('listProperty.listAnotherProperty'));
   newListingBtn.type = 'button';
   newListingBtn.addEventListener('click', () => {
     clearStorage();
@@ -1454,7 +1486,7 @@ function createSuccessState(data: PropertyListing): HTMLElement {
 
   // WhatsApp/Email info
   const contactInfo = createElement('div', 'list-property-success__contact');
-  const contactText = createElement('p', undefined, 'Questions? Contact us:');
+  const contactText = createElement('p', undefined, t('listProperty.questionsContact'));
   contactInfo.appendChild(contactText);
 
   const whatsappLink = createElement('a', 'list-property-success__link', 'WhatsApp: +964 750 792 2138');
@@ -1486,7 +1518,7 @@ function createNavigation(
 
   // Back button
   if (currentStep > 1) {
-    const backBtn = createElement('button', 'btn btn--outline list-property-nav__back', 'Back');
+    const backBtn = createElement('button', 'btn btn--outline list-property-nav__back', t('listProperty.back'));
     backBtn.type = 'button';
     backBtn.addEventListener('click', () => {
       const validation = validateFn(data);
@@ -1507,7 +1539,7 @@ function createNavigation(
   // Next/Submit button
   const nextBtn = createElement('button', 'btn btn--primary list-property-nav__next');
   nextBtn.type = 'button';
-  nextBtn.textContent = isLastStep ? 'Submit Listing' : 'Continue';
+  nextBtn.textContent = isLastStep ? t('listProperty.submitListing') : t('listProperty.continue');
 
   nextBtn.addEventListener('click', () => {
     const validation = validateFn(data);
@@ -1596,10 +1628,10 @@ function createTrustSignals(): HTMLElement {
   const grid = createElement('div', 'list-property-trust__grid');
 
   const signals = [
-    { icon: 'icon-shield', title: 'Free Service', desc: 'No hidden fees or commissions upfront' },
-    { icon: 'icon-clock', title: 'Fast Response', desc: 'We respond within 24-48 hours' },
-    { icon: 'icon-users', title: 'Expert Agents', desc: '23+ years of local market experience' },
-    { icon: 'icon-star', title: 'Wide Reach', desc: 'Thousands of active buyers & renters' }
+    { icon: 'icon-shield', title: t('listProperty.trustSignals.freeService'), desc: t('listProperty.trustSignals.freeServiceDesc') },
+    { icon: 'icon-clock', title: t('listProperty.trustSignals.fastResponse'), desc: t('listProperty.trustSignals.fastResponseDesc') },
+    { icon: 'icon-users', title: t('listProperty.trustSignals.expertAgents'), desc: t('listProperty.trustSignals.expertAgentsDesc') },
+    { icon: 'icon-star', title: t('listProperty.trustSignals.wideReach'), desc: t('listProperty.trustSignals.wideReachDesc') }
   ];
 
   signals.forEach(signal => {

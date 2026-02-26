@@ -8,6 +8,7 @@ import 'leaflet.markercluster';
 import 'leaflet.markercluster/dist/MarkerCluster.css';
 import 'leaflet.markercluster/dist/MarkerCluster.Default.css';
 import { properties, getDisplayPrice, type Property } from '../data/properties';
+import { t } from '../i18n';
 
 // Erbil city center coordinates (used for centering map on Erbil, Kurdistan)
 const ERBIL_CENTER: [number, number] = [36.191113, 44.009167];
@@ -59,24 +60,28 @@ function createCustomIcon(isActive = false): L.DivIcon {
 function createPopupContent(property: Property): string {
   const price = getDisplayPrice(property);
   const specs = property.specs;
+  const bedsText = t('map.bedsShort');
+  const bathsText = t('map.bathsShort');
+  const viewText = t('map.viewProperty');
+  const inText = t('map.propertyIn');
 
   return `
     <div class="property-popup">
       <div class="property-popup__image">
-        <img src="${property.images[0]}" alt="${property.type} - ${property.title} in ${property.location.district}, ${property.location.city}. ${specs.beds > 0 ? specs.beds + ' bedrooms, ' : ''}${specs.sqm} sqm." loading="lazy" />
+        <img src="${property.images[0]}" alt="${property.type} - ${property.title} ${inText} ${property.location.district}, ${property.location.city}. ${specs.beds > 0 ? specs.beds + ' ' + bedsText + ', ' : ''}${specs.sqm} m²." loading="lazy" />
         <span class="property-popup__type">${property.type}</span>
       </div>
       <div class="property-popup__content">
         <h3 class="property-popup__title">${property.title}</h3>
         <p class="property-popup__location">${property.location.district}, ${property.location.city}</p>
         <div class="property-popup__specs">
-          ${specs.beds > 0 ? `<span>${specs.beds} Beds</span>` : ''}
-          ${specs.baths > 0 ? `<span>${specs.baths} Baths</span>` : ''}
+          ${specs.beds > 0 ? `<span>${specs.beds} ${bedsText}</span>` : ''}
+          ${specs.baths > 0 ? `<span>${specs.baths} ${bathsText}</span>` : ''}
           <span>${specs.sqm} m²</span>
         </div>
         <div class="property-popup__footer">
           <span class="property-popup__price">${price}</span>
-          <a href="/properties/${property.id}" class="property-popup__btn" data-route>View</a>
+          <a href="/properties/${property.id}" class="property-popup__btn" data-route>${viewText}</a>
         </div>
       </div>
     </div>

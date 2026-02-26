@@ -17,6 +17,7 @@ import {
   generateBreadcrumbSchema,
   injectSchemaGraph,
 } from '../seo/schema';
+import { t } from '../i18n';
 
 // ─── Helper Functions ─────────────────────────────────────────────────────
 function createElement<K extends keyof HTMLElementTagNameMap>(
@@ -75,7 +76,7 @@ function createGalleryCard(image: GalleryImage, index: number): HTMLElement {
   location.setAttribute('aria-hidden', 'true');
   overlay.appendChild(location);
 
-  const viewBtn = createElement('button', 'gallery-card__view-btn', 'View Full Size');
+  const viewBtn = createElement('button', 'gallery-card__view-btn', t('gallery.viewFullSize'));
   viewBtn.setAttribute('aria-label', `View ${image.title} in full size`);
   viewBtn.addEventListener('click', (e) => {
     e.preventDefault();
@@ -133,7 +134,7 @@ function openLightbox(index: number): void {
 
     // Close button
     const closeBtn = createElement('button', 'gallery-lightbox__close');
-    closeBtn.setAttribute('aria-label', 'Close lightbox');
+    closeBtn.setAttribute('aria-label', t('gallery.closeLightbox'));
     closeBtn.textContent = '\u00D7'; // Times symbol
     closeBtn.addEventListener('click', closeLightbox);
     content.appendChild(closeBtn);
@@ -330,11 +331,9 @@ export function renderGalleryPage(): DocumentFragment {
   // Header section
   const header = createElement('div', 'gallery-page__header');
   const title = createElement('h1', 'gallery-page__title');
-  title.textContent = 'Property Erbil Gallery — ';
-  const em = createElement('em', undefined, 'Real Estate Erbil Photos');
-  title.appendChild(em);
+  title.textContent = t('gallery.pageTitle');
   header.appendChild(title);
-  const subtitle = createElement('p', 'gallery-page__subtitle', 'Browse stunning photos of luxury homes Kurdistan, villas Erbil Iraq, apartments Erbil Iraq, and penthouse Erbil. High-quality images showcasing the finest real estate Erbil from best real estate agent Erbil. Discover houses for sale Erbil and property Erbil in the Erbil property market.');
+  const subtitle = createElement('p', 'gallery-page__subtitle', t('gallery.pageSubtitle'));
   header.appendChild(subtitle);
   container.appendChild(header);
 

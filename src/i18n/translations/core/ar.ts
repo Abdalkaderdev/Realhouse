@@ -811,6 +811,7 @@ export const ar: CoreTranslations = {
     viewAllProperties: 'عرض جميع العقارات',
     backToProjects: 'العودة إلى المشاريع',
     completion: 'الإنجاز',
+    keyMilestones: 'المراحل الرئيسية',
   },
 
   propertyDetail: {
@@ -1550,5 +1551,87 @@ export const ar: CoreTranslations = {
     marketReports: 'تقارير السوق',
     // Stats
     stable: 'مستقر',
+  },
+
+  agentProfile: {
+    // Breadcrumbs
+    home: 'الرئيسية',
+    ourAgents: 'وكلاؤنا',
+    // 404
+    agentNotFound: 'الوكيل غير موجود',
+    agentNotFoundMessage: 'الوكيل الذي تبحث عنه غير موجود أو تمت إزالته.',
+    viewAllAgents: 'عرض جميع الوكلاء',
+    // Badge
+    leadership: 'قيادة',
+    // Stats
+    yearsExperience: 'سنوات الخبرة',
+    propertiesSold: 'العقارات المباعة',
+    totalSales: 'إجمالي المبيعات',
+    activeListings: 'العقارات النشطة',
+    yearsWithRealHouse: 'سنوات مع ريل هاوس',
+    languagesSpoken: 'اللغات المتحدث بها',
+    // Labels
+    languages: 'اللغات:',
+    // Buttons
+    callNow: 'اتصل الآن',
+    whatsApp: 'واتساب',
+    email: 'البريد الإلكتروني',
+    sendMessage: 'إرسال رسالة',
+    backToAllAgents: 'العودة لجميع الوكلاء',
+    viewAllProperties: 'عرض جميع العقارات',
+    // Section titles
+    about: 'عن {{name}}',
+    specializations: 'التخصصات',
+    featuredAreas: 'المناطق المميزة',
+    certificationsAwards: 'الشهادات والجوائز',
+    certifications: 'الشهادات',
+    awards: 'الجوائز',
+    clientReviews: 'آراء العملاء',
+    listings: 'عقارات {{name}}',
+    contactInformation: 'معلومات الاتصال',
+    connectOnSocialMedia: 'تواصل على وسائل التواصل الاجتماعي',
+    performanceStats: 'إحصائيات الأداء',
+    // Social
+    linkedin: 'لينكد إن',
+    instagram: 'انستغرام',
+    facebook: 'فيسبوك',
+    // Form
+    yourName: 'اسمك',
+    enterYourName: 'أدخل اسمك الكامل',
+    phoneNumber: 'رقم الهاتف',
+    phonePlaceholder: '+964 XXX XXX XXXX',
+    emailLabel: 'البريد الإلكتروني',
+    emailPlaceholder: 'your@email.com',
+    message: 'الرسالة',
+    messagePlaceholder: 'مرحباً {{name}}، أنا مهتم بـ...',
+    // Rating
+    outOf5: '{{rating}} من 5',
+    reviews: '{{count}} تقييم',
+    // Property
+    priceOnRequest: 'السعر عند الطلب',
+    beds: 'غرف',
+    baths: 'حمامات',
+  },
+
+  compareProjects: {
+    home: 'الرئيسية',
+    projects: 'المشاريع',
+    compareProjects: 'مقارنة المشاريع',
+    compareDevelopmentProjects: 'مقارنة مشاريع التطوير',
+    comparingProjects: 'مقارنة {{count}} مشروع جنباً إلى جنب. راجع الأسعار والمرافق والتوافر للعثور على استثمارك المثالي.',
+    compareUpTo3: 'قارن حتى 3 مشاريع تطوير جنباً إلى جنب لاتخاذ قرارات استثمارية مدروسة.',
+    clearAll: 'مسح الكل',
+    contactOurTeam: 'تواصل مع فريقنا',
+    browseMoreProjects: 'تصفح المزيد من المشاريع',
+    backToProjects: 'العودة للمشاريع',
+    needHelpDeciding: 'تحتاج مساعدة في اتخاذ القرار؟',
+    expertHelpText: 'يمكن لخبراء العقارات لدينا مساعدتك في اختيار مشروع التطوير المثالي بناءً على أهدافك الاستثمارية وميزانيتك.',
+  },
+
+  gallery: {
+    viewFullSize: 'عرض الحجم الكامل',
+    closeLightbox: 'إغلاق',
+    pageTitle: 'معرض عقارات أربيل',
+    pageSubtitle: 'تصفح صور مذهلة للمنازل الفاخرة في كردستان، فلل أربيل العراق، شقق أربيل العراق، وبنتهاوس أربيل. صور عالية الجودة تعرض أفضل العقارات في أربيل.',
   },
 };

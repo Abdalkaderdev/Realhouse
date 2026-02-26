@@ -14,6 +14,7 @@ import {
   type ServiceCategory,
   type ServiceProvider
 } from '../data/services-directory';
+import { t } from '../i18n';
 
 const BASE_URL = 'https://realhouseiq.com';
 
@@ -115,11 +116,13 @@ function createCategoryCard(category: ServiceCategory): HTMLElement {
   // Provider count
   const providers = getProvidersByCategory(category.id);
   const providerCount = createElement('span', 'services-dir__provider-count');
-  providerCount.textContent = `${providers.length} provider${providers.length !== 1 ? 's' : ''} available`;
+  providerCount.textContent = providers.length === 1
+    ? t('servicesDirectory.providerCount', { count: providers.length })
+    : t('servicesDirectory.providerCountPlural', { count: providers.length });
   content.appendChild(providerCount);
 
   // CTA
-  const cta = createElement('a', 'services-dir__category-cta', 'View Providers');
+  const cta = createElement('a', 'services-dir__category-cta', t('servicesDirectory.viewProviders'));
   cta.href = `/services-directory/${category.slug}`;
   cta.setAttribute('data-route', '');
   cta.appendChild(createSVGUse('icon-arrow-right'));
@@ -146,13 +149,13 @@ function createProviderCard(provider: ServiceProvider): HTMLElement {
   header.appendChild(img);
 
   if (provider.featured) {
-    const badge = createElement('span', 'services-dir__featured-badge', 'Featured');
+    const badge = createElement('span', 'services-dir__featured-badge', t('servicesDirectory.featured'));
     header.appendChild(badge);
   }
   if (provider.verified) {
     const verified = createElement('span', 'services-dir__verified-badge');
     verified.appendChild(createSVGUse('icon-check'));
-    verified.appendChild(document.createTextNode('Verified'));
+    verified.appendChild(document.createTextNode(t('servicesDirectory.verified')));
     header.appendChild(verified);
   }
   card.appendChild(header);
@@ -171,7 +174,7 @@ function createProviderCard(provider: ServiceProvider): HTMLElement {
     stars.appendChild(createSVGUse(starIcon));
   }
   rating.appendChild(stars);
-  const ratingText = createElement('span', undefined, `${provider.rating} (${provider.reviewCount} reviews)`);
+  const ratingText = createElement('span', undefined, t('servicesDirectory.reviewCount', { rating: provider.rating, count: provider.reviewCount }));
   rating.appendChild(ratingText);
   content.appendChild(rating);
 
@@ -186,14 +189,18 @@ function createProviderCard(provider: ServiceProvider): HTMLElement {
   });
   if (provider.services.length > 3) {
     const more = createElement('span', 'services-dir__service-tag services-dir__service-tag--more');
-    more.textContent = `+${provider.services.length - 3} more`;
+    more.textContent = t('servicesDirectory.moreServices', { count: provider.services.length - 3 });
     services.appendChild(more);
   }
   content.appendChild(services);
 
   // Price range
   if (provider.priceRange) {
-    const priceLabels = { budget: 'Budget-friendly', 'mid-range': 'Mid-range', premium: 'Premium' };
+    const priceLabels = {
+      budget: t('servicesDirectory.priceBudget'),
+      'mid-range': t('servicesDirectory.priceMidRange'),
+      premium: t('servicesDirectory.pricePremium')
+    };
     const price = createElement('div', 'services-dir__provider-price');
     price.textContent = priceLabels[provider.priceRange];
     content.appendChild(price);
@@ -204,13 +211,13 @@ function createProviderCard(provider: ServiceProvider): HTMLElement {
   // Contact buttons
   const actions = createElement('div', 'services-dir__provider-actions');
 
-  const phoneBtn = createElement('a', 'btn btn--primary btn--sm', 'Call Now');
+  const phoneBtn = createElement('a', 'btn btn--primary btn--sm', t('servicesDirectory.callNow'));
   phoneBtn.href = `tel:${provider.contact.phone.replace(/\s/g, '')}`;
   phoneBtn.appendChild(createSVGUse('icon-phone'));
   actions.appendChild(phoneBtn);
 
   if (provider.contact.whatsapp) {
-    const whatsappBtn = createElement('a', 'btn btn--success btn--sm', 'WhatsApp');
+    const whatsappBtn = createElement('a', 'btn btn--success btn--sm', t('servicesDirectory.whatsApp'));
     whatsappBtn.href = `https://wa.me/${provider.contact.whatsapp.replace(/[^0-9]/g, '')}`;
     whatsappBtn.target = '_blank';
     whatsappBtn.rel = 'noopener noreferrer';
@@ -242,10 +249,10 @@ function createQuoteSuccessMessage(): HTMLElement {
 
   successDiv.appendChild(iconSvg);
 
-  const title = createElement('h3', undefined, 'Request Submitted!');
+  const title = createElement('h3', undefined, t('servicesDirectory.requestSubmittedTitle'));
   successDiv.appendChild(title);
 
-  const text = createElement('p', undefined, 'Thank you for your interest. Our team will connect you with verified providers within 24 hours.');
+  const text = createElement('p', undefined, t('servicesDirectory.requestSubmittedText'));
   successDiv.appendChild(text);
 
   return successDiv;
@@ -255,11 +262,11 @@ function createQuoteSuccessMessage(): HTMLElement {
 function createQuoteForm(category: ServiceCategory): HTMLElement {
   const form = createElement('div', 'services-dir__quote-form');
 
-  const title = createElement('h3', 'services-dir__quote-title', 'Request a Free Quote');
+  const title = createElement('h3', 'services-dir__quote-title', t('servicesDirectory.requestQuoteTitle'));
   form.appendChild(title);
 
   const description = createElement('p', 'services-dir__quote-desc');
-  description.textContent = `Fill out the form below and we'll connect you with verified ${category.title.toLowerCase()} providers in Erbil.`;
+  description.textContent = t('servicesDirectory.requestQuoteDesc', { category: category.title.toLowerCase() });
   form.appendChild(description);
 
   const formElement = createElement('form');
@@ -267,57 +274,65 @@ function createQuoteForm(category: ServiceCategory): HTMLElement {
 
   // Name field
   const nameGroup = createElement('div', 'form-group');
-  const nameLabel = createElement('label', undefined, 'Full Name');
+  const nameLabel = createElement('label', undefined, t('servicesDirectory.fullNameLabel'));
   nameLabel.setAttribute('for', 'quote-name');
   const nameInput = createElement('input');
   nameInput.type = 'text';
   nameInput.id = 'quote-name';
   nameInput.name = 'name';
   nameInput.required = true;
-  nameInput.placeholder = 'Your name';
+  nameInput.placeholder = t('servicesDirectory.fullNamePlaceholder');
   nameGroup.appendChild(nameLabel);
   nameGroup.appendChild(nameInput);
   formElement.appendChild(nameGroup);
 
   // Phone field
   const phoneGroup = createElement('div', 'form-group');
-  const phoneLabel = createElement('label', undefined, 'Phone Number');
+  const phoneLabel = createElement('label', undefined, t('servicesDirectory.phoneLabel'));
   phoneLabel.setAttribute('for', 'quote-phone');
   const phoneInput = createElement('input');
   phoneInput.type = 'tel';
   phoneInput.id = 'quote-phone';
   phoneInput.name = 'phone';
   phoneInput.required = true;
-  phoneInput.placeholder = '+964 xxx xxx xxxx';
+  phoneInput.placeholder = t('servicesDirectory.phonePlaceholder');
   phoneGroup.appendChild(phoneLabel);
   phoneGroup.appendChild(phoneInput);
   formElement.appendChild(phoneGroup);
 
   // Email field
   const emailGroup = createElement('div', 'form-group');
-  const emailLabel = createElement('label', undefined, 'Email Address');
+  const emailLabel = createElement('label', undefined, t('servicesDirectory.emailLabel'));
   emailLabel.setAttribute('for', 'quote-email');
   const emailInput = createElement('input');
   emailInput.type = 'email';
   emailInput.id = 'quote-email';
   emailInput.name = 'email';
-  emailInput.placeholder = 'your@email.com (optional)';
+  emailInput.placeholder = t('servicesDirectory.emailPlaceholder');
   emailGroup.appendChild(emailLabel);
   emailGroup.appendChild(emailInput);
   formElement.appendChild(emailGroup);
 
   // Property type field
   const propertyGroup = createElement('div', 'form-group');
-  const propertyLabel = createElement('label', undefined, 'Property Type');
+  const propertyLabel = createElement('label', undefined, t('servicesDirectory.propertyTypeLabel'));
   propertyLabel.setAttribute('for', 'quote-property');
   const propertySelect = createElement('select');
   propertySelect.id = 'quote-property';
   propertySelect.name = 'property_type';
 
-  const propertyOptions = ['Select property type', 'Apartment', 'Villa', 'Townhouse', 'Office', 'Commercial', 'Other'];
+  const propertyOptions = [
+    { label: t('servicesDirectory.selectPropertyType'), value: '' },
+    { label: t('servicesDirectory.propertyApartment'), value: 'apartment' },
+    { label: t('servicesDirectory.propertyVilla'), value: 'villa' },
+    { label: t('servicesDirectory.propertyTownhouse'), value: 'townhouse' },
+    { label: t('servicesDirectory.propertyOffice'), value: 'office' },
+    { label: t('servicesDirectory.propertyCommercial'), value: 'commercial' },
+    { label: t('servicesDirectory.propertyOther'), value: 'other' }
+  ];
   propertyOptions.forEach(opt => {
-    const option = createElement('option', undefined, opt);
-    option.value = opt === 'Select property type' ? '' : opt.toLowerCase();
+    const option = createElement('option', undefined, opt.label);
+    option.value = opt.value;
     propertySelect.appendChild(option);
   });
   propertyGroup.appendChild(propertyLabel);
@@ -326,13 +341,13 @@ function createQuoteForm(category: ServiceCategory): HTMLElement {
 
   // Message field
   const messageGroup = createElement('div', 'form-group');
-  const messageLabel = createElement('label', undefined, 'Project Details');
+  const messageLabel = createElement('label', undefined, t('servicesDirectory.projectDetailsLabel'));
   messageLabel.setAttribute('for', 'quote-message');
   const messageTextarea = createElement('textarea');
   messageTextarea.id = 'quote-message';
   messageTextarea.name = 'message';
   messageTextarea.rows = 4;
-  messageTextarea.placeholder = 'Describe your project or requirements...';
+  messageTextarea.placeholder = t('servicesDirectory.projectDetailsPlaceholder');
   messageGroup.appendChild(messageLabel);
   messageGroup.appendChild(messageTextarea);
   formElement.appendChild(messageGroup);
@@ -345,7 +360,7 @@ function createQuoteForm(category: ServiceCategory): HTMLElement {
   formElement.appendChild(categoryInput);
 
   // Submit button
-  const submitBtn = createElement('button', 'btn btn--primary btn--block', 'Submit Request');
+  const submitBtn = createElement('button', 'btn btn--primary btn--block', t('servicesDirectory.submitRequest'));
   submitBtn.type = 'submit';
   formElement.appendChild(submitBtn);
 
@@ -383,27 +398,27 @@ export function renderServicesDirectoryPage(): DocumentFragment {
   const hero = createElement('section', 'services-dir__hero');
   const heroContainer = createElement('div', 'container');
 
-  const heroBadge = createElement('span', 'services-dir__badge', 'Home Services Directory');
+  const heroBadge = createElement('span', 'services-dir__badge', t('servicesDirectory.badge'));
   heroContainer.appendChild(heroBadge);
 
   const heroTitle = createElement('h1', 'services-dir__title');
-  heroTitle.textContent = 'Find Trusted Home Service Providers in ';
-  const heroTitleEm = createElement('em', undefined, 'Erbil');
+  heroTitle.textContent = t('servicesDirectory.heroTitle');
+  const heroTitleEm = createElement('em', undefined, t('servicesDirectory.heroTitleLocation'));
   heroTitle.appendChild(heroTitleEm);
   heroContainer.appendChild(heroTitle);
 
   const heroSubtitle = createElement('p', 'services-dir__subtitle');
-  heroSubtitle.textContent = 'Connect with verified professionals for interior design, cleaning, electrical, plumbing, landscaping, and more. All providers vetted by Real House IQ.';
+  heroSubtitle.textContent = t('servicesDirectory.heroSubtitle');
   heroContainer.appendChild(heroSubtitle);
 
   // Search bar placeholder
   const searchWrapper = createElement('div', 'services-dir__search');
   const searchInput = createElement('input');
   searchInput.type = 'text';
-  searchInput.placeholder = 'Search services or providers...';
+  searchInput.placeholder = t('servicesDirectory.searchPlaceholder');
   searchInput.className = 'services-dir__search-input';
   searchWrapper.appendChild(searchInput);
-  const searchBtn = createElement('button', 'btn btn--primary', 'Search');
+  const searchBtn = createElement('button', 'btn btn--primary', t('servicesDirectory.searchButton'));
   searchWrapper.appendChild(searchBtn);
   heroContainer.appendChild(searchWrapper);
 
@@ -415,10 +430,10 @@ export function renderServicesDirectoryPage(): DocumentFragment {
   const categoriesContainer = createElement('div', 'container');
 
   const categoriesHeader = createElement('div', 'services-dir__section-header');
-  const categoriesTitle = createElement('h2', 'services-dir__section-title', 'Service Categories');
+  const categoriesTitle = createElement('h2', 'services-dir__section-title', t('servicesDirectory.serviceCategoriesTitle'));
   categoriesHeader.appendChild(categoriesTitle);
   const categoriesSubtitle = createElement('p', 'services-dir__section-subtitle');
-  categoriesSubtitle.textContent = 'Browse our comprehensive directory of home services for property owners in Kurdistan';
+  categoriesSubtitle.textContent = t('servicesDirectory.serviceCategoriesSubtitle');
   categoriesHeader.appendChild(categoriesSubtitle);
   categoriesContainer.appendChild(categoriesHeader);
 
@@ -438,10 +453,10 @@ export function renderServicesDirectoryPage(): DocumentFragment {
     const featuredContainer = createElement('div', 'container');
 
     const featuredHeader = createElement('div', 'services-dir__section-header');
-    const featuredTitle = createElement('h2', 'services-dir__section-title', 'Featured Service Providers');
+    const featuredTitle = createElement('h2', 'services-dir__section-title', t('servicesDirectory.featuredProvidersTitle'));
     featuredHeader.appendChild(featuredTitle);
     const featuredSubtitle = createElement('p', 'services-dir__section-subtitle');
-    featuredSubtitle.textContent = 'Top-rated professionals trusted by Erbil property owners';
+    featuredSubtitle.textContent = t('servicesDirectory.featuredProvidersSubtitle');
     featuredHeader.appendChild(featuredSubtitle);
     featuredContainer.appendChild(featuredHeader);
 
@@ -460,17 +475,17 @@ export function renderServicesDirectoryPage(): DocumentFragment {
   const whyContainer = createElement('div', 'container');
 
   const whyHeader = createElement('div', 'services-dir__section-header');
-  const whyTitle = createElement('h2', 'services-dir__section-title', 'Why Use Our Services Directory?');
+  const whyTitle = createElement('h2', 'services-dir__section-title', t('servicesDirectory.whyUseTitle'));
   whyHeader.appendChild(whyTitle);
   whyContainer.appendChild(whyHeader);
 
   const whyGrid = createElement('div', 'services-dir__why-grid');
 
   const whyItems = [
-    { icon: 'icon-shield', title: 'Verified Providers', desc: 'All service providers are vetted and verified for quality and reliability.' },
-    { icon: 'icon-star', title: 'Ratings & Reviews', desc: 'Real reviews from property owners help you choose the best providers.' },
-    { icon: 'icon-check', title: 'Free Quotes', desc: 'Request free quotes from multiple providers to compare prices.' },
-    { icon: 'icon-phone', title: 'Direct Contact', desc: 'Connect directly with providers via phone or WhatsApp instantly.' }
+    { icon: 'icon-shield', title: t('servicesDirectory.whyVerifiedTitle'), desc: t('servicesDirectory.whyVerifiedDesc') },
+    { icon: 'icon-star', title: t('servicesDirectory.whyRatingsTitle'), desc: t('servicesDirectory.whyRatingsDesc') },
+    { icon: 'icon-check', title: t('servicesDirectory.whyQuotesTitle'), desc: t('servicesDirectory.whyQuotesDesc') },
+    { icon: 'icon-phone', title: t('servicesDirectory.whyContactTitle'), desc: t('servicesDirectory.whyContactDesc') }
   ];
 
   whyItems.forEach(item => {
@@ -494,14 +509,14 @@ export function renderServicesDirectoryPage(): DocumentFragment {
   const ctaContainer = createElement('div', 'container');
   const ctaContent = createElement('div', 'services-dir__cta-content');
 
-  const ctaTitle = createElement('h2', 'services-dir__cta-title', 'Are You a Service Provider?');
+  const ctaTitle = createElement('h2', 'services-dir__cta-title', t('servicesDirectory.providerCtaTitle'));
   ctaContent.appendChild(ctaTitle);
 
   const ctaText = createElement('p', 'services-dir__cta-text');
-  ctaText.textContent = 'Join our directory and connect with thousands of property owners in Erbil looking for quality services.';
+  ctaText.textContent = t('servicesDirectory.providerCtaText');
   ctaContent.appendChild(ctaText);
 
-  const ctaBtn = createElement('a', 'btn btn--primary btn--lg', 'List Your Business');
+  const ctaBtn = createElement('a', 'btn btn--primary btn--lg', t('servicesDirectory.listYourBusiness'));
   ctaBtn.href = '/contact';
   ctaBtn.setAttribute('data-route', '');
   ctaContent.appendChild(ctaBtn);
@@ -525,11 +540,11 @@ export function renderServiceCategoryPage(slug: string): DocumentFragment {
     const container = createElement('div', 'container');
 
     const errorContent = createElement('div', 'services-dir__error');
-    const errorTitle = createElement('h1', undefined, 'Service Category Not Found');
+    const errorTitle = createElement('h1', undefined, t('servicesDirectory.categoryNotFoundTitle'));
     errorContent.appendChild(errorTitle);
-    const errorText = createElement('p', undefined, 'The service category you\'re looking for doesn\'t exist or has been moved.');
+    const errorText = createElement('p', undefined, t('servicesDirectory.categoryNotFoundText'));
     errorContent.appendChild(errorText);
-    const backLink = createElement('a', 'btn btn--primary', 'View All Services');
+    const backLink = createElement('a', 'btn btn--primary', t('servicesDirectory.viewAllServices'));
     backLink.href = '/services-directory';
     backLink.setAttribute('data-route', '');
     errorContent.appendChild(backLink);
@@ -559,14 +574,14 @@ export function renderServiceCategoryPage(slug: string): DocumentFragment {
   const breadcrumbList = createElement('ol', 'breadcrumb');
 
   const homeCrumb = createElement('li', 'breadcrumb__item');
-  const homeLink = createElement('a', undefined, 'Home');
+  const homeLink = createElement('a', undefined, t('servicesDirectory.breadcrumbHome'));
   homeLink.href = '/';
   homeLink.setAttribute('data-route', '');
   homeCrumb.appendChild(homeLink);
   breadcrumbList.appendChild(homeCrumb);
 
   const directoryCrumb = createElement('li', 'breadcrumb__item');
-  const directoryLink = createElement('a', undefined, 'Services Directory');
+  const directoryLink = createElement('a', undefined, t('servicesDirectory.breadcrumbServicesDirectory'));
   directoryLink.href = '/services-directory';
   directoryLink.setAttribute('data-route', '');
   directoryCrumb.appendChild(directoryLink);
@@ -611,7 +626,7 @@ export function renderServiceCategoryPage(slug: string): DocumentFragment {
 
   // Why You Need This Section
   const whyNeedSection = createElement('div', 'services-dir__why-need');
-  const whyNeedTitle = createElement('h2', 'services-dir__section-title', `Why You Need ${category.title}`);
+  const whyNeedTitle = createElement('h2', 'services-dir__section-title', t('servicesDirectory.whyYouNeedTitle', { category: category.title }));
   whyNeedSection.appendChild(whyNeedTitle);
 
   const whyNeedList = createElement('ul', 'services-dir__why-list');
@@ -626,7 +641,7 @@ export function renderServiceCategoryPage(slug: string): DocumentFragment {
 
   // Benefits Section
   const benefitsSection = createElement('div', 'services-dir__benefits');
-  const benefitsTitle = createElement('h2', 'services-dir__section-title', 'Benefits of Professional Service');
+  const benefitsTitle = createElement('h2', 'services-dir__section-title', t('servicesDirectory.benefitsTitle'));
   benefitsSection.appendChild(benefitsTitle);
 
   const benefitsGrid = createElement('div', 'services-dir__benefits-grid');
@@ -643,7 +658,7 @@ export function renderServiceCategoryPage(slug: string): DocumentFragment {
   const providers = getProvidersByCategory(category.id);
   if (providers.length > 0) {
     const providersSection = createElement('div', 'services-dir__providers-section');
-    const providersTitle = createElement('h2', 'services-dir__section-title', `Recommended ${category.title} Providers in Erbil`);
+    const providersTitle = createElement('h2', 'services-dir__section-title', t('servicesDirectory.recommendedProvidersTitle', { category: category.title }));
     providersSection.appendChild(providersTitle);
 
     const providersGrid = createElement('div', 'services-dir__providers-grid');
@@ -655,17 +670,17 @@ export function renderServiceCategoryPage(slug: string): DocumentFragment {
   } else {
     // Placeholder for no providers
     const noProviders = createElement('div', 'services-dir__no-providers');
-    const noProvidersTitle = createElement('h2', 'services-dir__section-title', 'Service Providers Coming Soon');
+    const noProvidersTitle = createElement('h2', 'services-dir__section-title', t('servicesDirectory.noProvidersTitle'));
     noProviders.appendChild(noProvidersTitle);
     const noProvidersText = createElement('p');
-    noProvidersText.textContent = 'We are currently building our network of verified providers for this category. Submit a quote request and we\'ll connect you with trusted professionals.';
+    noProvidersText.textContent = t('servicesDirectory.noProvidersText');
     noProviders.appendChild(noProvidersText);
     article.appendChild(noProviders);
   }
 
   // FAQs Section
   const faqSection = createElement('div', 'services-dir__faqs');
-  const faqTitle = createElement('h2', 'services-dir__section-title', 'Frequently Asked Questions');
+  const faqTitle = createElement('h2', 'services-dir__section-title', t('servicesDirectory.faqTitle'));
   faqSection.appendChild(faqTitle);
 
   const faqList = createElement('div', 'services-dir__faq-list');
@@ -704,7 +719,7 @@ export function renderServiceCategoryPage(slug: string): DocumentFragment {
   const relatedCategories = getRelatedCategories(category);
   if (relatedCategories.length > 0) {
     const relatedSection = createElement('div', 'services-dir__related');
-    const relatedTitle = createElement('h3', 'services-dir__related-title', 'Related Services');
+    const relatedTitle = createElement('h3', 'services-dir__related-title', t('servicesDirectory.relatedServicesTitle'));
     relatedSection.appendChild(relatedTitle);
 
     const relatedList = createElement('div', 'services-dir__related-list');
@@ -730,9 +745,9 @@ export function renderServiceCategoryPage(slug: string): DocumentFragment {
 
   // Contact Card
   const contactCard = createElement('div', 'services-dir__contact-card');
-  const contactTitle = createElement('h3', undefined, 'Need Help?');
+  const contactTitle = createElement('h3', undefined, t('servicesDirectory.needHelpTitle'));
   contactCard.appendChild(contactTitle);
-  const contactText = createElement('p', undefined, 'Our team can help you find the right service provider for your needs.');
+  const contactText = createElement('p', undefined, t('servicesDirectory.needHelpText'));
   contactCard.appendChild(contactText);
   const contactPhone = createElement('a', 'services-dir__contact-phone');
   contactPhone.href = 'tel:+9647507922138';
@@ -751,16 +766,16 @@ export function renderServiceCategoryPage(slug: string): DocumentFragment {
   const bottomCtaContainer = createElement('div', 'container');
   const bottomCtaContent = createElement('div', 'services-dir__bottom-cta-content');
 
-  const bottomCtaTitle = createElement('h2', undefined, `Need ${category.title}?`);
+  const bottomCtaTitle = createElement('h2', undefined, t('servicesDirectory.needCategoryServiceTitle', { category: category.title }));
   bottomCtaContent.appendChild(bottomCtaTitle);
-  const bottomCtaText = createElement('p', undefined, 'Get connected with verified providers today.');
+  const bottomCtaText = createElement('p', undefined, t('servicesDirectory.getConnectedText'));
   bottomCtaContent.appendChild(bottomCtaText);
 
   const bottomCtaBtns = createElement('div', 'services-dir__bottom-cta-btns');
-  const bottomCtaBtn1 = createElement('a', 'btn btn--primary btn--lg', 'Request Free Quote');
+  const bottomCtaBtn1 = createElement('a', 'btn btn--primary btn--lg', t('servicesDirectory.requestFreeQuote'));
   bottomCtaBtn1.href = '#quote-form';
   bottomCtaBtns.appendChild(bottomCtaBtn1);
-  const bottomCtaBtn2 = createElement('a', 'btn btn--ghost btn--lg', 'View All Services');
+  const bottomCtaBtn2 = createElement('a', 'btn btn--ghost btn--lg', t('servicesDirectory.viewAllServices'));
   bottomCtaBtn2.href = '/services-directory';
   bottomCtaBtn2.setAttribute('data-route', '');
   bottomCtaBtns.appendChild(bottomCtaBtn2);

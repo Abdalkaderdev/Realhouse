@@ -14,6 +14,7 @@ import {
   createBreadcrumbs,
   injectBreadcrumbSchema
 } from '../components/internal-linking';
+import { t } from '../i18n';
 
 // ─── Helper Functions ─────────────────────────────────────────────────────
 function createElement<K extends keyof HTMLElementTagNameMap>(
@@ -39,8 +40,8 @@ function createSVGUse(iconId: string): SVGSVGElement {
 // ─── Breadcrumb Helpers ─────────────────────────────────────────────────────
 function getAgentDetailBreadcrumbs(agent: Agent) {
   return [
-    { name: 'Home', url: '/' },
-    { name: 'Our Agents', url: '/agents' },
+    { name: t('agentProfile.home'), url: '/' },
+    { name: t('agentProfile.ourAgents'), url: '/agents' },
     { name: agent.name, url: `/agents/${agent.slug}` }
   ];
 }
@@ -123,15 +124,15 @@ function createCompactPropertyCard(property: Property): HTMLElement {
   content.appendChild(location);
 
   const price = createElement('p', 'agent-profile__property-price');
-  price.textContent = property.price > 0 ? `$${property.price.toLocaleString()}` : 'Price on Request';
+  price.textContent = property.price > 0 ? `$${property.price.toLocaleString()}` : t('agentProfile.priceOnRequest');
   content.appendChild(price);
 
   const specs = createElement('div', 'agent-profile__property-specs');
   if (property.specs.beds > 0) {
-    const beds = createElement('span', undefined, `${property.specs.beds} Beds`);
+    const beds = createElement('span', undefined, `${property.specs.beds} ${t('agentProfile.beds')}`);
     specs.appendChild(beds);
   }
-  const baths = createElement('span', undefined, `${property.specs.baths} Baths`);
+  const baths = createElement('span', undefined, `${property.specs.baths} ${t('agentProfile.baths')}`);
   specs.appendChild(baths);
   const sqm = createElement('span', undefined, `${property.specs.sqm} m\u00B2`);
   specs.appendChild(sqm);
@@ -156,13 +157,13 @@ export function renderAgentProfilePage(slug: string): DocumentFragment {
     const container = createElement('div', 'container');
 
     const notFound = createElement('div', 'agent-profile-page__not-found');
-    const title = createElement('h1', undefined, 'Agent Not Found');
+    const title = createElement('h1', undefined, t('agentProfile.agentNotFound'));
     notFound.appendChild(title);
 
-    const text = createElement('p', undefined, 'The agent you are looking for does not exist or has been removed.');
+    const text = createElement('p', undefined, t('agentProfile.agentNotFoundMessage'));
     notFound.appendChild(text);
 
-    const backLink = createElement('a', 'btn btn--primary', 'View All Agents');
+    const backLink = createElement('a', 'btn btn--primary', t('agentProfile.viewAllAgents'));
     backLink.href = '/agents';
     backLink.setAttribute('data-route', '');
     notFound.appendChild(backLink);
@@ -194,7 +195,7 @@ export function renderAgentProfilePage(slug: string): DocumentFragment {
   imageWrapper.appendChild(image);
 
   if (agent.isLeadership) {
-    const badge = createElement('span', 'agent-profile__leadership-badge', 'Leadership');
+    const badge = createElement('span', 'agent-profile__leadership-badge', t('agentProfile.leadership'));
     imageWrapper.appendChild(badge);
   }
 
@@ -216,10 +217,10 @@ export function renderAgentProfilePage(slug: string): DocumentFragment {
   const quickStats = createElement('div', 'agent-profile__quick-stats');
 
   const statsData = [
-    { value: `${agent.yearsExperience}+`, label: 'Years Experience' },
-    { value: agent.propertiesSold.toString(), label: 'Properties Sold' },
-    { value: formatSalesVolume(agent.totalSalesVolume), label: 'Total Sales' },
-    { value: agent.activeListings.toString(), label: 'Active Listings' }
+    { value: `${agent.yearsExperience}+`, label: t('agentProfile.yearsExperience') },
+    { value: agent.propertiesSold.toString(), label: t('agentProfile.propertiesSold') },
+    { value: formatSalesVolume(agent.totalSalesVolume), label: t('agentProfile.totalSales') },
+    { value: agent.activeListings.toString(), label: t('agentProfile.activeListings') }
   ];
 
   statsData.forEach(stat => {
@@ -235,7 +236,7 @@ export function renderAgentProfilePage(slug: string): DocumentFragment {
 
   // Languages
   const languages = createElement('div', 'agent-profile__languages');
-  const langLabel = createElement('span', 'agent-profile__languages-label', 'Languages: ');
+  const langLabel = createElement('span', 'agent-profile__languages-label', t('agentProfile.languages'));
   languages.appendChild(langLabel);
   agent.languages.forEach((lang, i) => {
     const langTag = createElement('span', 'agent-profile__lang-tag', lang);
@@ -252,7 +253,7 @@ export function renderAgentProfilePage(slug: string): DocumentFragment {
   const callBtn = createElement('a', 'btn btn--primary btn--lg');
   callBtn.href = `tel:${agent.phone.replace(/\s/g, '')}`;
   callBtn.appendChild(createSVGUse('icon-phone'));
-  callBtn.appendChild(document.createTextNode(' Call Now'));
+  callBtn.appendChild(document.createTextNode(t('agentProfile.callNow')));
   heroCta.appendChild(callBtn);
 
   const whatsappBtn = createElement('a', 'btn btn--whatsapp btn--lg');
@@ -260,13 +261,13 @@ export function renderAgentProfilePage(slug: string): DocumentFragment {
   whatsappBtn.target = '_blank';
   whatsappBtn.rel = 'noopener noreferrer';
   whatsappBtn.appendChild(createSVGUse('icon-whatsapp'));
-  whatsappBtn.appendChild(document.createTextNode(' WhatsApp'));
+  whatsappBtn.appendChild(document.createTextNode(t('agentProfile.whatsApp')));
   heroCta.appendChild(whatsappBtn);
 
   const emailBtn = createElement('a', 'btn btn--ghost btn--lg');
   emailBtn.href = `mailto:${agent.email}`;
   emailBtn.appendChild(createSVGUse('icon-email'));
-  emailBtn.appendChild(document.createTextNode(' Email'));
+  emailBtn.appendChild(document.createTextNode(t('agentProfile.email')));
   heroCta.appendChild(emailBtn);
 
   heroInfo.appendChild(heroCta);
@@ -286,7 +287,7 @@ export function renderAgentProfilePage(slug: string): DocumentFragment {
 
   // About Section
   const aboutSection = createElement('div', 'agent-profile__section');
-  const aboutTitle = createElement('h2', 'agent-profile__section-title', `About ${agent.name}`);
+  const aboutTitle = createElement('h2', 'agent-profile__section-title', t('agentProfile.about', { name: agent.name }));
   aboutSection.appendChild(aboutTitle);
 
   const bioParagraphs = agent.fullBio.split('\n\n');
@@ -301,7 +302,7 @@ export function renderAgentProfilePage(slug: string): DocumentFragment {
 
   // Specializations Section
   const specSection = createElement('div', 'agent-profile__section');
-  const specTitle = createElement('h2', 'agent-profile__section-title', 'Specializations');
+  const specTitle = createElement('h2', 'agent-profile__section-title', t('agentProfile.specializations'));
   specSection.appendChild(specTitle);
 
   const specList = createElement('ul', 'agent-profile__spec-list');
@@ -317,7 +318,7 @@ export function renderAgentProfilePage(slug: string): DocumentFragment {
 
   // Featured Areas Section
   const areasSection = createElement('div', 'agent-profile__section');
-  const areasTitle = createElement('h2', 'agent-profile__section-title', 'Featured Areas');
+  const areasTitle = createElement('h2', 'agent-profile__section-title', t('agentProfile.featuredAreas'));
   areasSection.appendChild(areasTitle);
 
   const areasTags = createElement('div', 'agent-profile__areas-tags');
@@ -332,14 +333,14 @@ export function renderAgentProfilePage(slug: string): DocumentFragment {
   // Certifications & Awards Section
   if (agent.certifications.length > 0 || agent.awards.length > 0) {
     const credSection = createElement('div', 'agent-profile__section');
-    const credTitle = createElement('h2', 'agent-profile__section-title', 'Certifications & Awards');
+    const credTitle = createElement('h2', 'agent-profile__section-title', t('agentProfile.certificationsAwards'));
     credSection.appendChild(credTitle);
 
     const credGrid = createElement('div', 'agent-profile__cred-grid');
 
     if (agent.certifications.length > 0) {
       const certCol = createElement('div', 'agent-profile__cred-col');
-      const certTitle = createElement('h3', 'agent-profile__cred-heading', 'Certifications');
+      const certTitle = createElement('h3', 'agent-profile__cred-heading', t('agentProfile.certifications'));
       certCol.appendChild(certTitle);
 
       const certList = createElement('ul', 'agent-profile__cred-list');
@@ -355,7 +356,7 @@ export function renderAgentProfilePage(slug: string): DocumentFragment {
 
     if (agent.awards.length > 0) {
       const awardsCol = createElement('div', 'agent-profile__cred-col');
-      const awardsTitle = createElement('h3', 'agent-profile__cred-heading', 'Awards');
+      const awardsTitle = createElement('h3', 'agent-profile__cred-heading', t('agentProfile.awards'));
       awardsCol.appendChild(awardsTitle);
 
       const awardsList = createElement('ul', 'agent-profile__cred-list');
@@ -376,7 +377,7 @@ export function renderAgentProfilePage(slug: string): DocumentFragment {
   // Testimonials Section
   if (agent.testimonials.length > 0) {
     const testimonialsSection = createElement('div', 'agent-profile__section');
-    const testimonialsTitle = createElement('h2', 'agent-profile__section-title', 'Client Reviews');
+    const testimonialsTitle = createElement('h2', 'agent-profile__section-title', t('agentProfile.clientReviews'));
     testimonialsSection.appendChild(testimonialsTitle);
 
     const avgRating = agent.testimonials.reduce((sum, t) => sum + t.rating, 0) / agent.testimonials.length;
@@ -400,10 +401,10 @@ export function renderAgentProfilePage(slug: string): DocumentFragment {
   if (agentProperties.length > 0) {
     const propertiesSection = createElement('div', 'agent-profile__section');
     const propertiesHeader = createElement('div', 'agent-profile__section-header');
-    const propertiesTitle = createElement('h2', 'agent-profile__section-title', `${agent.name}'s Listings`);
+    const propertiesTitle = createElement('h2', 'agent-profile__section-title', t('agentProfile.listings', { name: agent.name }));
     propertiesHeader.appendChild(propertiesTitle);
 
-    const viewAllLink = createElement('a', 'agent-profile__view-all', 'View All Properties');
+    const viewAllLink = createElement('a', 'agent-profile__view-all', t('agentProfile.viewAllProperties'));
     viewAllLink.href = '/properties';
     viewAllLink.setAttribute('data-route', '');
     viewAllLink.appendChild(createSVGUse('icon-arrow-right'));
@@ -427,7 +428,7 @@ export function renderAgentProfilePage(slug: string): DocumentFragment {
 
   // Contact Card
   const contactCard = createElement('div', 'agent-profile__contact-card');
-  const contactTitle = createElement('h3', 'agent-profile__card-title', 'Contact Information');
+  const contactTitle = createElement('h3', 'agent-profile__card-title', t('agentProfile.contactInformation'));
   contactCard.appendChild(contactTitle);
 
   const contactInfo = createElement('div', 'agent-profile__contact-info');
@@ -449,7 +450,7 @@ export function renderAgentProfilePage(slug: string): DocumentFragment {
   whatsappItem.target = '_blank';
   whatsappItem.rel = 'noopener noreferrer';
   whatsappItem.appendChild(createSVGUse('icon-whatsapp'));
-  whatsappItem.appendChild(document.createTextNode('WhatsApp'));
+  whatsappItem.appendChild(document.createTextNode(t('agentProfile.whatsApp')));
   contactInfo.appendChild(whatsappItem);
 
   contactCard.appendChild(contactInfo);
@@ -457,7 +458,7 @@ export function renderAgentProfilePage(slug: string): DocumentFragment {
   // Social Links
   if (Object.values(agent.socialLinks).some(Boolean)) {
     const socialLinks = createElement('div', 'agent-profile__social-links');
-    const socialTitle = createElement('p', 'agent-profile__social-title', 'Connect on Social Media');
+    const socialTitle = createElement('p', 'agent-profile__social-title', t('agentProfile.connectOnSocialMedia'));
     socialLinks.appendChild(socialTitle);
 
     const socialButtons = createElement('div', 'agent-profile__social-buttons');
@@ -467,7 +468,7 @@ export function renderAgentProfilePage(slug: string): DocumentFragment {
       linkedinBtn.href = agent.socialLinks.linkedin;
       linkedinBtn.target = '_blank';
       linkedinBtn.rel = 'noopener noreferrer';
-      linkedinBtn.textContent = 'LinkedIn';
+      linkedinBtn.textContent = t('agentProfile.linkedin');
       socialButtons.appendChild(linkedinBtn);
     }
 
@@ -476,7 +477,7 @@ export function renderAgentProfilePage(slug: string): DocumentFragment {
       instaBtn.href = agent.socialLinks.instagram;
       instaBtn.target = '_blank';
       instaBtn.rel = 'noopener noreferrer';
-      instaBtn.textContent = 'Instagram';
+      instaBtn.textContent = t('agentProfile.instagram');
       socialButtons.appendChild(instaBtn);
     }
 
@@ -485,7 +486,7 @@ export function renderAgentProfilePage(slug: string): DocumentFragment {
       fbBtn.href = agent.socialLinks.facebook;
       fbBtn.target = '_blank';
       fbBtn.rel = 'noopener noreferrer';
-      fbBtn.textContent = 'Facebook';
+      fbBtn.textContent = t('agentProfile.facebook');
       socialButtons.appendChild(fbBtn);
     }
 
@@ -505,46 +506,46 @@ export function renderAgentProfilePage(slug: string): DocumentFragment {
   form.setAttribute('method', 'GET');
 
   const nameGroup = createElement('div', 'agent-profile__form-group');
-  const nameLabel = createElement('label', 'agent-profile__form-label', 'Your Name');
+  const nameLabel = createElement('label', 'agent-profile__form-label', t('agentProfile.yourName'));
   nameLabel.setAttribute('for', 'inquiry-name');
   const nameInput = createElement('input', 'agent-profile__form-input');
   nameInput.type = 'text';
   nameInput.id = 'inquiry-name';
   nameInput.name = 'name';
-  nameInput.placeholder = 'Enter your full name';
+  nameInput.placeholder = t('agentProfile.enterYourName');
   nameInput.required = true;
   nameGroup.appendChild(nameLabel);
   nameGroup.appendChild(nameInput);
   form.appendChild(nameGroup);
 
   const phoneGroup = createElement('div', 'agent-profile__form-group');
-  const phoneLabel = createElement('label', 'agent-profile__form-label', 'Phone Number');
+  const phoneLabel = createElement('label', 'agent-profile__form-label', t('agentProfile.phoneNumber'));
   phoneLabel.setAttribute('for', 'inquiry-phone');
   const phoneInput = createElement('input', 'agent-profile__form-input');
   phoneInput.type = 'tel';
   phoneInput.id = 'inquiry-phone';
   phoneInput.name = 'phone';
-  phoneInput.placeholder = '+964 XXX XXX XXXX';
+  phoneInput.placeholder = t('agentProfile.phonePlaceholder');
   phoneInput.required = true;
   phoneGroup.appendChild(phoneLabel);
   phoneGroup.appendChild(phoneInput);
   form.appendChild(phoneGroup);
 
   const emailGroup = createElement('div', 'agent-profile__form-group');
-  const emailLabel = createElement('label', 'agent-profile__form-label', 'Email');
+  const emailLabel = createElement('label', 'agent-profile__form-label', t('agentProfile.email'));
   emailLabel.setAttribute('for', 'inquiry-email');
   const emailInput = createElement('input', 'agent-profile__form-input');
   emailInput.type = 'email';
   emailInput.id = 'inquiry-email';
   emailInput.name = 'email';
-  emailInput.placeholder = 'your@email.com';
+  emailInput.placeholder = t('agentProfile.emailPlaceholder');
   emailInput.required = true;
   emailGroup.appendChild(emailLabel);
   emailGroup.appendChild(emailInput);
   form.appendChild(emailGroup);
 
   const messageGroup = createElement('div', 'agent-profile__form-group');
-  const messageLabel = createElement('label', 'agent-profile__form-label', 'Message');
+  const messageLabel = createElement('label', 'agent-profile__form-label', t('agentProfile.message'));
   messageLabel.setAttribute('for', 'inquiry-message');
   const messageTextarea = createElement('textarea', 'agent-profile__form-textarea');
   messageTextarea.id = 'inquiry-message';
@@ -561,7 +562,7 @@ export function renderAgentProfilePage(slug: string): DocumentFragment {
   hiddenAgent.value = agent.name;
   form.appendChild(hiddenAgent);
 
-  const submitBtn = createElement('button', 'btn btn--primary btn--full', 'Send Message');
+  const submitBtn = createElement('button', 'btn btn--primary btn--full', t('agentProfile.sendMessage'));
   submitBtn.type = 'submit';
   form.appendChild(submitBtn);
 
@@ -570,18 +571,18 @@ export function renderAgentProfilePage(slug: string): DocumentFragment {
 
   // Quick Stats Card
   const statsCard = createElement('div', 'agent-profile__stats-card');
-  const statsTitle = createElement('h3', 'agent-profile__card-title', 'Performance Stats');
+  const statsTitle = createElement('h3', 'agent-profile__card-title', t('agentProfile.performanceStats'));
   statsCard.appendChild(statsTitle);
 
   const statsList = createElement('div', 'agent-profile__stats-list');
 
   const statsItems = [
-    { label: 'Years of Experience', value: `${agent.yearsExperience}+` },
-    { label: 'Years with Real House', value: `${agent.yearsWithCompany}+` },
-    { label: 'Properties Sold', value: agent.propertiesSold.toString() },
-    { label: 'Total Sales Volume', value: formatSalesVolume(agent.totalSalesVolume) },
-    { label: 'Active Listings', value: agent.activeListings.toString() },
-    { label: 'Languages Spoken', value: agent.languages.length.toString() }
+    { label: t('agentProfile.yearsExperience'), value: `${agent.yearsExperience}+` },
+    { label: t('agentProfile.yearsWithRealHouse'), value: `${agent.yearsWithCompany}+` },
+    { label: t('agentProfile.propertiesSold'), value: agent.propertiesSold.toString() },
+    { label: t('agentProfile.totalSales'), value: formatSalesVolume(agent.totalSalesVolume) },
+    { label: t('agentProfile.activeListings'), value: agent.activeListings.toString() },
+    { label: t('agentProfile.languagesSpoken'), value: agent.languages.length.toString() }
   ];
 
   statsItems.forEach(item => {
@@ -608,7 +609,7 @@ export function renderAgentProfilePage(slug: string): DocumentFragment {
   backLink.href = '/agents';
   backLink.setAttribute('data-route', '');
   backLink.appendChild(createSVGUse('icon-arrow-left'));
-  backLink.appendChild(document.createTextNode('Back to All Agents'));
+  backLink.appendChild(document.createTextNode(t('agentProfile.backToAllAgents')));
   backContainer.appendChild(backLink);
   backSection.appendChild(backContainer);
   page.appendChild(backSection);

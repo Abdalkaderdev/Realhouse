@@ -793,6 +793,66 @@ export interface CoreTranslations {
     ctaText: string;
   };
 
+  agentProfile: {
+    // Breadcrumbs
+    home: string;
+    ourAgents: string;
+    // 404
+    agentNotFound: string;
+    agentNotFoundMessage: string;
+    viewAllAgents: string;
+    // Badge
+    leadership: string;
+    // Stats
+    yearsExperience: string;
+    propertiesSold: string;
+    totalSales: string;
+    activeListings: string;
+    yearsWithRealHouse: string;
+    languagesSpoken: string;
+    // Labels
+    languages: string;
+    // Buttons
+    callNow: string;
+    whatsApp: string;
+    email: string;
+    sendMessage: string;
+    backToAllAgents: string;
+    viewAllProperties: string;
+    // Section titles
+    about: string;
+    specializations: string;
+    featuredAreas: string;
+    certificationsAwards: string;
+    certifications: string;
+    awards: string;
+    clientReviews: string;
+    listings: string;
+    contactInformation: string;
+    connectOnSocialMedia: string;
+    performanceStats: string;
+    // Social
+    linkedin: string;
+    instagram: string;
+    facebook: string;
+    // Form
+    yourName: string;
+    enterYourName: string;
+    phoneNumber: string;
+    phonePlaceholder: string;
+    emailLabel: string;
+    emailPlaceholder: string;
+    message: string;
+    messagePlaceholder: string;
+    // Rating
+    outOf5: string;
+    reviews: string;
+    // Property
+    priceOnRequest: string;
+    beds: string;
+    baths: string;
+  };
+
   projectsPage: {
     title: string;
     titleEmphasis: string;
@@ -819,6 +879,7 @@ export interface CoreTranslations {
     browseAllProjects: string;
     projectOverview: string;
     constructionProgress: string;
+    keyMilestones: string;
     aboutThisProject: string;
     amenitiesFeatures: string;
     interestedInProject: string;
@@ -948,6 +1009,25 @@ export interface CoreTranslations {
     copied: string;
     bestValue: string;
     best: string;
+  };
+
+  compareProjects: {
+    // Breadcrumbs
+    home: string;
+    projects: string;
+    compareProjects: string;
+    // Title
+    compareDevelopmentProjects: string;
+    comparingProjects: string;
+    compareUpTo3: string;
+    // Buttons
+    clearAll: string;
+    contactOurTeam: string;
+    browseMoreProjects: string;
+    backToProjects: string;
+    // CTA
+    needHelpDeciding: string;
+    expertHelpText: string;
   };
 
   projectInquiry: {
@@ -1571,6 +1651,13 @@ export interface CoreTranslations {
     shopping: string;
     dining: string;
     recreation: string;
+  };
+
+  gallery: {
+    viewFullSize: string;
+    closeLightbox: string;
+    pageTitle: string;
+    pageSubtitle: string;
   };
 }
 

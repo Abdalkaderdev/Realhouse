@@ -24,6 +24,7 @@ import {
   getRelatedProjects,
   createInternalCTA
 } from '../components/internal-linking';
+import { t } from '../i18n';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -228,7 +229,7 @@ function createConstructionProgressSection(project: Project): HTMLElement {
 
   // Header with title
   const header = createElement('div', 'project-overview__progress-header');
-  const title = createElement('h4', 'project-overview__progress-title', 'Construction Progress');
+  const title = createElement('h4', 'project-overview__progress-title', t('projectsPage.constructionProgress'));
   header.appendChild(title);
   section.appendChild(header);
 
@@ -304,7 +305,7 @@ function createConstructionProgressSection(project: Project): HTMLElement {
   // Milestones timeline (only show if there are milestones)
   if (milestones.length > 0) {
     const milestonesWrapper = createElement('div', 'project-overview__milestones');
-    const milestonesTitle = createElement('h5', 'project-overview__milestones-title', 'Key Milestones');
+    const milestonesTitle = createElement('h5', 'project-overview__milestones-title', t('projectsPage.keyMilestones'));
     milestonesWrapper.appendChild(milestonesTitle);
 
     const timeline = createElement('ul', 'project-overview__milestones-list');
@@ -734,7 +735,7 @@ export function renderComprehensiveProjectDetailPage(projectId: string): Documen
 
     const title = createElement('h1', undefined, 'Project Not Found');
     const message = createElement('p', undefined, 'The project you are looking for does not exist or has been removed.');
-    const backLink = createElement('a', 'btn btn--primary', 'Browse All Projects');
+    const backLink = createElement('a', 'btn btn--primary', t('projectsPage.browseAllProjects'));
     backLink.href = '/projects';
     backLink.setAttribute('data-route', '');
 

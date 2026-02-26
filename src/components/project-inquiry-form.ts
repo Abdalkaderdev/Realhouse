@@ -166,13 +166,13 @@ function saveInquiryToStorage(inquiry: InquiryFormData): void {
 
 function generateWhatsAppLink(project: Project, formData: Partial<InquiryFormData>): string {
   const message = encodeURIComponent(
-    `Hello Real House,\n\n` +
-    `I'm interested in the *${project.name}* project.\n\n` +
-    `Name: ${formData.name || ''}\n` +
-    `Phone: ${formData.phone || ''}\n` +
-    `Email: ${formData.email || ''}\n` +
-    `${formData.message ? `\nMessage: ${formData.message}` : ''}\n\n` +
-    `Please contact me with more details.`
+    `${t('projectInquiry.whatsAppGreeting')}\n\n` +
+    `${t('projectInquiry.whatsAppInterested')}*${project.name}*.\n\n` +
+    `${t('projectInquiry.whatsAppName')}${formData.name || ''}\n` +
+    `${t('projectInquiry.whatsAppPhone')}${formData.phone || ''}\n` +
+    `${t('projectInquiry.whatsAppEmail')}${formData.email || ''}\n` +
+    `${formData.message ? `\n${t('projectInquiry.whatsAppMessage')}${formData.message}` : ''}\n\n` +
+    t('projectInquiry.whatsAppContactMe')
   );
   return `https://wa.me/${WHATSAPP_NUMBER}?text=${message}`;
 }
@@ -604,7 +604,7 @@ export function createInquiryModal(project: Project): HTMLElement {
   // Hidden description for screen readers
   const description = createElement('p', 'sr-only');
   description.id = 'inquiry-modal-desc';
-  description.textContent = `Inquiry form for ${project.name} project. Fill in your details to request more information.`;
+  description.textContent = t('projectInquiry.formDescription', { projectName: project.name });
   content.appendChild(description);
 
   // Form

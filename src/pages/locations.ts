@@ -14,6 +14,7 @@ import {
 import { properties, getDisplayPrice, formatPrice, type Property } from '../data/properties';
 import { isFavorite, toggleFavorite, updateFavoriteButton, updateFavoritesBadge } from '../utils/favorites';
 import { createCompareButton, updateComparisonBar } from '../comparison';
+import { t } from '../i18n';
 
 // ═══════════════════════════════════════════════════════════════════════════
 // Locations Index Page - All Districts
@@ -35,12 +36,12 @@ export function renderLocationsPage(): DocumentFragment {
 
   const h1 = document.createElement('h1');
   h1.className = 'locations-page__title';
-  h1.textContent = 'Property Erbil by Location — Real Estate Erbil Districts';
+  h1.textContent = t('locations.pageTitle');
   heroContent.appendChild(h1);
 
   const subtitle = document.createElement('p');
   subtitle.className = 'locations-page__subtitle';
-  subtitle.textContent = 'Explore houses for sale Erbil across the Erbil property market. Find apartments Erbil Iraq in Gulan, villas Erbil Iraq in Dream City, and luxury homes Kurdistan. Best real estate agent Erbil to buy house Erbil in real estate Kurdistan.';
+  subtitle.textContent = t('locations.pageSubtitle');
   heroContent.appendChild(subtitle);
 
   hero.appendChild(heroContent);
@@ -58,14 +59,14 @@ export function renderLocationsPage(): DocumentFragment {
   const breadcrumbLink1 = document.createElement('a');
   breadcrumbLink1.href = '/';
   breadcrumbLink1.setAttribute('data-route', '');
-  breadcrumbLink1.textContent = 'Home';
+  breadcrumbLink1.textContent = t('locations.breadcrumbHome');
   breadcrumbLi1.appendChild(breadcrumbLink1);
   breadcrumbOl.appendChild(breadcrumbLi1);
 
   const breadcrumbLi2 = document.createElement('li');
   const breadcrumbSpan = document.createElement('span');
   breadcrumbSpan.setAttribute('aria-current', 'page');
-  breadcrumbSpan.textContent = 'Locations';
+  breadcrumbSpan.textContent = t('locations.breadcrumbLocations');
   breadcrumbLi2.appendChild(breadcrumbSpan);
   breadcrumbOl.appendChild(breadcrumbLi2);
 
@@ -101,12 +102,12 @@ export function renderLocationsPage(): DocumentFragment {
 
   const mapTitle = document.createElement('h2');
   mapTitle.className = 'locations-page__section-title';
-  mapTitle.textContent = 'Erbil Districts Map';
+  mapTitle.textContent = t('locations.mapSectionTitle');
   mapContainer.appendChild(mapTitle);
 
   const mapSubtitle = document.createElement('p');
   mapSubtitle.className = 'locations-page__section-subtitle';
-  mapSubtitle.textContent = 'Click on any district to explore available properties';
+  mapSubtitle.textContent = t('locations.mapSectionSubtitle');
   mapContainer.appendChild(mapSubtitle);
 
   const mapPlaceholder = document.createElement('div');
@@ -137,17 +138,17 @@ export function renderLocationsPage(): DocumentFragment {
 
   const statsTitle = document.createElement('h2');
   statsTitle.className = 'locations-page__section-title';
-  statsTitle.textContent = 'Real Estate Erbil — Erbil Property Market Overview';
+  statsTitle.textContent = t('locations.statsTitle');
   statsContainer.appendChild(statsTitle);
 
   const statsGrid = document.createElement('div');
   statsGrid.className = 'locations-page__stats';
 
   const statsData = [
-    { number: `${properties.length}+`, label: 'Active Listings' },
-    { number: `${districts.length}`, label: 'Prime Districts' },
-    { number: '$85K+', label: 'Starting From' },
-    { number: '127+', label: 'Happy Clients' }
+    { number: `${properties.length}+`, label: t('locations.statsActiveListings') },
+    { number: `${districts.length}`, label: t('locations.statsPrimeDistricts') },
+    { number: '$85K+', label: t('locations.statsStartingFrom') },
+    { number: '127+', label: t('locations.statsHappyClients') }
   ];
 
   statsData.forEach(stat => {
@@ -179,11 +180,11 @@ export function renderLocationsPage(): DocumentFragment {
   ctaContainer.className = 'locations-page__container';
 
   const ctaTitle = document.createElement('h2');
-  ctaTitle.textContent = 'Looking for Property in Erbil?';
+  ctaTitle.textContent = t('locations.ctaTitle');
   ctaContainer.appendChild(ctaTitle);
 
   const ctaText = document.createElement('p');
-  ctaText.textContent = 'Our local experts can help you find the perfect property in your preferred district.';
+  ctaText.textContent = t('locations.ctaText');
   ctaContainer.appendChild(ctaText);
 
   const ctaButtons = document.createElement('div');
@@ -193,14 +194,14 @@ export function renderLocationsPage(): DocumentFragment {
   contactBtn.href = '/contact';
   contactBtn.className = 'btn btn--primary';
   contactBtn.setAttribute('data-route', '');
-  contactBtn.textContent = 'Contact Us';
+  contactBtn.textContent = t('locations.ctaContactUs');
   ctaButtons.appendChild(contactBtn);
 
   const propertiesBtn = document.createElement('a');
   propertiesBtn.href = '/properties';
   propertiesBtn.className = 'btn btn--secondary';
   propertiesBtn.setAttribute('data-route', '');
-  propertiesBtn.textContent = 'View All Properties';
+  propertiesBtn.textContent = t('locations.ctaViewAllProperties');
   ctaButtons.appendChild(propertiesBtn);
 
   ctaContainer.appendChild(ctaButtons);
@@ -238,12 +239,12 @@ export function renderDistrictPage(slug: string): DocumentFragment {
 
   const label = document.createElement('span');
   label.className = 'district-page__label';
-  label.textContent = 'Real Estate in Erbil';
+  label.textContent = t('locations.realEstateInErbil');
   heroContent.appendChild(label);
 
   const title = document.createElement('h1');
   title.className = 'district-page__title';
-  title.textContent = `${district.name} Properties`;
+  title.textContent = t('locations.districtProperties', { district: district.name });
   heroContent.appendChild(title);
 
   const subtitleP = document.createElement('p');
@@ -255,9 +256,9 @@ export function renderDistrictPage(slug: string): DocumentFragment {
   heroStats.className = 'district-page__hero-stats';
 
   const heroStatsData = [
-    { number: String(districtProperties.length), label: 'Properties Available' },
-    { number: formatPrice(district.averagePrice), label: 'Average Price' },
-    { number: String(district.propertyTypes.length), label: 'Property Types' }
+    { number: String(districtProperties.length), label: t('locations.propertiesAvailable') },
+    { number: formatPrice(district.averagePrice), label: t('locations.averagePrice') },
+    { number: String(district.propertyTypes.length), label: t('locations.propertyTypes') }
   ];
 
   heroStatsData.forEach(stat => {
@@ -290,8 +291,8 @@ export function renderDistrictPage(slug: string): DocumentFragment {
   breadcrumbOl.className = 'breadcrumb';
 
   const breadcrumbItems = [
-    { href: '/', text: 'Home' },
-    { href: '/locations', text: 'Locations' },
+    { href: '/', text: t('locations.breadcrumbHome') },
+    { href: '/locations', text: t('locations.breadcrumbLocations') },
     { text: district.name, current: true }
   ];
 
@@ -328,7 +329,7 @@ export function renderDistrictPage(slug: string): DocumentFragment {
   aboutSection.className = 'district-page__about';
 
   const aboutTitle = document.createElement('h2');
-  aboutTitle.textContent = `About ${district.name}`;
+  aboutTitle.textContent = t('locations.aboutDistrict', { district: district.name });
   aboutSection.appendChild(aboutTitle);
 
   const descriptionDiv = document.createElement('div');
@@ -348,7 +349,7 @@ export function renderDistrictPage(slug: string): DocumentFragment {
   highlightsSection.className = 'district-page__highlights';
 
   const highlightsTitle = document.createElement('h3');
-  highlightsTitle.textContent = `Why Choose ${district.name}?`;
+  highlightsTitle.textContent = t('locations.whyChooseDistrict', { district: district.name });
   highlightsSection.appendChild(highlightsTitle);
 
   const highlightsList = document.createElement('ul');
@@ -380,16 +381,16 @@ export function renderDistrictPage(slug: string): DocumentFragment {
   landmarksSection.className = 'district-page__landmarks';
 
   const landmarksTitle = document.createElement('h3');
-  landmarksTitle.textContent = 'Nearby Landmarks & Amenities';
+  landmarksTitle.textContent = t('locations.nearbyLandmarks');
   landmarksSection.appendChild(landmarksTitle);
 
   const landmarksGrid = document.createElement('div');
   landmarksGrid.className = 'district-page__landmarks-grid';
 
   const landmarksData = [
-    { title: 'Points of Interest', items: district.nearbyLandmarks },
-    { title: 'Amenities', items: district.amenities },
-    { title: 'Transport Links', items: district.transportLinks }
+    { title: t('locations.pointsOfInterest'), items: district.nearbyLandmarks },
+    { title: t('locations.amenities'), items: district.amenities },
+    { title: t('locations.transportLinks'), items: district.transportLinks }
   ];
 
   landmarksData.forEach(col => {
@@ -419,7 +420,7 @@ export function renderDistrictPage(slug: string): DocumentFragment {
   mapSection.className = 'district-page__map';
 
   const mapTitle = document.createElement('h3');
-  mapTitle.textContent = `${district.name} Location`;
+  mapTitle.textContent = t('locations.districtLocation', { district: district.name });
   mapSection.appendChild(mapTitle);
 
   const mapContainer = document.createElement('div');
@@ -451,17 +452,17 @@ export function renderDistrictPage(slug: string): DocumentFragment {
   infoCard.className = 'district-page__info-card';
 
   const infoTitle = document.createElement('h3');
-  infoTitle.textContent = 'Quick Facts';
+  infoTitle.textContent = t('locations.quickFacts');
   infoCard.appendChild(infoTitle);
 
   const infoList = document.createElement('dl');
   infoList.className = 'district-page__info-list';
 
   const infoData = [
-    { term: 'Property Types', definition: district.propertyTypes.join(', ') },
-    { term: 'Price Range', definition: `${formatPrice(district.priceRange.min)} - ${formatPrice(district.priceRange.max)}` },
-    { term: 'Lifestyle', definition: district.demographics.lifestyle },
-    { term: 'Ideal For', definition: district.demographics.targetBuyers.join(', ') }
+    { term: t('locations.propertyTypes'), definition: district.propertyTypes.join(', ') },
+    { term: t('locations.priceRange'), definition: `${formatPrice(district.priceRange.min)} - ${formatPrice(district.priceRange.max)}` },
+    { term: t('locations.lifestyle'), definition: district.demographics.lifestyle },
+    { term: t('locations.idealFor'), definition: district.demographics.targetBuyers.join(', ') }
   ];
 
   infoData.forEach(item => {
@@ -480,7 +481,7 @@ export function renderDistrictPage(slug: string): DocumentFragment {
   viewPropertiesBtn.href = `/properties?district=${district.slug}`;
   viewPropertiesBtn.className = 'btn btn--primary btn--full';
   viewPropertiesBtn.setAttribute('data-route', '');
-  viewPropertiesBtn.textContent = `View ${district.name} Properties`;
+  viewPropertiesBtn.textContent = t('locations.viewDistrictProperties', { district: district.name });
   infoCard.appendChild(viewPropertiesBtn);
 
   rightCol.appendChild(infoCard);
@@ -490,11 +491,11 @@ export function renderDistrictPage(slug: string): DocumentFragment {
   contactCard.className = 'district-page__contact-card';
 
   const contactTitle = document.createElement('h3');
-  contactTitle.textContent = `Interested in ${district.name}?`;
+  contactTitle.textContent = t('locations.interestedInDistrict', { district: district.name });
   contactCard.appendChild(contactTitle);
 
   const contactText = document.createElement('p');
-  contactText.textContent = 'Contact our local experts for personalized property recommendations.';
+  contactText.textContent = t('locations.contactExpertsText');
   contactCard.appendChild(contactText);
 
   const contactInfo = document.createElement('div');
@@ -534,7 +535,7 @@ export function renderDistrictPage(slug: string): DocumentFragment {
   scheduleBtn.href = '/contact';
   scheduleBtn.className = 'btn btn--secondary btn--full';
   scheduleBtn.setAttribute('data-route', '');
-  scheduleBtn.textContent = 'Schedule Consultation';
+  scheduleBtn.textContent = t('locations.scheduleConsultation');
   contactCard.appendChild(scheduleBtn);
 
   rightCol.appendChild(contactCard);
@@ -544,7 +545,7 @@ export function renderDistrictPage(slug: string): DocumentFragment {
   otherDistrictsCard.className = 'district-page__other-districts';
 
   const otherTitle = document.createElement('h3');
-  otherTitle.textContent = 'Explore Other Areas';
+  otherTitle.textContent = t('locations.exploreOtherAreas');
   otherDistrictsCard.appendChild(otherTitle);
 
   const otherDistricts = districts.filter(d => d.id !== district.id).slice(0, 4);
@@ -560,7 +561,7 @@ export function renderDistrictPage(slug: string): DocumentFragment {
     a.textContent = d.name;
 
     const span = document.createElement('span');
-    span.textContent = `${getPropertyCountByDistrict(d.name)} properties`;
+    span.textContent = `${getPropertyCountByDistrict(d.name)} ${t('locations.properties')}`;
     a.appendChild(span);
 
     li.appendChild(a);
@@ -573,7 +574,7 @@ export function renderDistrictPage(slug: string): DocumentFragment {
   viewAllLink.href = '/locations';
   viewAllLink.className = 'district-page__view-all';
   viewAllLink.setAttribute('data-route', '');
-  viewAllLink.textContent = 'View All Locations';
+  viewAllLink.textContent = t('locations.viewAllLocations');
   otherDistrictsCard.appendChild(viewAllLink);
 
   rightCol.appendChild(otherDistrictsCard);
@@ -590,14 +591,14 @@ export function renderDistrictPage(slug: string): DocumentFragment {
     propertiesHeader.className = 'district-page__properties-header';
 
     const propertiesTitle = document.createElement('h2');
-    propertiesTitle.textContent = `Available Properties in ${district.name}`;
+    propertiesTitle.textContent = t('locations.availablePropertiesIn', { district: district.name });
     propertiesHeader.appendChild(propertiesTitle);
 
     const viewAllBtn = document.createElement('a');
     viewAllBtn.href = `/properties?district=${district.slug}`;
     viewAllBtn.className = 'btn btn--secondary';
     viewAllBtn.setAttribute('data-route', '');
-    viewAllBtn.textContent = 'View All';
+    viewAllBtn.textContent = t('locations.viewAll');
     propertiesHeader.appendChild(viewAllBtn);
 
     propertiesSection.appendChild(propertiesHeader);
@@ -654,7 +655,7 @@ function createDistrictCard(district: DistrictLocation, propertyCount: number): 
 
   const countSpan = document.createElement('span');
   countSpan.className = 'district-card__count';
-  countSpan.textContent = `${propertyCount} Properties`;
+  countSpan.textContent = t('locations.propertiesCount', { count: String(propertyCount) });
   overlay.appendChild(countSpan);
 
   imageContainer.appendChild(overlay);
@@ -678,7 +679,7 @@ function createDistrictCard(district: DistrictLocation, propertyCount: number): 
 
   const price = document.createElement('span');
   price.className = 'district-card__price';
-  price.textContent = `From ${formatPrice(district.priceRange.min)}`;
+  price.textContent = t('locations.fromPrice', { price: formatPrice(district.priceRange.min) });
   meta.appendChild(price);
 
   const types = document.createElement('span');
@@ -821,11 +822,11 @@ function render404DistrictPage(slug: string): DocumentFragment {
   container.className = 'district-page__404';
 
   const title = document.createElement('h1');
-  title.textContent = 'District Not Found';
+  title.textContent = t('locations.districtNotFound');
   container.appendChild(title);
 
   const text = document.createElement('p');
-  text.textContent = `We couldn't find information about "${slug}". Please check our available locations.`;
+  text.textContent = t('locations.districtNotFoundText', { slug });
   container.appendChild(text);
 
   const buttons = document.createElement('div');
@@ -835,14 +836,14 @@ function render404DistrictPage(slug: string): DocumentFragment {
   locationsBtn.href = '/locations';
   locationsBtn.className = 'btn btn--primary';
   locationsBtn.setAttribute('data-route', '');
-  locationsBtn.textContent = 'View All Locations';
+  locationsBtn.textContent = t('locations.viewAllLocations');
   buttons.appendChild(locationsBtn);
 
   const propertiesBtn = document.createElement('a');
   propertiesBtn.href = '/properties';
   propertiesBtn.className = 'btn btn--secondary';
   propertiesBtn.setAttribute('data-route', '');
-  propertiesBtn.textContent = 'Browse Properties';
+  propertiesBtn.textContent = t('locations.browseProperties');
   buttons.appendChild(propertiesBtn);
 
   container.appendChild(buttons);

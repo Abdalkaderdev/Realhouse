@@ -3,6 +3,8 @@
 // Features: Track viewed properties, localStorage persistence, display widgets
 // ═══════════════════════════════════════════════════════════════════════════
 
+import { t } from '../i18n';
+
 const RECENTLY_VIEWED_KEY = 'rh-recently-viewed';
 const MAX_RECENTLY_VIEWED = 10;
 
@@ -139,11 +141,11 @@ export function createRecentlyViewedSection(
   const title = document.createElement('h2');
   title.id = 'recently-viewed-title';
   title.className = 'recently-viewed__title';
-  title.textContent = 'Recently Viewed';
+  title.textContent = t('recentlyViewed.title');
 
   const subtitle = document.createElement('p');
   subtitle.className = 'recently-viewed__subtitle';
-  subtitle.textContent = 'Properties you\'ve looked at recently';
+  subtitle.textContent = t('recentlyViewed.subtitle');
 
   titleWrapper.appendChild(title);
   titleWrapper.appendChild(subtitle);
@@ -152,7 +154,7 @@ export function createRecentlyViewedSection(
   // Clear history button
   const clearBtn = document.createElement('button');
   clearBtn.className = 'recently-viewed__clear btn btn--ghost btn--sm';
-  clearBtn.textContent = 'Clear History';
+  clearBtn.textContent = t('recentlyViewed.clearHistory');
   clearBtn.addEventListener('click', () => {
     clearRecentlyViewed();
     section.remove();
@@ -203,7 +205,7 @@ export function createRecentlyViewedWidget(
   const title = document.createElement('h4');
   title.id = 'rv-widget-title';
   title.className = 'recently-viewed-widget__title';
-  title.textContent = 'Recently Viewed';
+  title.textContent = t('recentlyViewed.title');
   widget.appendChild(title);
 
   const list = document.createElement('div');
@@ -267,7 +269,7 @@ export function createRecentlyViewedWidget(
   // Clear link
   const clearLink = document.createElement('button');
   clearLink.className = 'recently-viewed-widget__clear';
-  clearLink.textContent = 'Clear history';
+  clearLink.textContent = t('recentlyViewed.clearHistory');
   clearLink.addEventListener('click', () => {
     clearRecentlyViewed();
     widget.remove();
@@ -292,7 +294,7 @@ export function createRecentlyViewedBar(
 
   const label = document.createElement('span');
   label.className = 'recently-viewed-bar__label';
-  label.textContent = 'Recently viewed:';
+  label.textContent = t('recentlyViewed.label');
   bar.appendChild(label);
 
   const scrollContainer = document.createElement('div');

@@ -1212,6 +1212,153 @@ html[dir="rtl"] {
     }
   }
 
+  // ─── Property Detail RTL ─────────────────────────────────────────────────────
+
+  .property-detail {
+    &__status {
+      left: auto;
+      right: var(--space-4);
+    }
+
+    &__badges {
+      right: auto;
+      left: var(--space-4);
+    }
+
+    &__fullscreen-btn {
+      right: auto;
+      left: var(--space-4);
+    }
+
+    &__fullscreen-nav--prev {
+      left: auto;
+      right: var(--space-6);
+    }
+
+    &__fullscreen-nav--next {
+      right: auto;
+      left: var(--space-6);
+    }
+  }
+
+  // ─── Gallery Lightbox RTL ───────────────────────────────────────────────────────
+
+  .gallery-lightbox {
+    &__close {
+      right: auto;
+      left: 0;
+    }
+
+    &__nav--prev {
+      left: auto;
+      right: -4rem;
+
+      @media (max-width: 768px) {
+        right: 1rem;
+      }
+    }
+
+    &__nav--next {
+      right: auto;
+      left: -4rem;
+
+      @media (max-width: 768px) {
+        left: 1rem;
+      }
+    }
+  }
+
+  // ─── Project Detail RTL ─────────────────────────────────────────────────────────
+
+  .project-overview__milestones-list::before {
+    left: auto;
+    right: 6px;
+  }
+
+  .project-lightbox {
+    &__close {
+      right: auto;
+      left: var(--space-4);
+    }
+
+    &__nav--prev {
+      left: auto;
+      right: var(--space-4);
+    }
+
+    &__nav--next {
+      right: auto;
+      left: var(--space-4);
+    }
+  }
+
+  .similar-project-card__badge {
+    left: auto;
+    right: var(--space-3);
+  }
+
+  // ─── List Property RTL ──────────────────────────────────────────────────────────
+
+  .list-property-type__check {
+    right: auto;
+    left: var(--space-2);
+  }
+
+  .list-property-photo {
+    &__remove {
+      right: auto;
+      left: var(--space-1);
+    }
+
+    &__badge {
+      left: auto;
+      right: var(--space-1);
+    }
+  }
+
+  // ─── Video Tour RTL ─────────────────────────────────────────────────────────────
+
+  .video-tour-card__badge {
+    left: auto;
+    right: var(--space-2);
+  }
+
+  // ─── Floating Share RTL ─────────────────────────────────────────────────────────
+
+  .floating-share {
+    right: auto;
+    left: 1.5rem;
+
+    @media (max-width: 768px) {
+      left: 1rem;
+    }
+  }
+
+  // ─── Mobile/Select RTL ──────────────────────────────────────────────────────────
+
+  select {
+    background-position: left 16px center;
+    padding-left: 40px;
+    padding-right: var(--space-3);
+  }
+
+  // ─── Projects Page RTL ──────────────────────────────────────────────────────
+
+  .projects-page__filter-label {
+    margin-right: 0;
+    margin-left: var(--space-2);
+  }
+
+  .construction-progress__tooltip {
+    // Tooltip is already centered with left: 50%; transform: translateX(-50%)
+    // No changes needed for RTL as it uses transform-based centering
+  }
+
+  // ─── Mobile/Select RTL (Additional Rules) ──────────────────────────────────────
+
+  // PWA notification and skip link use transform-based centering
+  // which is direction-agnostic, no RTL overrides needed
+
   // ─── Print Styles ────────────────────────────────────────────────────────────
 
   @media print {

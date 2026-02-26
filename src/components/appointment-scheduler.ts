@@ -23,13 +23,49 @@ const TIME_SLOTS = [
   '09:00', '10:00', '11:00', '12:00', '13:00', '14:00', '15:00', '16:00', '17:00', '18:00'
 ];
 
-// Month names for display
-const MONTH_NAMES = [
-  'January', 'February', 'March', 'April', 'May', 'June',
-  'July', 'August', 'September', 'October', 'November', 'December'
-];
+// Get translated month names
+function getMonthNames(): string[] {
+  return [
+    t('calendar.months.january'),
+    t('calendar.months.february'),
+    t('calendar.months.march'),
+    t('calendar.months.april'),
+    t('calendar.months.may'),
+    t('calendar.months.june'),
+    t('calendar.months.july'),
+    t('calendar.months.august'),
+    t('calendar.months.september'),
+    t('calendar.months.october'),
+    t('calendar.months.november'),
+    t('calendar.months.december')
+  ];
+}
 
-const DAY_NAMES = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+// Get translated short day names
+function getDayNames(): string[] {
+  return [
+    t('calendar.days.sun'),
+    t('calendar.days.mon'),
+    t('calendar.days.tue'),
+    t('calendar.days.wed'),
+    t('calendar.days.thu'),
+    t('calendar.days.fri'),
+    t('calendar.days.sat')
+  ];
+}
+
+// Get translated full day names
+function getFullDayNames(): string[] {
+  return [
+    t('calendar.days.sunday'),
+    t('calendar.days.monday'),
+    t('calendar.days.tuesday'),
+    t('calendar.days.wednesday'),
+    t('calendar.days.thursday'),
+    t('calendar.days.friday'),
+    t('calendar.days.saturday')
+  ];
+}
 
 // Helper function to create elements
 function createElement<K extends keyof HTMLElementTagNameMap>(
@@ -46,7 +82,7 @@ function createElement<K extends keyof HTMLElementTagNameMap>(
 // Format time for display (e.g., "09:00" -> "9:00 AM")
 function formatTime(time: string): string {
   const [hours, minutes] = time.split(':').map(Number);
-  const period = hours >= 12 ? 'PM' : 'AM';
+  const period = hours >= 12 ? t('calendar.time.pm') : t('calendar.time.am');
   const displayHours = hours > 12 ? hours - 12 : hours === 0 ? 12 : hours;
   return `${displayHours}:${minutes.toString().padStart(2, '0')} ${period}`;
 }
@@ -54,8 +90,10 @@ function formatTime(time: string): string {
 // Format date for display (e.g., "2026-02-19" -> "Thursday, February 19, 2026")
 function formatDateLong(dateStr: string): string {
   const date = new Date(dateStr + 'T00:00:00');
-  const dayName = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'][date.getDay()];
-  const monthName = MONTH_NAMES[date.getMonth()];
+  const fullDayNames = getFullDayNames();
+  const monthNames = getMonthNames();
+  const dayName = fullDayNames[date.getDay()];
+  const monthName = monthNames[date.getMonth()];
   return `${dayName}, ${monthName} ${date.getDate()}, ${date.getFullYear()}`;
 }
 
@@ -168,12 +206,12 @@ export function createAppointmentScheduler(property: Property): HTMLElement {
   calendarContainer.appendChild(calendarHeader);
 
   // Day names
-  const dayNames = createElement('div', 'appointment-calendar__days');
-  DAY_NAMES.forEach(day => {
+  const dayNamesContainer = createElement('div', 'appointment-calendar__days');
+  getDayNames().forEach(day => {
     const dayEl = createElement('span', 'appointment-calendar__day-name', day);
-    dayNames.appendChild(dayEl);
+    dayNamesContainer.appendChild(dayEl);
   });
-  calendarContainer.appendChild(dayNames);
+  calendarContainer.appendChild(dayNamesContainer);
 
   // Calendar grid
   const calendarGrid = createElement('div', 'appointment-calendar__grid');
@@ -244,7 +282,7 @@ export function createAppointmentScheduler(property: Property): HTMLElement {
   nameInput.type = 'text';
   nameInput.id = 'apt-name';
   nameInput.name = 'name';
-  nameInput.placeholder = 'John Doe';
+  nameInput.placeholder = t('appointment.namePlaceholder');
   nameInput.required = true;
   nameInput.autocomplete = 'name';
   nameGroup.appendChild(nameLabel);
@@ -259,7 +297,7 @@ export function createAppointmentScheduler(property: Property): HTMLElement {
   emailInput.type = 'email';
   emailInput.id = 'apt-email';
   emailInput.name = 'email';
-  emailInput.placeholder = 'john@example.com';
+  emailInput.placeholder = t('appointment.emailPlaceholder');
   emailInput.required = true;
   emailInput.autocomplete = 'email';
   emailGroup.appendChild(emailLabel);
@@ -274,7 +312,7 @@ export function createAppointmentScheduler(property: Property): HTMLElement {
   phoneInput.type = 'tel';
   phoneInput.id = 'apt-phone';
   phoneInput.name = 'phone';
-  phoneInput.placeholder = '+1 (555) 000-0000';
+  phoneInput.placeholder = t('appointment.phonePlaceholder');
   phoneInput.required = true;
   phoneInput.autocomplete = 'tel';
   phoneGroup.appendChild(phoneLabel);
@@ -288,7 +326,7 @@ export function createAppointmentScheduler(property: Property): HTMLElement {
   const notesInput = createElement('textarea', 'appointment-form__textarea');
   notesInput.id = 'apt-notes';
   notesInput.name = 'notes';
-  notesInput.placeholder = 'Any special requests or questions...';
+  notesInput.placeholder = t('appointment.notesPlaceholder');
   notesInput.rows = 3;
   notesGroup.appendChild(notesLabel);
   notesGroup.appendChild(notesInput);
@@ -345,9 +383,10 @@ export function createAppointmentScheduler(property: Property): HTMLElement {
   function renderCalendar() {
     const year = currentMonth.getFullYear();
     const month = currentMonth.getMonth();
+    const monthNames = getMonthNames();
 
     // Update month display
-    monthDisplay.textContent = `${MONTH_NAMES[month]} ${year}`;
+    monthDisplay.textContent = `${monthNames[month]} ${year}`;
 
     // Clear grid
     while (calendarGrid.firstChild) {

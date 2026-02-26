@@ -5,6 +5,7 @@
 
 import type { Property } from '../data/properties';
 import { generatePropertySlug } from '../data/properties';
+import { t } from '../i18n';
 
 // ─── Types ───────────────────────────────────────────────────────────────────
 
@@ -72,7 +73,7 @@ function createPrintHeader(): HTMLElement {
   const logoSection = createElement('div', 'print-property-header__logo');
   logoSection.appendChild(createLogoSVG());
 
-  const brandName = createElement('span', 'print-property-header__brand', 'Real House');
+  const brandName = createElement('span', 'print-property-header__brand', 'Real House'); // Brand name kept as-is
   logoSection.appendChild(brandName);
 
   header.appendChild(logoSection);
@@ -102,13 +103,13 @@ function createPrintFooter(property: Property): HTMLElement {
   // Left side - Company info
   const leftSection = createElement('div', 'print-property-footer__left');
 
-  const brand = createElement('span', 'print-property-footer__brand', 'Real House');
+  const brand = createElement('span', 'print-property-footer__brand', 'Real House'); // Brand name kept as-is
   leftSection.appendChild(brand);
 
-  const location = createElement('span', 'print-property-footer__location', 'Gulan Street, Erbil, Kurdistan Region, Iraq');
+  const location = createElement('span', 'print-property-footer__location', t('print.officeAddress'));
   leftSection.appendChild(location);
 
-  const license = createElement('span', undefined, 'Licensed Real Estate Agency');
+  const license = createElement('span', undefined, t('print.licensedAgency'));
   leftSection.appendChild(license);
 
   footer.appendChild(leftSection);
@@ -121,13 +122,13 @@ function createPrintFooter(property: Property): HTMLElement {
     day: 'numeric'
   });
 
-  const refSpan = createElement('span', undefined, `Property Reference: ${property.id}`);
+  const refSpan = createElement('span', undefined, `${t('print.propertyReference')} ${property.id}`);
   rightSection.appendChild(refSpan);
 
-  const dateSpan = createElement('span', undefined, `Generated: ${date}`);
+  const dateSpan = createElement('span', undefined, `${t('print.generated')} ${date}`);
   rightSection.appendChild(dateSpan);
 
-  const disclaimer = createElement('span', undefined, 'Prices and availability subject to change');
+  const disclaimer = createElement('span', undefined, t('print.disclaimer'));
   rightSection.appendChild(disclaimer);
 
   footer.appendChild(rightSection);
@@ -143,13 +144,13 @@ function createQRCodeSection(property: Property): HTMLElement {
 
   const section = createElement('div', 'print-property-qr print-only');
 
-  const title = createElement('h4', 'print-property-qr__title', 'View Online');
+  const title = createElement('h4', 'print-property-qr__title', t('print.viewOnline'));
   section.appendChild(title);
 
   const qrWrapper = createElement('div', 'print-property-qr__wrapper');
   const qrImg = createElement('img', 'print-property-qr__image');
   qrImg.src = generateQRCodeURL(propertyUrl, 120);
-  qrImg.alt = 'QR Code - Scan to view property online';
+  qrImg.alt = t('print.qrCodeAlt');
   qrWrapper.appendChild(qrImg);
   section.appendChild(qrWrapper);
 
@@ -217,13 +218,13 @@ function createDownloadSVG(): SVGSVGElement {
 
 export function createPrintButton(property: Property, variant: 'icon' | 'full' = 'full'): HTMLButtonElement {
   const btn = createElement('button', `print-property-btn print-property-btn--${variant} no-print`);
-  btn.setAttribute('aria-label', 'Print or download property details as PDF');
+  btn.setAttribute('aria-label', t('print.printAriaLabel'));
   btn.setAttribute('type', 'button');
 
   btn.appendChild(createPrinterSVG());
 
   if (variant === 'full') {
-    const text = createElement('span', 'print-property-btn__text', 'Print / PDF');
+    const text = createElement('span', 'print-property-btn__text', t('print.printPdf'));
     btn.appendChild(text);
   }
 
@@ -236,13 +237,13 @@ export function createPrintButton(property: Property, variant: 'icon' | 'full' =
 
 export function createDownloadPDFButton(property: Property, variant: 'icon' | 'full' = 'full'): HTMLButtonElement {
   const btn = createElement('button', `print-property-btn print-property-btn--download print-property-btn--${variant} no-print`);
-  btn.setAttribute('aria-label', 'Download property details as PDF');
+  btn.setAttribute('aria-label', t('print.downloadAriaLabel'));
   btn.setAttribute('type', 'button');
 
   btn.appendChild(createDownloadSVG());
 
   if (variant === 'full') {
-    const text = createElement('span', 'print-property-btn__text', 'Download PDF');
+    const text = createElement('span', 'print-property-btn__text', t('print.downloadPdf'));
     btn.appendChild(text);
   }
 

@@ -4,6 +4,7 @@
 // ═══════════════════════════════════════════════════════════════════════════
 
 import { projects, getProjectById, formatPriceRange, type Project } from '../data/projects';
+import { t } from '../i18n';
 
 const MAX_COMPARE_PROJECTS = 3;
 const STORAGE_KEY = 'rh-compare-projects';
@@ -88,7 +89,7 @@ function compareNumericValues(
 
   return values.map((_, index) => {
     if (index === bestIndex) {
-      return { type: 'best', label: type === 'lower' ? 'Best Value' : 'Best' };
+      return { type: 'best', label: type === 'lower' ? t('projectCompare.bestValue') : t('projectCompare.best') };
     }
     // Check if it's the worst (only if more than 2 projects)
     if (projects.length > 2) {
@@ -167,7 +168,7 @@ export function createProjectComparisonBar(): HTMLElement {
 
   const compareBtn = document.createElement('a');
   compareBtn.className = 'btn btn--primary project-comparison-bar__compare-btn';
-  compareBtn.textContent = 'Compare Projects';
+  compareBtn.textContent = t('projectCompare.compareProjects');
   compareBtn.href = '/projects/compare';
   compareBtn.setAttribute('data-route', '');
   compareBtn.id = 'project-comparison-bar-compare-btn';
@@ -175,7 +176,7 @@ export function createProjectComparisonBar(): HTMLElement {
 
   const clearBtn = document.createElement('button');
   clearBtn.className = 'btn btn--ghost project-comparison-bar__clear-btn';
-  clearBtn.textContent = 'Clear All';
+  clearBtn.textContent = t('projectCompare.clearAll');
   clearBtn.addEventListener('click', () => {
     clearProjectCompare();
   });
@@ -206,7 +207,7 @@ export function updateProjectComparisonBar(): void {
 
   // Update compare button text
   if (compareBtn) {
-    compareBtn.textContent = `Compare Projects (${projectsList.length})`;
+    compareBtn.textContent = `${t('projectCompare.compareProjects')} (${projectsList.length})`;
   }
 
   // Update projects preview
@@ -245,7 +246,7 @@ export function updateProjectComparisonBar(): void {
       // Remove button
       const removeBtn = document.createElement('button');
       removeBtn.className = 'project-comparison-bar__item-remove';
-      removeBtn.setAttribute('aria-label', 'Remove from comparison');
+      removeBtn.setAttribute('aria-label', t('projectCompare.removeFromComparison'));
       removeBtn.textContent = '\u00D7';
       removeBtn.addEventListener('click', () => {
         removeProjectFromCompare(project.id);
@@ -262,7 +263,7 @@ export function updateProjectComparisonBar(): void {
 
       const placeholder = document.createElement('span');
       placeholder.className = 'project-comparison-bar__item-placeholder';
-      placeholder.textContent = `+ Add Project`;
+      placeholder.textContent = t('projectCompare.addProject');
       emptySlot.appendChild(placeholder);
 
       projectsContainer.appendChild(emptySlot);
@@ -285,7 +286,7 @@ export function createProjectCompareButton(projectId: string): HTMLElement {
   const button = document.createElement('button');
   button.className = 'project-card__compare';
   button.setAttribute('data-project-id', projectId);
-  button.setAttribute('aria-label', 'Add to comparison');
+  button.setAttribute('aria-label', t('projectCompare.addToComparison'));
 
   const checkbox = document.createElement('span');
   checkbox.className = 'compare-checkbox';
@@ -293,7 +294,7 @@ export function createProjectCompareButton(projectId: string): HTMLElement {
 
   const label = document.createElement('span');
   label.className = 'compare-label';
-  label.textContent = 'Compare';
+  label.textContent = t('projectCompare.compare');
   button.appendChild(label);
 
   // Set initial state
@@ -333,7 +334,7 @@ function showProjectMaxReachedToast(): void {
 
   const toast = document.createElement('div');
   toast.className = 'project-comparison-toast';
-  toast.textContent = `Maximum ${MAX_COMPARE_PROJECTS} projects can be compared`;
+  toast.textContent = t('projectCompare.maxProjectsMessage');
   document.body.appendChild(toast);
 
   requestAnimationFrame(() => {
@@ -445,7 +446,7 @@ export function renderProjectComparisonContent(projectsList: Project[]): HTMLEle
 
     // Remove button
     const removeBtn = createElement('button', 'project-compare-card__remove');
-    removeBtn.setAttribute('aria-label', 'Remove from comparison');
+    removeBtn.setAttribute('aria-label', t('projectCompare.removeFromComparison'));
     removeBtn.textContent = '\u00D7';
     removeBtn.addEventListener('click', () => {
       removeProjectFromCompare(project.id);
@@ -481,7 +482,7 @@ export function renderProjectComparisonContent(projectsList: Project[]): HTMLEle
     const viewBtn = createElement('a', 'btn btn--ghost btn--sm project-compare-card__view');
     viewBtn.href = `/projects/${project.id}`;
     viewBtn.setAttribute('data-route', '');
-    viewBtn.textContent = 'View Details';
+    viewBtn.textContent = t('projectCompare.viewDetails');
     card.appendChild(viewBtn);
 
     cardsRow.appendChild(card);
@@ -494,13 +495,13 @@ export function renderProjectComparisonContent(projectsList: Project[]): HTMLEle
 
   // ─── Price Section ──────────────────────────────────────────────────────────
   const priceSection = createElement('div', 'project-compare-section');
-  const priceHeader = createElement('h4', 'project-compare-section__title', 'Pricing');
+  const priceHeader = createElement('h4', 'project-compare-section__title', t('projectCompare.pricing'));
   priceSection.appendChild(priceHeader);
 
   // Price Range
   const priceIndicators = comparePriceMin(projectsList);
   priceSection.appendChild(createProjectCompareRow(
-    'Starting From',
+    t('projectCompare.startingFrom'),
     projectsList.map((p, i) => {
       const el = createElement('span', 'project-compare-value--price');
       el.textContent = `$${p.priceRange.min.toLocaleString()}`;
@@ -509,7 +510,7 @@ export function renderProjectComparisonContent(projectsList: Project[]): HTMLEle
   ));
 
   priceSection.appendChild(createProjectCompareRow(
-    'Maximum Price',
+    t('projectCompare.maximumPrice'),
     projectsList.map(p => {
       const el = createElement('span', 'project-compare-value--price');
       el.textContent = `$${p.priceRange.max.toLocaleString()}`;
@@ -518,7 +519,7 @@ export function renderProjectComparisonContent(projectsList: Project[]): HTMLEle
   ));
 
   priceSection.appendChild(createProjectCompareRow(
-    'Price Range',
+    t('projectCompare.priceRange'),
     projectsList.map(p => {
       const el = createElement('span');
       el.textContent = formatPriceRange(p);
@@ -530,11 +531,11 @@ export function renderProjectComparisonContent(projectsList: Project[]): HTMLEle
 
   // ─── Units Section ──────────────────────────────────────────────────────────
   const unitsSection = createElement('div', 'project-compare-section');
-  const unitsHeader = createElement('h4', 'project-compare-section__title', 'Units & Availability');
+  const unitsHeader = createElement('h4', 'project-compare-section__title', t('projectCompare.unitsAvailability'));
   unitsSection.appendChild(unitsHeader);
 
   unitsSection.appendChild(createProjectCompareRow(
-    'Total Units',
+    t('projectCompare.totalUnits'),
     projectsList.map(p => {
       const el = createElement('span');
       el.textContent = p.totalUnits.toLocaleString();
@@ -546,12 +547,12 @@ export function renderProjectComparisonContent(projectsList: Project[]): HTMLEle
 
   // ─── Project Details Section ────────────────────────────────────────────────
   const detailsSection = createElement('div', 'project-compare-section');
-  const detailsHeader = createElement('h4', 'project-compare-section__title', 'Project Details');
+  const detailsHeader = createElement('h4', 'project-compare-section__title', t('projectCompare.projectDetails'));
   detailsSection.appendChild(detailsHeader);
 
   // Status
   detailsSection.appendChild(createProjectCompareRow(
-    'Status',
+    t('projectCompare.status'),
     projectsList.map(p => {
       const el = createElement('span', `project-compare-status project-compare-status--${p.status.toLowerCase().replace(' ', '-')}`);
       el.textContent = p.status;
@@ -561,7 +562,7 @@ export function renderProjectComparisonContent(projectsList: Project[]): HTMLEle
 
   // Completion Date
   detailsSection.appendChild(createProjectCompareRow(
-    'Completion',
+    t('projectCompare.completion'),
     projectsList.map(p => {
       const el = createElement('span');
       el.textContent = p.completionDate;
@@ -571,7 +572,7 @@ export function renderProjectComparisonContent(projectsList: Project[]): HTMLEle
 
   // Location
   detailsSection.appendChild(createProjectCompareRow(
-    'District',
+    t('projectCompare.district'),
     projectsList.map(p => {
       const el = createElement('span');
       el.textContent = p.location.district;
@@ -580,7 +581,7 @@ export function renderProjectComparisonContent(projectsList: Project[]): HTMLEle
   ));
 
   detailsSection.appendChild(createProjectCompareRow(
-    'City',
+    t('projectCompare.city'),
     projectsList.map(p => {
       const el = createElement('span');
       el.textContent = p.location.city;
@@ -592,16 +593,16 @@ export function renderProjectComparisonContent(projectsList: Project[]): HTMLEle
 
   // ─── Amenities Section ──────────────────────────────────────────────────────
   const amenitiesSection = createElement('div', 'project-compare-section');
-  const amenitiesHeader = createElement('h4', 'project-compare-section__title', 'Amenities & Features');
+  const amenitiesHeader = createElement('h4', 'project-compare-section__title', t('projectCompare.amenitiesFeatures'));
   amenitiesSection.appendChild(amenitiesHeader);
 
   // Amenities count
   const amenitiesIndicators = compareAmenitiesCount(projectsList);
   amenitiesSection.appendChild(createProjectCompareRow(
-    'Total Amenities',
+    t('projectCompare.totalAmenities'),
     projectsList.map((p, i) => {
       const el = createElement('span');
-      el.textContent = `${p.amenities.length} features`;
+      el.textContent = `${p.amenities.length} ${t('projectCompare.features')}`;
       return { element: el, indicator: amenitiesIndicators[i] };
     })
   ));
@@ -711,17 +712,17 @@ export function renderEmptyComparisonState(): HTMLElement {
   iconWrapper.appendChild(svg);
   empty.appendChild(iconWrapper);
 
-  const emptyTitle = createElement('h3', 'project-compare__empty-title', 'No Projects to Compare');
+  const emptyTitle = createElement('h3', 'project-compare__empty-title', t('projectCompare.noProjects'));
   empty.appendChild(emptyTitle);
 
   const emptyText = createElement('p', 'project-compare__empty-text');
-  emptyText.textContent = 'Add projects to comparison from the projects page to see them side by side. You can compare up to 3 projects at once.';
+  emptyText.textContent = t('projectCompare.emptyStateDescription');
   empty.appendChild(emptyText);
 
   const browseLink = createElement('a', 'btn btn--primary');
   browseLink.href = '/projects';
   browseLink.setAttribute('data-route', '');
-  browseLink.textContent = 'Browse Projects';
+  browseLink.textContent = t('projectCompare.browseProjects');
   empty.appendChild(browseLink);
 
   return empty;
@@ -731,7 +732,7 @@ export function renderEmptyComparisonState(): HTMLElement {
 export function createShareComparisonSection(): HTMLElement {
   const shareSection = createElement('div', 'project-compare__share');
 
-  const shareTitle = createElement('h4', 'project-compare__share-title', 'Share This Comparison');
+  const shareTitle = createElement('h4', 'project-compare__share-title', t('projectCompare.shareComparison'));
   shareSection.appendChild(shareTitle);
 
   const shareActions = createElement('div', 'project-compare__share-actions');
@@ -760,20 +761,20 @@ export function createShareComparisonSection(): HTMLElement {
   copyIcon.appendChild(copyPath);
 
   copyBtn.appendChild(copyIcon);
-  copyBtn.appendChild(document.createTextNode(' Copy Link'));
+  copyBtn.appendChild(document.createTextNode(' ' + t('projectCompare.copyLink')));
 
   copyBtn.addEventListener('click', async () => {
     const url = generateComparisonShareUrl();
     try {
       await navigator.clipboard.writeText(url);
-      copyBtn.textContent = 'Copied!';
+      copyBtn.textContent = t('projectCompare.copied');
       copyBtn.classList.add('success');
       setTimeout(() => {
         while (copyBtn.firstChild) {
           copyBtn.removeChild(copyBtn.firstChild);
         }
         copyBtn.appendChild(copyIcon.cloneNode(true));
-        copyBtn.appendChild(document.createTextNode(' Copy Link'));
+        copyBtn.appendChild(document.createTextNode(' ' + t('projectCompare.copyLink')));
         copyBtn.classList.remove('success');
       }, 2000);
     } catch {
@@ -784,13 +785,13 @@ export function createShareComparisonSection(): HTMLElement {
       input.select();
       document.execCommand('copy');
       document.body.removeChild(input);
-      copyBtn.textContent = 'Copied!';
+      copyBtn.textContent = t('projectCompare.copied');
       setTimeout(() => {
         while (copyBtn.firstChild) {
           copyBtn.removeChild(copyBtn.firstChild);
         }
         copyBtn.appendChild(copyIcon.cloneNode(true));
-        copyBtn.appendChild(document.createTextNode(' Copy Link'));
+        copyBtn.appendChild(document.createTextNode(' ' + t('projectCompare.copyLink')));
       }, 2000);
     }
   });

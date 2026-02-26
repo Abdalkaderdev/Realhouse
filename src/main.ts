@@ -10,7 +10,7 @@ import './styles/main.scss';
 import { App } from './app';
 
 // Import i18n
-import { initI18n, getCurrentLanguage, updateDocumentLanguage } from './i18n';
+import { initI18n, getCurrentLanguage, updateDocumentLanguage, t } from './i18n';
 
 // Import performance modules
 import {
@@ -93,14 +93,14 @@ function showUpdateNotification(): void {
   notification.className = 'pwa-update-notification';
 
   const text = document.createElement('p');
-  text.textContent = 'A new version is available!';
+  text.textContent = t('pwa.updateAvailable');
 
   const updateBtn = document.createElement('button');
-  updateBtn.textContent = 'Update Now';
+  updateBtn.textContent = t('pwa.updateNow');
   updateBtn.addEventListener('click', () => window.location.reload());
 
   const laterBtn = document.createElement('button');
-  laterBtn.textContent = 'Later';
+  laterBtn.textContent = t('pwa.later');
   laterBtn.addEventListener('click', () => notification.remove());
 
   notification.appendChild(text);

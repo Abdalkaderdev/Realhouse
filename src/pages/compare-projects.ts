@@ -12,6 +12,7 @@ import {
   renderEmptyComparisonState,
   createShareComparisonSection
 } from '../components/project-compare';
+import { t } from '../i18n';
 
 // ─── Helper Functions ─────────────────────────────────────────────────────────
 function createElement<K extends keyof HTMLElementTagNameMap>(
@@ -93,21 +94,21 @@ export function renderProjectComparePage(): DocumentFragment {
   const breadcrumbList = createElement('ol', 'breadcrumb');
 
   const homeItem = createElement('li', 'breadcrumb__item');
-  const homeLink = createElement('a', 'breadcrumb__link', 'Home');
+  const homeLink = createElement('a', 'breadcrumb__link', t('compareProjects.home'));
   homeLink.href = '/';
   homeLink.setAttribute('data-route', '');
   homeItem.appendChild(homeLink);
   breadcrumbList.appendChild(homeItem);
 
   const projectsItem = createElement('li', 'breadcrumb__item');
-  const projectsLink = createElement('a', 'breadcrumb__link', 'Projects');
+  const projectsLink = createElement('a', 'breadcrumb__link', t('compareProjects.projects'));
   projectsLink.href = '/projects';
   projectsLink.setAttribute('data-route', '');
   projectsItem.appendChild(projectsLink);
   breadcrumbList.appendChild(projectsItem);
 
   const currentItem = createElement('li', 'breadcrumb__item breadcrumb__item--current');
-  const currentSpan = createElement('span', 'breadcrumb__text', 'Compare Projects');
+  const currentSpan = createElement('span', 'breadcrumb__text', t('compareProjects.compareProjects'));
   currentSpan.setAttribute('aria-current', 'page');
   currentItem.appendChild(currentSpan);
   breadcrumbList.appendChild(currentItem);
@@ -118,22 +119,22 @@ export function renderProjectComparePage(): DocumentFragment {
   // ─── Header ─────────────────────────────────────────────────────────────────
   const header = createElement('div', 'project-compare-page__header');
 
-  const title = createElement('h1', 'project-compare-page__title', 'Compare Development Projects');
+  const title = createElement('h1', 'project-compare-page__title', t('compareProjects.compareDevelopmentProjects'));
   header.appendChild(title);
 
   const projects = getCompareProjects();
 
   const subtitle = createElement('p', 'project-compare-page__subtitle');
   if (projects.length > 0) {
-    subtitle.textContent = `Comparing ${projects.length} project${projects.length !== 1 ? 's' : ''} side by side. Review pricing, amenities, and availability to find your ideal investment.`;
+    subtitle.textContent = t('compareProjects.comparingProjects', { count: projects.length, plural: projects.length !== 1 ? 's' : '' });
   } else {
-    subtitle.textContent = 'Compare up to 3 development projects side by side to make informed investment decisions.';
+    subtitle.textContent = t('compareProjects.compareUpTo3');
   }
   header.appendChild(subtitle);
 
   // Clear all button (only show if there are projects)
   if (projects.length > 0) {
-    const clearBtn = createElement('button', 'btn btn--ghost project-compare-page__clear-btn', 'Clear All');
+    const clearBtn = createElement('button', 'btn btn--ghost project-compare-page__clear-btn', t('compareProjects.clearAll'));
     clearBtn.addEventListener('click', () => {
       clearProjectCompare();
       // Re-render page
@@ -173,11 +174,11 @@ export function renderProjectComparePage(): DocumentFragment {
 
   const ctaContent = createElement('div', 'project-compare-page__cta-content');
 
-  const ctaTitle = createElement('h3', 'project-compare-page__cta-title', 'Need Help Deciding?');
+  const ctaTitle = createElement('h3', 'project-compare-page__cta-title', t('compareProjects.needHelpDeciding'));
   ctaContent.appendChild(ctaTitle);
 
   const ctaText = createElement('p', 'project-compare-page__cta-text');
-  ctaText.textContent = 'Our property experts can help you choose the perfect development project based on your investment goals and budget.';
+  ctaText.textContent = t('compareProjects.expertHelpText');
   ctaContent.appendChild(ctaText);
 
   const ctaActions = createElement('div', 'project-compare-page__cta-actions');
@@ -185,13 +186,13 @@ export function renderProjectComparePage(): DocumentFragment {
   const contactBtn = createElement('a', 'btn btn--primary');
   contactBtn.href = '/contact';
   contactBtn.setAttribute('data-route', '');
-  contactBtn.textContent = 'Contact Our Team';
+  contactBtn.textContent = t('compareProjects.contactOurTeam');
   ctaActions.appendChild(contactBtn);
 
   const browseBtn = createElement('a', 'btn btn--ghost');
   browseBtn.href = '/projects';
   browseBtn.setAttribute('data-route', '');
-  browseBtn.textContent = 'Browse More Projects';
+  browseBtn.textContent = t('compareProjects.browseMoreProjects');
   ctaActions.appendChild(browseBtn);
 
   ctaContent.appendChild(ctaActions);
@@ -218,7 +219,7 @@ export function renderProjectComparePage(): DocumentFragment {
   arrowIcon.appendChild(arrowPath);
 
   backLink.appendChild(arrowIcon);
-  backLink.appendChild(document.createTextNode(' Back to Projects'));
+  backLink.appendChild(document.createTextNode(t('compareProjects.backToProjects')));
 
   backSection.appendChild(backLink);
   container.appendChild(backSection);

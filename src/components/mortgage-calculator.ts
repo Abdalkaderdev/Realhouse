@@ -4,7 +4,7 @@
 // Monthly Payment, Total Payment, Interest Paid, Amortization, Chart, Print
 // ═══════════════════════════════════════════════════════════════════════════
 
-import { t } from '../i18n';
+import { t, getCurrentLanguage, type Language } from '../i18n';
 
 // ─── Types ───────────────────────────────────────────────────────────────────
 
@@ -46,8 +46,17 @@ function createElement<K extends keyof HTMLElementTagNameMap>(
   return el;
 }
 
+function getLocale(): string {
+  const localeMap: Record<Language, string> = {
+    en: 'en-US',
+    ar: 'ar-IQ',
+    ckb: 'ckb-IQ',
+  };
+  return localeMap[getCurrentLanguage()];
+}
+
 function formatCurrency(amount: number): string {
-  return new Intl.NumberFormat('en-US', {
+  return new Intl.NumberFormat(getLocale(), {
     style: 'currency',
     currency: 'USD',
     minimumFractionDigits: 0,
@@ -56,7 +65,7 @@ function formatCurrency(amount: number): string {
 }
 
 function formatCurrencyDetailed(amount: number): string {
-  return new Intl.NumberFormat('en-US', {
+  return new Intl.NumberFormat(getLocale(), {
     style: 'currency',
     currency: 'USD',
     minimumFractionDigits: 2,
@@ -589,7 +598,7 @@ export function createMortgageCalculator(options: MortgageCalculatorOptions = {}
   const resetBtn = createElement('button', 'btn btn--ghost mortgage-calc__reset');
   resetBtn.type = 'button';
   resetBtn.appendChild(createResetIcon());
-  const resetText = document.createTextNode(' Reset');
+  const resetText = document.createTextNode(` ${t('mortgage.reset')}`);
   resetBtn.appendChild(resetText);
   buttonsGroup.appendChild(resetBtn);
 
@@ -708,7 +717,7 @@ export function createMortgageCalculator(options: MortgageCalculatorOptions = {}
     const html = doc.createElement('html');
     const head = doc.createElement('head');
     const title = doc.createElement('title');
-    title.textContent = 'Mortgage Calculator Results - Real House';
+    title.textContent = t('mortgage.pageTitle');
     head.appendChild(title);
 
     const style = doc.createElement('style');
@@ -851,7 +860,7 @@ export function createMortgageCalculator(options: MortgageCalculatorOptions = {}
         toggleBtns.forEach(b => b.classList.remove('active'));
         btn.classList.add('active');
 
-        const isYearly = btn.textContent === 'Yearly';
+        const isYearly = btn.textContent === t('mortgage.yearly');
         const newTable = createAmortizationTable(currentResult.monthlyBreakdown, isYearly);
         const amortization = container.querySelector('.mortgage-calc__amortization');
         if (amortization && amortization.parentNode) {

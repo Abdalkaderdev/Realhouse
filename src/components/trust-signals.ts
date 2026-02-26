@@ -3,6 +3,7 @@
 // ═══════════════════════════════════════════════════════════════════════════
 
 import { agents, trustBadges, enhancedStats, featuredInMedia, partnerLogos } from '../data/agents';
+import { t } from '../i18n';
 
 // Helper function to create elements
 function createElement<K extends keyof HTMLElementTagNameMap>(
@@ -61,10 +62,10 @@ export function createEnhancedStatsSection(): HTMLElement {
   // Header
   const header = createElement('div', 'stats__header');
   const title = createElement('h2', 'stats__title');
-  title.textContent = 'Trusted by ';
-  const em = createElement('em', undefined, 'Hundreds');
+  title.textContent = t('trustSignals.trustedByPrefix');
+  const em = createElement('em', undefined, t('trustSignals.trustedByEmphasis'));
   title.appendChild(em);
-  title.appendChild(document.createTextNode(' of Families'));
+  title.appendChild(document.createTextNode(t('trustSignals.trustedBySuffix')));
   header.appendChild(title);
   container.appendChild(header);
 
@@ -128,7 +129,7 @@ export function createPartnersSection(): HTMLElement {
 
   const header = createElement('div', 'partners__header');
   const title = createElement('h3', 'partners__title', 'Trusted Developer Partners');
-  const subtitle = createElement('p', 'partners__subtitle', 'We work exclusively with Erbil\'s most reputable developers');
+  const subtitle = createElement('p', 'partners__subtitle', t('trustSignals.developerSubtitle'));
   header.appendChild(title);
   header.appendChild(subtitle);
   container.appendChild(header);
@@ -156,13 +157,13 @@ export function createAgentShowcaseSection(): HTMLElement {
 
   const header = createElement('div', 'agent-showcase__header');
   const title = createElement('h2', 'agent-showcase__title');
-  title.textContent = 'Meet Our ';
-  const em = createElement('em', undefined, 'Expert');
+  title.textContent = t('trustSignals.meetOurPrefix');
+  const em = createElement('em', undefined, t('trustSignals.meetOurEmphasis'));
   title.appendChild(em);
-  title.appendChild(document.createTextNode(' Team'));
+  title.appendChild(document.createTextNode(t('trustSignals.meetOurSuffix')));
   header.appendChild(title);
 
-  const subtitle = createElement('p', 'agent-showcase__subtitle', 'Dedicated professionals committed to finding your perfect property.');
+  const subtitle = createElement('p', 'agent-showcase__subtitle', t('trustSignals.teamSubtitle'));
   header.appendChild(subtitle);
   container.appendChild(header);
 

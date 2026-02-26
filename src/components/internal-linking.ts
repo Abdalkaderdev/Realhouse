@@ -166,21 +166,21 @@ export function injectBreadcrumbSchema(items: BreadcrumbItem[]): void {
 // ═══════════════════════════════════════════════════════════════════════════
 
 export function getHomeBreadcrumbs(): BreadcrumbItem[] {
-  return [{ name: 'Home', url: '/', current: true }];
+  return [{ name: t('breadcrumbs.home'), url: '/', current: true }];
 }
 
 export function getPropertiesBreadcrumbs(): BreadcrumbItem[] {
   return [
-    { name: 'Home', url: '/' },
-    { name: 'Properties for Sale & Rent', url: '/properties', current: true }
+    { name: t('breadcrumbs.home'), url: '/' },
+    { name: t('breadcrumbs.propertiesForSaleRent'), url: '/properties', current: true }
   ];
 }
 
 export function getPropertyDetailBreadcrumbs(property: Property): BreadcrumbItem[] {
   const slug = generatePropertySlug(property);
   return [
-    { name: 'Home', url: '/' },
-    { name: 'Properties', url: '/properties' },
+    { name: t('breadcrumbs.home'), url: '/' },
+    { name: t('breadcrumbs.properties'), url: '/properties' },
     { name: `${property.type}s in ${property.location.district}`, url: `/properties?type=${property.type}` },
     { name: property.title, url: `/properties/${slug}`, current: true }
   ];
@@ -188,30 +188,30 @@ export function getPropertyDetailBreadcrumbs(property: Property): BreadcrumbItem
 
 export function getProjectsBreadcrumbs(): BreadcrumbItem[] {
   return [
-    { name: 'Home', url: '/' },
-    { name: 'Development Projects in Erbil', url: '/projects', current: true }
+    { name: t('breadcrumbs.home'), url: '/' },
+    { name: t('breadcrumbs.developmentProjectsErbil'), url: '/projects', current: true }
   ];
 }
 
 export function getProjectDetailBreadcrumbs(project: Project): BreadcrumbItem[] {
   return [
-    { name: 'Home', url: '/' },
-    { name: 'Projects', url: '/projects' },
+    { name: t('breadcrumbs.home'), url: '/' },
+    { name: t('breadcrumbs.projects'), url: '/projects' },
     { name: project.name, url: `/projects/${project.id}`, current: true }
   ];
 }
 
 export function getBlogBreadcrumbs(): BreadcrumbItem[] {
   return [
-    { name: 'Home', url: '/' },
-    { name: 'Real Estate Blog & Insights', url: '/blog', current: true }
+    { name: t('breadcrumbs.home'), url: '/' },
+    { name: t('breadcrumbs.realEstateBlog'), url: '/blog', current: true }
   ];
 }
 
 export function getBlogPostBreadcrumbs(post: BlogPost): BreadcrumbItem[] {
   return [
-    { name: 'Home', url: '/' },
-    { name: 'Blog', url: '/blog' },
+    { name: t('breadcrumbs.home'), url: '/' },
+    { name: t('breadcrumbs.blog'), url: '/blog' },
     { name: post.category, url: `/blog?category=${encodeURIComponent(post.category)}` },
     { name: post.title.length > 50 ? post.title.substring(0, 50) + '...' : post.title, url: `/blog/${post.slug}`, current: true }
   ];
@@ -219,87 +219,87 @@ export function getBlogPostBreadcrumbs(post: BlogPost): BreadcrumbItem[] {
 
 export function getAboutBreadcrumbs(): BreadcrumbItem[] {
   return [
-    { name: 'Home', url: '/' },
-    { name: 'About Real House', url: '/about', current: true }
+    { name: t('breadcrumbs.home'), url: '/' },
+    { name: t('breadcrumbs.aboutRealHouse'), url: '/about', current: true }
   ];
 }
 
 export function getContactBreadcrumbs(): BreadcrumbItem[] {
   return [
-    { name: 'Home', url: '/' },
-    { name: 'Contact Us', url: '/contact', current: true }
+    { name: t('breadcrumbs.home'), url: '/' },
+    { name: t('breadcrumbs.contactUs'), url: '/contact', current: true }
   ];
 }
 
 export function getFAQBreadcrumbs(): BreadcrumbItem[] {
   return [
-    { name: 'Home', url: '/' },
-    { name: 'Frequently Asked Questions', url: '/faq', current: true }
+    { name: t('breadcrumbs.home'), url: '/' },
+    { name: t('breadcrumbs.faq'), url: '/faq', current: true }
   ];
 }
 
 export function getFavoritesBreadcrumbs(): BreadcrumbItem[] {
   return [
-    { name: 'Home', url: '/' },
-    { name: 'My Saved Properties', url: '/favorites', current: true }
+    { name: t('breadcrumbs.home'), url: '/' },
+    { name: t('breadcrumbs.mySavedProperties'), url: '/favorites', current: true }
   ];
 }
 
 export function getCompareBreadcrumbs(): BreadcrumbItem[] {
   return [
-    { name: 'Home', url: '/' },
-    { name: 'Properties', url: '/properties' },
-    { name: 'Compare Properties', url: '/compare', current: true }
+    { name: t('breadcrumbs.home'), url: '/' },
+    { name: t('breadcrumbs.properties'), url: '/properties' },
+    { name: t('breadcrumbs.compareProperties'), url: '/compare', current: true }
   ];
 }
 
 export function getPrivacyBreadcrumbs(): BreadcrumbItem[] {
   return [
-    { name: 'Home', url: '/' },
-    { name: 'Privacy Policy', url: '/privacy', current: true }
+    { name: t('breadcrumbs.home'), url: '/' },
+    { name: t('breadcrumbs.privacyPolicy'), url: '/privacy', current: true }
   ];
 }
 
 export function getTermsBreadcrumbs(): BreadcrumbItem[] {
   return [
-    { name: 'Home', url: '/' },
-    { name: 'Terms of Service', url: '/terms', current: true }
+    { name: t('breadcrumbs.home'), url: '/' },
+    { name: t('breadcrumbs.termsOfService'), url: '/terms', current: true }
   ];
 }
 
 export function getSitemapBreadcrumbs(): BreadcrumbItem[] {
   return [
-    { name: 'Home', url: '/' },
-    { name: 'Sitemap', url: '/sitemap', current: true }
+    { name: t('breadcrumbs.home'), url: '/' },
+    { name: t('breadcrumbs.sitemap'), url: '/sitemap', current: true }
   ];
 }
 
 // Hub page breadcrumbs
 export function getBuyBreadcrumbs(): BreadcrumbItem[] {
   return [
-    { name: 'Home', url: '/' },
-    { name: 'Properties for Sale in Erbil', url: '/buy', current: true }
+    { name: t('breadcrumbs.home'), url: '/' },
+    { name: t('breadcrumbs.propertiesForSaleErbil'), url: '/buy', current: true }
   ];
 }
 
 export function getRentBreadcrumbs(): BreadcrumbItem[] {
   return [
-    { name: 'Home', url: '/' },
-    { name: 'Properties for Rent in Erbil', url: '/rent', current: true }
+    { name: t('breadcrumbs.home'), url: '/' },
+    { name: t('breadcrumbs.propertiesForRentErbil'), url: '/rent', current: true }
   ];
 }
 
 export function getInvestBreadcrumbs(): BreadcrumbItem[] {
   return [
-    { name: 'Home', url: '/' },
-    { name: 'Investment Properties in Erbil', url: '/invest', current: true }
+    { name: t('breadcrumbs.home'), url: '/' },
+    { name: t('breadcrumbs.investmentPropertiesErbil'), url: '/invest', current: true }
   ];
 }
 
 export function getLuxuryBreadcrumbs(): BreadcrumbItem[] {
   return [
-    { name: 'Home', url: '/' },
-    { name: 'Luxury Properties in Erbil', url: '/luxury', current: true }
+    { name: t('breadcrumbs.home'), url: '/' },
+    { name: t('breadcrumbs.luxuryPropertiesErbil'), url: '/luxury', current: true }
   ];
 }
 
@@ -483,11 +483,11 @@ export function createEnhancedFooter(): HTMLElement {
   const logoIcon = createElement('span', 'footer__logo-icon');
   logoIcon.appendChild(createLogoSVG());
   logoDiv.appendChild(logoIcon);
-  const logoText = createElement('span', 'footer__logo-text', 'Real House');
+  const logoText = createElement('span', 'footer__logo-text', t('footer.realHouse'));
   logoDiv.appendChild(logoText);
   brand.appendChild(logoDiv);
 
-  const tagline = createElement('p', 'footer__tagline', 'Your trusted partner for luxury real estate in Erbil, Kurdistan. Find your dream property with expert guidance.');
+  const tagline = createElement('p', 'footer__tagline', t('footer.tagline'));
   brand.appendChild(tagline);
 
   // Contact info
@@ -513,14 +513,14 @@ export function createEnhancedFooter(): HTMLElement {
   mainPagesCol.appendChild(createElement('h4', undefined, t('footer.quickLinks')));
 
   const mainPages = [
-    { name: 'Home', url: '/' },
-    { name: 'All Properties', url: '/properties' },
-    { name: 'Development Projects', url: '/projects' },
-    { name: 'Real Estate Blog', url: '/blog' },
-    { name: 'About Us', url: '/about' },
-    { name: 'Contact Us', url: '/contact' },
-    { name: 'FAQ', url: '/faq' },
-    { name: 'Site Map', url: '/sitemap' }
+    { name: t('footer.home'), url: '/' },
+    { name: t('footer.allProperties'), url: '/properties' },
+    { name: t('footer.developmentProjects'), url: '/projects' },
+    { name: t('footer.realEstateBlog'), url: '/blog' },
+    { name: t('footer.aboutUs'), url: '/about' },
+    { name: t('footer.contactUs'), url: '/contact' },
+    { name: t('footer.faq'), url: '/faq' },
+    { name: t('footer.siteMap'), url: '/sitemap' }
   ];
 
   mainPages.forEach(page => {
@@ -537,13 +537,13 @@ export function createEnhancedFooter(): HTMLElement {
   typesCol.appendChild(createElement('h4', undefined, t('footer.propertyTypes')));
 
   const propertyTypes = [
-    { name: 'Apartments for Sale', url: '/properties?type=Apartment' },
-    { name: 'Villas in Erbil', url: '/properties?type=Villa' },
-    { name: 'Penthouses', url: '/properties?type=Penthouse' },
-    { name: 'Townhouses', url: '/properties?type=Townhouse' },
-    { name: 'Commercial Properties', url: '/properties?type=Commercial' },
-    { name: 'Duplex Apartments', url: '/properties?type=Duplex' },
-    { name: 'Land for Sale', url: '/properties?type=Land' }
+    { name: t('footer.apartmentsForSale'), url: '/properties?type=Apartment' },
+    { name: t('footer.villasInErbil'), url: '/properties?type=Villa' },
+    { name: t('footer.penthouses'), url: '/properties?type=Penthouse' },
+    { name: t('footer.townhouses'), url: '/properties?type=Townhouse' },
+    { name: t('footer.commercialProperties'), url: '/properties?type=Commercial' },
+    { name: t('footer.duplexApartments'), url: '/properties?type=Duplex' },
+    { name: t('footer.landForSale'), url: '/properties?type=Land' }
   ];
 
   propertyTypes.forEach(type => {
@@ -560,13 +560,13 @@ export function createEnhancedFooter(): HTMLElement {
   browseCol.appendChild(createElement('h4', undefined, t('footer.browseProperties')));
 
   const browseLinks = [
-    { name: 'Properties for Sale', url: '/buy' },
-    { name: 'Properties for Rent', url: '/rent' },
-    { name: 'Investment Properties', url: '/invest' },
-    { name: 'Luxury Properties', url: '/luxury' },
-    { name: 'New Listings', url: '/properties?badges=New' },
-    { name: 'Hot Deals', url: '/properties?badges=Hot' },
-    { name: 'Compare Properties', url: '/compare' }
+    { name: t('footer.propertiesForSale'), url: '/buy' },
+    { name: t('footer.propertiesForRent'), url: '/rent' },
+    { name: t('footer.investmentProperties'), url: '/invest' },
+    { name: t('footer.luxuryProperties'), url: '/luxury' },
+    { name: t('footer.newListings'), url: '/properties?badges=New' },
+    { name: t('footer.hotDeals'), url: '/properties?badges=Hot' },
+    { name: t('footer.compareProperties'), url: '/compare' }
   ];
 
   browseLinks.forEach(link => {
@@ -583,12 +583,12 @@ export function createEnhancedFooter(): HTMLElement {
   locationsCol.appendChild(createElement('h4', undefined, t('footer.popularLocations')));
 
   const locations = [
-    { name: 'Properties in Gulan', url: '/properties?district=Gulan' },
-    { name: 'Properties in Dream City', url: '/properties?district=Dream%20City' },
-    { name: 'Properties in Ankawa', url: '/properties?district=Ankawa' },
-    { name: 'Italian Village Homes', url: '/properties?district=Italian%20Village' },
-    { name: 'English Village Homes', url: '/properties?district=English%20Village' },
-    { name: 'Empire World Properties', url: '/properties?district=Empire%20World' }
+    { name: t('footer.propertiesInGulan'), url: '/properties?district=Gulan' },
+    { name: t('footer.propertiesInDreamCity'), url: '/properties?district=Dream%20City' },
+    { name: t('footer.propertiesInAnkawa'), url: '/properties?district=Ankawa' },
+    { name: t('footer.italianVillageHomes'), url: '/properties?district=Italian%20Village' },
+    { name: t('footer.englishVillageHomes'), url: '/properties?district=English%20Village' },
+    { name: t('footer.empireWorldProperties'), url: '/properties?district=Empire%20World' }
   ];
 
   locations.forEach(loc => {
@@ -602,7 +602,7 @@ export function createEnhancedFooter(): HTMLElement {
 
   // Projects Column
   const projectsCol = createElement('div', 'footer__col');
-  projectsCol.appendChild(createElement('h4', undefined, 'Featured Projects'));
+  projectsCol.appendChild(createElement('h4', undefined, t('footer.featuredProjects')));
 
   // Get top projects
   const featuredProjects = projects.slice(0, 6);
@@ -617,7 +617,7 @@ export function createEnhancedFooter(): HTMLElement {
 
   // Blog Column
   const blogCol = createElement('div', 'footer__col');
-  blogCol.appendChild(createElement('h4', undefined, 'Recent Articles'));
+  blogCol.appendChild(createElement('h4', undefined, t('footer.recentArticles')));
 
   // Get recent blog posts
   const recentPosts = blogPosts.slice(0, 5);
@@ -654,7 +654,7 @@ export function createEnhancedFooter(): HTMLElement {
     link.href = s.url;
     link.target = '_blank';
     link.rel = 'noopener noreferrer';
-    link.setAttribute('aria-label', `Follow us on ${s.name}`);
+    link.setAttribute('aria-label', t('footer.followUsOn', { platform: s.name }));
     socialLinks.appendChild(link);
   });
 
@@ -665,7 +665,7 @@ export function createEnhancedFooter(): HTMLElement {
 
   // Bottom Section
   const bottom = createElement('div', 'footer__bottom');
-  const copyright = createElement('p', undefined, '\u00A9 2025 Real House. All rights reserved.');
+  const copyright = createElement('p', undefined, t('footer.copyright'));
   bottom.appendChild(copyright);
 
   const legal = createElement('div', 'footer__legal');
@@ -732,10 +732,10 @@ export function createYouMayAlsoLikeSection(currentPost: BlogPost, limit: number
   const container = createElement('div', 'container');
 
   const header = createElement('div', 'you-may-like__header');
-  const title = createElement('h2', 'you-may-like__title', 'You May Also Like');
+  const title = createElement('h2', 'you-may-like__title', t('internalLinks.youMayAlsoLike'));
   header.appendChild(title);
 
-  const viewAllLink = createElement('a', 'you-may-like__view-all', 'View All Articles');
+  const viewAllLink = createElement('a', 'you-may-like__view-all', t('internalLinks.viewAllArticles'));
   viewAllLink.href = '/blog';
   viewAllLink.setAttribute('data-route', '');
   viewAllLink.appendChild(createSVGUse('icon-arrow-right'));
@@ -804,7 +804,7 @@ export function createContentSidebar(currentPageType: 'property' | 'project' | '
 
   // Popular Properties Section
   const popularPropertiesSection = createElement('div', 'content-sidebar__section');
-  const popularPropertiesTitle = createElement('h3', 'content-sidebar__title', 'Popular Properties');
+  const popularPropertiesTitle = createElement('h3', 'content-sidebar__title', t('internalLinks.popularProperties'));
   popularPropertiesSection.appendChild(popularPropertiesTitle);
 
   const popularProperties = properties
@@ -831,7 +831,7 @@ export function createContentSidebar(currentPageType: 'property' | 'project' | '
     const itemPrice = createElement('span', 'content-sidebar__item-price');
     itemPrice.textContent = property.price > 0
       ? `$${property.price.toLocaleString()}`
-      : 'Contact for Price';
+      : t('internalLinks.contactForPrice');
     info.appendChild(itemPrice);
     item.appendChild(info);
 
@@ -842,7 +842,7 @@ export function createContentSidebar(currentPageType: 'property' | 'project' | '
 
   // Featured Projects Section
   const projectsSection = createElement('div', 'content-sidebar__section');
-  const projectsTitle = createElement('h3', 'content-sidebar__title', 'Featured Projects');
+  const projectsTitle = createElement('h3', 'content-sidebar__title', t('internalLinks.featuredProjects'));
   projectsSection.appendChild(projectsTitle);
 
   const featuredProjects = projects.slice(0, 3);
@@ -874,7 +874,7 @@ export function createContentSidebar(currentPageType: 'property' | 'project' | '
 
   // Recent Blog Posts Section
   const blogSection = createElement('div', 'content-sidebar__section');
-  const blogTitle = createElement('h3', 'content-sidebar__title', 'Recent Articles');
+  const blogTitle = createElement('h3', 'content-sidebar__title', t('internalLinks.recentArticles'));
   blogSection.appendChild(blogTitle);
 
   const recentPosts = blogPosts.slice(0, 4);
@@ -907,16 +907,16 @@ export function createContentSidebar(currentPageType: 'property' | 'project' | '
 
   // Quick Links Section
   const quickLinksSection = createElement('div', 'content-sidebar__section');
-  const quickLinksTitle = createElement('h3', 'content-sidebar__title', 'Quick Links');
+  const quickLinksTitle = createElement('h3', 'content-sidebar__title', t('internalLinks.quickLinks'));
   quickLinksSection.appendChild(quickLinksTitle);
 
   const quickLinks = [
-    { name: 'Properties for Sale', url: '/buy' },
-    { name: 'Properties for Rent', url: '/rent' },
-    { name: 'Investment Properties', url: '/invest' },
-    { name: 'Luxury Properties', url: '/luxury' },
-    { name: 'All Projects', url: '/projects' },
-    { name: 'Contact Us', url: '/contact' }
+    { name: t('internalLinks.propertiesForSale'), url: '/buy' },
+    { name: t('internalLinks.propertiesForRent'), url: '/rent' },
+    { name: t('internalLinks.investmentProperties'), url: '/invest' },
+    { name: t('internalLinks.luxuryProperties'), url: '/luxury' },
+    { name: t('internalLinks.allProjects'), url: '/projects' },
+    { name: t('internalLinks.contactUs'), url: '/contact' }
   ];
 
   const quickLinksList = createElement('ul', 'content-sidebar__quick-links');
@@ -1025,7 +1025,7 @@ export function createBlogContentLinks(post: BlogPost): HTMLElement {
 
   const container = createElement('div', 'blog-content-links__container');
 
-  const title = createElement('h3', 'blog-content-links__title', 'Explore Related Properties');
+  const title = createElement('h3', 'blog-content-links__title', t('internalLinks.exploreRelatedProperties'));
   container.appendChild(title);
 
   // Properties
@@ -1059,7 +1059,7 @@ export function createBlogContentLinks(post: BlogPost): HTMLElement {
       const price = createElement('span', 'blog-content-links__price');
       price.textContent = property.price > 0
         ? `$${property.price.toLocaleString()}`
-        : 'Contact for Price';
+        : t('internalLinks.contactForPrice');
       content.appendChild(price);
 
       card.appendChild(content);
@@ -1071,7 +1071,7 @@ export function createBlogContentLinks(post: BlogPost): HTMLElement {
 
   // Projects
   if (relevantProjects.length > 0) {
-    const projectsTitle = createElement('h4', 'blog-content-links__subtitle', 'Featured Projects');
+    const projectsTitle = createElement('h4', 'blog-content-links__subtitle', t('internalLinks.featuredProjects'));
     container.appendChild(projectsTitle);
 
     const projectsList = createElement('div', 'blog-content-links__projects');
@@ -1097,7 +1097,7 @@ export function createBlogContentLinks(post: BlogPost): HTMLElement {
 
   // View All CTA
   const viewAllWrapper = createElement('div', 'blog-content-links__cta');
-  const viewAllBtn = createElement('a', 'btn btn--ghost', 'View All Properties');
+  const viewAllBtn = createElement('a', 'btn btn--ghost', t('internalLinks.viewAllProperties'));
   viewAllBtn.href = '/properties';
   viewAllBtn.setAttribute('data-route', '');
   viewAllWrapper.appendChild(viewAllBtn);
@@ -1122,31 +1122,31 @@ export function getAllSiteLinks(): SiteLink[] {
 
   // Main pages
   links.push(
-    { name: 'Home', url: '/', type: 'main' },
-    { name: 'Properties', url: '/properties', type: 'main' },
-    { name: 'Projects', url: '/projects', type: 'main' },
-    { name: 'Blog', url: '/blog', type: 'main' },
-    { name: 'About', url: '/about', type: 'main' },
-    { name: 'Contact', url: '/contact', type: 'main' },
-    { name: 'FAQ', url: '/faq', type: 'main' },
-    { name: 'Gallery', url: '/gallery', type: 'main' },
-    { name: 'Services', url: '/services', type: 'main' },
-    { name: 'Locations', url: '/locations', type: 'main' }
+    { name: t('internalLinks.home'), url: '/', type: 'main' },
+    { name: t('internalLinks.propertiesPage'), url: '/properties', type: 'main' },
+    { name: t('internalLinks.projects'), url: '/projects', type: 'main' },
+    { name: t('internalLinks.blog'), url: '/blog', type: 'main' },
+    { name: t('internalLinks.about'), url: '/about', type: 'main' },
+    { name: t('internalLinks.contact'), url: '/contact', type: 'main' },
+    { name: t('internalLinks.faq'), url: '/faq', type: 'main' },
+    { name: t('internalLinks.gallery'), url: '/gallery', type: 'main' },
+    { name: t('internalLinks.servicesPage'), url: '/services', type: 'main' },
+    { name: t('internalLinks.locations'), url: '/locations', type: 'main' }
   );
 
   // Hub pages
   links.push(
-    { name: 'Buy', url: '/buy', type: 'hub' },
-    { name: 'Rent', url: '/rent', type: 'hub' },
-    { name: 'Invest', url: '/invest', type: 'hub' },
-    { name: 'Luxury', url: '/luxury', type: 'hub' }
+    { name: t('internalLinks.buy'), url: '/buy', type: 'hub' },
+    { name: t('internalLinks.rent'), url: '/rent', type: 'hub' },
+    { name: t('internalLinks.invest'), url: '/invest', type: 'hub' },
+    { name: t('internalLinks.luxury'), url: '/luxury', type: 'hub' }
   );
 
   // Legal pages
   links.push(
-    { name: 'Privacy Policy', url: '/privacy', type: 'legal' },
-    { name: 'Terms of Service', url: '/terms', type: 'legal' },
-    { name: 'Sitemap', url: '/sitemap', type: 'legal' }
+    { name: t('internalLinks.privacyPolicy'), url: '/privacy', type: 'legal' },
+    { name: t('internalLinks.termsOfService'), url: '/terms', type: 'legal' },
+    { name: t('internalLinks.sitemap'), url: '/sitemap', type: 'legal' }
   );
 
   // Property pages
@@ -1256,7 +1256,7 @@ export function createCrossContentLinks(
   const container = createElement('div', 'container');
 
   const header = createElement('div', 'cross-content-links__header');
-  const title = createElement('h3', 'cross-content-links__title', 'You Might Also Be Interested In');
+  const title = createElement('h3', 'cross-content-links__title', t('internalLinks.youMightAlsoBeInterestedIn'));
   header.appendChild(title);
   container.appendChild(header);
 
@@ -1412,12 +1412,12 @@ export function createQuickNav(): HTMLElement {
   const list = createElement('ul', 'quick-nav__list');
 
   const quickLinks = [
-    { name: 'Properties', url: '/properties', icon: 'icon-home' },
-    { name: 'For Sale', url: '/buy', icon: 'icon-tag' },
-    { name: 'For Rent', url: '/rent', icon: 'icon-key' },
-    { name: 'Projects', url: '/projects', icon: 'icon-building' },
-    { name: 'Blog', url: '/blog', icon: 'icon-book' },
-    { name: 'Contact', url: '/contact', icon: 'icon-phone' }
+    { name: t('internalLinks.propertiesPage'), url: '/properties', icon: 'icon-home' },
+    { name: t('internalLinks.forSale'), url: '/buy', icon: 'icon-tag' },
+    { name: t('internalLinks.forRent'), url: '/rent', icon: 'icon-key' },
+    { name: t('internalLinks.projects'), url: '/projects', icon: 'icon-building' },
+    { name: t('internalLinks.blog'), url: '/blog', icon: 'icon-book' },
+    { name: t('internalLinks.contact'), url: '/contact', icon: 'icon-phone' }
   ];
 
   quickLinks.forEach(link => {
@@ -1444,7 +1444,7 @@ export function createQuickNav(): HTMLElement {
 
 export function createPopularPropertiesWidget(limit: number = 5): HTMLElement {
   const widget = createElement('div', 'popular-widget');
-  const title = createElement('h3', 'popular-widget__title', 'Popular Properties');
+  const title = createElement('h3', 'popular-widget__title', t('internalLinks.popularProperties'));
   widget.appendChild(title);
 
   const list = createElement('div', 'popular-widget__list');
@@ -1472,7 +1472,7 @@ export function createPopularPropertiesWidget(limit: number = 5): HTMLElement {
     info.appendChild(itemTitle);
 
     const price = createElement('span', 'popular-widget__price');
-    price.textContent = prop.price > 0 ? `$${prop.price.toLocaleString()}` : 'Contact for Price';
+    price.textContent = prop.price > 0 ? `$${prop.price.toLocaleString()}` : t('internalLinks.contactForPrice');
     info.appendChild(price);
 
     item.appendChild(info);
@@ -1481,7 +1481,7 @@ export function createPopularPropertiesWidget(limit: number = 5): HTMLElement {
 
   widget.appendChild(list);
 
-  const viewAll = createElement('a', 'popular-widget__view-all', 'View All Properties');
+  const viewAll = createElement('a', 'popular-widget__view-all', t('internalLinks.viewAllProperties'));
   viewAll.href = '/properties';
   viewAll.setAttribute('data-route', '');
   widget.appendChild(viewAll);
@@ -1491,7 +1491,7 @@ export function createPopularPropertiesWidget(limit: number = 5): HTMLElement {
 
 export function createPopularProjectsWidget(limit: number = 4): HTMLElement {
   const widget = createElement('div', 'popular-widget');
-  const title = createElement('h3', 'popular-widget__title', 'Featured Projects');
+  const title = createElement('h3', 'popular-widget__title', t('internalLinks.featuredProjects'));
   widget.appendChild(title);
 
   const list = createElement('div', 'popular-widget__list');
@@ -1522,7 +1522,7 @@ export function createPopularProjectsWidget(limit: number = 4): HTMLElement {
 
   widget.appendChild(list);
 
-  const viewAll = createElement('a', 'popular-widget__view-all', 'View All Projects');
+  const viewAll = createElement('a', 'popular-widget__view-all', t('internalLinks.viewAllProjects'));
   viewAll.href = '/projects';
   viewAll.setAttribute('data-route', '');
   widget.appendChild(viewAll);
@@ -1532,7 +1532,7 @@ export function createPopularProjectsWidget(limit: number = 4): HTMLElement {
 
 export function createRecentBlogWidget(limit: number = 4): HTMLElement {
   const widget = createElement('div', 'popular-widget');
-  const title = createElement('h3', 'popular-widget__title', 'Recent Articles');
+  const title = createElement('h3', 'popular-widget__title', t('internalLinks.recentArticles'));
   widget.appendChild(title);
 
   const list = createElement('div', 'popular-widget__list');
@@ -1564,7 +1564,7 @@ export function createRecentBlogWidget(limit: number = 4): HTMLElement {
 
   widget.appendChild(list);
 
-  const viewAll = createElement('a', 'popular-widget__view-all', 'View All Articles');
+  const viewAll = createElement('a', 'popular-widget__view-all', t('internalLinks.viewAllArticles'));
   viewAll.href = '/blog';
   viewAll.setAttribute('data-route', '');
   widget.appendChild(viewAll);
@@ -1580,7 +1580,7 @@ export function createLocationLinks(): HTMLElement {
   const section = createElement('section', 'location-links');
   const container = createElement('div', 'container');
 
-  const title = createElement('h2', 'location-links__title', 'Explore Properties by Location');
+  const title = createElement('h2', 'location-links__title', t('internalLinks.explorePropertiesByLocation'));
   container.appendChild(title);
 
   const grid = createElement('div', 'location-links__grid');
@@ -1605,7 +1605,7 @@ export function createLocationLinks(): HTMLElement {
     const name = createElement('span', 'location-links__name', district);
     card.appendChild(name);
 
-    const countEl = createElement('span', 'location-links__count', `${count} properties`);
+    const countEl = createElement('span', 'location-links__count', `${count} ${t('internalLinks.properties')}`);
     card.appendChild(countEl);
 
     grid.appendChild(card);
@@ -1664,37 +1664,37 @@ export function createInternalCTA(
 
 export function getServicesBreadcrumbs(): BreadcrumbItem[] {
   return [
-    { name: 'Home', url: '/' },
-    { name: 'Our Services', url: '/services', current: true }
+    { name: t('breadcrumbs.home'), url: '/' },
+    { name: t('breadcrumbs.ourServices'), url: '/services', current: true }
   ];
 }
 
 export function getServiceDetailBreadcrumbs(serviceName: string, serviceSlug: string): BreadcrumbItem[] {
   return [
-    { name: 'Home', url: '/' },
-    { name: 'Services', url: '/services' },
+    { name: t('breadcrumbs.home'), url: '/' },
+    { name: t('breadcrumbs.services'), url: '/services' },
     { name: serviceName, url: `/services/${serviceSlug}`, current: true }
   ];
 }
 
 export function getLocationsBreadcrumbs(): BreadcrumbItem[] {
   return [
-    { name: 'Home', url: '/' },
-    { name: 'Locations', url: '/locations', current: true }
+    { name: t('breadcrumbs.home'), url: '/' },
+    { name: t('breadcrumbs.locations'), url: '/locations', current: true }
   ];
 }
 
 export function getLocationDetailBreadcrumbs(locationName: string, locationSlug: string): BreadcrumbItem[] {
   return [
-    { name: 'Home', url: '/' },
-    { name: 'Locations', url: '/locations' },
+    { name: t('breadcrumbs.home'), url: '/' },
+    { name: t('breadcrumbs.locations'), url: '/locations' },
     { name: locationName, url: `/locations/${locationSlug}`, current: true }
   ];
 }
 
 export function getGalleryBreadcrumbs(): BreadcrumbItem[] {
   return [
-    { name: 'Home', url: '/' },
-    { name: 'Photo Gallery', url: '/gallery', current: true }
+    { name: t('breadcrumbs.home'), url: '/' },
+    { name: t('breadcrumbs.photoGallery'), url: '/gallery', current: true }
   ];
 }

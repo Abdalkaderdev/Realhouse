@@ -811,6 +811,7 @@ export const en: CoreTranslations = {
     viewAllProperties: 'View All Properties',
     backToProjects: 'Back to Projects',
     completion: 'Completion',
+    keyMilestones: 'Key Milestones',
   },
 
   propertyDetail: {
@@ -1550,5 +1551,87 @@ export const en: CoreTranslations = {
     marketReports: 'Market Reports',
     // Stats
     stable: 'Stable',
+  },
+
+  agentProfile: {
+    // Breadcrumbs
+    home: 'Home',
+    ourAgents: 'Our Agents',
+    // 404
+    agentNotFound: 'Agent Not Found',
+    agentNotFoundMessage: 'The agent you are looking for does not exist or has been removed.',
+    viewAllAgents: 'View All Agents',
+    // Badge
+    leadership: 'Leadership',
+    // Stats
+    yearsExperience: 'Years Experience',
+    propertiesSold: 'Properties Sold',
+    totalSales: 'Total Sales',
+    activeListings: 'Active Listings',
+    yearsWithRealHouse: 'Years with Real House',
+    languagesSpoken: 'Languages Spoken',
+    // Labels
+    languages: 'Languages:',
+    // Buttons
+    callNow: 'Call Now',
+    whatsApp: 'WhatsApp',
+    email: 'Email',
+    sendMessage: 'Send Message',
+    backToAllAgents: 'Back to All Agents',
+    viewAllProperties: 'View All Properties',
+    // Section titles
+    about: 'About {{name}}',
+    specializations: 'Specializations',
+    featuredAreas: 'Featured Areas',
+    certificationsAwards: 'Certifications & Awards',
+    certifications: 'Certifications',
+    awards: 'Awards',
+    clientReviews: 'Client Reviews',
+    listings: '{{name}}\'s Listings',
+    contactInformation: 'Contact Information',
+    connectOnSocialMedia: 'Connect on Social Media',
+    performanceStats: 'Performance Stats',
+    // Social
+    linkedin: 'LinkedIn',
+    instagram: 'Instagram',
+    facebook: 'Facebook',
+    // Form
+    yourName: 'Your Name',
+    enterYourName: 'Enter your full name',
+    phoneNumber: 'Phone Number',
+    phonePlaceholder: '+964 XXX XXX XXXX',
+    emailLabel: 'Email',
+    emailPlaceholder: 'your@email.com',
+    message: 'Message',
+    messagePlaceholder: 'Hi {{name}}, I\'m interested in...',
+    // Rating
+    outOf5: '{{rating}} out of 5',
+    reviews: '{{count}} reviews',
+    // Property
+    priceOnRequest: 'Price on Request',
+    beds: 'Beds',
+    baths: 'Baths',
+  },
+
+  compareProjects: {
+    home: 'Home',
+    projects: 'Projects',
+    compareProjects: 'Compare Projects',
+    compareDevelopmentProjects: 'Compare Development Projects',
+    comparingProjects: 'Comparing {{count}} project{{plural}} side by side. Review pricing, amenities, and availability to find your ideal investment.',
+    compareUpTo3: 'Compare up to 3 development projects side by side to make informed investment decisions.',
+    clearAll: 'Clear All',
+    contactOurTeam: 'Contact Our Team',
+    browseMoreProjects: 'Browse More Projects',
+    backToProjects: 'Back to Projects',
+    needHelpDeciding: 'Need Help Deciding?',
+    expertHelpText: 'Our property experts can help you choose the perfect development project based on your investment goals and budget.',
+  },
+
+  gallery: {
+    viewFullSize: 'View Full Size',
+    closeLightbox: 'Close lightbox',
+    pageTitle: 'Property Erbil Gallery',
+    pageSubtitle: 'Browse stunning photos of luxury homes Kurdistan, villas Erbil Iraq, apartments Erbil Iraq, and penthouse Erbil. High-quality images showcasing the finest real estate Erbil.',
   },
 };
