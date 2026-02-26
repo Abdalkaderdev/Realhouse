@@ -16,7 +16,7 @@ export interface Neighborhood {
 }
 
 export type PropertyStatus = 'For Sale' | 'For Rent' | 'Daily Rent' | 'Off Plan' | 'Ready' | 'Sold';
-export type PropertyBadge = 'Hot' | 'New' | 'Discount' | 'Installment' | 'Exclusive';
+export type PropertyBadge = 'Hot' | 'New' | 'Discount' | 'Installment' | 'Exclusive' | 'Coming Soon';
 export type FurnishingStatus = 'Fully Furnished' | 'Semi-Furnished' | 'Unfurnished';
 export type ViewType = 'City View' | 'Garden View' | 'Pool View' | 'Street View' | 'Mountain View' | 'Park View';
 
@@ -43,7 +43,7 @@ export interface Property {
   title: string;
   titleKu?: string; // Kurdish title
   titleAr?: string; // Arabic title
-  type: 'Villa' | 'Apartment' | 'Penthouse' | 'Townhouse' | 'Land' | 'Commercial' | 'Duplex';
+  type: 'Villa' | 'Apartment' | 'Penthouse' | 'Townhouse' | 'Land' | 'Commercial' | 'Duplex' | 'Hotel';
   price: number; // Price in USD
   priceIQD?: number; // Price in Iraqi Dinar
   rentPrice?: number; // Monthly rent in USD
@@ -507,6 +507,305 @@ Contact us for rental pricing and available lease terms.`,
     },
     agent: agents[2],
     agents: [agents[0], agents[1], agents[2]]
+  },
+
+  // Queen Towers - Studio Apartments (NazNaz)
+  {
+    id: 'queen-towers-studio-floor-25-rent',
+    title: 'Queen Towers - Studio Apartment (Floor 25)',
+    titleKu: 'کوین تاوەرز - ستودیۆ (نهۆمی ٢٥)',
+    titleAr: 'كوين تاورز - استوديو (الطابق 25)',
+    type: 'Apartment',
+    price: 0,
+    rentPrice: 450,
+    status: 'For Rent',
+    badges: ['New'],
+    location: {
+      address: 'Queen Towers, Floor 25, NazNaz',
+      city: 'Erbil',
+      district: 'NazNaz',
+      country: 'Iraq',
+      coordinates: { lat: 36.2120, lng: 44.0150 },
+      nearbyLandmarks: ['The Boulevard', 'NazNaz Area']
+    },
+    specs: {
+      beds: 0,
+      baths: 1,
+      sqm: 63,
+      floor: 25
+    },
+    images: [
+      'https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?w=800&q=80&fm=webp',
+      'https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?w=800&q=80&fm=webp'
+    ],
+    description: `Fully furnished studio apartment on the 25th floor of Queen Towers, located in NazNaz directly in front of The Boulevard. This compact yet stylish unit offers excellent city views from an elevated position.
+
+Features include modern furnishings, a functional kitchenette, and a well-appointed bathroom. The open-plan layout maximizes the 63 sqm space efficiently.
+
+Building amenities include 24/7 security, elevator access, and parking. Perfect for singles or couples seeking a modern urban lifestyle.`,
+    features: [
+      'Fully Furnished',
+      'City Views',
+      'Modern Kitchen',
+      '24/7 Security',
+      'Elevator',
+      'Parking',
+      'Near The Boulevard'
+    ],
+    furnishing: 'Fully Furnished',
+    isFeatured: false,
+    isNew: true,
+    neighborhood: {
+      name: 'NazNaz',
+      walkScore: 85,
+      description: 'Vibrant area in front of The Boulevard with easy access to shopping and entertainment.'
+    },
+    agent: agents[0]
+  },
+  {
+    id: 'queen-towers-studio-floor-25-sale',
+    title: 'Queen Towers - Studio Apartment (Floor 25)',
+    titleKu: 'کوین تاوەرز - ستودیۆ (نهۆمی ٢٥)',
+    titleAr: 'كوين تاورز - استوديو (الطابق 25)',
+    type: 'Apartment',
+    price: 63000,
+    status: 'For Sale',
+    badges: ['New'],
+    location: {
+      address: 'Queen Towers, Floor 25, NazNaz',
+      city: 'Erbil',
+      district: 'NazNaz',
+      country: 'Iraq',
+      coordinates: { lat: 36.2120, lng: 44.0150 },
+      nearbyLandmarks: ['The Boulevard', 'NazNaz Area']
+    },
+    specs: {
+      beds: 0,
+      baths: 1,
+      sqm: 63,
+      floor: 25
+    },
+    images: [
+      'https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?w=800&q=80&fm=webp',
+      'https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?w=800&q=80&fm=webp'
+    ],
+    description: `Fully furnished studio apartment for sale on the 25th floor of Queen Towers, located in NazNaz directly in front of The Boulevard. This compact yet stylish unit offers excellent city views from an elevated position.
+
+Features include modern furnishings, a functional kitchenette, and a well-appointed bathroom. The open-plan layout maximizes the 63 sqm space efficiently.
+
+Building amenities include 24/7 security, elevator access, and parking. Excellent investment opportunity or ideal for owner-occupiers seeking modern urban living.`,
+    features: [
+      'Fully Furnished',
+      'City Views',
+      'Modern Kitchen',
+      '24/7 Security',
+      'Elevator',
+      'Parking',
+      'Near The Boulevard'
+    ],
+    furnishing: 'Fully Furnished',
+    isFeatured: false,
+    isNew: true,
+    neighborhood: {
+      name: 'NazNaz',
+      walkScore: 85,
+      description: 'Vibrant area in front of The Boulevard with easy access to shopping and entertainment.'
+    },
+    agent: agents[0]
+  },
+  {
+    id: 'queen-towers-studio-floor-29-rent',
+    title: 'Queen Towers - Studio Apartment (Floor 29)',
+    titleKu: 'کوین تاوەرز - ستودیۆ (نهۆمی ٢٩)',
+    titleAr: 'كوين تاورز - استوديو (الطابق 29)',
+    type: 'Apartment',
+    price: 0,
+    rentPrice: 450,
+    status: 'For Rent',
+    badges: ['New'],
+    location: {
+      address: 'Queen Towers, Floor 29, NazNaz',
+      city: 'Erbil',
+      district: 'NazNaz',
+      country: 'Iraq',
+      coordinates: { lat: 36.2120, lng: 44.0150 },
+      nearbyLandmarks: ['The Boulevard', 'NazNaz Area']
+    },
+    specs: {
+      beds: 0,
+      baths: 1,
+      sqm: 63,
+      floor: 29
+    },
+    images: [
+      'https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?w=800&q=80&fm=webp',
+      'https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?w=800&q=80&fm=webp'
+    ],
+    description: `Fully furnished studio apartment on the 29th floor of Queen Towers, located in NazNaz directly in front of The Boulevard. This higher floor unit offers superior city views and more privacy.
+
+Features include modern furnishings, a functional kitchenette, and a well-appointed bathroom. The open-plan layout maximizes the 63 sqm space efficiently.
+
+Building amenities include 24/7 security, elevator access, and parking. Perfect for singles or couples seeking a modern urban lifestyle with stunning views.`,
+    features: [
+      'Fully Furnished',
+      'Superior City Views',
+      'Modern Kitchen',
+      '24/7 Security',
+      'Elevator',
+      'Parking',
+      'Near The Boulevard',
+      'Higher Floor'
+    ],
+    furnishing: 'Fully Furnished',
+    isFeatured: false,
+    isNew: true,
+    neighborhood: {
+      name: 'NazNaz',
+      walkScore: 85,
+      description: 'Vibrant area in front of The Boulevard with easy access to shopping and entertainment.'
+    },
+    agent: agents[0]
+  },
+  {
+    id: 'queen-towers-studio-floor-29-sale',
+    title: 'Queen Towers - Studio Apartment (Floor 29)',
+    titleKu: 'کوین تاوەرز - ستودیۆ (نهۆمی ٢٩)',
+    titleAr: 'كوين تاورز - استوديو (الطابق 29)',
+    type: 'Apartment',
+    price: 63000,
+    status: 'For Sale',
+    badges: ['New'],
+    location: {
+      address: 'Queen Towers, Floor 29, NazNaz',
+      city: 'Erbil',
+      district: 'NazNaz',
+      country: 'Iraq',
+      coordinates: { lat: 36.2120, lng: 44.0150 },
+      nearbyLandmarks: ['The Boulevard', 'NazNaz Area']
+    },
+    specs: {
+      beds: 0,
+      baths: 1,
+      sqm: 63,
+      floor: 29
+    },
+    images: [
+      'https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?w=800&q=80&fm=webp',
+      'https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?w=800&q=80&fm=webp'
+    ],
+    description: `Fully furnished studio apartment for sale on the 29th floor of Queen Towers, located in NazNaz directly in front of The Boulevard. This higher floor unit offers superior city views and more privacy.
+
+Features include modern furnishings, a functional kitchenette, and a well-appointed bathroom. The open-plan layout maximizes the 63 sqm space efficiently.
+
+Building amenities include 24/7 security, elevator access, and parking. Excellent investment opportunity or ideal for owner-occupiers seeking modern urban living with stunning views.`,
+    features: [
+      'Fully Furnished',
+      'Superior City Views',
+      'Modern Kitchen',
+      '24/7 Security',
+      'Elevator',
+      'Parking',
+      'Near The Boulevard',
+      'Higher Floor'
+    ],
+    furnishing: 'Fully Furnished',
+    isFeatured: false,
+    isNew: true,
+    neighborhood: {
+      name: 'NazNaz',
+      walkScore: 85,
+      description: 'Vibrant area in front of The Boulevard with easy access to shopping and entertainment.'
+    },
+    agent: agents[0]
+  },
+
+  // Hotels - Coming Soon (Placeholder)
+  {
+    id: 'hotel-coming-soon-1',
+    title: 'Hotel for Sale - Coming Soon',
+    titleKu: 'هوتێل بۆ فرۆشتن - بەم زوانە',
+    titleAr: 'فندق للبيع - قريباً',
+    type: 'Hotel',
+    price: 0,
+    status: 'For Sale',
+    badges: ['Coming Soon'],
+    location: {
+      address: 'Erbil',
+      city: 'Erbil',
+      district: 'Erbil',
+      country: 'Iraq'
+    },
+    specs: {
+      beds: 0,
+      baths: 0,
+      sqm: 0
+    },
+    images: [
+      'https://images.unsplash.com/photo-1566073771259-6a8506099945?w=800&q=80&fm=webp'
+    ],
+    description: 'Hotel for sale - details coming soon. Contact us for more information.',
+    features: ['Coming Soon'],
+    isFeatured: false,
+    isNew: true,
+    agent: agents[0]
+  },
+  {
+    id: 'hotel-coming-soon-2',
+    title: 'Hotel for Sale - Coming Soon',
+    titleKu: 'هوتێل بۆ فرۆشتن - بەم زوانە',
+    titleAr: 'فندق للبيع - قريباً',
+    type: 'Hotel',
+    price: 0,
+    status: 'For Sale',
+    badges: ['Coming Soon'],
+    location: {
+      address: 'Erbil',
+      city: 'Erbil',
+      district: 'Erbil',
+      country: 'Iraq'
+    },
+    specs: {
+      beds: 0,
+      baths: 0,
+      sqm: 0
+    },
+    images: [
+      'https://images.unsplash.com/photo-1582719508461-905c673771fd?w=800&q=80&fm=webp'
+    ],
+    description: 'Hotel for sale - details coming soon. Contact us for more information.',
+    features: ['Coming Soon'],
+    isFeatured: false,
+    isNew: true,
+    agent: agents[0]
+  },
+  {
+    id: 'hotel-coming-soon-3',
+    title: 'Hotel for Sale - Coming Soon',
+    titleKu: 'هوتێل بۆ فرۆشتن - بەم زوانە',
+    titleAr: 'فندق للبيع - قريباً',
+    type: 'Hotel',
+    price: 0,
+    status: 'For Sale',
+    badges: ['Coming Soon'],
+    location: {
+      address: 'Erbil',
+      city: 'Erbil',
+      district: 'Erbil',
+      country: 'Iraq'
+    },
+    specs: {
+      beds: 0,
+      baths: 0,
+      sqm: 0
+    },
+    images: [
+      'https://images.unsplash.com/photo-1551882547-ff40c63fe5fa?w=800&q=80&fm=webp'
+    ],
+    description: 'Hotel for sale - details coming soon. Contact us for more information.',
+    features: ['Coming Soon'],
+    isFeatured: false,
+    isNew: true,
+    agent: agents[0]
   }
 ];
 
@@ -575,9 +874,9 @@ export function filterProperties(options: {
   });
 }
 
-export const propertyTypes = ['Villa', 'Apartment', 'Penthouse', 'Townhouse', 'Land', 'Commercial', 'Duplex'] as const;
+export const propertyTypes = ['Villa', 'Apartment', 'Penthouse', 'Townhouse', 'Land', 'Commercial', 'Duplex', 'Hotel'] as const;
 export const propertyStatuses = ['For Sale', 'For Rent', 'Daily Rent', 'Off Plan', 'Ready', 'Sold'] as const;
-export const propertyBadges = ['Hot', 'New', 'Discount', 'Installment', 'Exclusive'] as const;
+export const propertyBadges = ['Hot', 'New', 'Discount', 'Installment', 'Exclusive', 'Coming Soon'] as const;
 export const furnishingStatuses = ['Fully Furnished', 'Semi-Furnished', 'Unfurnished'] as const;
 export const viewTypes = ['City View', 'Garden View', 'Pool View', 'Street View', 'Mountain View', 'Park View'] as const;
 export const districts = [
