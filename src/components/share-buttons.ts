@@ -38,32 +38,32 @@ function getPlatformConfig(): Record<SharePlatform, {
 }> {
   return {
     facebook: {
-      name: 'Facebook',
+      name: t('share.platforms.facebook'),
       color: '#1877F2',
       ariaLabel: t('share.shareOnFacebook'),
     },
     twitter: {
-      name: 'X',
+      name: t('share.platforms.x'),
       color: '#000000',
       ariaLabel: t('share.shareOnTwitter'),
     },
     linkedin: {
-      name: 'LinkedIn',
+      name: t('share.platforms.linkedin'),
       color: '#0A66C2',
       ariaLabel: t('share.shareOnLinkedIn'),
     },
     pinterest: {
-      name: 'Pinterest',
+      name: t('share.platforms.pinterest'),
       color: '#E60023',
       ariaLabel: t('share.shareOnPinterest'),
     },
     whatsapp: {
-      name: 'WhatsApp',
+      name: t('share.whatsApp'),
       color: '#25D366',
       ariaLabel: t('share.shareOnWhatsApp'),
     },
     telegram: {
-      name: 'Telegram',
+      name: t('share.platforms.telegram'),
       color: '#0088CC',
       ariaLabel: t('share.shareOnTelegram'),
     },
@@ -588,7 +588,7 @@ export function createInlineShareLinks(config: {
     if (index < platforms.length - 1) {
       const separator = document.createElement('span');
       separator.className = 'inline-share-separator';
-      separator.textContent = ' | ';
+      separator.textContent = t('share.separator');
       container.appendChild(separator);
     }
   });

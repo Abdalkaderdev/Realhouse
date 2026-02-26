@@ -199,7 +199,9 @@ export interface CoreTranslations {
   };
 
   footer: {
+    realHouse: string;
     tagline: string;
+    followUsOn: string;
     quickLinks: string;
     propertyTypes: string;
     browseProperties: string;
@@ -208,6 +210,107 @@ export interface CoreTranslations {
     connectWithUs: string;
     copyright: string;
     allRightsReserved: string;
+    featuredProjects: string;
+    recentArticles: string;
+    home: string;
+    allProperties: string;
+    developmentProjects: string;
+    realEstateBlog: string;
+    aboutUs: string;
+    contactUs: string;
+    faq: string;
+    siteMap: string;
+    apartmentsForSale: string;
+    villasInErbil: string;
+    penthouses: string;
+    townhouses: string;
+    commercialProperties: string;
+    duplexApartments: string;
+    landForSale: string;
+    propertiesForSale: string;
+    propertiesForRent: string;
+    investmentProperties: string;
+    luxuryProperties: string;
+    newListings: string;
+    hotDeals: string;
+    compareProperties: string;
+    propertiesInGulan: string;
+    propertiesInDreamCity: string;
+    propertiesInAnkawa: string;
+    italianVillageHomes: string;
+    englishVillageHomes: string;
+    empireWorldProperties: string;
+  };
+
+  internalLinks: {
+    youMayAlsoLike: string;
+    viewAllArticles: string;
+    popularProperties: string;
+    featuredProjects: string;
+    recentArticles: string;
+    quickLinks: string;
+    exploreRelatedProperties: string;
+    viewAllProperties: string;
+    viewAllProjects: string;
+    youMightAlsoBeInterestedIn: string;
+    explorePropertiesByLocation: string;
+    properties: string;
+    contactForPrice: string;
+    minRead: string;
+    // Sitemap links
+    home: string;
+    propertiesPage: string;
+    projects: string;
+    blog: string;
+    about: string;
+    contact: string;
+    faq: string;
+    gallery: string;
+    servicesPage: string;
+    locations: string;
+    buy: string;
+    rent: string;
+    invest: string;
+    luxury: string;
+    privacyPolicy: string;
+    termsOfService: string;
+    sitemap: string;
+    // Quick nav
+    forSale: string;
+    forRent: string;
+    // Sidebar quick links
+    propertiesForSale: string;
+    propertiesForRent: string;
+    investmentProperties: string;
+    luxuryProperties: string;
+    allProjects: string;
+    contactUs: string;
+  };
+
+  breadcrumbs: {
+    home: string;
+    properties: string;
+    propertiesForSaleRent: string;
+    developmentProjectsErbil: string;
+    projects: string;
+    realEstateBlog: string;
+    blog: string;
+    aboutRealHouse: string;
+    contactUs: string;
+    faq: string;
+    mySavedProperties: string;
+    compareProperties: string;
+    privacyPolicy: string;
+    termsOfService: string;
+    sitemap: string;
+    propertiesForSaleErbil: string;
+    propertiesForRentErbil: string;
+    investmentPropertiesErbil: string;
+    luxuryPropertiesErbil: string;
+    ourServices: string;
+    services: string;
+    locations: string;
+    photoGallery: string;
   };
 
   hero: {
@@ -227,8 +330,66 @@ export interface CoreTranslations {
     experience: string;
     yearsExperience: string;
     propertiesSold: string;
+    propertiesSoldDesc: string;
     happyClients: string;
+    happyClientsDesc: string;
+    internationalClients: string;
+    internationalClientsDesc: string;
+    transactionVolume: string;
+    transactionVolumeDesc: string;
+    clientSatisfaction: string;
+    clientSatisfactionDesc: string;
+    repeatClients: string;
+    repeatClientsDesc: string;
     awardsWon: string;
+    ourJourney: string;
+    journeySubtitle: string;
+    expertTeam: string;
+    consultants: string;
+    teamSubtitle: string;
+    coFounder: string;
+    yearsExp: string;
+    sales: string;
+    languages: string;
+    credentials: string;
+    recognition: string;
+    recognitionSubtitle: string;
+    inThe: string;
+    media: string;
+    mediaSubtitle: string;
+    professional: string;
+    affiliations: string;
+    affiliationsSubtitle: string;
+    memberSince: string;
+    licensesAnd: string;
+    certifications: string;
+    certificationsSubtitle: string;
+    license: string;
+    validUntil: string;
+    client: string;
+    testimonials: string;
+    verifiedBuyer: string;
+    successStories: string;
+    storiesSubtitle: string;
+    challenge: string;
+    outcome: string;
+    resourceCenter: string;
+    resourceCenterSubtitle: string;
+    pages: string;
+    updated: string;
+    downloadFree: string;
+    contactUs: string;
+    contactSubtitle: string;
+    viewOnMap: string;
+    officeHours: string;
+    getInTouch: string;
+    followUs: string;
+    responseCommitment: string;
+    ctaTitle: string;
+    ctaSubtitle: string;
+    browseProperties: string;
+    ourServices: string;
+    professionalServices: string;
   };
 
   contact: {
@@ -260,6 +421,13 @@ export interface CoreTranslations {
     closeMenu: string;
     selectLanguage: string;
     currentLanguage: string;
+  };
+
+  map: {
+    bedsShort: string;
+    bathsShort: string;
+    viewProperty: string;
+    propertyIn: string;
   };
 
   filters: {
@@ -346,6 +514,7 @@ export interface CoreTranslations {
     calculate: string;
     recalculate: string;
     print: string;
+    reset: string;
     loanSummary: string;
     amortizationSchedule: string;
     yearlyAmortization: string;
@@ -362,6 +531,7 @@ export interface CoreTranslations {
     showAllMonths: string;
     typicalRates: string;
     resultsTitle: string;
+    pageTitle: string;
     generatedOn: string;
     disclaimer: string;
     poweredBy: string;
@@ -420,6 +590,17 @@ export interface CoreTranslations {
     shareOnTelegram: string;
     copyLink: string;
     linkCopied: string;
+    separator: string;
+    whatsApp: string;
+    email: string;
+    // Platform names
+    platforms: {
+      facebook: string;
+      x: string;
+      linkedin: string;
+      pinterest: string;
+      telegram: string;
+    };
   };
 
   testimonials: {
@@ -436,15 +617,41 @@ export interface CoreTranslations {
     backToHome: string;
   };
 
-  breadcrumbs: {
-    home: string;
-    services: string;
-    properties: string;
-    projects: string;
-    blog: string;
-    faq: string;
-    about: string;
-    contact: string;
+  calendar: {
+    months: {
+      january: string;
+      february: string;
+      march: string;
+      april: string;
+      may: string;
+      june: string;
+      july: string;
+      august: string;
+      september: string;
+      october: string;
+      november: string;
+      december: string;
+    };
+    days: {
+      sun: string;
+      mon: string;
+      tue: string;
+      wed: string;
+      thu: string;
+      fri: string;
+      sat: string;
+      sunday: string;
+      monday: string;
+      tuesday: string;
+      wednesday: string;
+      thursday: string;
+      friday: string;
+      saturday: string;
+    };
+    time: {
+      am: string;
+      pm: string;
+    };
   };
 
   appointment: {
@@ -472,6 +679,10 @@ export interface CoreTranslations {
     invalidEmail: string;
     invalidPhone: string;
     selectDateTime: string;
+    namePlaceholder: string;
+    emailPlaceholder: string;
+    phonePlaceholder: string;
+    notesPlaceholder: string;
   };
 
   modals: {
@@ -648,6 +859,718 @@ export interface CoreTranslations {
     viewProfile: string;
     similarProperties: string;
     viewAllProperties: string;
+    // Categories
+    categories: {
+      interior: string;
+      exterior: string;
+      security: string;
+      amenities: string;
+      other: string;
+    };
+    // Specs
+    bedrooms: string;
+    bathrooms: string;
+    area: string;
+    type: string;
+    yearBuilt: string;
+    floors: string;
+    // Contact
+    callNow: string;
+    whatsApp: string;
+    // Form placeholders
+    enterYourName: string;
+    enterYourEmail: string;
+    phonePlaceholder: string;
+    messagePlaceholder: string;
+    thankYouMessage: string;
+  };
+
+  recentlyViewed: {
+    title: string;
+    subtitle: string;
+    clearHistory: string;
+    label: string;
+  };
+
+  trustSignals: {
+    trustedByPrefix: string;
+    trustedByEmphasis: string;
+    trustedBySuffix: string;
+    developerSubtitle: string;
+    meetOurPrefix: string;
+    meetOurEmphasis: string;
+    meetOurSuffix: string;
+    teamSubtitle: string;
+  };
+
+  print: {
+    officeAddress: string;
+    licensedAgency: string;
+    propertyReference: string;
+    generated: string;
+    disclaimer: string;
+    viewOnline: string;
+    qrCodeAlt: string;
+    printAriaLabel: string;
+    printPdf: string;
+    downloadAriaLabel: string;
+    downloadPdf: string;
+  };
+
+  projectCompare: {
+    compareProjects: string;
+    clearAll: string;
+    removeFromComparison: string;
+    addProject: string;
+    addToComparison: string;
+    compare: string;
+    maxProjectsMessage: string;
+    viewDetails: string;
+    pricing: string;
+    startingFrom: string;
+    maximumPrice: string;
+    priceRange: string;
+    unitsAvailability: string;
+    totalUnits: string;
+    projectDetails: string;
+    status: string;
+    completion: string;
+    district: string;
+    city: string;
+    amenitiesFeatures: string;
+    totalAmenities: string;
+    features: string;
+    noProjects: string;
+    emptyStateDescription: string;
+    browseProjects: string;
+    shareComparison: string;
+    copyLink: string;
+    copied: string;
+    bestValue: string;
+    best: string;
+  };
+
+  projectInquiry: {
+    whatsAppGreeting: string;
+    whatsAppInterested: string;
+    whatsAppName: string;
+    whatsAppPhone: string;
+    whatsAppEmail: string;
+    whatsAppMessage: string;
+    whatsAppContactMe: string;
+    formDescription: string;
+  };
+
+  blog: {
+    heroTitle: string;
+    heroTitleEmphasis: string;
+    heroSubtitle: string;
+    pageSubtitle: string;
+    featuredArticles: string;
+    allArticles: string;
+    searchPlaceholder: string;
+    searchAriaLabel: string;
+    filterAll: string;
+    stayUpdated: string;
+    stayUpdatedText: string;
+    noArticlesFound: string;
+    tryAdjustingFilters: string;
+    articleNotFound: string;
+    articleNotFoundText: string;
+    backToBlog: string;
+    tags: string;
+    credentials: string;
+    viewFullProfile: string;
+    connectOnLinkedIn: string;
+    relatedArticles: string;
+    lookingForProperty: string;
+    lookingForPropertyText: string;
+    viewProperties: string;
+    readArticle: string;
+    readArticleAria: string;
+    minRead: string;
+    metaTitle: string;
+    metaDescription: string;
+    yearsExperience: string;
+    // CTA section
+    readyToFindDreamProperty: string;
+    exploreOurSelection: string;
+    browseProperties: string;
+    viewProjects: string;
+  };
+
+  notFound: {
+    pageTitle: string;
+    metaDescription: string;
+    breadcrumbHome: string;
+    breadcrumbNotFound: string;
+    heading: string;
+    description: string;
+    returnHome: string;
+    browseProperties: string;
+    searchOurSite: string;
+    searchPlaceholder: string;
+    search: string;
+    popularSearches: string;
+    popularPages: string;
+    needHelp: string;
+    helpText: string;
+    callUs: string;
+    whatsApp: string;
+    contactForm: string;
+    allProperties: string;
+    luxuryVillas: string;
+    apartments: string;
+    newProjects: string;
+    realEstateBlog: string;
+    contactUs: string;
+    // Search suggestions
+    searchSuggestions: {
+      villaForSale: string;
+      apartmentErbil: string;
+      dreamCity: string;
+      penthouse: string;
+      commercialProperty: string;
+    };
+  };
+
+  locations: {
+    pageTitle: string;
+    pageSubtitle: string;
+    breadcrumbHome: string;
+    breadcrumbLocations: string;
+    mapSectionTitle: string;
+    mapSectionSubtitle: string;
+    statsTitle: string;
+    statsActiveListings: string;
+    statsPrimeDistricts: string;
+    statsStartingFrom: string;
+    statsHappyClients: string;
+    ctaTitle: string;
+    ctaText: string;
+    ctaContactUs: string;
+    ctaViewAllProperties: string;
+    realEstateInErbil: string;
+    districtProperties: string;
+    propertiesAvailable: string;
+    averagePrice: string;
+    propertyTypes: string;
+    aboutDistrict: string;
+    whyChooseDistrict: string;
+    nearbyLandmarks: string;
+    pointsOfInterest: string;
+    amenities: string;
+    transportLinks: string;
+    districtLocation: string;
+    quickFacts: string;
+    priceRange: string;
+    lifestyle: string;
+    idealFor: string;
+    viewDistrictProperties: string;
+    interestedInDistrict: string;
+    contactExpertsText: string;
+    scheduleConsultation: string;
+    exploreOtherAreas: string;
+    viewAllLocations: string;
+    properties: string;
+    availablePropertiesIn: string;
+    viewAll: string;
+    districtNotFound: string;
+    districtNotFoundText: string;
+    browseProperties: string;
+    propertiesCount: string;
+    fromPrice: string;
+  };
+
+  servicesDirectory: {
+    // Hero section
+    badge: string;
+    heroTitle: string;
+    heroTitleLocation: string;
+    heroSubtitle: string;
+    searchPlaceholder: string;
+    searchButton: string;
+
+    // Categories section
+    serviceCategoriesTitle: string;
+    serviceCategoriesSubtitle: string;
+    providerCount: string;
+    providerCountPlural: string;
+    viewProviders: string;
+
+    // Featured providers section
+    featuredProvidersTitle: string;
+    featuredProvidersSubtitle: string;
+
+    // Provider card
+    featured: string;
+    verified: string;
+    reviewCount: string;
+    moreServices: string;
+    priceBudget: string;
+    priceMidRange: string;
+    pricePremium: string;
+    callNow: string;
+    whatsApp: string;
+
+    // Why use directory section
+    whyUseTitle: string;
+    whyVerifiedTitle: string;
+    whyVerifiedDesc: string;
+    whyRatingsTitle: string;
+    whyRatingsDesc: string;
+    whyQuotesTitle: string;
+    whyQuotesDesc: string;
+    whyContactTitle: string;
+    whyContactDesc: string;
+
+    // Provider CTA section
+    providerCtaTitle: string;
+    providerCtaText: string;
+    listYourBusiness: string;
+
+    // Quote form
+    requestQuoteTitle: string;
+    requestQuoteDesc: string;
+    fullNameLabel: string;
+    fullNamePlaceholder: string;
+    phoneLabel: string;
+    phonePlaceholder: string;
+    emailLabel: string;
+    emailPlaceholder: string;
+    propertyTypeLabel: string;
+    selectPropertyType: string;
+    propertyApartment: string;
+    propertyVilla: string;
+    propertyTownhouse: string;
+    propertyOffice: string;
+    propertyCommercial: string;
+    propertyOther: string;
+    projectDetailsLabel: string;
+    projectDetailsPlaceholder: string;
+    submitRequest: string;
+
+    // Quote success
+    requestSubmittedTitle: string;
+    requestSubmittedText: string;
+
+    // Category page
+    breadcrumbHome: string;
+    breadcrumbServicesDirectory: string;
+    whyYouNeedTitle: string;
+    benefitsTitle: string;
+    recommendedProvidersTitle: string;
+    noProvidersTitle: string;
+    noProvidersText: string;
+    faqTitle: string;
+    relatedServicesTitle: string;
+    needHelpTitle: string;
+    needHelpText: string;
+
+    // Bottom CTA
+    needCategoryServiceTitle: string;
+    getConnectedText: string;
+    requestFreeQuote: string;
+    viewAllServices: string;
+
+    // 404
+    categoryNotFoundTitle: string;
+    categoryNotFoundText: string;
+    viewAllServicesBtn: string;
+  };
+
+  pwa: {
+    updateAvailable: string;
+    updateNow: string;
+    later: string;
+  };
+
+  listProperty: {
+    // Hero
+    freeListing: string;
+    listYourProperty: string;
+    withUs: string;
+    heroSubtitle: string;
+    propertiesSold: string;
+    averageResponse: string;
+    clientSatisfaction: string;
+
+    // Progress steps
+    stepOf: string;
+    steps: {
+      type: string;
+      details: string;
+      location: string;
+      pricing: string;
+      photos: string;
+      contact: string;
+      review: string;
+    };
+
+    // Step 1: Property Type
+    step1Title: string;
+    step1Subtitle: string;
+    propertyTypes: {
+      apartment: string;
+      villa: string;
+      house: string;
+      land: string;
+      commercial: string;
+    };
+
+    // Step 2: Property Details
+    step2Title: string;
+    step2Subtitle: string;
+    bedrooms: string;
+    bathrooms: string;
+    areaSqm: string;
+    areaPlaceholder: string;
+    yearBuilt: string;
+    yearBuiltPlaceholder: string;
+    floors: string;
+    parkingSpaces: string;
+    furnishingStatus: string;
+    furnishing: {
+      unfurnished: string;
+      semiFurnished: string;
+      fullyFurnished: string;
+    };
+    propertyFeatures: string;
+    features: {
+      centralAC: string;
+      balcony: string;
+      garden: string;
+      pool: string;
+      gym: string;
+      elevator: string;
+      security: string;
+      electricity24_7: string;
+      solarPanels: string;
+      smartHome: string;
+      storageRoom: string;
+      maidRoom: string;
+      driverRoom: string;
+      rooftopAccess: string;
+      seaLakeView: string;
+      cityView: string;
+      mountainView: string;
+    };
+
+    // Step 3: Location
+    step3Title: string;
+    step3Subtitle: string;
+    city: string;
+    cityPlaceholder: string;
+    neighborhoodDistrict: string;
+    selectNeighborhood: string;
+    fullAddress: string;
+    addressPlaceholder: string;
+    nearbyLandmarks: string;
+    landmarksPlaceholder: string;
+
+    // Step 4: Pricing
+    step4Title: string;
+    step4Subtitle: string;
+    listingType: string;
+    forSale: string;
+    forRent: string;
+    price: string;
+    pricePlaceholder: string;
+    currency: string;
+    currencyUSD: string;
+    currencyIQD: string;
+    paymentTerms: string;
+    paymentTermsPlaceholder: string;
+    priceNegotiable: string;
+
+    // Step 5: Photos
+    step5Title: string;
+    step5Subtitle: string;
+    dragDropPhotos: string;
+    or: string;
+    browseFiles: string;
+    supportedFormats: string;
+    mainPhoto: string;
+    photoNote: string;
+
+    // Step 6: Contact
+    step6Title: string;
+    step6Subtitle: string;
+    fullName: string;
+    fullNamePlaceholder: string;
+    phoneNumber: string;
+    phonePlaceholder: string;
+    emailAddress: string;
+    emailPlaceholder: string;
+    preferredContactMethod: string;
+    contactMethods: {
+      whatsapp: string;
+      phone: string;
+      email: string;
+    };
+    bestTimeToContact: string;
+    bestTimePlaceholder: string;
+
+    // Step 7: Review
+    step7Title: string;
+    step7Subtitle: string;
+    edit: string;
+    propertyType: string;
+    propertyDetails: string;
+    location: string;
+    pricing: string;
+    photos: string;
+    contactInfo: string;
+    noPhotosUploaded: string;
+    more: string;
+    area: string;
+    furnishingLabel: string;
+    landmarks: string;
+    preferredContact: string;
+    available: string;
+    negotiable: string;
+    termsAgree: string;
+    termsOfService: string;
+    and: string;
+    privacyPolicy: string;
+
+    // Navigation
+    back: string;
+    continue: string;
+    submitListing: string;
+
+    // Validation errors
+    errors: {
+      selectPropertyType: string;
+      enterValidArea: string;
+      specifyBedrooms: string;
+      enterCity: string;
+      selectNeighborhood: string;
+      provideAddress: string;
+      selectListingType: string;
+      enterValidPrice: string;
+      enterName: string;
+      enterPhone: string;
+      enterValidEmail: string;
+      agreeTerms: string;
+    };
+
+    // Success
+    successTitle: string;
+    referenceNumber: string;
+    successMessage: string;
+    backToHome: string;
+    listAnotherProperty: string;
+    questionsContact: string;
+
+    // Trust signals
+    trustSignals: {
+      freeService: string;
+      freeServiceDesc: string;
+      fastResponse: string;
+      fastResponseDesc: string;
+      expertAgents: string;
+      expertAgentsDesc: string;
+      wideReach: string;
+      wideReachDesc: string;
+    };
+  };
+
+  areas: {
+    // Business hours
+    businessHours: string;
+    satToThu: string;
+    friday: string;
+    // Map directions
+    getDrivingDirections: string;
+    // Visit office section
+    visitOurOffice: string;
+    visitOurOfficeSubtitle: string;
+    // District guide
+    completeGuideTo: string;
+    aboutDistrict: string;
+    everythingYouNeedToKnow: string;
+    locationAccessibility: string;
+    nearbyAmenities: string;
+    pointsOfInterest: string;
+    idealFor: string;
+    whyChooseDistrict: string;
+    // Location text
+    erbilKurdistanRegionIraq: string;
+    // Hero stats labels
+    availableProperties: string;
+    averagePrice: string;
+    propertyTypes: string;
+    lifestyle: string;
+    // Properties section
+    propertiesForSaleIn: string;
+    propertiesAvailableStartingFrom: string;
+    viewAllPropertiesIn: string;
+    browseDistrictProperties: string;
+    // Contact button
+    call: string;
+    // Map section
+    districtLocation: string;
+    exploreDistrictAndSurrounding: string;
+    // Breadcrumbs
+    home: string;
+    locations: string;
+    // Sidebar quick facts
+    quickFacts: string;
+    priceRange: string;
+    // Sidebar CTA
+    interestedIn: string;
+    ourLocalExpertsCanHelp: string;
+    scheduleFreeConsultation: string;
+    // Other areas
+    exploreOtherAreasInErbil: string;
+    viewAllErbilLocations: string;
+    properties: string;
+    // Bottom CTA
+    readyToFindYourProperty: string;
+    contactRealHouseToday: string;
+    scheduleViewing: string;
+    whatsAppUs: string;
+    // 404 area page
+    areaNotFound: string;
+    areaNotFoundMessage: string;
+    viewAllLocations: string;
+    browseProperties: string;
+    // Real estate suffix
+    realEstate: string;
+    propertiesForSaleAndRentInErbil: string;
+  };
+
+  marketReport: {
+    avgPricePerSqm: string;
+    keyFindings: string;
+    reportContents: string;
+    marketOutlook: string;
+    reportNotFound: string;
+    reportNotFoundMessage: string;
+    viewProperties: string;
+    yearMarketReport: string;
+    lastUpdated: string;
+    methodology: string;
+    getFullReport: string;
+    getFullReportText: string;
+    requestFullReport: string;
+    investmentConsultation: string;
+    investmentConsultationText: string;
+    scheduleConsultation: string;
+    exploreMore: string;
+    buyerGuide: string;
+    investorGuide: string;
+    browseProperties: string;
+    viewProjects: string;
+    makeInformedDecisions: string;
+    makeInformedDecisionsText: string;
+    viewAvailableProperties: string;
+    // Breadcrumbs
+    home: string;
+    marketReports: string;
+    // Stats
+    stable: string;
+  };
+
+  neighborhoodGuide: {
+    // Hero
+    heroBadge: string;
+    heroTitle: string;
+    heroSubtitle: string;
+    // Stats labels
+    neighborhoods: string;
+    properties: string;
+    priceRange: string;
+    // Breadcrumbs
+    home: string;
+    neighborhoodsLabel: string;
+    // Intro section
+    findYourPerfectNeighborhood: string;
+    introText: string;
+    // CTA section
+    needHelpFindingRightArea: string;
+    ctaExpertsText: string;
+    getExpertAdvice: string;
+    // Card strings
+    fromPrice: string;
+    exploreArea: string;
+    propertyTypesCount: string;
+    highSecurity: string;
+    goodSecurity: string;
+    // Location badge
+    erbilKurdistanIraq: string;
+    // Detail page stats
+    lifestyle: string;
+    safetyRating: string;
+    // Buttons
+    viewProperties: string;
+    // Section titles
+    aboutNeighborhood: string;
+    whyChooseNeighborhood: string;
+    propertyPrices: string;
+    currentMarketPrices: string;
+    nearbyAmenities: string;
+    amenitiesSubtitle: string;
+    transportationAccessibility: string;
+    gettingAroundFrom: string;
+    lifestyleCommunity: string;
+    whatItsLikeToLive: string;
+    // Price section
+    startingFrom: string;
+    upTo: string;
+    averagePrice: string;
+    pricePerSqm: string;
+    // Table headers
+    propertyType: string;
+    priceRangeHeader: string;
+    availability: string;
+    // Lifestyle section
+    communityVibe: string;
+    idealFor: string;
+    features: string;
+    familyFriendly: string;
+    petFriendly: string;
+    expatFriendly: string;
+    yes: string;
+    no: string;
+    // Map section
+    neighborhoodLocation: string;
+    exploreAreaOnMap: string;
+    getDrivingDirections: string;
+    // Properties section
+    propertiesInNeighborhood: string;
+    featuredListingsAvailable: string;
+    viewAllProperties: string;
+    // Projects section
+    developmentProjectsIn: string;
+    newDevelopmentsOpportunities: string;
+    viewAllProjects: string;
+    // Sidebar
+    quickFacts: string;
+    avgPrice: string;
+    propertyTypesLabel: string;
+    interestedInNeighborhood: string;
+    localExpertsHelp: string;
+    scheduleFreeConsultation: string;
+    // CTA section
+    readyToFindProperty: string;
+    contactTodayForGuidance: string;
+    scheduleViewing: string;
+    whatsappUs: string;
+    // Other neighborhoods
+    exploreOtherNeighborhoods: string;
+    viewAllNeighborhoods: string;
+    // 404
+    neighborhoodNotFound: string;
+    couldntFindNeighborhood: string;
+    browseProperties: string;
+    // Amenity categories
+    schoolsEducation: string;
+    healthcare: string;
+    shopping: string;
+    dining: string;
+    recreation: string;
   };
 }
 

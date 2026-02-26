@@ -13,6 +13,7 @@ import {
 } from '../data/locations';
 import { properties, getDisplayPrice, formatPrice, type Property } from '../data/properties';
 import { isFavorite, toggleFavorite, updateFavoriteButton, updateFavoritesBadge } from '../utils/favorites';
+import { t } from '../i18n';
 
 // ═══════════════════════════════════════════════════════════════════════════
 // NAP Component - Consistent Name, Address, Phone across site
@@ -145,20 +146,16 @@ export function createNAPComponent(variant: 'full' | 'compact' | 'footer' = 'ful
     const hoursDiv = document.createElement('div');
     hoursDiv.className = 'nap__hours';
     const hoursStrong = document.createElement('strong');
-    hoursStrong.textContent = 'Business Hours:';
+    hoursStrong.textContent = t('areas.businessHours');
     hoursDiv.appendChild(hoursStrong);
 
     const hoursList = document.createElement('ul');
-    const weekdaysPart1 = document.createElement('li');
-    weekdaysPart1.textContent = `${businessNAP.openingHours.weekdays.days.slice(0, 3).join(', ')}: ${businessNAP.openingHours.weekdays.open} - ${businessNAP.openingHours.weekdays.close}`;
-    hoursList.appendChild(weekdaysPart1);
-
-    const weekdaysPart2 = document.createElement('li');
-    weekdaysPart2.textContent = `${businessNAP.openingHours.weekdays.days.slice(3).join(', ')}: ${businessNAP.openingHours.weekdays.open} - ${businessNAP.openingHours.weekdays.close}`;
-    hoursList.appendChild(weekdaysPart2);
+    const weekdaysLi = document.createElement('li');
+    weekdaysLi.textContent = `${t('areas.satToThu')}${businessNAP.openingHours.weekdays.open} - ${businessNAP.openingHours.weekdays.close}`;
+    hoursList.appendChild(weekdaysLi);
 
     const friday = document.createElement('li');
-    friday.textContent = `${businessNAP.openingHours.friday.day}: ${businessNAP.openingHours.friday.note}`;
+    friday.textContent = `${t('areas.friday')}${businessNAP.openingHours.friday.note}`;
     hoursList.appendChild(friday);
 
     hoursDiv.appendChild(hoursList);
@@ -302,7 +299,7 @@ export function createGoogleMapEmbed(coordinates: { lat: number; lng: number }, 
   dirPath.setAttribute('d', 'M21.71 11.29l-9-9c-.39-.39-1.02-.39-1.41 0l-9 9c-.39.39-.39 1.02 0 1.41l9 9c.39.39 1.02.39 1.41 0l9-9c.39-.38.39-1.01 0-1.41zM14 14.5V12h-4v3H8v-4c0-.55.45-1 1-1h5V7.5l3.5 3.5-3.5 3.5z');
   dirSvg.appendChild(dirPath);
   directionsLink.appendChild(dirSvg);
-  directionsLink.appendChild(document.createTextNode(' Get Driving Directions'));
+  directionsLink.appendChild(document.createTextNode(' ' + t('areas.getDrivingDirections')));
 
   mapContainer.appendChild(directionsLink);
 
@@ -321,11 +318,11 @@ export function createBusinessLocationMap(): HTMLElement {
   header.className = 'business-location__header';
 
   const headerTitle = document.createElement('h3');
-  headerTitle.textContent = 'Visit Our Office';
+  headerTitle.textContent = t('areas.visitOurOffice');
   header.appendChild(headerTitle);
 
   const headerSubtitle = document.createElement('p');
-  headerSubtitle.textContent = "Located in Dream City, Erbil - Kurdistan's premier real estate hub";
+  headerSubtitle.textContent = t('areas.visitOurOfficeSubtitle');
   header.appendChild(headerSubtitle);
 
   container.appendChild(header);
@@ -356,12 +353,12 @@ export function createNeighborhoodGuide(district: DistrictLocation): HTMLElement
   header.className = 'neighborhood-guide__header';
 
   const title = document.createElement('h2');
-  title.textContent = `Complete Guide to ${district.name}, Erbil`;
+  title.textContent = t('areas.completeGuideTo', { district: district.name });
   header.appendChild(title);
 
   const subtitle = document.createElement('p');
   subtitle.className = 'neighborhood-guide__subtitle';
-  subtitle.textContent = `Everything you need to know about living, buying, and investing in ${district.name}`;
+  subtitle.textContent = t('areas.everythingYouNeedToKnow', { district: district.name });
   header.appendChild(subtitle);
 
   guide.appendChild(header);
@@ -375,7 +372,7 @@ export function createNeighborhoodGuide(district: DistrictLocation): HTMLElement
   overview.className = 'neighborhood-guide__overview';
 
   const overviewTitle = document.createElement('h3');
-  overviewTitle.textContent = `About ${district.name}`;
+  overviewTitle.textContent = t('areas.aboutDistrict', { district: district.name });
   overview.appendChild(overviewTitle);
 
   const paragraphs = district.longDescription.split('\n\n');
@@ -393,7 +390,7 @@ export function createNeighborhoodGuide(district: DistrictLocation): HTMLElement
 
   // Location card
   const locationCard = createGuideCard(
-    'Location & Accessibility',
+    t('areas.locationAccessibility'),
     'M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z',
     district.transportLinks
   );
@@ -401,7 +398,7 @@ export function createNeighborhoodGuide(district: DistrictLocation): HTMLElement
 
   // Amenities card
   const amenitiesCard = createGuideCard(
-    'Nearby Amenities',
+    t('areas.nearbyAmenities'),
     'M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-5 14H7v-2h7v2zm3-4H7v-2h10v2zm0-4H7V7h10v2z',
     district.amenities.slice(0, 6)
   );
@@ -409,7 +406,7 @@ export function createNeighborhoodGuide(district: DistrictLocation): HTMLElement
 
   // Points of Interest card
   const poiCard = createGuideCard(
-    'Points of Interest',
+    t('areas.pointsOfInterest'),
     'M12 2l-5.5 9h11L12 2zm0 3.84L13.93 9h-3.87L12 5.84zM17.5 13c-2.49 0-4.5 2.01-4.5 4.5s2.01 4.5 4.5 4.5 4.5-2.01 4.5-4.5-2.01-4.5-4.5-4.5zm0 7a2.5 2.5 0 010-5 2.5 2.5 0 010 5zM3 21.5h8v-8H3v8zm2-6h4v4H5v-4z',
     district.nearbyLandmarks.slice(0, 5)
   );
@@ -417,7 +414,7 @@ export function createNeighborhoodGuide(district: DistrictLocation): HTMLElement
 
   // Ideal For card
   const idealForCard = createGuideCard(
-    'Ideal For',
+    t('areas.idealFor'),
     'M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5c-1.66 0-3 1.34-3 3s1.34 3 3 3zm-8 0c1.66 0 2.99-1.34 2.99-3S9.66 5 8 5C6.34 5 5 6.34 5 8s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V19h14v-2.5c0-2.33-4.67-3.5-7-3.5zm8 0c-.29 0-.62.02-.97.05 1.16.84 1.97 1.97 1.97 3.45V19h6v-2.5c0-2.33-4.67-3.5-7-3.5z',
     district.demographics.targetBuyers
   );
@@ -430,7 +427,7 @@ export function createNeighborhoodGuide(district: DistrictLocation): HTMLElement
   highlights.className = 'neighborhood-guide__highlights';
 
   const highlightsTitle = document.createElement('h3');
-  highlightsTitle.textContent = `Why Choose ${district.name}?`;
+  highlightsTitle.textContent = t('areas.whyChooseDistrict', { district: district.name });
   highlights.appendChild(highlightsTitle);
 
   const highlightsGrid = document.createElement('div');
@@ -535,7 +532,7 @@ export function renderAreaPage(slug: string): DocumentFragment {
   locationBadge.appendChild(badgeSvg);
 
   const badgeText = document.createElement('span');
-  badgeText.textContent = 'Erbil, Kurdistan Region, Iraq';
+  badgeText.textContent = t('areas.erbilKurdistanRegionIraq');
   locationBadge.appendChild(badgeText);
 
   heroContent.appendChild(locationBadge);
@@ -543,10 +540,10 @@ export function renderAreaPage(slug: string): DocumentFragment {
   // H1
   const h1 = document.createElement('h1');
   h1.className = 'area-page__title';
-  h1.textContent = `${district.name} Real Estate`;
+  h1.textContent = `${district.name} ${t('areas.realEstate')}`;
 
   const h1Span = document.createElement('span');
-  h1Span.textContent = 'Properties for Sale & Rent in Erbil';
+  h1Span.textContent = t('areas.propertiesForSaleAndRentInErbil');
   h1.appendChild(document.createElement('br'));
   h1.appendChild(h1Span);
 
@@ -563,10 +560,10 @@ export function renderAreaPage(slug: string): DocumentFragment {
   heroStats.className = 'area-page__hero-stats';
 
   const statsData = [
-    { value: propertyCount.toString(), label: 'Available Properties' },
-    { value: formatPrice(district.averagePrice), label: 'Average Price' },
-    { value: district.propertyTypes.length.toString(), label: 'Property Types' },
-    { value: district.demographics.lifestyle, label: 'Lifestyle' }
+    { value: propertyCount.toString(), label: t('areas.availableProperties') },
+    { value: formatPrice(district.averagePrice), label: t('areas.averagePrice') },
+    { value: district.propertyTypes.length.toString(), label: t('areas.propertyTypes') },
+    { value: district.demographics.lifestyle, label: t('areas.lifestyle') }
   ];
 
   statsData.forEach(stat => {
@@ -596,7 +593,7 @@ export function renderAreaPage(slug: string): DocumentFragment {
   viewPropertiesBtn.href = `/properties?district=${district.slug}`;
   viewPropertiesBtn.className = 'btn btn--primary btn--large';
   viewPropertiesBtn.setAttribute('data-route', '');
-  viewPropertiesBtn.textContent = `Browse ${district.name} Properties`;
+  viewPropertiesBtn.textContent = t('areas.browseDistrictProperties', { district: district.name });
   ctaButtons.appendChild(viewPropertiesBtn);
 
   const contactBtn = document.createElement('a');
@@ -610,7 +607,7 @@ export function renderAreaPage(slug: string): DocumentFragment {
   contactPath.setAttribute('d', 'M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z');
   contactSvg.appendChild(contactPath);
   contactBtn.appendChild(contactSvg);
-  contactBtn.appendChild(document.createTextNode(` Call ${businessNAP.phones[0].number}`));
+  contactBtn.appendChild(document.createTextNode(` ${t('areas.call')} ${businessNAP.phones[0].number}`));
   ctaButtons.appendChild(contactBtn);
 
   heroContent.appendChild(ctaButtons);
@@ -637,11 +634,11 @@ export function renderAreaPage(slug: string): DocumentFragment {
   mapHeader.className = 'area-page__map-header';
 
   const mapTitle = document.createElement('h2');
-  mapTitle.textContent = `${district.name} Location`;
+  mapTitle.textContent = t('areas.districtLocation', { district: district.name });
   mapHeader.appendChild(mapTitle);
 
   const mapSubtitle = document.createElement('p');
-  mapSubtitle.textContent = `Explore ${district.name} and surrounding areas in Erbil, Kurdistan`;
+  mapSubtitle.textContent = t('areas.exploreDistrictAndSurrounding', { district: district.name });
   mapHeader.appendChild(mapSubtitle);
 
   mapSection.appendChild(mapHeader);
@@ -706,7 +703,7 @@ function createBreadcrumb(districtName: string, districtSlug: string): HTMLEleme
 
   const span1 = document.createElement('span');
   span1.setAttribute('itemprop', 'name');
-  span1.textContent = 'Home';
+  span1.textContent = t('areas.home');
   a1.appendChild(span1);
 
   li1.appendChild(a1);
@@ -731,7 +728,7 @@ function createBreadcrumb(districtName: string, districtSlug: string): HTMLEleme
 
   const span2 = document.createElement('span');
   span2.setAttribute('itemprop', 'name');
-  span2.textContent = 'Locations';
+  span2.textContent = t('areas.locations');
   a2.appendChild(span2);
 
   li2.appendChild(a2);
@@ -774,11 +771,11 @@ function createPropertiesSection(district: DistrictLocation, districtProperties:
   header.className = 'area-page__properties-header';
 
   const title = document.createElement('h2');
-  title.textContent = `Properties for Sale in ${district.name}`;
+  title.textContent = t('areas.propertiesForSaleIn', { district: district.name });
   header.appendChild(title);
 
   const subtitle = document.createElement('p');
-  subtitle.textContent = `${districtProperties.length} properties available starting from ${formatPrice(district.priceRange.min)}`;
+  subtitle.textContent = t('areas.propertiesAvailableStartingFrom', { count: districtProperties.length.toString(), price: formatPrice(district.priceRange.min) });
   header.appendChild(subtitle);
 
   section.appendChild(header);
@@ -798,7 +795,7 @@ function createPropertiesSection(district: DistrictLocation, districtProperties:
     viewAllBtn.href = `/properties?district=${district.slug}`;
     viewAllBtn.className = 'btn btn--primary area-page__view-all';
     viewAllBtn.setAttribute('data-route', '');
-    viewAllBtn.textContent = `View All ${districtProperties.length} Properties in ${district.name}`;
+    viewAllBtn.textContent = t('areas.viewAllPropertiesIn', { count: districtProperties.length.toString(), district: district.name });
     section.appendChild(viewAllBtn);
   }
 
@@ -814,18 +811,18 @@ function createSidebar(district: DistrictLocation): HTMLElement {
   infoCard.className = 'area-page__info-card';
 
   const infoTitle = document.createElement('h3');
-  infoTitle.textContent = `${district.name} Quick Facts`;
+  infoTitle.textContent = t('areas.quickFacts', { district: district.name });
   infoCard.appendChild(infoTitle);
 
   const dl = document.createElement('dl');
   dl.className = 'area-page__info-list';
 
   const infoItems = [
-    ['Property Types', district.propertyTypes.join(', ')],
-    ['Price Range', `${formatPrice(district.priceRange.min)} - ${formatPrice(district.priceRange.max)}`],
-    ['Average Price', formatPrice(district.averagePrice)],
-    ['Lifestyle', district.demographics.lifestyle],
-    ['Ideal For', district.demographics.targetBuyers.join(', ')]
+    [t('areas.propertyTypes'), district.propertyTypes.join(', ')],
+    [t('areas.priceRange'), `${formatPrice(district.priceRange.min)} - ${formatPrice(district.priceRange.max)}`],
+    [t('areas.averagePrice'), formatPrice(district.averagePrice)],
+    [t('areas.lifestyle'), district.demographics.lifestyle],
+    [t('areas.idealFor'), district.demographics.targetBuyers.join(', ')]
   ];
 
   infoItems.forEach(([term, def]) => {
@@ -846,11 +843,11 @@ function createSidebar(district: DistrictLocation): HTMLElement {
   contactCard.className = 'area-page__contact-card';
 
   const contactTitle = document.createElement('h3');
-  contactTitle.textContent = `Interested in ${district.name}?`;
+  contactTitle.textContent = t('areas.interestedIn', { district: district.name });
   contactCard.appendChild(contactTitle);
 
   const contactText = document.createElement('p');
-  contactText.textContent = `Our local experts can help you find the perfect property in ${district.name}.`;
+  contactText.textContent = t('areas.ourLocalExpertsCanHelp', { district: district.name });
   contactCard.appendChild(contactText);
 
   const napCompact = createNAPComponent('compact');
@@ -860,7 +857,7 @@ function createSidebar(district: DistrictLocation): HTMLElement {
   scheduleBtn.href = '/contact';
   scheduleBtn.className = 'btn btn--primary btn--full';
   scheduleBtn.setAttribute('data-route', '');
-  scheduleBtn.textContent = 'Schedule Free Consultation';
+  scheduleBtn.textContent = t('areas.scheduleFreeConsultation');
   contactCard.appendChild(scheduleBtn);
 
   sidebar.appendChild(contactCard);
@@ -870,7 +867,7 @@ function createSidebar(district: DistrictLocation): HTMLElement {
   otherAreasCard.className = 'area-page__other-areas';
 
   const otherTitle = document.createElement('h3');
-  otherTitle.textContent = 'Explore Other Areas in Erbil';
+  otherTitle.textContent = t('areas.exploreOtherAreasInErbil');
   otherAreasCard.appendChild(otherTitle);
 
   const areasList = document.createElement('ul');
@@ -892,7 +889,7 @@ function createSidebar(district: DistrictLocation): HTMLElement {
 
       const countSpan = document.createElement('span');
       countSpan.className = 'area-count';
-      countSpan.textContent = `${getPropertyCountByDistrict(d.name)} properties`;
+      countSpan.textContent = `${getPropertyCountByDistrict(d.name)} ${t('areas.properties')}`;
       a.appendChild(countSpan);
 
       li.appendChild(a);
@@ -905,7 +902,7 @@ function createSidebar(district: DistrictLocation): HTMLElement {
   viewAllAreasLink.href = '/locations';
   viewAllAreasLink.className = 'area-page__view-all-areas';
   viewAllAreasLink.setAttribute('data-route', '');
-  viewAllAreasLink.textContent = 'View All Erbil Locations';
+  viewAllAreasLink.textContent = t('areas.viewAllErbilLocations');
   otherAreasCard.appendChild(viewAllAreasLink);
 
   sidebar.appendChild(otherAreasCard);
@@ -921,11 +918,11 @@ function createBottomCTA(district: DistrictLocation): HTMLElement {
   content.className = 'area-page__bottom-cta-content';
 
   const title = document.createElement('h2');
-  title.textContent = `Ready to Find Your Property in ${district.name}?`;
+  title.textContent = t('areas.readyToFindYourProperty', { district: district.name });
   content.appendChild(title);
 
   const text = document.createElement('p');
-  text.textContent = `Contact Real House today for expert guidance on buying or renting in ${district.name}, Erbil.`;
+  text.textContent = t('areas.contactRealHouseToday', { district: district.name });
   content.appendChild(text);
 
   const buttons = document.createElement('div');
@@ -935,7 +932,7 @@ function createBottomCTA(district: DistrictLocation): HTMLElement {
   scheduleBtn.href = '/contact';
   scheduleBtn.className = 'btn btn--primary btn--large';
   scheduleBtn.setAttribute('data-route', '');
-  scheduleBtn.textContent = 'Schedule Viewing';
+  scheduleBtn.textContent = t('areas.scheduleViewing');
   buttons.appendChild(scheduleBtn);
 
   const whatsappBtn = document.createElement('a');
@@ -953,7 +950,7 @@ function createBottomCTA(district: DistrictLocation): HTMLElement {
   waPath.setAttribute('d', 'M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z');
   waSvg.appendChild(waPath);
   whatsappBtn.appendChild(waSvg);
-  whatsappBtn.appendChild(document.createTextNode(' WhatsApp Us'));
+  whatsappBtn.appendChild(document.createTextNode(' ' + t('areas.whatsAppUs')));
   buttons.appendChild(whatsappBtn);
 
   content.appendChild(buttons);
@@ -1100,11 +1097,11 @@ function render404AreaPage(slug: string): DocumentFragment {
   container.className = 'area-page__404';
 
   const title = document.createElement('h1');
-  title.textContent = 'Area Not Found';
+  title.textContent = t('areas.areaNotFound');
   container.appendChild(title);
 
   const text = document.createElement('p');
-  text.textContent = `We couldn't find information about "${slug}". Please check our available locations in Erbil.`;
+  text.textContent = t('areas.areaNotFoundMessage', { slug });
   container.appendChild(text);
 
   const buttons = document.createElement('div');
@@ -1114,14 +1111,14 @@ function render404AreaPage(slug: string): DocumentFragment {
   locationsBtn.href = '/locations';
   locationsBtn.className = 'btn btn--primary';
   locationsBtn.setAttribute('data-route', '');
-  locationsBtn.textContent = 'View All Locations';
+  locationsBtn.textContent = t('areas.viewAllLocations');
   buttons.appendChild(locationsBtn);
 
   const propertiesBtn = document.createElement('a');
   propertiesBtn.href = '/properties';
   propertiesBtn.className = 'btn btn--secondary';
   propertiesBtn.setAttribute('data-route', '');
-  propertiesBtn.textContent = 'Browse Properties';
+  propertiesBtn.textContent = t('areas.browseProperties');
   buttons.appendChild(propertiesBtn);
 
   container.appendChild(buttons);

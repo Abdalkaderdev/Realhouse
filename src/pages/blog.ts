@@ -3,6 +3,7 @@
 // SEO-Optimized Blog Listing and Detail Pages
 // ═══════════════════════════════════════════════════════════════════════════
 
+import { t } from '../i18n';
 import {
   blogPosts,
   blogCategories,
@@ -133,7 +134,7 @@ function createBlogCard(post: BlogPost, featured: boolean = false): HTMLElement 
   const imageLink = createElement('a', 'blog-card__image-link');
   imageLink.href = `/blog/${post.slug}`;
   imageLink.setAttribute('data-route', '');
-  imageLink.setAttribute('aria-label', `Read: ${post.title}`);
+  imageLink.setAttribute('aria-label', t('blog.readArticleAria', { title: post.title }));
 
   // SEO-optimized blog image
   const img = createSEOImage({
@@ -170,7 +171,7 @@ function createBlogCard(post: BlogPost, featured: boolean = false): HTMLElement 
   meta.appendChild(dateTime);
   const separator = createElement('span', 'blog-card__separator', '\u00B7');
   meta.appendChild(separator);
-  const readTime = createElement('span', 'blog-card__read-time', `${post.readTime} min read`);
+  const readTime = createElement('span', 'blog-card__read-time', `${post.readTime} ${t('blog.minRead')}`);
   meta.appendChild(readTime);
   content.appendChild(meta);
 
@@ -202,7 +203,7 @@ function createBlogCard(post: BlogPost, featured: boolean = false): HTMLElement 
   authorDiv.appendChild(authorInfo);
   footer.appendChild(authorDiv);
 
-  const readMoreLink = createElement('a', 'blog-card__read-more', 'Read Article');
+  const readMoreLink = createElement('a', 'blog-card__read-more', t('blog.readArticle'));
   readMoreLink.href = `/blog/${post.slug}`;
   readMoreLink.setAttribute('data-route', '');
   readMoreLink.appendChild(createSVGUse('icon-arrow-right'));
@@ -245,9 +246,9 @@ function filterAndRenderPosts(grid: HTMLElement): void {
     const emptyState = createElement('div', 'blog-page__empty');
     const emptyIcon = createSVGUse('icon-area');
     emptyState.appendChild(emptyIcon);
-    const emptyTitle = createElement('h3', undefined, 'No articles found');
+    const emptyTitle = createElement('h3', undefined, t('blog.noArticlesFound'));
     emptyState.appendChild(emptyTitle);
-    const emptyText = createElement('p', undefined, 'Try adjusting your filters or search terms.');
+    const emptyText = createElement('p', undefined, t('blog.tryAdjustingFilters'));
     emptyState.appendChild(emptyText);
     grid.appendChild(emptyState);
   } else {
@@ -278,12 +279,12 @@ export function renderBlogPage(): DocumentFragment {
   // Header section with SEO keywords
   const header = createElement('div', 'blog-page__header');
   const title = createElement('h1', 'blog-page__title');
-  title.textContent = 'Real Estate Erbil ';
-  const em = createElement('em', undefined, 'Insights');
+  title.textContent = t('blog.heroTitle');
+  const em = createElement('em', undefined, t('blog.heroTitleEmphasis'));
   title.appendChild(em);
-  title.appendChild(document.createTextNode(' — Erbil Property Market Blog'));
+  title.appendChild(document.createTextNode(t('blog.heroSubtitle')));
   header.appendChild(title);
-  const subtitle = createElement('p', 'blog-page__subtitle', 'Expert property Erbil advice, real estate Kurdistan market trends, and comprehensive guides for houses for sale Erbil. Learn about apartments Erbil, villas Erbil Iraq, luxury homes Kurdistan, and property investment Kurdistan Iraq opportunities.');
+  const subtitle = createElement('p', 'blog-page__subtitle', t('blog.pageSubtitle'));
   header.appendChild(subtitle);
   container.appendChild(header);
 
@@ -291,7 +292,7 @@ export function renderBlogPage(): DocumentFragment {
   const featuredPosts = getFeaturedPosts();
   if (featuredPosts.length > 0) {
     const featuredSection = createElement('section', 'blog-page__featured');
-    const featuredTitle = createElement('h2', 'blog-page__section-title', 'Featured Articles');
+    const featuredTitle = createElement('h2', 'blog-page__section-title', t('blog.featuredArticles'));
     featuredSection.appendChild(featuredTitle);
 
     const featuredGrid = createElement('div', 'blog-page__featured-grid');
@@ -310,14 +311,14 @@ export function renderBlogPage(): DocumentFragment {
   const searchWrapper = createElement('div', 'blog-page__search');
   const searchInput = createElement('input', 'blog-page__search-input');
   searchInput.type = 'text';
-  searchInput.placeholder = 'Search articles...';
-  searchInput.setAttribute('aria-label', 'Search articles');
+  searchInput.placeholder = t('blog.searchPlaceholder');
+  searchInput.setAttribute('aria-label', t('blog.searchAriaLabel'));
   searchWrapper.appendChild(searchInput);
   filters.appendChild(searchWrapper);
 
   // Category filters
   const categoryWrapper = createElement('div', 'blog-page__categories');
-  const allBtn = createElement('button', 'blog-page__category-btn active', 'All');
+  const allBtn = createElement('button', 'blog-page__category-btn active', t('blog.filterAll'));
   allBtn.setAttribute('data-category', 'All');
   categoryWrapper.appendChild(allBtn);
 
@@ -332,7 +333,7 @@ export function renderBlogPage(): DocumentFragment {
 
   // All posts section
   const postsSection = createElement('section', 'blog-page__posts');
-  const postsTitle = createElement('h2', 'blog-page__section-title', 'All Articles');
+  const postsTitle = createElement('h2', 'blog-page__section-title', t('blog.allArticles'));
   postsSection.appendChild(postsTitle);
 
   const postsGrid = createElement('div', 'blog-page__grid');
@@ -346,11 +347,11 @@ export function renderBlogPage(): DocumentFragment {
   // Newsletter CTA
   const ctaSection = createElement('section', 'blog-page__cta');
   const ctaContent = createElement('div', 'blog-page__cta-content');
-  const ctaTitle = createElement('h2', 'blog-page__cta-title', 'Stay Updated');
+  const ctaTitle = createElement('h2', 'blog-page__cta-title', t('blog.stayUpdated'));
   ctaContent.appendChild(ctaTitle);
-  const ctaText = createElement('p', 'blog-page__cta-text', 'Get the latest real estate insights and property listings delivered to your inbox.');
+  const ctaText = createElement('p', 'blog-page__cta-text', t('blog.stayUpdatedText'));
   ctaContent.appendChild(ctaText);
-  const ctaBtn = createElement('a', 'btn btn--primary', 'Contact Us');
+  const ctaBtn = createElement('a', 'btn btn--primary', t('common.contactUs'));
   ctaBtn.href = '/contact';
   ctaBtn.setAttribute('data-route', '');
   ctaContent.appendChild(ctaBtn);
@@ -365,10 +366,10 @@ export function renderBlogPage(): DocumentFragment {
 
   // ─── Property & Project Browse CTA ─────────────────────────────────────
   const browseCta = createInternalCTA(
-    'Ready to Find Your Dream Property?',
-    'Explore our curated selection of luxury properties and development projects in Erbil, Kurdistan.',
-    { text: 'Browse Properties', url: '/properties' },
-    { text: 'View Projects', url: '/projects' }
+    t('blog.readyToFindDreamProperty'),
+    t('blog.exploreOurSelection'),
+    { text: t('blog.browseProperties'), url: '/properties' },
+    { text: t('blog.viewProjects'), url: '/projects' }
   );
   page.appendChild(browseCta);
 
@@ -417,11 +418,11 @@ export function renderBlogPostPage(slug: string): DocumentFragment {
     const container = createElement('div', 'container');
 
     const errorContent = createElement('div', 'blog-post-page__error');
-    const errorTitle = createElement('h1', undefined, 'Article Not Found');
+    const errorTitle = createElement('h1', undefined, t('blog.articleNotFound'));
     errorContent.appendChild(errorTitle);
-    const errorText = createElement('p', undefined, 'The article you\'re looking for doesn\'t exist or has been moved.');
+    const errorText = createElement('p', undefined, t('blog.articleNotFoundText'));
     errorContent.appendChild(errorText);
-    const backLink = createElement('a', 'btn btn--primary', 'Back to Blog');
+    const backLink = createElement('a', 'btn btn--primary', t('blog.backToBlog'));
     backLink.href = '/blog';
     backLink.setAttribute('data-route', '');
     errorContent.appendChild(backLink);
@@ -514,7 +515,7 @@ export function renderBlogPostPage(slug: string): DocumentFragment {
   metaDetails.appendChild(dateTime);
   const readTimeSpan = createElement('span', 'blog-post-page__read-time');
   readTimeSpan.appendChild(createSVGUse('icon-clock'));
-  readTimeSpan.appendChild(document.createTextNode(`${post.readTime} min read`));
+  readTimeSpan.appendChild(document.createTextNode(`${post.readTime} ${t('blog.minRead')}`));
   metaDetails.appendChild(readTimeSpan);
   articleMeta.appendChild(metaDetails);
 
@@ -528,7 +529,7 @@ export function renderBlogPostPage(slug: string): DocumentFragment {
 
   // Tags
   const tagsSection = createElement('div', 'blog-post-page__tags');
-  const tagsLabel = createElement('span', 'blog-post-page__tags-label', 'Tags:');
+  const tagsLabel = createElement('span', 'blog-post-page__tags-label', t('blog.tags'));
   tagsSection.appendChild(tagsLabel);
   const tagsList = createElement('div', 'blog-post-page__tags-list');
   post.tags.forEach(tag => {
@@ -582,7 +583,7 @@ export function renderBlogPostPage(slug: string): DocumentFragment {
   // Show experience badge
   if (enhancedAuthor) {
     const expBadge = createElement('div', 'blog-post-page__author-experience');
-    expBadge.textContent = `${enhancedAuthor.yearsExperience}+ Years Experience`;
+    expBadge.textContent = t('blog.yearsExperience', { years: enhancedAuthor.yearsExperience });
     authorCard.appendChild(expBadge);
   }
 
@@ -594,7 +595,7 @@ export function renderBlogPostPage(slug: string): DocumentFragment {
   // Show credentials
   if (enhancedAuthor && enhancedAuthor.credentials.length > 0) {
     const credentials = createElement('div', 'blog-post-page__author-credentials');
-    const credTitle = createElement('span', 'blog-post-page__author-cred-title', 'Credentials:');
+    const credTitle = createElement('span', 'blog-post-page__author-cred-title', t('blog.credentials'));
     credentials.appendChild(credTitle);
     const credList = createElement('ul', 'blog-post-page__author-cred-list');
     enhancedAuthor.credentials.forEach(cred => {
@@ -607,7 +608,7 @@ export function renderBlogPostPage(slug: string): DocumentFragment {
 
   // Author link to team page
   if (enhancedAuthor) {
-    const authorLink = createElement('a', 'blog-post-page__author-link', 'View Full Profile');
+    const authorLink = createElement('a', 'blog-post-page__author-link', t('blog.viewFullProfile'));
     authorLink.href = `/about#team-${enhancedAuthor.teamMemberId}`;
     authorLink.setAttribute('data-route', '');
     authorLink.setAttribute('itemprop', 'url');
@@ -620,7 +621,7 @@ export function renderBlogPostPage(slug: string): DocumentFragment {
       linkedinLink.target = '_blank';
       linkedinLink.rel = 'noopener noreferrer';
       linkedinLink.setAttribute('itemprop', 'sameAs');
-      linkedinLink.textContent = 'Connect on LinkedIn';
+      linkedinLink.textContent = t('blog.connectOnLinkedIn');
       authorCard.appendChild(linkedinLink);
     }
   }
@@ -631,7 +632,7 @@ export function renderBlogPostPage(slug: string): DocumentFragment {
   const relatedPosts = getRelatedPosts(post, 3);
   if (relatedPosts.length > 0) {
     const relatedSection = createElement('div', 'blog-post-page__related');
-    const relatedTitle = createElement('h3', 'blog-post-page__related-title', 'Related Articles');
+    const relatedTitle = createElement('h3', 'blog-post-page__related-title', t('blog.relatedArticles'));
     relatedSection.appendChild(relatedTitle);
 
     const relatedList = createElement('div', 'blog-post-page__related-list');
@@ -661,11 +662,11 @@ export function renderBlogPostPage(slug: string): DocumentFragment {
 
   // CTA card
   const ctaCard = createElement('div', 'blog-post-page__cta-card');
-  const ctaTitle = createElement('h3', 'blog-post-page__cta-title', 'Looking for Property?');
+  const ctaTitle = createElement('h3', 'blog-post-page__cta-title', t('blog.lookingForProperty'));
   ctaCard.appendChild(ctaTitle);
-  const ctaText = createElement('p', 'blog-post-page__cta-text', 'Explore our curated selection of luxury properties in Erbil.');
+  const ctaText = createElement('p', 'blog-post-page__cta-text', t('blog.lookingForPropertyText'));
   ctaCard.appendChild(ctaText);
-  const ctaBtn = createElement('a', 'btn btn--primary btn--block', 'View Properties');
+  const ctaBtn = createElement('a', 'btn btn--primary btn--block', t('blog.viewProperties'));
   ctaBtn.href = '/properties';
   ctaBtn.setAttribute('data-route', '');
   ctaCard.appendChild(ctaBtn);
@@ -690,7 +691,7 @@ export function renderBlogPostPage(slug: string): DocumentFragment {
 
   // Back to blog
   const backSection = createElement('div', 'blog-post-page__back');
-  const backLink = createElement('a', 'btn btn--ghost', 'Back to Blog');
+  const backLink = createElement('a', 'btn btn--ghost', t('blog.backToBlog'));
   backLink.href = '/blog';
   backLink.setAttribute('data-route', '');
   const backIcon = createSVGUse('icon-arrow-left');
@@ -712,11 +713,11 @@ export function renderBlogPostPage(slug: string): DocumentFragment {
 // ─── SEO Helper for Blog Pages ─────────────────────────────────────────────
 export function setupBlogPageSEO(): void {
   // Update meta tags for blog listing page (optimized for CTR)
-  document.title = 'Erbil Real Estate Blog | Market Insights, Buying Guides';
+  document.title = t('blog.metaTitle');
 
   const metaDescription = document.querySelector('meta[name="description"]');
   if (metaDescription) {
-    metaDescription.setAttribute('content', 'Expert Erbil real estate insights: 2025 market trends, buying guides, investment tips & neighborhood reviews. Stay informed with Real House professionals.');
+    metaDescription.setAttribute('content', t('blog.metaDescription'));
   }
 }
 

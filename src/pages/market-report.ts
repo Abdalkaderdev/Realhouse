@@ -14,6 +14,7 @@ import {
   injectBreadcrumbSchema,
   type BreadcrumbItem
 } from '../components/internal-linking';
+import { t } from '../i18n';
 
 // --- Helper Functions ---
 function createElement<K extends keyof HTMLElementTagNameMap>(
@@ -83,8 +84,8 @@ function parseReportContent(htmlContent: string): DocumentFragment {
 // --- Breadcrumb Helpers ---
 function getMarketReportBreadcrumbs(report: MarketReport): BreadcrumbItem[] {
   return [
-    { name: 'Home', url: '/' },
-    { name: 'Market Reports', url: '/market-report' },
+    { name: t('marketReport.home'), url: '/' },
+    { name: t('marketReport.marketReports'), url: '/market-report' },
     { name: report.title, url: `/market-report/${report.slug}` }
   ];
 }
@@ -104,7 +105,7 @@ function createStatsGrid(stats: { label: string; value: string; change?: string 
 
     if (stat.change) {
       const change = createElement('span', 'market-report__stat-change');
-      const isPositive = stat.change.startsWith('+') || stat.change === 'Stable';
+      const isPositive = stat.change.startsWith('+') || stat.change === t('marketReport.stable');
       change.classList.add(isPositive ? 'market-report__stat-change--positive' : 'market-report__stat-change--negative');
       change.textContent = stat.change;
       card.appendChild(change);
@@ -120,7 +121,7 @@ function createStatsGrid(stats: { label: string; value: string; change?: string 
 function createPriceChart(data: { area: string; avgPrice: number; priceChange: number }[]): HTMLElement {
   const chartWrapper = createElement('div', 'market-report__chart');
 
-  const chartTitle = createElement('h4', 'market-report__chart-title', 'Average Price per sqm (USD)');
+  const chartTitle = createElement('h4', 'market-report__chart-title', t('marketReport.avgPricePerSqm'));
   chartWrapper.appendChild(chartTitle);
 
   const maxPrice = Math.max(...data.map(d => d.avgPrice));
@@ -185,7 +186,7 @@ function createReportSection(section: MarketReportSection): HTMLElement {
 function createKeyFindings(findings: string[]): HTMLElement {
   const section = createElement('section', 'market-report__key-findings');
 
-  const title = createElement('h2', 'market-report__key-findings-title', 'Key Findings');
+  const title = createElement('h2', 'market-report__key-findings-title', t('marketReport.keyFindings'));
   section.appendChild(title);
 
   const list = createElement('ul', 'market-report__key-findings-list');
@@ -206,7 +207,7 @@ function createReportTOC(sections: MarketReportSection[]): HTMLElement {
   const toc = createElement('nav', 'market-report__toc');
   toc.setAttribute('aria-label', 'Report Sections');
 
-  const tocTitle = createElement('h2', 'market-report__toc-title', 'Report Contents');
+  const tocTitle = createElement('h2', 'market-report__toc-title', t('marketReport.reportContents'));
   toc.appendChild(tocTitle);
 
   const tocList = createElement('ul', 'market-report__toc-list');
@@ -228,15 +229,18 @@ function createReportTOC(sections: MarketReportSection[]): HTMLElement {
   });
 
   // Add Key Findings and Outlook
-  const extraItems = ['Key Findings', 'Market Outlook'];
-  extraItems.forEach(name => {
+  const extraItems = [
+    { name: t('marketReport.keyFindings'), id: 'key-findings' },
+    { name: t('marketReport.marketOutlook'), id: 'market-outlook' }
+  ];
+  extraItems.forEach(({ name, id }) => {
     const item = createElement('li', 'market-report__toc-item');
     const link = createElement('a', 'market-report__toc-link');
-    link.href = `#${name.toLowerCase().replace(' ', '-')}`;
+    link.href = `#${id}`;
     link.textContent = name;
     link.addEventListener('click', (e) => {
       e.preventDefault();
-      const target = document.getElementById(name.toLowerCase().replace(' ', '-'));
+      const target = document.getElementById(id);
       if (target) {
         target.scrollIntoView({ behavior: 'smooth', block: 'start' });
       }
@@ -262,11 +266,11 @@ export function renderMarketReportPage(slug: string): DocumentFragment {
     const container = createElement('div', 'container');
 
     const errorContent = createElement('div', 'market-report__error');
-    const errorTitle = createElement('h1', undefined, 'Report Not Found');
+    const errorTitle = createElement('h1', undefined, t('marketReport.reportNotFound'));
     errorContent.appendChild(errorTitle);
-    const errorText = createElement('p', undefined, 'The market report you are looking for does not exist or has been moved.');
+    const errorText = createElement('p', undefined, t('marketReport.reportNotFoundMessage'));
     errorContent.appendChild(errorText);
-    const backLink = createElement('a', 'btn btn--primary', 'View Properties');
+    const backLink = createElement('a', 'btn btn--primary', t('marketReport.viewProperties'));
     backLink.href = '/properties';
     backLink.setAttribute('data-route', '');
     errorContent.appendChild(backLink);
@@ -294,7 +298,7 @@ export function renderMarketReportPage(slug: string): DocumentFragment {
   heroContent.appendChild(createBreadcrumbs(breadcrumbs));
   injectBreadcrumbSchema(breadcrumbs);
 
-  const heroBadge = createElement('span', 'market-report__hero-badge', `${report.year} Market Report`);
+  const heroBadge = createElement('span', 'market-report__hero-badge', t('marketReport.yearMarketReport', { year: report.year }));
   heroContent.appendChild(heroBadge);
 
   const heroTitle = createElement('h1', 'market-report__hero-title', report.title);
@@ -304,7 +308,7 @@ export function renderMarketReportPage(slug: string): DocumentFragment {
   const heroMeta = createElement('div', 'market-report__hero-meta');
   const metaDate = createElement('span', 'market-report__hero-meta-item');
   metaDate.appendChild(createSVGUse('icon-calendar'));
-  metaDate.appendChild(document.createTextNode(`Last Updated: ${report.lastUpdated}`));
+  metaDate.appendChild(document.createTextNode(t('marketReport.lastUpdated', { date: report.lastUpdated })));
   metaDate.setAttribute('itemprop', 'dateModified');
   heroMeta.appendChild(metaDate);
   heroContent.appendChild(heroMeta);
@@ -346,7 +350,7 @@ export function renderMarketReportPage(slug: string): DocumentFragment {
   // Market Outlook
   const outlookSection = createElement('section', 'market-report__outlook');
   outlookSection.id = 'market-outlook';
-  const outlookTitle = createElement('h2', 'market-report__outlook-title', 'Market Outlook');
+  const outlookTitle = createElement('h2', 'market-report__outlook-title', t('marketReport.marketOutlook'));
   outlookSection.appendChild(outlookTitle);
   const outlookContent = createElement('div', 'market-report__outlook-content');
   outlookContent.appendChild(parseReportContent(report.outlook));
@@ -355,7 +359,7 @@ export function renderMarketReportPage(slug: string): DocumentFragment {
 
   // Methodology
   const methodologySection = createElement('section', 'market-report__methodology');
-  const methodologyTitle = createElement('h3', 'market-report__methodology-title', 'Methodology');
+  const methodologyTitle = createElement('h3', 'market-report__methodology-title', t('marketReport.methodology'));
   methodologySection.appendChild(methodologyTitle);
   const methodologyText = createElement('p', 'market-report__methodology-text', report.methodology);
   methodologySection.appendChild(methodologyText);
@@ -373,11 +377,11 @@ export function renderMarketReportPage(slug: string): DocumentFragment {
 
   // Download CTA
   const downloadCard = createElement('div', 'market-report__download-card');
-  const downloadTitle = createElement('h3', 'market-report__download-title', 'Get the Full Report');
+  const downloadTitle = createElement('h3', 'market-report__download-title', t('marketReport.getFullReport'));
   downloadCard.appendChild(downloadTitle);
-  const downloadText = createElement('p', 'market-report__download-text', 'Contact us to receive the complete market report with additional data and analysis.');
+  const downloadText = createElement('p', 'market-report__download-text', t('marketReport.getFullReportText'));
   downloadCard.appendChild(downloadText);
-  const downloadBtn = createElement('a', 'btn btn--primary btn--block', 'Request Full Report');
+  const downloadBtn = createElement('a', 'btn btn--primary btn--block', t('marketReport.requestFullReport'));
   downloadBtn.href = '/contact';
   downloadBtn.setAttribute('data-route', '');
   downloadCard.appendChild(downloadBtn);
@@ -385,11 +389,11 @@ export function renderMarketReportPage(slug: string): DocumentFragment {
 
   // CTA Card
   const ctaCard = createElement('div', 'market-report__cta-card');
-  const ctaTitle = createElement('h3', 'market-report__cta-title', 'Investment Consultation');
+  const ctaTitle = createElement('h3', 'market-report__cta-title', t('marketReport.investmentConsultation'));
   ctaCard.appendChild(ctaTitle);
-  const ctaText = createElement('p', 'market-report__cta-text', 'Get personalized investment advice based on current market conditions.');
+  const ctaText = createElement('p', 'market-report__cta-text', t('marketReport.investmentConsultationText'));
   ctaCard.appendChild(ctaText);
-  const ctaBtn = createElement('a', 'btn btn--outline btn--block', 'Schedule Consultation');
+  const ctaBtn = createElement('a', 'btn btn--outline btn--block', t('marketReport.scheduleConsultation'));
   ctaBtn.href = '/contact';
   ctaBtn.setAttribute('data-route', '');
   ctaCard.appendChild(ctaBtn);
@@ -400,14 +404,14 @@ export function renderMarketReportPage(slug: string): DocumentFragment {
 
   // Related Links
   const relatedLinks = createElement('div', 'market-report__related-links');
-  const relatedTitle = createElement('h3', 'market-report__related-title', 'Explore More');
+  const relatedTitle = createElement('h3', 'market-report__related-title', t('marketReport.exploreMore'));
   relatedLinks.appendChild(relatedTitle);
   const linksList = createElement('ul', 'market-report__related-list');
   const links = [
-    { text: 'Buyer\'s Guide', url: '/guides/buying-property-erbil' },
-    { text: 'Investor\'s Guide', url: '/guides/real-estate-investment-erbil' },
-    { text: 'Browse Properties', url: '/properties' },
-    { text: 'View Projects', url: '/projects' }
+    { text: t('marketReport.buyerGuide'), url: '/guides/buying-property-erbil' },
+    { text: t('marketReport.investorGuide'), url: '/guides/real-estate-investment-erbil' },
+    { text: t('marketReport.browseProperties'), url: '/properties' },
+    { text: t('marketReport.viewProjects'), url: '/projects' }
   ];
   links.forEach(link => {
     const item = createElement('li');
@@ -426,16 +430,16 @@ export function renderMarketReportPage(slug: string): DocumentFragment {
   // Bottom CTA
   const bottomCta = createElement('section', 'market-report__bottom-cta');
   const bottomCtaContent = createElement('div', 'market-report__bottom-cta-content');
-  const bottomCtaTitle = createElement('h2', 'market-report__bottom-cta-title', 'Make Informed Investment Decisions');
+  const bottomCtaTitle = createElement('h2', 'market-report__bottom-cta-title', t('marketReport.makeInformedDecisions'));
   bottomCtaContent.appendChild(bottomCtaTitle);
-  const bottomCtaText = createElement('p', 'market-report__bottom-cta-text', 'Our expert team combines market data with local expertise to help you find the best property opportunities in Erbil.');
+  const bottomCtaText = createElement('p', 'market-report__bottom-cta-text', t('marketReport.makeInformedDecisionsText'));
   bottomCtaContent.appendChild(bottomCtaText);
   const bottomCtaActions = createElement('div', 'market-report__bottom-cta-actions');
-  const btnProperties = createElement('a', 'btn btn--primary', 'View Available Properties');
+  const btnProperties = createElement('a', 'btn btn--primary', t('marketReport.viewAvailableProperties'));
   btnProperties.href = '/properties';
   btnProperties.setAttribute('data-route', '');
   bottomCtaActions.appendChild(btnProperties);
-  const btnInvest = createElement('a', 'btn btn--outline', 'Investment Consultation');
+  const btnInvest = createElement('a', 'btn btn--outline', t('marketReport.investmentConsultation'));
   btnInvest.href = '/contact';
   btnInvest.setAttribute('data-route', '');
   bottomCtaActions.appendChild(btnInvest);

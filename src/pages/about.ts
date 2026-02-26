@@ -172,12 +172,12 @@ function createStatsSection(): HTMLElement {
   const grid = createElement('div', 'about-stats__grid');
 
   const statsItems = [
-    { icon: 'icon-home', value: companyStats.totalTransactions.toLocaleString(), label: 'Properties Sold', desc: 'Successful transactions completed' },
-    { icon: 'icon-users', value: `${companyStats.localClients + companyStats.internationalClients}+`, label: 'Happy Clients', desc: 'Families and investors served' },
-    { icon: 'icon-globe', value: companyStats.internationalClients.toLocaleString(), label: 'International Clients', desc: 'From 20+ countries worldwide' },
-    { icon: 'icon-chart', value: formatCurrency(companyStats.totalSalesVolume), label: 'Transaction Volume', desc: 'Total value of properties sold' },
-    { icon: 'icon-star', value: `${companyStats.clientSatisfactionRate}%`, label: 'Client Satisfaction', desc: 'Based on post-sale surveys' },
-    { icon: 'icon-refresh', value: `${companyStats.repeatClientRate}%`, label: 'Repeat Clients', desc: 'Clients who return for more' }
+    { icon: 'icon-home', value: companyStats.totalTransactions.toLocaleString(), label: t('about.propertiesSold'), desc: t('about.propertiesSoldDesc') },
+    { icon: 'icon-users', value: `${companyStats.localClients + companyStats.internationalClients}+`, label: t('about.happyClients'), desc: t('about.happyClientsDesc') },
+    { icon: 'icon-globe', value: companyStats.internationalClients.toLocaleString(), label: t('about.internationalClients'), desc: t('about.internationalClientsDesc') },
+    { icon: 'icon-chart', value: formatCurrency(companyStats.totalSalesVolume), label: t('about.transactionVolume'), desc: t('about.transactionVolumeDesc') },
+    { icon: 'icon-star', value: `${companyStats.clientSatisfactionRate}%`, label: t('about.clientSatisfaction'), desc: t('about.clientSatisfactionDesc') },
+    { icon: 'icon-refresh', value: `${companyStats.repeatClientRate}%`, label: t('about.repeatClients'), desc: t('about.repeatClientsDesc') }
   ];
 
   statsItems.forEach(item => {
@@ -271,11 +271,11 @@ function createTimelineSection(): HTMLElement {
 
   const header = createElement('div', 'section-header');
   const headerTitle = createElement('h2', 'section-title');
-  headerTitle.textContent = 'Our ';
-  const em = createElement('em', undefined, 'Journey');
+  headerTitle.textContent = t('about.ourStory') + ' ';
+  const em = createElement('em', undefined, t('about.ourJourney'));
   headerTitle.appendChild(em);
   header.appendChild(headerTitle);
-  const headerSubtitle = createElement('p', 'section-subtitle', 'Key milestones in our 23-year real estate Erbil history - Erbil property market leaders');
+  const headerSubtitle = createElement('p', 'section-subtitle', t('about.journeySubtitle'));
   header.appendChild(headerSubtitle);
   container.appendChild(header);
 
@@ -377,12 +377,12 @@ function createTeamSection(): HTMLElement {
 
   const header = createElement('div', 'section-header');
   const headerTitle = createElement('h2', 'section-title');
-  headerTitle.textContent = 'Our ';
-  const em = createElement('em', undefined, 'Expert');
+  headerTitle.textContent = t('about.meetTheTeam') + ' ';
+  const em = createElement('em', undefined, t('about.expertTeam'));
   headerTitle.appendChild(em);
-  headerTitle.appendChild(document.createTextNode(' Consultants'));
+  headerTitle.appendChild(document.createTextNode(' ' + t('about.consultants')));
   header.appendChild(headerTitle);
-  const headerSubtitle = createElement('p', 'section-subtitle', 'Dedicated real estate Kurdistan professionals - buy house Erbil with apartments Erbil Iraq experts');
+  const headerSubtitle = createElement('p', 'section-subtitle', t('about.teamSubtitle'));
   header.appendChild(headerSubtitle);
   container.appendChild(header);
 
@@ -423,7 +423,7 @@ function createTeamMemberCard(member: typeof teamMembers[0], isLeadership: boole
   imageWrap.appendChild(img);
 
   if (member.isFounder) {
-    const founderBadge = createElement('span', 'team-card__badge', 'Co-Founder');
+    const founderBadge = createElement('span', 'team-card__badge', t('about.coFounder'));
     imageWrap.appendChild(founderBadge);
   }
 
@@ -448,7 +448,7 @@ function createTeamMemberCard(member: typeof teamMembers[0], isLeadership: boole
   const expStat = createElement('div', 'team-card__stat');
   const expValue = createElement('span', 'team-card__stat-value', `${member.yearsExperience}+`);
   expStat.appendChild(expValue);
-  const expLabel = createElement('span', 'team-card__stat-label', 'Years Exp.');
+  const expLabel = createElement('span', 'team-card__stat-label', t('about.yearsExp'));
   expStat.appendChild(expLabel);
   stats.appendChild(expStat);
 
@@ -456,7 +456,7 @@ function createTeamMemberCard(member: typeof teamMembers[0], isLeadership: boole
     const transStat = createElement('div', 'team-card__stat');
     const transValue = createElement('span', 'team-card__stat-value', member.transactionCount.toString());
     transStat.appendChild(transValue);
-    const transLabel = createElement('span', 'team-card__stat-label', 'Sales');
+    const transLabel = createElement('span', 'team-card__stat-label', t('about.sales'));
     transStat.appendChild(transLabel);
     stats.appendChild(transStat);
   }
@@ -465,7 +465,7 @@ function createTeamMemberCard(member: typeof teamMembers[0], isLeadership: boole
 
   // Languages
   const languages = createElement('div', 'team-card__languages');
-  const langLabel = createElement('span', 'team-card__lang-label', 'Languages: ');
+  const langLabel = createElement('span', 'team-card__lang-label', t('about.languages'));
   languages.appendChild(langLabel);
   const langList = createElement('span', 'team-card__lang-list', member.languages.join(', '));
   languages.appendChild(langList);
@@ -487,7 +487,7 @@ function createTeamMemberCard(member: typeof teamMembers[0], isLeadership: boole
   // Credentials (for leadership)
   if (isLeadership && member.credentials.length > 0) {
     const credentials = createElement('div', 'team-card__credentials');
-    const credTitle = createElement('span', 'team-card__cred-title', 'Credentials:');
+    const credTitle = createElement('span', 'team-card__cred-title', t('about.credentials'));
     credentials.appendChild(credTitle);
     member.credentials.slice(0, 2).forEach(cred => {
       const credItem = createElement('span', 'team-card__cred-item', cred.title);
@@ -503,14 +503,14 @@ function createTeamMemberCard(member: typeof teamMembers[0], isLeadership: boole
   phoneLink.href = `tel:${member.phone.replace(/\s/g, '')}`;
   phoneLink.setAttribute('itemprop', 'telephone');
   phoneLink.appendChild(createSVGUse('icon-phone'));
-  phoneLink.appendChild(document.createTextNode(' Call'));
+  phoneLink.appendChild(document.createTextNode(' ' + t('buttons.call')));
   contact.appendChild(phoneLink);
 
   const emailLink = createElement('a', 'team-card__link');
   emailLink.href = `mailto:${member.email}`;
   emailLink.setAttribute('itemprop', 'email');
   emailLink.appendChild(createSVGUse('icon-email'));
-  emailLink.appendChild(document.createTextNode(' Email'));
+  emailLink.appendChild(document.createTextNode(' ' + t('buttons.email')));
   contact.appendChild(emailLink);
 
   if (member.socialLinks.linkedin) {
@@ -537,11 +537,11 @@ function createAwardsSection(): HTMLElement {
 
   const header = createElement('div', 'section-header');
   const headerTitle = createElement('h2', 'section-title');
-  headerTitle.textContent = 'Awards & ';
-  const em = createElement('em', undefined, 'Recognition');
+  headerTitle.textContent = t('about.awardsWon') + ' & ';
+  const em = createElement('em', undefined, t('about.recognition'));
   headerTitle.appendChild(em);
   header.appendChild(headerTitle);
-  const headerSubtitle = createElement('p', 'section-subtitle', 'Industry recognition for real estate Erbil excellence - best real estate agent Erbil awards');
+  const headerSubtitle = createElement('p', 'section-subtitle', t('about.recognitionSubtitle'));
   header.appendChild(headerSubtitle);
   container.appendChild(header);
 
@@ -583,11 +583,11 @@ function createMediaSection(): HTMLElement {
 
   const header = createElement('div', 'section-header');
   const headerTitle = createElement('h2', 'section-title');
-  headerTitle.textContent = 'In The ';
-  const em = createElement('em', undefined, 'Media');
+  headerTitle.textContent = t('about.inThe');
+  const em = createElement('em', undefined, t('about.media'));
   headerTitle.appendChild(em);
   header.appendChild(headerTitle);
-  const headerSubtitle = createElement('p', 'section-subtitle', 'Real House featured in leading publications');
+  const headerSubtitle = createElement('p', 'section-subtitle', t('about.mediaSubtitle'));
   header.appendChild(headerSubtitle);
   container.appendChild(header);
 
@@ -637,11 +637,11 @@ function createAffiliationsSection(): HTMLElement {
 
   const header = createElement('div', 'section-header');
   const headerTitle = createElement('h2', 'section-title');
-  headerTitle.textContent = 'Professional ';
-  const em = createElement('em', undefined, 'Affiliations');
+  headerTitle.textContent = t('about.professional');
+  const em = createElement('em', undefined, t('about.affiliations'));
   headerTitle.appendChild(em);
   header.appendChild(headerTitle);
-  const headerSubtitle = createElement('p', 'section-subtitle', 'Member of leading real estate Kurdistan organizations - property Erbil professionals');
+  const headerSubtitle = createElement('p', 'section-subtitle', t('about.affiliationsSubtitle'));
   header.appendChild(headerSubtitle);
   container.appendChild(header);
 
@@ -659,7 +659,7 @@ function createAffiliationsSection(): HTMLElement {
     const type = createElement('span', 'about-affiliations__type', aff.type.charAt(0).toUpperCase() + aff.type.slice(1));
     card.appendChild(type);
 
-    const since = createElement('span', 'about-affiliations__since', `Member since ${aff.since}`);
+    const since = createElement('span', 'about-affiliations__since', `${t('about.memberSince')} ${aff.since}`);
     card.appendChild(since);
 
     const desc = createElement('p', 'about-affiliations__desc', aff.description);
@@ -682,11 +682,11 @@ function createCertificationsSection(): HTMLElement {
 
   const header = createElement('div', 'section-header');
   const headerTitle = createElement('h2', 'section-title');
-  headerTitle.textContent = 'Licenses & ';
-  const em = createElement('em', undefined, 'Certifications');
+  headerTitle.textContent = t('about.licensesAnd');
+  const em = createElement('em', undefined, t('about.certifications'));
   headerTitle.appendChild(em);
   header.appendChild(headerTitle);
-  const headerSubtitle = createElement('p', 'section-subtitle', 'Fully licensed real estate Erbil agency - certified for houses for sale Erbil');
+  const headerSubtitle = createElement('p', 'section-subtitle', t('about.certificationsSubtitle'));
   header.appendChild(headerSubtitle);
   container.appendChild(header);
 
@@ -705,10 +705,10 @@ function createCertificationsSection(): HTMLElement {
     const issuer = createElement('p', 'about-certifications__issuer', cert.issuedBy);
     card.appendChild(issuer);
 
-    const number = createElement('span', 'about-certifications__number', `License: ${cert.number}`);
+    const number = createElement('span', 'about-certifications__number', `${t('about.license')}: ${cert.number}`);
     card.appendChild(number);
 
-    const valid = createElement('span', 'about-certifications__valid', `Valid until: ${new Date(cert.validUntil).toLocaleDateString('en-US', { year: 'numeric', month: 'long' })}`);
+    const valid = createElement('span', 'about-certifications__valid', `${t('about.validUntil')}: ${new Date(cert.validUntil).toLocaleDateString('en-US', { year: 'numeric', month: 'long' })}`);
     card.appendChild(valid);
 
     grid.appendChild(card);
@@ -728,11 +728,11 @@ function createTestimonialsSection(): HTMLElement {
 
   const header = createElement('div', 'section-header');
   const headerTitle = createElement('h2', 'section-title');
-  headerTitle.textContent = 'Client ';
-  const em = createElement('em', undefined, 'Testimonials');
+  headerTitle.textContent = t('about.client');
+  const em = createElement('em', undefined, t('about.testimonials'));
   headerTitle.appendChild(em);
   header.appendChild(headerTitle);
-  const headerSubtitle = createElement('p', 'section-subtitle', `Trusted by ${companyStats.localClients + companyStats.internationalClients}+ clients`);
+  const headerSubtitle = createElement('p', 'section-subtitle', `${t('about.happyClients')}: ${companyStats.localClients + companyStats.internationalClients}+`);
   header.appendChild(headerSubtitle);
   container.appendChild(header);
 
@@ -762,7 +762,7 @@ function createTestimonialsSection(): HTMLElement {
     if (testimonial.isVerifiedBuyer) {
       const verified = createElement('div', 'testimonial-card__verified');
       verified.appendChild(createSVGUse('icon-check'));
-      const verifiedText = createElement('span', undefined, 'Verified Buyer');
+      const verifiedText = createElement('span', undefined, t('about.verifiedBuyer'));
       verified.appendChild(verifiedText);
       card.appendChild(verified);
     }
@@ -820,11 +820,11 @@ function createCaseStudiesSection(): HTMLElement {
 
   const header = createElement('div', 'section-header');
   const headerTitle = createElement('h2', 'section-title');
-  headerTitle.textContent = 'Success ';
-  const em = createElement('em', undefined, 'Stories');
+  headerTitle.textContent = t('common.successStories') + ' ';
+  const em = createElement('em', undefined, t('about.successStories'));
   headerTitle.appendChild(em);
   header.appendChild(headerTitle);
-  const headerSubtitle = createElement('p', 'section-subtitle', 'Real results for real clients');
+  const headerSubtitle = createElement('p', 'section-subtitle', t('about.storiesSubtitle'));
   header.appendChild(headerSubtitle);
   container.appendChild(header);
 
@@ -850,14 +850,14 @@ function createCaseStudiesSection(): HTMLElement {
     content.appendChild(title);
 
     const challenge = createElement('div', 'case-study-card__section');
-    const challengeLabel = createElement('span', 'case-study-card__label', 'Challenge:');
+    const challengeLabel = createElement('span', 'case-study-card__label', t('about.challenge'));
     challenge.appendChild(challengeLabel);
     const challengeText = createElement('p', undefined, cs.challenge);
     challenge.appendChild(challengeText);
     content.appendChild(challenge);
 
     const outcome = createElement('div', 'case-study-card__section');
-    const outcomeLabel = createElement('span', 'case-study-card__label', 'Outcome:');
+    const outcomeLabel = createElement('span', 'case-study-card__label', t('about.outcome'));
     outcome.appendChild(outcomeLabel);
     const outcomeText = createElement('p', undefined, cs.outcome);
     outcome.appendChild(outcomeText);
@@ -901,11 +901,11 @@ function createResourcesSection(): HTMLElement {
 
   const header = createElement('div', 'section-header');
   const headerTitle = createElement('h2', 'section-title');
-  headerTitle.textContent = 'Resource ';
-  const em = createElement('em', undefined, 'Center');
+  headerTitle.textContent = t('common.resourceCenter') + ' ';
+  const em = createElement('em', undefined, t('about.resourceCenter'));
   headerTitle.appendChild(em);
   header.appendChild(headerTitle);
-  const headerSubtitle = createElement('p', 'section-subtitle', 'Free guides for buy house Erbil and property Erbil investment in the Erbil property market');
+  const headerSubtitle = createElement('p', 'section-subtitle', t('about.resourceCenterSubtitle'));
   header.appendChild(headerSubtitle);
   container.appendChild(header);
 
@@ -934,13 +934,13 @@ function createResourcesSection(): HTMLElement {
     content.appendChild(desc);
 
     const meta = createElement('div', 'resource-card__meta');
-    const pages = createElement('span', undefined, `${resource.pageCount} pages`);
+    const pages = createElement('span', undefined, `${resource.pageCount} ${t('about.pages')}`);
     meta.appendChild(pages);
-    const updated = createElement('span', undefined, `Updated ${new Date(resource.lastUpdated).toLocaleDateString('en-US', { month: 'short', year: 'numeric' })}`);
+    const updated = createElement('span', undefined, `${t('about.updated')} ${new Date(resource.lastUpdated).toLocaleDateString('en-US', { month: 'short', year: 'numeric' })}`);
     meta.appendChild(updated);
     content.appendChild(meta);
 
-    const downloadBtn = createElement('a', 'btn btn--primary btn--sm resource-card__download', 'Download Free');
+    const downloadBtn = createElement('a', 'btn btn--primary btn--sm resource-card__download', t('about.downloadFree'));
     downloadBtn.href = resource.downloadUrl;
     downloadBtn.setAttribute('download', '');
     content.appendChild(downloadBtn);
@@ -963,11 +963,11 @@ function createContactSection(): HTMLElement {
 
   const header = createElement('div', 'section-header');
   const headerTitle = createElement('h2', 'section-title');
-  headerTitle.textContent = 'Contact ';
-  const em = createElement('em', undefined, 'Us');
+  headerTitle.textContent = t('common.contactUs') + ' ';
+  const em = createElement('em', undefined, t('about.contactUs'));
   headerTitle.appendChild(em);
   header.appendChild(headerTitle);
-  const headerSubtitle = createElement('p', 'section-subtitle', 'We are here to help - reach us through your preferred channel');
+  const headerSubtitle = createElement('p', 'section-subtitle', t('about.contactSubtitle'));
   header.appendChild(headerSubtitle);
   container.appendChild(header);
 
@@ -999,7 +999,7 @@ function createContactSection(): HTMLElement {
   mapLink.rel = 'noopener noreferrer';
   const mapPlaceholder = createElement('div', 'about-contact__map-placeholder');
   mapPlaceholder.appendChild(createSVGUse('icon-location'));
-  const mapText = createElement('span', undefined, 'View on Google Maps');
+  const mapText = createElement('span', undefined, t('about.viewOnMap'));
   mapPlaceholder.appendChild(mapText);
   mapLink.appendChild(mapPlaceholder);
   mapWrap.appendChild(mapLink);
@@ -1007,16 +1007,16 @@ function createContactSection(): HTMLElement {
 
   // Office hours
   const hours = createElement('div', 'about-contact__hours');
-  const hoursTitle = createElement('h4', undefined, 'Office Hours');
+  const hoursTitle = createElement('h4', undefined, t('about.officeHours'));
   hours.appendChild(hoursTitle);
   const hoursList = createElement('ul');
   const satThu = createElement('li');
-  const satThuLabel = createElement('strong', undefined, 'Sat - Thu: ');
+  const satThuLabel = createElement('strong', undefined, t('areas.satToThu'));
   satThu.appendChild(satThuLabel);
   satThu.appendChild(document.createTextNode(office.hours.saturday));
   hoursList.appendChild(satThu);
   const fri = createElement('li');
-  const friLabel = createElement('strong', undefined, 'Friday: ');
+  const friLabel = createElement('strong', undefined, t('areas.friday'));
   fri.appendChild(friLabel);
   fri.appendChild(document.createTextNode(office.hours.friday));
   hoursList.appendChild(fri);
@@ -1028,7 +1028,7 @@ function createContactSection(): HTMLElement {
   // Contact Methods
   const methodsCard = createElement('div', 'about-contact__methods');
 
-  const methodsTitle = createElement('h3', undefined, 'Get in Touch');
+  const methodsTitle = createElement('h3', undefined, t('about.getInTouch'));
   methodsCard.appendChild(methodsTitle);
 
   const methodsList = createElement('div', 'about-contact__methods-list');
@@ -1066,7 +1066,7 @@ function createContactSection(): HTMLElement {
 
   // Social links
   const socialCard = createElement('div', 'about-contact__social');
-  const socialTitle = createElement('h4', undefined, 'Follow Us');
+  const socialTitle = createElement('h4', undefined, t('about.followUs'));
   socialCard.appendChild(socialTitle);
 
   const socialList = createElement('div', 'about-contact__social-list');
@@ -1086,7 +1086,7 @@ function createContactSection(): HTMLElement {
 
   // Response Commitments
   const responseCard = createElement('div', 'about-contact__response');
-  const responseTitle = createElement('h3', undefined, 'Our Response Commitment');
+  const responseTitle = createElement('h3', undefined, t('about.responseCommitment'));
   responseCard.appendChild(responseTitle);
 
   const responseList = createElement('div', 'about-contact__response-list');
@@ -1125,23 +1125,22 @@ function createCTASection(): HTMLElement {
   const content = createElement('div', 'about-cta__content');
 
   const title = createElement('h2', 'about-cta__title');
-  title.textContent = 'Ready to Find Your ';
-  const em = createElement('em', undefined, 'Property Erbil');
+  title.textContent = t('common.findYourHome') + ' ';
+  const em = createElement('em', undefined, t('about.ctaTitle'));
   title.appendChild(em);
-  title.appendChild(document.createTextNode(' Dream Home?'));
   content.appendChild(title);
 
-  const subtitle = createElement('p', 'about-cta__subtitle', 'Let our best real estate agent Erbil team guide you through houses for sale Erbil, apartments Erbil Iraq, and luxury homes Kurdistan');
+  const subtitle = createElement('p', 'about-cta__subtitle', t('about.ctaSubtitle'));
   content.appendChild(subtitle);
 
   const buttons = createElement('div', 'about-cta__buttons');
 
-  const primaryBtn = createElement('a', 'btn btn--primary btn--lg', 'Browse Properties');
+  const primaryBtn = createElement('a', 'btn btn--primary btn--lg', t('about.browseProperties'));
   primaryBtn.href = '/properties';
   primaryBtn.setAttribute('data-route', '');
   buttons.appendChild(primaryBtn);
 
-  const secondaryBtn = createElement('a', 'btn btn--outline btn--lg', 'Our Services');
+  const secondaryBtn = createElement('a', 'btn btn--outline btn--lg', t('about.ourServices'));
   secondaryBtn.href = '/services';
   secondaryBtn.setAttribute('data-route', '');
   buttons.appendChild(secondaryBtn);
@@ -1150,21 +1149,21 @@ function createCTASection(): HTMLElement {
 
   // Internal Links Section for SEO
   const internalLinks = createElement('div', 'about-cta__services');
-  const servicesTitle = createElement('p', 'about-cta__services-label', 'Our Professional Services:');
+  const servicesTitle = createElement('p', 'about-cta__services-label', t('about.professionalServices'));
   internalLinks.appendChild(servicesTitle);
 
   const servicesLinks = createElement('div', 'about-cta__services-links');
   const servicePages = [
-    { href: '/services/property-sales', text: 'Sell Property' },
-    { href: '/services/property-buying', text: 'Buy Property' },
-    { href: '/services/property-valuation', text: 'Free Valuation' },
-    { href: '/services/property-management', text: 'Property Management' },
-    { href: '/services/investment-consulting', text: 'Investment Consulting' },
-    { href: '/services/legal-assistance', text: 'Legal Assistance' }
+    { href: '/services/property-sales', textKey: 'services.sell' },
+    { href: '/services/property-buying', textKey: 'services.buy' },
+    { href: '/services/property-valuation', textKey: 'services.valuation' },
+    { href: '/services/property-management', textKey: 'services.management' },
+    { href: '/services/investment-consulting', textKey: 'services.investment' },
+    { href: '/services/legal-assistance', textKey: 'services.legal' }
   ];
 
-  servicePages.forEach(({ href, text }) => {
-    const link = createElement('a', 'about-cta__service-link', text);
+  servicePages.forEach(({ href, textKey }) => {
+    const link = createElement('a', 'about-cta__service-link', t(textKey));
     link.href = href;
     link.setAttribute('data-route', '');
     servicesLinks.appendChild(link);

@@ -4,6 +4,7 @@
 // ═══════════════════════════════════════════════════════════════════════════
 
 import { injectSchema } from '../seo/schema';
+import { t } from '../i18n';
 
 // ─── Helper Function to Create Elements ─────────────────────────────────────
 function createElement<K extends keyof HTMLElementTagNameMap>(
@@ -38,13 +39,12 @@ function createSvgIcon(paths: string[], viewBox = '0 0 24 24', fill = 'none', st
 // ─── 404 Page SEO Schema ────────────────────────────────────────────────────
 export function setup404PageSEO(): void {
   // Set proper meta tags for 404
-  document.title = 'Page Not Found | Real House Erbil';
+  document.title = t('notFound.pageTitle');
 
   // Meta description
   const metaDesc = document.querySelector('meta[name="description"]');
   if (metaDesc) {
-    metaDesc.setAttribute('content',
-      'The page you are looking for could not be found. Browse our luxury properties in Erbil, Kurdistan or contact Real House for assistance.');
+    metaDesc.setAttribute('content', t('notFound.metaDescription'));
   }
 
   // Robots: noindex 404 pages
@@ -67,8 +67,8 @@ export function setup404PageSEO(): void {
     '@context': 'https://schema.org',
     '@type': 'WebPage',
     '@id': 'https://realhouseiq.com/404#webpage',
-    name: 'Page Not Found - Real House',
-    description: 'The requested page could not be found. Browse luxury real estate in Erbil or contact us.',
+    name: t('notFound.heading'),
+    description: t('notFound.metaDescription'),
     url: 'https://realhouseiq.com/404',
     isPartOf: {
       '@id': 'https://realhouseiq.com/#website'
@@ -79,13 +79,13 @@ export function setup404PageSEO(): void {
         {
           '@type': 'ListItem',
           position: 1,
-          name: 'Home',
+          name: t('notFound.breadcrumbHome'),
           item: 'https://realhouseiq.com'
         },
         {
           '@type': 'ListItem',
           position: 2,
-          name: 'Page Not Found'
+          name: t('notFound.breadcrumbNotFound')
         }
       ]
     }
@@ -130,23 +130,27 @@ export function logError(type: '404' | '500' | 'js-error', message?: string): vo
 }
 
 // ─── Popular Links for Recovery ─────────────────────────────────────────────
-const popularLinks = [
-  { href: '/properties', label: 'All Properties', icon: 'home' },
-  { href: '/properties?type=villa', label: 'Luxury Villas', icon: 'villa' },
-  { href: '/properties?type=apartment', label: 'Apartments', icon: 'apartment' },
-  { href: '/projects', label: 'New Projects', icon: 'project' },
-  { href: '/blog', label: 'Real Estate Blog', icon: 'blog' },
-  { href: '/contact', label: 'Contact Us', icon: 'contact' }
-];
+function getPopularLinks() {
+  return [
+    { href: '/properties', labelKey: 'notFound.allProperties', icon: 'home' },
+    { href: '/properties?type=villa', labelKey: 'notFound.luxuryVillas', icon: 'villa' },
+    { href: '/properties?type=apartment', labelKey: 'notFound.apartments', icon: 'apartment' },
+    { href: '/projects', labelKey: 'notFound.newProjects', icon: 'project' },
+    { href: '/blog', labelKey: 'notFound.realEstateBlog', icon: 'blog' },
+    { href: '/contact', labelKey: 'notFound.contactUs', icon: 'contact' }
+  ];
+}
 
 // ─── Search Suggestions ─────────────────────────────────────────────────────
-const searchSuggestions = [
-  'villa for sale',
-  'apartment erbil',
-  'dream city',
-  'penthouse',
-  'commercial property'
-];
+function getSearchSuggestions(): string[] {
+  return [
+    t('notFound.searchSuggestions.villaForSale'),
+    t('notFound.searchSuggestions.apartmentErbil'),
+    t('notFound.searchSuggestions.dreamCity'),
+    t('notFound.searchSuggestions.penthouse'),
+    t('notFound.searchSuggestions.commercialProperty')
+  ];
+}
 
 // ─── Icon Path Data ─────────────────────────────────────────────────────────
 const iconPaths: Record<string, string[]> = {
@@ -185,13 +189,13 @@ export function renderEnhanced404Page(): DocumentFragment {
   const breadcrumbList = createElement('ol', 'error-page__breadcrumb-list');
 
   const breadcrumbHome = createElement('li');
-  const breadcrumbHomeLink = createElement('a', '', 'Home');
+  const breadcrumbHomeLink = createElement('a', '', t('notFound.breadcrumbHome'));
   breadcrumbHomeLink.href = '/';
   breadcrumbHomeLink.setAttribute('data-route', '');
   breadcrumbHome.appendChild(breadcrumbHomeLink);
   breadcrumbList.appendChild(breadcrumbHome);
 
-  const breadcrumbCurrent = createElement('li', '', 'Page Not Found');
+  const breadcrumbCurrent = createElement('li', '', t('notFound.breadcrumbNotFound'));
   breadcrumbCurrent.setAttribute('aria-current', 'page');
   breadcrumbList.appendChild(breadcrumbCurrent);
 
@@ -230,13 +234,13 @@ export function renderEnhanced404Page(): DocumentFragment {
   const srText = createElement('span', 'visually-hidden', 'Error 404: ');
   heading.appendChild(srText);
 
-  const title = createElement('span', 'error-page__title', 'Page Not Found');
+  const title = createElement('span', 'error-page__title', t('notFound.heading'));
   heading.appendChild(title);
   content.appendChild(heading);
 
   // Description
   const description = createElement('p', 'error-page__description');
-  description.textContent = 'The page you\'re looking for doesn\'t exist or has been moved.';
+  description.textContent = t('notFound.description');
   content.appendChild(description);
 
   // Show the URL that was not found
@@ -250,7 +254,7 @@ export function renderEnhanced404Page(): DocumentFragment {
   homeBtn.href = '/';
   homeBtn.setAttribute('data-route', '');
   homeBtn.appendChild(createSvgIcon(iconPaths.home));
-  const homeBtnText = createElement('span', '', 'Return Home');
+  const homeBtnText = createElement('span', '', t('notFound.returnHome'));
   homeBtn.appendChild(homeBtnText);
   actions.appendChild(homeBtn);
 
@@ -258,7 +262,7 @@ export function renderEnhanced404Page(): DocumentFragment {
   propertiesBtn.href = '/properties';
   propertiesBtn.setAttribute('data-route', '');
   propertiesBtn.appendChild(createSvgIcon(iconPaths.search));
-  const propertiesBtnText = createElement('span', '', 'Browse Properties');
+  const propertiesBtnText = createElement('span', '', t('notFound.browseProperties'));
   propertiesBtn.appendChild(propertiesBtnText);
   actions.appendChild(propertiesBtn);
 
@@ -270,7 +274,7 @@ export function renderEnhanced404Page(): DocumentFragment {
   const searchSection = createElement('section', 'error-page__search');
   searchSection.setAttribute('aria-labelledby', 'search-title');
 
-  const searchTitle = createElement('h2', 'error-page__section-title', 'Search Our Site');
+  const searchTitle = createElement('h2', 'error-page__section-title', t('notFound.searchOurSite'));
   searchTitle.id = 'search-title';
   searchSection.appendChild(searchTitle);
 
@@ -282,14 +286,14 @@ export function renderEnhanced404Page(): DocumentFragment {
   const searchInput = createElement('input', 'error-page__search-input');
   searchInput.type = 'search';
   searchInput.name = 'q';
-  searchInput.placeholder = 'Search properties, projects, blog...';
-  searchInput.setAttribute('aria-label', 'Search the website');
+  searchInput.placeholder = t('notFound.searchPlaceholder');
+  searchInput.setAttribute('aria-label', t('notFound.searchOurSite'));
   searchForm.appendChild(searchInput);
 
   const searchBtn = createElement('button', 'btn btn--primary');
   searchBtn.type = 'submit';
   searchBtn.appendChild(createSvgIcon(iconPaths.search));
-  const searchBtnText = createElement('span', '', 'Search');
+  const searchBtnText = createElement('span', '', t('notFound.search'));
   searchBtn.appendChild(searchBtnText);
   searchForm.appendChild(searchBtn);
 
@@ -297,10 +301,10 @@ export function renderEnhanced404Page(): DocumentFragment {
 
   // Search suggestions
   const suggestions = createElement('div', 'error-page__suggestions');
-  const suggestLabel = createElement('span', 'error-page__suggest-label', 'Popular searches: ');
+  const suggestLabel = createElement('span', 'error-page__suggest-label', t('notFound.popularSearches'));
   suggestions.appendChild(suggestLabel);
 
-  searchSuggestions.forEach(term => {
+  getSearchSuggestions().forEach(term => {
     const link = createElement('a', 'error-page__suggest-link', term);
     link.href = `/properties?q=${encodeURIComponent(term)}`;
     link.setAttribute('data-route', '');
@@ -314,12 +318,13 @@ export function renderEnhanced404Page(): DocumentFragment {
   const linksSection = createElement('section', 'error-page__links');
   linksSection.setAttribute('aria-labelledby', 'links-title');
 
-  const linksTitle = createElement('h2', 'error-page__section-title', 'Popular Pages');
+  const linksTitle = createElement('h2', 'error-page__section-title', t('notFound.popularPages'));
   linksTitle.id = 'links-title';
   linksSection.appendChild(linksTitle);
 
   const linksGrid = createElement('div', 'error-page__links-grid');
 
+  const popularLinks = getPopularLinks();
   popularLinks.forEach(link => {
     const linkCard = createElement('a', 'error-page__link-card');
     linkCard.href = link.href;
@@ -330,7 +335,7 @@ export function renderEnhanced404Page(): DocumentFragment {
     iconSpan.appendChild(createSvgIcon(iconPaths[link.icon] || iconPaths.home));
     linkCard.appendChild(iconSpan);
 
-    const labelSpan = createElement('span', 'error-page__link-label', link.label);
+    const labelSpan = createElement('span', 'error-page__link-label', t(link.labelKey));
     linkCard.appendChild(labelSpan);
 
     linksGrid.appendChild(linkCard);
@@ -343,12 +348,11 @@ export function renderEnhanced404Page(): DocumentFragment {
   const contactSection = createElement('section', 'error-page__contact');
   contactSection.setAttribute('aria-labelledby', 'contact-title');
 
-  const contactTitle = createElement('h2', 'error-page__section-title', 'Need Help?');
+  const contactTitle = createElement('h2', 'error-page__section-title', t('notFound.needHelp'));
   contactTitle.id = 'contact-title';
   contactSection.appendChild(contactTitle);
 
-  const contactText = createElement('p', 'error-page__contact-text',
-    'Our team is here to assist you. Contact us and we\'ll help you find what you\'re looking for.');
+  const contactText = createElement('p', 'error-page__contact-text', t('notFound.helpText'));
   contactSection.appendChild(contactText);
 
   const contactActions = createElement('div', 'error-page__contact-actions');
@@ -357,7 +361,7 @@ export function renderEnhanced404Page(): DocumentFragment {
   const phoneLink = createElement('a', 'error-page__contact-link');
   phoneLink.href = 'tel:+9647507922138';
   phoneLink.appendChild(createSvgIcon(iconPaths.phone));
-  const phoneLinkText = createElement('span', '', 'Call Us');
+  const phoneLinkText = createElement('span', '', t('notFound.callUs'));
   phoneLink.appendChild(phoneLinkText);
   contactActions.appendChild(phoneLink);
 
@@ -375,7 +379,7 @@ export function renderEnhanced404Page(): DocumentFragment {
   whatsappPath.setAttribute('d', 'M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z');
   whatsappSvg.appendChild(whatsappPath);
   whatsappLink.appendChild(whatsappSvg);
-  const whatsappLinkText = createElement('span', '', 'WhatsApp');
+  const whatsappLinkText = createElement('span', '', t('notFound.whatsApp'));
   whatsappLink.appendChild(whatsappLinkText);
   contactActions.appendChild(whatsappLink);
 
@@ -384,7 +388,7 @@ export function renderEnhanced404Page(): DocumentFragment {
   emailLink.href = '/contact';
   emailLink.setAttribute('data-route', '');
   emailLink.appendChild(createSvgIcon(iconPaths.mail));
-  const emailLinkText = createElement('span', '', 'Contact Form');
+  const emailLinkText = createElement('span', '', t('notFound.contactForm'));
   emailLink.appendChild(emailLinkText);
   contactActions.appendChild(emailLink);
 
