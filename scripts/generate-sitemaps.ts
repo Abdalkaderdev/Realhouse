@@ -13,7 +13,7 @@ import { join } from 'path';
 import { properties } from '../src/data/properties';
 import { projects } from '../src/data/projects';
 import { blogPosts } from '../src/data/blog';
-import { neighborhoods } from '../src/data/locations';
+import { districts } from '../src/data/locations';
 
 const BASE_URL = 'https://realhouseiq.com';
 const PUBLIC_DIR = join(process.cwd(), 'public');
@@ -161,12 +161,12 @@ function generateNeighborhoodsSitemap(): string {
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
         xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
   <!-- Real House Neighborhoods Sitemap - Auto-generated -->
-  <!-- Neighborhoods: ${neighborhoods.length} areas -->
+  <!-- Neighborhoods: ${districts.length} areas -->
   <!-- Generated: ${today} -->
 `;
 
-  for (const neighborhood of neighborhoods) {
-    const url = `${BASE_URL}/locations/${neighborhood.id}`;
+  for (const district of districts) {
+    const url = `${BASE_URL}/locations/${district.id}`;
     xml += `
   <url>
     <loc>${escapeXml(url)}</loc>
@@ -174,11 +174,11 @@ function generateNeighborhoodsSitemap(): string {
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>`;
 
-    if (neighborhood.heroImage) {
+    if (district.image) {
       xml += `
     <image:image>
-      <image:loc>${escapeXml(neighborhood.heroImage)}</image:loc>
-      <image:title>${escapeXml(neighborhood.name)} - Erbil Neighborhood Guide</image:title>
+      <image:loc>${escapeXml(district.image)}</image:loc>
+      <image:title>${escapeXml(district.name)} - Erbil Neighborhood Guide</image:title>
     </image:image>`;
     }
 
@@ -238,7 +238,7 @@ function generateSitemapIndex(): string {
     <lastmod>${today}</lastmod>
   </sitemap>
 
-  <!-- Neighborhoods (${neighborhoods.length} areas) -->
+  <!-- Neighborhoods (${districts.length} areas) -->
   <sitemap>
     <loc>${BASE_URL}/sitemap-neighborhoods.xml</loc>
     <lastmod>${today}</lastmod>
@@ -276,7 +276,7 @@ async function main() {
   console.log(`   Properties: ${properties.length}`);
   console.log(`   Projects: ${projects.length}`);
   console.log(`   Blog Posts: ${blogPosts.length}`);
-  console.log(`   Neighborhoods: ${neighborhoods.length}`);
+  console.log(`   Neighborhoods: ${districts.length}`);
   console.log('\n✨ Sitemap generation complete!');
 }
 

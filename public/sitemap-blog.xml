@@ -1,507 +1,405 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!--
-  ===============================================================================
-  Real House - Blog Sitemap
-  All blog posts and articles with Google News markup
-  Last Updated: 2026-02-22
-  ===============================================================================
--->
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
         xmlns:news="http://www.google.com/schemas/sitemap-news/0.9"
         xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
-
-  <!-- Blog Main Page -->
-  <url>
-    <loc>https://realhouseiq.com/blog</loc>
-    <lastmod>2025-02-22</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.85</priority>
-  </url>
-
-  <!-- ═══════════════════════════════════════════════════════════════════════════ -->
-  <!-- NEW SEO-TARGETED BLOG POSTS - February 2025 -->
-  <!-- ═══════════════════════════════════════════════════════════════════════════ -->
-
-  <url>
-    <loc>https://realhouseiq.com/blog/top-10-luxury-apartments-erbil-2025</loc>
-    <lastmod>2025-02-18</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.85</priority>
-    <news:news>
-      <news:publication>
-        <news:name>Real House Blog</news:name>
-        <news:language>en</news:language>
-      </news:publication>
-      <news:publication_date>2025-02-18</news:publication_date>
-      <news:title>Top 10 Luxury Apartments in Erbil 2025: Premium Living in Kurdistan</news:title>
-      <news:keywords>luxury apartments erbil, premium living kurdistan, penthouses erbil, high-end properties</news:keywords>
-    </news:news>
-    <image:image>
-      <image:loc>https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?w=1200&amp;q=80&amp;fm=webp</image:loc>
-      <image:title>Top 10 Luxury Apartments in Erbil 2025</image:title>
-      <image:caption>Premium luxury apartments and penthouses in Erbil, Kurdistan</image:caption>
-    </image:image>
-  </url>
-
-  <url>
-    <loc>https://realhouseiq.com/blog/empire-world-erbil-complete-guide</loc>
-    <lastmod>2025-02-15</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.85</priority>
-    <news:news>
-      <news:publication>
-        <news:name>Real House Blog</news:name>
-        <news:language>en</news:language>
-      </news:publication>
-      <news:publication_date>2025-02-15</news:publication_date>
-      <news:title>Empire World Erbil: Complete Guide to Kurdistan's Largest Development</news:title>
-      <news:keywords>empire world erbil, kurdistan development, mixed-use erbil, emaar kurdistan</news:keywords>
-    </news:news>
-    <image:image>
-      <image:loc>https://images.unsplash.com/photo-1486325212027-8081e485255e?w=1200&amp;q=80&amp;fm=webp</image:loc>
-      <image:title>Empire World Erbil Complete Guide</image:title>
-      <image:caption>Everything you need to know about Empire World, Kurdistan's largest development</image:caption>
-    </image:image>
-  </url>
-
-  <url>
-    <loc>https://realhouseiq.com/blog/best-areas-live-erbil-families</loc>
-    <lastmod>2025-02-12</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-    <news:news>
-      <news:publication>
-        <news:name>Real House Blog</news:name>
-        <news:language>en</news:language>
-      </news:publication>
-      <news:publication_date>2025-02-12</news:publication_date>
-      <news:title>Best Areas to Live in Erbil for Families: 2025 Neighborhood Guide</news:title>
-      <news:keywords>best areas erbil families, family neighborhoods erbil, dream city families, expat families erbil</news:keywords>
-    </news:news>
-    <image:image>
-      <image:loc>https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=1200&amp;q=80&amp;fm=webp</image:loc>
-      <image:title>Best Areas to Live in Erbil for Families</image:title>
-      <image:caption>Family-friendly neighborhoods in Erbil with schools, safety, and community amenities</image:caption>
-    </image:image>
-  </url>
-
-  <url>
-    <loc>https://realhouseiq.com/blog/erbil-real-estate-market-trends-analysis-2025</loc>
-    <lastmod>2025-02-08</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.85</priority>
-    <news:news>
-      <news:publication>
-        <news:name>Real House Blog</news:name>
-        <news:language>en</news:language>
-      </news:publication>
-      <news:publication_date>2025-02-08</news:publication_date>
-      <news:title>Erbil Real Estate Market Trends 2025: Complete Analysis and Forecast</news:title>
-      <news:keywords>erbil real estate trends 2025, kurdistan property market, erbil price forecast, property investment erbil</news:keywords>
-    </news:news>
-    <image:image>
-      <image:loc>https://images.unsplash.com/photo-1560520653-9e0e4c89eb11?w=1200&amp;q=80&amp;fm=webp</image:loc>
-      <image:title>Erbil Real Estate Market Trends 2025</image:title>
-      <image:caption>In-depth analysis and forecast of Erbil's 2025 property market</image:caption>
-    </image:image>
-  </url>
-
-  <url>
-    <loc>https://realhouseiq.com/blog/how-to-buy-property-kurdistan-complete-guide</loc>
-    <lastmod>2025-02-05</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.85</priority>
-    <news:news>
-      <news:publication>
-        <news:name>Real House Blog</news:name>
-        <news:language>en</news:language>
-      </news:publication>
-      <news:publication_date>2025-02-05</news:publication_date>
-      <news:title>How to Buy Property in Kurdistan: A Complete Guide for Foreign Buyers</news:title>
-      <news:keywords>buy property kurdistan, foreign buyers erbil, property purchase iraq, kurdistan real estate guide</news:keywords>
-    </news:news>
-    <image:image>
-      <image:loc>https://images.unsplash.com/photo-1560518883-ce09059eeffa?w=1200&amp;q=80&amp;fm=webp</image:loc>
-      <image:title>How to Buy Property in Kurdistan</image:title>
-      <image:caption>Complete step-by-step guide for foreign buyers purchasing property in Kurdistan</image:caption>
-    </image:image>
-  </url>
-
-  <url>
-    <loc>https://realhouseiq.com/blog/ankawa-neighborhood-guide-erbil</loc>
-    <lastmod>2025-01-28</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-    <news:news>
-      <news:publication>
-        <news:name>Real House Blog</news:name>
-        <news:language>en</news:language>
-      </news:publication>
-      <news:publication_date>2025-01-28</news:publication_date>
-      <news:title>Ankawa Neighborhood Guide: Living in Erbil's Christian Quarter</news:title>
-      <news:keywords>ankawa erbil, christian quarter erbil, expat neighborhood erbil, ankawa nightlife restaurants</news:keywords>
-    </news:news>
-    <image:image>
-      <image:loc>https://images.unsplash.com/photo-1449824913935-59a10b8d2000?w=1200&amp;q=80&amp;fm=webp</image:loc>
-      <image:title>Ankawa Neighborhood Guide</image:title>
-      <image:caption>Living in Ankawa, Erbil's vibrant Christian quarter and expat hub</image:caption>
-    </image:image>
-  </url>
-
-  <url>
-    <loc>https://realhouseiq.com/blog/investment-opportunities-erbil-real-estate</loc>
-    <lastmod>2025-01-25</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.85</priority>
-    <news:news>
-      <news:publication>
-        <news:name>Real House Blog</news:name>
-        <news:language>en</news:language>
-      </news:publication>
-      <news:publication_date>2025-01-25</news:publication_date>
-      <news:title>Investment Opportunities in Erbil Real Estate: 2025 Guide</news:title>
-      <news:keywords>erbil investment opportunities, property investment kurdistan, real estate roi erbil, rental yields erbil</news:keywords>
-    </news:news>
-    <image:image>
-      <image:loc>https://images.unsplash.com/photo-1560520653-9e0e4c89eb11?w=1200&amp;q=80&amp;fm=webp</image:loc>
-      <image:title>Investment Opportunities in Erbil Real Estate</image:title>
-      <image:caption>Best real estate investment opportunities in Erbil for 2025</image:caption>
-    </image:image>
-  </url>
-
-  <url>
-    <loc>https://realhouseiq.com/blog/new-construction-projects-erbil-2025</loc>
-    <lastmod>2025-01-20</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-    <news:news>
-      <news:publication>
-        <news:name>Real House Blog</news:name>
-        <news:language>en</news:language>
-      </news:publication>
-      <news:publication_date>2025-01-20</news:publication_date>
-      <news:title>New Construction Projects in Erbil: What's Coming in 2025</news:title>
-      <news:keywords>new construction erbil, development projects kurdistan, off-plan erbil, new buildings erbil 2025</news:keywords>
-    </news:news>
-    <image:image>
-      <image:loc>https://images.unsplash.com/photo-1541888946425-d81bb19240f5?w=1200&amp;q=80&amp;fm=webp</image:loc>
-      <image:title>New Construction Projects in Erbil 2025</image:title>
-      <image:caption>Upcoming construction and development projects launching in Erbil 2025</image:caption>
-    </image:image>
-  </url>
-
-  <url>
-    <loc>https://realhouseiq.com/blog/comparing-erbil-top-residential-compounds</loc>
-    <lastmod>2025-01-15</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-    <news:news>
-      <news:publication>
-        <news:name>Real House Blog</news:name>
-        <news:language>en</news:language>
-      </news:publication>
-      <news:publication_date>2025-01-15</news:publication_date>
-      <news:title>Comparing Erbil's Top Residential Compounds: Dream City vs Italian Village vs English Village</news:title>
-      <news:keywords>dream city vs italian village, erbil compounds comparison, gated communities erbil, villa communities kurdistan</news:keywords>
-    </news:news>
-    <image:image>
-      <image:loc>https://images.unsplash.com/photo-1512917774080-9991f1c4c750?w=1200&amp;q=80&amp;fm=webp</image:loc>
-      <image:title>Comparing Erbil's Top Residential Compounds</image:title>
-      <image:caption>Detailed comparison of Dream City, Italian Village, and English Village</image:caption>
-    </image:image>
-  </url>
-
-  <url>
-    <loc>https://realhouseiq.com/blog/renting-vs-buying-erbil-which-better</loc>
-    <lastmod>2025-01-10</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-    <news:news>
-      <news:publication>
-        <news:name>Real House Blog</news:name>
-        <news:language>en</news:language>
-      </news:publication>
-      <news:publication_date>2025-01-10</news:publication_date>
-      <news:title>Renting vs Buying in Erbil: Which is Better for You?</news:title>
-      <news:keywords>rent vs buy erbil, should i rent erbil, buying property erbil, rental costs erbil</news:keywords>
-    </news:news>
-    <image:image>
-      <image:loc>https://images.unsplash.com/photo-1560518883-ce09059eeffa?w=1200&amp;q=80&amp;fm=webp</image:loc>
-      <image:title>Renting vs Buying in Erbil</image:title>
-      <image:caption>Compare costs and benefits of renting versus buying property in Erbil</image:caption>
-    </image:image>
-  </url>
-
-  <url>
-    <loc>https://realhouseiq.com/blog/understanding-property-prices-erbil-neighborhood</loc>
-    <lastmod>2025-01-05</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-    <news:news>
-      <news:publication>
-        <news:name>Real House Blog</news:name>
-        <news:language>en</news:language>
-      </news:publication>
-      <news:publication_date>2025-01-05</news:publication_date>
-      <news:title>Understanding Property Prices in Erbil by Neighborhood: 2025 Guide</news:title>
-      <news:keywords>erbil property prices, erbil neighborhood prices, gulan prices, dream city prices, ankawa prices</news:keywords>
-    </news:news>
-    <image:image>
-      <image:loc>https://images.unsplash.com/photo-1560520653-9e0e4c89eb11?w=1200&amp;q=80&amp;fm=webp</image:loc>
-      <image:title>Property Prices in Erbil by Neighborhood</image:title>
-      <image:caption>Comprehensive breakdown of property prices across Erbil's neighborhoods</image:caption>
-    </image:image>
-  </url>
-
-  <url>
-    <loc>https://realhouseiq.com/blog/dream-city-erbil-complete-guide</loc>
-    <lastmod>2024-12-28</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-    <news:news>
-      <news:publication>
-        <news:name>Real House Blog</news:name>
-        <news:language>en</news:language>
-      </news:publication>
-      <news:publication_date>2024-12-28</news:publication_date>
-      <news:title>Dream City Erbil: Everything You Need to Know</news:title>
-      <news:keywords>dream city erbil, gated community erbil, villas dream city, family living erbil</news:keywords>
-    </news:news>
-    <image:image>
-      <image:loc>https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=1200&amp;q=80&amp;fm=webp</image:loc>
-      <image:title>Dream City Erbil Complete Guide</image:title>
-      <image:caption>Everything you need to know about Dream City, Erbil's premier gated community</image:caption>
-    </image:image>
-  </url>
-
-  <url>
-    <loc>https://realhouseiq.com/blog/best-schools-near-erbil-residential-areas</loc>
-    <lastmod>2024-12-20</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.75</priority>
-    <news:news>
-      <news:publication>
-        <news:name>Real House Blog</news:name>
-        <news:language>en</news:language>
-      </news:publication>
-      <news:publication_date>2024-12-20</news:publication_date>
-      <news:title>Best Schools Near Erbil's Top Residential Areas: Parent's Guide</news:title>
-      <news:keywords>international schools erbil, schools near dream city, british school erbil, education erbil</news:keywords>
-    </news:news>
-    <image:image>
-      <image:loc>https://images.unsplash.com/photo-1580582932707-520aed937b7b?w=1200&amp;q=80&amp;fm=webp</image:loc>
-      <image:title>Best Schools Near Erbil Residential Areas</image:title>
-      <image:caption>Guide to international and private schools near Erbil's best neighborhoods</image:caption>
-    </image:image>
-  </url>
-
-  <url>
-    <loc>https://realhouseiq.com/blog/erbil-property-investment-returns-roi</loc>
-    <lastmod>2024-12-15</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-    <news:news>
-      <news:publication>
-        <news:name>Real House Blog</news:name>
-        <news:language>en</news:language>
-      </news:publication>
-      <news:publication_date>2024-12-15</news:publication_date>
-      <news:title>Erbil Property Investment: Expected Returns and ROI Analysis</news:title>
-      <news:keywords>erbil property roi, rental yields erbil, investment returns kurdistan, capital appreciation erbil</news:keywords>
-    </news:news>
-    <image:image>
-      <image:loc>https://images.unsplash.com/photo-1560520653-9e0e4c89eb11?w=1200&amp;q=80&amp;fm=webp</image:loc>
-      <image:title>Erbil Property Investment ROI</image:title>
-      <image:caption>Detailed ROI analysis for Erbil real estate investments</image:caption>
-    </image:image>
-  </url>
-
-  <url>
-    <loc>https://realhouseiq.com/blog/moving-to-erbil-essential-guide-expats</loc>
-    <lastmod>2024-12-10</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-    <news:news>
-      <news:publication>
-        <news:name>Real House Blog</news:name>
-        <news:language>en</news:language>
-      </news:publication>
-      <news:publication_date>2024-12-10</news:publication_date>
-      <news:title>Moving to Erbil: Essential Guide for Expats</news:title>
-      <news:keywords>moving to erbil, expat guide erbil, relocation kurdistan, living in erbil expats</news:keywords>
-    </news:news>
-    <image:image>
-      <image:loc>https://images.unsplash.com/photo-1512917774080-9991f1c4c750?w=1200&amp;q=80&amp;fm=webp</image:loc>
-      <image:title>Moving to Erbil Guide for Expats</image:title>
-      <image:caption>Complete relocation guide for expatriates moving to Erbil, Kurdistan</image:caption>
-    </image:image>
-  </url>
-
-  <!-- ═══════════════════════════════════════════════════════════════════════════ -->
-  <!-- EXISTING BLOG POSTS - Market Insights & Trends -->
-  <!-- ═══════════════════════════════════════════════════════════════════════════ -->
+  <!-- Real House Blog Sitemap - Auto-generated -->
+  <!-- Blog Posts: 66 articles -->
+  <!-- Generated: 2026-03-14 -->
 
   <url>
     <loc>https://realhouseiq.com/blog/erbil-real-estate-market-trends-2025</loc>
-    <lastmod>2025-01-15</lastmod>
+    <lastmod>undefined</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-    <news:news>
-      <news:publication>
-        <news:name>Real House Blog</news:name>
-        <news:language>en</news:language>
-      </news:publication>
-      <news:publication_date>2025-01-15</news:publication_date>
-      <news:title>Erbil Real Estate Market Trends 2025: What Buyers Need to Know</news:title>
-      <news:keywords>erbil real estate, property market trends, kurdistan investment, 2025 forecast</news:keywords>
-    </news:news>
-    <image:image>
-      <image:loc>https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=1200&amp;q=80&amp;fm=webp</image:loc>
-      <image:title>Erbil Real Estate Market Trends 2025</image:title>
-      <image:caption>Latest trends shaping Erbil's property market in 2025</image:caption>
-    </image:image>
+    <priority>0.6</priority>
   </url>
-
-  <!-- ═══════════════════════════════════════════════════════════════════════════ -->
-  <!-- EXISTING BLOG POSTS - Buying Guides -->
-  <!-- ═══════════════════════════════════════════════════════════════════════════ -->
-
   <url>
     <loc>https://realhouseiq.com/blog/buying-property-in-kurdistan-complete-guide</loc>
-    <lastmod>2025-01-10</lastmod>
+    <lastmod>undefined</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.85</priority>
-    <news:news>
-      <news:publication>
-        <news:name>Real House Blog</news:name>
-        <news:language>en</news:language>
-      </news:publication>
-      <news:publication_date>2025-01-10</news:publication_date>
-      <news:title>Complete Guide to Buying Property in Kurdistan Iraq</news:title>
-      <news:keywords>buying property, kurdistan, foreign buyers, legal guide, erbil</news:keywords>
-    </news:news>
-    <image:image>
-      <image:loc>https://images.unsplash.com/photo-1560518883-ce09059eeffa?w=1200&amp;q=80&amp;fm=webp</image:loc>
-      <image:title>Complete Guide to Buying Property in Kurdistan</image:title>
-      <image:caption>Everything foreign buyers need to know about purchasing real estate in Kurdistan</image:caption>
-    </image:image>
+    <priority>0.6</priority>
   </url>
-
-  <url>
-    <loc>https://realhouseiq.com/blog/off-plan-properties-erbil-what-to-know</loc>
-    <lastmod>2024-12-15</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.75</priority>
-    <news:news>
-      <news:publication>
-        <news:name>Real House Blog</news:name>
-        <news:language>en</news:language>
-      </news:publication>
-      <news:publication_date>2024-12-15</news:publication_date>
-      <news:title>Off-Plan Properties in Erbil: What Every Buyer Should Know</news:title>
-      <news:keywords>off-plan, pre-construction, property investment, erbil</news:keywords>
-    </news:news>
-    <image:image>
-      <image:loc>https://images.unsplash.com/photo-1541888946425-d81bb19240f5?w=1200&amp;q=80&amp;fm=webp</image:loc>
-      <image:title>Off-Plan Properties in Erbil - Buyer's Guide</image:title>
-      <image:caption>What every buyer should know about off-plan purchases in Erbil</image:caption>
-    </image:image>
-  </url>
-
-  <!-- ═══════════════════════════════════════════════════════════════════════════ -->
-  <!-- EXISTING BLOG POSTS - Neighborhood Guides -->
-  <!-- ═══════════════════════════════════════════════════════════════════════════ -->
-
   <url>
     <loc>https://realhouseiq.com/blog/erbil-neighborhoods-guide-gulan-ankawa-dream-city</loc>
-    <lastmod>2025-01-05</lastmod>
+    <lastmod>undefined</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-    <news:news>
-      <news:publication>
-        <news:name>Real House Blog</news:name>
-        <news:language>en</news:language>
-      </news:publication>
-      <news:publication_date>2025-01-05</news:publication_date>
-      <news:title>Erbil Neighborhoods Guide: Gulan, Ankawa, Dream City and More</news:title>
-      <news:keywords>erbil neighborhoods, gulan, ankawa, dream city, italian village</news:keywords>
-    </news:news>
-    <image:image>
-      <image:loc>https://images.unsplash.com/photo-1449824913935-59a10b8d2000?w=1200&amp;q=80&amp;fm=webp</image:loc>
-      <image:title>Erbil Neighborhoods Guide</image:title>
-      <image:caption>Explore Erbil's most desirable neighborhoods for property investment</image:caption>
-    </image:image>
+    <priority>0.6</priority>
   </url>
-
-  <!-- ═══════════════════════════════════════════════════════════════════════════ -->
-  <!-- EXISTING BLOG POSTS - Lifestyle & Living -->
-  <!-- ═══════════════════════════════════════════════════════════════════════════ -->
-
+  <url>
+    <loc>https://realhouseiq.com/blog/investment-opportunities-erbil-real-estate</loc>
+    <lastmod>undefined</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
   <url>
     <loc>https://realhouseiq.com/blog/luxury-living-erbil-modern-amenities</loc>
-    <lastmod>2024-12-20</lastmod>
+    <lastmod>undefined</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-    <news:news>
-      <news:publication>
-        <news:name>Real House Blog</news:name>
-        <news:language>en</news:language>
-      </news:publication>
-      <news:publication_date>2024-12-20</news:publication_date>
-      <news:title>Luxury Living in Erbil: Modern Amenities and Lifestyle</news:title>
-      <news:keywords>luxury living, erbil lifestyle, modern amenities, high-end properties</news:keywords>
-    </news:news>
-    <image:image>
-      <image:loc>https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=1200&amp;q=80&amp;fm=webp</image:loc>
-      <image:title>Luxury Living in Erbil</image:title>
-      <image:caption>What luxury living means in modern Erbil</image:caption>
-    </image:image>
+    <priority>0.6</priority>
   </url>
-
   <url>
-    <loc>https://realhouseiq.com/blog/erbil-expat-guide-finding-home</loc>
-    <lastmod>2024-12-05</lastmod>
+    <loc>https://realhouseiq.com/blog/off-plan-properties-erbil-what-to-know</loc>
+    <lastmod>undefined</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.75</priority>
-    <news:news>
-      <news:publication>
-        <news:name>Real House Blog</news:name>
-        <news:language>en</news:language>
-      </news:publication>
-      <news:publication_date>2024-12-05</news:publication_date>
-      <news:title>Expat Guide: Finding Your Home in Erbil Kurdistan</news:title>
-      <news:keywords>expat, relocation, erbil living, international residents</news:keywords>
-    </news:news>
-    <image:image>
-      <image:loc>https://images.unsplash.com/photo-1512917774080-9991f1c4c750?w=1200&amp;q=80&amp;fm=webp</image:loc>
-      <image:title>Expat Guide to Finding a Home in Erbil</image:title>
-      <image:caption>Comprehensive guide for expatriates relocating to Erbil</image:caption>
-    </image:image>
+    <priority>0.6</priority>
   </url>
-
-  <!-- ═══════════════════════════════════════════════════════════════════════════ -->
-  <!-- EXISTING BLOG POSTS - Commercial Real Estate -->
-  <!-- ═══════════════════════════════════════════════════════════════════════════ -->
-
   <url>
     <loc>https://realhouseiq.com/blog/erbil-commercial-real-estate-opportunities</loc>
-    <lastmod>2024-12-10</lastmod>
+    <lastmod>undefined</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-    <news:news>
-      <news:publication>
-        <news:name>Real House Blog</news:name>
-        <news:language>en</news:language>
-      </news:publication>
-      <news:publication_date>2024-12-10</news:publication_date>
-      <news:title>Commercial Real Estate Opportunities in Erbil</news:title>
-      <news:keywords>commercial property, retail space, office space, erbil business</news:keywords>
-    </news:news>
-    <image:image>
-      <image:loc>https://images.unsplash.com/photo-1497366216548-37526070297c?w=1200&amp;q=80&amp;fm=webp</image:loc>
-      <image:title>Commercial Real Estate in Erbil</image:title>
-      <image:caption>Retail and office space opportunities in Erbil's commercial market</image:caption>
-    </image:image>
+    <priority>0.6</priority>
   </url>
-
+  <url>
+    <loc>https://realhouseiq.com/blog/erbil-expat-guide-finding-home</loc>
+    <lastmod>undefined</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://realhouseiq.com/blog/best-real-estate-companies-erbil-2025</loc>
+    <lastmod>undefined</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://realhouseiq.com/blog/where-to-buy-property-iraq-complete-guide</loc>
+    <lastmod>undefined</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://realhouseiq.com/blog/erbil-vs-baghdad-property-prices-comparison</loc>
+    <lastmod>undefined</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://realhouseiq.com/blog/sulaymaniyah-vs-erbil-real-estate</loc>
+    <lastmod>undefined</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://realhouseiq.com/blog/best-city-invest-iraq-2025</loc>
+    <lastmod>undefined</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://realhouseiq.com/blog/erbil-property-market-2025-forecast</loc>
+    <lastmod>undefined</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://realhouseiq.com/blog/faq-buying-property-erbil-kurdistan</loc>
+    <lastmod>undefined</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://realhouseiq.com/blog/top-property-agents-kurdistan-2025</loc>
+    <lastmod>undefined</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://realhouseiq.com/blog/iraq-real-estate-foreigners-complete-guide</loc>
+    <lastmod>undefined</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://realhouseiq.com/blog/how-much-house-cost-erbil-2025</loc>
+    <lastmod>undefined</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://realhouseiq.com/blog/is-erbil-safe-for-investment-2025</loc>
+    <lastmod>undefined</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://realhouseiq.com/blog/best-area-erbil-to-buy-property</loc>
+    <lastmod>undefined</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://realhouseiq.com/blog/is-kurdistan-good-property-investment</loc>
+    <lastmod>undefined</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://realhouseiq.com/blog/best-areas-to-live-in-erbil-2025</loc>
+    <lastmod>undefined</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://realhouseiq.com/blog/erbil-real-estate-investment-guide-2025</loc>
+    <lastmod>undefined</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://realhouseiq.com/blog/buying-property-kurdistan-foreigner-complete-guide</loc>
+    <lastmod>undefined</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://realhouseiq.com/blog/erbil-apartment-prices-2025-complete-guide</loc>
+    <lastmod>undefined</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://realhouseiq.com/blog/luxury-villas-erbil-for-sale-2025</loc>
+    <lastmod>undefined</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://realhouseiq.com/blog/erbil-vs-sulaymaniyah-property-comparison</loc>
+    <lastmod>undefined</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://realhouseiq.com/blog/kurdistan-property-market-forecast-2025-2026</loc>
+    <lastmod>undefined</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://realhouseiq.com/blog/best-neighborhoods-erbil-families-2025</loc>
+    <lastmod>undefined</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://realhouseiq.com/blog/commercial-property-erbil-guide-2025</loc>
+    <lastmod>undefined</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://realhouseiq.com/blog/erbil-penthouse-apartments-luxury-living</loc>
+    <lastmod>undefined</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://realhouseiq.com/blog/best-areas-live-erbil-neighborhoods</loc>
+    <lastmod>undefined</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://realhouseiq.com/blog/erbil-real-estate-investment-handbook</loc>
+    <lastmod>undefined</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://realhouseiq.com/blog/buying-property-kurdistan-foreigner-guide</loc>
+    <lastmod>undefined</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://realhouseiq.com/blog/erbil-apartment-prices-2025-market-analysis</loc>
+    <lastmod>undefined</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://realhouseiq.com/blog/luxury-villas-erbil-for-sale-guide</loc>
+    <lastmod>undefined</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://realhouseiq.com/blog/erbil-sulaymaniyah-property-investment-comparison</loc>
+    <lastmod>undefined</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://realhouseiq.com/blog/kurdistan-property-market-forecast-2025-2030</loc>
+    <lastmod>undefined</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://realhouseiq.com/blog/best-neighborhoods-erbil-families</loc>
+    <lastmod>undefined</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://realhouseiq.com/blog/commercial-property-erbil-complete-guide</loc>
+    <lastmod>undefined</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://realhouseiq.com/blog/erbil-penthouse-apartments-luxury-guide</loc>
+    <lastmod>undefined</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://realhouseiq.com/blog/dream-city-erbil-properties-complete-guide</loc>
+    <lastmod>undefined</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://realhouseiq.com/blog/italian-village-erbil-homes-guide</loc>
+    <lastmod>undefined</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://realhouseiq.com/blog/gulan-district-erbil-real-estate-guide</loc>
+    <lastmod>undefined</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://realhouseiq.com/blog/ankawa-erbil-property-prices-guide</loc>
+    <lastmod>undefined</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://realhouseiq.com/blog/off-plan-properties-erbil-2025-guide</loc>
+    <lastmod>undefined</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://realhouseiq.com/blog/erbil-real-estate-agent-tips-guide</loc>
+    <lastmod>undefined</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://realhouseiq.com/blog/property-taxes-kurdistan-iraq-guide</loc>
+    <lastmod>undefined</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://realhouseiq.com/blog/renting-vs-buying-erbil-analysis</loc>
+    <lastmod>undefined</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://realhouseiq.com/blog/erbil-expat-housing-guide-2025</loc>
+    <lastmod>undefined</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://realhouseiq.com/blog/kurdistan-golden-visa-property-investment</loc>
+    <lastmod>undefined</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://realhouseiq.com/blog/top-10-luxury-apartments-erbil-2025</loc>
+    <lastmod>undefined</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://realhouseiq.com/blog/empire-world-erbil-complete-guide</loc>
+    <lastmod>undefined</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://realhouseiq.com/blog/best-areas-live-erbil-families</loc>
+    <lastmod>undefined</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://realhouseiq.com/blog/erbil-real-estate-market-trends-analysis-2025</loc>
+    <lastmod>undefined</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://realhouseiq.com/blog/how-to-buy-property-kurdistan-complete-guide</loc>
+    <lastmod>undefined</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://realhouseiq.com/blog/ankawa-neighborhood-guide-erbil</loc>
+    <lastmod>undefined</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://realhouseiq.com/blog/investment-opportunities-erbil-real-estate</loc>
+    <lastmod>undefined</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://realhouseiq.com/blog/new-construction-projects-erbil-2025</loc>
+    <lastmod>undefined</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://realhouseiq.com/blog/comparing-erbil-top-residential-compounds</loc>
+    <lastmod>undefined</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://realhouseiq.com/blog/renting-vs-buying-erbil-which-better</loc>
+    <lastmod>undefined</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://realhouseiq.com/blog/understanding-property-prices-erbil-neighborhood</loc>
+    <lastmod>undefined</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://realhouseiq.com/blog/dream-city-erbil-complete-guide</loc>
+    <lastmod>undefined</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://realhouseiq.com/blog/best-schools-near-erbil-residential-areas</loc>
+    <lastmod>undefined</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://realhouseiq.com/blog/erbil-property-investment-returns-roi</loc>
+    <lastmod>undefined</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://realhouseiq.com/blog/moving-to-erbil-essential-guide-expats</loc>
+    <lastmod>undefined</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
 </urlset>
