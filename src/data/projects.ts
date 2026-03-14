@@ -48,13 +48,13 @@ export const projects: Project[] = [
     id: 'empire-world',
     name: 'Empire World',
     location: {
-      address: 'Empire World Complex',
+      address: 'Empire World Complex, near Erbil International Airport',
       city: 'Erbil',
       district: 'Gulan',
       country: 'Iraq'
     },
     status: 'Under Construction',
-    totalUnits: 6000,
+    totalUnits: 8000,
     priceRange: {
       min: 150000,
       max: 2500000,
@@ -62,18 +62,18 @@ export const projects: Project[] = [
     },
     completionDate: '2028',
     amenities: [
-      'Shopping Mall',
-      'Five-Star Hotel',
-      'Business Center',
-      'Luxury Apartments',
-      'Fine Dining Restaurants',
+      'JW Marriott Hotel (207 rooms)',
+      'JW Marriott Executive Apartments (96 units)',
+      '5 Empire Business Towers',
+      'Empire Avenue Pedestrian Walkway',
+      'Luxury Restaurants (East & West)',
+      'Swimming Pools',
+      'Tennis Courts',
       'Fitness Center',
       '24/7 Security',
       'Underground Parking',
-      'Swimming Pool',
-      'Spa & Wellness Center',
-      'Cinema',
-      'Kids Play Area'
+      'Majid Agha Mosque',
+      'Welat Statue Monument'
     ],
     images: [
       'https://images.unsplash.com/photo-1486325212027-8081e485255e?w=800&q=80&fm=webp',
@@ -94,50 +94,51 @@ export const projects: Project[] = [
       'https://images.unsplash.com/photo-1503387837-b154d5074bd2?w=800&q=80&fm=webp',
       'https://images.unsplash.com/photo-1600585152220-90363fe7e115?w=800&q=80&fm=webp'
     ],
-    description: `Empire World is Erbil's most ambitious mixed-use development project, setting new standards for luxury living in the Kurdistan Region. This landmark development features residential towers, a world-class shopping mall, five-star hotel, and premium office spaces.
+    description: `Empire World is Iraq's most ambitious real estate project, spanning over 1.25 million square meters near Erbil International Airport and adjacent to Sami Abdulrahman Park. Awarded "Most Innovative Mixed-Use Real Estate Project - Iraq 2025" by International Finance.
 
-The project spans over 500,000 square meters and will become the commercial heart of Erbil. Residential units range from elegant studio apartments to sprawling penthouses with panoramic city views. Every residence features premium finishes, smart home technology, and access to exclusive amenities.
+The development includes multiple components: Royal Villas (900 modern villas across 3 phases), Royal Apartments (2,412 units in European-style buildings of 10-13 floors), Empire Wings East & West (3,856 apartments in 30 buildings of 9-31 floors), Empire Square (720 residential and commercial units), and Empire Diamond towers.
 
-Empire World represents the future of urban living in Iraq, combining international standards with local hospitality traditions.`,
+Commercial facilities include the JW Marriott Hotel with 207 rooms, 96 JW Marriott Executive Apartments, 5 Empire Business Towers (the main tower rises 27 floors with 24,000 sqm), and 6 Empire Business Complexes. The project creates a self-sustained community combining luxury living, business, hospitality, and retail.`,
     propertyIds: [],
-    constructionProgress: 65,
+    constructionProgress: 70,
     constructionMilestones: [
+      { date: '2019-Q1', title: 'Groundbreaking', description: 'Official project launch with KRG officials', completed: true },
       { date: '2023-Q1', title: 'Foundation Complete', description: 'Foundation and underground structure completed', completed: true },
-      { date: '2024-Q2', title: 'Structure 50%', description: 'Main structure reached 50% completion', completed: true },
-      { date: '2025-Q4', title: 'Exterior Finishing', description: 'External facade and cladding installation', completed: false },
-      { date: '2027-Q2', title: 'Final Handover', description: 'Project completion and unit handover', completed: false }
+      { date: '2024-Q2', title: 'Structure 70%', description: 'Main structures reaching completion', completed: true },
+      { date: '2026-Q4', title: 'Phase 1 Handover', description: 'First residential units ready for handover', completed: false },
+      { date: '2028-Q2', title: 'Full Completion', description: 'All phases complete and operational', completed: false }
     ]
   },
   {
     id: 'dream-city',
     name: 'Dream City',
     location: {
-      address: 'Dream City Complex',
+      address: '100 Meter Street, 2km northwest of city center',
       city: 'Erbil',
       district: 'Dream City',
       country: 'Iraq'
     },
     status: 'Ready',
-    totalUnits: 1000,
+    totalUnits: 1200,
     priceRange: {
       min: 380000,
       max: 2400000,
       currency: 'USD'
     },
-    completionDate: '2007',
+    completionDate: '2006',
     amenities: [
-      'Gated Community',
-      'Central Park',
-      'International Schools',
-      'Medical Clinic',
-      'Shopping Center',
-      'Sports Facilities',
+      'Gated Community (4 entries)',
+      '4,000m Security Fence',
+      'SABIS International School',
+      'Health Center & Clinic',
+      'Shopping Mall',
+      'Commercial Plazas (2)',
       'Mosque',
-      'Community Center',
+      'Social Center',
       '24/7 Security',
-      'Landscaped Gardens',
-      'Jogging Track',
-      'Playground'
+      'Kids Play Areas',
+      'Playgrounds',
+      'Green Areas & Parks'
     ],
     images: [
       'https://images.unsplash.com/photo-1512917774080-9991f1c4c750?w=800&q=80&fm=webp',
@@ -158,31 +159,31 @@ Empire World represents the future of urban living in Iraq, combining internatio
       'https://images.unsplash.com/photo-1503387837-b154d5074bd2?w=800&q=80&fm=webp',
       'https://images.unsplash.com/photo-1600566752734-2a0cd66c42ae?w=800&q=80&fm=webp'
     ],
-    description: `Dream City is one of Erbil's premier residential communities, offering a complete lifestyle destination for families and professionals. This master-planned community combines modern architecture with thoughtful urban planning.
+    description: `Dream City is Erbil's most luxurious residential complex, built on approximately 1 million square meters on 100 Meter Street, just 5 minutes from Erbil International Airport. Developed by Nasri Group of Companies (NGC), the project started operating in 2006.
 
-The project features a diverse range of housing options including villas, townhouses, and apartments, all set within beautifully landscaped grounds. Residents enjoy access to international schools, healthcare facilities, shopping centers, and recreational amenities without leaving the community.
+The community features 1,200 separate villas ranging from 250 to 900 square meters. Villa sizes include 250m², 350m², 450m², 600m², 800m², and 900m² options, with larger villas featuring private pools. All homes were designed by architects in Erbil, Baghdad, Beirut, and Dubai.
 
-Dream City represents the ideal blend of privacy, security, and community living, making it one of the most sought-after addresses in Erbil.`,
+Residents enjoy excellent infrastructure including 24-hour electricity, reliable water supply, complete sewerage systems, and fast internet. The complex has 4 gated entries and a 4,000-meter security fence ensuring privacy. Amenities include SABIS International School, health center, two commercial plazas, mosque, cafes, shops, and extensive green areas.`,
     propertyIds: [],
     constructionProgress: 100,
     constructionMilestones: [
-      { date: '2020-Q1', title: 'Construction Started', description: 'Groundbreaking ceremony', completed: true },
-      { date: '2021-Q3', title: 'Structure Complete', description: 'All structures completed', completed: true },
-      { date: '2022-Q4', title: 'Interior Finishing', description: 'Interior finishing completed', completed: true },
-      { date: '2023-Q2', title: 'Project Delivered', description: 'Full project handover complete', completed: true }
+      { date: '2004-Q1', title: 'Project Launch', description: 'Dream City development announced', completed: true },
+      { date: '2005-Q3', title: 'Infrastructure Complete', description: 'Roads, utilities, and security infrastructure', completed: true },
+      { date: '2006-Q2', title: 'First Phase Delivered', description: 'Initial villas ready for residents', completed: true },
+      { date: '2008-Q4', title: 'Full Completion', description: 'All 1,200 villas completed and occupied', completed: true }
     ]
   },
   {
     id: 'italian-village',
-    name: 'Italian Village',
+    name: 'Italian City 1',
     location: {
-      address: 'Italian Village',
+      address: 'Italian City 1, 120m Ring Street',
       city: 'Erbil',
       district: 'Italian Village',
       country: 'Iraq'
     },
     status: 'Ready',
-    totalUnits: 2200,
+    totalUnits: 720,
     priceRange: {
       min: 150000,
       max: 450000,
@@ -191,17 +192,17 @@ Dream City represents the ideal blend of privacy, security, and community living
     completionDate: '2015',
     amenities: [
       'Italian-Style Architecture',
-      'Central Piazza',
-      'Restaurants & Cafes',
-      'Boutique Shops',
-      'Art Gallery',
-      'Fitness Center',
-      'Swimming Pool',
+      '5-Star Hotel (121 rooms)',
+      '8 Suites & 4 King Suites',
+      'Restaurants & Ballroom',
+      'Outdoor Swimming Pools',
+      'Recreational Facilities',
+      'Landscaped Leisure Areas',
+      'Large Car Park',
       '24/7 Security',
-      'Covered Parking',
-      'Landscaped Courtyards',
-      'Children\'s Play Area',
-      'Event Hall'
+      'Boutique Shops',
+      'Multiple Neighborhoods',
+      'Distinctive Design Styles'
     ],
     images: [
       'https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?w=800&q=80&fm=webp',
@@ -222,43 +223,43 @@ Dream City represents the ideal blend of privacy, security, and community living
       'https://images.unsplash.com/photo-1600566752734-2a0cd66c42ae?w=800&q=80&fm=webp',
       'https://images.unsplash.com/photo-1600210491892-03d54c0aaf87?w=800&q=80&fm=webp'
     ],
-    description: `Italian Village brings the charm of Tuscany to the heart of Erbil. This unique residential development features authentic Italian architecture, with homes designed around picturesque courtyards and a central piazza.
+    description: `Italian City 1 is one of Erbil's most attractive residential communities, developed by Hemn Group. This mixed-use development features 640 residential units and 80 commercial units arranged in tiered townhouses and villas across different neighborhoods, each with distinctive architectural styles.
 
-The village atmosphere creates a warm, welcoming community where neighbors become friends. Cobblestone pathways wind through the property, connecting residents to charming cafes, boutique shops, and community spaces inspired by Italian lifestyle.
+Residential options include Type A houses (212 units at 320 sqm each) and Type B houses (160 units at 240 sqm each). The community features a 5-star hotel spanning 4,554 sqm with 13 floors, 121 rooms, 8 suites, and 4 King suites.
 
-Each residence is crafted with attention to detail, featuring terracotta roofs, wrought-iron balconies, and arched doorways. Italian Village offers a distinctive living experience that celebrates Mediterranean elegance in Kurdistan.`,
+The hotel includes restaurants, a ballroom, recreational facilities, outdoor swimming pools, large car park, and landscaped leisure areas. Italian City 1 brings Mediterranean elegance to Kurdistan with authentic Italian architecture and a vibrant community atmosphere.`,
     propertyIds: []
   },
   {
     id: 'english-village',
     name: 'English Village',
     location: {
-      address: 'English Village',
+      address: 'Western Erbil',
       city: 'Erbil',
       district: 'English Village',
       country: 'Iraq'
     },
     status: 'Ready',
-    totalUnits: 458,
+    totalUnits: 420,
     priceRange: {
-      min: 180000,
-      max: 550000,
+      min: 400000,
+      max: 600000,
       currency: 'USD'
     },
-    completionDate: '2010',
+    completionDate: '2006',
     amenities: [
-      'British Colonial Architecture',
-      'Private Gardens',
-      'Country Club',
-      'Tennis Courts',
-      'Swimming Pool',
-      'Spa',
-      'Fine Dining Restaurant',
-      'Business Center',
-      '24/7 Security',
-      'Valet Parking',
-      'Concierge Service',
-      'Golf Course Access'
+      'British-Built Construction',
+      'Identical Villa Design',
+      '235 sqm Floor Space (each)',
+      '5 Bedrooms Per Villa',
+      'Full Air Conditioning',
+      'Fitted Kitchens',
+      'Eastern & Western Bathrooms',
+      'Reliable Electricity Supply',
+      'Modern Sanitation System',
+      'School',
+      '5-Story Shopping Centre',
+      '24/7 Security'
     ],
     images: [
       'https://images.unsplash.com/photo-1600047509807-ba8f99d2cdde?w=800&q=80&fm=webp',
@@ -279,43 +280,43 @@ Each residence is crafted with attention to detail, featuring terracotta roofs, 
       'https://images.unsplash.com/photo-1600566752734-2a0cd66c42ae?w=800&q=80&fm=webp',
       'https://images.unsplash.com/photo-1600210491892-03d54c0aaf87?w=800&q=80&fm=webp'
     ],
-    description: `English Village is an exclusive residential enclave that captures the elegance of British country living. This prestigious community features stately homes inspired by Georgian and Victorian architecture.
+    description: `English Village is a British-built luxury housing compound located in western Erbil, covering 26 hectares (64 acres). The compound contains 420 identical villas, now predominantly used as residences and offices for international companies.
 
-Residents enjoy a refined lifestyle with access to a private country club, manicured gardens, and world-class amenities. The village is designed for those who appreciate timeless elegance and seek a distinguished address in Erbil.
+Each villa offers 235 square meters (2,530 sq ft) of floor space on two floors with 5 bedrooms, full air conditioning, fitted kitchens, and 2 bathrooms with combined Eastern and Western toilets. The compound features reliable electricity supply and modern sanitation systems, setting it apart from other areas of Erbil.
 
-Each residence offers generous living spaces, quality craftsmanship, and private gardens. English Village represents the pinnacle of luxury living in Kurdistan, where tradition meets contemporary comfort.`,
+Amenities include a school and a five-story shopping centre. The complex is populated mostly by upper-class locals, foreign businesspeople, and aid workers. Villa prices have appreciated significantly: $125,000 in 2006, $200,000 in 2008, and $500,000+ by 2011, with rentals around $3,400/month.`,
     propertyIds: []
   },
   {
     id: 'boulevard',
     name: 'The Boulevard',
     location: {
-      address: 'Boulevard Complex',
+      address: 'Gulan Street, across from Gulan Towers',
       city: 'Erbil',
       district: 'Gulan',
       country: 'Iraq'
     },
     status: 'Ready',
-    totalUnits: 1300,
+    totalUnits: 1600,
     priceRange: {
-      min: 95000,
+      min: 100000,
       max: 350000,
       currency: 'USD'
     },
     completionDate: '2023',
     amenities: [
-      'Modern Architecture',
-      'Rooftop Garden',
-      'Fitness Center',
-      'Swimming Pool',
-      '24/7 Security',
-      'Underground Parking',
-      'High-Speed Elevators',
-      'Smart Home Ready',
-      'Concierge Service',
-      'Business Center',
-      'Children\'s Play Area',
-      'BBQ Area'
+      '10 Residential Towers',
+      'Outdoor Gymnasium',
+      'Outdoor Pool',
+      'Rooftop Pool',
+      'Cinema',
+      'Tennis Court',
+      'Volleyball & Basketball Courts',
+      'Small Stadium',
+      'Jogging Tracks',
+      '24/7 Security & CCTV',
+      'Fire Safety Systems',
+      'Commercial Shopping Spaces'
     ],
     images: [
       'https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?w=800&q=80&fm=webp',
@@ -336,43 +337,43 @@ Each residence offers generous living spaces, quality craftsmanship, and private
       'https://images.unsplash.com/photo-1503387837-b154d5074bd2?w=800&q=80&fm=webp',
       'https://images.unsplash.com/photo-1600585152220-90363fe7e115?w=800&q=80&fm=webp'
     ],
-    description: `The Boulevard is a premier residential complex in the heart of Gulan, offering modern luxury apartments with stunning city views. This iconic development combines contemporary design with premium amenities.
+    description: `The Boulevard is a 'Project of the Century' by Four Bridges company, located right in the centre of Erbil across from Gulan Towers. This prime mixed-use development spans 53,000 square meters with 10 residential towers and commercial spaces.
 
-Each apartment features spacious layouts, floor-to-ceiling windows, and high-end finishes. Residents enjoy access to a rooftop garden, fitness center, swimming pool, and 24/7 concierge service.
+The project offers 1,600 residential units in configurations of 1+1, 2+1, 3+1, and 4+1 apartments, plus villa gardens. Unit sizes range from 97 sqm to 235 sqm with prices from $100,000 to $300,000. Furnished rentals available from $1,050/month.
 
-The Boulevard is perfectly located near shopping centers, restaurants, and entertainment venues, making it an ideal choice for professionals and families seeking a modern urban lifestyle in Erbil.`,
-    propertyIds: ['boulevard-a1', 'boulevard-a2', 'boulevard-a3']
+Recreation facilities include outdoor and rooftop pools, outdoor gymnasium, cinema, jogging tracks, tennis court, volleyball and basketball courts, and a small stadium. Features the latest fire safety systems, CCTV surveillance, and 24/7 patrolling.`,
+    propertyIds: ['boulevard-apt-floor-13', 'boulevard-apt-floor-14', 'boulevard-apt-floor-17']
   },
   {
     id: 'cavally-tower',
-    name: 'Cavally Tower',
+    name: 'Cavalli Tower',
     location: {
-      address: 'Cavally Tower',
+      address: '40m Street (Gulan Street)',
       city: 'Erbil',
-      district: 'Ankawa',
+      district: 'Gulan',
       country: 'Iraq'
     },
     status: 'Ready',
-    totalUnits: 350,
+    totalUnits: 745,
     priceRange: {
-      min: 110000,
+      min: 62000,
       max: 420000,
       currency: 'USD'
     },
     completionDate: '2023',
     amenities: [
-      'Luxury Tower Living',
-      'Panoramic Views',
-      'Sky Lounge',
-      'Infinity Pool',
-      'Spa & Sauna',
-      'Private Cinema',
+      '50 Floors (149m tall)',
+      '24hr Electricity',
+      'Playground',
+      'Underground Car Park',
+      'Fitness Center',
+      'Public Garden',
+      'Supermarket',
+      'Reception',
+      'Green Areas',
       '24/7 Security',
-      'Valet Parking',
-      'Concierge Service',
-      'Business Center',
-      'Residents\' Lounge',
-      'Landscaped Terraces'
+      'Covered Parking',
+      'Modern Infrastructure'
     ],
     images: [
       'https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=800&q=80&fm=webp',
@@ -393,43 +394,43 @@ The Boulevard is perfectly located near shopping centers, restaurants, and enter
       'https://images.unsplash.com/photo-1503387837-b154d5074bd2?w=800&q=80&fm=webp',
       'https://images.unsplash.com/photo-1600585152220-90363fe7e115?w=800&q=80&fm=webp'
     ],
-    description: `Cavally Tower stands as one of Ankawa's most prestigious residential addresses. This elegant high-rise offers luxury apartments with breathtaking panoramic views of Erbil and the surrounding mountains.
+    description: `Cavalli Tower is a landmark 50-floor residential tower standing 149 meters tall, built by Shahan Company on 40m Street (Gulan Street) in the heart of Erbil. The tower contains 745 residential apartments ranging from studios to 4-bedroom units.
 
-The tower features world-class amenities including a sky lounge, infinity pool, spa, and private cinema. Every apartment is designed with attention to detail, featuring premium materials, smart home technology, and spacious balconies.
+Unit sizes include studios (59 sqm, from $62,000), 1-bedrooms (108 sqm, from $112,000), 3-bedrooms (172 sqm), and 4-bedrooms (238 sqm). Flexible payment plans available: 20% advance, 28% at structure completion, 28% at delivery, and 25% over 36-month installments.
 
-Cavally Tower represents the pinnacle of vertical living in Erbil, combining sophisticated design with unparalleled comfort and convenience.`,
+Amenities include 24-hour electricity, playground, underground car park, fitness center, public garden, supermarket, and reception. The tower offers panoramic views of Erbil and represents premium vertical living in the city center.`,
     propertyIds: []
   },
   {
     id: 'tulip-towers',
     name: 'Tulip Towers',
     location: {
-      address: 'Tulip Towers Complex',
+      address: 'Gulan Street, near Sami Abdulrahman Park',
       city: 'Erbil',
       district: 'Gulan',
       country: 'Iraq'
     },
     status: 'Ready',
-    totalUnits: 1220,
+    totalUnits: 1243,
     priceRange: {
       min: 85000,
-      max: 280000,
+      max: 350000,
       currency: 'USD'
     },
     completionDate: '2022',
     amenities: [
-      'Four Tower Design',
-      'Central Garden',
-      'Swimming Pool',
-      'Fitness Center',
-      'Children\'s Play Area',
-      '24/7 Security',
-      'Covered Parking',
-      'Shopping Arcade',
-      'Cafes & Restaurants',
-      'Jogging Track',
-      'Basketball Court',
-      'Community Center'
+      'Four 44-Story Towers',
+      '215,600 sqm Total Area',
+      '4-Floor Underground Parking (58,400 sqm)',
+      'Greenery & Landscaping',
+      'Restaurants & Cafes',
+      'Sport Centers',
+      '24hr Electricity',
+      'Internet',
+      'Playground',
+      'Gym',
+      'Kindergarten',
+      'Health Center'
     ],
     images: [
       'https://images.unsplash.com/photo-1577495508326-19a1b3cf65b7?w=800&q=80&fm=webp',
@@ -450,11 +451,11 @@ Cavally Tower represents the pinnacle of vertical living in Erbil, combining sop
       'https://images.unsplash.com/photo-1503387837-b154d5074bd2?w=800&q=80&fm=webp',
       'https://images.unsplash.com/photo-1600585152220-90363fe7e115?w=800&q=80&fm=webp'
     ],
-    description: `Tulip Towers is a distinctive four-tower residential complex offering modern apartments in the heart of Gulan. The iconic design features four elegant towers connected by landscaped gardens and shared amenities.
+    description: `Tulip Towers is a landmark development of four 44-story towers overlooking Erbil's golden zone, located on Gulan Street next to Sami Abdulrahman Park, just 10 minutes from the airport or city center.
 
-Residents enjoy a variety of apartment sizes to suit different lifestyles, from cozy studios to spacious family apartments. The development includes a swimming pool, fitness center, children's play areas, and a shopping arcade at ground level.
+The project comprises 1,243 luxury apartments with various sizes and deluxe penthouses across a total area of 215,600 square meters. Parking needs are met through 4 basement floors with 58,400 sqm of underground parking.
 
-Tulip Towers combines affordability with quality, making it an excellent choice for first-time buyers and investors looking for value in Erbil's growing real estate market.`,
+Amenities include 24-hour electricity, internet, playground, gym, underground parking, kindergarten, supermarket, health center, and proper infrastructure for sewerage, sanitary and electrical systems. Residents enjoy greenery, restaurants, cafes, and sport centers.`,
     propertyIds: []
   },
   {
@@ -559,9 +560,9 @@ Early buyers can take advantage of attractive pre-construction pricing and flexi
   },
   {
     id: 'pavilion-erbil',
-    name: 'Pavilion Erbil',
+    name: 'Pavilion by Rams',
     location: {
-      address: 'Pavilion Erbil',
+      address: 'Pavilion Erbil, 170+ hectares',
       city: 'Erbil',
       district: 'Pavilion',
       country: 'Iraq'
@@ -575,18 +576,18 @@ Early buyers can take advantage of attractive pre-construction pricing and flexi
     },
     completionDate: '2028',
     amenities: [
-      '320,000 sqm Lagoon',
-      'Private Beach',
+      '320,000 sqm Lagoon & Canals',
+      'Villas & High-Rise Towers',
       'Smart Home Technology',
-      'Football Stadium',
-      'Basketball & Volleyball Courts',
-      'Shopping & Retail',
-      'Healthcare Facilities',
-      'International Schools',
-      'Five-Star Hotels',
-      '24/7 Security',
-      'Landscaped Gardens',
-      'Marina & Waterways'
+      'Automated Lighting & Temperature',
+      'Shopping Mall',
+      'Hotel',
+      'School & Kindergarten',
+      'Mosque',
+      'Health Center',
+      'Gym & Fitness Center',
+      'Underground Car Park',
+      'Pre-installed ACs & Kitchen Appliances'
     ],
     images: [
       'https://images.unsplash.com/photo-1613490493576-7fde63acd811?w=800&q=80&fm=webp',
@@ -607,11 +608,11 @@ Early buyers can take advantage of attractive pre-construction pricing and flexi
       'https://images.unsplash.com/photo-1600566752734-2a0cd66c42ae?w=800&q=80&fm=webp',
       'https://images.unsplash.com/photo-1600585152220-90363fe7e115?w=800&q=80&fm=webp'
     ],
-    description: `Pavilion Erbil is one of the most significant and luxurious residential developments in Kurdistan and Iraq, spanning over 170 hectares with neighborhoods designed as an island escape. The centerpiece is a stunning 320,000 square meter lagoon and waterways providing a refreshing environment.
+    description: `Pavilion by Rams commenced construction in early 2022 as one of the most significant and luxurious residential developments in Kurdistan and Iraq. Spanning over 170 hectares, the project transforms land into villas, apartments, green areas, water canals, hotels, shopping malls, and more.
 
-The project offers luxury villas in four collections with plot sizes ranging from 400 to over 1,000 square meters, featuring modern architecture with large balconies, expansive windows, and smart home technologies. Apartments line the green edge of the masterplan with views of the canal and lagoon.
+The centerpiece is a stunning 320,000 sqm lagoon and canals creating a serene atmosphere. Apartment buildings line the green edge of the masterplan, while luxury villas are situated along the canal side around the lagoon. All residences feature smart home technologies including automated lighting, temperature control, and security systems.
 
-Pavilion Erbil represents a radically new offer to contemporary luxury living, combining world-class amenities with serene waterfront living in the heart of Kurdistan.`,
+Amenities include 24hr electricity, internet, playground, pre-installed ACs, security, parking, gym, underground car park, fitness center, supermarket, mosque, school, central A/C, concierge, built-in wardrobes, and kitchen appliances. Pets allowed.`,
     propertyIds: []
   },
   {
@@ -650,11 +651,11 @@ Pavilion Erbil represents a radically new offer to contemporary luxury living, c
       'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=800&q=80&fm=webp',
       'https://images.unsplash.com/photo-1600566753190-17f0baa2a6c3?w=800&q=80&fm=webp'
     ],
-    description: `Lebanese Village is a master-planned residential and commercial mixed-use development located just 10 minutes from Erbil International Airport on the new Baherka Road near Ainkawa. The project spans a built-up area of 240,000 square meters.
+    description: `Lebanese Village is a master-planned residential and commercial mixed-use development by LDRS Chehab & Partners, located just 10 minutes from Erbil International Airport on the new Baherka Road near Ainkawa. The project spans a built-up area of 240,000 square meters organized into 8 zones (A-H).
 
-Featuring 3,400 residential units including spacious villas and apartments ranging from 50 to 200 square meters, the development caters to diverse lifestyle needs. The unique Lebanese-inspired architecture and large open spaces create a distinctive community atmosphere.
+The development features 3,400 residential units including 48 villas (Type A: 336 sqm with ground floor, first floor, and attic) and apartments: studios (40 sqm), 1-bed (50-56 sqm), 2-bed (107-110 sqm), 3-bed (160 sqm), and 4-bed (200 sqm). Also includes a 200-room motel/chalet, offices, and furnished apartment units.
 
-Residents enjoy comprehensive amenities including a health club, swimming pool, schools, medical facilities, and beautifully landscaped parks with walkways throughout the community.`,
+Amenities include 24-hour electricity, central gas, underground parking, health & sports club with outdoor swimming pool, fitness center, kindergarten, school, medical center, supermarket, mosque, restaurants, and landscaped green areas with walkways adhering to international design standards.`,
     propertyIds: []
   },
   {
@@ -890,7 +891,7 @@ Residents enjoy comprehensive amenities including a sports complex, gym, swimmin
     id: 'naz-city',
     name: 'Naz City',
     location: {
-      address: '40 Meter Road',
+      address: '40 Meter Street (Gulan), 5 minutes from city center',
       city: 'Erbil',
       district: 'Naz City',
       country: 'Iraq'
@@ -902,19 +903,19 @@ Residents enjoy comprehensive amenities including a sports complex, gym, swimmin
       max: 350000,
       currency: 'USD'
     },
-    completionDate: '2021',
+    completionDate: '2007',
     amenities: [
       '14 Residential Buildings',
+      '7 Buildings with 11 Floors',
+      '7 Buildings with 14 Floors',
+      '4 Apartments Per Floor',
+      '225 sqm Per Apartment',
       'High Security Standards',
       'Professional Maintenance',
       'Green Spaces',
       'Children\'s Playground',
       '24/7 Security',
       'Covered Parking',
-      'Community Center',
-      'Fitness Facilities',
-      'Landscaped Gardens',
-      'Shopping Nearby',
       'Easy Highway Access'
     ],
     images: [
@@ -922,11 +923,11 @@ Residents enjoy comprehensive amenities including a sports complex, gym, swimmin
       'https://images.unsplash.com/photo-1512917774080-9991f1c4c750?w=800&q=80&fm=webp',
       'https://images.unsplash.com/photo-1600585154526-990dced4db0d?w=800&q=80&fm=webp'
     ],
-    description: `Naz City is a vibrant residential community featuring 14 modern buildings located on the 40-meter road in Erbil. The development includes seven 11-story towers and seven 14-story towers, with each building offering four spacious 225 square meter apartments per floor.
+    description: `Naz City is one of Erbil's premier luxury residential projects, implemented in 2007 in cooperation with Nassouri and Brian Company. Located on 40 Meter Street (Gulan), about 5 minutes from Erbil city center.
 
-Totaling approximately 700 units, Naz City is renowned for its high security and maintenance standards, creating an excellent living environment for families. The community features extensive green spaces and well-maintained common areas.
+The project consists of 14 buildings - seven with 11 floors and seven with 14 floors - with 4 apartments per floor totaling approximately 700 units. Each apartment spans 225 sqm and includes 2 bedrooms, sitting room, kitchen, reception room, 2 bathrooms, and a toilet.
 
-Naz City offers a perfect balance of urban convenience and residential tranquility, with easy access to major roads and city amenities while maintaining a secure, family-friendly atmosphere.`,
+Naz City offers a perfect balance of urban convenience and residential tranquility, known for its high security and maintenance standards. The community features extensive green spaces and well-maintained common areas, creating an excellent environment for families.`,
     propertyIds: []
   },
   {
@@ -1062,7 +1063,7 @@ Quattro Towers represents an excellent investment opportunity with its prime loc
     id: 'star-towers',
     name: 'Star Towers',
     location: {
-      address: 'Golden Square Area',
+      address: 'Gulan Street, opposite Dream City, Golden Square',
       city: 'Erbil',
       district: 'Golden Square',
       country: 'Iraq'
@@ -1070,35 +1071,35 @@ Quattro Towers represents an excellent investment opportunity with its prime loc
     status: 'Ready',
     totalUnits: 602,
     priceRange: {
-      min: 85000,
-      max: 280000,
+      min: 52000,
+      max: 700000,
       currency: 'USD'
     },
     completionDate: '2022',
     amenities: [
-      'Four 14-Story Towers',
+      'Four 14-Story Blocks',
       '3 Basement Parking Floors',
+      'Ground Floor Commercial',
+      'Restaurants & Cafeterias',
       'Views of Dream City',
       '24/7 Security',
       'Fitness Center',
       'Swimming Pool',
       'Green Areas',
       'Children\'s Playground',
-      'Retail Spaces',
       'High-Speed Internet',
-      '24/7 Electricity',
-      'Close to Airport'
+      '5km from Airport'
     ],
     images: [
       'https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?w=800&q=80&fm=webp',
       'https://images.unsplash.com/photo-1512917774080-9991f1c4c750?w=800&q=80&fm=webp',
       'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=800&q=80&fm=webp'
     ],
-    description: `Star Towers is a modern residential complex in Erbil's Golden Square area, featuring four 14-story towers with three basement floors for parking. Located just 5 kilometers from Erbil International Airport, the development offers 602 apartments with stunning views of the Waziran area and Dream City.
+    description: `Star Towers is a modern residential complex by MRFGroup located on Gulan Street opposite Dream City in Erbil's Golden Square area. The project started in 2019 and features four 14-story blocks with three basement floors for parking.
 
-The project was completed in 2022, offering move-in ready apartments with various size options to suit different lifestyle needs. All units feature modern finishes, 24/7 electricity, and high-speed internet connectivity.
+The development offers 602 apartments with ground floor commercial spaces including restaurants and cafeterias. Located just 5km from Erbil International Airport and near the park, units range from studios (62 sqm, from $52,000) to larger apartments. Rentals available from $400-$1,100/month.
 
-Star Towers provides excellent value for buyers seeking quality residential units in a prime location with comprehensive community amenities and easy airport access.`,
+Star Towers provides excellent value for buyers and investors seeking quality residential units with comprehensive community amenities, panoramic views of Dream City, and easy airport access.`,
     propertyIds: []
   },
   {
@@ -1361,34 +1362,34 @@ Signature Towers represents sophisticated urban living in central Erbil, offerin
   },
   {
     id: 'rotana-hotel-residences',
-    name: 'Rotana Hotel & Residences',
+    name: 'Erbil Arjaan by Rotana',
     location: {
-      address: '100 Meter Road',
+      address: '10 minutes from Erbil International Airport',
       city: 'Erbil',
       district: '100 Meter Road',
       country: 'Iraq'
     },
     status: 'Ready',
-    totalUnits: 280,
+    totalUnits: 168,
     priceRange: {
       min: 180000,
       max: 650000,
       currency: 'USD'
     },
-    completionDate: '2021',
+    completionDate: '2015',
     amenities: [
-      'Five-Star Hotel Services',
-      'Branded Residences',
-      'Infinity Pool',
-      'Spa & Wellness Center',
-      'Fine Dining Restaurants',
-      'Business Center',
-      '24/7 Concierge',
-      'Valet Parking',
-      'Fitness Center',
-      'Room Service',
-      'Housekeeping',
-      'Private Lounge'
+      '168 Serviced Hotel Apartments',
+      'Studios to 2-Bedroom Suites',
+      'Fully Equipped Kitchens',
+      'Bodylines Fitness & Wellness Club',
+      'Relaxing Spa Treatments',
+      'Free On-Site Parking',
+      '24/7 Security & CCTV',
+      'Uniformed Security',
+      'Maid Service',
+      'Business Center Nearby',
+      'Near International Fairground',
+      '10 min to Downtown Citadel'
     ],
     images: [
       'https://images.unsplash.com/photo-1566073771259-6a8506099945?w=800&q=80&fm=webp',
@@ -1409,43 +1410,43 @@ Signature Towers represents sophisticated urban living in central Erbil, offerin
       'https://images.unsplash.com/photo-1574362848149-11496d93a7c7?w=800&q=80&fm=webp',
       'https://images.unsplash.com/photo-1600607688960-e095ff83135c?w=800&q=80&fm=webp'
     ],
-    description: `Rotana Hotel & Residences brings international hospitality standards to Erbil with its branded residential tower on the prestigious 100 Meter Road. Residents enjoy all the luxury amenities of a five-star hotel combined with the privacy of home ownership.
+    description: `Erbil Arjaan by Rotana is an upscale property featuring 168 modern, fully-furnished serviced hotel apartments. Conveniently located 10 minutes from Erbil International Airport, the main international fairground, business centers, and downtown citadel.
 
-The development features elegantly appointed apartments with premium finishes, panoramic city views, and access to world-class facilities including spa, infinity pool, and fine dining. Hotel-style services such as concierge, housekeeping, and room service are available to residents.
+The property offers studios to spacious two-bedroom suites, each with fully-equipped kitchens, contemporary furnishings, and home-from-home comfort. Designed for business travelers, long stays, and family comfort, all apartments feature modern amenities and state-of-the-art connectivity.
 
-This is ideal for investors seeking hassle-free luxury living with the option of hotel rental programs for attractive returns.`,
+Residents enjoy the Bodylines Fitness & Wellness Club with gym and spa treatments, free on-site parking, and high security with uniformed guards and CCTV surveillance. Payment accepted in US Dollars.`,
     propertyIds: []
   },
   {
     id: 'divan-erbil',
     name: 'Divan Erbil',
     location: {
-      address: 'Gulan Street',
+      address: 'Gulan Street, opposite Sami Abdul-Rahman Park',
       city: 'Erbil',
       district: 'Gulan',
       country: 'Iraq'
     },
     status: 'Ready',
-    totalUnits: 220,
+    totalUnits: 250,
     priceRange: {
       min: 200000,
       max: 580000,
       currency: 'USD'
     },
-    completionDate: '2019',
+    completionDate: '2014',
     amenities: [
-      'Turkish Hospitality Brand',
-      'Luxury Apartments',
-      'Rooftop Restaurant',
-      'Spa & Hammam',
-      'Indoor Pool',
-      'Business Center',
-      '24/7 Security',
-      'Concierge Service',
-      'Underground Parking',
-      'Fitness Center',
-      'Meeting Rooms',
-      'Ballroom'
+      'Highest Tower in Erbil',
+      '250+ Luxurious Rooms/Suites',
+      'Presidential Suites & Penthouses',
+      'Apartments with Kitchenette',
+      'Qi 21 Restaurant (21st Floor)',
+      'Seasons Restaurant (Buffet)',
+      'Spa & Wellness Center',
+      'Marble Bathrooms',
+      'Large LCD Satellite TV',
+      'High-Speed Internet',
+      '24hr Laundry Service',
+      '10 min from Airport'
     ],
     images: [
       'https://images.unsplash.com/photo-1564501049412-61c2a3083791?w=800&q=80&fm=webp',
@@ -1466,11 +1467,11 @@ This is ideal for investors seeking hassle-free luxury living with the option of
       'https://images.unsplash.com/photo-1574362848149-11496d93a7c7?w=800&q=80&fm=webp',
       'https://images.unsplash.com/photo-1600607688960-e095ff83135c?w=800&q=80&fm=webp'
     ],
-    description: `Divan Erbil represents Turkish hospitality excellence with luxury serviced residences in the heart of Gulan. The development combines the renowned Divan brand's service standards with premium residential living.
+    description: `Divan Erbil is the most visually modern structure and highest tower in Erbil, a local landmark spreading over 25,000 sqm on Gulan Street opposite Sami Abdul-Rahman Park (the largest park in Iraq). Just 10 minutes from the Airport.
 
-Each residence features sophisticated interiors, modern amenities, and access to hotel facilities including rooftop dining, traditional hammam, and indoor pool. The location offers easy access to Erbil's business district and entertainment venues.
+The complex features over 250 luxurious accommodations including King and Twin Rooms, Club Floor Rooms, various Suites, Presidential Suites, Penthouses, and Apartments with kitchenettes. All rooms include marble bathrooms, large LCD satellite TV, and some suites have terraces overlooking the Park and city.
 
-Divan Erbil is perfect for discerning buyers who appreciate refined living with the convenience of hotel services and the security of a prestigious international brand.`,
+Dining includes Seasons Restaurant (breakfast, lunch, dinner buffets) and Qi 21 Restaurant on the 21st floor serving authentic Sushi and Far Eastern cuisine. Features the latest 5-star standard in leisure and business technology with high-speed internet and 24-hour laundry service.`,
     propertyIds: []
   },
   {
@@ -3369,44 +3370,53 @@ Bakhtyari Twin Towers attracts buyers seeking an iconic address with distinctive
     id: 'queen-towers',
     name: 'Queen Towers',
     location: {
-      address: 'Queen Towers Complex',
+      address: 'Queen Towers, NazNaz Area',
       city: 'Erbil',
-      district: 'Ankawa',
+      district: 'NazNaz',
       country: 'Iraq'
     },
     status: 'Ready',
     totalUnits: 360,
     priceRange: {
-      min: 125000,
+      min: 63000,
       max: 450000,
       currency: 'USD'
     },
     completionDate: '2022',
     amenities: [
-      'Royal-Inspired Design',
-      'Elegant Apartments',
+      'Studio Apartments',
+      'Commercial Spaces',
+      'Modern Tower Design',
       'Grand Lobby',
       'Swimming Pool',
       'Spa & Beauty Salon',
       'Fitness Center',
       '24/7 Security',
-      'Valet Parking',
-      'Concierge Service',
-      'Rooftop Garden',
-      'Private Cinema',
-      'Event Hall'
+      'Elevator Access',
+      'Covered Parking',
+      'High Floor Views',
+      'Near The Boulevard'
     ],
     images: [
       'https://images.unsplash.com/photo-1565623833408-d77e39b88af6?w=800&q=80&fm=webp',
       'https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?w=800&q=80&fm=webp',
       'https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?w=800&q=80&fm=webp'
     ],
-    description: `Queen Towers brings regal elegance to Ankawa with royal-inspired design elements and refined living spaces. This development offers apartments fit for royalty with attention to luxurious details throughout.
+    description: `Queen Towers is a modern residential and commercial tower located in the vibrant NazNaz area, directly in front of The Boulevard. This well-established development offers a mix of studio apartments and ground-floor commercial spaces.
 
-The grand lobby sets an impressive tone while the spa and beauty salon provide pampering amenities. The private cinema and event hall offer exclusive entertainment options for residents and their guests.
+Studio apartments range from 63 sqm on floors 25-29, featuring fully furnished units with city views, modern kitchens, and access to building amenities. Ground-floor commercial stores range from 63 sqm to 182 sqm, ideal for retail, restaurants, or professional services.
 
-Queen Towers is perfect for those who appreciate elegant living with a touch of royal sophistication.`,
-    propertyIds: []
+With its prime location near The Boulevard and excellent public facilities, Queen Towers is perfect for investors seeking rental income or owner-occupiers wanting modern urban living in Erbil.`,
+    propertyIds: [
+      'queen-towers-store-1',
+      'queen-towers-store-2',
+      'queen-towers-store-3',
+      'queen-towers-store-4',
+      'queen-towers-studio-floor-25-rent',
+      'queen-towers-studio-floor-25-sale',
+      'queen-towers-studio-floor-29-rent',
+      'queen-towers-studio-floor-29-sale'
+    ]
   },
   {
     id: 'hana-city',
