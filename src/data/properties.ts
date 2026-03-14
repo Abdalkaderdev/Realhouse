@@ -174,7 +174,7 @@ Available for sale at $100,000 or for rent - contact us for rental pricing.`,
     isFeatured: true,
     isNew: true,
     virtualTourUrl: 'https://my.matterport.com/show/?m=SxQL3iGyvAk',
-    videoTourUrl: 'https://www.youtube.com/watch?v=dQw4w9WgXcQ',
+    // videoTourUrl: '', // TODO: Add actual property video tour
     floorPlanUrl: 'https://images.unsplash.com/photo-1580219015423-3e2b6a92f9c5?w=1200&q=80&fm=webp',
     neighborhood: {
       name: 'Gulan',

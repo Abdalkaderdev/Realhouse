@@ -45,9 +45,11 @@ function createHubPropertyCard(property: Property): HTMLElement {
 
   // Image
   const imageWrapper = createElement('div', 'hub-property-card__image-wrapper');
-  const img = createElement('img', 'hub-property-card__image');
+  const img = createElement('img', 'hub-property-card__image') as HTMLImageElement;
   img.src = property.images[0];
   img.alt = `${property.title} - ${property.type} ${property.status.toLowerCase()} in ${property.location.district}, Erbil`;
+  img.width = 400;
+  img.height = 300;
   img.loading = 'lazy';
   imageWrapper.appendChild(img);
 
@@ -414,9 +416,11 @@ export function renderInvestPage(): DocumentFragment {
     card.setAttribute('data-route', '');
 
     const imgWrapper = createElement('div', 'hub-page__project-image-wrapper');
-    const img = createElement('img', 'hub-page__project-image');
+    const img = createElement('img', 'hub-page__project-image') as HTMLImageElement;
     img.src = project.images[0];
     img.alt = `${project.name} - ${project.status} in ${project.location.district}`;
+    img.width = 400;
+    img.height = 300;
     img.loading = 'lazy';
     imgWrapper.appendChild(img);
 
@@ -547,9 +551,12 @@ export function renderLuxuryPage(): DocumentFragment {
     featuredCard.setAttribute('data-route', '');
 
     const featuredImage = createElement('div', 'hub-page__featured-image');
-    const img = createElement('img');
+    const img = createElement('img') as HTMLImageElement;
     img.src = featured.images[0];
     img.alt = `${featured.title} - Premier ${featured.type} in ${featured.location.district}`;
+    img.width = 800;
+    img.height = 600;
+    img.loading = 'eager';
     featuredImage.appendChild(img);
     featuredCard.appendChild(featuredImage);
 

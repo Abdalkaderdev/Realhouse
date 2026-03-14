@@ -39,9 +39,8 @@ export const testimonials: Testimonial[] = [
     serviceType: 'Buying',
     isVerifiedBuyer: true,
     purchaseYear: 2024,
-    reviewDate: '2024-12-15',
-    videoUrl: 'https://www.youtube.com/embed/dQw4w9WgXcQ',
-    videoThumbnail: 'https://images.unsplash.com/photo-1560518883-ce09059eeffa?w=600&q=80&fm=webp'
+    reviewDate: '2024-12-15'
+    // Video testimonial coming soon
   },
   {
     id: 'testimonial-2',
@@ -71,9 +70,8 @@ export const testimonials: Testimonial[] = [
     serviceType: 'Investment',
     isVerifiedBuyer: true,
     purchaseYear: 2024,
-    reviewDate: '2024-11-08',
-    videoUrl: 'https://www.youtube.com/embed/dQw4w9WgXcQ',
-    videoThumbnail: 'https://images.unsplash.com/photo-1512917774080-9991f1c4c750?w=600&q=80&fm=webp'
+    reviewDate: '2024-11-08'
+    // Video testimonial coming soon
   },
   {
     id: 'testimonial-4',
@@ -163,9 +161,8 @@ export const testimonials: Testimonial[] = [
     serviceType: 'Investment',
     isVerifiedBuyer: true,
     purchaseYear: 2023,
-    reviewDate: '2023-12-22',
-    videoUrl: 'https://www.youtube.com/embed/dQw4w9WgXcQ',
-    videoThumbnail: 'https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?w=600&q=80&fm=webp'
+    reviewDate: '2023-12-22'
+    // Video testimonial coming soon
   },
   {
     id: 'testimonial-10',

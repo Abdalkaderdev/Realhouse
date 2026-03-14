@@ -57,9 +57,11 @@ function createAgentCard(agent: Agent): HTMLElement {
 
   // Image Section
   const imageWrapper = createElement('div', 'agent-card__image-wrapper');
-  const image = createElement('img', 'agent-card__image');
+  const image = createElement('img', 'agent-card__image') as HTMLImageElement;
   image.src = agent.image;
   image.alt = `${agent.name} - ${agent.role} at Real House`;
+  image.width = 300;
+  image.height = 300;
   image.loading = 'lazy';
   imageWrapper.appendChild(image);
 

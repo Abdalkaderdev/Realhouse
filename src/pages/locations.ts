@@ -647,6 +647,8 @@ function createDistrictCard(district: DistrictLocation, propertyCount: number): 
   img.src = district.image;
   img.alt = `Properties in ${district.name}, Erbil`;
   img.className = 'district-card__image';
+  img.width = 400;
+  img.height = 300;
   img.loading = 'lazy';
   imageContainer.appendChild(img);
 
@@ -713,6 +715,8 @@ function createPropertyCard(property: Property): HTMLElement {
   img.src = property.images[0];
   img.alt = property.title;
   img.className = 'property-card__image';
+  img.width = 400;
+  img.height = 300;
   img.loading = 'lazy';
   media.appendChild(img);
 

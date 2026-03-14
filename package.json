@@ -5,11 +5,12 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "tsc && vite build",
+    "build": "npm run sitemaps && tsc && vite build",
     "preview": "vite preview",
     "server": "tsx server/src/index.ts",
     "server:dev": "tsx watch server/src/index.ts",
-    "dev:all": "concurrently \"npm run dev\" \"npm run server:dev\""
+    "dev:all": "concurrently \"npm run dev\" \"npm run server:dev\"",
+    "sitemaps": "tsx scripts/generate-sitemaps.ts"
   },
   "dependencies": {
     "@types/leaflet.markercluster": "^1.5.6",

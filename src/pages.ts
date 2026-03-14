@@ -656,6 +656,8 @@ export function renderHomePage(): DocumentFragment {
   heroImage.src = 'https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=1920&q=80&fm=webp';
   heroImage.alt = '';
   heroImage.className = 'hero__image';
+  heroImage.width = 1920;
+  heroImage.height = 1080;
   heroImage.loading = 'eager';
   heroBackground.appendChild(heroImage);
   hero.appendChild(heroBackground);
@@ -3244,6 +3246,8 @@ export function renderPropertyDetailPage(propertyId: string): DocumentFragment {
   const agentImg = createElement('img');
   agentImg.src = 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=200&q=80&fm=webp';
   agentImg.alt = 'Marcus Williams';
+  agentImg.width = 64;
+  agentImg.height = 64;
   agentImg.loading = 'lazy';
   agentAvatar.appendChild(agentImg);
   agentInfo.appendChild(agentAvatar);
