@@ -11,9 +11,18 @@ export interface ConstructionMilestone {
   completed: boolean;
 }
 
+export interface UnitType {
+  type: string;
+  grossArea: number;
+  netArea: number;
+  bedrooms: number;
+  bathrooms: number;
+}
+
 export interface Project {
   id: string;
   name: string;
+  developer?: string;
   location: {
     address: string;
     city: string;
@@ -21,13 +30,16 @@ export interface Project {
     country: string;
   };
   status: ProjectStatus;
-  totalUnits: number;
+  totalUnits: number | string;
+  buildings?: number;
+  floors?: number;
+  unitTypes?: UnitType[];
   priceRange: {
     min: number;
     max: number;
     currency: 'USD' | 'IQD';
   };
-  completionDate: string;
+  completionDate?: string;
   amenities: string[];
   images: string[];
   image?: string; // Main hero image (optional)
@@ -395,23 +407,30 @@ Recreation includes indoor and outdoor pools, outdoor gym, cinema, jogging track
       'Landscaped Public Realm'
     ],
     images: [
-      'https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=800&q=80&fm=webp',
-      'https://images.unsplash.com/photo-1567767292278-a4f21aa2d36e?w=800&q=80&fm=webp',
-      'https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?w=800&q=80&fm=webp'
+      '/images/projects/cavalli-tower/page01_img01.jpeg',
+      '/images/projects/cavalli-tower/page02_img01.jpeg',
+      '/images/projects/cavalli-tower/page03_img01.jpeg'
     ],
-    image: 'https://images.unsplash.com/photo-1565623833408-d77e39b88af6?w=1200&q=80&fm=webp',
+    image: '/images/projects/cavalli-tower/page01_img01.jpeg',
     gallery: [
-      'https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=800&q=80&fm=webp',
-      'https://images.unsplash.com/photo-1567767292278-a4f21aa2d36e?w=800&q=80&fm=webp',
-      'https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?w=800&q=80&fm=webp',
-      'https://images.unsplash.com/photo-1560185893-a55cbc8c57e8?w=800&q=80&fm=webp',
-      'https://images.unsplash.com/photo-1512918728675-ed5a9ecdebfd?w=800&q=80&fm=webp',
-      'https://images.unsplash.com/photo-1560184897-ae75f418493e?w=800&q=80&fm=webp'
+      '/images/projects/cavalli-tower/page01_img01.jpeg',
+      '/images/projects/cavalli-tower/page02_img01.jpeg',
+      '/images/projects/cavalli-tower/page03_img01.jpeg',
+      '/images/projects/cavalli-tower/page04_img01.jpeg',
+      '/images/projects/cavalli-tower/page05_img01.jpeg',
+      '/images/projects/cavalli-tower/page06_img01.jpeg',
+      '/images/projects/cavalli-tower/page07_img01.jpeg',
+      '/images/projects/cavalli-tower/page09_img01.jpeg',
+      '/images/projects/cavalli-tower/page10_img01.jpeg',
+      '/images/projects/cavalli-tower/page11_img01.jpeg',
+      '/images/projects/cavalli-tower/page12_img01.jpeg',
+      '/images/projects/cavalli-tower/page13_img01.jpeg',
+      '/images/projects/cavalli-tower/page14_img01.jpeg',
+      '/images/projects/cavalli-tower/page15_img01.jpeg'
     ],
     floorPlanImages: [
-      'https://images.unsplash.com/photo-1574362848149-11496d93a7c7?w=800&q=80&fm=webp',
-      'https://images.unsplash.com/photo-1503387837-b154d5074bd2?w=800&q=80&fm=webp',
-      'https://images.unsplash.com/photo-1600585152220-90363fe7e115?w=800&q=80&fm=webp'
+      '/images/projects/cavalli-tower/page08_img01.jpeg',
+      '/images/projects/cavalli-tower/page12_img02.jpeg'
     ],
     description: `Cavalli Tower by SHAHAN is a landmark 48-storey residential tower standing 149 meters tall on Gulan Street (40m Street) in central Erbil. Built on 4,644 sqm, the tower contains 745 residential apartments across levels 6-47, plus an exclusive penthouse floor.
 
@@ -3498,9 +3517,44 @@ Bakhtyari Twin Towers attracts buyers seeking an iconic address with distinctive
       'Near The Boulevard'
     ],
     images: [
-      'https://images.unsplash.com/photo-1565623833408-d77e39b88af6?w=800&q=80&fm=webp',
-      'https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?w=800&q=80&fm=webp',
-      'https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?w=800&q=80&fm=webp'
+      '/images/projects/queen-towers/page01_img01.jpeg',
+      '/images/projects/queen-towers/page04_img01.jpeg',
+      '/images/projects/queen-towers/page17_img01.jpeg'
+    ],
+    image: '/images/projects/queen-towers/page01_img01.jpeg',
+    gallery: [
+      '/images/projects/queen-towers/page01_img01.jpeg',
+      '/images/projects/queen-towers/page04_img01.jpeg',
+      '/images/projects/queen-towers/page06_img01.jpeg',
+      '/images/projects/queen-towers/page07_img01.jpeg',
+      '/images/projects/queen-towers/page08_img01.jpeg',
+      '/images/projects/queen-towers/page11_img01.jpeg',
+      '/images/projects/queen-towers/page16_img01.jpeg',
+      '/images/projects/queen-towers/page17_img01.jpeg',
+      '/images/projects/queen-towers/page22_img01.jpeg',
+      '/images/projects/queen-towers/page25_img01.jpeg',
+      '/images/projects/queen-towers/page26_img01.jpeg',
+      '/images/projects/queen-towers/page27_img01.jpeg',
+      '/images/projects/queen-towers/page39_img01.jpeg',
+      '/images/projects/queen-towers/page40_img01.jpeg',
+      '/images/projects/queen-towers/page41_img01.jpeg',
+      '/images/projects/queen-towers/page51_img01.jpeg',
+      '/images/projects/queen-towers/page53_img01.jpeg',
+      '/images/projects/queen-towers/page58_img01.jpeg'
+    ],
+    floorPlanImages: [
+      '/images/projects/queen-towers/page28_img02.jpeg',
+      '/images/projects/queen-towers/page30_img02.jpeg',
+      '/images/projects/queen-towers/page31_img02.jpeg',
+      '/images/projects/queen-towers/page32_img02.jpeg',
+      '/images/projects/queen-towers/page34_img02.jpeg',
+      '/images/projects/queen-towers/page35_img02.jpeg',
+      '/images/projects/queen-towers/page36_img02.jpeg',
+      '/images/projects/queen-towers/page43_img01.jpeg',
+      '/images/projects/queen-towers/page44_img02.jpeg',
+      '/images/projects/queen-towers/page45_img02.jpeg',
+      '/images/projects/queen-towers/page46_img02.jpeg',
+      '/images/projects/queen-towers/page47_img02.jpeg'
     ],
     description: `Queen Tower is a modern twin-tower residential development in NazNaz area featuring Building A (11 units per floor) and Building B (8 units per floor), totaling approximately 570 apartments across 30 typical floors per building.
 
@@ -3684,9 +3738,43 @@ Green World appeals to environmentally conscious families seeking to reduce thei
       'Children\'s Play Area'
     ],
     images: [
-      'https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?w=800&q=80&fm=webp',
-      'https://images.unsplash.com/photo-1512917774080-9991f1c4c750?w=800&q=80&fm=webp',
-      'https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?w=800&q=80&fm=webp'
+      '/images/projects/salam-residences/page04_img01.jpeg',
+      '/images/projects/salam-residences/page06_img01.jpeg',
+      '/images/projects/salam-residences/page16_img01.jpeg'
+    ],
+    image: '/images/projects/salam-residences/page04_img01.jpeg',
+    gallery: [
+      '/images/projects/salam-residences/page04_img01.jpeg',
+      '/images/projects/salam-residences/page05_img01.jpeg',
+      '/images/projects/salam-residences/page06_img01.jpeg',
+      '/images/projects/salam-residences/page07_img01.jpeg',
+      '/images/projects/salam-residences/page08_img01.jpeg',
+      '/images/projects/salam-residences/page15_img01.jpeg',
+      '/images/projects/salam-residences/page16_img01.jpeg',
+      '/images/projects/salam-residences/page19_img01.jpeg',
+      '/images/projects/salam-residences/page21_img01.jpeg',
+      '/images/projects/salam-residences/page26_img01.jpeg',
+      '/images/projects/salam-residences/page28_img01.jpeg',
+      '/images/projects/salam-residences/page33_img01.jpeg',
+      '/images/projects/salam-residences/page38_img01.jpeg'
+    ],
+    floorPlanImages: [
+      '/images/projects/salam-residences/page17_img01.jpeg',
+      '/images/projects/salam-residences/page18_img01.jpeg',
+      '/images/projects/salam-residences/page20_img01.jpeg',
+      '/images/projects/salam-residences/page22_img01.jpeg',
+      '/images/projects/salam-residences/page23_img01.jpeg',
+      '/images/projects/salam-residences/page24_img01.jpeg',
+      '/images/projects/salam-residences/page25_img01.jpeg',
+      '/images/projects/salam-residences/page27_img01.jpeg',
+      '/images/projects/salam-residences/page29_img01.jpeg',
+      '/images/projects/salam-residences/page30_img01.jpeg',
+      '/images/projects/salam-residences/page31_img01.jpeg',
+      '/images/projects/salam-residences/page32_img01.jpeg',
+      '/images/projects/salam-residences/page34_img01.jpeg',
+      '/images/projects/salam-residences/page35_img01.jpeg',
+      '/images/projects/salam-residences/page36_img01.jpeg',
+      '/images/projects/salam-residences/page37_img01.jpeg'
     ],
     description: `Salam Residences is a modern high-rise residential development offering affordable luxury apartments with flexible payment plans. Multiple towers provide a range of unit types across Blocks A, B, C, and D.
 
@@ -3737,9 +3825,30 @@ Salam Residences appeals to first-time buyers and investors seeking quality apar
       'Interior Gardens'
     ],
     images: [
-      'https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=800&q=80&fm=webp',
-      'https://images.unsplash.com/photo-1567767292278-a4f21aa2d36e?w=800&q=80&fm=webp',
-      'https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?w=800&q=80&fm=webp'
+      '/images/projects/rami-towers/page04_img02.jpeg',
+      '/images/projects/rami-towers/page10_img02.jpeg',
+      '/images/projects/rami-towers/page20_img02.jpeg'
+    ],
+    image: '/images/projects/rami-towers/page04_img02.jpeg',
+    gallery: [
+      '/images/projects/rami-towers/page04_img02.jpeg',
+      '/images/projects/rami-towers/page10_img02.jpeg',
+      '/images/projects/rami-towers/page11_img02.jpeg',
+      '/images/projects/rami-towers/page18_img02.jpeg',
+      '/images/projects/rami-towers/page20_img02.jpeg',
+      '/images/projects/rami-towers/page22_img02.jpeg',
+      '/images/projects/rami-towers/page24_img02.jpeg',
+      '/images/projects/rami-towers/page30_img01.jpeg',
+      '/images/projects/rami-towers/page34_img01.jpeg',
+      '/images/projects/rami-towers/page40_img02.jpeg',
+      '/images/projects/rami-towers/page76_img01.jpeg'
+    ],
+    floorPlanImages: [
+      '/images/projects/rami-towers/page57_img01.jpeg',
+      '/images/projects/rami-towers/page59_img01.jpeg',
+      '/images/projects/rami-towers/page65_img01.jpeg',
+      '/images/projects/rami-towers/page67_img01.jpeg',
+      '/images/projects/rami-towers/page73_img01.jpeg'
     ],
     description: `Rami Towers by Rami Holding (operating since 2011) is a landmark 10-block residential development on 38,450 sqm, featuring 2,872 residences across 31 floors per block. Located on the 100m Street next to English Village, near Sami Abdulrahman Park, Italian Village, Roya Tower, Empire World, and Dream City.
 
@@ -3943,6 +4052,138 @@ Buildings ES1 & ES2 offer Types 01-05 (2+1, 143-151 sqm). ES3 & ES4 add Types 06
 
 Features include centralized LPG gas, garbage chute system, linear grill AC, separate kitchens, and large windows. Near Erbil Airport, Sami Abdulrahman Park, and Erbil Citadel.`,
     propertyIds: []
+  },
+  {
+    id: 'erbil-garden',
+    name: 'Erbil Garden',
+    developer: 'Erbil Garden Development',
+    location: {
+      address: 'Erbil Garden Complex',
+      city: 'Erbil',
+      district: 'Pirmam Road',
+      country: 'Iraq'
+    },
+    status: 'Under Construction',
+    totalUnits: 500,
+    priceRange: {
+      min: 150000,
+      max: 500000,
+      currency: 'USD'
+    },
+    completionDate: '2026',
+    amenities: [
+      'Garden Villas',
+      'Modern Apartments',
+      'Landscaped Gardens',
+      'Swimming Pool',
+      'Fitness Center',
+      'Children\'s Playground',
+      '24/7 Security',
+      'Covered Parking',
+      'Community Center',
+      'Walking Paths',
+      'Green Spaces',
+      'Commercial Area'
+    ],
+    images: [
+      '/images/projects/erbil-garden/page06_img01.jpeg',
+      '/images/projects/erbil-garden/page09_img01.jpeg',
+      '/images/projects/erbil-garden/page10_img01.jpeg'
+    ],
+    image: '/images/projects/erbil-garden/page06_img01.jpeg',
+    gallery: [
+      '/images/projects/erbil-garden/page09_img01.jpeg',
+      '/images/projects/erbil-garden/page10_img01.jpeg',
+      '/images/projects/erbil-garden/page11_img01.jpeg',
+      '/images/projects/erbil-garden/page13_img01.jpeg',
+      '/images/projects/erbil-garden/page16_img01.jpeg',
+      '/images/projects/erbil-garden/page30_img01.jpeg',
+      '/images/projects/erbil-garden/page31_img01.jpeg',
+      '/images/projects/erbil-garden/page32_img01.jpeg',
+      '/images/projects/erbil-garden/page39_img01.jpeg',
+      '/images/projects/erbil-garden/page42_img01.jpeg',
+      '/images/projects/erbil-garden/page49_img01.jpeg',
+      '/images/projects/erbil-garden/page50_img01.jpeg',
+      '/images/projects/erbil-garden/page51_img01.jpeg',
+      '/images/projects/erbil-garden/page53_img01.jpeg',
+      '/images/projects/erbil-garden/page54_img01.jpeg'
+    ],
+    floorPlanImages: [
+      '/images/projects/erbil-garden/page21_img02.jpeg',
+      '/images/projects/erbil-garden/page22_img02.jpeg',
+      '/images/projects/erbil-garden/page25_img01.jpeg',
+      '/images/projects/erbil-garden/page26_img01.jpeg',
+      '/images/projects/erbil-garden/page28_img01.jpeg',
+      '/images/projects/erbil-garden/page40_img01.jpeg'
+    ],
+    description: `Erbil Garden is a premium residential development offering a blend of garden villas and modern apartments in a beautifully landscaped setting. The project emphasizes green living with extensive gardens, walking paths, and outdoor amenities.
+
+The development features multiple housing options from compact apartments to spacious villas, all surrounded by lush landscaping and mature trees. Residents enjoy access to community facilities including swimming pool, fitness center, and children's play areas.
+
+Located on Pirmam Road with easy access to Erbil's city center, Erbil Garden offers a peaceful retreat while remaining connected to urban conveniences.`,
+    propertyIds: []
+  },
+  {
+    id: 'north-holland',
+    name: 'North Holland',
+    developer: 'North Holland Development',
+    location: {
+      address: 'North Holland Village',
+      city: 'Erbil',
+      district: 'North Erbil',
+      country: 'Iraq'
+    },
+    status: 'Under Construction',
+    totalUnits: 300,
+    priceRange: {
+      min: 180000,
+      max: 450000,
+      currency: 'USD'
+    },
+    completionDate: '2026',
+    amenities: [
+      'Dutch-Inspired Architecture',
+      'Villas & Townhouses',
+      'Canal-Side Living',
+      'Windmill Features',
+      'Tulip Gardens',
+      'Cycling Paths',
+      'Community Center',
+      'Swimming Pool',
+      '24/7 Security',
+      'Private Gardens',
+      'Underground Parking',
+      'Children\'s Areas'
+    ],
+    images: [
+      '/images/projects/north-holland/page02_img02.jpeg',
+      '/images/projects/north-holland/page03_img01.jpeg',
+      '/images/projects/north-holland/page04_img02.jpeg'
+    ],
+    image: '/images/projects/north-holland/page02_img02.jpeg',
+    gallery: [
+      '/images/projects/north-holland/page02_img02.jpeg',
+      '/images/projects/north-holland/page03_img01.jpeg',
+      '/images/projects/north-holland/page04_img02.jpeg',
+      '/images/projects/north-holland/page06_img01.jpeg',
+      '/images/projects/north-holland/page07_img01.jpeg',
+      '/images/projects/north-holland/page08_img02.jpeg',
+      '/images/projects/north-holland/page09_img01.jpeg',
+      '/images/projects/north-holland/page10_img02.jpeg',
+      '/images/projects/north-holland/page11_img02.jpeg',
+      '/images/projects/north-holland/page12_img01.jpeg',
+      '/images/projects/north-holland/page13_img01.jpeg',
+      '/images/projects/north-holland/page14_img01.jpeg'
+    ],
+    floorPlanImages: [
+      '/images/projects/north-holland/page05_img02.jpeg'
+    ],
+    description: `North Holland brings European charm to Erbil with Dutch-inspired architecture featuring distinctive canal-side living, windmill accents, and tulip gardens. This unique development offers a taste of Netherlands living in Kurdistan.
+
+The community features villas and townhouses with traditional Dutch design elements including gabled roofs, brick facades, and private gardens. Cycling paths wind through the development, connecting residents to community amenities.
+
+North Holland appeals to those seeking a distinctive European aesthetic combined with modern Middle Eastern hospitality and premium residential standards.`,
+    propertyIds: []
   }
 ];
 
@@ -3991,7 +4232,7 @@ export const projectStatuses: ProjectStatus[] = ['Under Construction', 'Ready', 
  * Generate default construction milestones based on project status and completion date
  */
 export function generateDefaultMilestones(project: Project): ConstructionMilestone[] {
-  const completionYear = parseInt(project.completionDate) || 2025;
+  const completionYear = parseInt(project.completionDate || '2025') || 2025;
 
   if (project.status === 'Ready') {
     return [
@@ -4034,7 +4275,7 @@ export function getProjectProgress(project: Project): number {
   if (project.status === 'Coming Soon') return 10;
 
   // For Under Construction, estimate based on completion date
-  const completionYear = parseInt(project.completionDate) || 2027;
+  const completionYear = parseInt(project.completionDate || '2027') || 2027;
   const currentYear = 2026;
   const yearsRemaining = completionYear - currentYear;
 

@@ -2,7 +2,7 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
         xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
   <!-- Real House Projects Sitemap - Auto-generated -->
-  <!-- Projects: 82 developments -->
+  <!-- Projects: 84 developments -->
   <!-- Generated: 2026-03-16 -->
 
   <url>
@@ -493,6 +493,18 @@
   </url>
   <url>
     <loc>https://realhouseiq.com/projects/empire-square</loc>
+    <lastmod>2026-03-16</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://realhouseiq.com/projects/erbil-garden</loc>
+    <lastmod>2026-03-16</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://realhouseiq.com/projects/north-holland</loc>
     <lastmod>2026-03-16</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>

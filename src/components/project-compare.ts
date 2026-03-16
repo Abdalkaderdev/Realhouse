@@ -565,7 +565,7 @@ export function renderProjectComparisonContent(projectsList: Project[]): HTMLEle
     t('projectCompare.completion'),
     projectsList.map(p => {
       const el = createElement('span');
-      el.textContent = p.completionDate;
+      el.textContent = p.completionDate || 'TBD';
       return { element: el };
     })
   ));
