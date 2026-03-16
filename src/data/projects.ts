@@ -3143,33 +3143,52 @@ Safiran City offers proven quality with an active community, making it ideal for
   {
     id: 'ruby-towers',
     name: 'Ruby Towers',
+    developer: 'GK Architects',
     location: {
       address: 'Ruby Towers Complex',
       city: 'Erbil',
       district: 'Gulan',
       country: 'Iraq'
     },
-    status: 'Ready',
-    totalUnits: 380,
+    status: 'Under Construction',
+    totalUnits: 'TBD',
+    buildings: 6,
+    floors: 32,
+    unitTypes: [
+      { type: '1+1A', grossArea: 88, netArea: 65.5, bedrooms: 1, bathrooms: 1 },
+      { type: '1+1B', grossArea: 93, netArea: 69, bedrooms: 1, bathrooms: 1 },
+      { type: '2+1', grossArea: 127, netArea: 94, bedrooms: 2, bathrooms: 2 },
+      { type: '3+1', grossArea: 200, netArea: 150, bedrooms: 3, bathrooms: 2 },
+      { type: 'VIP A1 Duplex', grossArea: 508, netArea: 389, bedrooms: 4, bathrooms: 4 },
+      { type: 'VIP A2 Duplex', grossArea: 518, netArea: 398, bedrooms: 4, bathrooms: 4 },
+      { type: 'VIP A3 Duplex', grossArea: 693, netArea: 523, bedrooms: 5, bathrooms: 5 },
+      { type: 'VIP B1', grossArea: 460, netArea: 359, bedrooms: 3, bathrooms: 3 },
+      { type: 'VIP B2 Duplex', grossArea: 729, netArea: 556, bedrooms: 4, bathrooms: 4 }
+    ],
     priceRange: {
       min: 130000,
       max: 480000,
       currency: 'USD'
     },
-    completionDate: '2023',
     amenities: [
-      'Gemstone-Inspired Design',
-      'Luxury Apartments',
-      'Ruby-Red Accents',
-      'Swimming Pool',
-      'Spa & Wellness',
+      '6 Towers (A1, A2, A3, B1, B2, B3)',
+      '32 Floors per Tower',
+      '4-Floor Underground Parking',
+      'Smart Parking System',
+      '24/7 Security System',
+      'Digital Surveillance',
+      'Fire Protection System',
+      'Central Heating/Cooling',
+      'Water Purification System',
+      'Central Generator',
+      'Shopping Mall',
+      'Restaurant',
+      'Cafe',
       'Fitness Center',
-      '24/7 Security',
-      'Valet Parking',
-      'Concierge Service',
-      'Sky Lounge',
-      'Business Center',
-      'Event Space'
+      'Kindergarten',
+      'Central Garden with Fountains',
+      'Green Landscaped Areas',
+      'Modern Lobby with Living Wall'
     ],
     images: [
       '/images/projects/ruby-towers/page03_img01.jpeg',
@@ -3178,23 +3197,55 @@ Safiran City offers proven quality with an active community, making it ideal for
     ],
     image: '/images/projects/ruby-towers/page03_img01.jpeg',
     gallery: [
-      '/images/projects/ruby-towers/page06_img01.jpeg',
-      '/images/projects/ruby-towers/page07_img01.jpeg',
       '/images/projects/ruby-towers/page25_img01.jpeg',
       '/images/projects/ruby-towers/page26_img01.jpeg',
       '/images/projects/ruby-towers/page27_img01.jpeg',
-      '/images/projects/ruby-towers/page28_img01.jpeg'
+      '/images/projects/ruby-towers/page28_img01.jpeg',
+      '/images/projects/ruby-towers/page29_img01.jpeg',
+      '/images/projects/ruby-towers/page30_img01.jpeg',
+      '/images/projects/ruby-towers/page31_img01.jpeg',
+      '/images/projects/ruby-towers/page34_img01.jpeg',
+      '/images/projects/ruby-towers/page35_img01.jpeg',
+      '/images/projects/ruby-towers/page36_img01.jpeg',
+      '/images/projects/ruby-towers/page37_img01.jpeg',
+      '/images/projects/ruby-towers/page38_img01.jpeg',
+      '/images/projects/ruby-towers/page39_img01.jpeg',
+      '/images/projects/ruby-towers/page40_img01.jpeg',
+      '/images/projects/ruby-towers/page41_img01.jpeg',
+      '/images/projects/ruby-towers/page42_img01.jpeg',
+      '/images/projects/ruby-towers/page43_img01.jpeg',
+      '/images/projects/ruby-towers/page44_img01.jpeg',
+      '/images/projects/ruby-towers/page45_img01.jpeg',
+      '/images/projects/ruby-towers/page46_img01.jpeg'
     ],
     floorPlanImages: [
+      '/images/projects/ruby-towers/page06_img01.jpeg',
+      '/images/projects/ruby-towers/page07_img01.jpeg',
+      '/images/projects/ruby-towers/page08_img01.jpeg',
+      '/images/projects/ruby-towers/page09_img01.jpeg',
+      '/images/projects/ruby-towers/page10_img01.jpeg',
+      '/images/projects/ruby-towers/page11_img01.jpeg',
+      '/images/projects/ruby-towers/page12_img01.jpeg',
+      '/images/projects/ruby-towers/page13_img01.jpeg',
+      '/images/projects/ruby-towers/page14_img01.jpeg',
+      '/images/projects/ruby-towers/page15_img01.jpeg',
+      '/images/projects/ruby-towers/page16_img01.jpeg',
+      '/images/projects/ruby-towers/page17_img01.jpeg',
+      '/images/projects/ruby-towers/page18_img01.jpeg',
+      '/images/projects/ruby-towers/page19_img01.jpeg',
+      '/images/projects/ruby-towers/page20_img01.jpeg',
+      '/images/projects/ruby-towers/page21_img01.jpeg',
+      '/images/projects/ruby-towers/page22_img01.jpeg',
+      '/images/projects/ruby-towers/page23_img01.jpeg',
+      '/images/projects/ruby-towers/page24_img01.jpeg',
       '/images/projects/ruby-towers/page32_img01.jpeg',
-      '/images/projects/ruby-towers/page33_img01.jpeg',
-      '/images/projects/ruby-towers/page34_img01.jpeg'
+      '/images/projects/ruby-towers/page33_img01.jpeg'
     ],
-    description: `Ruby Towers brings gemstone luxury to Erbil's skyline with its distinctive design featuring elegant red accents throughout. This Gulan development offers premium apartments with sophisticated styling.
+    description: `Ruby Towers - "A Brilliant Life Begins" - is a prestigious development in Erbil designed by GK Architects. The complex features 6 towers (A1, A2, A3, B1, B2, B3) rising 32 floors each.
 
-The sky lounge provides exclusive entertaining space while the spa and wellness facilities offer relaxation. Valet parking and concierge services ensure a seamless luxury lifestyle.
+Unit options range from compact 1+1 apartments (88-93 sqm) to spacious 3+1 units (200 sqm), plus exclusive VIP duplex penthouses on floors 28-31 reaching up to 729 sqm. Each tower features carefully designed floor plans maximizing space and natural light.
 
-Ruby Towers attracts discerning buyers who appreciate distinctive design and premium amenities in a prestigious location.`,
+Located 3.7 km from city center and 19.8 km from the airport, with easy access to universities (2.8 km) and malls (4 km). The complex includes 4 floors of underground parking with smart guidance systems, shopping mall, restaurant, cafe, fitness center, kindergarten, and beautiful central gardens with fountains.`,
     propertyIds: []
   },
   {
