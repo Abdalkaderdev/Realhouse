@@ -5,7 +5,7 @@
   Luxury Real Estate in Erbil, Kurdistan Region, Iraq
   https://realhouseiq.com
 
-  Generated: 2026-03-14
+  Generated: 2026-03-16
   ===============================================================================
 -->
 <sitemapindex xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
@@ -13,43 +13,43 @@
   <!-- Main Sitemap -->
   <sitemap>
     <loc>https://realhouseiq.com/sitemap.xml</loc>
-    <lastmod>2026-03-14</lastmod>
+    <lastmod>2026-03-16</lastmod>
   </sitemap>
 
   <!-- Static Pages -->
   <sitemap>
     <loc>https://realhouseiq.com/sitemap-pages.xml</loc>
-    <lastmod>2026-03-14</lastmod>
+    <lastmod>2026-03-16</lastmod>
   </sitemap>
 
   <!-- Properties (14 listings) -->
   <sitemap>
     <loc>https://realhouseiq.com/sitemap-properties.xml</loc>
-    <lastmod>2026-03-14</lastmod>
+    <lastmod>2026-03-16</lastmod>
   </sitemap>
 
-  <!-- Projects (77 developments) -->
+  <!-- Projects (79 developments) -->
   <sitemap>
     <loc>https://realhouseiq.com/sitemap-projects.xml</loc>
-    <lastmod>2026-03-14</lastmod>
+    <lastmod>2026-03-16</lastmod>
   </sitemap>
 
   <!-- Blog Posts (66 articles) -->
   <sitemap>
     <loc>https://realhouseiq.com/sitemap-blog.xml</loc>
-    <lastmod>2026-03-14</lastmod>
+    <lastmod>2026-03-16</lastmod>
   </sitemap>
 
   <!-- Neighborhoods (6 areas) -->
   <sitemap>
     <loc>https://realhouseiq.com/sitemap-neighborhoods.xml</loc>
-    <lastmod>2026-03-14</lastmod>
+    <lastmod>2026-03-16</lastmod>
   </sitemap>
 
   <!-- Images -->
   <sitemap>
     <loc>https://realhouseiq.com/sitemap-images.xml</loc>
-    <lastmod>2026-03-14</lastmod>
+    <lastmod>2026-03-16</lastmod>
   </sitemap>
 
 </sitemapindex>

@@ -290,8 +290,9 @@ Amenities include a school and a five-story shopping centre. The complex is popu
   {
     id: 'boulevard',
     name: 'The Boulevard',
+    developer: '4Bridges',
     location: {
-      address: 'Gulan Street, across from Gulan Towers',
+      address: 'Ainkawa Intersection, Gulan Street',
       city: 'Erbil',
       district: 'Gulan',
       country: 'Iraq'
@@ -299,24 +300,33 @@ Amenities include a school and a five-story shopping centre. The complex is popu
     status: 'Ready',
     totalUnits: 1600,
     priceRange: {
-      min: 100000,
+      min: 69500,
       max: 350000,
       currency: 'USD'
     },
     completionDate: '2023',
     amenities: [
       '10 Residential Towers',
+      '53,000 sqm Total Area',
+      '10,000 sqm Gardens',
+      '60% Open to Air',
+      'Central Heating System',
+      'Central Gas System',
+      'Earthquake Resistant (6+ Richter)',
+      'Indoor Swimming Pool',
+      'Outdoor Swimming Pool',
       'Outdoor Gymnasium',
-      'Outdoor Pool',
-      'Rooftop Pool',
       'Cinema',
-      'Tennis Court',
-      'Volleyball & Basketball Courts',
-      'Small Stadium',
+      'Tennis Courts',
+      'Basketball Court',
+      'Handball Court',
+      'Mini Football Pitch',
       'Jogging Tracks',
+      'Children\'s Playground',
+      'Prayer Areas',
       '24/7 Security & CCTV',
-      'Fire Safety Systems',
-      'Commercial Shopping Spaces'
+      'Tree-Lined Boulevard',
+      '5-Year Installment Plan'
     ],
     images: [
       'https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?w=800&q=80&fm=webp',
@@ -337,18 +347,21 @@ Amenities include a school and a five-story shopping centre. The complex is popu
       'https://images.unsplash.com/photo-1503387837-b154d5074bd2?w=800&q=80&fm=webp',
       'https://images.unsplash.com/photo-1600585152220-90363fe7e115?w=800&q=80&fm=webp'
     ],
-    description: `The Boulevard is a 'Project of the Century' by Four Bridges company, located right in the centre of Erbil across from Gulan Towers. This prime mixed-use development spans 53,000 square meters with 10 residential towers and commercial spaces.
+    description: `The Boulevard by 4Bridges is a landmark mixed-use development at Ainkawa Intersection on Gulan Street, spanning 53,000 sqm with 10 residential towers offering 1,600 units and 10,000 sqm of landscaped gardens.
 
-The project offers 1,600 residential units in configurations of 1+1, 2+1, 3+1, and 4+1 apartments, plus villa gardens. Unit sizes range from 97 sqm to 235 sqm with prices from $100,000 to $300,000. Furnished rentals available from $1,050/month.
+Unit types include Studios (69.5 sqm), 1-Bedroom (97 sqm), 2-Bedroom (148-169 sqm), 3-Bedroom with service room (235 sqm), and 4-Bedroom with service room (298.5 sqm). Select units include villas with private gardens. Buildings reach up to 20 floors with 60% of project area open to air.
 
-Recreation facilities include outdoor and rooftop pools, outdoor gymnasium, cinema, jogging tracks, tennis court, volleyball and basketball courts, and a small stadium. Features the latest fire safety systems, CCTV surveillance, and 24/7 patrolling.`,
+First-ever features in Erbil include central heating with continuous hot water, centralized gas supply, and earthquake-resistant construction rated above 6 on the Richter scale (vs standard 5.5). Privacy design separates smaller units from family apartments.
+
+Recreation includes indoor and outdoor pools, outdoor gym, cinema, jogging tracks, tennis, basketball, handball courts, mini football pitch, and children's playground. The tree-lined boulevard creates spaces for shopping, entertainment, and relaxation. 5-year installment plans available.`,
     propertyIds: ['boulevard-apt-floor-13', 'boulevard-apt-floor-14', 'boulevard-apt-floor-17']
   },
   {
-    id: 'cavally-tower',
+    id: 'cavalli-tower',
     name: 'Cavalli Tower',
+    developer: 'SHAHAN',
     location: {
-      address: '40m Street (Gulan Street)',
+      address: 'Gulan Street (40 Meter Street)',
       city: 'Erbil',
       district: 'Gulan',
       country: 'Iraq'
@@ -362,18 +375,24 @@ Recreation facilities include outdoor and rooftop pools, outdoor gymnasium, cine
     },
     completionDate: '2023',
     amenities: [
-      '50 Floors (149m tall)',
-      '24hr Electricity',
-      'Playground',
-      'Underground Car Park',
-      'Fitness Center',
-      'Public Garden',
+      '48 Floors (149m tall)',
+      '4,644 sqm Land Area',
+      'Penthouse Floor',
+      '6th Floor Garden Apartments',
+      'DDK Restaurant',
+      'MV Cafe',
       'Supermarket',
-      'Reception',
-      'Green Areas',
-      '24/7 Security',
-      'Covered Parking',
-      'Modern Infrastructure'
+      'Bakery & Dessert Shop',
+      'Kids Indoor Playground',
+      'Sport Center',
+      'Laundry Services',
+      'Barber Shop',
+      '4 Parking Floors',
+      '2 Underground Parking Levels',
+      'CCTV Security',
+      'Public Lifts',
+      'Podium Amenities',
+      'Landscaped Public Realm'
     ],
     images: [
       'https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=800&q=80&fm=webp',
@@ -394,11 +413,13 @@ Recreation facilities include outdoor and rooftop pools, outdoor gymnasium, cine
       'https://images.unsplash.com/photo-1503387837-b154d5074bd2?w=800&q=80&fm=webp',
       'https://images.unsplash.com/photo-1600585152220-90363fe7e115?w=800&q=80&fm=webp'
     ],
-    description: `Cavalli Tower is a landmark 50-floor residential tower standing 149 meters tall, built by Shahan Company on 40m Street (Gulan Street) in the heart of Erbil. The tower contains 745 residential apartments ranging from studios to 4-bedroom units.
+    description: `Cavalli Tower by SHAHAN is a landmark 48-storey residential tower standing 149 meters tall on Gulan Street (40m Street) in central Erbil. Built on 4,644 sqm, the tower contains 745 residential apartments across levels 6-47, plus an exclusive penthouse floor.
 
-Unit sizes include studios (59 sqm, from $62,000), 1-bedrooms (108 sqm, from $112,000), 3-bedrooms (172 sqm), and 4-bedrooms (238 sqm). Flexible payment plans available: 20% advance, 28% at structure completion, 28% at delivery, and 25% over 36-month installments.
+Unit types include Studios (59 sqm), 1-Bedroom (85-108 sqm), 3-Bedroom (162-209 sqm), and 4-Bedroom (235-238 sqm). The 6th floor features special garden apartments with private terraces ranging from 35 sqm to an impressive 310 sqm.
 
-Amenities include 24-hour electricity, playground, underground car park, fitness center, public garden, supermarket, and reception. The tower offers panoramic views of Erbil and represents premium vertical living in the city center.`,
+The twin-block tower (Block 1 and Block 2) features modern glass curtain wall architecture designed by SEVENSTUDIO. Views include Erbil Citadel (3.5km), Sami Abdulrahman Park (1.2km), Parliament (2.4km), and Gulan Mall (1.2km).
+
+Two full amenity floors house DDK Restaurant, MV Cafe, market, bakery, dessert shop, kids indoor playground, sport center, laundry, and barber. Parking includes 4 floors with 2 underground levels for commercial spaces. "Cavalli is for people whose lives never slow down."`,
     propertyIds: []
   },
   {
@@ -3368,15 +3389,15 @@ Bakhtyari Twin Towers attracts buyers seeking an iconic address with distinctive
   },
   {
     id: 'queen-towers',
-    name: 'Queen Towers',
+    name: 'Queen Tower',
     location: {
-      address: 'Queen Towers, NazNaz Area',
+      address: 'Queen Tower, NazNaz Area',
       city: 'Erbil',
       district: 'NazNaz',
       country: 'Iraq'
     },
     status: 'Ready',
-    totalUnits: 360,
+    totalUnits: 570,
     priceRange: {
       min: 63000,
       max: 450000,
@@ -3384,17 +3405,20 @@ Bakhtyari Twin Towers attracts buyers seeking an iconic address with distinctive
     },
     completionDate: '2022',
     amenities: [
-      'Studio Apartments',
-      'Commercial Spaces',
-      'Modern Tower Design',
-      'Grand Lobby',
-      'Swimming Pool',
-      'Spa & Beauty Salon',
-      'Fitness Center',
+      'Twin Tower Design (Building A & B)',
+      '30 Typical Floors Per Building',
+      '36 Total Floors',
+      'Building A: 11 Units/Floor',
+      'Building B: 8 Units/Floor',
+      'Studios to 4-Bedroom Units',
+      'Hot Kitchen in Large Units',
+      'En-Suite Bathrooms',
+      'Multiple Balconies',
+      'Laundry Rooms',
       '24/7 Security',
+      '24/7 Services',
       'Elevator Access',
       'Covered Parking',
-      'High Floor Views',
       'Near The Boulevard'
     ],
     images: [
@@ -3402,11 +3426,13 @@ Bakhtyari Twin Towers attracts buyers seeking an iconic address with distinctive
       'https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?w=800&q=80&fm=webp',
       'https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?w=800&q=80&fm=webp'
     ],
-    description: `Queen Towers is a modern residential and commercial tower located in the vibrant NazNaz area, directly in front of The Boulevard. This well-established development offers a mix of studio apartments and ground-floor commercial spaces.
+    description: `Queen Tower is a modern twin-tower residential development in NazNaz area featuring Building A (11 units per floor) and Building B (8 units per floor), totaling approximately 570 apartments across 30 typical floors per building.
 
-Studio apartments range from 63 sqm on floors 25-29, featuring fully furnished units with city views, modern kitchens, and access to building amenities. Ground-floor commercial stores range from 63 sqm to 182 sqm, ideal for retail, restaurants, or professional services.
+Building A offers 11 unit types: Studios (0+1) at 63 sqm, 1-Bedroom (1+1) from 77-115 sqm, 2-Bedroom (2+1) from 126-156 sqm, 3-Bedroom (3+1) from 175-206 sqm, and 4-Bedroom (4+1) at 240 sqm with 50 sqm balcony. Building B features 8 unit types with similar configurations.
 
-With its prime location near The Boulevard and excellent public facilities, Queen Towers is perfect for investors seeking rental income or owner-occupiers wanting modern urban living in Erbil.`,
+Larger units (3+1 and 4+1) include separate hot kitchens for cooking odor separation, a common Middle Eastern design feature. Master bedrooms feature en-suite bathrooms, and most units have generous balconies (8-50 sqm). Net-to-gross efficiency is 80-85%.
+
+With its prime location near The Boulevard and comprehensive facilities, Queen Tower offers diverse options from investment studios to spacious family apartments.`,
     propertyIds: [
       'queen-towers-store-1',
       'queen-towers-store-2',
@@ -3545,6 +3571,103 @@ Asuda City is ideal for families, retirees, and professionals seeking peaceful l
 Nature trails wind through the community while organic gardens provide fresh produce for the farm-to-table restaurant. Electric vehicle charging and bicycle paths encourage sustainable transportation.
 
 Green World appeals to environmentally conscious families seeking to reduce their carbon footprint while enjoying modern comforts.`,
+    propertyIds: []
+  },
+  {
+    id: 'salam-residences',
+    name: 'Salam Residences',
+    developer: 'Salam Group',
+    location: {
+      address: 'Salam Residences Complex',
+      city: 'Erbil',
+      district: 'Gulan',
+      country: 'Iraq'
+    },
+    status: 'Under Construction',
+    totalUnits: 800,
+    priceRange: {
+      min: 84000,
+      max: 189000,
+      currency: 'USD'
+    },
+    completionDate: '2025',
+    amenities: [
+      'Multiple High-Rise Towers',
+      '1+1, 2+1, 3+1 Apartments',
+      'Boulevard-Facing Units',
+      'Inner Courtyard Units',
+      'Modern Open-Plan Living',
+      'Fitted Kitchens',
+      'En-Suite Bathrooms',
+      'Private Balconies',
+      '5-Year Payment Plans',
+      'Low Monthly Installments',
+      '24/7 Security',
+      'Covered Parking',
+      'Landscaped Gardens',
+      'Children\'s Play Area'
+    ],
+    images: [
+      'https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?w=800&q=80&fm=webp',
+      'https://images.unsplash.com/photo-1512917774080-9991f1c4c750?w=800&q=80&fm=webp',
+      'https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?w=800&q=80&fm=webp'
+    ],
+    description: `Salam Residences is a modern high-rise residential development offering affordable luxury apartments with flexible payment plans. Multiple towers provide a range of unit types across Blocks A, B, C, and D.
+
+Unit configurations include 1+1 (75-81 sqm, from $84,000), 2+1 (102-125 sqm, from $119,000-$145,000), and 3+1 (132-155 sqm, from $159,000-$189,000). Boulevard-facing units command premium pricing while inner courtyard units offer value options.
+
+Payment plans make ownership accessible: deposits from $20,000-$40,000, monthly installments from $500-$1,400 over approximately 80 months. All units feature modern open-plan layouts, fitted kitchens, en-suite bathrooms, and private balconies.
+
+Salam Residences appeals to first-time buyers and investors seeking quality apartments with manageable payment terms in a growing Erbil neighborhood.`,
+    propertyIds: []
+  },
+  {
+    id: 'rami-towers',
+    name: 'Rami Towers',
+    developer: 'Baghy Shaqlawa Real Estate',
+    location: {
+      address: 'Between Roya Towers and Italian Village 1',
+      city: 'Erbil',
+      district: 'Gulan',
+      country: 'Iraq'
+    },
+    status: 'Ready',
+    totalUnits: 1600,
+    priceRange: {
+      min: 70000,
+      max: 350000,
+      currency: 'USD'
+    },
+    completionDate: '2023',
+    amenities: [
+      '10 Residential Towers',
+      '31 Floors Per Tower',
+      'Commercial Podium',
+      'Villa Gardens',
+      'Common Terrace Greens',
+      'Studios (70-80 sqm)',
+      '1+1, 2+1, 3+1, 4+1 Units',
+      '750m from Sami Abdulrahman Park',
+      'Near English Village',
+      'Near Italian Village 1',
+      'Near Empire Park',
+      '24/7 Security',
+      'High-Quality Finishes',
+      'Green Spaces',
+      'Underground Parking'
+    ],
+    images: [
+      'https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=800&q=80&fm=webp',
+      'https://images.unsplash.com/photo-1567767292278-a4f21aa2d36e?w=800&q=80&fm=webp',
+      'https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?w=800&q=80&fm=webp'
+    ],
+    description: `Rami Towers by Baghy Shaqlawa Real Estate is a luxurious residential complex of 10 towers with a commercial podium, positioned as Erbil's premier living center with common terrace greens and high-quality finishes.
+
+Located in the most prestigious residential area of Erbil between Roya Towers and Italian Village 1, near English Village, Vital Village, Empire Park, and just 750 meters from Sami Abdulrahman Park. Each tower rises 31 floors.
+
+The development offers 1,600 units including Studios (0+1) at 70-76-80 sqm, plus 1+1, 2+1, 3+1, and 4+1 configurations. Select units feature villa gardens providing private outdoor space. Diverse apartment designs and areas cater to various lifestyle needs.
+
+With its strategic location surrounded by established communities and green spaces, Rami Towers offers premium urban living with easy access to Erbil's best amenities.`,
     propertyIds: []
   }
 ];
@@ -3836,11 +3959,11 @@ function getProjectType(projectId: string, projectName: string): ProjectType {
       id.includes('cihan-tower') || id.includes('ster') || id.includes('life-tower') ||
       id.includes('naz-towers') || id.includes('classy') || id.includes('royal-towers') ||
       id.includes('star-towers') || id.includes('gulan-towers') || id.includes('roya') ||
-      id.includes('erbil-one') || id.includes('boulevard') || id.includes('cavally') ||
+      id.includes('erbil-one') || id.includes('boulevard') || id.includes('cavalli') ||
       id.includes('zaniary') || id.includes('ankawa-4') || id.includes('sarbast') ||
       id.includes('mrf') || id.includes('z-center') || id.includes('bakhtyari') ||
       id.includes('queen-towers') || id.includes('four-towers') || id.includes('park-view') ||
-      id.includes('qaiwan')) {
+      id.includes('qaiwan') || id.includes('salam') || id.includes('rami')) {
     return 'tower';
   }
 
