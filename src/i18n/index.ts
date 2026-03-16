@@ -2,27 +2,61 @@
 // i18n Utility Functions - Real House Multi-language Support
 // =============================================================================
 
-// Import from legacy translations.ts for backward compatibility
-// TODO: Migrate to new structure in translations/index.ts
+// Import from new modular translations structure
 import {
   translations,
-  RTL_LANGUAGES,
-  LANGUAGES,
-  getLanguageInfo,
   type Language,
   type TranslationStrings,
-  type LanguageInfo,
-} from './translations';
+} from './translations/index';
+
+// RTL and language info
+export const RTL_LANGUAGES: Language[] = ['ar', 'ckb'];
+
+export interface LanguageInfo {
+  code: Language;
+  name: string;
+  nativeName: string;
+  dir: 'ltr' | 'rtl';
+  flag: string;
+  hreflang: string;
+}
+
+export const LANGUAGES: LanguageInfo[] = [
+  {
+    code: 'en',
+    name: 'English',
+    nativeName: 'English',
+    dir: 'ltr',
+    flag: '🇬🇧',
+    hreflang: 'en',
+  },
+  {
+    code: 'ar',
+    name: 'Arabic',
+    nativeName: 'العربية',
+    dir: 'rtl',
+    flag: '🇮🇶',
+    hreflang: 'ar',
+  },
+  {
+    code: 'ckb',
+    name: 'Kurdish (Sorani)',
+    nativeName: 'کوردی',
+    dir: 'rtl',
+    flag: '🏴',
+    hreflang: 'ku',
+  },
+];
+
+export function getLanguageInfo(code: Language): LanguageInfo | undefined {
+  return LANGUAGES.find(lang => lang.code === code);
+}
 
 // Re-export types and constants
 export {
   translations,
-  RTL_LANGUAGES,
-  LANGUAGES,
-  getLanguageInfo,
   type Language,
   type TranslationStrings,
-  type LanguageInfo,
 };
 
 // Export from new modular structure
