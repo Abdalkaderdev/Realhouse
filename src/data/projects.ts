@@ -3624,50 +3624,54 @@ Salam Residences appeals to first-time buyers and investors seeking quality apar
   {
     id: 'rami-towers',
     name: 'Rami Towers',
-    developer: 'Baghy Shaqlawa Real Estate',
+    developer: 'Rami Holding',
     location: {
-      address: 'Between Roya Towers and Italian Village 1',
+      address: '100m Street, next to English Village',
       city: 'Erbil',
       district: 'Gulan',
       country: 'Iraq'
     },
-    status: 'Ready',
-    totalUnits: 1600,
+    status: 'Under Construction',
+    totalUnits: 2872,
     priceRange: {
       min: 70000,
-      max: 350000,
+      max: 400000,
       currency: 'USD'
     },
-    completionDate: '2023',
+    completionDate: '2025',
     amenities: [
-      '10 Residential Towers',
-      '31 Floors Per Tower',
-      'Commercial Podium',
-      'Villa Gardens',
-      'Common Terrace Greens',
-      'Studios (70-80 sqm)',
-      '1+1, 2+1, 3+1, 4+1 Units',
-      '750m from Sami Abdulrahman Park',
-      'Near English Village',
-      'Near Italian Village 1',
-      'Near Empire Park',
-      '24/7 Security',
-      'High-Quality Finishes',
-      'Green Spaces',
-      'Underground Parking'
+      '10 Blocks (A1-A5, B1-B3, C1-C2)',
+      '31 Floors Per Block',
+      '38,450 sqm Land Area',
+      '11,500 sqm Commercial Space',
+      '17,857 sqm Terrace Gardens',
+      '18,000 sqm Landscape Areas',
+      'Swimming Pool',
+      'Fitness Center',
+      'Cafes & Restaurants',
+      'Nursery & Kindergarten',
+      'Children\'s Playground',
+      'Walking & Cycling Trails',
+      'Electric Car Charging',
+      'Water Purification System',
+      'Fire Detection Systems',
+      'CCTV & 24/7 Security',
+      'Private Parking Per Unit',
+      'Roof Terrace Gardens',
+      'Interior Gardens'
     ],
     images: [
       'https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=800&q=80&fm=webp',
       'https://images.unsplash.com/photo-1567767292278-a4f21aa2d36e?w=800&q=80&fm=webp',
       'https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?w=800&q=80&fm=webp'
     ],
-    description: `Rami Towers by Baghy Shaqlawa Real Estate is a luxurious residential complex of 10 towers with a commercial podium, positioned as Erbil's premier living center with common terrace greens and high-quality finishes.
+    description: `Rami Towers by Rami Holding (operating since 2011) is a landmark 10-block residential development on 38,450 sqm, featuring 2,872 residences across 31 floors per block. Located on the 100m Street next to English Village, near Sami Abdulrahman Park, Italian Village, Roya Tower, Empire World, and Dream City.
 
-Located in the most prestigious residential area of Erbil between Roya Towers and Italian Village 1, near English Village, Vital Village, Empire Park, and just 750 meters from Sami Abdulrahman Park. Each tower rises 31 floors.
+Unit types include Studios (1+0) at 70-80 sqm, 1-Bedroom (1+1) at 90-115 sqm, 2-Bedroom (2+1) at 160-170 sqm, and 3-Bedroom (3+1) at 210-225 sqm. Contemporary luxury interiors feature marble floors, fitted kitchens, floor-to-ceiling windows, and modern bathrooms.
 
-The development offers 1,600 units including Studios (0+1) at 70-76-80 sqm, plus 1+1, 2+1, 3+1, and 4+1 configurations. Select units feature villa gardens providing private outdoor space. Diverse apartment designs and areas cater to various lifestyle needs.
+The development includes 11,500 sqm of commercial retail, 17,857 sqm of terrace gardens, and 18,000 sqm of landscapes. Amenities include swimming pool, fitness center, nursery, kindergarten, playgrounds, walking/cycling trails, cafes, and restaurants.
 
-With its strategic location surrounded by established communities and green spaces, Rami Towers offers premium urban living with easy access to Erbil's best amenities.`,
+Smart features include automatic irrigation, water purification, fire detection, EV charging stations, and 24/7 CCTV security. "Life is Better with Frames That Suit You."`,
     propertyIds: []
   }
 ];
