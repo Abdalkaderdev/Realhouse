@@ -1244,9 +1244,106 @@ $property-detail-radius: var(--radius-lg);
   }
 }
 
+// ─── Floating Mobile CTA ──────────────────────────────────────────────────────
+// Fixed contact button visible on mobile when scrolling past the sidebar
+
+.property-detail__floating-cta {
+  display: none; // Hidden by default on desktop
+  position: fixed;
+  bottom: var(--space-4);
+  left: var(--space-4);
+  right: var(--space-4);
+  z-index: 100;
+  padding: var(--space-3);
+  background: var(--c-surface);
+  border: 1px solid var(--c-border);
+  border-radius: var(--radius-lg);
+  box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.3);
+  transform: translateY(120%);
+  transition: transform 0.3s var(--ease-out);
+
+  // Show on mobile only
+  @media (max-width: 1023px) {
+    display: block;
+  }
+
+  &--visible {
+    transform: translateY(0);
+  }
+
+  &__content {
+    display: flex;
+    align-items: center;
+    gap: var(--space-3);
+  }
+
+  &__price {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+
+  &__price-label {
+    font-size: var(--text-xs);
+    color: var(--c-text-2);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+
+  &__price-value {
+    font-size: var(--text-lg);
+    font-weight: 700;
+    color: var(--c-gold);
+  }
+
+  &__actions {
+    display: flex;
+    gap: var(--space-2);
+  }
+
+  &__btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--space-1);
+    padding: var(--space-3) var(--space-4);
+    font-size: var(--text-sm);
+    font-weight: 600;
+    border-radius: var(--radius-md);
+    text-decoration: none;
+    white-space: nowrap;
+    transition: all var(--transition-fast);
+
+    svg {
+      width: 18px;
+      height: 18px;
+    }
+
+    &--whatsapp {
+      background: var(--c-whatsapp);
+      color: white;
+
+      &:hover {
+        background: var(--c-whatsapp-dark);
+      }
+    }
+
+    &--call {
+      background: var(--c-gold);
+      color: var(--c-bg);
+
+      &:hover {
+        filter: brightness(1.1);
+      }
+    }
+  }
+}
+
 // ─── Print Styles ────────────────────────────────────────────────────────────
 
 @media print {
+  .property-detail__floating-cta,
   .property-detail__gallery-controls,
   .property-detail__fullscreen-btn,
   .property-detail__wishlist-btn,

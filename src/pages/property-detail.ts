@@ -1024,12 +1024,48 @@ export function renderPropertyDetailPage(slug: string): DocumentFragment {
     page.appendChild(similarSection);
   }
 
+  // ─── Floating Mobile CTA ────────────────────────────────────────────────────
+  const floatingCta = createElement('div', 'property-detail__floating-cta');
+  floatingCta.setAttribute('aria-label', 'Contact options');
+
+  const ctaContent = createElement('div', 'property-detail__floating-cta__content');
+
+  const ctaPrice = createElement('div', 'property-detail__floating-cta__price');
+  const ctaPriceLabel = createElement('span', 'property-detail__floating-cta__price-label', t('propertyDetail.price'));
+  const ctaPriceValue = createElement('span', 'property-detail__floating-cta__price-value', getDisplayPrice(property));
+  ctaPrice.appendChild(ctaPriceLabel);
+  ctaPrice.appendChild(ctaPriceValue);
+  ctaContent.appendChild(ctaPrice);
+
+  const ctaActions = createElement('div', 'property-detail__floating-cta__actions');
+
+  const ctaWhatsApp = createElement('a', 'property-detail__floating-cta__btn property-detail__floating-cta__btn--whatsapp');
+  ctaWhatsApp.href = `https://wa.me/9647507922138?text=${encodeURIComponent(`Hi, I'm interested in: ${property.title}`)}`;
+  ctaWhatsApp.target = '_blank';
+  ctaWhatsApp.rel = 'noopener noreferrer';
+  ctaWhatsApp.setAttribute('aria-label', 'Contact via WhatsApp');
+  ctaWhatsApp.appendChild(createWhatsAppSVG());
+  ctaActions.appendChild(ctaWhatsApp);
+
+  const ctaCall = createElement('a', 'property-detail__floating-cta__btn property-detail__floating-cta__btn--call');
+  ctaCall.href = 'tel:+9647507922138';
+  ctaCall.setAttribute('aria-label', 'Call now');
+  ctaCall.appendChild(createPhoneSVG());
+  const ctaCallText = document.createTextNode(t('propertyDetail.callNow'));
+  ctaCall.appendChild(ctaCallText);
+  ctaActions.appendChild(ctaCall);
+
+  ctaContent.appendChild(ctaActions);
+  floatingCta.appendChild(ctaContent);
+  page.appendChild(floatingCta);
+
   fragment.appendChild(page);
 
   // Initialize interactions
   setTimeout(() => {
     initializeGallery(property);
     initializeAnimations();
+    initializeFloatingCta();
   }, 0);
 
   return fragment;
@@ -1211,6 +1247,42 @@ function initializeAnimations(): void {
       }
     );
   });
+}
+
+// ─── Floating CTA Initialization ─────────────────────────────────────────────
+
+function initializeFloatingCta(): void {
+  const floatingCta = document.querySelector('.property-detail__floating-cta');
+  const sidebar = document.querySelector('.property-detail__sidebar');
+
+  if (!floatingCta || !sidebar) return;
+
+  // Show floating CTA when scrolled past the sidebar on mobile
+  const observer = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        // Show when sidebar is NOT intersecting (scrolled past it)
+        if (!entry.isIntersecting) {
+          floatingCta.classList.add('property-detail__floating-cta--visible');
+        } else {
+          floatingCta.classList.remove('property-detail__floating-cta--visible');
+        }
+      });
+    },
+    {
+      threshold: 0,
+      rootMargin: '-100px 0px 0px 0px' // Start showing a bit before sidebar is fully out of view
+    }
+  );
+
+  observer.observe(sidebar);
+
+  // Clean up observer when navigating away
+  const cleanup = () => {
+    observer.disconnect();
+    window.removeEventListener('popstate', cleanup);
+  };
+  window.addEventListener('popstate', cleanup);
 }
 
 // ─── SEO Setup ───────────────────────────────────────────────────────────────

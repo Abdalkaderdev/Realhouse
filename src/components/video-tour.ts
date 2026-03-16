@@ -182,7 +182,6 @@ export function createVideoTourCard(options: VideoTourOptions): HTMLElement {
 
   const videoId = extractYouTubeVideoId(videoUrl);
   if (!videoId) {
-    console.warn('Invalid YouTube URL:', videoUrl);
     return createElement('div');
   }
 
@@ -263,7 +262,6 @@ export function openVideoModal(options: VideoTourOptions): void {
 
   const videoId = extractYouTubeVideoId(videoUrl);
   if (!videoId) {
-    console.warn('Invalid YouTube URL:', videoUrl);
     return;
   }
 
@@ -302,12 +300,13 @@ export function openVideoModal(options: VideoTourOptions): void {
   loader.appendChild(spinner);
   videoContainer.appendChild(loader);
 
-  // Iframe
+  // Iframe with security sandbox
   const iframe = createElement('iframe', 'video-tour-modal__iframe');
   iframe.src = getYouTubeEmbedUrl(videoId, true);
   iframe.setAttribute('frameborder', '0');
   iframe.setAttribute('allowfullscreen', '');
   iframe.setAttribute('allow', 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture');
+  iframe.setAttribute('sandbox', 'allow-scripts allow-same-origin allow-presentation allow-popups');
 
   iframe.addEventListener('load', () => {
     loader.classList.add('hidden');
@@ -319,8 +318,16 @@ export function openVideoModal(options: VideoTourOptions): void {
 
   overlay.appendChild(container);
 
-  // Close handlers
+  // Escape key handler (defined before closeModal so it can be cleaned up)
+  const handleEscape = (e: KeyboardEvent) => {
+    if (e.key === 'Escape') {
+      closeModal();
+    }
+  };
+
+  // Close handlers - always clean up the escape listener
   const closeModal = () => {
+    document.removeEventListener('keydown', handleEscape);
     overlay.classList.add('closing');
     setTimeout(() => {
       overlay.remove();
@@ -335,13 +342,6 @@ export function openVideoModal(options: VideoTourOptions): void {
     }
   });
 
-  // Escape key handler
-  const handleEscape = (e: KeyboardEvent) => {
-    if (e.key === 'Escape') {
-      closeModal();
-      document.removeEventListener('keydown', handleEscape);
-    }
-  };
   document.addEventListener('keydown', handleEscape);
 
   // Add to DOM

@@ -828,16 +828,28 @@ em {
   &:focus-visible {
     outline: 3px solid var(--c-gold);
     outline-offset: 3px;
+    // Ensure focus ring is visible in light mode
+    box-shadow: 0 0 0 6px rgba(201, 168, 76, 0.25);
   }
 
   &:active {
     transform: scale(0.98);
   }
 
-  &:disabled {
-    opacity: 0.5;
+  // WCAG-compliant disabled state - use color changes instead of opacity
+  &:disabled,
+  &[aria-disabled="true"] {
+    background: var(--c-surface-3);
+    color: var(--c-text-3);
+    border-color: var(--c-glass-border);
     cursor: not-allowed;
-    pointer-events: none;
+    transform: none;
+    box-shadow: none;
+
+    &:hover {
+      transform: none;
+      box-shadow: none;
+    }
   }
 
   &--primary {
@@ -869,13 +881,22 @@ em {
   }
 
   &--ghost {
-    border: 1px solid var(--c-glass-border);
+    background: transparent;
+    border: 1px solid var(--c-border);
     color: var(--c-text);
 
     &:hover {
       background: var(--c-glass-bg);
       border-color: var(--c-gold);
       color: var(--c-gold);
+    }
+
+    // Ghost buttons need distinct disabled styling
+    &:disabled,
+    &[aria-disabled="true"] {
+      background: transparent;
+      border-color: var(--c-glass-border);
+      color: var(--c-text-3);
     }
   }
 
@@ -908,6 +929,14 @@ em {
     padding: var(--space-4) var(--space-8);
     font-size: var(--text-base);
     min-height: 56px;
+  }
+
+  &--small,
+  &--sm {
+    padding: var(--space-2) var(--space-4);
+    font-size: var(--text-xs);
+    min-height: 36px;
+    min-width: 36px;
   }
 
   // Icon inside buttons

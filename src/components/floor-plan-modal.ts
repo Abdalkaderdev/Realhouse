@@ -185,6 +185,34 @@ function createDownloadIcon(): SVGSVGElement {
   return svg;
 }
 
+// Focus trap for accessibility
+function trapFocus(modal: HTMLElement): (e: KeyboardEvent) => void {
+  const focusableElements = modal.querySelectorAll(
+    'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])'
+  );
+  const firstFocusable = focusableElements[0] as HTMLElement;
+  const lastFocusable = focusableElements[focusableElements.length - 1] as HTMLElement;
+
+  const handleTabKey = (e: KeyboardEvent) => {
+    if (e.key !== 'Tab') return;
+
+    if (e.shiftKey) {
+      if (document.activeElement === firstFocusable) {
+        e.preventDefault();
+        lastFocusable.focus();
+      }
+    } else {
+      if (document.activeElement === lastFocusable) {
+        e.preventDefault();
+        firstFocusable.focus();
+      }
+    }
+  };
+
+  modal.addEventListener('keydown', handleTabKey);
+  return handleTabKey;
+}
+
 export function openFloorPlanModal(options: FloorPlanModalOptions): void {
   const { imageUrl, propertyTitle, pdfUrl } = options;
   const planUrl = imageUrl || DEMO_FLOOR_PLAN_URL;
@@ -378,6 +406,40 @@ export function openFloorPlanModal(options: FloorPlanModalOptions): void {
     }
   });
 
+  // Document-level event handlers (defined here so we can clean them up)
+  const handleMouseMove = (e: MouseEvent) => {
+    if (!isDragging) return;
+    translateX = e.clientX - startX;
+    translateY = e.clientY - startY;
+    updateTransform();
+  };
+
+  const handleMouseUp = () => {
+    isDragging = false;
+    imageContainer.style.cursor = scale > 1 ? 'grab' : 'default';
+  };
+
+  const handleEscape = (e: KeyboardEvent) => {
+    if (e.key === 'Escape') {
+      closeModal();
+    }
+  };
+
+  // Close handlers - clean up all document-level listeners
+  const closeModal = () => {
+    document.removeEventListener('mousemove', handleMouseMove);
+    document.removeEventListener('mouseup', handleMouseUp);
+    document.removeEventListener('keydown', handleEscape);
+    overlay.classList.add('closing');
+    if (document.fullscreenElement) {
+      document.exitFullscreen();
+    }
+    setTimeout(() => {
+      overlay.remove();
+      document.body.style.overflow = '';
+    }, 300);
+  };
+
   // Drag to pan
   imageContainer.addEventListener('mousedown', (e) => {
     if (scale <= 1) return;
@@ -387,17 +449,8 @@ export function openFloorPlanModal(options: FloorPlanModalOptions): void {
     imageContainer.style.cursor = 'grabbing';
   });
 
-  document.addEventListener('mousemove', (e) => {
-    if (!isDragging) return;
-    translateX = e.clientX - startX;
-    translateY = e.clientY - startY;
-    updateTransform();
-  });
-
-  document.addEventListener('mouseup', () => {
-    isDragging = false;
-    imageContainer.style.cursor = scale > 1 ? 'grab' : 'default';
-  });
+  document.addEventListener('mousemove', handleMouseMove);
+  document.addEventListener('mouseup', handleMouseUp);
 
   // Double click to reset
   imageContainer.addEventListener('dblclick', resetZoom);
@@ -442,18 +495,6 @@ export function openFloorPlanModal(options: FloorPlanModalOptions): void {
     lastTouchDistance = 0;
   });
 
-  // Close handlers
-  const closeModal = () => {
-    overlay.classList.add('closing');
-    if (document.fullscreenElement) {
-      document.exitFullscreen();
-    }
-    setTimeout(() => {
-      overlay.remove();
-      document.body.style.overflow = '';
-    }, 300);
-  };
-
   closeBtn.addEventListener('click', closeModal);
   overlay.addEventListener('click', (e) => {
     if (e.target === overlay) {
@@ -461,18 +502,14 @@ export function openFloorPlanModal(options: FloorPlanModalOptions): void {
     }
   });
 
-  // Escape key handler
-  const handleEscape = (e: KeyboardEvent) => {
-    if (e.key === 'Escape') {
-      closeModal();
-      document.removeEventListener('keydown', handleEscape);
-    }
-  };
   document.addEventListener('keydown', handleEscape);
 
   // Add to DOM
   document.body.appendChild(overlay);
   document.body.style.overflow = 'hidden';
+
+  // Set up focus trap for accessibility
+  trapFocus(modal);
 
   // Animate in
   requestAnimationFrame(() => {
