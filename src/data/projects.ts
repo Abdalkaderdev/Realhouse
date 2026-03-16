@@ -426,7 +426,7 @@ Two full amenity floors house DDK Restaurant, MV Cafe, market, bakery, dessert s
     id: 'tulip-towers',
     name: 'Tulip Towers',
     location: {
-      address: 'Gulan Street, near Sami Abdulrahman Park',
+      address: 'Gulan Street, Erbil Golden Zone',
       city: 'Erbil',
       district: 'Gulan',
       country: 'Iraq'
@@ -434,49 +434,60 @@ Two full amenity floors house DDK Restaurant, MV Cafe, market, bakery, dessert s
     status: 'Ready',
     totalUnits: 1243,
     priceRange: {
-      min: 85000,
-      max: 350000,
+      min: 95000,
+      max: 450000,
       currency: 'USD'
     },
     completionDate: '2022',
     amenities: [
-      'Four 44-Story Towers',
-      '215,600 sqm Total Area',
-      '4-Floor Underground Parking (58,400 sqm)',
-      'Greenery & Landscaping',
-      'Restaurants & Cafes',
-      'Sport Centers',
-      '24hr Electricity',
-      'Internet',
-      'Playground',
-      'Gym',
-      'Kindergarten',
-      'Health Center'
+      '4 Towers (Blocks A, B, C, D)',
+      '44 Floors Per Tower',
+      '300,976 sqm Total Construction',
+      '24,295 sqm Commercial Space',
+      '1,602 Vehicle Parking',
+      '5,700 sqm Green Area',
+      'Earthquake Resistant (8.0 Richter)',
+      'Studios to 4+1 Apartments',
+      'Duplex Apartments',
+      'Penthouses',
+      'Smart Home System',
+      'Sports Center',
+      'Pharmacy',
+      'Day Nursery',
+      'Pet Friendly',
+      'Supermarket & Cafes',
+      'Fire Fighting Station',
+      'Roof Garden Social Floor',
+      'Spa & Fitness Center',
+      'EV Charging Stations',
+      '24/7 Security & CCTV'
     ],
     images: [
-      'https://images.unsplash.com/photo-1577495508326-19a1b3cf65b7?w=800&q=80&fm=webp',
-      'https://images.unsplash.com/photo-1565623833408-d77e39b88af6?w=800&q=80&fm=webp',
-      'https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=800&q=80&fm=webp'
+      '/images/projects/tulip-towers/page01_img01.jpeg',
+      '/images/projects/tulip-towers/page04_img01.jpeg',
+      '/images/projects/tulip-towers/page06_img01.jpeg'
     ],
-    image: 'https://images.unsplash.com/photo-1577495508326-19a1b3cf65b7?w=1200&q=80&fm=webp',
+    image: '/images/projects/tulip-towers/page01_img01.jpeg',
     gallery: [
-      'https://images.unsplash.com/photo-1577495508326-19a1b3cf65b7?w=800&q=80&fm=webp',
-      'https://images.unsplash.com/photo-1565623833408-d77e39b88af6?w=800&q=80&fm=webp',
-      'https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?w=800&q=80&fm=webp',
-      'https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?w=800&q=80&fm=webp',
-      'https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?w=800&q=80&fm=webp',
-      'https://images.unsplash.com/photo-1560185893-a55cbc8c57e8?w=800&q=80&fm=webp'
+      '/images/projects/tulip-towers/page03_img01.jpeg',
+      '/images/projects/tulip-towers/page05_img01.jpeg',
+      '/images/projects/tulip-towers/page07_img01.jpeg',
+      '/images/projects/tulip-towers/page09_img01.jpeg',
+      '/images/projects/tulip-towers/page17_img01.jpeg',
+      '/images/projects/tulip-towers/page18_img01.jpeg'
     ],
     floorPlanImages: [
-      'https://images.unsplash.com/photo-1574362848149-11496d93a7c7?w=800&q=80&fm=webp',
-      'https://images.unsplash.com/photo-1503387837-b154d5074bd2?w=800&q=80&fm=webp',
-      'https://images.unsplash.com/photo-1600585152220-90363fe7e115?w=800&q=80&fm=webp'
+      '/images/projects/tulip-towers/page25_img01.jpeg',
+      '/images/projects/tulip-towers/page27_img01.jpeg',
+      '/images/projects/tulip-towers/page29_img01.jpeg'
     ],
-    description: `Tulip Towers is a landmark development of four 44-story towers overlooking Erbil's golden zone, located on Gulan Street next to Sami Abdulrahman Park, just 10 minutes from the airport or city center.
+    description: `Tulip Towers is a landmark 4-tower development on Gulan Street in Erbil's Golden Zone, featuring 44 floors per tower and 1,243 apartments plus penthouses. Walking distance to Sami Abdulrahman Park, 10 minutes to airport, 3 minutes to World Trade Center.
 
-The project comprises 1,243 luxury apartments with various sizes and deluxe penthouses across a total area of 215,600 square meters. Parking needs are met through 4 basement floors with 58,400 sqm of underground parking.
+Unit types include Studios (95 sqm), 1+1 (103-113 sqm), 2+1 (145-155 sqm), 3+1 (230 sqm), and 4+1 (237-255 sqm). Duplex apartments range from 1+1 (96-159 sqm) to 3+1 (228-238 sqm) with balconies up to 75 sqm.
 
-Amenities include 24-hour electricity, internet, playground, gym, underground parking, kindergarten, supermarket, health center, and proper infrastructure for sewerage, sanitary and electrical systems. Residents enjoy greenery, restaurants, cafes, and sport centers.`,
+Total construction spans 300,976 sqm with 24,295 sqm commercial, 1,602 parking spaces, and 5,700 sqm green areas. Earthquake protection uses nailing system technology withstanding magnitude 8.0.
+
+Amenities include roof garden social floor, spa, fitness center, sports center, pharmacy, nursery, pet-friendly facilities, supermarket, cafes, restaurants, and EV charging stations. Smart home system and 24/7 security throughout.`,
     propertyIds: []
   },
   {
@@ -3161,9 +3172,23 @@ Safiran City offers proven quality with an active community, making it ideal for
       'Event Space'
     ],
     images: [
-      'https://images.unsplash.com/photo-1567767292278-a4f21aa2d36e?w=800&q=80&fm=webp',
-      'https://images.unsplash.com/photo-1486325212027-8081e485255e?w=800&q=80&fm=webp',
-      'https://images.unsplash.com/photo-1565623833408-d77e39b88af6?w=800&q=80&fm=webp'
+      '/images/projects/ruby-towers/page03_img01.jpeg',
+      '/images/projects/ruby-towers/page04_img01.jpeg',
+      '/images/projects/ruby-towers/page05_img01.jpeg'
+    ],
+    image: '/images/projects/ruby-towers/page03_img01.jpeg',
+    gallery: [
+      '/images/projects/ruby-towers/page06_img01.jpeg',
+      '/images/projects/ruby-towers/page07_img01.jpeg',
+      '/images/projects/ruby-towers/page25_img01.jpeg',
+      '/images/projects/ruby-towers/page26_img01.jpeg',
+      '/images/projects/ruby-towers/page27_img01.jpeg',
+      '/images/projects/ruby-towers/page28_img01.jpeg'
+    ],
+    floorPlanImages: [
+      '/images/projects/ruby-towers/page32_img01.jpeg',
+      '/images/projects/ruby-towers/page33_img01.jpeg',
+      '/images/projects/ruby-towers/page34_img01.jpeg'
     ],
     description: `Ruby Towers brings gemstone luxury to Erbil's skyline with its distinctive design featuring elegant red accents throughout. This Gulan development offers premium apartments with sophisticated styling.
 
@@ -3673,6 +3698,200 @@ The development includes 11,500 sqm of commercial retail, 17,857 sqm of terrace 
 
 Smart features include automatic irrigation, water purification, fire detection, EV charging stations, and 24/7 CCTV security. "Life is Better with Frames That Suit You."`,
     propertyIds: []
+  },
+  {
+    id: 'spanish-village',
+    name: 'Spanish Village',
+    developer: 'Alcor Group',
+    location: {
+      address: '150m Ring Road Street',
+      city: 'Erbil',
+      district: 'Pirmam',
+      country: 'Iraq'
+    },
+    status: 'Under Construction',
+    totalUnits: 327,
+    priceRange: {
+      min: 280000,
+      max: 550000,
+      currency: 'USD'
+    },
+    completionDate: '2025',
+    amenities: [
+      '327 Luxury Villas',
+      'Spanish Architecture',
+      '3 Villa Types (A, B, C)',
+      '4 Bedrooms Per Villa',
+      'Type A & B: 430 sqm',
+      'Type C: 610 sqm',
+      '15,000+ sqm Central Park',
+      'Swimming Pool',
+      'BBQ Zone',
+      'Walking & Jogging Track',
+      'Children Playground',
+      'Picnic Lawns',
+      'Retail Outlets',
+      'Shopping Areas',
+      'Football Field',
+      'Tennis Courts',
+      'Panoramic Erbil Views',
+      '30 min to City Center',
+      '20 min to Airport'
+    ],
+    images: [
+      '/images/projects/spanish-village/page03_img01.jpeg',
+      '/images/projects/spanish-village/page05_img01.jpeg',
+      '/images/projects/spanish-village/page06_img01.jpeg'
+    ],
+    image: '/images/projects/spanish-village/page03_img01.jpeg',
+    gallery: [
+      '/images/projects/spanish-village/page07_img01.jpeg',
+      '/images/projects/spanish-village/page08_img01.jpeg',
+      '/images/projects/spanish-village/page10_img01.jpeg',
+      '/images/projects/spanish-village/page14_img01.jpeg',
+      '/images/projects/spanish-village/page18_img01.jpeg'
+    ],
+    floorPlanImages: [
+      '/images/projects/spanish-village/page11_img27.png',
+      '/images/projects/spanish-village/page15_img01.jpeg',
+      '/images/projects/spanish-village/page19_img01.jpeg'
+    ],
+    description: `Spanish Village by Alcor Group is a luxury villa community of 327 units on the 150m ring road, featuring authentic Spanish architecture with panoramic views of Erbil.
+
+Three villa types available: Type A (430 sqm on 320 sqm plot) and Type B (430 sqm) feature 4 bedrooms, 5 bathrooms, garage, garden, and balconies up to 30 sqm. Type C (610 sqm on 500 sqm plot) includes servant room, multiple terraces, and 4+ balconies totaling 40+ sqm.
+
+All villas feature ground + first floor layouts with master bedrooms, hot kitchens, living rooms, laundry, and walk-in closets. Gardens range from 7m wide to 16+ sqm private outdoor spaces.
+
+Community amenities include 15,000+ sqm central park, swimming pool, BBQ zone, jogging tracks, playgrounds, retail outlets, football field, and tennis courts. Located 30 min to city center, 20 min to airport.`,
+    propertyIds: []
+  },
+  {
+    id: 'aram-towers',
+    name: 'Aram Towers',
+    developer: 'Aram Group',
+    location: {
+      address: '150m Street, opposite Erbil Hills',
+      city: 'Erbil',
+      district: 'Ankawa',
+      country: 'Iraq'
+    },
+    status: 'Under Construction',
+    totalUnits: 700,
+    priceRange: {
+      min: 108000,
+      max: 500000,
+      currency: 'USD'
+    },
+    completionDate: '2026',
+    amenities: [
+      '5 Residential Towers (30 floors)',
+      '2 Business Towers (18 floors)',
+      '32,000 sqm Total Area',
+      '14,000 sqm Landscape',
+      '200 Luxury Offices',
+      '1,400 Parking Spaces',
+      '40+ Amenities',
+      '3m Ceiling Height',
+      '5-Year Warranty (First in Iraq)',
+      'Smart Home Technology',
+      'Indoor Infinity Pool',
+      'SPA & Gym',
+      'Rooftop Dining 360°',
+      'Nursery & Kindergarten',
+      'Pet-Friendly Spaces',
+      'EV Charging Points',
+      'Golf Course Views',
+      'Arabia Awards Winner 2025-2026'
+    ],
+    images: [
+      '/images/projects/aram-towers/page04_img03.jpeg',
+      '/images/projects/aram-towers/page05_img01.jpeg',
+      '/images/projects/aram-towers/page06_img01.jpeg'
+    ],
+    image: '/images/projects/aram-towers/page04_img03.jpeg',
+    gallery: [
+      '/images/projects/aram-towers/page07_img01.jpeg',
+      '/images/projects/aram-towers/page13_img01.jpeg',
+      '/images/projects/aram-towers/page15_img01.jpeg',
+      '/images/projects/aram-towers/page17_img01.jpeg',
+      '/images/projects/aram-towers/page28_img01.jpeg',
+      '/images/projects/aram-towers/page29_img01.jpeg'
+    ],
+    floorPlanImages: [
+      '/images/projects/aram-towers/page23_img03.png',
+      '/images/projects/aram-towers/page24_img01.png',
+      '/images/projects/aram-towers/page25_img01.png'
+    ],
+    description: `Aram Towers by Aram Group is "The Paramount of Erbil" - an award-winning mixed-use development featuring 5 residential towers (30 floors) and 2 business towers (18 floors) on 32,000 sqm opposite Erbil Hills Golf Course.
+
+Winner of Arabia Property Awards 2025-2026 for Mixed-Use, Office, and Residential High-Rise Development (Iraq). The first project in Iraq with 5-year warranty coverage.
+
+Residential units include 1+1 (108-153 sqm), 2+1 (170-234 sqm), 3+1 (240-281 sqm), 3+2 (340 sqm), and 4+1 (345 sqm) with balconies up to 42 sqm. Type A towers (A, B, D) and Type B towers (C, E) offer different configurations. 200 offices range from 99-260 sqm.
+
+40+ amenities include indoor infinity pool, spa, gym, 360° rooftop dining, nursery, kindergarten, pet-friendly spaces, EV charging, and panoramic golf course views. 5 min to airport, 10 min to Sami Abdulrahman Park.`,
+    propertyIds: []
+  },
+  {
+    id: 'empire-square',
+    name: 'Empire Square',
+    developer: 'Empire World',
+    location: {
+      address: 'Northwest of Empire World, near 100M Street',
+      city: 'Erbil',
+      district: 'Empire',
+      country: 'Iraq'
+    },
+    status: 'Under Construction',
+    totalUnits: 720,
+    priceRange: {
+      min: 130000,
+      max: 280000,
+      currency: 'USD'
+    },
+    completionDate: '2025',
+    amenities: [
+      '4 Buildings (ES1, ES2, ES3, ES4)',
+      '168,497 sqm Total Area',
+      '720 Apartments',
+      '3.3m Ceiling Height',
+      '1+1, 2+1, 4+1 Units',
+      'LPG Central Gas System',
+      'Garbage Chute System',
+      'Linear Grill AC',
+      'Large Windows',
+      'Luxury Restaurants',
+      'Commercial Spaces',
+      'Near Erbil Airport',
+      'Near Sami Abdulrahman Park',
+      'Views of Empire World'
+    ],
+    images: [
+      '/images/projects/empire-square/page01_img01.jpeg',
+      '/images/projects/empire-square/page14_img01.jpeg',
+      '/images/projects/empire-square/page56_img01.jpeg'
+    ],
+    image: '/images/projects/empire-square/page01_img01.jpeg',
+    gallery: [
+      '/images/projects/empire-square/page17_img01.jpeg',
+      '/images/projects/empire-square/page50_img01.jpeg',
+      '/images/projects/empire-square/page51_img01.jpeg',
+      '/images/projects/empire-square/page58_img01.jpeg',
+      '/images/projects/empire-square/page60_img01.jpeg',
+      '/images/projects/empire-square/page61_img01.jpeg'
+    ],
+    floorPlanImages: [
+      '/images/projects/empire-square/page23_img01.png',
+      '/images/projects/empire-square/page35_img01.png',
+      '/images/projects/empire-square/page43_img01.png'
+    ],
+    description: `Empire Square by Empire World is a premium residential development of 4 buildings (ES1-ES4) on 168,497 sqm northwest of the main Empire World project, offering 720 apartments with views of Empire World, 100M Street, and Zagros Road.
+
+Unit distribution: 40 one-bedroom (1+1, 131 sqm), 600 two-bedroom (2+1, 140-178 sqm), and 80 four-bedroom (4+1, 212-217 sqm). ES1 & ES2 share 15.8% common areas while ES3 & ES4 have 15.1%. All units feature 3.3m ceilings.
+
+Buildings ES1 & ES2 offer Types 01-05 (2+1, 143-151 sqm). ES3 & ES4 add Types 06-13 including 1+1 (131 sqm), larger 2+1 (141-178 sqm), and 4+1 (212-217 sqm with maid rooms).
+
+Features include centralized LPG gas, garbage chute system, linear grill AC, separate kitchens, and large windows. Near Erbil Airport, Sami Abdulrahman Park, and Erbil Citadel.`,
+    propertyIds: []
   }
 ];
 
@@ -3967,7 +4186,8 @@ function getProjectType(projectId: string, projectName: string): ProjectType {
       id.includes('zaniary') || id.includes('ankawa-4') || id.includes('sarbast') ||
       id.includes('mrf') || id.includes('z-center') || id.includes('bakhtyari') ||
       id.includes('queen-towers') || id.includes('four-towers') || id.includes('park-view') ||
-      id.includes('qaiwan') || id.includes('salam') || id.includes('rami')) {
+      id.includes('qaiwan') || id.includes('salam') || id.includes('rami') ||
+      id.includes('aram-towers') || id.includes('empire-square') || id.includes('tulip')) {
     return 'tower';
   }
 
@@ -3975,7 +4195,7 @@ function getProjectType(projectId: string, projectName: string): ProjectType {
   if (id.includes('village') || name.includes('village') || id.includes('villa') ||
       id.includes('american') || id.includes('english') || id.includes('italian') ||
       id.includes('lebanese') || id.includes('garden-city') || id.includes('ganjan') ||
-      id.includes('aram') || id.includes('zanko') || id.includes('mnara') ||
+      id.includes('aram-village') || id.includes('zanko') || id.includes('mnara') ||
       id.includes('four-season') || id.includes('family-land') || id.includes('green-world')) {
     return 'villa';
   }

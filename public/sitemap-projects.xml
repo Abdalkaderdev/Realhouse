@@ -2,7 +2,7 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
         xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
   <!-- Real House Projects Sitemap - Auto-generated -->
-  <!-- Projects: 79 developments -->
+  <!-- Projects: 82 developments -->
   <!-- Generated: 2026-03-16 -->
 
   <url>
@@ -475,6 +475,24 @@
   </url>
   <url>
     <loc>https://realhouseiq.com/projects/rami-towers</loc>
+    <lastmod>2026-03-16</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://realhouseiq.com/projects/spanish-village</loc>
+    <lastmod>2026-03-16</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://realhouseiq.com/projects/aram-towers</loc>
+    <lastmod>2026-03-16</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://realhouseiq.com/projects/empire-square</loc>
     <lastmod>2026-03-16</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
