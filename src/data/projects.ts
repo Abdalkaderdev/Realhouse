@@ -421,15 +421,15 @@ Recreation includes indoor and outdoor pools, outdoor gym, cinema, jogging track
       '/images/projects/cavalli-tower/page06_img01.jpeg',
       '/images/projects/cavalli-tower/page07_img01.jpeg',
       '/images/projects/cavalli-tower/page09_img01.jpeg',
-      '/images/projects/cavalli-tower/page10_img01.jpeg',
-      '/images/projects/cavalli-tower/page11_img01.jpeg',
-      '/images/projects/cavalli-tower/page12_img01.jpeg',
       '/images/projects/cavalli-tower/page13_img01.jpeg',
       '/images/projects/cavalli-tower/page14_img01.jpeg',
       '/images/projects/cavalli-tower/page15_img01.jpeg'
     ],
     floorPlanImages: [
       '/images/projects/cavalli-tower/page08_img01.jpeg',
+      '/images/projects/cavalli-tower/page10_img01.jpeg',
+      '/images/projects/cavalli-tower/page11_img01.jpeg',
+      '/images/projects/cavalli-tower/page12_img01.jpeg',
       '/images/projects/cavalli-tower/page12_img02.jpeg'
     ],
     description: `Cavalli Tower by SHAHAN is a landmark 48-storey residential tower standing 149 meters tall on Gulan Street (40m Street) in central Erbil. Built on 4,644 sqm, the tower contains 745 residential apartments across levels 6-47, plus an exclusive penthouse floor.
