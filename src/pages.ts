@@ -2869,7 +2869,7 @@ export function renderPropertyDetailPage(propertyId: string): DocumentFragment {
   };
 
   const getShareText = (): string => {
-    return `Check out this ${property.type}: ${property.title} - $${property.price.toLocaleString()}`;
+    return `Check out this ${property.type}: ${property.title} - ${getDisplayPrice(property)}`;
   };
 
   // Toast notification function
@@ -2989,8 +2989,8 @@ export function renderPropertyDetailPage(propertyId: string): DocumentFragment {
 
   // Price
   const priceSection = createElement('div', 'property-detail__price-section');
-  const priceLabel = createElement('span', 'property-detail__price-label', 'Asking Price');
-  const priceValue = createElement('span', 'property-detail__price', `$${property.price.toLocaleString()}`);
+  const priceLabel = createElement('span', 'property-detail__price-label', property.price === 0 ? 'Price' : 'Asking Price');
+  const priceValue = createElement('span', 'property-detail__price', getDisplayPrice(property));
   priceSection.appendChild(priceLabel);
   priceSection.appendChild(priceValue);
   mainInfo.appendChild(priceSection);
