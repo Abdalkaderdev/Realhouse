@@ -676,14 +676,18 @@ export function renderHomePage(): DocumentFragment {
 
   hero.appendChild(heroBackground);
 
-  // Auto-rotate hero images every 4 seconds
-  let currentSlide = 0;
-  const slides = heroBackground.querySelectorAll('.hero__slide');
-  setInterval(() => {
-    slides[currentSlide].classList.remove('hero__slide--active');
-    currentSlide = (currentSlide + 1) % slides.length;
-    slides[currentSlide].classList.add('hero__slide--active');
-  }, 4000);
+  // Auto-rotate hero images every 4 seconds (start after DOM is ready)
+  setTimeout(() => {
+    let currentSlide = 0;
+    const slides = document.querySelectorAll('.hero__slide');
+    if (slides.length > 1) {
+      setInterval(() => {
+        slides[currentSlide].classList.remove('hero__slide--active');
+        currentSlide = (currentSlide + 1) % slides.length;
+        slides[currentSlide].classList.add('hero__slide--active');
+      }, 4000);
+    }
+  }, 100);
 
   // Overlay for text readability
   const heroOverlay = createElement('div', 'hero__overlay');
