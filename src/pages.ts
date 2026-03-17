@@ -649,12 +649,12 @@ export function renderHomePage(): DocumentFragment {
   hero.id = 'hero';
   hero.setAttribute('aria-label', 'Welcome to Real House - Luxury Real Estate');
 
-  // Static Image Background
+  // Static Image Background - Kark Land Development Aerial View
   const heroBackground = createElement('div', 'hero__background');
   heroBackground.setAttribute('aria-hidden', 'true');
   const heroImage = document.createElement('img');
-  heroImage.src = 'https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=1920&q=80&fm=webp';
-  heroImage.alt = '';
+  heroImage.src = '/images/lands/kark/aerial-01.jpeg';
+  heroImage.alt = 'Aerial view of Kark land development in Erbil';
   heroImage.className = 'hero__image';
   heroImage.width = 1920;
   heroImage.height = 1080;
