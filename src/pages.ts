@@ -649,18 +649,41 @@ export function renderHomePage(): DocumentFragment {
   hero.id = 'hero';
   hero.setAttribute('aria-label', 'Welcome to Real House - Luxury Real Estate');
 
-  // Static Image Background - Kark Land Development Aerial View
-  const heroBackground = createElement('div', 'hero__background');
+  // Hero Slideshow Background - Kark Land Development Aerial Views
+  const heroImages = [
+    '/images/lands/kark/aerial-01.jpeg',
+    '/images/lands/kark/aerial-02.jpeg',
+    '/images/lands/kark/aerial-03.jpeg',
+    '/images/lands/kark/aerial-04.jpeg',
+    '/images/lands/kark/aerial-05.jpeg',
+    '/images/lands/kark/aerial-06.jpeg',
+    '/images/lands/kark/aerial-07.jpeg'
+  ];
+
+  const heroBackground = createElement('div', 'hero__background hero__slideshow');
   heroBackground.setAttribute('aria-hidden', 'true');
-  const heroImage = document.createElement('img');
-  heroImage.src = '/images/lands/kark/aerial-01.jpeg';
-  heroImage.alt = 'Aerial view of Kark land development in Erbil';
-  heroImage.className = 'hero__image';
-  heroImage.width = 1920;
-  heroImage.height = 1080;
-  heroImage.loading = 'eager';
-  heroBackground.appendChild(heroImage);
+
+  heroImages.forEach((src, index) => {
+    const heroImage = document.createElement('img');
+    heroImage.src = src;
+    heroImage.alt = `Aerial view of Kark land development in Erbil - ${index + 1}`;
+    heroImage.className = `hero__image hero__slide ${index === 0 ? 'hero__slide--active' : ''}`;
+    heroImage.width = 1920;
+    heroImage.height = 1080;
+    heroImage.loading = index === 0 ? 'eager' : 'lazy';
+    heroBackground.appendChild(heroImage);
+  });
+
   hero.appendChild(heroBackground);
+
+  // Auto-rotate hero images every 4 seconds
+  let currentSlide = 0;
+  const slides = heroBackground.querySelectorAll('.hero__slide');
+  setInterval(() => {
+    slides[currentSlide].classList.remove('hero__slide--active');
+    currentSlide = (currentSlide + 1) % slides.length;
+    slides[currentSlide].classList.add('hero__slide--active');
+  }, 4000);
 
   // Overlay for text readability
   const heroOverlay = createElement('div', 'hero__overlay');
