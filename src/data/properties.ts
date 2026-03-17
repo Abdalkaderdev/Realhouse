@@ -124,6 +124,47 @@ export const properties: Property[] = [
   // Real House - Exclusive Listings
   // ═══════════════════════════════════════════════════════════════════════════
 
+  // ─── KARK LAND PLOTS ───────────────────────────────────────────────────────
+  {
+    id: 'kark-land-plot',
+    title: 'Land Plot in Kark',
+    titleKu: 'زەوی لە کارک',
+    titleAr: 'أرض في كارك',
+    type: 'Land',
+    price: 0, // Contact for price
+    status: 'For Sale',
+    badges: ['Hot', 'Exclusive'],
+    location: {
+      address: 'Kark',
+      city: 'Erbil',
+      district: 'Kark',
+      country: 'Iraq',
+      coordinates: { lat: 36.263632, lng: 44.022134 }
+    },
+    specs: {
+      beds: 0,
+      baths: 0,
+      sqm: 300
+    },
+    images: [
+      '/images/lands/kark/aerial-01.jpeg',
+      '/images/lands/kark/aerial-02.jpeg',
+      '/images/lands/kark/aerial-03.jpeg',
+      '/images/lands/kark/aerial-04.jpeg',
+      '/images/lands/kark/aerial-05.jpeg',
+      '/images/lands/kark/aerial-06.jpeg',
+      '/images/lands/kark/aerial-07.jpeg'
+    ],
+    description: 'Premium land plots available in Kark, Erbil. Contact us for pricing and availability.',
+    features: [],
+    isFeatured: true,
+    isNew: true,
+    neighborhood: {
+      name: 'Kark'
+    },
+    agent: agents[0]
+  },
+
   // The Boulevard - One Bedroom Apartments
   {
     id: 'boulevard-apt-floor-13',
@@ -835,6 +876,10 @@ export function getDisplayPrice(property: Property): string {
       return `$${property.rentPrice.toLocaleString()}/mo`;
     }
     return 'Contact for Price';
+  }
+  // Price 0 means inquiry/contact for price
+  if (property.price === 0) {
+    return 'Inquiry';
   }
   return formatPrice(property.price);
 }
