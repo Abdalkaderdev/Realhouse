@@ -649,24 +649,24 @@ export function renderHomePage(): DocumentFragment {
   hero.id = 'hero';
   hero.setAttribute('aria-label', 'Welcome to Real House - Luxury Real Estate');
 
-  // Hero Slideshow Background - Kark Land Development Aerial Views
+  // Hero Slideshow Background - Projects & Land Development
   const heroImages = [
-    '/images/lands/kark/aerial-01.jpeg',
-    '/images/lands/kark/aerial-02.jpeg',
-    '/images/lands/kark/aerial-03.jpeg',
-    '/images/lands/kark/aerial-04.jpeg',
-    '/images/lands/kark/aerial-05.jpeg',
-    '/images/lands/kark/aerial-06.jpeg',
-    '/images/lands/kark/aerial-07.jpeg'
+    { src: '/images/lands/kark/aerial-01.jpeg', alt: 'Kark land development aerial view' },
+    { src: '/images/projects/cavalli-tower/page01_img01.jpeg', alt: 'Cavalli Tower luxury apartments' },
+    { src: '/images/lands/kark/aerial-05.jpeg', alt: 'Kark land plots in Erbil' },
+    { src: '/images/projects/tulip-towers/page05_img01.jpeg', alt: 'Tulip Towers residential complex' },
+    { src: '/images/projects/ruby-towers/page04_img01.jpeg', alt: 'Ruby Towers modern living' },
+    { src: '/images/projects/empire-square/page12_img01.jpeg', alt: 'Empire Square development' },
+    { src: '/images/lands/kark/aerial-06.jpeg', alt: 'Premium land for sale in Kark' }
   ];
 
   const heroBackground = createElement('div', 'hero__background hero__slideshow');
   heroBackground.setAttribute('aria-hidden', 'true');
 
-  heroImages.forEach((src, index) => {
+  heroImages.forEach((img, index) => {
     const heroImage = document.createElement('img');
-    heroImage.src = src;
-    heroImage.alt = `Aerial view of Kark land development in Erbil - ${index + 1}`;
+    heroImage.src = img.src;
+    heroImage.alt = img.alt;
     heroImage.className = `hero__image hero__slide ${index === 0 ? 'hero__slide--active' : ''}`;
     heroImage.width = 1920;
     heroImage.height = 1080;
