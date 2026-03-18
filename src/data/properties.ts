@@ -121,10 +121,130 @@ export const agents: Agent[] = [
 
 export const properties: Property[] = [
   // ═══════════════════════════════════════════════════════════════════════════
+  // Newly Added Properties
+  // ═══════════════════════════════════════════════════════════════════════════
+  {
+    id: 'hotel-sky-hamilton',
+    title: 'Hotel Sky Hamilton',
+    titleKu: 'هۆتێل سکای هامیڵتۆن',
+    titleAr: 'فندق سكاي هاميلتون',
+    type: 'Hotel',
+    price: 0,
+    status: 'For Sale',
+    badges: ['Exclusive', 'New'],
+    location: {
+      address: 'Baharka Road',
+      city: 'Erbil',
+      district: 'Baharka',
+      country: 'Iraq',
+      coordinates: { lat: 36.216315, lng: 43.9961608 },
+      nearbyLandmarks: ['Baharka Main Road']
+    },
+    specs: {
+      beds: 50, // Represents total rooms
+      baths: 50, // Matching en-suite bathrooms
+      sqm: 1200,
+      numberOfFloors: 6,
+      totalFloors: 6
+    },
+    images: [
+      'https://images.unsplash.com/photo-1566073771259-6a8506099945?w=800&q=80&fm=webp',
+      'https://images.unsplash.com/photo-1582719508461-905c673771fd?w=800&q=80&fm=webp',
+      'https://images.unsplash.com/photo-1497366216548-37526070297c?w=800&q=80&fm=webp'
+    ],
+    description: `Premium hotel property for sale on Baharka Road, Erbil. Hotel Sky Hamilton features 50 fully furnished rooms spread across 6 floors. A fantastic commercial investment opportunity in a rapidly growing area of the city. Features a modern lobby, elevator access, and dedicated parking. Price available upon request.`,
+    features: [
+      'Prime Location',
+      'Fully Furnished',
+      'Elevator',
+      'Parking',
+      '24/7 Security'
+    ],
+    furnishing: 'Fully Furnished',
+    isFeatured: true,
+    isNew: true,
+    neighborhood: {
+      name: 'Baharka',
+      walkScore: 75,
+      description: 'Strategic commercial and residential district in Erbil with excellent connectivity.'
+    },
+    agent: agents[0]
+  },
+
+  // ═══════════════════════════════════════════════════════════════════════════
   // Real House - Exclusive Listings
   // ═══════════════════════════════════════════════════════════════════════════
 
-  // ─── KARK LAND PLOTS ───────────────────────────────────────────────────────
+  // ─── KARK LAND PLOTS & COMMERCIAL ──────────────────────────────────────────
+  {
+    id: 'kark-huge-commercial-land',
+    title: 'Huge Commercial Land in Kark',
+    titleKu: 'زەوی بازرگانی گەورە لە کارک',
+    titleAr: 'أرض تجارية ضخمة في كارك',
+    type: 'Commercial',
+    price: 0, // Contact for price
+    status: 'For Sale',
+    badges: ['Exclusive', 'Hot'],
+    location: {
+      address: 'Main Commercial Zone, Kark',
+      city: 'Erbil',
+      district: 'Kark',
+      country: 'Iraq',
+      coordinates: { lat: 36.264000, lng: 44.023000 },
+      nearbyLandmarks: ['Kark Main Highway']
+    },
+    specs: {
+      beds: 0,
+      baths: 0,
+      sqm: 10000, // 10,000 sqm huge commercial land
+    },
+    images: [
+      '/images/lands/kark/aerial-04.jpeg',
+      '/images/lands/kark/aerial-05.jpeg'
+    ],
+    description: 'A massive 10,000 square meter commercial land plot located in the heart of Kark, Erbil. Perfect for large-scale development, shopping malls, or warehousing. Exceptional highway access.',
+    features: ['Highway Access', 'Commercial Zoning', 'Investment Opportunity'],
+    isFeatured: true,
+    isNew: true,
+    neighborhood: {
+      name: 'Kark'
+    },
+    agent: agents[0]
+  },
+  {
+    id: 'kark-residential-plot-blocks',
+    title: 'Residential Plot Blocks in Kark',
+    titleKu: 'بلۆکی زەوی نیشتەجێبوون لە کارک',
+    titleAr: 'بلوكات أراضي سكنية في كارك',
+    type: 'Land',
+    price: 0,
+    status: 'For Sale',
+    badges: ['New'],
+    location: {
+      address: 'Residential Sector, Kark',
+      city: 'Erbil',
+      district: 'Kark',
+      country: 'Iraq',
+      coordinates: { lat: 36.262500, lng: 44.021000 }
+    },
+    specs: {
+      beds: 0,
+      baths: 0,
+      sqm: 250, // Typical plot size
+    },
+    images: [
+      '/images/lands/kark/aerial-02.jpeg',
+      '/images/lands/kark/aerial-03.jpeg'
+    ],
+    description: 'Premium residential land blocks available in Kark. Subdivided plots starting from 250 sqm up to 1000 sqm. Ideal for building your dream villa or multiple townhouses.',
+    features: ['Residential Zoning', 'Infrastructure Ready', 'Quiet Neighborhood'],
+    isFeatured: false,
+    isNew: true,
+    neighborhood: {
+      name: 'Kark'
+    },
+    agent: agents[1]
+  },
   {
     id: 'kark-land-plot',
     title: 'Land Plot in Kark',

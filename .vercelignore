@@ -1,0 +1,11 @@
+.git
+.vercel
+node_modules
+server/node_modules
+.playwright-mcp
+dist
+uploads
+*lighthouse*
+*.report.html
+*.report.json
+temp_check.txt
