@@ -10191,6 +10191,103 @@ export const blogPosts: BlogPost[] = [
     tags: ['Expat Guide', 'Moving to Erbil', 'Relocation', 'Kurdistan', 'Cost of Living', 'Visa', 'Expat Life'],
     readTime: 12,
     isFeatured: false
+  },
+  {
+    id: 'top-5-new-projects-erbil-2025',
+    title: 'Top 5 New Real Estate Projects in Erbil to Watch in 2025',
+    slug: 'top-5-new-projects-erbil-2025',
+    excerpt: 'Explore the most exciting residential and commercial developments transforming Erbil\'s skyline in 2025, from luxury high-rises to sprawling green villa communities.',
+    content: `
+<p>As we move into 2025, Erbil's real estate market continues to show remarkable resilience and growth. Several major projects are setting new standards for luxury, sustainability, and urban living. Here are the top 5 projects you should keep on your radar this year.</p>
+
+<h2>1. Vana Towers: The Future of Gulan Street</h2>
+<p>Vana Towers is rapidly becoming the new landmark of the Gulan district. With its ultra-modern glass facade and integrated smart home technology, it appeals to a new generation of urban professionals. The infinity pool and high-altitude fitness center offer some of the best views in the city.</p>
+
+<h2>2. Alaska Towers: Sustainable Urban Density</h2>
+<p>Focusing on solar energy and efficient design, Alaska Towers on the 100m road is proving that high-density living can be environmentally conscious. It offers a great entry point for first-time investors looking for quality construction near the airport.</p>
+
+<h2>3. Qaiwan Mirador: Elevated Hillside Luxury</h2>
+<p>For those seeking a cooler climate and panoramic views, Qaiwan Mirador in Pirmam is the ultimate choice. It's not just a residential project; it's a holistic wellness community featuring world-class spa facilities and private schools.</p>
+
+<h2>4. Empire World: The Billion-Dollar Masterpiece</h2>
+<p>While not a "new" project, the ongoing expansion of Empire World—including the new business towers and luxury retail promenades—makes it a perpetual top contender for investment and high-end living in Kurdistan.</p>
+
+<h2>5. Spanish Village 2: Mediterranean Charm</h2>
+<p>Offering a distinct architectural departure from Erbil\'s towers, Spanish Village 2 provides a tranquil, pedestrian-friendly environment focused on family life and lush private gardens. It's the perfect middle ground between the city and nature.</p>
+
+<h3>Investment Tip for 2025</h3>
+<p>Diversification is key. Consider a mix of Ready-to-Move properties in Gulan for immediate rental income and Off-Plan units in emerging areas like 150m road for long-term capital appreciation.</p>
+    `,
+    author: blogAuthors.abdalkader,
+    date: '2025-03-24',
+    image: 'https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=1200&q=80&fm=webp',
+    category: 'Market Trends',
+    tags: ['Erbil Projects', 'Investment 2025', 'Vana Towers', 'Empire World', 'Spanish Village', 'Market Trends'],
+    readTime: 9,
+    isFeatured: true
+  },
+  {
+    id: 'why-erbil-is-safe-haven',
+    title: 'Why Erbil is the Safest Real Estate Haven in the Middle East',
+    slug: 'why-erbil-is-safe-haven',
+    excerpt: 'Discover why international investors are increasingly looking at Erbil as a secure alternative to more volatile markets in the region.',
+    content: `
+<p>In a region often characterized by volatility, Erbil has maintained a steady course of growth and stability. Today, it stands out as one of the most promising "safe centers" for property investment in the Middle East.</p>
+
+<h2>Regional Stability and Security</h2>
+<p>The Kurdistan Region has consistently prioritized security, creating a safe environment for both residents and foreign businesses. This foundation of safety is the primary driver of the region's real estate value appreciation.</p>
+
+<h2>Legal Framework for Foreigners</h2>
+<p>Unlike many other regional markets, the Kurdistan Regional Government (KRG) has established clear, investor-friendly laws that allow foreigners to own property entirely in their own name, providing significant legal peace of mind.</p>
+
+<h2>High Rental Yields</h2>
+<p>With a growing expatriate community, diplomatic presence, and corporate expansion, rental demand in premium areas remains high. Investors in Erbil often see gross rental yields ranging from 6% to 10%, significantly higher than many mature Western markets.</p>
+
+<h3>The "Safe Center" Strategy</h3>
+<p>Investors are moving capital from more volatile cities to Erbil to hedge against regional risks. The city's infrastructure development—specifically the new 150m ring road—is opening up new growth corridors that are expected to appreciate steadily over the next decade.</p>
+    `,
+    author: blogAuthors.mahmood,
+    date: '2025-03-20',
+    image: 'https://images.unsplash.com/photo-1560518883-ce09059eeffa?w=1200&q=80&fm=webp',
+    category: 'Investment',
+    tags: ['Safety', 'Investment', 'Kurdistan', 'Legal', 'Regional Trends', 'Foreign Investment'],
+    readTime: 7,
+    isFeatured: true
+  },
+  {
+    id: 'dream-city-vs-empire-world',
+    title: 'Dream City vs. Empire World: Where Should You Live?',
+    slug: 'dream-city-vs-empire-world',
+    excerpt: 'An in-depth comparison of Erbil\'s two most prestigious developments. We look at lifestyle, amenities, and community to help you choose your next home.',
+    content: `
+<p>If you're looking for the best that Erbil has to offer, you'll inevitably find yourself choosing between Dream City and Empire World. While both represent the pinnacle of luxury, they offer very different lifestyles.</p>
+
+<h2>Dream City: The Suburban Oasis</h2>
+<p>Dream City is designed for those who value space, privacy, and a traditional community atmosphere. It is primarily a villa-based development with quiet streets and private gardens.</p>
+<ul>
+  <li><strong>Lifestye:</strong> Family-oriented, quiet, and secure.</li>
+  <li><strong>Key Perks:</strong> Large private gardens, community parks, and specialized schools nearby.</li>
+  <li><strong>Best For:</strong> Large families and those seeking a retreat from the city's hustle.</li>
+</ul>
+
+<h2>Empire World: The Urban Powerhouse</h2>
+<p>Empire World is the heart of modern, vertical Erbil. It offers a high-energy, mixed-use environment where business, leisure, and residential life intersect.</p>
+<ul>
+  <li><strong>Lifestye:</strong> Fast-paced, cosmopolitan, and convenient.</li>
+  <li><strong>Key Perks:</strong> Walking distance to offices, high-end restaurants, and the JW Marriott hotel.</li>
+  <li><strong>Best For:</strong> Professionals, investors, and those who love vibrant city living.</li>
+</ul>
+
+<h2>The Verdict</h2>
+<p>If you want a private garden and a peaceful home for your children, <strong>Dream City</strong> is unmatched. However, if you want to be in the center of the action with premium amenities just an elevator ride away, <strong>Empire World</strong> is the clear winner.</p>
+    `,
+    author: blogAuthors.karwan,
+    date: '2025-03-15',
+    image: 'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=1200&q=80&fm=webp',
+    category: 'Comparison',
+    tags: ['Dream City', 'Empire World', 'Comparison', 'Lifestyle', 'Erbil Neighborhoods'],
+    readTime: 8,
+    isFeatured: false
   }
 ];
 

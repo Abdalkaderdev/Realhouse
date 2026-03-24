@@ -3,8 +3,8 @@
         xmlns:news="http://www.google.com/schemas/sitemap-news/0.9"
         xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
   <!-- Real House Blog Sitemap - Auto-generated -->
-  <!-- Blog Posts: 66 articles -->
-  <!-- Generated: 2026-03-18 -->
+  <!-- Blog Posts: 69 articles -->
+  <!-- Generated: 2026-03-24 -->
 
   <url>
     <loc>https://realhouseiq.com/blog/erbil-real-estate-market-trends-2025</loc>
@@ -398,6 +398,24 @@
   </url>
   <url>
     <loc>https://realhouseiq.com/blog/moving-to-erbil-essential-guide-expats</loc>
+    <lastmod>undefined</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://realhouseiq.com/blog/top-5-new-projects-erbil-2025</loc>
+    <lastmod>undefined</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://realhouseiq.com/blog/why-erbil-is-safe-haven</loc>
+    <lastmod>undefined</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://realhouseiq.com/blog/dream-city-vs-empire-world</loc>
     <lastmod>undefined</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>

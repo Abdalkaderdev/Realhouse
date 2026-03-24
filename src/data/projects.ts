@@ -4256,6 +4256,259 @@ The master plan prioritizes a pedestrian-friendly lifestyle with dedicated walkw
       { date: '2023-Q2', title: 'Central Park & Amenities', description: '15,000 sqm central park and community amenities finished', completed: true },
       { date: '2023-Q4', title: 'Handover Complete', description: 'All villas handed over to residents', completed: true }
     ]
+  },
+  {
+    id: 'vana-towers',
+    name: 'Vana Towers',
+    developer: 'Vana Group',
+    location: {
+      address: 'Gulan Street, near Family Mall',
+      city: 'Erbil',
+      district: 'Gulan',
+      country: 'Iraq'
+    },
+    status: 'Under Construction',
+    totalUnits: 450,
+    priceRange: {
+      min: 125000,
+      max: 450000,
+      currency: 'USD'
+    },
+    completionDate: '2026',
+    amenities: [
+      'Smart Home Systems',
+      'Panoramic City Views',
+      'Infinity Pool',
+      'High-Speed Elevators',
+      '24/7 Security & Concierge',
+      'Fitness & Wellness Center',
+      'Cafes & Fine Dining'
+    ],
+    images: [
+      'https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=800&q=80&fm=webp',
+      'https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?w=800&q=80&fm=webp'
+    ],
+    description: 'Vana Towers represents the pinnacle of modern urban living in Erbil. Located in the prestigious Gulan district, these towers offer luxury apartments with integrated smart technology and world-class amenities.',
+    propertyIds: []
+  },
+  {
+    id: 'alaska-towers',
+    name: 'Alaska Towers',
+    developer: 'Alaska Group',
+    location: {
+      address: '100m Road, Near Erbil Airport',
+      city: 'Erbil',
+      district: 'Airport Road',
+      country: 'Iraq'
+    },
+    status: 'Under Construction',
+    totalUnits: 600,
+    priceRange: {
+      min: 95000,
+      max: 320000,
+      currency: 'USD'
+    },
+    completionDate: '2026',
+    amenities: [
+      'Modern Architectural Design',
+      'Underground Parking',
+      'Retail Plaza',
+      'Green Spaces',
+      'Kids Play Area',
+      'Solar Energy Systems'
+    ],
+    images: [
+      'https://images.unsplash.com/photo-1565623833408-d77e39b88af6?w=800&q=80&fm=webp',
+      'https://images.unsplash.com/photo-1486325212027-8081e485255e?w=800&q=80&fm=webp'
+    ],
+    description: 'Alaska Towers is a massive residential development focused on providing high-quality, sustainable housing for Erbil\'s growing population. Located strategically on the 100m road.',
+    propertyIds: []
+  },
+  {
+    id: 'english-tower',
+    name: 'English Tower',
+    location: {
+      address: 'Near English Village, Gulan District',
+      city: 'Erbil',
+      district: 'Gulan',
+      country: 'Iraq'
+    },
+    status: 'Ready',
+    totalUnits: 180,
+    priceRange: {
+      min: 180000,
+      max: 650000,
+      currency: 'USD'
+    },
+    completionDate: '2023',
+    amenities: [
+      'European Standard Finishes',
+      'Private Balconies',
+      'Executive Lounge',
+      'Secured Gated Entry',
+      'Dedicated Maintenance Team'
+    ],
+    images: [
+      'https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?w=800&q=80&fm=webp',
+      'https://images.unsplash.com/photo-1567767292278-a4f21aa2d36e?w=800&q=80&fm=webp'
+    ],
+    description: 'English Tower brings British-inspired elegance to the heart of Erbil. Completed in 2023, it remains one of the most sought-after residential towers for professionals and diplomats.',
+    propertyIds: []
+  },
+  {
+    id: 'london-towers',
+    name: 'London Towers',
+    developer: 'London Group',
+    location: {
+      address: '40m Road, near Empire World',
+      city: 'Erbil',
+      district: 'Gulan',
+      country: 'Iraq'
+    },
+    status: 'Under Construction',
+    totalUnits: 320,
+    priceRange: {
+      min: 140000,
+      max: 550000,
+      currency: 'USD'
+    },
+    completionDate: '2027',
+    amenities: [
+      'Modern High-Rise living',
+      'Integrated Retail Shops',
+      'Private Health Club',
+      'Business Center',
+      'Smart Elevator System'
+    ],
+    images: [
+      'https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=800&q=80&fm=webp',
+      'https://images.unsplash.com/photo-1565623833408-d77e39b88af6?w=800&q=80&fm=webp'
+    ],
+    description: 'London Towers is a flagship development offering premium vertical living. With its iconic design and proximity to Erbil\'s business hub, it represents a premier investment opportunity.',
+    propertyIds: []
+  },
+  {
+    id: 'qaiwan-mirador',
+    name: 'Qaiwan Mirador',
+    developer: 'Qaiwan Group',
+    location: {
+      address: 'Pirmam Road, Elevated Area',
+      city: 'Erbil',
+      district: 'Pirmam',
+      country: 'Iraq'
+    },
+    status: 'Coming Soon',
+    totalUnits: 550,
+    priceRange: {
+      min: 250000,
+      max: 1200000,
+      currency: 'USD'
+    },
+    amenities: [
+      'Hillside Living',
+      'Cooler Microclimate',
+      'Luxury Villas & Apparments',
+      'Spa & Holistic Wellness',
+      'Private Schools & Facilities'
+    ],
+    images: [
+      'https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=800&q=80&fm=webp',
+      'https://images.unsplash.com/photo-1564013799919-ab600027ffc6?w=800&q=80&fm=webp'
+    ],
+    description: 'Qaiwan Mirador is an exclusive hillside development offering panoramic views of the Erbil plains. It combines natural beauty with the ultimate in architectural luxury.',
+    propertyIds: []
+  },
+  {
+    id: 'green-land-erbil',
+    name: 'Green Land',
+    location: {
+      address: 'Near 150m Road, East Erbil',
+      city: 'Erbil',
+      district: 'East Erbil',
+      country: 'Iraq'
+    },
+    status: 'Under Construction',
+    totalUnits: 2500,
+    priceRange: {
+      min: 85000,
+      max: 240000,
+      currency: 'USD'
+    },
+    completionDate: '2028',
+    amenities: [
+      'Largest Green Belt in Erbil',
+      'Artificial Lakes',
+      'Walking & Jogging Trails',
+      'Community Sports Complexes',
+      'Eco-Friendly Infrastructure'
+    ],
+    images: [
+      'https://images.unsplash.com/photo-1449824913935-59a10b8d2000?w=800&q=80&fm=webp',
+      'https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=800&q=80&fm=webp'
+    ],
+    description: 'Green Land is set to be Erbil\'s greenest residential community. Stretching across massive acreage, it focuses on environmental sustainability and active outdoor lifestyles.',
+    propertyIds: []
+  },
+  {
+    id: 'address-city',
+    name: 'Address City',
+    location: {
+      address: 'Old Bahirka Road, North Erbil',
+      city: 'Erbil',
+      district: 'Bahirka',
+      country: 'Iraq'
+    },
+    status: 'Under Construction',
+    totalUnits: 421,
+    priceRange: {
+      min: 195000,
+      max: 550000,
+      currency: 'USD'
+    },
+    completionDate: '2026',
+    amenities: [
+      'Private Gated Community',
+      'Premium Villa Designs',
+      'Central Park (30% Green Space)',
+      'Underground Utilities',
+      'Smart Home Ready'
+    ],
+    images: [
+      'https://images.unsplash.com/photo-1512917774080-9991f1c4c750?w=800&q=80&fm=webp',
+      'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=800&q=80&fm=webp'
+    ],
+    description: 'Address City offers a sophisticated villa-only community in the rapidly developing northern part of Erbil. It focuses on privacy, space, and modern aesthetics.',
+    propertyIds: []
+  },
+  {
+    id: 'mirage-city',
+    name: 'Mirage City',
+    location: {
+      address: 'Northeast Erbil, near 150m Street',
+      city: 'Erbil',
+      district: 'Northeast',
+      country: 'Iraq'
+    },
+    status: 'Coming Soon',
+    totalUnits: 850,
+    priceRange: {
+      min: 110000,
+      max: 380000,
+      currency: 'USD'
+    },
+    amenities: [
+      'Ultra-Modern Design',
+      'Solar Powered Common Areas',
+      'Tech-Integrated Community',
+      'Outdoor Cinema',
+      'Creative Workspaces'
+    ],
+    images: [
+      'https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=800&q=80&fm=webp',
+      'https://images.unsplash.com/photo-1486325212027-8081e485255e?w=800&q=80&fm=webp'
+    ],
+    description: 'Mirage City is a futuristic residential project designed for the next generation of Erbil residents. It integrates technology, community, and cutting-edge design.',
+    propertyIds: []
   }
 ];
 
