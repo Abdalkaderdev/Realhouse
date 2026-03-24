@@ -530,17 +530,21 @@
   position: relative;
   border-radius: var(--radius-lg);
   overflow: hidden;
-  background: var(--c-surface);
-  transition: transform 0.4s var(--ease-out), box-shadow 0.4s;
-  border: 1px solid transparent;
+  background: var(--c-glass-bg);
+  backdrop-filter: var(--blur-md);
+  -webkit-backdrop-filter: var(--blur-md);
+  border: 1px solid var(--c-glass-border);
+  transition: transform var(--transition-base), box-shadow var(--transition-base), border-color var(--transition-base);
+  box-shadow: var(--shadow-md);
 
   &:hover {
-    transform: translateY(-6px);
-    box-shadow: 0 12px 48px rgba(201, 168, 76, 0.15);
-    border-color: rgba(201, 168, 76, 0.2);
+    transform: translateY(-10px) scale(1.02);
+    box-shadow: var(--shadow-lg), var(--shadow-gold);
+    border-color: rgba(var(--c-gold-rgb), 0.4);
+    background: var(--c-glass-shine);
 
     .project-card__image {
-      transform: scale(1.05);
+      transform: scale(1.1);
     }
   }
 
