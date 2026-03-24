@@ -704,6 +704,7 @@ export function renderHomePage(): DocumentFragment {
   const heroBackground = createElement('div', 'hero__background hero__slideshow');
   heroBackground.setAttribute('aria-hidden', 'true');
 
+  const slides: HTMLImageElement[] = [];
   heroImages.forEach((img, index) => {
     const heroImage = document.createElement('img');
     heroImage.src = img.src;
@@ -712,7 +713,14 @@ export function renderHomePage(): DocumentFragment {
     heroImage.width = 1920;
     heroImage.height = 1080;
     heroImage.loading = index === 0 ? 'eager' : 'lazy';
+    
+    // Safety check: log error if image fails to load
+    heroImage.onerror = () => {
+      console.error(`[Hero] Failed to load slide ${index}: ${img.src}`);
+    };
+
     heroBackground.appendChild(heroImage);
+    slides.push(heroImage);
   });
 
   hero.appendChild(heroBackground);
@@ -731,36 +739,49 @@ export function renderHomePage(): DocumentFragment {
   const subline = createElement('p', 'hero__subline', heroImages[0].subtitle);
   heroContent.appendChild(subline);
 
-  // Auto-rotate hero images and text every 4 seconds
+  // Auto-rotate hero images and text every 5 seconds
+  // Using a unique interval ID to potentially clear it if needed
+  let currentSlideIndex = 0;
+  const rotateInterval = setInterval(() => {
+    // Check if hero element is still in DOM to avoid leaked intervals
+    if (!document.getElementById('hero')) {
+      clearInterval(rotateInterval);
+      return;
+    }
+
+    // Fade out transition for text
+    headline.style.opacity = '0';
+    subline.style.opacity = '0';
+    headline.style.transform = 'translateY(10px)';
+    subline.style.transform = 'translateY(10px)';
+    headline.style.transition = 'all 0.4s ease';
+    subline.style.transition = 'all 0.4s ease';
+
+    setTimeout(() => {
+      // Remove active class from CURRENT slide
+      slides[currentSlideIndex].classList.remove('hero__slide--active');
+      
+      // Increment and set active on NEXT slide
+      currentSlideIndex = (currentSlideIndex + 1) % slides.length;
+      slides[currentSlideIndex].classList.add('hero__slide--active');
+
+      // Update text
+      headline.textContent = heroImages[currentSlideIndex].title;
+      subline.textContent = heroImages[currentSlideIndex].subtitle;
+
+      // Fade back in
+      headline.style.opacity = '1';
+      subline.style.opacity = '1';
+      headline.style.transform = 'translateY(0)';
+      subline.style.transform = 'translateY(0)';
+    }, 400);
+  }, 5000);
+
+  // Initial animation for first slide
   setTimeout(() => {
-    let currentSlide = 0;
-    const slides = document.querySelectorAll('.hero__slide');
-    if (slides.length > 1) {
-      setInterval(() => {
-        // Fade out transition for text
-        headline.style.opacity = '0';
-        subline.style.opacity = '0';
-        headline.style.transform = 'translateY(10px)';
-        subline.style.transform = 'translateY(10px)';
-        headline.style.transition = 'all 0.4s ease';
-        subline.style.transition = 'all 0.4s ease';
-
-        setTimeout(() => {
-          slides[currentSlide].classList.remove('hero__slide--active');
-          currentSlide = (currentSlide + 1) % slides.length;
-          slides[currentSlide].classList.add('hero__slide--active');
-
-          // Update text
-          headline.textContent = heroImages[currentSlide].title;
-          subline.textContent = heroImages[currentSlide].subtitle;
-
-          // Fade back in
-          headline.style.opacity = '1';
-          subline.style.opacity = '1';
-          headline.style.transform = 'translateY(0)';
-          subline.style.transform = 'translateY(0)';
-        }, 400);
-      }, 5000); // 5 seconds for a better reading pace
+    if (headline && subline) {
+      headline.style.opacity = '1';
+      subline.style.opacity = '1';
     }
   }, 100);
 

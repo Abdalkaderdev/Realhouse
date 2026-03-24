@@ -6130,19 +6130,17 @@ em {
     position: absolute;
     inset: 0;
     opacity: 0;
-    visibility: hidden;
-    transition: opacity 1.5s ease-in-out, visibility 1.5s ease-in-out;
+    transition: opacity 1.5s ease-in-out;
     object-fit: cover;
     width: 100%;
     height: 100%;
     transform: scale(1.05);
-    filter: brightness(0.7); // Improved contrast for text readability
+    filter: brightness(0.65); // Slightly darker for even better text contrast
 
     &--active {
       opacity: 1;
-      visibility: visible;
       z-index: 1;
-      animation: hero-ken-burns 20s ease-in-out infinite alternate !important;
+      animation: hero-ken-burns 12s ease-in-out infinite alternate !important;
     }
   }
 
