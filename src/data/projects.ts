@@ -4184,6 +4184,78 @@ The community features villas and townhouses with traditional Dutch design eleme
 
 North Holland appeals to those seeking a distinctive European aesthetic combined with modern Middle Eastern hospitality and premium residential standards.`,
     propertyIds: []
+  },
+  {
+    id: 'spanish-village-2',
+    name: 'Spanish Village 2',
+    developer: 'Chukargroup',
+    location: {
+      address: 'Outer Ring Road Street (150m Road)',
+      city: 'Erbil',
+      district: 'Outer Ring Road',
+      country: 'Iraq'
+    },
+    status: 'Ready',
+    totalUnits: 120,
+    priceRange: {
+      min: 300000,
+      max: 950000,
+      currency: 'USD'
+    },
+    completionDate: '2023',
+    amenities: [
+      'Spanish-Inspired Architecture',
+      '430 sqm & 610 sqm Villas',
+      '15,000 sqm Central Park',
+      'Panoramic City Views',
+      'Private Garden Per Villa',
+      'Azure Swimming Pool',
+      'Pedestrian Walkways',
+      'Jogging Tracks',
+      'Children\'s Playground',
+      'BBQ Zones & Lawns',
+      'Retail Outlets',
+      'Entertainment Zones',
+      '24-Hour Electricity',
+      '24-Hour Water Supply',
+      'Private Parking Per Villa',
+      'Schools Nearby',
+      'Health Centres Nearby',
+      'Markets, Restaurants & Cafes Nearby'
+    ],
+    images: [
+      '/images/projects/spanish-village-2/sv2_img01.jpg',
+      '/images/projects/spanish-village-2/sv2_img02.jpg',
+      '/images/projects/spanish-village-2/sv2_img03.jpg'
+    ],
+    image: '/images/projects/spanish-village-2/sv2_img02.jpg',
+    gallery: [
+      '/images/projects/spanish-village-2/sv2_img01.jpg',
+      '/images/projects/spanish-village-2/sv2_img02.jpg',
+      '/images/projects/spanish-village-2/sv2_img03.jpg',
+      '/images/projects/spanish-village-2/sv2_img04.jpg',
+      '/images/projects/spanish-village-2/sv2_img05.jpg'
+    ],
+    floorPlanImages: [
+      '/images/projects/spanish-village-2/sv2_img03.jpg',
+      '/images/projects/spanish-village-2/sv2_img04.jpg'
+    ],
+    description: `Spanish Village 2 (Phase II) is a prestigious independent villa community developed by Chukargroup, ideally situated in Erbil's fastest-growing area on Outer Ring Road Street. The project is just 30 minutes from Erbil city center, 20 minutes from Erbil International Airport, and 10 minutes from the main highway (120M St Road).
+
+The community features spacious villas in two sizes — 430 sqm and 610 sqm — each boasting panoramic city views and an exquisite touch of authentic Spanish architecture. Unlike typical brick-dominated developments, Spanish Village 2 is designed around lush greenery, with vibrant private gardens for each villa and a sprawling 15,000 sqm central park at its heart.
+
+Villa options include 4 en-suite bedrooms, multiple living and dining areas, private kitchens, dedicated parking, and generous outdoor garden space. The 430 sqm villa features a 320 sqm built area with 110 sqm allocated for an extra garden and garage.
+
+The master plan prioritizes a pedestrian-friendly lifestyle with dedicated walkways, jogging tracks, children's playgrounds, BBQ zones, lawns, and an azure swimming pool. Retail outlets and entertainment zones are integrated within the community. Residents also benefit from proximity to schools, health centres, markets, restaurants, and cafes, making Spanish Village 2 a perfect habitat for a balanced, luxurious lifestyle in Kurdistan.`,
+    propertyIds: [],
+    constructionProgress: 100,
+    constructionMilestones: [
+      { date: '2019-Q2', title: 'Project Launch', description: 'Spanish Village Phase II launched by Chukargroup', completed: true },
+      { date: '2020-Q3', title: 'Foundation Complete', description: 'Land development and foundation works completed', completed: true },
+      { date: '2022-Q1', title: 'Villa Construction', description: 'Individual villa construction and landscaping underway', completed: true },
+      { date: '2023-Q2', title: 'Central Park & Amenities', description: '15,000 sqm central park and community amenities finished', completed: true },
+      { date: '2023-Q4', title: 'Handover Complete', description: 'All villas handed over to residents', completed: true }
+    ]
   }
 ];
 

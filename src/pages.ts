@@ -651,13 +651,54 @@ export function renderHomePage(): DocumentFragment {
 
   // Hero Slideshow Background - Projects & Land Development
   const heroImages = [
-    { src: '/images/lands/kark/aerial-01.jpeg', alt: 'Kark land development aerial view' },
-    { src: '/images/projects/cavalli-tower/page01_img01.jpeg', alt: 'Cavalli Tower luxury apartments' },
-    { src: '/images/lands/kark/aerial-05.jpeg', alt: 'Kark land plots in Erbil' },
-    { src: '/images/projects/tulip-towers/page05_img01.jpeg', alt: 'Tulip Towers residential complex' },
-    { src: '/images/projects/ruby-towers/page04_img01.jpeg', alt: 'Ruby Towers modern living' },
-    { src: '/images/projects/empire-square/page12_img01.jpeg', alt: 'Empire Square development' },
-    { src: '/images/lands/kark/aerial-06.jpeg', alt: 'Premium land for sale in Kark' }
+    { 
+      src: '/images/projects/spanish-village-2/sv2_img02.jpg', 
+      alt: 'Spanish Village 2 luxury villas',
+      title: 'Experience Spanish Elegance',
+      subtitle: 'Premium villas in the heart of Erbil with breathtaking views.'
+    },
+    { 
+      src: '/images/lands/kark/aerial-01.jpeg', 
+      alt: 'Kark land development aerial view',
+      title: 'Prime Land Opportunities',
+      subtitle: 'Invest in the future of Erbil with our exclusive land developments.'
+    },
+    { 
+      src: '/images/projects/cavalli-tower/page01_img01.jpeg', 
+      alt: 'Cavalli Tower luxury apartments',
+      title: 'Urban Luxury Redefined',
+      subtitle: 'Discover sophisticated living at Cavalli Tower.'
+    },
+    { 
+      src: '/images/lands/kark/aerial-05.jpeg', 
+      alt: 'Kark land plots in Erbil',
+      title: 'Build Your Dream Home',
+      subtitle: 'Spacious plots in Erbil\'s most promising locations.'
+    },
+    { 
+      src: '/images/projects/tulip-towers/page05_img01.jpeg', 
+      alt: 'Tulip Towers residential complex',
+      title: 'Modern Community Living',
+      subtitle: 'Tulip Towers: Where comfort meets contemporary design.'
+    },
+    { 
+      src: '/images/projects/ruby-towers/page04_img01.jpeg', 
+      alt: 'Ruby Towers modern living',
+      title: 'Exquisite Architecture',
+      subtitle: 'Living spaces designed for the modern lifestyle.'
+    },
+    { 
+      src: '/images/projects/empire-square/page12_img01.jpeg', 
+      alt: 'Empire Square development',
+      title: 'Empire Square Excellence',
+      subtitle: 'A landmark development in the heart of Erbil city.'
+    },
+    { 
+      src: '/images/lands/kark/aerial-06.jpeg', 
+      alt: 'Premium land for sale in Kark',
+      title: 'Secure Your Investment',
+      subtitle: 'Trusted real estate infrastructure and land management.'
+    }
   ];
 
   const heroBackground = createElement('div', 'hero__background hero__slideshow');
@@ -676,20 +717,6 @@ export function renderHomePage(): DocumentFragment {
 
   hero.appendChild(heroBackground);
 
-  // Auto-rotate hero images every 4 seconds (start after DOM is ready)
-  setTimeout(() => {
-    let currentSlide = 0;
-    const slides = document.querySelectorAll('.hero__slide');
-    if (slides.length > 1) {
-      setInterval(() => {
-        slides[currentSlide].classList.remove('hero__slide--active');
-        currentSlide = (currentSlide + 1) % slides.length;
-        slides[currentSlide].classList.add('hero__slide--active');
-      }, 4000);
-    }
-  }, 100);
-
-  // Overlay for text readability
   const heroOverlay = createElement('div', 'hero__overlay');
   heroOverlay.setAttribute('aria-hidden', 'true');
   hero.appendChild(heroOverlay);
@@ -697,12 +724,45 @@ export function renderHomePage(): DocumentFragment {
   const heroContent = createElement('div', 'hero__content container');
 
   // Headline
-  const headline = createElement('h1', 'hero__headline', t('hero.title'));
+  const headline = createElement('h1', 'hero__headline', heroImages[0].title);
   heroContent.appendChild(headline);
 
   // Subline
-  const subline = createElement('p', 'hero__subline', t('hero.subtitle'));
+  const subline = createElement('p', 'hero__subline', heroImages[0].subtitle);
   heroContent.appendChild(subline);
+
+  // Auto-rotate hero images and text every 4 seconds
+  setTimeout(() => {
+    let currentSlide = 0;
+    const slides = document.querySelectorAll('.hero__slide');
+    if (slides.length > 1) {
+      setInterval(() => {
+        // Fade out transition for text
+        headline.style.opacity = '0';
+        subline.style.opacity = '0';
+        headline.style.transform = 'translateY(10px)';
+        subline.style.transform = 'translateY(10px)';
+        headline.style.transition = 'all 0.4s ease';
+        subline.style.transition = 'all 0.4s ease';
+
+        setTimeout(() => {
+          slides[currentSlide].classList.remove('hero__slide--active');
+          currentSlide = (currentSlide + 1) % slides.length;
+          slides[currentSlide].classList.add('hero__slide--active');
+
+          // Update text
+          headline.textContent = heroImages[currentSlide].title;
+          subline.textContent = heroImages[currentSlide].subtitle;
+
+          // Fade back in
+          headline.style.opacity = '1';
+          subline.style.opacity = '1';
+          headline.style.transform = 'translateY(0)';
+          subline.style.transform = 'translateY(0)';
+        }, 400);
+      }, 5000); // 5 seconds for a better reading pace
+    }
+  }, 100);
 
   // CTA
   const cta = createElement('div', 'hero__cta');
