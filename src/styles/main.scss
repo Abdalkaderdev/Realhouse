@@ -33,6 +33,7 @@
 @use 'offers';
 @use 'testimonials';
 @use 'careers';
+@use 'property-card-carousel';
 
 // ═══════════════════════════════════════════════════════════════════════════
 // Real House - Main Styles
@@ -1282,8 +1283,10 @@ em {
 
   &__headline {
     margin-bottom: var(--space-6);
-    @extend .animate-reveal;
     @extend .text-gold-gradient;
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.8s var(--ease-luxury), transform 0.8s var(--ease-luxury);
   }
 
   &__subline {
@@ -1293,8 +1296,9 @@ em {
     max-width: 600px;
     margin-left: auto;
     margin-right: auto;
-    @extend .animate-reveal;
-    animation-delay: 0.2s;
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.8s var(--ease-luxury), transform 0.8s var(--ease-luxury);
   }
 
   &__cta {
@@ -6202,7 +6206,35 @@ em {
     &--active {
       opacity: 1;
       z-index: 1;
-      animation: hero-ken-burns 12s ease-in-out infinite alternate !important;
+      animation: hero-ken-burns 12s ease-in-out infinite alternate;
+    }
+  }
+
+  &__dots {
+    display: flex;
+    gap: var(--space-2);
+    justify-content: center;
+    margin-top: var(--space-8);
+  }
+
+  &__dot {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    border: 2px solid rgba(255, 255, 255, 0.4);
+    background: transparent;
+    cursor: pointer;
+    padding: 0;
+    transition: all 0.3s ease;
+
+    &:hover {
+      border-color: var(--c-gold);
+    }
+
+    &--active {
+      background: var(--c-gold);
+      border-color: var(--c-gold);
+      transform: scale(1.2);
     }
   }
 
@@ -6233,7 +6265,6 @@ em {
     margin-bottom: var(--space-10) !important;
     font-size: var(--text-xl) !important;
     color: var(--c-text) !important;
-    opacity: 1 !important;
   }
 }
 

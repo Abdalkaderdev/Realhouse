@@ -25,6 +25,7 @@ import {
   createInternalCTA
 } from '../components/internal-linking';
 import { t } from '../i18n';
+import { addSwipeSupport } from '../utils/touch-swipe';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -651,6 +652,12 @@ function createLightbox(images: string[], startIndex: number = 0): HTMLElement {
     if (e.key === 'ArrowRight') navigate(1);
   }
   document.addEventListener('keydown', handleKeydown);
+
+  // Touch/swipe support for mobile
+  addSwipeSupport(imageContainer, {
+    onSwipeLeft: () => navigate(1),
+    onSwipeRight: () => navigate(-1),
+  });
 
   const observer = new MutationObserver((mutations) => {
     mutations.forEach((mutation) => {

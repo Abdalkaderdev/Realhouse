@@ -27,6 +27,7 @@ import {
   updateImageMetaTags
 } from '../utils/image-seo';
 import { createMortgageWidget } from '../components/mortgage-calculator';
+import { addSwipeSupport } from '../utils/touch-swipe';
 import { createPrintButton } from '../components/print-property';
 import { createVideoTourSection } from '../components/video-tour';
 import { trackPropertyView } from '../components/recently-viewed';
@@ -1132,6 +1133,15 @@ function initializeGallery(property: Property): void {
     if (e.key === 'ArrowRight') updateMainImage(currentIndex + 1);
   });
 
+  // Touch/swipe support for mobile
+  const galleryMain = document.querySelector('.property-detail__gallery-main') as HTMLElement;
+  if (galleryMain) {
+    addSwipeSupport(galleryMain, {
+      onSwipeLeft: () => updateMainImage(currentIndex + 1),
+      onSwipeRight: () => updateMainImage(currentIndex - 1),
+    });
+  }
+
   fullscreenBtn?.addEventListener('click', () => {
     openFullscreenGallery(property, currentIndex);
   });
@@ -1191,6 +1201,12 @@ function openFullscreenGallery(property: Property, startIndex: number): void {
     if (e.key === 'ArrowRight') updateImage(currentIndex + 1);
   };
   document.addEventListener('keydown', handleKeydown);
+
+  // Touch/swipe support for fullscreen gallery
+  addSwipeSupport(imageContainer, {
+    onSwipeLeft: () => updateImage(currentIndex + 1),
+    onSwipeRight: () => updateImage(currentIndex - 1),
+  });
 
   document.body.appendChild(overlay);
   document.body.style.overflow = 'hidden';

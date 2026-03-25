@@ -18,6 +18,7 @@ import {
   injectSchemaGraph,
 } from '../seo/schema';
 import { t } from '../i18n';
+import { addSwipeSupport } from '../utils/touch-swipe';
 
 // ─── Helper Functions ─────────────────────────────────────────────────────
 function createElement<K extends keyof HTMLElementTagNameMap>(
@@ -179,6 +180,12 @@ function openLightbox(index: number): void {
 
     // Keyboard navigation and focus trap
     document.addEventListener('keydown', handleLightboxKeydown);
+
+    // Touch/swipe support for mobile
+    addSwipeSupport(imageWrapper, {
+      onSwipeLeft: () => navigateLightbox(1),
+      onSwipeRight: () => navigateLightbox(-1),
+    });
   }
 
   updateLightboxContent();

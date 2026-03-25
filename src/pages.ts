@@ -12,6 +12,7 @@ import { updateAriaCurrentPage, announcePageChange, createTimeElement, createFig
 import { isFavorite, toggleFavorite, getFavorites, clearFavorites, updateFavoriteButton, updateFavoritesBadge } from './utils/favorites';
 import { createCompareButton, initComparisonBar, updateComparisonBar } from './comparison';
 import { getAmenitiesForDistrict, getCategoryIcon, getCategoryLabel, type Amenity, type DistrictAmenities } from './data/amenities';
+import { addSwipeSupport } from './utils/touch-swipe';
 import { openAppointmentScheduler } from './components/appointment-scheduler';
 import { openVirtualTourModal, injectVirtualTourStyles } from './components/virtual-tour-modal';
 import { openFloorPlanModal, injectFloorPlanStyles } from './components/floor-plan-modal';
@@ -510,19 +511,98 @@ function createPropertyCard(property: Property): HTMLElement {
   // Media section with figure element for semantic markup
   const media = createElement('figure', 'property-card__media');
 
-  // SEO-Optimized Image with srcset, sizes, dimensions
-  const img = createSEOImage({
-    src: property.images[0],
-    alt: generatePropertyAltText(property, 0, 'card'),
-    title: generatePropertyTitle(property),
-    className: 'property-card__image',
-    loading: 'lazy',
-    width: IMAGE_DIMENSIONS.card.width,
-    height: IMAGE_DIMENSIONS.card.height,
-    srcset: generateSrcSet(property.images[0], [400, 600, 800]),
-    sizes: generateSizes('card'),
-  });
-  media.appendChild(img);
+  if (property.images.length > 1) {
+    // Carousel for multiple images
+    const carousel = createElement('div', 'property-card__carousel');
+    const track = createElement('div', 'property-card__carousel-track');
+
+    const maxSlides = Math.min(property.images.length, 5);
+    property.images.slice(0, maxSlides).forEach((imgSrc, index) => {
+      const slide = createElement('div', 'property-card__carousel-slide');
+      const slideImg = createSEOImage({
+        src: imgSrc,
+        alt: generatePropertyAltText(property, index, 'card'),
+        title: index === 0 ? generatePropertyTitle(property) : '',
+        className: 'property-card__image',
+        loading: 'lazy',
+        width: IMAGE_DIMENSIONS.card.width,
+        height: IMAGE_DIMENSIONS.card.height,
+        srcset: generateSrcSet(imgSrc, [400, 600, 800]),
+        sizes: generateSizes('card'),
+      });
+      slide.appendChild(slideImg);
+      track.appendChild(slide);
+    });
+
+    carousel.appendChild(track);
+
+    // Dot indicators (clickable)
+    const dots = createElement('div', 'property-card__dots');
+    let currentSlide = 0;
+
+    const updateSlide = (index: number) => {
+      currentSlide = index;
+      track.style.transform = `translateX(-${currentSlide * 100}%)`;
+      dots.querySelectorAll('.property-card__dot').forEach((d, i) => {
+        d.classList.toggle('property-card__dot--active', i === currentSlide);
+      });
+    };
+
+    for (let i = 0; i < maxSlides; i++) {
+      const dot = createElement('button', `property-card__dot${i === 0 ? ' property-card__dot--active' : ''}`);
+      dot.setAttribute('aria-label', `Image ${i + 1}`);
+      dot.addEventListener('click', (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        updateSlide(i);
+      });
+      dots.appendChild(dot);
+    }
+    carousel.appendChild(dots);
+
+    // Prev/Next buttons
+    const prevBtn = createElement('button', 'property-card__carousel-btn property-card__carousel-btn--prev');
+    prevBtn.innerHTML = '&#8249;';
+    prevBtn.setAttribute('aria-label', 'Previous image');
+    prevBtn.addEventListener('click', (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+      updateSlide(currentSlide === 0 ? maxSlides - 1 : currentSlide - 1);
+    });
+    carousel.appendChild(prevBtn);
+
+    const nextBtn = createElement('button', 'property-card__carousel-btn property-card__carousel-btn--next');
+    nextBtn.innerHTML = '&#8250;';
+    nextBtn.setAttribute('aria-label', 'Next image');
+    nextBtn.addEventListener('click', (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+      updateSlide(currentSlide === maxSlides - 1 ? 0 : currentSlide + 1);
+    });
+    carousel.appendChild(nextBtn);
+
+    // Touch/swipe on card carousel
+    addSwipeSupport(carousel, {
+      onSwipeLeft: () => updateSlide(currentSlide === maxSlides - 1 ? 0 : currentSlide + 1),
+      onSwipeRight: () => updateSlide(currentSlide === 0 ? maxSlides - 1 : currentSlide - 1),
+    });
+
+    media.appendChild(carousel);
+  } else {
+    // Single image fallback
+    const img = createSEOImage({
+      src: property.images[0],
+      alt: generatePropertyAltText(property, 0, 'card'),
+      title: generatePropertyTitle(property),
+      className: 'property-card__image',
+      loading: 'lazy',
+      width: IMAGE_DIMENSIONS.card.width,
+      height: IMAGE_DIMENSIONS.card.height,
+      srcset: generateSrcSet(property.images[0], [400, 600, 800]),
+      sizes: generateSizes('card'),
+    });
+    media.appendChild(img);
+  }
 
   const overlay = createElement('div', 'property-card__overlay');
   overlay.setAttribute('aria-hidden', 'true'); // Decorative element
@@ -740,16 +820,18 @@ export function renderHomePage(): DocumentFragment {
   heroContent.appendChild(subline);
 
   // Auto-rotate hero images and text every 5 seconds
-  // Using a unique interval ID to potentially clear it if needed
   let currentSlideIndex = 0;
-  const rotateInterval = setInterval(() => {
+  let isTransitioning = false;
+
+  const startAutoRotate = () => setInterval(() => {
+    if (isTransitioning) return;
     // Check if hero element is still in DOM to avoid leaked intervals
     if (!document.getElementById('hero')) {
       clearInterval(rotateInterval);
       return;
     }
 
-    // Fade out transition for text
+    isTransitioning = true;
     headline.style.opacity = '0';
     subline.style.opacity = '0';
     headline.style.transform = 'translateY(10px)';
@@ -758,24 +840,26 @@ export function renderHomePage(): DocumentFragment {
     subline.style.transition = 'all 0.4s ease';
 
     setTimeout(() => {
-      // Remove active class from CURRENT slide
       slides[currentSlideIndex].classList.remove('hero__slide--active');
-      
-      // Increment and set active on NEXT slide
       currentSlideIndex = (currentSlideIndex + 1) % slides.length;
       slides[currentSlideIndex].classList.add('hero__slide--active');
 
-      // Update text
+      dotsContainer.querySelectorAll('.hero__dot').forEach((dot, i) => {
+        dot.classList.toggle('hero__dot--active', i === currentSlideIndex);
+        dot.setAttribute('aria-selected', i === currentSlideIndex ? 'true' : 'false');
+      });
+
       headline.textContent = heroImages[currentSlideIndex].title;
       subline.textContent = heroImages[currentSlideIndex].subtitle;
-
-      // Fade back in
       headline.style.opacity = '1';
       subline.style.opacity = '1';
       headline.style.transform = 'translateY(0)';
       subline.style.transform = 'translateY(0)';
+      isTransitioning = false;
     }, 400);
   }, 5000);
+
+  let rotateInterval = startAutoRotate();
 
   // Initial animation for first slide
   setTimeout(() => {
@@ -797,7 +881,65 @@ export function renderHomePage(): DocumentFragment {
   cta.appendChild(consultationBtn);
   heroContent.appendChild(cta);
 
+  // Slide indicator dots
+  const dotsContainer = createElement('div', 'hero__dots');
+  dotsContainer.setAttribute('role', 'tablist');
+  dotsContainer.setAttribute('aria-label', 'Slide navigation');
+
+  const goToSlide = (targetIndex: number) => {
+    if (targetIndex === currentSlideIndex || isTransitioning) return;
+
+    // Pause auto-rotation during manual navigation, restart after
+    clearInterval(rotateInterval);
+    isTransitioning = true;
+
+    headline.style.opacity = '0';
+    subline.style.opacity = '0';
+    headline.style.transform = 'translateY(10px)';
+    subline.style.transform = 'translateY(10px)';
+
+    setTimeout(() => {
+      slides[currentSlideIndex].classList.remove('hero__slide--active');
+      currentSlideIndex = targetIndex;
+      slides[currentSlideIndex].classList.add('hero__slide--active');
+
+      dotsContainer.querySelectorAll('.hero__dot').forEach((d, i) => {
+        d.classList.toggle('hero__dot--active', i === currentSlideIndex);
+        d.setAttribute('aria-selected', i === currentSlideIndex ? 'true' : 'false');
+      });
+
+      headline.textContent = heroImages[currentSlideIndex].title;
+      subline.textContent = heroImages[currentSlideIndex].subtitle;
+      headline.style.opacity = '1';
+      subline.style.opacity = '1';
+      headline.style.transform = 'translateY(0)';
+      subline.style.transform = 'translateY(0)';
+
+      isTransitioning = false;
+      rotateInterval = startAutoRotate();
+    }, 400);
+  };
+
+  heroImages.forEach((_, index) => {
+    const dot = createElement('button', `hero__dot${index === 0 ? ' hero__dot--active' : ''}`);
+    dot.setAttribute('role', 'tab');
+    dot.setAttribute('aria-selected', index === 0 ? 'true' : 'false');
+    dot.setAttribute('aria-label', `Go to slide ${index + 1}`);
+    dot.setAttribute('data-slide', index.toString());
+    dot.addEventListener('click', () => goToSlide(index));
+    dotsContainer.appendChild(dot);
+  });
+
+  heroContent.appendChild(dotsContainer);
+
   hero.appendChild(heroContent);
+
+  // Touch/swipe support for hero
+  addSwipeSupport(hero, {
+    onSwipeLeft: () => goToSlide((currentSlideIndex + 1) % slides.length),
+    onSwipeRight: () => goToSlide((currentSlideIndex - 1 + slides.length) % slides.length),
+  });
+
   fragment.appendChild(hero);
 
   // Trust Badges Section
