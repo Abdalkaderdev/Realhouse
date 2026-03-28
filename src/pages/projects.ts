@@ -42,6 +42,7 @@ import {
 } from '../components/internal-linking';
 import { createInquiryButton } from '../components/project-inquiry-form';
 import { t } from '../i18n';
+import { addSwipeSupport } from '../utils/touch-swipe';
 
 // ─── Helper Functions ─────────────────────────────────────────────────────
 function createElement<K extends keyof HTMLElementTagNameMap>(
@@ -299,10 +300,12 @@ function createDetailProgressSection(project: Project): HTMLElement {
 // ─── Project Filter State ─────────────────────────────────────────────────
 interface ProjectFilterState {
   status: string;
+  search: string;
 }
 
 let currentProjectFilterState: ProjectFilterState = {
-  status: 'All'
+  status: 'All',
+  search: ''
 };
 
 // ─── Project Card Component ───────────────────────────────────────────────
@@ -313,19 +316,98 @@ function createProjectCard(project: Project): HTMLElement {
   // Media section
   const media = createElement('div', 'project-card__media');
 
-  // SEO-Optimized project image
-  const img = createSEOImage({
-    src: project.images[0],
-    alt: generateProjectAltText(project, 0, 'card'),
-    title: generateProjectTitle(project),
-    className: 'project-card__image',
-    loading: 'lazy',
-    width: IMAGE_DIMENSIONS.card.width,
-    height: IMAGE_DIMENSIONS.card.height,
-    srcset: generateSrcSet(project.images[0], [400, 600, 800]),
-    sizes: generateSizes('card'),
-  });
-  media.appendChild(img);
+  if (project.images.length > 1) {
+    // Carousel for multiple images
+    const carousel = createElement('div', 'project-card__carousel');
+    const track = createElement('div', 'project-card__carousel-track');
+
+    const maxSlides = Math.min(project.images.length, 5);
+    project.images.slice(0, maxSlides).forEach((imgSrc, index) => {
+      const slide = createElement('div', 'project-card__carousel-slide');
+      const slideImg = createSEOImage({
+        src: imgSrc,
+        alt: generateProjectAltText(project, index, 'card'),
+        title: index === 0 ? generateProjectTitle(project) : '',
+        className: 'project-card__image',
+        loading: 'lazy',
+        width: IMAGE_DIMENSIONS.card.width,
+        height: IMAGE_DIMENSIONS.card.height,
+        srcset: generateSrcSet(imgSrc, [400, 600, 800]),
+        sizes: generateSizes('card'),
+      });
+      slide.appendChild(slideImg);
+      track.appendChild(slide);
+    });
+
+    carousel.appendChild(track);
+
+    // Dot indicators (clickable)
+    const dots = createElement('div', 'project-card__dots');
+    let currentSlide = 0;
+
+    const updateSlide = (index: number) => {
+      currentSlide = index;
+      track.style.transform = `translateX(-${currentSlide * 100}%)`;
+      dots.querySelectorAll('.project-card__dot').forEach((d, i) => {
+        d.classList.toggle('project-card__dot--active', i === currentSlide);
+      });
+    };
+
+    for (let i = 0; i < maxSlides; i++) {
+      const dot = createElement('button', `project-card__dot${i === 0 ? ' project-card__dot--active' : ''}`);
+      dot.setAttribute('aria-label', `Image ${i + 1}`);
+      dot.addEventListener('click', (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        updateSlide(i);
+      });
+      dots.appendChild(dot);
+    }
+    carousel.appendChild(dots);
+
+    // Prev/Next buttons
+    const prevBtn = createElement('button', 'project-card__carousel-btn project-card__carousel-btn--prev');
+    prevBtn.innerHTML = '&#8249;';
+    prevBtn.setAttribute('aria-label', 'Previous image');
+    prevBtn.addEventListener('click', (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+      updateSlide(currentSlide === 0 ? maxSlides - 1 : currentSlide - 1);
+    });
+    carousel.appendChild(prevBtn);
+
+    const nextBtn = createElement('button', 'project-card__carousel-btn project-card__carousel-btn--next');
+    nextBtn.innerHTML = '&#8250;';
+    nextBtn.setAttribute('aria-label', 'Next image');
+    nextBtn.addEventListener('click', (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+      updateSlide(currentSlide === maxSlides - 1 ? 0 : currentSlide + 1);
+    });
+    carousel.appendChild(nextBtn);
+
+    // Touch/swipe
+    addSwipeSupport(carousel, {
+      onSwipeLeft: () => updateSlide(currentSlide === maxSlides - 1 ? 0 : currentSlide + 1),
+      onSwipeRight: () => updateSlide(currentSlide === 0 ? maxSlides - 1 : currentSlide - 1),
+    });
+
+    media.appendChild(carousel);
+  } else {
+    // Single image fallback
+    const img = createSEOImage({
+      src: project.images[0],
+      alt: generateProjectAltText(project, 0, 'card'),
+      title: generateProjectTitle(project),
+      className: 'project-card__image',
+      loading: 'lazy',
+      width: IMAGE_DIMENSIONS.card.width,
+      height: IMAGE_DIMENSIONS.card.height,
+      srcset: generateSrcSet(project.images[0], [400, 600, 800]),
+      sizes: generateSizes('card'),
+    });
+    media.appendChild(img);
+  }
 
   const overlay = createElement('div', 'project-card__overlay');
   media.appendChild(overlay);
@@ -422,7 +504,8 @@ export function renderProjectsPage(): DocumentFragment {
 
   // Reset filter state when page loads
   currentProjectFilterState = {
-    status: 'All'
+    status: 'All',
+    search: ''
   };
 
   const page = createElement('div', 'projects-page');
@@ -443,6 +526,20 @@ export function renderProjectsPage(): DocumentFragment {
   const subtitle = createElement('p', 'projects-page__subtitle', t('projectsPage.subtitle'));
   header.appendChild(subtitle);
   container.appendChild(header);
+
+  // Search bar
+  const searchSection = createElement('div', 'projects-page__search');
+  const searchInput = createElement('input', 'projects-page__search-input') as HTMLInputElement;
+  searchInput.type = 'search';
+  searchInput.placeholder = 'Search projects by name, location, or developer...';
+  searchInput.id = 'projects-search';
+  searchInput.setAttribute('aria-label', 'Search projects');
+  searchSection.appendChild(searchInput);
+  const searchCount = createElement('span', 'projects-page__search-count');
+  searchCount.id = 'projects-search-count';
+  searchCount.textContent = `${projects.length} projects`;
+  searchSection.appendChild(searchCount);
+  container.appendChild(searchSection);
 
   // Status Filter
   const filterGroup = createElement('div', 'projects-page__filter-group');
@@ -496,18 +593,41 @@ export function renderProjectsPage(): DocumentFragment {
       gridEl.removeChild(gridEl.firstChild);
     }
 
-    // Filter projects
+    // Filter projects by status and search
+    const searchTerm = currentProjectFilterState.search.toLowerCase().trim();
     const filteredProjects = projects.filter(project => {
       if (currentProjectFilterState.status !== 'All' && project.status !== currentProjectFilterState.status) {
         return false;
       }
+      if (searchTerm) {
+        const searchableText = [
+          project.name,
+          project.location.district,
+          project.location.city,
+          project.location.address,
+          project.developer || '',
+          project.status,
+          project.description
+        ].join(' ').toLowerCase();
+        if (!searchableText.includes(searchTerm)) {
+          return false;
+        }
+      }
       return true;
     });
+
+    // Update search count
+    const countEl = document.getElementById('projects-search-count');
+    if (countEl) {
+      countEl.textContent = `${filteredProjects.length} project${filteredProjects.length !== 1 ? 's' : ''}`;
+    }
 
     if (filteredProjects.length === 0) {
       const noResults = createElement('div', 'projects-page__no-results');
       const noResultsTitle = createElement('h3', undefined, t('projectsPage.noProjectsFound'));
-      const noResultsText = createElement('p', undefined, t('projectsPage.tryDifferentFilter'));
+      const noResultsText = createElement('p', undefined, searchTerm
+        ? 'No projects match your search. Try a different keyword.'
+        : t('projectsPage.tryDifferentFilter'));
       noResults.appendChild(noResultsTitle);
       noResults.appendChild(noResultsText);
       gridEl.appendChild(noResults);
@@ -540,6 +660,20 @@ export function renderProjectsPage(): DocumentFragment {
         updateProjectComparisonBar();
       });
     });
+
+    // Search input handler
+    const searchEl = document.getElementById('projects-search') as HTMLInputElement;
+    if (searchEl) {
+      let debounceTimer: ReturnType<typeof setTimeout>;
+      searchEl.addEventListener('input', () => {
+        clearTimeout(debounceTimer);
+        debounceTimer = setTimeout(() => {
+          currentProjectFilterState.search = searchEl.value;
+          renderGrid();
+          updateProjectComparisonBar();
+        }, 200);
+      });
+    }
 
     // Initialize project comparison bar
     initProjectComparisonBar();
