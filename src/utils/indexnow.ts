@@ -15,7 +15,7 @@
  * - Lowercase alphanumeric only (a-z, 0-9)
  * - No special characters
  */
-const INDEXNOW_KEY = 'a1b2c3d4e5f6g7h8i9j0k1l2m3n4o5p6'; // TODO: Replace with your actual key
+const INDEXNOW_KEY = '5srttrwsv1tfzbwmj8uqigc7jtlbi6m8';
 const SITE_HOST = 'realhouseiq.com';
 const KEY_LOCATION = `https://${SITE_HOST}/indexnow-key.txt`;
 

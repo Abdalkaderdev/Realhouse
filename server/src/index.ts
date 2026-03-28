@@ -14,6 +14,7 @@ import inquiriesRoutes from './routes/inquiries.js';
 import contentRoutes from './routes/content.js';
 import uploadRoutes from './routes/upload.js';
 import settingsRoutes from './routes/settings.js';
+import indexnowRoutes from './routes/indexnow.js';
 
 const app = express();
 const PORT = process.env.PORT || 3001;
@@ -68,6 +69,7 @@ app.use('/api/inquiries', inquiriesRoutes);
 app.use('/api/content', contentRoutes);
 app.use('/api/upload', uploadRoutes);
 app.use('/api/settings', settingsRoutes);
+app.use('/api/indexnow', indexnowRoutes);
 
 // Serve admin panel
 const adminPath = path.join(process.cwd(), 'admin');

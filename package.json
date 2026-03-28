@@ -10,7 +10,9 @@
     "server": "tsx server/src/index.ts",
     "server:dev": "tsx watch server/src/index.ts",
     "dev:all": "concurrently \"npm run dev\" \"npm run server:dev\"",
-    "sitemaps": "tsx scripts/generate-sitemaps.ts"
+    "sitemaps": "tsx scripts/generate-sitemaps.ts",
+    "indexnow": "tsx scripts/submit-indexnow.ts",
+    "deploy": "npm run build && npm run indexnow"
   },
   "dependencies": {
     "@types/leaflet.markercluster": "^1.5.6",
