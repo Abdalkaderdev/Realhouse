@@ -522,12 +522,12 @@ export function setupTestimonialsPageSEO(): void {
     'image': 'https://realhouseiq.com/logo.png',
     'address': {
       '@type': 'PostalAddress',
-      'streetAddress': 'Gulan Street, Dream City',
+      'streetAddress': 'Queen Tower, Erbil',
       'addressLocality': 'Erbil',
       'addressRegion': 'Kurdistan Region',
       'addressCountry': 'IQ'
     },
-    'telephone': '+964-750-792-2138',
+    'telephone': '+964 750 792 2138',
     'url': 'https://realhouseiq.com',
     'aggregateRating': {
       '@type': 'AggregateRating',

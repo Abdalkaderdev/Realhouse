@@ -1194,7 +1194,7 @@ function generateOrganizationSchema(): object {
     'email': 'info@realhouseiq.com',
     'address': {
       '@type': 'PostalAddress',
-      'streetAddress': 'Dream City Main Boulevard, Building A3',
+      'streetAddress': 'Queen Tower, Erbil',
       'addressLocality': 'Erbil',
       'addressRegion': 'Kurdistan Region',
       'postalCode': '44001',

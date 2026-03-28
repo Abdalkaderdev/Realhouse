@@ -455,7 +455,7 @@ export function generateJobPostingSchema(job: JobListing): object {
       '@type': 'Place',
       'address': {
         '@type': 'PostalAddress',
-        'streetAddress': 'Queen Tower',
+        'streetAddress': 'Queen Tower, Erbil',
         'addressLocality': 'Erbil',
         'addressRegion': 'Kurdistan Region',
         'postalCode': '44001',

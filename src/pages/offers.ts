@@ -813,7 +813,7 @@ function injectOfferDetailSchema(offer: Offer): void {
       '@type': 'RealEstateAgent',
       'name': 'Real House',
       'url': 'https://realhouseiq.com',
-      'telephone': '+964-750-792-2138',
+      'telephone': '+964 750 792 2138',
       'address': {
         '@type': 'PostalAddress',
         'streetAddress': 'Queen Tower, Erbil',

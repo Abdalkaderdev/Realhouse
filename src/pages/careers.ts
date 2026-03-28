@@ -955,7 +955,7 @@ function generateEmployerSchema(): object {
     },
     'address': {
       '@type': 'PostalAddress',
-      'streetAddress': 'Queen Tower',
+      'streetAddress': 'Queen Tower, Erbil',
       'addressLocality': 'Erbil',
       'addressRegion': 'Kurdistan Region',
       'postalCode': '44001',
@@ -963,7 +963,7 @@ function generateEmployerSchema(): object {
     },
     'contactPoint': {
       '@type': 'ContactPoint',
-      'telephone': '+964-750-792-2138',
+      'telephone': '+964 750 792 2138',
       'contactType': 'Human Resources',
       'email': 'careers@realhouseiq.com'
     }

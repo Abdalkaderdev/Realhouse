@@ -1182,6 +1182,12 @@ export class App {
     const slug = generatePropertySlug(property);
     const canonicalUrl = `https://realhouseiq.com/properties/${slug}`;
     this.updateOrCreateLink('canonical', canonicalUrl);
+
+    // Open Graph - use actual property image
+    this.updateOrCreateMeta('property', 'og:image', property.images[0] || 'https://realhouseiq.com/og-image.jpg');
+
+    // Twitter - use actual property image
+    this.updateOrCreateMeta('name', 'twitter:image', property.images[0] || 'https://realhouseiq.com/twitter-card.jpg');
   }
 
   private updateProjectMeta(project: import('./data/projects').Project): void {

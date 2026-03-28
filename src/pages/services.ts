@@ -827,7 +827,7 @@ export function setupServiceDetailPageSEO(service: Service): void {
       '@type': 'RealEstateAgent',
       'name': 'Real House',
       'url': BASE_URL,
-      'telephone': '+964-750-792-2138',
+      'telephone': '+964 750 792 2138',
       'email': 'info@realhouseiq.com',
       'address': {
         '@type': 'PostalAddress',
@@ -909,6 +909,8 @@ export function setupServiceDetailPageSEO(service: Service): void {
   faqSchema.textContent = JSON.stringify({
     '@context': 'https://schema.org',
     '@type': 'FAQPage',
+    'datePublished': '2025-01-01',
+    'dateModified': '2026-03-28',
     'mainEntity': service.faqs.map(faq => ({
       '@type': 'Question',
       'name': faq.question,

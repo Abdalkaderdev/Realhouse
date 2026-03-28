@@ -515,7 +515,7 @@ function generateProjectSchema(project: Project): string {
         '@type': 'RealEstateAgent',
         'name': 'Real House',
         'url': 'https://realhouseiq.com',
-        'telephone': '+964-750-792-2138'
+        'telephone': '+964 750 792 2138'
       }
     },
     'amenityFeature': project.amenities.map(amenity => ({
@@ -529,10 +529,10 @@ function generateProjectSchema(project: Project): string {
       'name': 'Real House',
       'url': 'https://realhouseiq.com',
       'logo': 'https://realhouseiq.com/logo.png',
-      'telephone': '+964-750-792-2138',
+      'telephone': '+964 750 792 2138',
       'address': {
         '@type': 'PostalAddress',
-        'streetAddress': 'Dream City',
+        'streetAddress': 'Queen Tower, Erbil',
         'addressLocality': 'Erbil',
         'addressRegion': 'Kurdistan Region',
         'addressCountry': 'IQ'

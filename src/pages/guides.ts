@@ -545,6 +545,8 @@ export function setupGuidePageSEO(guide: Guide): void {
     faqSchema.textContent = JSON.stringify({
       '@context': 'https://schema.org',
       '@type': 'FAQPage',
+      'datePublished': '2025-01-01',
+      'dateModified': '2026-03-28',
       mainEntity: guide.faqs.map(faq => ({
         '@type': 'Question',
         name: faq.question,

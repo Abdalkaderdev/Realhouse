@@ -65,7 +65,7 @@ const COMPANY_INFO = {
   numberOfEmployees: '10-50',
   slogan: 'Your Trusted Partner in Luxury Real Estate',
   description: 'Premier luxury real estate agency in Erbil, Kurdistan Region, Iraq. Specializing in villas, apartments, penthouses, commercial properties, and real estate investment opportunities.',
-  telephone: ['+964-750-792-2138', '+964-751-441-5003'],
+  telephone: ['+964 750 792 2138', '+964 751 441 5003'],
   email: 'info@realhouseiq.com',
   address: {
     streetAddress: 'Queen Tower, Erbil',
@@ -444,7 +444,7 @@ export function generateHomeFAQSchema(): object {
   const homeFaqs = [
     {
       question: 'What is the best area to buy property in Erbil?',
-      answer: 'The best areas to buy property in Erbil depend on your needs. Gulan District is ideal for professionals seeking modern apartments near shopping and dining. Dream City is perfect for families wanting spacious villas in a gated community. Italian Village and English Village offer unique European-style homes. Empire World provides luxury high-rise living with premium amenities. Ankawa is popular with expatriates for its diverse community and vibrant restaurant scene. Contact Real House at +964-750-792-2138 for personalized recommendations.'
+      answer: 'The best areas to buy property in Erbil depend on your needs. Gulan District is ideal for professionals seeking modern apartments near shopping and dining. Dream City is perfect for families wanting spacious villas in a gated community. Italian Village and English Village offer unique European-style homes. Empire World provides luxury high-rise living with premium amenities. Ankawa is popular with expatriates for its diverse community and vibrant restaurant scene. Contact Real House at +964 750 792 2138 for personalized recommendations.'
     },
     {
       question: 'Can foreigners buy property in Kurdistan Iraq?',
@@ -460,7 +460,7 @@ export function generateHomeFAQSchema(): object {
     },
     {
       question: 'How do I schedule a property viewing in Erbil?',
-      answer: 'Scheduling a viewing with Real House is easy. You can: call us at +964-750-792-2138 or +964-751-441-5003, email info@realhouseiq.com, use the "Schedule Viewing" button on any property listing, or visit our office in Dream City, Erbil. We offer flexible viewing times including evenings and weekends. Virtual tours via video call are also available for international clients.'
+      answer: 'Scheduling a viewing with Real House is easy. You can: call us at +964 750 792 2138 or +964 751 441 5003, email info@realhouseiq.com, use the "Schedule Viewing" button on any property listing, or visit our office in Dream City, Erbil. We offer flexible viewing times including evenings and weekends. Virtual tours via video call are also available for international clients.'
     },
     {
       question: 'What types of properties does Real House offer?',
@@ -488,6 +488,8 @@ export function generateHomeFAQSchema(): object {
     '@context': 'https://schema.org',
     '@type': 'FAQPage',
     '@id': `${BASE_URL}/#faq`,
+    'datePublished': '2025-01-01',
+    'dateModified': '2026-03-28',
     'mainEntity': homeFaqs.map(faq => ({
       '@type': 'Question',
       'name': faq.question,
@@ -538,6 +540,8 @@ export function generateAboutFAQSchema(): object {
     '@context': 'https://schema.org',
     '@type': 'FAQPage',
     '@id': `${BASE_URL}/about#faq`,
+    'datePublished': '2025-01-01',
+    'dateModified': '2026-03-28',
     'mainEntity': aboutFaqs.map(faq => ({
       '@type': 'Question',
       'name': faq.question,
@@ -560,11 +564,11 @@ export function generateContactFAQSchema(): object {
     },
     {
       question: 'Where is the Real House office located?',
-      answer: 'Our main office is located in Dream City, Erbil, Kurdistan Region, Iraq. The office is easily accessible and has ample parking. We can provide directions via Google Maps or WhatsApp upon request. Call +964-750-792-2138 for specific directions.'
+      answer: 'Our main office is located in Dream City, Erbil, Kurdistan Region, Iraq. The office is easily accessible and has ample parking. We can provide directions via Google Maps or WhatsApp upon request. Call +964 750 792 2138 for specific directions.'
     },
     {
       question: 'How can I contact Real House?',
-      answer: 'You can reach Real House through multiple channels: Phone: +964-750-792-2138 or +964-751-441-5003, Email: info@realhouseiq.com, WhatsApp: +964-750-792-2138, Instagram: @realhouseiq, Facebook: Real House Erbil, or visit our office in Dream City. We typically respond to inquiries within 2-4 hours during business hours.'
+      answer: 'You can reach Real House through multiple channels: Phone: +964 750 792 2138 or +964 751 441 5003, Email: info@realhouseiq.com, WhatsApp: +964 750 792 2138, Instagram: @realhouseiq, Facebook: Real House Erbil, or visit our office in Dream City. We typically respond to inquiries within 2-4 hours during business hours.'
     },
     {
       question: 'Does Real House offer virtual consultations?',
@@ -572,7 +576,7 @@ export function generateContactFAQSchema(): object {
     },
     {
       question: 'How quickly does Real House respond to inquiries?',
-      answer: 'We aim to respond to all inquiries within 2-4 hours during business hours. For urgent matters, please call our office directly at +964-750-792-2138. After-hours inquiries are typically addressed first thing the next business day.'
+      answer: 'We aim to respond to all inquiries within 2-4 hours during business hours. For urgent matters, please call our office directly at +964 750 792 2138. After-hours inquiries are typically addressed first thing the next business day.'
     },
     {
       question: 'Can I visit properties on weekends?',
@@ -588,6 +592,8 @@ export function generateContactFAQSchema(): object {
     '@context': 'https://schema.org',
     '@type': 'FAQPage',
     '@id': `${BASE_URL}/contact#faq`,
+    'datePublished': '2025-01-01',
+    'dateModified': '2026-03-28',
     'mainEntity': contactFaqs.map(faq => ({
       '@type': 'Question',
       'name': faq.question,
@@ -612,6 +618,8 @@ export function generateFAQSchema(): object {
     '@id': `${BASE_URL}/faq#faqpage`,
     'name': 'Frequently Asked Questions - Real House Erbil',
     'description': 'Comprehensive FAQ about buying, selling, renting, and investing in Erbil real estate. 50+ expert answers for property buyers in Kurdistan.',
+    'datePublished': '2025-01-01',
+    'dateModified': '2026-03-28',
     'mainEntity': allFaqs.map((faq: FAQ) => ({
       '@type': 'Question',
       'name': faq.question,
@@ -636,6 +644,8 @@ export function generateCategoryFAQSchema(categoryId: string): object {
     '@id': `${BASE_URL}/faq#${categoryId}`,
     'name': `${category.title} - Real House Erbil FAQ`,
     'description': category.description,
+    'datePublished': '2025-01-01',
+    'dateModified': '2026-03-28',
     'mainEntity': category.faqs.map((faq: FAQ) => ({
       '@type': 'Question',
       'name': faq.question,
@@ -701,6 +711,8 @@ export function generatePeopleAlsoAskSchema(): object {
     '@id': `${BASE_URL}/#people-also-ask`,
     'name': 'Common Questions About Erbil Real Estate',
     'description': 'Expert answers to the most common questions about buying property, investing, and living in Erbil, Kurdistan Region, Iraq.',
+    'datePublished': '2025-01-01',
+    'dateModified': '2026-03-28',
     'mainEntity': paaQuestions.map(faq => ({
       '@type': 'Question',
       'name': faq.question,
@@ -726,8 +738,8 @@ export function generatePropertyFAQSchema(property: Property): object {
     {
       question: `What is the price of ${property.title}?`,
       answer: property.price > 0
-        ? `${property.title} is listed at $${property.price.toLocaleString()} USD. Contact Real House at +964-750-792-2138 for the latest pricing, availability, and to discuss payment options including installment plans.`
-        : `Please contact Real House at +964-750-792-2138 or info@realhouseiq.com for current pricing information on ${property.title}.`
+        ? `${property.title} is listed at $${property.price.toLocaleString()} USD. Contact Real House at +964 750 792 2138 for the latest pricing, availability, and to discuss payment options including installment plans.`
+        : `Please contact Real House at +964 750 792 2138 or info@realhouseiq.com for current pricing information on ${property.title}.`
     },
     {
       question: `How many bedrooms does ${property.title} have?`,
@@ -745,7 +757,7 @@ export function generatePropertyFAQSchema(property: Property): object {
     },
     {
       question: `Can I schedule a viewing for ${property.title}?`,
-      answer: `Yes, you can schedule a viewing for ${property.title} by calling +964-750-792-2138, emailing info@realhouseiq.com, or using the contact form on this page. We offer in-person viewings and virtual tours for international clients.`
+      answer: `Yes, you can schedule a viewing for ${property.title} by calling +964 750 792 2138, emailing info@realhouseiq.com, or using the contact form on this page. We offer in-person viewings and virtual tours for international clients.`
     }
   ];
 
@@ -755,6 +767,8 @@ export function generatePropertyFAQSchema(property: Property): object {
     '@id': `${BASE_URL}/properties/${property.id}#faq`,
     'name': `FAQ - ${property.title}`,
     'description': `Common questions about ${property.title} in ${property.location.district}, ${property.location.city}`,
+    'datePublished': '2025-01-01',
+    'dateModified': '2026-03-28',
     'mainEntity': propertyFaqs.map(faq => ({
       '@type': 'Question',
       'name': faq.question,
@@ -1063,7 +1077,7 @@ export function generateHowToViewPropertySchema(): object {
         '@type': 'HowToStep',
         'position': 1,
         'name': 'Contact Real House',
-        'text': 'Call +964-750-792-2138, email info@realhouseiq.com, or use the website contact form. Provide your requirements: budget, preferred areas, property type, and available times.',
+        'text': 'Call +964 750 792 2138, email info@realhouseiq.com, or use the website contact form. Provide your requirements: budget, preferred areas, property type, and available times.',
         'url': `${BASE_URL}/contact`
       },
       {
@@ -2790,7 +2804,7 @@ export function generateEnhancedLocalBusinessSchema(): object {
       'height': 512
     },
     'image': `${BASE_URL}/og-image.jpg`,
-    'telephone': ['+964-750-792-2138', '+964-751-441-5003'],
+    'telephone': ['+964 750 792 2138', '+964 751 441 5003'],
     'email': 'info@realhouseiq.com',
     'foundingDate': '2018',
     'priceRange': '$$$',
@@ -2871,7 +2885,7 @@ export function generateEnhancedLocalBusinessSchema(): object {
     'contactPoint': [
       {
         '@type': 'ContactPoint',
-        'telephone': '+964-750-792-2138',
+        'telephone': '+964 750 792 2138',
         'contactType': 'sales',
         'areaServed': ['IQ', 'Kurdistan Region'],
         'availableLanguage': ['English', 'Arabic', 'Kurdish'],
@@ -2879,7 +2893,7 @@ export function generateEnhancedLocalBusinessSchema(): object {
       },
       {
         '@type': 'ContactPoint',
-        'telephone': '+964-751-441-5003',
+        'telephone': '+964 751 441 5003',
         'contactType': 'customer service',
         'areaServed': ['IQ', 'Kurdistan Region'],
         'availableLanguage': ['English', 'Arabic', 'Kurdish']
@@ -3251,7 +3265,7 @@ export function generateRealEstateAgentSchema(): object {
     ],
     'numberOfEmployees': { '@type': 'QuantitativeValue', 'value': 25 },
     'slogan': 'Your Trusted Partner in Luxury Real Estate',
-    'address': { '@type': 'PostalAddress', 'streetAddress': 'Dream City Main Boulevard, Building A3', 'addressLocality': 'Erbil', 'addressRegion': 'Kurdistan Region', 'postalCode': '44001', 'addressCountry': 'IQ' },
+    'address': { '@type': 'PostalAddress', 'streetAddress': 'Queen Tower, Erbil', 'addressLocality': 'Erbil', 'addressRegion': 'Kurdistan Region', 'postalCode': '44001', 'addressCountry': 'IQ' },
     'geo': { '@type': 'GeoCoordinates', 'latitude': '36.1901', 'longitude': '44.0091' },
     'openingHoursSpecification': [
       { '@type': 'OpeningHoursSpecification', 'dayOfWeek': ['Saturday', 'Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday'], 'opens': '10:00', 'closes': '18:00' },
@@ -3884,7 +3898,7 @@ export function generateCompleteOrganizationSchema(): object {
     },
     'address': {
       '@type': 'PostalAddress',
-      'streetAddress': 'Dream City Main Boulevard, Building A3',
+      'streetAddress': 'Queen Tower, Erbil',
       'addressLocality': 'Erbil',
       'addressRegion': 'Kurdistan Region',
       'postalCode': '44001',
@@ -3926,7 +3940,7 @@ export function generateCompleteOrganizationSchema(): object {
       {
         '@type': 'ContactPoint',
         'contactType': 'WhatsApp',
-        'telephone': '+964-750-792-2138',
+        'telephone': '+964 750 792 2138',
         'url': 'https://wa.me/9647507922138'
       }
     ],
@@ -4772,8 +4786,8 @@ export function generateTopPeopleAlsoAskSchema(): object {
     '@id': `${BASE_URL}/#top-paa`,
     'name': 'Top Questions About Erbil Real Estate',
     'description': 'Expert answers to the most searched questions about buying, investing, and living in Erbil, Kurdistan.',
-    'datePublished': new Date().toISOString().split('T')[0],
-    'dateModified': new Date().toISOString().split('T')[0],
+    'datePublished': '2025-01-01',
+    'dateModified': '2026-03-28',
     'publisher': { '@type': 'Organization', 'name': 'Real House', 'logo': { '@type': 'ImageObject', 'url': COMPANY_INFO.logo } },
     'mainEntity': paaQuestions.map((faq, idx) => ({
       '@type': 'Question',
@@ -4782,7 +4796,7 @@ export function generateTopPeopleAlsoAskSchema(): object {
       'acceptedAnswer': {
         '@type': 'Answer',
         'text': faq.answer,
-        'dateCreated': new Date().toISOString().split('T')[0],
+        'dateCreated': '2025-01-01',
         'author': { '@type': 'Organization', 'name': 'Real House', 'url': BASE_URL }
       }
     }))
@@ -4822,6 +4836,8 @@ export function generateInvestmentFAQSchema(): object {
     '@id': `${BASE_URL}/#investment-faq`,
     'name': 'Erbil Real Estate Investment FAQ',
     'description': 'Expert answers about real estate investment opportunities, ROI, and property buying in Kurdistan.',
+    'datePublished': '2025-01-01',
+    'dateModified': '2026-03-28',
     'mainEntity': investmentFaqs.map((faq, idx) => ({
       '@type': 'Question',
       '@id': `${BASE_URL}/#inv-q${idx + 1}`,
@@ -5019,8 +5035,8 @@ export function generateMaxLocalBusinessSchema(): object {
       { '@type': 'Language', 'name': 'Kurdish (Sorani)', 'alternateName': 'ku' }
     ],
     'contactPoint': [
-      { '@type': 'ContactPoint', 'telephone': '+964-750-792-2138', 'contactType': 'sales', 'areaServed': ['IQ', 'Kurdistan Region'], 'availableLanguage': ['English', 'Arabic', 'Kurdish'], 'hoursAvailable': { '@type': 'OpeningHoursSpecification', 'dayOfWeek': ['Saturday', 'Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday'], 'opens': '10:00', 'closes': '18:00' } },
-      { '@type': 'ContactPoint', 'telephone': '+964-751-441-5003', 'contactType': 'customer service', 'areaServed': ['IQ', 'Kurdistan Region'], 'availableLanguage': ['English', 'Arabic', 'Kurdish'] },
+      { '@type': 'ContactPoint', 'telephone': '+964 750 792 2138', 'contactType': 'sales', 'areaServed': ['IQ', 'Kurdistan Region'], 'availableLanguage': ['English', 'Arabic', 'Kurdish'], 'hoursAvailable': { '@type': 'OpeningHoursSpecification', 'dayOfWeek': ['Saturday', 'Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday'], 'opens': '10:00', 'closes': '18:00' } },
+      { '@type': 'ContactPoint', 'telephone': '+964 751 441 5003', 'contactType': 'customer service', 'areaServed': ['IQ', 'Kurdistan Region'], 'availableLanguage': ['English', 'Arabic', 'Kurdish'] },
       { '@type': 'ContactPoint', 'email': 'info@realhouseiq.com', 'contactType': 'customer service', 'contactOption': 'TollFree' }
     ],
     'hasCredential': [

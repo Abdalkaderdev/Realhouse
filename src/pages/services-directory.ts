@@ -973,6 +973,8 @@ export function setupServiceCategoryPageSEO(category: ServiceCategory): void {
   faqSchema.textContent = JSON.stringify({
     '@context': 'https://schema.org',
     '@type': 'FAQPage',
+    'datePublished': '2025-01-01',
+    'dateModified': '2026-03-28',
     'mainEntity': category.faqs.map(faq => ({
       '@type': 'Question',
       'name': faq.question,

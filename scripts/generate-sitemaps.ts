@@ -31,6 +31,13 @@ function escapeXml(str: string): string {
     .replace(/'/g, '&apos;');
 }
 
+function toAbsoluteUrl(url: string): string {
+  if (url.startsWith('http://') || url.startsWith('https://')) {
+    return url;
+  }
+  return `${BASE_URL}${url.startsWith('/') ? '' : '/'}${url}`;
+}
+
 // Generate Properties Sitemap
 function generatePropertiesSitemap(): string {
   const today = getCurrentDate();
@@ -56,7 +63,7 @@ function generatePropertiesSitemap(): string {
     if (property.images && property.images.length > 0) {
       xml += `
     <image:image>
-      <image:loc>${escapeXml(property.images[0])}</image:loc>
+      <image:loc>${escapeXml(toAbsoluteUrl(property.images[0]))}</image:loc>
       <image:title>${escapeXml(property.title)} - Real House Erbil</image:title>
       <image:caption>${escapeXml(`${property.type} in ${property.location.district}, Erbil - ${property.bedrooms} bed, ${property.bathrooms} bath`)}</image:caption>
     </image:image>`;
@@ -94,12 +101,12 @@ function generateProjectsSitemap(): string {
     <priority>0.7</priority>`;
 
     // Add cover image
-    if (project.coverImage) {
+    if (project.image) {
       xml += `
     <image:image>
-      <image:loc>${escapeXml(project.coverImage)}</image:loc>
-      <image:title>${escapeXml(project.name)} - ${escapeXml(project.developer)}</image:title>
-      <image:caption>${escapeXml(`${project.name} development in ${project.location}, Erbil by ${project.developer}`)}</image:caption>
+      <image:loc>${escapeXml(toAbsoluteUrl(project.image))}</image:loc>
+      <image:title>${escapeXml(project.name)}${project.developer ? ` - ${escapeXml(project.developer)}` : ''}</image:title>
+      <image:caption>${escapeXml(`${project.name} development in ${project.location.district}, Erbil${project.developer ? ` by ${project.developer}` : ''}`)}</image:caption>
     </image:image>`;
     }
 
@@ -131,14 +138,14 @@ function generateBlogSitemap(): string {
     xml += `
   <url>
     <loc>${escapeXml(url)}</loc>
-    <lastmod>${post.updatedAt || post.publishedAt}</lastmod>
+    <lastmod>${post.date || today}</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>`;
 
-    if (post.featuredImage) {
+    if (post.image) {
       xml += `
     <image:image>
-      <image:loc>${escapeXml(post.featuredImage)}</image:loc>
+      <image:loc>${escapeXml(toAbsoluteUrl(post.image))}</image:loc>
       <image:title>${escapeXml(post.title)}</image:title>
     </image:image>`;
     }
@@ -177,7 +184,7 @@ function generateNeighborhoodsSitemap(): string {
     if (district.image) {
       xml += `
     <image:image>
-      <image:loc>${escapeXml(district.image)}</image:loc>
+      <image:loc>${escapeXml(toAbsoluteUrl(district.image))}</image:loc>
       <image:title>${escapeXml(district.name)} - Erbil Neighborhood Guide</image:title>
     </image:image>`;
     }
