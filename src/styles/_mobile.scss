@@ -1151,14 +1151,6 @@ svg {
       padding: var(--space-2) 0;
       scroll-snap-type: x mandatory;
       -webkit-overflow-scrolling: touch;
-
-      // Hide scrollbar but keep functionality
-      scrollbar-width: none;
-      -ms-overflow-style: none;
-
-      &::-webkit-scrollbar {
-        display: none;
-      }
     }
 
     &__thumb {

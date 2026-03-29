@@ -146,37 +146,44 @@ img, video {
 }
 
 // ─── Global Scrollbar Styling ─────────────────────────────────────────────
-// Hide scrollbar arrows and style scrollbars across all browsers (Windows fix)
+// Styled scrollbar only on the main page (html/body)
 html, body {
-  // Firefox
   scrollbar-width: thin;
   scrollbar-color: var(--c-gold) transparent;
-}
 
-// Webkit (Chrome, Safari, Edge Chromium)
-::-webkit-scrollbar {
-  width: 8px;
-  height: 8px;
-}
+  &::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+  }
 
-::-webkit-scrollbar-track {
-  background: transparent;
-}
+  &::-webkit-scrollbar-track {
+    background: transparent;
+  }
 
-::-webkit-scrollbar-thumb {
-  background: var(--c-gold);
-  border-radius: 4px;
+  &::-webkit-scrollbar-thumb {
+    background: var(--c-gold);
+    border-radius: 4px;
 
-  &:hover {
-    background: var(--c-gold-light);
+    &:hover {
+      background: var(--c-gold-light);
+    }
+  }
+
+  &::-webkit-scrollbar-button {
+    display: none;
+    width: 0;
+    height: 0;
   }
 }
 
-// Hide scrollbar button arrows (Windows)
-::-webkit-scrollbar-button {
-  display: none;
-  width: 0;
-  height: 0;
+// Hide scrollbars on all inner scrollable elements by default
+// This prevents ugly scrollbars from appearing on cards, sidebars, panels, etc.
+*:not(html):not(body) {
+  scrollbar-width: none;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
 }
 
 // ─── Premium Glassmorphism & Animations ──────────────────────────────────
@@ -3148,19 +3155,6 @@ em {
     gap: var(--space-3);
     overflow-x: auto;
     padding-bottom: var(--space-2);
-
-    &::-webkit-scrollbar {
-      height: 4px;
-    }
-
-    &::-webkit-scrollbar-track {
-      background: var(--c-surface);
-    }
-
-    &::-webkit-scrollbar-thumb {
-      background: var(--c-gold);
-      border-radius: var(--radius-pill);
-    }
   }
 
   &__thumb {
@@ -4292,12 +4286,6 @@ em {
     margin-bottom: var(--space-8);
     overflow-x: auto;
     -webkit-overflow-scrolling: touch;
-    scrollbar-width: none;
-    -ms-overflow-style: none;
-
-    &::-webkit-scrollbar {
-      display: none;
-    }
   }
 
   &__nav-list {

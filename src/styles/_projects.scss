@@ -936,19 +936,6 @@
     gap: var(--space-3);
     overflow-x: auto;
     padding-bottom: var(--space-2);
-
-    &::-webkit-scrollbar {
-      height: 4px;
-    }
-
-    &::-webkit-scrollbar-track {
-      background: var(--c-surface);
-    }
-
-    &::-webkit-scrollbar-thumb {
-      background: var(--c-gold);
-      border-radius: var(--radius-pill);
-    }
   }
 
   &__thumb {

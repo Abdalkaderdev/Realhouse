@@ -286,22 +286,6 @@ $property-detail-radius: var(--radius-lg);
   gap: var(--space-2);
   overflow-x: auto;
   padding: var(--space-1) 0;
-  scrollbar-width: thin;
-  scrollbar-color: var(--c-gold) var(--c-surface);
-
-  &::-webkit-scrollbar {
-    height: 6px;
-  }
-
-  &::-webkit-scrollbar-track {
-    background: var(--c-surface);
-    border-radius: 3px;
-  }
-
-  &::-webkit-scrollbar-thumb {
-    background: var(--c-gold);
-    border-radius: 3px;
-  }
 }
 
 .property-detail__thumb {
