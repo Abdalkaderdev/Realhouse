@@ -877,15 +877,17 @@ American Village is home to the International School of Choueifat and enjoys spe
       'Car Parking'
     ],
     images: [
-      'https://images.unsplash.com/photo-1486325212027-8081e485255e?w=800&q=80&fm=webp',
-      'https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?w=800&q=80&fm=webp',
-      'https://images.unsplash.com/photo-1565623833408-d77e39b88af6?w=800&q=80&fm=webp'
+      '/images/projects/ankawa-4-towers/01.jpg',
+      '/images/projects/ankawa-4-towers/02.jpg',
+      '/images/projects/ankawa-4-towers/03.jpg'
     ],
-    image: 'https://images.unsplash.com/photo-1486325212027-8081e485255e?w=800&q=80&fm=webp',
+    image: '/images/projects/ankawa-4-towers/01.jpg',
     gallery: [
-      'https://images.unsplash.com/photo-1486325212027-8081e485255e?w=800&q=80&fm=webp',
-      'https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?w=800&q=80&fm=webp',
-      'https://images.unsplash.com/photo-1565623833408-d77e39b88af6?w=800&q=80&fm=webp'
+      '/images/projects/ankawa-4-towers/01.jpg',
+      '/images/projects/ankawa-4-towers/02.jpg',
+      '/images/projects/ankawa-4-towers/03.jpg',
+      '/images/projects/ankawa-4-towers/04.jpg',
+      '/images/projects/ankawa-4-towers/05.jpg'
     ],
     description: `Ankawa 4 Towers is a high-end residential project located in the prestigious Ankawa district, northwest of Erbil city. The development consists of four elegant towers, each rising 15 floors.
 
@@ -971,15 +973,16 @@ Naz City offers a perfect balance of urban convenience and residential tranquili
       'Underground Parking'
     ],
     images: [
-      'https://images.unsplash.com/photo-1486325212027-8081e485255e?w=800&q=80&fm=webp',
-      'https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?w=800&q=80&fm=webp',
-      'https://images.unsplash.com/photo-1565623833408-d77e39b88af6?w=800&q=80&fm=webp'
+      '/images/projects/gulan-towers/01.jpeg',
+      '/images/projects/gulan-towers/02.jpeg',
+      '/images/projects/gulan-towers/03.jpeg'
     ],
-    image: 'https://images.unsplash.com/photo-1486325212027-8081e485255e?w=800&q=80&fm=webp',
+    image: '/images/projects/gulan-towers/01.jpeg',
     gallery: [
-      'https://images.unsplash.com/photo-1486325212027-8081e485255e?w=800&q=80&fm=webp',
-      'https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?w=800&q=80&fm=webp',
-      'https://images.unsplash.com/photo-1565623833408-d77e39b88af6?w=800&q=80&fm=webp'
+      '/images/projects/gulan-towers/01.jpeg',
+      '/images/projects/gulan-towers/02.jpeg',
+      '/images/projects/gulan-towers/03.jpeg',
+      '/images/projects/gulan-towers/04.jpg'
     ],
     description: `Gulan Park-WTC is Erbil's first integrated development combining residence, office, shopping, and hotel in one prestigious location. The project features the Radisson Hotel on floors 1-9, Gulan Park Residences on floors 10-22, and 22 floors of World Trade Center offices.
 
@@ -1329,9 +1332,16 @@ Majidi View represents an excellent opportunity to own property in one of Erbil'
       'Family-Friendly Environment'
     ],
     images: [
-      'https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=800&q=80&fm=webp',
-      'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=800&q=80&fm=webp',
-      'https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?w=800&q=80&fm=webp'
+      '/images/projects/kurdistan-city/01.jpg',
+      '/images/projects/kurdistan-city/02.jpg',
+      '/images/projects/kurdistan-city/03.jpg'
+    ],
+    image: '/images/projects/kurdistan-city/01.jpg',
+    gallery: [
+      '/images/projects/kurdistan-city/01.jpg',
+      '/images/projects/kurdistan-city/02.jpg',
+      '/images/projects/kurdistan-city/03.jpg',
+      '/images/projects/kurdistan-city/04.jpg'
     ],
     description: `Kurdistan City is an established family residential community completed in 2014, located on 150m Street behind Ganjan City. The project consists of 13 buildings with 7 floors each, offering 4 apartments per floor, totaling 408 houses and 364 apartments.
 
@@ -2071,15 +2081,15 @@ Hawler City has matured into a vibrant neighborhood with an active community lif
       'Management Office'
     ],
     images: [
-      'https://images.unsplash.com/photo-1486325212027-8081e485255e?w=800&q=80&fm=webp',
-      'https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?w=800&q=80&fm=webp',
-      'https://images.unsplash.com/photo-1565623833408-d77e39b88af6?w=800&q=80&fm=webp'
+      '/images/projects/venus-tower/01.png',
+      '/images/projects/venus-tower/02.png',
+      '/images/projects/venus-tower/03.png'
     ],
-    image: 'https://images.unsplash.com/photo-1486325212027-8081e485255e?w=800&q=80&fm=webp',
+    image: '/images/projects/venus-tower/01.png',
     gallery: [
-      'https://images.unsplash.com/photo-1486325212027-8081e485255e?w=800&q=80&fm=webp',
-      'https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?w=800&q=80&fm=webp',
-      'https://images.unsplash.com/photo-1565623833408-d77e39b88af6?w=800&q=80&fm=webp'
+      '/images/projects/venus-tower/01.png',
+      '/images/projects/venus-tower/02.png',
+      '/images/projects/venus-tower/03.png'
     ],
     description: `Venus Tower brings elegance to the 60 Meter Road with its classic architectural design and refined residential offerings. The development balances aesthetic appeal with practical living requirements.
 
@@ -2429,15 +2439,15 @@ Aram Village is perfect for families seeking tranquil living away from the city 
       'Retail Podium'
     ],
     images: [
-      'https://images.unsplash.com/photo-1486325212027-8081e485255e?w=800&q=80&fm=webp',
-      'https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?w=800&q=80&fm=webp',
-      'https://images.unsplash.com/photo-1565623833408-d77e39b88af6?w=800&q=80&fm=webp'
+      '/images/projects/erbil-one-tower/01.jpg',
+      '/images/projects/erbil-one-tower/02.jpg',
+      '/images/projects/erbil-one-tower/03.jpg'
     ],
-    image: 'https://images.unsplash.com/photo-1486325212027-8081e485255e?w=800&q=80&fm=webp',
+    image: '/images/projects/erbil-one-tower/01.jpg',
     gallery: [
-      'https://images.unsplash.com/photo-1486325212027-8081e485255e?w=800&q=80&fm=webp',
-      'https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?w=800&q=80&fm=webp',
-      'https://images.unsplash.com/photo-1565623833408-d77e39b88af6?w=800&q=80&fm=webp'
+      '/images/projects/erbil-one-tower/01.jpg',
+      '/images/projects/erbil-one-tower/02.jpg',
+      '/images/projects/erbil-one-tower/03.jpg'
     ],
     description: `Erbil One Tower stands as a singular statement of luxury on the prestigious 100 Meter Road. This iconic tower offers premium apartments with city views and comprehensive lifestyle amenities.
 
@@ -2479,11 +2489,14 @@ Erbil One Tower appeals to buyers seeking a prestigious single-tower address wit
       'Green Spaces'
     ],
     images: [
-      'https://images.unsplash.com/photo-1486325212027-8081e485255e?w=800&q=80&fm=webp',
-      'https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?w=800&q=80&fm=webp',
-      'https://images.unsplash.com/photo-1565623833408-d77e39b88af6?w=800&q=80&fm=webp'
+      '/images/projects/life-tower/01.jpg',
+      '/images/projects/life-tower/02.jpg'
     ],
-    image: 'https://images.unsplash.com/photo-1486325212027-8081e485255e?w=800&q=80&fm=webp',
+    image: '/images/projects/life-tower/01.jpg',
+    gallery: [
+      '/images/projects/life-tower/01.jpg',
+      '/images/projects/life-tower/02.jpg'
+    ],
     description: `Life Tower is designed for health-conscious residents who prioritize wellness in their daily lives. This Gulan development integrates fitness facilities and healthy living concepts throughout.
 
 Beyond the standard gym, residents enjoy a dedicated yoga studio, juice bar, and cycling storage encouraging active lifestyles. The rooftop garden provides fresh air and green space above the city.
@@ -3435,9 +3448,15 @@ Asuda City is ideal for families, retirees, and professionals seeking peaceful l
       'Environmental Education'
     ],
     images: [
-      'https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=800&q=80&fm=webp',
-      'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=800&q=80&fm=webp',
-      'https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?w=800&q=80&fm=webp'
+      '/images/projects/green-world/01.jpg',
+      '/images/projects/green-world/02.jpg',
+      '/images/projects/green-world/03.jpg'
+    ],
+    image: '/images/projects/green-world/01.jpg',
+    gallery: [
+      '/images/projects/green-world/01.jpg',
+      '/images/projects/green-world/02.jpg',
+      '/images/projects/green-world/03.jpg'
     ],
     description: `Green World is Kurdistan's premier eco-friendly residential community, designed with sustainability at its core. This Shaqlawa Road development incorporates solar power, water recycling, and green building practices.
 
