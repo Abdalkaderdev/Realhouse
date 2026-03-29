@@ -59,6 +59,7 @@ export const projects: Project[] = [
   {
     id: 'empire-world',
     name: 'Empire World',
+    developer: 'Empire World',
     location: {
       address: 'Empire World Complex, near Erbil International Airport',
       city: 'Erbil',
@@ -66,7 +67,7 @@ export const projects: Project[] = [
       country: 'Iraq'
     },
     status: 'Under Construction',
-    totalUnits: 8000,
+    totalUnits: 5700,
     priceRange: {
       min: 150000,
       max: 2500000,
@@ -88,23 +89,23 @@ export const projects: Project[] = [
       'Welat Statue Monument'
     ],
     images: [
-      'https://images.unsplash.com/photo-1486325212027-8081e485255e?w=800&q=80&fm=webp',
-      'https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?w=800&q=80&fm=webp',
-      'https://images.unsplash.com/photo-1565623833408-d77e39b88af6?w=800&q=80&fm=webp'
+      '/images/projects/empire-world/01.jpeg',
+      '/images/projects/empire-world/02.jpeg',
+      '/images/projects/empire-world/03.jpeg'
     ],
-    image: 'https://images.unsplash.com/photo-1486325212027-8081e485255e?w=1200&q=80&fm=webp',
+    image: '/images/projects/empire-world/01.jpeg',
     gallery: [
-      'https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=800&q=80&fm=webp',
-      'https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?w=800&q=80&fm=webp',
-      'https://images.unsplash.com/photo-1565623833408-d77e39b88af6?w=800&q=80&fm=webp',
-      'https://images.unsplash.com/photo-1567767292278-a4f21aa2d36e?w=800&q=80&fm=webp',
-      'https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?w=800&q=80&fm=webp',
-      'https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?w=800&q=80&fm=webp'
+      '/images/projects/empire-world/01.jpeg',
+      '/images/projects/empire-world/02.jpeg',
+      '/images/projects/empire-world/03.jpeg',
+      '/images/projects/empire-world/04.jpeg',
+      '/images/projects/empire-world/05.jpeg',
+      '/images/projects/empire-world/06.jpeg'
     ],
     floorPlanImages: [
-      'https://images.unsplash.com/photo-1574362848149-11496d93a7c7?w=800&q=80&fm=webp',
-      'https://images.unsplash.com/photo-1503387837-b154d5074bd2?w=800&q=80&fm=webp',
-      'https://images.unsplash.com/photo-1600585152220-90363fe7e115?w=800&q=80&fm=webp'
+      '/images/projects/empire-world/07.jpeg',
+      '/images/projects/empire-world/08.jpeg',
+      '/images/projects/empire-world/ew-01.jpg'
     ],
     description: `Empire World is Iraq's most ambitious real estate project, spanning over 1.25 million square meters near Erbil International Airport and adjacent to Sami Abdulrahman Park. Awarded "Most Innovative Mixed-Use Real Estate Project - Iraq 2025" by International Finance.
 
@@ -124,6 +125,7 @@ Commercial facilities include the JW Marriott Hotel with 207 rooms, 96 JW Marrio
   {
     id: 'dream-city',
     name: 'Dream City',
+    developer: 'Nasri Group of Companies (NGC)',
     location: {
       address: '100 Meter Street, 2km northwest of city center',
       city: 'Erbil',
@@ -153,23 +155,18 @@ Commercial facilities include the JW Marriott Hotel with 207 rooms, 96 JW Marrio
       'Green Areas & Parks'
     ],
     images: [
-      'https://images.unsplash.com/photo-1512917774080-9991f1c4c750?w=800&q=80&fm=webp',
-      'https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=800&q=80&fm=webp',
-      'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=800&q=80&fm=webp'
+      '/images/projects/dream-city/page01_img01.jpeg',
+      '/images/projects/dream-city/02.jpg',
+      '/images/projects/dream-city/03.jpg'
     ],
-    image: 'https://images.unsplash.com/photo-1449824913935-59a10b8d2000?w=1200&q=80&fm=webp',
+    image: '/images/projects/dream-city/page01_img01.jpeg',
     gallery: [
-      'https://images.unsplash.com/photo-1512917774080-9991f1c4c750?w=800&q=80&fm=webp',
-      'https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=800&q=80&fm=webp',
-      'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=800&q=80&fm=webp',
-      'https://images.unsplash.com/photo-1564013799919-ab600027ffc6?w=800&q=80&fm=webp',
-      'https://images.unsplash.com/photo-1582268611958-ebfd161ef9cf?w=800&q=80&fm=webp',
-      'https://images.unsplash.com/photo-1580587771525-78b9dba3b914?w=800&q=80&fm=webp'
-    ],
-    floorPlanImages: [
-      'https://images.unsplash.com/photo-1600585152220-90363fe7e115?w=800&q=80&fm=webp',
-      'https://images.unsplash.com/photo-1503387837-b154d5074bd2?w=800&q=80&fm=webp',
-      'https://images.unsplash.com/photo-1600566752734-2a0cd66c42ae?w=800&q=80&fm=webp'
+      '/images/projects/dream-city/02.jpg',
+      '/images/projects/dream-city/03.jpg',
+      '/images/projects/dream-city/04.jpg',
+      '/images/projects/dream-city/05.jpg',
+      '/images/projects/dream-city/06.jpg',
+      '/images/projects/dream-city/07.jpg'
     ],
     description: `Dream City is Erbil's most luxurious residential complex, built on approximately 1 million square meters on 100 Meter Street, just 5 minutes from Erbil International Airport. Developed by Nasri Group of Companies (NGC), the project started operating in 2006.
 
@@ -188,14 +185,23 @@ Residents enjoy excellent infrastructure including 24-hour electricity, reliable
   {
     id: 'italian-village',
     name: 'Italian City 1',
+    developer: 'Hemn Group',
     location: {
-      address: 'Italian City 1, 120m Ring Street',
+      address: 'Between 100m Road and 40m Road, near Sami Abdulrahman Park',
       city: 'Erbil',
       district: 'Italian Village',
       country: 'Iraq'
     },
     status: 'Ready',
-    totalUnits: 720,
+    totalUnits: 665,
+    buildings: 4,
+    unitTypes: [
+      { type: 'Type A Villa', grossArea: 320, netArea: 290, bedrooms: 4, bathrooms: 3 },
+      { type: 'Type B Villa', grossArea: 240, netArea: 215, bedrooms: 4, bathrooms: 3 },
+      { type: 'Type C Villa', grossArea: 200, netArea: 180, bedrooms: 3, bathrooms: 3 },
+      { type: 'Type D Villa', grossArea: 140, netArea: 125, bedrooms: 2, bathrooms: 2 },
+      { type: 'Private House', grossArea: 600, netArea: 540, bedrooms: 6, bathrooms: 5 }
+    ],
     priceRange: {
       min: 150000,
       max: 450000,
@@ -204,47 +210,46 @@ Residents enjoy excellent infrastructure including 24-hour electricity, reliable
     completionDate: '2015',
     amenities: [
       'Italian-Style Architecture',
-      '5-Star Hotel (121 rooms)',
+      '5-Star Hotel (121 rooms, 13 floors)',
       '8 Suites & 4 King Suites',
       'Restaurants & Ballroom',
       'Outdoor Swimming Pools',
-      'Recreational Facilities',
-      'Landscaped Leisure Areas',
-      'Large Car Park',
+      'Health Center & Clinic',
+      'Supermarket',
+      'Mosque',
+      '81 Office Units',
+      '80 Commercial Units',
+      '24-Hour Electricity & Internet',
       '24/7 Security',
-      'Boutique Shops',
-      'Multiple Neighborhoods',
-      'Distinctive Design Styles'
+      'Green Areas & Public Garden',
+      'Kids Play Areas'
     ],
     images: [
-      'https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?w=800&q=80&fm=webp',
-      'https://images.unsplash.com/photo-1600566753190-17f0baa2a6c3?w=800&q=80&fm=webp',
-      'https://images.unsplash.com/photo-1600585154526-990dced4db0d?w=800&q=80&fm=webp'
+      '/images/projects/italian-village/01.jpg',
+      '/images/projects/italian-village/02.jpg',
+      '/images/projects/italian-village/03.jpg'
     ],
-    image: 'https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=1200&q=80&fm=webp',
+    image: '/images/projects/italian-village/01.jpg',
     gallery: [
-      'https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?w=800&q=80&fm=webp',
-      'https://images.unsplash.com/photo-1600566753190-17f0baa2a6c3?w=800&q=80&fm=webp',
-      'https://images.unsplash.com/photo-1600585154526-990dced4db0d?w=800&q=80&fm=webp',
-      'https://images.unsplash.com/photo-1600566753086-00f18fb6b3ea?w=800&q=80&fm=webp',
-      'https://images.unsplash.com/photo-1600585154363-67eb9e2e2099?w=800&q=80&fm=webp',
-      'https://images.unsplash.com/photo-1600573472550-8090b5e0745e?w=800&q=80&fm=webp'
+      '/images/projects/italian-village/01.jpg',
+      '/images/projects/italian-village/02.jpg',
+      '/images/projects/italian-village/03.jpg',
+      '/images/projects/italian-village/04.jpg',
+      '/images/projects/italian-village/05.jpg',
+      '/images/projects/italian-village/06.jpg'
     ],
-    floorPlanImages: [
-      'https://images.unsplash.com/photo-1600607688969-a5bfcd646154?w=800&q=80&fm=webp',
-      'https://images.unsplash.com/photo-1600566752734-2a0cd66c42ae?w=800&q=80&fm=webp',
-      'https://images.unsplash.com/photo-1600210491892-03d54c0aaf87?w=800&q=80&fm=webp'
-    ],
-    description: `Italian City 1 is one of Erbil's most attractive residential communities, developed by Hemn Group. This mixed-use development features 640 residential units and 80 commercial units arranged in tiered townhouses and villas across different neighborhoods, each with distinctive architectural styles.
+    description: `Italian City (commonly known as Italian Village) is a flagship residential mega-project developed by Hemn Group in Erbil, Kurdistan Region. Located between the 100m and 40m roads near Sami Abdulrahman Park, the compound features 665 villas and townhouses alongside 81 office units and 80 commercial spaces.
 
-Residential options include Type A houses (212 units at 320 sqm each) and Type B houses (160 units at 240 sqm each). The community features a 5-star hotel spanning 4,554 sqm with 13 floors, 121 rooms, 8 suites, and 4 King suites.
+Residential units range from 140 m² to 600 m², with the majority being 200-320 m² family homes featuring 3-4 bedrooms, private gardens, and modern amenities. The development includes a 5-star hotel spanning 4,554 sqm with 13 floors, 121 rooms, 8 suites, and 4 King suites, plus restaurants, a ballroom, and swimming pools.
 
-The hotel includes restaurants, a ballroom, recreational facilities, outdoor swimming pools, large car park, and landscaped leisure areas. Italian City 1 brings Mediterranean elegance to Kurdistan with authentic Italian architecture and a vibrant community atmosphere.`,
-    propertyIds: []
+Italian City brings Mediterranean elegance to Kurdistan with authentic Italian architecture and a vibrant community atmosphere. The compound has become one of Erbil's most prestigious addresses, hosting international businesses, NGOs, and diplomatic residences.`,
+    propertyIds: [],
+    constructionProgress: 100
   },
   {
     id: 'english-village',
     name: 'English Village',
+    developer: 'Hawler Housing Project',
     location: {
       address: 'Western Erbil',
       city: 'Erbil',
@@ -310,7 +315,7 @@ Amenities include a school and a five-story shopping centre. The complex is popu
       country: 'Iraq'
     },
     status: 'Ready',
-    totalUnits: 1600,
+    totalUnits: 1000,
     priceRange: {
       min: 69500,
       max: 350000,
@@ -341,23 +346,23 @@ Amenities include a school and a five-story shopping centre. The complex is popu
       '5-Year Installment Plan'
     ],
     images: [
-      'https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?w=800&q=80&fm=webp',
-      'https://images.unsplash.com/photo-1512917774080-9991f1c4c750?w=800&q=80&fm=webp',
-      'https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?w=800&q=80&fm=webp'
+      '/images/projects/boulevard/01.webp',
+      '/images/projects/boulevard/02.png',
+      '/images/projects/boulevard/03.png'
     ],
-    image: 'https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=1200&q=80&fm=webp',
+    image: '/images/projects/boulevard/01.webp',
     gallery: [
-      'https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?w=800&q=80&fm=webp',
-      'https://images.unsplash.com/photo-1567767292278-a4f21aa2d36e?w=800&q=80&fm=webp',
-      'https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?w=800&q=80&fm=webp',
-      'https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?w=800&q=80&fm=webp',
-      'https://images.unsplash.com/photo-1493809842364-78817add7ffb?w=800&q=80&fm=webp',
-      'https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?w=800&q=80&fm=webp'
+      '/images/projects/boulevard/01.webp',
+      '/images/projects/boulevard/02.png',
+      '/images/projects/boulevard/03.png',
+      '/images/projects/boulevard/04.jpeg',
+      '/images/projects/boulevard/05.webp',
+      '/images/projects/boulevard/06.png'
     ],
     floorPlanImages: [
-      'https://images.unsplash.com/photo-1574362848149-11496d93a7c7?w=800&q=80&fm=webp',
-      'https://images.unsplash.com/photo-1503387837-b154d5074bd2?w=800&q=80&fm=webp',
-      'https://images.unsplash.com/photo-1600585152220-90363fe7e115?w=800&q=80&fm=webp'
+      '/images/projects/boulevard/07.png',
+      '/images/projects/boulevard/08.png',
+      '/images/projects/boulevard/09.png'
     ],
     description: `The Boulevard by 4Bridges is a landmark mixed-use development at Ainkawa Intersection on Gulan Street, spanning 53,000 sqm with 10 residential towers offering 1,600 units and 10,000 sqm of landscaped gardens.
 
@@ -510,65 +515,9 @@ Amenities include roof garden social floor, spa, fitness center, sports center, 
     propertyIds: []
   },
   {
-    id: 'london-towers',
-    name: 'London Towers',
-    location: {
-      address: 'London Towers',
-      city: 'Erbil',
-      district: 'Waziran',
-      country: 'Iraq'
-    },
-    status: 'Under Construction',
-    totalUnits: 400,
-    priceRange: {
-      min: 130000,
-      max: 380000,
-      currency: 'USD'
-    },
-    completionDate: '2026',
-    amenities: [
-      'British-Inspired Design',
-      'Rooftop Terrace',
-      'Indoor Pool',
-      'Fitness Center',
-      'Business Lounge',
-      '24/7 Security',
-      'Underground Parking',
-      'Concierge Service',
-      'Private Gardens',
-      'Children\'s Club',
-      'Meeting Rooms',
-      'Guest Suites'
-    ],
-    images: [
-      'https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?w=800&q=80&fm=webp',
-      'https://images.unsplash.com/photo-1600047509807-ba8f99d2cdde?w=800&q=80&fm=webp',
-      'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=800&q=80&fm=webp'
-    ],
-    image: 'https://images.unsplash.com/photo-1486325212027-8081e485255e?w=1200&q=80&fm=webp',
-    gallery: [
-      'https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?w=800&q=80&fm=webp',
-      'https://images.unsplash.com/photo-1600047509807-ba8f99d2cdde?w=800&q=80&fm=webp',
-      'https://images.unsplash.com/photo-1567767292278-a4f21aa2d36e?w=800&q=80&fm=webp',
-      'https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?w=800&q=80&fm=webp',
-      'https://images.unsplash.com/photo-1493809842364-78817add7ffb?w=800&q=80&fm=webp',
-      'https://images.unsplash.com/photo-1512918728675-ed5a9ecdebfd?w=800&q=80&fm=webp'
-    ],
-    floorPlanImages: [
-      'https://images.unsplash.com/photo-1574362848149-11496d93a7c7?w=800&q=80&fm=webp',
-      'https://images.unsplash.com/photo-1503387837-b154d5074bd2?w=800&q=80&fm=webp',
-      'https://images.unsplash.com/photo-1600585152220-90363fe7e115?w=800&q=80&fm=webp'
-    ],
-    description: `London Towers brings British elegance to Erbil's skyline. This prestigious residential development features refined architecture inspired by London's most desirable addresses, combined with modern luxury amenities.
-
-Each apartment offers generous living spaces, premium finishes, and thoughtful layouts designed for comfortable family living. Residents have access to an indoor pool, rooftop terrace, business lounge, and private gardens.
-
-London Towers is ideal for those seeking a sophisticated lifestyle in one of Erbil's most desirable locations, with easy access to schools, shopping, and entertainment.`,
-    propertyIds: []
-  },
-  {
     id: 'mnw-towers',
     name: 'MNW Towers',
+    developer: '99 Shakha Barza Company',
     location: {
       address: 'MNW Towers Complex',
       city: 'Erbil',
@@ -598,9 +547,9 @@ London Towers is ideal for those seeking a sophisticated lifestyle in one of Erb
       'Pet-Friendly Areas'
     ],
     images: [
-      'https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=800&q=80&fm=webp',
-      'https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?w=800&q=80&fm=webp',
-      'https://images.unsplash.com/photo-1577495508326-19a1b3cf65b7?w=800&q=80&fm=webp'
+      '/images/projects/mnw-towers/01.jpg',
+      '/images/projects/mnw-towers/02.jpg',
+      '/images/projects/mnw-towers/03.jpg'
     ],
     description: `MNW Towers is an upcoming landmark development in Ankawa, featuring modern high-rise apartments designed for contemporary urban living. This ambitious project combines cutting-edge architecture with sustainable design principles.
 
@@ -612,6 +561,7 @@ Early buyers can take advantage of attractive pre-construction pricing and flexi
   {
     id: 'pavilion-erbil',
     name: 'Pavilion by Rams',
+    developer: 'RAMS Global / Lalav Group',
     location: {
       address: 'Pavilion Erbil, 170+ hectares',
       city: 'Erbil',
@@ -645,14 +595,14 @@ Early buyers can take advantage of attractive pre-construction pricing and flexi
       'https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=800&q=80&fm=webp',
       'https://images.unsplash.com/photo-1582268611958-ebfd161ef9cf?w=800&q=80&fm=webp'
     ],
-    image: 'https://images.unsplash.com/photo-1512917774080-9991f1c4c750?w=1200&q=80&fm=webp',
+    image: '/images/projects/mnw-towers/01.jpg',
     gallery: [
-      'https://images.unsplash.com/photo-1613490493576-7fde63acd811?w=800&q=80&fm=webp',
-      'https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=800&q=80&fm=webp',
-      'https://images.unsplash.com/photo-1582268611958-ebfd161ef9cf?w=800&q=80&fm=webp',
-      'https://images.unsplash.com/photo-1580587771525-78b9dba3b914?w=800&q=80&fm=webp',
-      'https://images.unsplash.com/photo-1600047509807-ba8f99d2cdde?w=800&q=80&fm=webp',
-      'https://images.unsplash.com/photo-1613977257363-707ba9348227?w=800&q=80&fm=webp'
+      '/images/projects/mnw-towers/01.jpg',
+      '/images/projects/mnw-towers/02.jpg',
+      '/images/projects/mnw-towers/03.jpg',
+      '/images/projects/mnw-towers/04.jpg',
+      '/images/projects/mnw-towers/05.jpg',
+      '/images/projects/mnw-towers/06.jpg'
     ],
     floorPlanImages: [
       'https://images.unsplash.com/photo-1600607688969-a5bfcd646154?w=800&q=80&fm=webp',
@@ -669,6 +619,7 @@ Amenities include 24hr electricity, internet, playground, pre-installed ACs, sec
   {
     id: 'lebanese-village',
     name: 'Lebanese Village',
+    developer: 'Hariri Construction',
     location: {
       address: 'Baherka Road, near Ainkawa',
       city: 'Erbil',
@@ -712,6 +663,7 @@ Amenities include 24-hour electricity, central gas, underground parking, health 
   {
     id: 'downtown-erbil',
     name: 'Downtown Erbil',
+    developer: 'Emaar Properties',
     location: {
       address: 'Between Citadel and Airport',
       city: 'Erbil',
@@ -769,6 +721,7 @@ Downtown Erbil is designed to create up to 45,000 jobs and will become a major e
   {
     id: 'sky-towers',
     name: 'Sky Towers',
+    developer: 'Galiawa Group',
     location: {
       address: '100m Street, beside Arjaan by Rotana',
       city: 'Erbil',
@@ -798,10 +751,11 @@ Downtown Erbil is designed to create up to 45,000 jobs and will become a major e
       'School Nearby'
     ],
     images: [
-      'https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=800&q=80&fm=webp',
-      'https://images.unsplash.com/photo-1567767292278-a4f21aa2d36e?w=800&q=80&fm=webp',
-      'https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?w=800&q=80&fm=webp'
+      '/images/projects/sky-towers/01.jpg',
+      '/images/projects/sky-towers/02.jpg',
+      '/images/projects/sky-towers/03.jpg'
     ],
+    image: '/images/projects/sky-towers/01.jpg',
     description: `Sky Towers is one of the most upscale residential projects in Kurdistan and Iraq, consisting of three impressive 38-story towers located on the prestigious 100-meter street beside the Arjaan by Rotana hotel.
 
 The project offers 1,212 luxury apartments plus 12 exclusive duplex apartments, all built according to international standards using high-quality materials. Each unit features modern finishes, pre-installed air conditioning, and access to comprehensive building amenities.
@@ -812,6 +766,7 @@ Sky Towers combines strategic location with premium living standards, making it 
   {
     id: 'zaniary-towers',
     name: 'Zaniary Towers',
+    developer: 'Kirmanj Construction',
     location: {
       address: 'Zaniary District',
       city: 'Erbil',
@@ -855,6 +810,7 @@ Zaniary Towers represents a milestone in Kurdistan's architectural landscape, of
   {
     id: 'american-village',
     name: 'American Village',
+    developer: 'Sigma International Construction',
     location: {
       address: 'Salahadin Road',
       city: 'Erbil',
@@ -898,6 +854,7 @@ American Village is home to the International School of Choueifat and enjoys spe
   {
     id: 'ankawa-4-towers',
     name: 'Ankawa 4 Towers',
+    developer: 'Ashur Ban Company',
     location: {
       address: 'Northwest Erbil, Ankawa Area',
       city: 'Erbil',
@@ -927,9 +884,17 @@ American Village is home to the International School of Choueifat and enjoys spe
       'Car Parking'
     ],
     images: [
-      'https://images.unsplash.com/photo-1577495508326-19a1b3cf65b7?w=800&q=80&fm=webp',
-      'https://images.unsplash.com/photo-1565623833408-d77e39b88af6?w=800&q=80&fm=webp',
-      'https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?w=800&q=80&fm=webp'
+      '/images/projects/ankawa-4-towers/01.jpg',
+      '/images/projects/ankawa-4-towers/02.jpg',
+      '/images/projects/ankawa-4-towers/03.jpg'
+    ],
+    image: '/images/projects/ankawa-4-towers/01.jpg',
+    gallery: [
+      '/images/projects/ankawa-4-towers/01.jpg',
+      '/images/projects/ankawa-4-towers/02.jpg',
+      '/images/projects/ankawa-4-towers/03.jpg',
+      '/images/projects/ankawa-4-towers/04.jpg',
+      '/images/projects/ankawa-4-towers/05.jpg'
     ],
     description: `Ankawa 4 Towers is a high-end residential project located in the prestigious Ankawa district, northwest of Erbil city. The development consists of four elegant towers, each rising 15 floors.
 
@@ -941,6 +906,7 @@ Residents enjoy comprehensive amenities including a sports complex, gym, swimmin
   {
     id: 'naz-city',
     name: 'Naz City',
+    developer: 'Kar Group',
     location: {
       address: '40 Meter Street (Gulan), 5 minutes from city center',
       city: 'Erbil',
@@ -984,6 +950,7 @@ Naz City offers a perfect balance of urban convenience and residential tranquili
   {
     id: 'gulan-towers',
     name: 'Gulan Park-WTC Towers',
+    developer: 'SB Ozel Group',
     location: {
       address: 'Gulan Street',
       city: 'Erbil',
@@ -1013,9 +980,16 @@ Naz City offers a perfect balance of urban convenience and residential tranquili
       'Underground Parking'
     ],
     images: [
-      'https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=800&q=80&fm=webp',
-      'https://images.unsplash.com/photo-1567767292278-a4f21aa2d36e?w=800&q=80&fm=webp',
-      'https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?w=800&q=80&fm=webp'
+      '/images/projects/gulan-towers/01.jpeg',
+      '/images/projects/gulan-towers/02.jpeg',
+      '/images/projects/gulan-towers/03.jpeg'
+    ],
+    image: '/images/projects/gulan-towers/01.jpeg',
+    gallery: [
+      '/images/projects/gulan-towers/01.jpeg',
+      '/images/projects/gulan-towers/02.jpeg',
+      '/images/projects/gulan-towers/03.jpeg',
+      '/images/projects/gulan-towers/04.jpg'
     ],
     description: `Gulan Park-WTC is Erbil's first integrated development combining residence, office, shopping, and hotel in one prestigious location. The project features the Radisson Hotel on floors 1-9, Gulan Park Residences on floors 10-22, and 22 floors of World Trade Center offices.
 
@@ -1027,6 +1001,7 @@ This landmark project represents the pinnacle of mixed-use urban living in Kurdi
   {
     id: 'roya-towers',
     name: 'Roya Towers',
+    developer: 'MRF Group',
     location: {
       address: 'Erbil City Center',
       city: 'Erbil',
@@ -1070,6 +1045,7 @@ Roya Towers combines vertical living convenience with community amenities, offer
   {
     id: 'quattro-towers',
     name: 'Quattro Towers',
+    developer: 'MRF Group',
     location: {
       address: 'Gulan Street, beside Turkish Consulate',
       city: 'Erbil',
@@ -1113,6 +1089,7 @@ Quattro Towers represents an excellent investment opportunity with its prime loc
   {
     id: 'star-towers',
     name: 'Star Towers',
+    developer: 'MRF Group / Lalav Group',
     location: {
       address: 'Gulan Street, opposite Dream City, Golden Square',
       city: 'Erbil',
@@ -1156,6 +1133,7 @@ Star Towers provides excellent value for buyers and investors seeking quality re
   {
     id: 'garden-city',
     name: 'Garden City',
+    developer: 'Bayan Real Estate (Halabja Group)',
     location: {
       address: 'King Mahmoud Ring Road, near Shar Hospital',
       city: 'Erbil',
@@ -1199,6 +1177,7 @@ Garden City lives up to its name with beautifully landscaped gardens and green s
   {
     id: 'ganjan-city',
     name: 'Ganjan City',
+    developer: 'Happy Land Company',
     location: {
       address: '150 Meter Street',
       city: 'Erbil',
@@ -1242,6 +1221,7 @@ Ganjan City represents suburban living at its finest in Kurdistan, combining spa
   {
     id: 'hiwa-city',
     name: 'Hiwa City',
+    developer: 'Hewa Holding',
     location: {
       address: 'Kasnazan Koya Road',
       city: 'Erbil',
@@ -1285,6 +1265,7 @@ Hiwa City is famous in Erbil for its exceptional quality, comprehensive services
   {
     id: 'majidi-view',
     name: 'Majidi View',
+    developer: 'Hewa Holding',
     location: {
       address: 'Koya Road, next to Hiwa City',
       city: 'Erbil',
@@ -1328,6 +1309,7 @@ Majidi View represents an excellent opportunity to own property in one of Erbil'
   {
     id: 'kurdistan-city',
     name: 'Kurdistan City',
+    developer: 'Rostvale Company',
     location: {
       address: '150m Street, behind Ganjan City',
       city: 'Erbil',
@@ -1357,9 +1339,9 @@ Majidi View represents an excellent opportunity to own property in one of Erbil'
       'Family-Friendly Environment'
     ],
     images: [
-      'https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=800&q=80&fm=webp',
-      'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=800&q=80&fm=webp',
-      'https://images.unsplash.com/photo-1600566753086-00f18fb6b3ea?w=800&q=80&fm=webp'
+      '/images/projects/kurdistan-city/01.jpg',
+      '/images/projects/kurdistan-city/02.jpg',
+      '/images/projects/kurdistan-city/03.jpg'
     ],
     description: `Kurdistan City is an established family residential community completed in 2014, located on 150m Street behind Ganjan City. The project consists of 13 buildings with 7 floors each, offering 4 apartments per floor, totaling 408 houses and 364 apartments.
 
@@ -1371,6 +1353,7 @@ Kurdistan City offers proven quality and an established community atmosphere, ma
   {
     id: 'signature-towers',
     name: 'Signature Towers',
+    developer: 'Signature Group',
     location: {
       address: 'Central Erbil',
       city: 'Erbil',
@@ -1414,6 +1397,7 @@ Signature Towers represents sophisticated urban living in central Erbil, offerin
   {
     id: 'rotana-hotel-residences',
     name: 'Erbil Arjaan by Rotana',
+    developer: 'Rotana Hotels',
     location: {
       address: '10 minutes from Erbil International Airport',
       city: 'Erbil',
@@ -1447,14 +1431,14 @@ Signature Towers represents sophisticated urban living in central Erbil, offerin
       'https://images.unsplash.com/photo-1582719508461-905c673771fd?w=800&q=80&fm=webp',
       'https://images.unsplash.com/photo-1551882547-ff40c63fe5fa?w=800&q=80&fm=webp'
     ],
-    image: 'https://images.unsplash.com/photo-1566073771259-6a8506099945?w=1200&q=80&fm=webp',
+    image: '/images/projects/kurdistan-city/01.jpg',
     gallery: [
-      'https://images.unsplash.com/photo-1566073771259-6a8506099945?w=800&q=80&fm=webp',
-      'https://images.unsplash.com/photo-1582719508461-905c673771fd?w=800&q=80&fm=webp',
-      'https://images.unsplash.com/photo-1551882547-ff40c63fe5fa?w=800&q=80&fm=webp',
-      'https://images.unsplash.com/photo-1520250497591-112f2f40a3f4?w=800&q=80&fm=webp',
-      'https://images.unsplash.com/photo-1578683010236-d716f9a3f461?w=800&q=80&fm=webp',
-      'https://images.unsplash.com/photo-1584132967334-10e028bd69f7?w=800&q=80&fm=webp'
+      '/images/projects/kurdistan-city/01.jpg',
+      '/images/projects/kurdistan-city/02.jpg',
+      '/images/projects/kurdistan-city/03.jpg',
+      '/images/projects/kurdistan-city/04.jpg',
+      '/images/projects/kurdistan-city/05.jpg',
+      '/images/projects/kurdistan-city/06.jpg'
     ],
     floorPlanImages: [
       'https://images.unsplash.com/photo-1600585152220-90363fe7e115?w=800&q=80&fm=webp',
@@ -1471,6 +1455,7 @@ Residents enjoy the Bodylines Fitness & Wellness Club with gym and spa treatment
   {
     id: 'divan-erbil',
     name: 'Divan Erbil',
+    developer: 'Elegan Group',
     location: {
       address: 'Gulan Street, opposite Sami Abdul-Rahman Park',
       city: 'Erbil',
@@ -1500,23 +1485,18 @@ Residents enjoy the Bodylines Fitness & Wellness Club with gym and spa treatment
       '10 min from Airport'
     ],
     images: [
-      'https://images.unsplash.com/photo-1564501049412-61c2a3083791?w=800&q=80&fm=webp',
-      'https://images.unsplash.com/photo-1571896349842-33c89424de2d?w=800&q=80&fm=webp',
-      'https://images.unsplash.com/photo-1520250497591-112f2f40a3f4?w=800&q=80&fm=webp'
+      '/images/projects/divan-erbil/01.jpg',
+      '/images/projects/divan-erbil/02.jpg',
+      '/images/projects/divan-erbil/03.jpg'
     ],
-    image: 'https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?w=1200&q=80&fm=webp',
+    image: '/images/projects/divan-erbil/01.jpg',
     gallery: [
-      'https://images.unsplash.com/photo-1564501049412-61c2a3083791?w=800&q=80&fm=webp',
-      'https://images.unsplash.com/photo-1571896349842-33c89424de2d?w=800&q=80&fm=webp',
-      'https://images.unsplash.com/photo-1520250497591-112f2f40a3f4?w=800&q=80&fm=webp',
-      'https://images.unsplash.com/photo-1563911302283-d2bc129e7570?w=800&q=80&fm=webp',
-      'https://images.unsplash.com/photo-1596436889106-be35e843f974?w=800&q=80&fm=webp',
-      'https://images.unsplash.com/photo-1590490360182-c33d57733427?w=800&q=80&fm=webp'
-    ],
-    floorPlanImages: [
-      'https://images.unsplash.com/photo-1600585152220-90363fe7e115?w=800&q=80&fm=webp',
-      'https://images.unsplash.com/photo-1574362848149-11496d93a7c7?w=800&q=80&fm=webp',
-      'https://images.unsplash.com/photo-1600607688960-e095ff83135c?w=800&q=80&fm=webp'
+      '/images/projects/divan-erbil/01.jpg',
+      '/images/projects/divan-erbil/02.jpg',
+      '/images/projects/divan-erbil/03.jpg',
+      '/images/projects/divan-erbil/04.jpg',
+      '/images/projects/divan-erbil/05.jpg',
+      '/images/projects/divan-erbil/06.jpg'
     ],
     description: `Divan Erbil is the most visually modern structure and highest tower in Erbil, a local landmark spreading over 25,000 sqm on Gulan Street opposite Sami Abdul-Rahman Park (the largest park in Iraq). Just 10 minutes from the Airport.
 
@@ -1528,6 +1508,7 @@ Dining includes Seasons Restaurant (breakfast, lunch, dinner buffets) and Qi 21 
   {
     id: 'marriott-erbil-residences',
     name: 'Marriott Erbil Residences',
+    developer: 'Empire World',
     location: {
       address: 'Gulan Street, near Empire World',
       city: 'Erbil',
@@ -1571,6 +1552,7 @@ This is a rare opportunity to own a Marriott-branded residence in Erbil's most p
   {
     id: 'kempinski-erbil',
     name: 'Kempinski Erbil',
+    developer: 'Via Group',
     location: {
       address: 'Ankawa',
       city: 'Erbil',
@@ -1600,9 +1582,18 @@ This is a rare opportunity to own a Marriott-branded residence in Erbil's most p
       'Private Cinema'
     ],
     images: [
-      'https://images.unsplash.com/photo-1618773928121-c32242e63f39?w=800&q=80&fm=webp',
-      'https://images.unsplash.com/photo-1578683010236-d716f9a3f461?w=800&q=80&fm=webp',
-      'https://images.unsplash.com/photo-1584132967334-10e028bd69f7?w=800&q=80&fm=webp'
+      '/images/projects/kempinski-erbil/01.jpg',
+      '/images/projects/kempinski-erbil/02.jpg',
+      '/images/projects/kempinski-erbil/03.jpg'
+    ],
+    image: '/images/projects/kempinski-erbil/01.jpg',
+    gallery: [
+      '/images/projects/kempinski-erbil/01.jpg',
+      '/images/projects/kempinski-erbil/02.jpg',
+      '/images/projects/kempinski-erbil/03.jpg',
+      '/images/projects/kempinski-erbil/04.jpg',
+      '/images/projects/kempinski-erbil/05.jpg',
+      '/images/projects/kempinski-erbil/06.jpg'
     ],
     description: `Kempinski Erbil represents the pinnacle of European luxury hospitality in Kurdistan. This exclusive development offers serviced residences with the legendary Kempinski standard of excellence that has defined luxury for over a century.
 
@@ -1614,6 +1605,7 @@ Kempinski Erbil is reserved for those who accept nothing but the finest, offerin
   {
     id: 'royal-city',
     name: 'Royal City',
+    developer: 'Falcon Group / Empire World',
     location: {
       address: 'Pirmam Road',
       city: 'Erbil',
@@ -1643,9 +1635,18 @@ Kempinski Erbil is reserved for those who accept nothing but the finest, offerin
       'Landscaped Gardens'
     ],
     images: [
-      'https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=800&q=80&fm=webp',
-      'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=800&q=80&fm=webp',
-      'https://images.unsplash.com/photo-1600047509807-ba8f99d2cdde?w=800&q=80&fm=webp'
+      '/images/projects/royal-city/01.jpeg',
+      '/images/projects/royal-city/02.jpeg',
+      '/images/projects/royal-city/03.jpeg'
+    ],
+    image: '/images/projects/royal-city/01.jpeg',
+    gallery: [
+      '/images/projects/royal-city/01.jpeg',
+      '/images/projects/royal-city/02.jpeg',
+      '/images/projects/royal-city/03.jpeg',
+      '/images/projects/royal-city/05.jpeg',
+      '/images/projects/royal-city/08.jpeg',
+      '/images/projects/royal-city/09.jpeg'
     ],
     description: `Royal City is an upscale residential community on Pirmam Road offering luxury villas and apartments in a secure, master-planned environment. The development combines royal elegance with modern conveniences.
 
@@ -1655,51 +1656,9 @@ Royal City provides an exceptional family living environment with privacy, secur
     propertyIds: []
   },
   {
-    id: 'sarbast-heights',
-    name: 'Sarbast Heights',
-    location: {
-      address: '60 Meter Road',
-      city: 'Erbil',
-      district: '60 Meter Road',
-      country: 'Iraq'
-    },
-    status: 'Ready',
-    totalUnits: 480,
-    priceRange: {
-      min: 95000,
-      max: 320000,
-      currency: 'USD'
-    },
-    completionDate: '2023',
-    amenities: [
-      'Twin Tower Design',
-      'City Views',
-      'Rooftop Garden',
-      'Fitness Center',
-      'Swimming Pool',
-      '24/7 Security',
-      'Underground Parking',
-      'High-Speed Elevators',
-      'Children\'s Play Area',
-      'Retail Podium',
-      'Business Center',
-      'Landscaped Plaza'
-    ],
-    images: [
-      'https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=800&q=80&fm=webp',
-      'https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?w=800&q=80&fm=webp',
-      'https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?w=800&q=80&fm=webp'
-    ],
-    description: `Sarbast Heights rises elegantly on the 60 Meter Road with twin residential towers offering modern apartments with stunning city views. The development combines contemporary architecture with practical living solutions.
-
-Each apartment is designed for comfortable family living with spacious layouts, quality finishes, and access to comprehensive building amenities. The rooftop garden provides a peaceful retreat above the city bustle.
-
-Sarbast Heights offers excellent value in a prime location, making it ideal for families and investors seeking quality residential units with strong rental potential.`,
-    propertyIds: []
-  },
-  {
     id: 'newroz-city',
     name: 'Newroz City',
+    developer: 'BC Group / Doski Holding',
     location: {
       address: 'Kirkuk Road',
       city: 'Erbil',
@@ -1741,51 +1700,9 @@ Early buyers benefit from attractive pre-construction pricing and flexible payme
     propertyIds: []
   },
   {
-    id: 'classy-tower',
-    name: 'Classy Tower',
-    location: {
-      address: 'Gulan Street',
-      city: 'Erbil',
-      district: 'Gulan',
-      country: 'Iraq'
-    },
-    status: 'Ready',
-    totalUnits: 320,
-    priceRange: {
-      min: 120000,
-      max: 420000,
-      currency: 'USD'
-    },
-    completionDate: '2022',
-    amenities: [
-      'Premium High-Rise',
-      'Panoramic Views',
-      'Rooftop Lounge',
-      'Infinity Pool',
-      'Fitness Center',
-      '24/7 Security',
-      'Concierge Service',
-      'Underground Parking',
-      'Smart Home Systems',
-      'High-Speed Elevators',
-      'Landscaped Terraces',
-      'Retail Spaces'
-    ],
-    images: [
-      'https://images.unsplash.com/photo-1567767292278-a4f21aa2d36e?w=800&q=80&fm=webp',
-      'https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?w=800&q=80&fm=webp',
-      'https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?w=800&q=80&fm=webp'
-    ],
-    description: `Classy Tower lives up to its name with sophisticated residential apartments in the heart of Gulan. This premium high-rise offers elegant living spaces with panoramic views of Erbil's evolving skyline.
-
-Each apartment features contemporary design, smart home systems, and premium finishes. The rooftop lounge and infinity pool provide exclusive spaces for residents to relax and entertain.
-
-Classy Tower is perfectly positioned for urban professionals seeking a stylish address with convenient access to Erbil's business and entertainment districts.`,
-    propertyIds: []
-  },
-  {
     id: 'royal-towers',
     name: 'Royal Towers',
+    developer: 'Royal Group',
     location: {
       address: 'Ankawa',
       city: 'Erbil',
@@ -1827,51 +1744,9 @@ Royal Towers provides excellent value in Ankawa, close to restaurants, entertain
     propertyIds: []
   },
   {
-    id: 'amna-suraka-development',
-    name: 'Amna Suraka Area Development',
-    location: {
-      address: 'Near Red Security Building',
-      city: 'Erbil',
-      district: 'Amna Suraka',
-      country: 'Iraq'
-    },
-    status: 'Under Construction',
-    totalUnits: 650,
-    priceRange: {
-      min: 95000,
-      max: 350000,
-      currency: 'USD'
-    },
-    completionDate: '2027',
-    amenities: [
-      'Historic District Location',
-      'Cultural Heritage Area',
-      'Modern Apartments',
-      'Landscaped Gardens',
-      'Memorial Park Views',
-      '24/7 Security',
-      'Underground Parking',
-      'Fitness Center',
-      'Community Spaces',
-      'Retail Podium',
-      'Museum Access',
-      'Cultural Center'
-    ],
-    images: [
-      'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=800&q=80&fm=webp',
-      'https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=800&q=80&fm=webp',
-      'https://images.unsplash.com/photo-1600566753086-00f18fb6b3ea?w=800&q=80&fm=webp'
-    ],
-    description: `The Amna Suraka Area Development transforms the historic district near the Red Security Building museum into a modern residential neighborhood while respecting its cultural significance. This thoughtful development honors history while creating contemporary homes.
-
-Apartments offer views of the memorial park and surrounding gardens, with designs that complement the area's heritage character. Residents benefit from proximity to cultural institutions and the central city location.
-
-This unique development appeals to those who appreciate history and culture, offering a meaningful address with modern comforts in a revitalized historic district.`,
-    propertyIds: []
-  },
-  {
     id: 'family-village',
     name: 'Family Village',
+    developer: 'Family Village Group',
     location: {
       address: 'Pirmam Road',
       city: 'Erbil',
@@ -1913,51 +1788,9 @@ Family Village has earned its reputation as one of Erbil's premier family commun
     propertyIds: []
   },
   {
-    id: 'sami-abdulrahman-park-residences',
-    name: 'Sami Abdulrahman Park Residences',
-    location: {
-      address: 'Adjacent to Sami Abdulrahman Park',
-      city: 'Erbil',
-      district: 'Central Erbil',
-      country: 'Iraq'
-    },
-    status: 'Coming Soon',
-    totalUnits: 420,
-    priceRange: {
-      min: 200000,
-      max: 680000,
-      currency: 'USD'
-    },
-    completionDate: '2029',
-    amenities: [
-      'Park Views',
-      'Luxury Apartments',
-      'Direct Park Access',
-      'Rooftop Gardens',
-      'Wellness Center',
-      'Infinity Pool',
-      '24/7 Security',
-      'Concierge Service',
-      'Underground Parking',
-      'Smart Home Technology',
-      'Premium Finishes',
-      'Private Terraces'
-    ],
-    images: [
-      'https://images.unsplash.com/photo-1613490493576-7fde63acd811?w=800&q=80&fm=webp',
-      'https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?w=800&q=80&fm=webp',
-      'https://images.unsplash.com/photo-1512917774080-9991f1c4c750?w=800&q=80&fm=webp'
-    ],
-    description: `Sami Abdulrahman Park Residences will offer an unparalleled living experience adjacent to Erbil's beloved central park. This premium development maximizes its exceptional location with park-facing apartments and direct access to green spaces.
-
-Every residence will feature views of the park's lakes, gardens, and promenades, with private terraces to enjoy the scenery. The development incorporates biophilic design principles connecting indoor and outdoor living.
-
-This rare opportunity to live beside Erbil's premier public park makes these residences highly desirable for nature lovers and those seeking tranquil urban living.`,
-    propertyIds: []
-  },
-  {
     id: 'naz-towers',
     name: 'Naz Towers',
+    developer: 'Kar Group',
     location: {
       address: '40 Meter Road',
       city: 'Erbil',
@@ -2001,6 +1834,7 @@ Naz Towers appeals to buyers seeking a prestigious address with reliable infrast
   {
     id: 'park-view',
     name: 'Park View',
+    developer: 'Salahaddin Holding',
     location: {
       address: 'Near Shanidar Park',
       city: 'Erbil',
@@ -2044,6 +1878,7 @@ Park View is perfect for health-conscious residents and families who value outdo
   {
     id: 'ster-tower',
     name: 'Ster Tower',
+    developer: 'Ster Group',
     location: {
       address: '100 Meter Road',
       city: 'Erbil',
@@ -2087,6 +1922,7 @@ Ster Tower attracts discerning buyers who appreciate distinctive architecture an
   {
     id: 'cihan-tower',
     name: 'Cihan Tower',
+    developer: 'Cihan Group',
     location: {
       address: 'Gulan',
       city: 'Erbil',
@@ -2130,6 +1966,7 @@ Cihan Tower is ideal for professionals and families seeking a well-located, well
   {
     id: 'asia-city',
     name: 'Asia City',
+    developer: 'Asia City Group',
     location: {
       address: 'Airport Road',
       city: 'Erbil',
@@ -2173,6 +2010,7 @@ Asia City represents accessible home ownership in Erbil with pre-construction pr
   {
     id: 'hawler-city',
     name: 'Hawler City',
+    developer: 'Hawler City Group',
     location: {
       address: '120 Meter Road',
       city: 'Erbil',
@@ -2216,6 +2054,7 @@ Hawler City has matured into a vibrant neighborhood with an active community lif
   {
     id: 'venus-tower',
     name: 'Venus Tower',
+    developer: 'Lalav Group',
     location: {
       address: '60 Meter Road',
       city: 'Erbil',
@@ -2245,9 +2084,17 @@ Hawler City has matured into a vibrant neighborhood with an active community lif
       'Management Office'
     ],
     images: [
-      'https://images.unsplash.com/photo-1567767292278-a4f21aa2d36e?w=800&q=80&fm=webp',
-      'https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=800&q=80&fm=webp',
-      'https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?w=800&q=80&fm=webp'
+      '/images/projects/venus-tower/01.jpg',
+      '/images/projects/venus-tower/02.jpg',
+      '/images/projects/venus-tower/03.png'
+    ],
+    image: '/images/projects/venus-tower/01.jpg',
+    gallery: [
+      '/images/projects/venus-tower/01.jpg',
+      '/images/projects/venus-tower/02.jpg',
+      '/images/projects/venus-tower/03.png',
+      '/images/projects/venus-tower/04.png',
+      '/images/projects/venus-tower/05.png'
     ],
     description: `Venus Tower brings elegance to the 60 Meter Road with its classic architectural design and refined residential offerings. The development balances aesthetic appeal with practical living requirements.
 
@@ -2259,6 +2106,7 @@ Venus Tower attracts buyers who appreciate understated elegance and solid constr
   {
     id: 'crystal-tower',
     name: 'Crystal Tower',
+    developer: 'Crystal Group',
     location: {
       address: 'Gulan Street',
       city: 'Erbil',
@@ -2302,6 +2150,7 @@ Crystal Tower is perfect for design-conscious buyers seeking a contemporary livi
   {
     id: 'new-eskan',
     name: 'New Eskan',
+    developer: 'Shaxa Barza & 99 Companies',
     location: {
       address: 'New Eskan Complex',
       city: 'Erbil',
@@ -2345,6 +2194,7 @@ New Eskan represents excellent value in a mature neighborhood with established i
   {
     id: 'cihan-city',
     name: 'Cihan City',
+    developer: 'Cihan Group',
     location: {
       address: 'Cihan City Complex',
       city: 'Erbil',
@@ -2388,6 +2238,7 @@ Cihan City represents the vision of modern suburban living in Kurdistan, combini
   {
     id: 'mrf-towers',
     name: 'MRF Towers',
+    developer: 'MRF Group',
     location: {
       address: 'MRF Towers Complex',
       city: 'Erbil',
@@ -2417,9 +2268,9 @@ Cihan City represents the vision of modern suburban living in Kurdistan, combini
       'Landscaped Plaza'
     ],
     images: [
-      'https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=800&q=80&fm=webp',
-      'https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?w=800&q=80&fm=webp',
-      'https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?w=800&q=80&fm=webp'
+      '/images/projects/mrf-towers/01.jpg',
+      '/images/projects/mrf-towers/02.jpg',
+      '/images/projects/mrf-towers/03.jpg'
     ],
     description: `MRF Towers is an upcoming premium residential development in the heart of Gulan featuring twin towers with modern architecture and comprehensive amenities. The project offers attractive pre-construction pricing for early buyers.
 
@@ -2431,6 +2282,7 @@ MRF Towers represents an excellent investment opportunity in Erbil's most desira
   {
     id: 'the-atlantic',
     name: 'The Atlantic',
+    developer: 'Claremont Group',
     location: {
       address: 'The Atlantic Complex',
       city: 'Erbil',
@@ -2460,9 +2312,9 @@ MRF Towers represents an excellent investment opportunity in Erbil's most desira
       'Fine Dining Restaurant'
     ],
     images: [
-      'https://images.unsplash.com/photo-1567767292278-a4f21aa2d36e?w=800&q=80&fm=webp',
-      'https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?w=800&q=80&fm=webp',
-      'https://images.unsplash.com/photo-1565623833408-d77e39b88af6?w=800&q=80&fm=webp'
+      '/images/projects/the-atlantic/01.jpg',
+      '/images/projects/the-atlantic/02.jpeg',
+      '/images/projects/the-atlantic/03.jpg'
     ],
     description: `The Atlantic brings oceanic elegance to Erbil's Ankawa district with its distinctive wave-inspired architecture and luxury amenities. This prestigious development offers premium apartments with sophisticated design throughout.
 
@@ -2474,6 +2326,7 @@ The Atlantic appeals to discerning buyers seeking a unique residential experienc
   {
     id: 'nawroz-city',
     name: 'Nawroz City',
+    developer: 'BC Group / Doski Holding',
     location: {
       address: 'Nawroz City Complex',
       city: 'Erbil',
@@ -2515,49 +2368,6 @@ Nawroz City offers accessible home ownership with attractive pre-construction pr
     propertyIds: []
   },
   {
-    id: 'msy-nefes',
-    name: 'MSY Nefes',
-    location: {
-      address: 'MSY Nefes Complex',
-      city: 'Erbil',
-      district: 'Gulan',
-      country: 'Iraq'
-    },
-    status: 'Ready',
-    totalUnits: 380,
-    priceRange: {
-      min: 110000,
-      max: 380000,
-      currency: 'USD'
-    },
-    completionDate: '2022',
-    amenities: [
-      'Turkish-Style Design',
-      'Modern Apartments',
-      'Swimming Pool',
-      'Fitness Center',
-      '24/7 Security',
-      'Underground Parking',
-      'Rooftop Garden',
-      'High-Speed Elevators',
-      'Children\'s Area',
-      'Retail Spaces',
-      'Cafe & Restaurant',
-      'Landscaped Gardens'
-    ],
-    images: [
-      'https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?w=800&q=80&fm=webp',
-      'https://images.unsplash.com/photo-1577495508326-19a1b3cf65b7?w=800&q=80&fm=webp',
-      'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=800&q=80&fm=webp'
-    ],
-    description: `MSY Nefes brings Turkish residential design excellence to Erbil's Gulan district. The name "Nefes" meaning "breath" in Turkish reflects the project's focus on spacious, airy living environments.
-
-Each apartment features open floor plans, large windows, and quality finishes that maximize natural light and ventilation. The rooftop garden provides a peaceful retreat while ground-floor retail adds daily convenience.
-
-MSY Nefes is ideal for buyers who appreciate thoughtful design and quality construction in a prime location.`,
-    propertyIds: []
-  },
-  {
     id: 'aram-village',
     name: 'Aram Village',
     location: {
@@ -2589,9 +2399,9 @@ MSY Nefes is ideal for buyers who appreciate thoughtful design and quality const
       'Shopping Nearby'
     ],
     images: [
-      'https://images.unsplash.com/photo-1600047509807-ba8f99d2cdde?w=800&q=80&fm=webp',
-      'https://images.unsplash.com/photo-1600585154526-990dced4db0d?w=800&q=80&fm=webp',
-      'https://images.unsplash.com/photo-1600566753190-17f0baa2a6c3?w=800&q=80&fm=webp'
+      '/images/projects/aram-village/01.jpg',
+      '/images/projects/aram-village/02.jpeg',
+      '/images/projects/aram-village/03.jpg'
     ],
     description: `Aram Village offers peaceful suburban living on the scenic Shaqlawa Road with stunning mountain views. This established community features spacious villas in a village-style setting that prioritizes privacy and natural beauty.
 
@@ -2601,51 +2411,9 @@ Aram Village is perfect for families seeking tranquil living away from the city 
     propertyIds: []
   },
   {
-    id: 'qaiwan-mirador',
-    name: 'Qaiwan Mirador',
-    location: {
-      address: 'Qaiwan Mirador Tower',
-      city: 'Erbil',
-      district: 'Central Erbil',
-      country: 'Iraq'
-    },
-    status: 'Under Construction',
-    totalUnits: 280,
-    priceRange: {
-      min: 150000,
-      max: 550000,
-      currency: 'USD'
-    },
-    completionDate: '2026',
-    amenities: [
-      'Panoramic City Views',
-      'Luxury High-Rise',
-      'Sky Lounge',
-      'Infinity Pool',
-      'Spa & Wellness',
-      '24/7 Security',
-      'Valet Parking',
-      'Concierge Service',
-      'Smart Home Technology',
-      'Business Center',
-      'Private Cinema',
-      'Landscaped Terraces'
-    ],
-    images: [
-      'https://images.unsplash.com/photo-1486325212027-8081e485255e?w=800&q=80&fm=webp',
-      'https://images.unsplash.com/photo-1567767292278-a4f21aa2d36e?w=800&q=80&fm=webp',
-      'https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?w=800&q=80&fm=webp'
-    ],
-    description: `Qaiwan Mirador, meaning "viewpoint" in Spanish, will offer unparalleled panoramic views of Erbil from its premium high-rise apartments. This upcoming luxury development focuses on elevated living experiences.
-
-The sky lounge and infinity pool provide exclusive spaces for residents to enjoy breathtaking city views. Every apartment features smart home technology and premium finishes befitting the prestigious address.
-
-Early investors benefit from attractive pre-construction pricing for this landmark project in central Erbil.`,
-    propertyIds: []
-  },
-  {
     id: 'erbil-one-tower',
     name: 'Erbil One Tower',
+    developer: 'Kirmanj Group',
     location: {
       address: 'Erbil One Tower',
       city: 'Erbil',
@@ -2675,9 +2443,18 @@ Early investors benefit from attractive pre-construction pricing for this landma
       'Retail Podium'
     ],
     images: [
-      'https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=800&q=80&fm=webp',
-      'https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?w=800&q=80&fm=webp',
-      'https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?w=800&q=80&fm=webp'
+      '/images/projects/erbil-one-tower/01.jpg',
+      '/images/projects/erbil-one-tower/02.jpg',
+      '/images/projects/erbil-one-tower/03.jpg'
+    ],
+    image: '/images/projects/aram-village/01.jpg',
+    gallery: [
+      '/images/projects/mrf-towers/01.jpg',
+      '/images/projects/mrf-towers/02.jpg',
+      '/images/projects/mrf-towers/03.jpg',
+      '/images/projects/mrf-towers/04.jpg',
+      '/images/projects/mrf-towers/05.jpg',
+      '/images/projects/mrf-towers/06.jpg'
     ],
     description: `Erbil One Tower stands as a singular statement of luxury on the prestigious 100 Meter Road. This iconic tower offers premium apartments with city views and comprehensive lifestyle amenities.
 
@@ -2689,6 +2466,7 @@ Erbil One Tower appeals to buyers seeking a prestigious single-tower address wit
   {
     id: 'life-tower',
     name: 'Life Tower',
+    developer: 'Tanj Group',
     location: {
       address: 'Life Tower',
       city: 'Erbil',
@@ -2718,10 +2496,10 @@ Erbil One Tower appeals to buyers seeking a prestigious single-tower address wit
       'Green Spaces'
     ],
     images: [
-      'https://images.unsplash.com/photo-1577495508326-19a1b3cf65b7?w=800&q=80&fm=webp',
-      'https://images.unsplash.com/photo-1565623833408-d77e39b88af6?w=800&q=80&fm=webp',
-      'https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?w=800&q=80&fm=webp'
+      '/images/projects/life-tower/01.jpg',
+      '/images/projects/life-tower/02.jpg'
     ],
+    image: '/images/projects/life-tower/01.jpg',
     description: `Life Tower is designed for health-conscious residents who prioritize wellness in their daily lives. This Gulan development integrates fitness facilities and healthy living concepts throughout.
 
 Beyond the standard gym, residents enjoy a dedicated yoga studio, juice bar, and cycling storage encouraging active lifestyles. The rooftop garden provides fresh air and green space above the city.
@@ -2730,51 +2508,9 @@ Life Tower attracts buyers who value health and wellness as core aspects of thei
     propertyIds: []
   },
   {
-    id: 'miran-city',
-    name: 'Miran City',
-    location: {
-      address: 'Miran City Complex',
-      city: 'Erbil',
-      district: 'Pirmam',
-      country: 'Iraq'
-    },
-    status: 'Ready',
-    totalUnits: 1800,
-    priceRange: {
-      min: 100000,
-      max: 420000,
-      currency: 'USD'
-    },
-    completionDate: '2021',
-    amenities: [
-      'Residential Community',
-      'Apartments & Villas',
-      'Shopping Center',
-      'Schools',
-      'Medical Clinic',
-      'Sports Complex',
-      'Parks & Gardens',
-      '24/7 Security',
-      'Mosque',
-      'Community Hall',
-      'Covered Parking',
-      'Playground'
-    ],
-    images: [
-      'https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=800&q=80&fm=webp',
-      'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=800&q=80&fm=webp',
-      'https://images.unsplash.com/photo-1600047509807-ba8f99d2cdde?w=800&q=80&fm=webp'
-    ],
-    description: `Miran City is an established residential community in the Pirmam district offering diverse housing from apartments to spacious villas. The development provides a complete lifestyle with all essential services on-site.
-
-The community features shopping, schools, and healthcare within walking distance for most residents. Parks and gardens throughout create a pleasant living environment for families.
-
-Miran City has matured into a vibrant neighborhood with strong community bonds, ideal for families seeking an established address with proven infrastructure.`,
-    propertyIds: []
-  },
-  {
     id: 'four-towers',
     name: 'Four Towers',
+    developer: 'Four Towers Group',
     location: {
       address: 'Four Towers Complex',
       city: 'Erbil',
@@ -2818,6 +2554,7 @@ Four Towers appeals to buyers seeking community-oriented living in a modern towe
   {
     id: 'zanko-village',
     name: 'Zanko Village',
+    developer: 'Zanko Group',
     location: {
       address: 'Zanko Village',
       city: 'Erbil',
@@ -2861,6 +2598,7 @@ Zanko Village is reserved for those seeking prestigious suburban living with exc
   {
     id: 'diplomati-safiran',
     name: 'Diplomati Safiran',
+    developer: 'Bramak Company',
     location: {
       address: 'Diplomati Safiran Complex',
       city: 'Erbil',
@@ -2890,9 +2628,16 @@ Zanko Village is reserved for those seeking prestigious suburban living with exc
       'Landscaped Gardens'
     ],
     images: [
-      'https://images.unsplash.com/photo-1567767292278-a4f21aa2d36e?w=800&q=80&fm=webp',
-      'https://images.unsplash.com/photo-1565623833408-d77e39b88af6?w=800&q=80&fm=webp',
-      'https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?w=800&q=80&fm=webp'
+      '/images/projects/diplomati-safiran/01.jpg',
+      '/images/projects/diplomati-safiran/02.jpg',
+      '/images/projects/diplomati-safiran/03.jpg'
+    ],
+    image: '/images/projects/diplomati-safiran/01.jpg',
+    gallery: [
+      '/images/projects/diplomati-safiran/01.jpg',
+      '/images/projects/diplomati-safiran/02.jpg',
+      '/images/projects/diplomati-safiran/03.jpg',
+      '/images/projects/diplomati-safiran/04.jpg'
     ],
     description: `Diplomati Safiran is strategically located in Erbil's Diplomatic Quarter, offering premium residences with enhanced security for diplomats, executives, and high-profile residents.
 
@@ -2904,6 +2649,7 @@ Diplomati Safiran provides peace of mind with its secure location and comprehens
   {
     id: 'lana-city',
     name: 'Lana City',
+    developer: 'Ario Group',
     location: {
       address: 'Lana City Complex',
       city: 'Erbil',
@@ -2947,6 +2693,7 @@ Lana City offers an excellent entry point to home ownership with flexible paymen
   {
     id: 'mnara-village',
     name: 'Mnara Village',
+    developer: 'Mnara Group',
     location: {
       address: 'Mnara Village',
       city: 'Erbil',
@@ -2990,6 +2737,7 @@ Mnara Village appeals to families seeking suburban tranquility with a distinctiv
   {
     id: 'zaner-city',
     name: 'Zaner City',
+    developer: 'Zaner Group',
     location: {
       address: 'Zaner City Complex',
       city: 'Erbil',
@@ -3033,6 +2781,7 @@ Zaner City offers proven quality and an active community life, making it popular
   {
     id: 'zilan-city',
     name: 'Zilan City',
+    developer: 'Zilan Group',
     location: {
       address: 'Zilan City Complex',
       city: 'Erbil',
@@ -3076,6 +2825,7 @@ Zilan City offers attractive pre-construction pricing and payment plans for earl
   {
     id: 'z-center-towers',
     name: 'Z Center Towers',
+    developer: 'Z Center Group',
     location: {
       address: 'Z Center Complex',
       city: 'Erbil',
@@ -3119,6 +2869,7 @@ Z Center Towers is perfect for urban professionals seeking walkable lifestyle wi
   {
     id: 'safiran-city',
     name: 'Safiran City',
+    developer: 'Safiran Group',
     location: {
       address: 'Safiran City Complex',
       city: 'Erbil',
@@ -3270,6 +3021,7 @@ Located 3.7 km from city center and 19.8 km from the airport, with easy access t
   {
     id: 'four-season-park',
     name: 'Four Season Park',
+    developer: 'Four Season Group',
     location: {
       address: 'Four Season Park',
       city: 'Erbil',
@@ -3313,6 +3065,7 @@ Four Season Park is ideal for families and nature lovers seeking a serene living
   {
     id: 'family-land',
     name: 'Family Land',
+    developer: 'Family Land Group',
     location: {
       address: 'Family Land Complex',
       city: 'Erbil',
@@ -3356,6 +3109,7 @@ Family Land creates lasting memories with regular community events and activitie
   {
     id: 'firdaws-city',
     name: 'Firdaws City',
+    developer: 'Firdaws Group',
     location: {
       address: 'Firdaws City Complex',
       city: 'Erbil',
@@ -3399,6 +3153,7 @@ Firdaws City appeals to families seeking a serene, garden-filled living environm
   {
     id: 'dubai-city',
     name: 'Dubai City',
+    developer: 'Dubai City Group',
     location: {
       address: 'Dubai City Complex',
       city: 'Erbil',
@@ -3442,6 +3197,7 @@ Dubai City represents the future of urban development in Kurdistan with attracti
   {
     id: 'bakhtyari-twin-towers',
     name: 'Bakhtyari Twin Towers',
+    developer: 'Bakhtyari Group',
     location: {
       address: 'Bakhtyari Twin Towers',
       city: 'Erbil',
@@ -3471,9 +3227,9 @@ Dubai City represents the future of urban development in Kurdistan with attracti
       'Landscaped Plaza'
     ],
     images: [
-      'https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=800&q=80&fm=webp',
-      'https://images.unsplash.com/photo-1567767292278-a4f21aa2d36e?w=800&q=80&fm=webp',
-      'https://images.unsplash.com/photo-1560448204-e02f11c3d0e2?w=800&q=80&fm=webp'
+      '/images/projects/bakhtyari-twin-towers/01.jpg',
+      '/images/projects/bakhtyari-twin-towers/02.jpeg',
+      '/images/projects/bakhtyari-twin-towers/03.jpg'
     ],
     description: `Bakhtyari Twin Towers makes an architectural statement in Gulan with its distinctive twin tower design connected by a dramatic sky bridge. This landmark development offers premium apartments with stunning city views.
 
@@ -3521,7 +3277,7 @@ Bakhtyari Twin Towers attracts buyers seeking an iconic address with distinctive
       '/images/projects/queen-towers/page04_img01.jpeg',
       '/images/projects/queen-towers/page17_img01.jpeg'
     ],
-    image: '/images/projects/queen-towers/page01_img01.jpeg',
+    image: '/images/projects/bakhtyari-twin-towers/01.jpg',
     gallery: [
       '/images/projects/queen-towers/page01_img01.jpeg',
       '/images/projects/queen-towers/page04_img01.jpeg',
@@ -3577,6 +3333,7 @@ With its prime location near The Boulevard and comprehensive facilities, Queen T
   {
     id: 'hana-city',
     name: 'Hana City',
+    developer: 'Hana Group',
     location: {
       address: 'Hana City Complex',
       city: 'Erbil',
@@ -3620,6 +3377,7 @@ Hana City appeals to families seeking a positive, supportive community environme
   {
     id: 'asuda-city',
     name: 'Asuda City',
+    developer: 'Asuda Group',
     location: {
       address: 'Asuda City Complex',
       city: 'Erbil',
@@ -3663,6 +3421,7 @@ Asuda City is ideal for families, retirees, and professionals seeking peaceful l
   {
     id: 'green-world',
     name: 'Green World',
+    developer: 'SUA Insaat',
     location: {
       address: 'Green World Complex',
       city: 'Erbil',
@@ -3692,9 +3451,9 @@ Asuda City is ideal for families, retirees, and professionals seeking peaceful l
       'Environmental Education'
     ],
     images: [
-      'https://images.unsplash.com/photo-1600047509807-ba8f99d2cdde?w=800&q=80&fm=webp',
-      'https://images.unsplash.com/photo-1600585154526-990dced4db0d?w=800&q=80&fm=webp',
-      'https://images.unsplash.com/photo-1600566753190-17f0baa2a6c3?w=800&q=80&fm=webp'
+      '/images/projects/green-world/01.jpg',
+      '/images/projects/green-world/02.jpg',
+      '/images/projects/green-world/03.jpg'
     ],
     description: `Green World is Kurdistan's premier eco-friendly residential community, designed with sustainability at its core. This Shaqlawa Road development incorporates solar power, water recycling, and green building practices.
 
@@ -3742,21 +3501,11 @@ Green World appeals to environmentally conscious families seeking to reduce thei
       '/images/projects/salam-residences/page06_img01.jpeg',
       '/images/projects/salam-residences/page16_img01.jpeg'
     ],
-    image: '/images/projects/salam-residences/page04_img01.jpeg',
+    image: '/images/projects/green-world/01.jpg',
     gallery: [
-      '/images/projects/salam-residences/page04_img01.jpeg',
-      '/images/projects/salam-residences/page05_img01.jpeg',
-      '/images/projects/salam-residences/page06_img01.jpeg',
-      '/images/projects/salam-residences/page07_img01.jpeg',
-      '/images/projects/salam-residences/page08_img01.jpeg',
-      '/images/projects/salam-residences/page15_img01.jpeg',
-      '/images/projects/salam-residences/page16_img01.jpeg',
-      '/images/projects/salam-residences/page19_img01.jpeg',
-      '/images/projects/salam-residences/page21_img01.jpeg',
-      '/images/projects/salam-residences/page26_img01.jpeg',
-      '/images/projects/salam-residences/page28_img01.jpeg',
-      '/images/projects/salam-residences/page33_img01.jpeg',
-      '/images/projects/salam-residences/page38_img01.jpeg'
+      '/images/projects/green-world/01.jpg',
+      '/images/projects/green-world/02.jpg',
+      '/images/projects/green-world/03.jpg'
     ],
     floorPlanImages: [
       '/images/projects/salam-residences/page17_img01.jpeg',
@@ -4285,8 +4034,9 @@ The master plan prioritizes a pedestrian-friendly lifestyle with dedicated walkw
       'Cafes & Fine Dining'
     ],
     images: [
-      'https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=800&q=80&fm=webp',
-      'https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?w=800&q=80&fm=webp'
+      '/images/projects/vana-towers/page02_img01.jpeg',
+      '/images/projects/vana-towers/page04_img01.jpeg',
+      '/images/projects/vana-towers/page05_img01.jpeg'
     ],
     description: 'Vana Towers represents the pinnacle of modern urban living in Erbil. Located in the prestigious Gulan district, these towers offer luxury apartments with integrated smart technology and world-class amenities.',
     propertyIds: []
@@ -4318,8 +4068,9 @@ The master plan prioritizes a pedestrian-friendly lifestyle with dedicated walkw
       'Solar Energy Systems'
     ],
     images: [
-      'https://images.unsplash.com/photo-1565623833408-d77e39b88af6?w=800&q=80&fm=webp',
-      'https://images.unsplash.com/photo-1486325212027-8081e485255e?w=800&q=80&fm=webp'
+      '/images/projects/alaska-towers/01.png',
+      '/images/projects/alaska-towers/02.png',
+      '/images/projects/alaska-towers/03.jpg'
     ],
     description: 'Alaska Towers is a massive residential development focused on providing high-quality, sustainable housing for Erbil\'s growing population. Located strategically on the 100m road.',
     propertyIds: []
@@ -4327,6 +4078,7 @@ The master plan prioritizes a pedestrian-friendly lifestyle with dedicated walkw
   {
     id: 'english-tower',
     name: 'English Tower',
+    developer: 'King Insaat',
     location: {
       address: 'Near English Village, Gulan District',
       city: 'Erbil',
@@ -4349,8 +4101,9 @@ The master plan prioritizes a pedestrian-friendly lifestyle with dedicated walkw
       'Dedicated Maintenance Team'
     ],
     images: [
-      'https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?w=800&q=80&fm=webp',
-      'https://images.unsplash.com/photo-1567767292278-a4f21aa2d36e?w=800&q=80&fm=webp'
+      '/images/projects/english-tower/01.jpg',
+      '/images/projects/english-tower/02.jpg',
+      '/images/projects/english-tower/03.jpg'
     ],
     description: 'English Tower brings British-inspired elegance to the heart of Erbil. Completed in 2023, it remains one of the most sought-after residential towers for professionals and diplomats.',
     propertyIds: []
@@ -4381,8 +4134,16 @@ The master plan prioritizes a pedestrian-friendly lifestyle with dedicated walkw
       'Smart Elevator System'
     ],
     images: [
-      'https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=800&q=80&fm=webp',
-      'https://images.unsplash.com/photo-1565623833408-d77e39b88af6?w=800&q=80&fm=webp'
+      '/images/projects/london-towers/01.webp',
+      '/images/projects/london-towers/02.webp',
+      '/images/projects/london-towers/03.webp'
+    ],
+    image: '/images/projects/vana-towers/page02_img01.jpeg',
+    gallery: [
+      '/images/projects/alaska-towers/01.png',
+      '/images/projects/alaska-towers/02.png',
+      '/images/projects/alaska-towers/03.jpg',
+      '/images/projects/alaska-towers/04.png'
     ],
     description: 'London Towers is a flagship development offering premium vertical living. With its iconic design and proximity to Erbil\'s business hub, it represents a premier investment opportunity.',
     propertyIds: []
@@ -4421,6 +4182,7 @@ The master plan prioritizes a pedestrian-friendly lifestyle with dedicated walkw
   {
     id: 'green-land-erbil',
     name: 'Green Land',
+    developer: 'Haji Salam Group',
     location: {
       address: 'Near 150m Road, East Erbil',
       city: 'Erbil',
@@ -4452,6 +4214,7 @@ The master plan prioritizes a pedestrian-friendly lifestyle with dedicated walkw
   {
     id: 'address-city',
     name: 'Address City',
+    developer: 'Address Erbil Company',
     location: {
       address: 'Old Bahirka Road, North Erbil',
       city: 'Erbil',
@@ -4474,8 +4237,15 @@ The master plan prioritizes a pedestrian-friendly lifestyle with dedicated walkw
       'Smart Home Ready'
     ],
     images: [
-      'https://images.unsplash.com/photo-1512917774080-9991f1c4c750?w=800&q=80&fm=webp',
-      'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=800&q=80&fm=webp'
+      '/images/projects/address-city/01.png',
+      '/images/projects/address-city/02.png',
+      '/images/projects/address-city/03.png'
+    ],
+    image: '/images/projects/address-city/01.png',
+    gallery: [
+      '/images/projects/address-city/01.png',
+      '/images/projects/address-city/02.png',
+      '/images/projects/address-city/03.png'
     ],
     description: 'Address City offers a sophisticated villa-only community in the rapidly developing northern part of Erbil. It focuses on privacy, space, and modern aesthetics.',
     propertyIds: []
@@ -4483,6 +4253,7 @@ The master plan prioritizes a pedestrian-friendly lifestyle with dedicated walkw
   {
     id: 'mirage-city',
     name: 'Mirage City',
+    developer: 'Address Erbil Company',
     location: {
       address: 'Northeast Erbil, near 150m Street',
       city: 'Erbil',
@@ -4504,8 +4275,15 @@ The master plan prioritizes a pedestrian-friendly lifestyle with dedicated walkw
       'Creative Workspaces'
     ],
     images: [
-      'https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=800&q=80&fm=webp',
-      'https://images.unsplash.com/photo-1486325212027-8081e485255e?w=800&q=80&fm=webp'
+      '/images/projects/mirage-city/01.png',
+      '/images/projects/mirage-city/02.png',
+      '/images/projects/mirage-city/03.png'
+    ],
+    image: '/images/projects/mirage-city/01.png',
+    gallery: [
+      '/images/projects/mirage-city/01.png',
+      '/images/projects/mirage-city/02.png',
+      '/images/projects/mirage-city/03.png'
     ],
     description: 'Mirage City is a futuristic residential project designed for the next generation of Erbil residents. It integrates technology, community, and cutting-edge design.',
     propertyIds: []
