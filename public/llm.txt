@@ -1,0 +1,86 @@
+# Real House - Luxury Real Estate in Erbil, Kurdistan
+
+> Real House is Erbil's #1 trusted real estate agency with 24+ years of experience in luxury properties across Kurdistan Region, Iraq.
+
+## About
+
+Real House is a premier real estate agency headquartered in Queen Tower, Erbil, Kurdistan Region, Iraq. Founded over two decades ago, we specialize in luxury villas, apartments, penthouses, commercial properties, and land across Erbil and the Kurdistan Region.
+
+## Website
+
+- URL: https://realhouseiq.com
+- Contact: info@realhouseiq.com
+- Phone: +964 750 792 2138
+- WhatsApp: +964 751 441 5003
+
+## Services
+
+- Property Sales & Purchases (villas, apartments, penthouses, commercial, land)
+- Project Marketing & Off-Plan Sales
+- Real Estate Investment Advisory
+- Property Valuation & Market Analysis
+- Rental Services
+- Property Management
+
+## Coverage
+
+We cover all major districts in Erbil including:
+- Gulan, Dream City, Italian Village, English Village, American Village
+- Ankawa, Empire World, Pavilion, Lebanese Village
+- Central Erbil, 100 Meter Road, 60 Meter Road, 120 Meter Road
+- Kasnazan, Pirmam, Baherka, Shaqlawa Road
+
+## Properties
+
+We list 18+ individual properties and 85+ development projects across Erbil, ranging from:
+- Price: $25,000 to $2,500,000+
+- Types: Studios, 1-4+ bedroom apartments, villas, penthouses, commercial spaces, land
+- Statuses: Ready, Under Construction, Coming Soon
+
+## Featured Projects
+
+Major projects we represent include:
+- Empire World (5,700+ units, JW Marriott, near airport)
+- Dream City (1,200 villas by NGC)
+- The Boulevard (10 towers by 4Bridges)
+- Pavilion by Rams (170 hectares, luxury development)
+- Italian City (665 villas by Hemn Group)
+- Cavalli Tower, Tulip Towers, Ruby Towers, Queen Towers
+- London Towers (3x51 floors by Galiawa Group)
+- Kempinski/Candle Residence (4x46 floors)
+- Sky Towers (3x38 floors)
+- And 75+ more projects
+
+## Content
+
+- 69 blog articles about Erbil real estate market
+- Neighborhood guides for 6+ districts
+- Project galleries with real images
+- Property comparison tools
+- Mortgage calculator
+
+## Languages
+
+- English (primary)
+- Arabic
+- Kurdish (Sorani)
+
+## Team
+
+- Abdalkader - Senior Property Consultant
+- Mahmood - Property Consultant
+
+## Technical
+
+- Single Page Application (Vite + TypeScript)
+- SEO optimized with 25+ schema types
+- Progressive Web App (PWA)
+- Mobile responsive
+
+## API
+
+No public API is available. For property inquiries, use the contact form at https://realhouseiq.com/contact or call/WhatsApp the numbers above.
+
+## Sitemap
+
+https://realhouseiq.com/sitemap-index.xml

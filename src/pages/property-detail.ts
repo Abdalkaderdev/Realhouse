@@ -1113,6 +1113,7 @@ function initializeGallery(property: Property): void {
 
     currentIndex = index;
     mainImage.src = property.images[index];
+    mainImage.srcset = generateSrcSet(property.images[index], [600, 900, 1200, 1600]);
     mainImage.alt = `${property.title} - Image ${index + 1} of ${property.images.length}`;
 
     thumbnails.forEach((thumb, i) => {
