@@ -199,6 +199,10 @@ export const properties: Property[] = [
       sqm: 10000, // 10,000 sqm huge commercial land
     },
     images: [
+      '/images/lands/kark/photo-01.jpeg',
+      '/images/lands/kark/photo-02.jpeg',
+      '/images/lands/kark/photo-03.jpeg',
+      '/images/lands/kark/photo-04.jpeg',
       '/images/lands/kark/aerial-04.jpeg',
       '/images/lands/kark/aerial-05.jpeg'
     ],
@@ -233,6 +237,10 @@ export const properties: Property[] = [
       sqm: 250, // Typical plot size
     },
     images: [
+      '/images/lands/kark/photo-01.jpeg',
+      '/images/lands/kark/photo-02.jpeg',
+      '/images/lands/kark/photo-03.jpeg',
+      '/images/lands/kark/photo-04.jpeg',
       '/images/lands/kark/aerial-02.jpeg',
       '/images/lands/kark/aerial-03.jpeg'
     ],
@@ -267,6 +275,10 @@ export const properties: Property[] = [
       sqm: 300
     },
     images: [
+      '/images/lands/kark/photo-01.jpeg',
+      '/images/lands/kark/photo-02.jpeg',
+      '/images/lands/kark/photo-03.jpeg',
+      '/images/lands/kark/photo-04.jpeg',
       '/images/lands/kark/aerial-01.jpeg',
       '/images/lands/kark/aerial-02.jpeg',
       '/images/lands/kark/aerial-03.jpeg',
