@@ -389,6 +389,24 @@ export function renderPropertyDetailPage(slug: string): DocumentFragment {
   heroSection.setAttribute('aria-label', 'Property images');
   const heroContainer = createElement('div', 'container');
 
+  // Video hero for Kark land properties
+  if (property.location.district === 'Kark') {
+    const videoHero = createElement('div', 'property-detail__video-hero');
+    const video = document.createElement('video');
+    video.src = '/videos/kark-hero.mp4';
+    video.autoplay = true;
+    video.muted = true;
+    video.loop = true;
+    video.playsInline = true;
+    video.poster = property.images[0];
+    videoHero.appendChild(video);
+    const overlay = createElement('div', 'property-detail__video-hero__overlay');
+    videoHero.appendChild(overlay);
+    const badge = createElement('div', 'property-detail__video-hero__badge', 'AERIAL TOUR');
+    videoHero.appendChild(badge);
+    heroContainer.appendChild(videoHero);
+  }
+
   const galleryWrapper = createElement('div', 'property-detail__gallery');
 
   // Main Image

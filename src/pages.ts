@@ -805,6 +805,19 @@ export function renderHomePage(): DocumentFragment {
 
   hero.appendChild(heroBackground);
 
+  // Hero Video Background (plays on top of slideshow fallback)
+  const heroVideo = document.createElement('video');
+  heroVideo.className = 'hero__video';
+  heroVideo.src = '/videos/kark-hero.mp4';
+  heroVideo.autoplay = true;
+  heroVideo.muted = true;
+  heroVideo.loop = true;
+  heroVideo.playsInline = true;
+  heroVideo.setAttribute('aria-hidden', 'true');
+  heroVideo.setAttribute('preload', 'auto');
+  heroVideo.poster = '/images/lands/kark/aerial-01.jpeg';
+  hero.appendChild(heroVideo);
+
   const heroOverlay = createElement('div', 'hero__overlay');
   heroOverlay.setAttribute('aria-hidden', 'true');
   hero.appendChild(heroOverlay);
@@ -998,6 +1011,44 @@ export function renderHomePage(): DocumentFragment {
   statsContainer.appendChild(statsGrid);
   stats.appendChild(statsContainer);
   fragment.appendChild(stats);
+
+  // Kark Land Showcase Section
+  const karkShowcase = createElement('section', 'kark-showcase');
+  karkShowcase.setAttribute('aria-label', 'Kark Land Investment Opportunities');
+  const karkVideo = document.createElement('video');
+  karkVideo.className = 'kark-showcase__video';
+  karkVideo.src = '/videos/kark-hero.mp4';
+  karkVideo.autoplay = true;
+  karkVideo.muted = true;
+  karkVideo.loop = true;
+  karkVideo.playsInline = true;
+  karkVideo.setAttribute('aria-hidden', 'true');
+  karkVideo.poster = '/images/lands/kark/aerial-01.jpeg';
+  karkShowcase.appendChild(karkVideo);
+
+  const karkOverlay = createElement('div', 'kark-showcase__overlay');
+  karkShowcase.appendChild(karkOverlay);
+
+  const karkContent = createElement('div', 'kark-showcase__content container');
+  const karkEyebrow = createElement('span', 'kark-showcase__eyebrow', 'EXCLUSIVE INVESTMENT');
+  karkContent.appendChild(karkEyebrow);
+  const karkTitle = createElement('h2', 'kark-showcase__title', 'Kark Land Plots');
+  karkContent.appendChild(karkTitle);
+  const karkSubtitle = createElement('p', 'kark-showcase__subtitle',
+    'Premium commercial and residential land in Erbil\'s fastest-growing district. Direct highway access, full infrastructure, ready for development.');
+  karkContent.appendChild(karkSubtitle);
+  const karkCta = createElement('div', 'kark-showcase__cta');
+  const karkBtn = createElement('a', 'btn btn--primary btn--large', 'Explore Kark Lands');
+  karkBtn.href = '/properties/kark-land-plot';
+  karkBtn.setAttribute('data-route', '');
+  karkCta.appendChild(karkBtn);
+  const karkBtn2 = createElement('a', 'btn btn--ghost btn--large', 'Contact Us');
+  karkBtn2.href = '/contact';
+  karkBtn2.setAttribute('data-route', '');
+  karkCta.appendChild(karkBtn2);
+  karkContent.appendChild(karkCta);
+  karkShowcase.appendChild(karkContent);
+  fragment.appendChild(karkShowcase);
 
   // Featured Properties Section
   const featured = createElement('section', 'featured');
