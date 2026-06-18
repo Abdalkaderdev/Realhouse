@@ -729,83 +729,7 @@ export function renderHomePage(): DocumentFragment {
   hero.id = 'hero';
   hero.setAttribute('aria-label', 'Welcome to Real House - Luxury Real Estate');
 
-  // Hero Slideshow Background - Projects & Land Development
-  const heroImages = [
-    { 
-      src: '/images/projects/spanish-village-2/sv2_img02.jpg', 
-      alt: 'Spanish Village 2 luxury villas',
-      title: 'Experience Spanish Elegance',
-      subtitle: 'Premium villas in the heart of Erbil with breathtaking views.'
-    },
-    { 
-      src: '/images/lands/kark/aerial-01.jpeg', 
-      alt: 'Kark land development aerial view',
-      title: 'Prime Land Opportunities',
-      subtitle: 'Invest in the future of Erbil with our exclusive land developments.'
-    },
-    { 
-      src: '/images/projects/cavalli-tower/page01_img01.jpeg', 
-      alt: 'Cavalli Tower luxury apartments',
-      title: 'Urban Luxury Redefined',
-      subtitle: 'Discover sophisticated living at Cavalli Tower.'
-    },
-    { 
-      src: '/images/lands/kark/aerial-05.jpeg', 
-      alt: 'Kark land plots in Erbil',
-      title: 'Build Your Dream Home',
-      subtitle: 'Spacious plots in Erbil\'s most promising locations.'
-    },
-    { 
-      src: '/images/projects/tulip-towers/page05_img01.jpeg', 
-      alt: 'Tulip Towers residential complex',
-      title: 'Modern Community Living',
-      subtitle: 'Tulip Towers: Where comfort meets contemporary design.'
-    },
-    { 
-      src: '/images/projects/ruby-towers/page04_img01.jpeg', 
-      alt: 'Ruby Towers modern living',
-      title: 'Exquisite Architecture',
-      subtitle: 'Living spaces designed for the modern lifestyle.'
-    },
-    { 
-      src: '/images/projects/empire-square/page12_img01.jpeg', 
-      alt: 'Empire Square development',
-      title: 'Empire Square Excellence',
-      subtitle: 'A landmark development in the heart of Erbil city.'
-    },
-    { 
-      src: '/images/lands/kark/aerial-06.jpeg', 
-      alt: 'Premium land for sale in Kark',
-      title: 'Secure Your Investment',
-      subtitle: 'Trusted real estate infrastructure and land management.'
-    }
-  ];
-
-  const heroBackground = createElement('div', 'hero__background hero__slideshow');
-  heroBackground.setAttribute('aria-hidden', 'true');
-
-  const slides: HTMLImageElement[] = [];
-  heroImages.forEach((img, index) => {
-    const heroImage = document.createElement('img');
-    heroImage.src = img.src;
-    heroImage.alt = img.alt;
-    heroImage.className = `hero__image hero__slide ${index === 0 ? 'hero__slide--active' : ''}`;
-    heroImage.width = 1920;
-    heroImage.height = 1080;
-    heroImage.loading = index === 0 ? 'eager' : 'lazy';
-    
-    // Safety check: log error if image fails to load
-    heroImage.onerror = () => {
-      console.error(`[Hero] Failed to load slide ${index}: ${img.src}`);
-    };
-
-    heroBackground.appendChild(heroImage);
-    slides.push(heroImage);
-  });
-
-  hero.appendChild(heroBackground);
-
-  // Hero Video Background (plays on top of slideshow fallback)
+  // Hero Video Background
   const heroVideo = document.createElement('video');
   heroVideo.className = 'hero__video';
   heroVideo.src = '/videos/kark-hero.mp4';
@@ -824,63 +748,14 @@ export function renderHomePage(): DocumentFragment {
 
   const heroContent = createElement('div', 'hero__content container');
 
-  // Headline
-  const headline = createElement('h1', 'hero__headline', heroImages[0].title);
+  // Static headline
+  const headline = createElement('h1', 'hero__headline', 'Luxury Real Estate in Erbil');
   heroContent.appendChild(headline);
 
-  // Subline
-  const subline = createElement('p', 'hero__subline', heroImages[0].subtitle);
+  // Static subline
+  const subline = createElement('p', 'hero__subline',
+    'Discover premium properties, exclusive land plots, and the finest developments in Kurdistan.');
   heroContent.appendChild(subline);
-
-  // Auto-rotate hero images and text every 5 seconds
-  let currentSlideIndex = 0;
-  let isTransitioning = false;
-
-  const startAutoRotate = () => setInterval(() => {
-    if (isTransitioning) return;
-    // Check if hero element is still in DOM to avoid leaked intervals
-    if (!document.getElementById('hero')) {
-      clearInterval(rotateInterval);
-      return;
-    }
-
-    isTransitioning = true;
-    headline.style.opacity = '0';
-    subline.style.opacity = '0';
-    headline.style.transform = 'translateY(10px)';
-    subline.style.transform = 'translateY(10px)';
-    headline.style.transition = 'all 0.4s ease';
-    subline.style.transition = 'all 0.4s ease';
-
-    setTimeout(() => {
-      slides[currentSlideIndex].classList.remove('hero__slide--active');
-      currentSlideIndex = (currentSlideIndex + 1) % slides.length;
-      slides[currentSlideIndex].classList.add('hero__slide--active');
-
-      dotsContainer.querySelectorAll('.hero__dot').forEach((dot, i) => {
-        dot.classList.toggle('hero__dot--active', i === currentSlideIndex);
-        dot.setAttribute('aria-selected', i === currentSlideIndex ? 'true' : 'false');
-      });
-
-      headline.textContent = heroImages[currentSlideIndex].title;
-      subline.textContent = heroImages[currentSlideIndex].subtitle;
-      headline.style.opacity = '1';
-      subline.style.opacity = '1';
-      headline.style.transform = 'translateY(0)';
-      subline.style.transform = 'translateY(0)';
-      isTransitioning = false;
-    }, 400);
-  }, 5000);
-
-  let rotateInterval = startAutoRotate();
-
-  // Initial animation for first slide
-  setTimeout(() => {
-    if (headline && subline) {
-      headline.style.opacity = '1';
-      subline.style.opacity = '1';
-    }
-  }, 100);
 
   // CTA
   const cta = createElement('div', 'hero__cta');
@@ -894,65 +769,7 @@ export function renderHomePage(): DocumentFragment {
   cta.appendChild(consultationBtn);
   heroContent.appendChild(cta);
 
-  // Slide indicator dots
-  const dotsContainer = createElement('div', 'hero__dots');
-  dotsContainer.setAttribute('role', 'tablist');
-  dotsContainer.setAttribute('aria-label', 'Slide navigation');
-
-  const goToSlide = (targetIndex: number) => {
-    if (targetIndex === currentSlideIndex || isTransitioning) return;
-
-    // Pause auto-rotation during manual navigation, restart after
-    clearInterval(rotateInterval);
-    isTransitioning = true;
-
-    headline.style.opacity = '0';
-    subline.style.opacity = '0';
-    headline.style.transform = 'translateY(10px)';
-    subline.style.transform = 'translateY(10px)';
-
-    setTimeout(() => {
-      slides[currentSlideIndex].classList.remove('hero__slide--active');
-      currentSlideIndex = targetIndex;
-      slides[currentSlideIndex].classList.add('hero__slide--active');
-
-      dotsContainer.querySelectorAll('.hero__dot').forEach((d, i) => {
-        d.classList.toggle('hero__dot--active', i === currentSlideIndex);
-        d.setAttribute('aria-selected', i === currentSlideIndex ? 'true' : 'false');
-      });
-
-      headline.textContent = heroImages[currentSlideIndex].title;
-      subline.textContent = heroImages[currentSlideIndex].subtitle;
-      headline.style.opacity = '1';
-      subline.style.opacity = '1';
-      headline.style.transform = 'translateY(0)';
-      subline.style.transform = 'translateY(0)';
-
-      isTransitioning = false;
-      rotateInterval = startAutoRotate();
-    }, 400);
-  };
-
-  heroImages.forEach((_, index) => {
-    const dot = createElement('button', `hero__dot${index === 0 ? ' hero__dot--active' : ''}`);
-    dot.setAttribute('role', 'tab');
-    dot.setAttribute('aria-selected', index === 0 ? 'true' : 'false');
-    dot.setAttribute('aria-label', `Go to slide ${index + 1}`);
-    dot.setAttribute('data-slide', index.toString());
-    dot.addEventListener('click', () => goToSlide(index));
-    dotsContainer.appendChild(dot);
-  });
-
-  heroContent.appendChild(dotsContainer);
-
   hero.appendChild(heroContent);
-
-  // Touch/swipe support for hero
-  addSwipeSupport(hero, {
-    onSwipeLeft: () => goToSlide((currentSlideIndex + 1) % slides.length),
-    onSwipeRight: () => goToSlide((currentSlideIndex - 1 + slides.length) % slides.length),
-  });
-
   fragment.appendChild(hero);
 
   // Trust Badges Section
