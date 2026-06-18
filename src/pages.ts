@@ -506,6 +506,42 @@ function createVideoSoundButton(video: HTMLVideoElement): HTMLButtonElement {
   return btn;
 }
 
+// ─── Video Fullscreen Button ───────────────────────────────────────────────
+function createVideoFullscreenButton(video: HTMLVideoElement): HTMLButtonElement {
+  const btn = createElement('button', 'video-fullscreen-btn');
+  btn.setAttribute('aria-label', 'View video fullscreen');
+  btn.setAttribute('type', 'button');
+  btn.innerHTML = `<svg class="video-fullscreen-btn__icon video-fullscreen-btn__icon--expand" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M7 14H5v5h5v-2H7v-3zm-2-4h2V7h3V5H5v5zm12 7h-3v2h5v-5h-2v3zM14 5v2h3v3h2V5h-5z"/></svg><svg class="video-fullscreen-btn__icon video-fullscreen-btn__icon--collapse" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M5 16h3v3h2v-5H5v2zm3-8H5v2h5V5H8v3zm6 11h2v-3h3v-2h-5v5zm2-11V5h-2v5h5V8h-3z"/></svg>`;
+  btn.addEventListener('click', (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    const v = video as HTMLVideoElement & {
+      webkitEnterFullscreen?: () => void;
+      webkitRequestFullscreen?: () => Promise<void>;
+    };
+    const doc = document as Document & {
+      webkitFullscreenElement?: Element;
+      webkitExitFullscreen?: () => Promise<void>;
+    };
+    if (doc.fullscreenElement || doc.webkitFullscreenElement) {
+      doc.exitFullscreen?.() || doc.webkitExitFullscreen?.();
+    } else if (v.webkitEnterFullscreen) {
+      // iOS Safari
+      v.webkitEnterFullscreen();
+    } else if (v.requestFullscreen) {
+      v.requestFullscreen().catch(() => {});
+    } else if (v.webkitRequestFullscreen) {
+      v.webkitRequestFullscreen();
+    }
+  });
+  document.addEventListener('fullscreenchange', () => {
+    const isFs = !!document.fullscreenElement;
+    btn.classList.toggle('video-fullscreen-btn--active', isFs);
+    btn.setAttribute('aria-label', isFs ? 'Exit fullscreen' : 'View video fullscreen');
+  });
+  return btn;
+}
+
 // ─── Screen Reader Announcements ───────────────────────────────────────────
 function announceToScreenReader(message: string): void {
   const announcer = document.getElementById('sr-announcements');
@@ -761,6 +797,7 @@ export function renderHomePage(): DocumentFragment {
   heroVideo.poster = '/images/lands/kark/aerial-01.jpeg';
   hero.appendChild(heroVideo);
   hero.appendChild(createVideoSoundButton(heroVideo));
+  hero.appendChild(createVideoFullscreenButton(heroVideo));
 
   const heroOverlay = createElement('div', 'hero__overlay');
   heroOverlay.setAttribute('aria-hidden', 'true');
@@ -768,11 +805,23 @@ export function renderHomePage(): DocumentFragment {
 
   const heroContent = createElement('div', 'hero__content container');
 
-  // Static headline
-  const headline = createElement('h1', 'hero__headline', 'Luxury Real Estate in Erbil');
+  // Eyebrow with decorative lines for cinematic feel
+  const heroEyebrow = createElement('div', 'hero__eyebrow');
+  heroEyebrow.setAttribute('aria-hidden', 'true');
+  const eyebrowLineLeft = createElement('span', 'hero__line');
+  const eyebrowText = createElement('span', '', 'Real House Erbil');
+  const eyebrowLineRight = createElement('span', 'hero__line');
+  heroEyebrow.appendChild(eyebrowLineLeft);
+  heroEyebrow.appendChild(eyebrowText);
+  heroEyebrow.appendChild(eyebrowLineRight);
+  heroContent.appendChild(heroEyebrow);
+
+  // Cinematic headline (text-gold-gradient on the parent so GSAP cinematicReveal,
+  // which rebuilds the element from textContent into character spans, preserves the gold gradient).
+  const headline = createElement('h1', 'hero__headline text-gold-gradient', 'Luxury Real Estate in Erbil');
   heroContent.appendChild(headline);
 
-  // Static subline
+  // Subline
   const subline = createElement('p', 'hero__subline',
     'Discover premium properties, exclusive land plots, and the finest developments in Kurdistan.');
   heroContent.appendChild(subline);
@@ -790,6 +839,16 @@ export function renderHomePage(): DocumentFragment {
   heroContent.appendChild(cta);
 
   hero.appendChild(heroContent);
+
+  // Scroll-down indicator (cinematic cue)
+  const heroScroll = createElement('div', 'hero__scroll');
+  heroScroll.setAttribute('aria-hidden', 'true');
+  const scrollLabel = createElement('span', 'hero__scroll-label', 'Scroll');
+  const scrollLine = createElement('span', 'hero__scroll-line');
+  heroScroll.appendChild(scrollLabel);
+  heroScroll.appendChild(scrollLine);
+  hero.appendChild(heroScroll);
+
   fragment.appendChild(hero);
 
   // Trust Badges Section
@@ -863,15 +922,30 @@ export function renderHomePage(): DocumentFragment {
   karkVideo.poster = '/images/lands/kark/aerial-01.jpeg';
   karkShowcase.appendChild(karkVideo);
   karkShowcase.appendChild(createVideoSoundButton(karkVideo));
+  karkShowcase.appendChild(createVideoFullscreenButton(karkVideo));
 
   const karkOverlay = createElement('div', 'kark-showcase__overlay');
   karkShowcase.appendChild(karkOverlay);
 
   const karkContent = createElement('div', 'kark-showcase__content container');
-  const karkEyebrow = createElement('span', 'kark-showcase__eyebrow', 'EXCLUSIVE INVESTMENT');
+
+  const karkEyebrow = createElement('div', 'kark-showcase__eyebrow');
+  karkEyebrow.setAttribute('aria-hidden', 'true');
+  const karkEyebrowLineL = createElement('span', 'kark-showcase__eyebrow-line');
+  const karkEyebrowText = createElement('span', 'kark-showcase__eyebrow-text', 'Exclusive Investment');
+  const karkEyebrowLineR = createElement('span', 'kark-showcase__eyebrow-line');
+  karkEyebrow.appendChild(karkEyebrowLineL);
+  karkEyebrow.appendChild(karkEyebrowText);
+  karkEyebrow.appendChild(karkEyebrowLineR);
   karkContent.appendChild(karkEyebrow);
-  const karkTitle = createElement('h2', 'kark-showcase__title', 'Kark Land Plots');
+
+  const karkTitle = createElement('h2', 'kark-showcase__title');
+  const karkTitleLine1 = createElement('span', 'kark-showcase__title-line', 'Kark Land Plots');
+  const karkTitleLine2 = createElement('span', 'kark-showcase__title-accent', 'Erbil\'s Next Investment Frontier');
+  karkTitle.appendChild(karkTitleLine1);
+  karkTitle.appendChild(karkTitleLine2);
   karkContent.appendChild(karkTitle);
+
   const karkSubtitle = createElement('p', 'kark-showcase__subtitle',
     'Premium commercial and residential land in Erbil\'s fastest-growing district. Direct highway access, full infrastructure, ready for development.');
   karkContent.appendChild(karkSubtitle);

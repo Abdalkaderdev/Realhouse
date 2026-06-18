@@ -1290,19 +1290,38 @@ em {
 
   &__headline {
     margin-bottom: var(--space-6);
-    @extend .text-gold-gradient;
+    line-height: 1.05;
+    letter-spacing: -0.025em;
+    font-weight: 500;
+    color: var(--c-text);
+    text-shadow: 0 4px 24px rgba(0, 0, 0, 0.55), 0 2px 6px rgba(0, 0, 0, 0.4);
     opacity: 0;
     transform: translateY(30px);
     transition: opacity 0.8s var(--ease-luxury), transform 0.8s var(--ease-luxury);
+  }
+
+  &__headline-line {
+    display: block;
+  }
+
+  &__headline-line--accent {
+    @extend .text-gold-gradient;
+    font-style: italic;
+    font-weight: 400;
+    // Drop-shadow works on gradient-filled text where text-shadow cannot
+    filter: drop-shadow(0 4px 18px rgba(0, 0, 0, 0.5));
   }
 
   &__subline {
     font-size: var(--text-lg);
     color: var(--c-text-2);
     margin-bottom: var(--space-8);
-    max-width: 600px;
+    max-width: 640px;
     margin-left: auto;
     margin-right: auto;
+    line-height: 1.6;
+    letter-spacing: 0.005em;
+    text-shadow: 0 2px 12px rgba(0, 0, 0, 0.55);
     opacity: 0;
     transform: translateY(30px);
     transition: opacity 0.8s var(--ease-luxury), transform 0.8s var(--ease-luxury);
@@ -6205,8 +6224,9 @@ em {
     height: 100%;
     object-fit: cover;
     z-index: 1;
-    filter: brightness(0.65);
+    filter: brightness(0.6) saturate(1.05) contrast(1.05);
     pointer-events: none;
+    animation: heroVideoFadeIn 1.6s var(--ease-luxury) both;
   }
 
   &__dots {
@@ -6239,34 +6259,50 @@ em {
     }
   }
 
+  // Cinematic overlay: directional gradient (top→bottom) + radial vignette
   &__overlay {
     z-index: 2;
-    background: linear-gradient(to bottom, 
-      rgba(10, 10, 15, 0.2) 0%, 
-      rgba(10, 10, 15, 0.4) 50%, 
-      rgba(10, 10, 15, 0.8) 100%
-    );
+    background:
+      radial-gradient(
+        ellipse at center,
+        rgba(10, 10, 15, 0) 0%,
+        rgba(10, 10, 15, 0.35) 60%,
+        rgba(10, 10, 15, 0.7) 100%
+      ),
+      linear-gradient(
+        180deg,
+        rgba(10, 10, 15, 0.55) 0%,
+        rgba(10, 10, 15, 0.25) 35%,
+        rgba(10, 10, 15, 0.45) 70%,
+        rgba(10, 10, 15, 0.9) 100%
+      );
     pointer-events: none;
   }
 
   &__content {
     position: relative;
     z-index: 3;
+    animation: heroContentFadeIn 1.2s var(--ease-luxury) 0.2s both;
   }
 
-  &__headline {
-    text-shadow: 0 4px 15px rgba(0, 0, 0, 0.6);
-    line-height: 1.1;
-    margin-bottom: var(--space-6);
+  &__scroll-label {
+    font-size: var(--text-xs);
+    text-transform: uppercase;
+    letter-spacing: 0.3em;
+    color: rgba(255, 255, 255, 0.7);
+    font-weight: 500;
   }
+}
 
-  &__subline {
-    text-shadow: 0 2px 10px rgba(0, 0, 0, 0.6);
-    max-width: 800px;
-    margin-bottom: var(--space-10) !important;
-    font-size: var(--text-xl) !important;
-    color: var(--c-text) !important;
-  }
+// Cinematic entrance animations (no transforms that fight GSAP on content)
+@keyframes heroVideoFadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes heroContentFadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
 }
 
 @keyframes hero-ken-burns {
@@ -6278,7 +6314,7 @@ em {
 .kark-showcase {
   position: relative;
   width: 100%;
-  min-height: 70vh;
+  min-height: 78vh;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -6293,19 +6329,29 @@ em {
     height: 100%;
     object-fit: cover;
     z-index: 1;
-    filter: brightness(0.55);
+    filter: brightness(0.55) saturate(1.05) contrast(1.05);
+    animation: heroVideoFadeIn 1.6s var(--ease-luxury) both;
   }
 
+  // Cinematic overlay: directional gradient + radial vignette
   &__overlay {
     position: absolute;
     inset: 0;
     z-index: 2;
-    background: linear-gradient(
-      to bottom,
-      rgba(10, 10, 15, 0.4) 0%,
-      rgba(10, 10, 15, 0.5) 50%,
-      rgba(10, 10, 15, 0.85) 100%
-    );
+    background:
+      radial-gradient(
+        ellipse at center,
+        rgba(10, 10, 15, 0) 0%,
+        rgba(10, 10, 15, 0.4) 65%,
+        rgba(10, 10, 15, 0.75) 100%
+      ),
+      linear-gradient(
+        180deg,
+        rgba(10, 10, 15, 0.55) 0%,
+        rgba(10, 10, 15, 0.35) 40%,
+        rgba(10, 10, 15, 0.55) 75%,
+        rgba(10, 10, 15, 0.9) 100%
+      );
     pointer-events: none;
   }
 
@@ -6313,34 +6359,66 @@ em {
     position: relative;
     z-index: 3;
     text-align: center;
-    padding: var(--space-12) var(--space-4);
-    max-width: 900px;
+    padding: var(--space-16) var(--space-4);
+    max-width: 920px;
+    margin: 0 auto;
+    animation: heroContentFadeIn 1.2s var(--ease-luxury) 0.2s both;
   }
 
   &__eyebrow {
-    display: inline-block;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--space-4);
+    margin-bottom: var(--space-6);
+  }
+
+  &__eyebrow-line {
+    display: block;
+    width: 48px;
+    height: 1px;
+    background: linear-gradient(to right, transparent, var(--c-gold), transparent);
+  }
+
+  &__eyebrow-text {
     font-size: var(--text-xs);
     font-weight: 500;
     color: var(--c-gold);
     text-transform: uppercase;
-    letter-spacing: 0.3em;
-    margin-bottom: var(--space-6);
+    letter-spacing: 0.35em;
   }
 
   &__title {
     font-size: clamp(2.5rem, 6vw, 5rem);
-    line-height: 1.1;
+    line-height: 1.05;
+    letter-spacing: -0.02em;
     margin-bottom: var(--space-6);
     color: var(--c-text);
-    text-shadow: 0 4px 15px rgba(0, 0, 0, 0.6);
+    text-shadow: 0 4px 24px rgba(0, 0, 0, 0.55), 0 2px 6px rgba(0, 0, 0, 0.4);
+  }
+
+  &__title-line {
+    display: block;
+  }
+
+  &__title-accent {
+    display: block;
+    @extend .text-gold-gradient;
+    font-style: italic;
+    font-weight: 400;
+    font-size: 0.78em;
+    margin-top: var(--space-2);
+    filter: drop-shadow(0 4px 18px rgba(0, 0, 0, 0.5));
   }
 
   &__subtitle {
     font-size: var(--text-xl);
-    line-height: 1.5;
+    line-height: 1.6;
+    letter-spacing: 0.005em;
     color: var(--c-text-2);
-    margin-bottom: var(--space-8);
-    text-shadow: 0 2px 10px rgba(0, 0, 0, 0.6);
+    margin: 0 auto var(--space-10);
+    max-width: 680px;
+    text-shadow: 0 2px 12px rgba(0, 0, 0, 0.55);
   }
 
   &__cta {
@@ -6393,14 +6471,36 @@ em {
 
 @media (max-width: 768px) {
   .kark-showcase {
-    min-height: 60vh;
+    min-height: 64vh;
+
+    &__content {
+      padding: var(--space-10) var(--space-4);
+    }
+
+    &__eyebrow-line {
+      width: 28px;
+    }
+
+    &__eyebrow-text {
+      letter-spacing: 0.25em;
+    }
+
+    &__title {
+      font-size: clamp(2rem, 9vw, 3rem);
+    }
+
+    &__title-accent {
+      font-size: 0.82em;
+    }
 
     &__subtitle {
       font-size: var(--text-base);
+      padding: 0 var(--space-2);
     }
 
     &__cta {
       flex-direction: column;
+      width: 100%;
 
       .btn {
         width: 100%;
@@ -6469,6 +6569,76 @@ em {
   @media (max-width: 768px) {
     bottom: var(--space-4);
     right: var(--space-4);
+    width: 42px;
+    height: 42px;
+
+    &__icon {
+      width: 20px;
+      height: 20px;
+    }
+  }
+}
+
+// ─── Video Fullscreen Toggle Button ────────────────────────────────────────
+.video-fullscreen-btn {
+  position: absolute;
+  bottom: var(--space-6);
+  right: calc(var(--space-6) + 56px); // To the left of sound button (48px + 8px gap)
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background: rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  color: white;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 10;
+  transition: all 0.2s ease;
+  padding: 0;
+
+  &:hover {
+    background: rgba(var(--c-gold-rgb), 0.9);
+    border-color: var(--c-gold);
+    color: var(--c-bg);
+    transform: scale(1.1);
+  }
+
+  &:focus-visible {
+    outline: 2px solid var(--c-gold);
+    outline-offset: 2px;
+  }
+
+  &__icon {
+    width: 22px;
+    height: 22px;
+    display: block;
+
+    &--collapse {
+      display: none;
+    }
+  }
+
+  &--active {
+    background: rgba(var(--c-gold-rgb), 0.9);
+    border-color: var(--c-gold);
+    color: var(--c-bg);
+
+    .video-fullscreen-btn__icon--expand {
+      display: none;
+    }
+
+    .video-fullscreen-btn__icon--collapse {
+      display: block;
+    }
+  }
+
+  @media (max-width: 768px) {
+    bottom: var(--space-4);
+    right: calc(var(--space-4) + 50px);
     width: 42px;
     height: 42px;
 
