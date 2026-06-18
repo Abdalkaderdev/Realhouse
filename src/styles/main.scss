@@ -6408,3 +6408,73 @@ em {
     }
   }
 }
+
+// ─── Video Sound Toggle Button ─────────────────────────────────────────────
+.video-sound-btn {
+  position: absolute;
+  bottom: var(--space-6);
+  right: var(--space-6);
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background: rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  color: white;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 10;
+  transition: all 0.2s ease;
+  padding: 0;
+
+  &:hover {
+    background: rgba(var(--c-gold-rgb), 0.9);
+    border-color: var(--c-gold);
+    color: var(--c-bg);
+    transform: scale(1.1);
+  }
+
+  &:focus-visible {
+    outline: 2px solid var(--c-gold);
+    outline-offset: 2px;
+  }
+
+  &__icon {
+    width: 22px;
+    height: 22px;
+    display: block;
+
+    &--unmuted {
+      display: none;
+    }
+  }
+
+  &--unmuted {
+    background: rgba(var(--c-gold-rgb), 0.9);
+    border-color: var(--c-gold);
+    color: var(--c-bg);
+
+    .video-sound-btn__icon--muted {
+      display: none;
+    }
+
+    .video-sound-btn__icon--unmuted {
+      display: block;
+    }
+  }
+
+  @media (max-width: 768px) {
+    bottom: var(--space-4);
+    right: var(--space-4);
+    width: 42px;
+    height: 42px;
+
+    &__icon {
+      width: 20px;
+      height: 20px;
+    }
+  }
+}
