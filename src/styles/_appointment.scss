@@ -69,8 +69,9 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 40px;
-    height: 40px;
+    // WCAG 2.5.8 Target Size (Minimum) — 44x44 modal close target for fingers.
+    width: 44px;
+    height: 44px;
     font-size: 28px;
     line-height: 1;
     color: var(--c-text-2);

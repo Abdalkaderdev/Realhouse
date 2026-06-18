@@ -608,6 +608,9 @@ export function createMortgageCalculator(options: MortgageCalculatorOptions = {}
   // Results container
   const resultsContainer = createElement('div', 'mortgage-calc__results-container');
   resultsContainer.id = 'mortgage-results';
+  // WCAG 4.1.3 Status Messages — announce when results are recalculated.
+  resultsContainer.setAttribute('aria-live', 'polite');
+  resultsContainer.setAttribute('aria-atomic', 'false');
   container.appendChild(resultsContainer);
 
   // Actions (print)
@@ -683,6 +686,9 @@ export function createMortgageCalculator(options: MortgageCalculatorOptions = {}
     if (existingError) existingError.remove();
 
     const error = createElement('div', 'mortgage-calc__error', message);
+    // WCAG 4.1.3 Status Messages — announce validation errors to screen readers.
+    error.setAttribute('role', 'alert');
+    error.setAttribute('aria-live', 'assertive');
     form.insertBefore(error, form.querySelector('.mortgage-calc__buttons'));
 
     setTimeout(() => error.remove(), 5000);

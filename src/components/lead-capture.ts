@@ -39,11 +39,15 @@ export function createLeadCaptureSection(): HTMLElement {
   const formRow = createElement('div', 'lead-capture__form-row');
   const emailInput = createElement('input', 'lead-capture__input');
   emailInput.type = 'email';
+  emailInput.id = 'lead-capture-email';
   emailInput.name = 'newsletter-email';
   emailInput.placeholder = t('leadCapture.emailPlaceholder');
   emailInput.required = true;
   emailInput.autocomplete = 'email';
   emailInput.setAttribute('aria-label', t('leadCapture.emailAriaLabel'));
+  // WCAG 3.3.1 Error Identification — programmatically link the input to its error region.
+  emailInput.setAttribute('aria-describedby', 'lead-capture-error');
+  emailInput.setAttribute('aria-invalid', 'false');
   formRow.appendChild(emailInput);
 
   const subscribeBtn = createElement('button', 'btn btn--primary lead-capture__submit', t('leadCapture.subscribe'));
@@ -53,6 +57,8 @@ export function createLeadCaptureSection(): HTMLElement {
 
   // Error message
   const formError = createElement('div', 'lead-capture__error');
+  formError.id = 'lead-capture-error';
+  formError.setAttribute('role', 'alert');
   formError.setAttribute('aria-live', 'polite');
   leadCaptureForm.appendChild(formError);
 
@@ -77,12 +83,15 @@ export function createLeadCaptureSection(): HTMLElement {
     formError.style.display = 'none';
     formSuccess.style.display = 'none';
     emailInput.classList.remove('error');
+    emailInput.setAttribute('aria-invalid', 'false');
 
     // Validate email
     if (!email) {
       formError.textContent = t('leadCapture.enterEmail');
       formError.style.display = 'block';
       emailInput.classList.add('error');
+      emailInput.setAttribute('aria-invalid', 'true');
+      emailInput.focus();
       return;
     }
 
@@ -90,6 +99,8 @@ export function createLeadCaptureSection(): HTMLElement {
       formError.textContent = t('leadCapture.invalidEmail');
       formError.style.display = 'block';
       emailInput.classList.add('error');
+      emailInput.setAttribute('aria-invalid', 'true');
+      emailInput.focus();
       return;
     }
 

@@ -68,8 +68,9 @@
   position: absolute;
   top: 50%;
   transform: translateY(-50%);
-  width: 36px;
-  height: 36px;
+  // WCAG 2.5.8 Target Size (Minimum) — 44x44 keeps prev/next arrows tappable on mobile.
+  width: 44px;
+  height: 44px;
   border-radius: 50%;
   background: rgba(10, 10, 15, 0.55);
   backdrop-filter: blur(10px);
@@ -87,7 +88,9 @@
   font-size: 18px;
   line-height: 1;
 
-  .property-card:hover & {
+  .property-card:hover &,
+  // WCAG 2.4.7 Focus Visible — reveal arrows when ANY descendant of the card receives keyboard focus.
+  .property-card:focus-within & {
     opacity: 1;
   }
 

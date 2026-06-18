@@ -733,6 +733,7 @@ function createApplicationForm(job: JobListing): HTMLElement {
   nameInput.id = 'applicant-name';
   nameInput.name = 'name';
   nameInput.required = true;
+  nameInput.autocomplete = 'name';
   nameInput.placeholder = 'Enter your full name';
   nameGroup.appendChild(nameInput);
   formEl.appendChild(nameGroup);
@@ -747,6 +748,7 @@ function createApplicationForm(job: JobListing): HTMLElement {
   emailInput.id = 'applicant-email';
   emailInput.name = 'email';
   emailInput.required = true;
+  emailInput.autocomplete = 'email';
   emailInput.placeholder = 'your.email@example.com';
   emailGroup.appendChild(emailInput);
   formEl.appendChild(emailGroup);
@@ -761,6 +763,7 @@ function createApplicationForm(job: JobListing): HTMLElement {
   phoneInput.id = 'applicant-phone';
   phoneInput.name = 'phone';
   phoneInput.required = true;
+  phoneInput.autocomplete = 'tel';
   phoneInput.placeholder = '+964 750 XXX XXXX';
   phoneGroup.appendChild(phoneInput);
   formEl.appendChild(phoneGroup);

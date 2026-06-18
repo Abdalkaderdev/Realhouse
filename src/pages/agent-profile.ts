@@ -512,6 +512,7 @@ export function renderAgentProfilePage(slug: string): DocumentFragment {
   nameInput.type = 'text';
   nameInput.id = 'inquiry-name';
   nameInput.name = 'name';
+  nameInput.autocomplete = 'name';
   nameInput.placeholder = t('agentProfile.enterYourName');
   nameInput.required = true;
   nameGroup.appendChild(nameLabel);
@@ -525,6 +526,7 @@ export function renderAgentProfilePage(slug: string): DocumentFragment {
   phoneInput.type = 'tel';
   phoneInput.id = 'inquiry-phone';
   phoneInput.name = 'phone';
+  phoneInput.autocomplete = 'tel';
   phoneInput.placeholder = t('agentProfile.phonePlaceholder');
   phoneInput.required = true;
   phoneGroup.appendChild(phoneLabel);
@@ -538,6 +540,7 @@ export function renderAgentProfilePage(slug: string): DocumentFragment {
   emailInput.type = 'email';
   emailInput.id = 'inquiry-email';
   emailInput.name = 'email';
+  emailInput.autocomplete = 'email';
   emailInput.placeholder = t('agentProfile.emailPlaceholder');
   emailInput.required = true;
   emailGroup.appendChild(emailLabel);

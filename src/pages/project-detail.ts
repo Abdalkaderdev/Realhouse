@@ -1308,6 +1308,7 @@ export function renderComprehensiveProjectDetailPage(projectId: string): Documen
   nameInput.id = 'inquiry-name';
   nameInput.type = 'text';
   nameInput.name = 'name';
+  nameInput.autocomplete = 'name';
   nameInput.placeholder = 'Enter your full name';
   nameInput.required = true;
   nameGroup.appendChild(nameLabel);
@@ -1321,6 +1322,7 @@ export function renderComprehensiveProjectDetailPage(projectId: string): Documen
   phoneInput.id = 'inquiry-phone';
   phoneInput.type = 'tel';
   phoneInput.name = 'phone';
+  phoneInput.autocomplete = 'tel';
   phoneInput.placeholder = '+964 XXX XXX XXXX';
   phoneInput.required = true;
   phoneGroup.appendChild(phoneLabel);
@@ -1334,6 +1336,7 @@ export function renderComprehensiveProjectDetailPage(projectId: string): Documen
   emailInput.id = 'inquiry-email';
   emailInput.type = 'email';
   emailInput.name = 'email';
+  emailInput.autocomplete = 'email';
   emailInput.placeholder = 'your@email.com';
   emailInput.required = true;
   emailGroup.appendChild(emailLabel);
