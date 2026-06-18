@@ -2112,155 +2112,391 @@ export function renderPropertiesPage(): DocumentFragment {
 export function renderAboutPage(): DocumentFragment {
   const fragment = document.createDocumentFragment();
 
-  // Main article wrapper for the about page content
-  const page = createElement('article', 'about-page');
+  const page = createElement('article', 'about-redesign');
   page.setAttribute('itemscope', '');
   page.setAttribute('itemtype', 'https://schema.org/AboutPage');
 
-  // Hero section (header for the article)
-  const hero = createElement('header', 'about-page__hero');
-  const heroContent = createElement('div', 'container');
+  // ══════════════════════════════════════════════════════════════════════
+  // CINEMATIC HERO
+  // ══════════════════════════════════════════════════════════════════════
+  const hero = createElement('header', 'about-redesign__hero');
 
-  // Only ONE h1 per page
-  const title = createElement('h1', 'about-page__title');
-  title.setAttribute('itemprop', 'name');
-  title.textContent = 'Real Estate Erbil — Redefining ';
-  const em = createElement('em', undefined, 'Luxury');
-  title.appendChild(em);
-  title.appendChild(document.createTextNode(' Property Erbil'));
-  heroContent.appendChild(title);
+  const heroBg = createElement('div', 'about-redesign__hero-bg');
+  const heroImg = createSEOImage({
+    src: 'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=1920&q=80&fm=webp',
+    alt: 'Luxury villa Erbil Iraq - Premium real estate Erbil featuring modern architecture in Kurdistan Region',
+    title: 'Real House - Luxury Real Estate in Erbil, Kurdistan',
+    loading: 'eager',
+    width: 1920,
+    height: 1080,
+    srcset: 'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=960&q=80&fm=webp 960w, https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=1440&q=80&fm=webp 1440w, https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=1920&q=80&fm=webp 1920w',
+    sizes: '100vw',
+    fetchPriority: 'high',
+  });
+  heroBg.appendChild(heroImg);
+  hero.appendChild(heroBg);
 
-  const subtitle = createElement('p', 'about-page__subtitle');
-  subtitle.setAttribute('itemprop', 'description');
-  subtitle.textContent = 'Real House is the premier real estate Kurdistan agency for houses for sale Erbil and apartments Erbil Iraq. We are the best real estate agent Erbil for villas Erbil Iraq, penthouse Erbil, and luxury homes Kurdistan in the Erbil property market.';
-  heroContent.appendChild(subtitle);
+  const heroOverlay = createElement('div', 'about-redesign__hero-overlay');
+  hero.appendChild(heroOverlay);
 
-  hero.appendChild(heroContent);
+  const heroInner = createElement('div', 'about-redesign__hero-inner');
+
+  const heroEyebrow = createElement('span', 'about-redesign__hero-eyebrow', 'Since 2001 · Erbil, Kurdistan');
+  heroInner.appendChild(heroEyebrow);
+
+  const heroTitle = createElement('h1', 'about-redesign__hero-title');
+  heroTitle.setAttribute('itemprop', 'name');
+  heroTitle.appendChild(document.createTextNode('Redefining '));
+  const heroEm = createElement('em', undefined, 'luxury');
+  heroTitle.appendChild(heroEm);
+  heroTitle.appendChild(document.createTextNode(' real estate in Erbil.'));
+  heroInner.appendChild(heroTitle);
+
+  const heroLede = createElement('p', 'about-redesign__hero-lede');
+  heroLede.setAttribute('itemprop', 'description');
+  heroLede.textContent = 'Real House is the Kurdistan Region\'s premier agency for exceptional villas, penthouses and curated apartments — building generational relationships with discerning buyers since 2001.';
+  heroInner.appendChild(heroLede);
+
+  // Stats overlay
+  const heroStats = createElement('div', 'about-redesign__hero-stats');
+  const stats = [
+    { num: '24', sup: '+', label: 'Years in Erbil' },
+    { num: '85', sup: '+', label: 'Signature Projects' },
+    { num: '1,200', sup: '+', label: 'Families Placed' },
+    { num: '99', sup: '%', label: 'Client Retention' }
+  ];
+  stats.forEach(s => {
+    const stat = createElement('div', 'about-redesign__hero-stat');
+    const num = createElement('span', 'about-redesign__hero-stat-num');
+    num.appendChild(document.createTextNode(s.num));
+    const sup = createElement('sup', undefined, s.sup);
+    num.appendChild(sup);
+    const lab = createElement('span', 'about-redesign__hero-stat-label', s.label);
+    stat.appendChild(num);
+    stat.appendChild(lab);
+    heroStats.appendChild(stat);
+  });
+  heroInner.appendChild(heroStats);
+
+  hero.appendChild(heroInner);
   page.appendChild(hero);
 
-  // Story Section - Proper heading hierarchy h2
-  const story = createElement('section', 'about-page__story');
-  story.setAttribute('aria-labelledby', 'story-title');
-  const storyContainer = createElement('div', 'container about-page__story-grid');
+  // ══════════════════════════════════════════════════════════════════════
+  // STORY SECTION
+  // ══════════════════════════════════════════════════════════════════════
+  const story = createElement('section', 'about-redesign__story');
+  story.setAttribute('aria-labelledby', 'about-story-title');
+  const storyContainer = createElement('div', 'container');
+  const storyGrid = createElement('div', 'about-redesign__story-grid');
 
-  const storyContent = createElement('div', 'about-page__story-content');
-  const storyTitle = createElement('h2', undefined, 'Our Real Estate Erbil Story');
-  storyTitle.id = 'story-title';
-  const storyP1 = createElement('p', undefined, 'Founded in 2001 by a team of visionary property Erbil professionals, Real House was born from a simple belief: that finding your perfect houses for sale Erbil or apartments Erbil should be an extraordinary experience. Our team became the trusted best real estate agent Erbil for buyers across the Erbil property market.');
-  const storyP2 = createElement('p', undefined, 'Today, we represent the finest villas Erbil Iraq, penthouse Erbil, and luxury homes Kurdistan, including exclusive apartments Erbil Iraq. Every real estate Erbil listing is personally curated for clients seeking property investment Kurdistan Iraq and real estate Kurdistan opportunities.');
-  storyContent.appendChild(storyTitle);
-  storyContent.appendChild(storyP1);
-  storyContent.appendChild(storyP2);
-  storyContainer.appendChild(storyContent);
+  const storyText = createElement('div');
+  const storyEyebrow = createElement('div', 'about-redesign__story-eyebrow', 'Our Story');
+  storyText.appendChild(storyEyebrow);
+  const storyTitle = createElement('h2', 'about-redesign__story-title');
+  storyTitle.id = 'about-story-title';
+  storyTitle.appendChild(document.createTextNode('A quarter century of '));
+  const storyEm = createElement('em', undefined, 'considered');
+  storyTitle.appendChild(storyEm);
+  storyTitle.appendChild(document.createTextNode(' real estate.'));
+  storyText.appendChild(storyTitle);
 
-  const storyImage = createElement('div', 'about-page__story-image');
-  // SEO-optimized about page image
-  const img = createSEOImage({
-    src: 'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=800&q=80&fm=webp',
-    alt: 'Luxury villa Erbil Iraq - Premium real estate Erbil property featuring modern architecture in Kurdistan Region',
-    title: 'Real House - Luxury Real Estate in Erbil, Kurdistan',
+  const storyBody = createElement('div', 'about-redesign__story-text');
+  const p1 = createElement('p', undefined, 'Founded in 2001 by a team of visionary property professionals, Real House was born from a simple belief — that finding your perfect home in Erbil should be an extraordinary experience, not a transactional one. Two decades later, we remain Kurdistan\'s most trusted name in luxury real estate.');
+  const p2 = createElement('p', undefined, 'Today we represent the finest villas, penthouses and curated apartments across Erbil. Every listing is hand-selected, every relationship personal — and every transaction held to a standard that has earned us the loyalty of more than a thousand families.');
+  storyBody.appendChild(p1);
+  storyBody.appendChild(p2);
+  storyText.appendChild(storyBody);
+
+  storyGrid.appendChild(storyText);
+
+  const storyFigure = createElement('div', 'about-redesign__story-figure');
+  const storyImg = createSEOImage({
+    src: 'https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=900&q=80&fm=webp',
+    alt: 'Real House office interior - Luxury real estate consultancy in Erbil, Kurdistan',
+    title: 'Real House - Luxury Real Estate Consultancy',
     loading: 'lazy',
-    width: 800,
-    height: 600,
-    srcset: 'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=400&q=80&fm=webp 400w, https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=800&q=80&fm=webp 800w, https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=1200&q=80&fm=webp 1200w',
-    sizes: '(max-width: 768px) 100vw, 50vw',
+    width: 900,
+    height: 1125,
+    srcset: generateSrcSet('https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=900&q=80&fm=webp', [600, 900, 1200]),
+    sizes: '(max-width: 900px) 100vw, 50vw',
   });
-  storyImage.appendChild(img);
-  storyContainer.appendChild(storyImage);
+  storyFigure.appendChild(storyImg);
+  const storyTag = createElement('div', 'about-redesign__story-tag', 'Est. 2001 · Queen Tower');
+  storyFigure.appendChild(storyTag);
+  storyGrid.appendChild(storyFigure);
 
+  storyContainer.appendChild(storyGrid);
   story.appendChild(storyContainer);
   page.appendChild(story);
 
-  // Values Section - h2 for proper hierarchy
-  const values = createElement('section', 'about-page__values');
-  values.setAttribute('aria-labelledby', 'values-title');
-  const valuesContainer = createElement('div', 'container');
+  // ══════════════════════════════════════════════════════════════════════
+  // TIMELINE — MILESTONES
+  // ══════════════════════════════════════════════════════════════════════
+  const timeline = createElement('section', 'about-redesign__timeline');
+  timeline.setAttribute('aria-labelledby', 'about-timeline-title');
+  const timelineContainer = createElement('div', 'container');
 
-  const valuesHeader = createElement('header', 'about-page__values-header');
-  const valuesTitle = createElement('h2', undefined, 'Our Real Estate Kurdistan Values');
-  valuesTitle.id = 'values-title';
-  valuesHeader.appendChild(valuesTitle);
-  valuesContainer.appendChild(valuesHeader);
+  const tlHead = createElement('div', 'about-redesign__section-head');
+  const tlEyebrow = createElement('div', 'about-redesign__section-eyebrow', 'Milestones');
+  tlHead.appendChild(tlEyebrow);
+  const tlTitle = createElement('h2', 'about-redesign__section-title');
+  tlTitle.id = 'about-timeline-title';
+  tlTitle.appendChild(document.createTextNode('A timeline of '));
+  const tlEm = createElement('em', undefined, 'firsts');
+  tlTitle.appendChild(tlEm);
+  tlTitle.appendChild(document.createTextNode('.'));
+  tlHead.appendChild(tlTitle);
+  const tlLede = createElement('p', 'about-redesign__section-lede', 'Two decades, one obsession — to make Erbil\'s finest properties accessible to the families who deserve them.');
+  tlHead.appendChild(tlLede);
+  timelineContainer.appendChild(tlHead);
 
-  const valuesGrid = createElement('div', 'about-page__values-grid');
-  valuesGrid.setAttribute('role', 'list');
-  const valuesList = [
-    { title: 'Excellence in Property Erbil', desc: 'We pursue perfection in every real estate Erbil transaction, from houses for sale Erbil to luxury villa Erbil price negotiations.' },
-    { title: 'Integrity', desc: 'Honesty and transparency guide every interaction, making us the best real estate agent Erbil for apartments Erbil and villas.' },
-    { title: 'Innovation in Erbil Property Market', desc: 'We leverage cutting-edge technology to help you buy house in Erbil Iraq with superior real estate Kurdistan experiences.' }
+  const tlTrack = createElement('div', 'about-redesign__timeline-track');
+  const milestones = [
+    { year: '2001', title: 'The Beginning', desc: 'Founded in Erbil by a small team of property specialists with a vision for considered, client-first real estate.' },
+    { year: '2008', title: 'First 100 Homes', desc: 'Reached our first hundred placements — the year Real House became a household name in the Kurdistan region.' },
+    { year: '2014', title: 'Dream City Studio', desc: 'Opened our flagship office at Queen Tower in Dream City — Kurdistan\'s premier real-estate quarter.' },
+    { year: '2019', title: 'Luxury Division', desc: 'Launched the Real House Luxury division, dedicated to villas above $750K and signature penthouses.' },
+    { year: '2023', title: 'Digital Concierge', desc: 'Introduced 24/7 WhatsApp concierge and virtual tour booking — bringing white-glove service into every device.' },
+    { year: '2025', title: 'Today', desc: '85+ active projects, 1,200+ families placed, 99% client retention — and only just beginning.' }
   ];
 
-  valuesList.forEach(value => {
-    const valueEl = createElement('div', 'about-page__value');
-    valueEl.setAttribute('role', 'listitem');
-    // h3 since it's under h2
-    const vTitle = createElement('h3', undefined, value.title);
-    const vDesc = createElement('p', undefined, value.desc);
-    valueEl.appendChild(vTitle);
-    valueEl.appendChild(vDesc);
-    valuesGrid.appendChild(valueEl);
+  milestones.forEach(m => {
+    const ms = createElement('div', 'about-redesign__milestone');
+    const year = createElement('div', 'about-redesign__milestone-year', m.year);
+    const card = createElement('div', 'about-redesign__milestone-card');
+    const cardTitle = createElement('h3', 'about-redesign__milestone-title', m.title);
+    const cardDesc = createElement('p', 'about-redesign__milestone-desc', m.desc);
+    card.appendChild(cardTitle);
+    card.appendChild(cardDesc);
+    ms.appendChild(year);
+    ms.appendChild(card);
+    tlTrack.appendChild(ms);
+  });
+
+  timelineContainer.appendChild(tlTrack);
+  timeline.appendChild(timelineContainer);
+  page.appendChild(timeline);
+
+  // ══════════════════════════════════════════════════════════════════════
+  // VALUES
+  // ══════════════════════════════════════════════════════════════════════
+  const values = createElement('section', 'about-redesign__values');
+  values.setAttribute('aria-labelledby', 'about-values-title');
+  const valuesContainer = createElement('div', 'container');
+
+  const vHead = createElement('div', 'about-redesign__section-head');
+  const vEyebrow = createElement('div', 'about-redesign__section-eyebrow', 'What We Stand For');
+  vHead.appendChild(vEyebrow);
+  const vTitle = createElement('h2', 'about-redesign__section-title');
+  vTitle.id = 'about-values-title';
+  vTitle.appendChild(document.createTextNode('Principles before '));
+  const vEm = createElement('em', undefined, 'profit');
+  vTitle.appendChild(vEm);
+  vTitle.appendChild(document.createTextNode('.'));
+  vHead.appendChild(vTitle);
+  valuesContainer.appendChild(vHead);
+
+  const valuesGrid = createElement('div', 'about-redesign__values-grid');
+  valuesGrid.setAttribute('role', 'list');
+  const valueList = [
+    { title: 'Excellence', desc: 'We pursue perfection in every detail — from the listings we curate to the negotiations we close.', icon: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polygon points="12 2 15 8.5 22 9.3 17 14 18.2 21 12 17.8 5.8 21 7 14 2 9.3 9 8.5 12 2"/></svg>' },
+    { title: 'Integrity', desc: 'Honesty and transparency guide every interaction. The right answer often beats the easy answer.', icon: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>' },
+    { title: 'Discretion', desc: 'Your search and your finances stay private. We honor confidentiality the way we honor contracts.', icon: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/><line x1="3" y1="3" x2="21" y2="21"/></svg>' },
+    { title: 'Innovation', desc: 'Virtual tours, WhatsApp concierge, smart search — we bring modern tools to an ancient craft.', icon: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>' }
+  ];
+
+  valueList.forEach((v, i) => {
+    const card = createElement('div', 'about-redesign__value');
+    card.setAttribute('role', 'listitem');
+    card.setAttribute('data-index', String(i + 1).padStart(2, '0'));
+    const icon = createElement('div', 'about-redesign__value-icon');
+    icon.innerHTML = v.icon;
+    const t = createElement('h3', 'about-redesign__value-title', v.title);
+    const d = createElement('p', 'about-redesign__value-desc', v.desc);
+    card.appendChild(icon);
+    card.appendChild(t);
+    card.appendChild(d);
+    valuesGrid.appendChild(card);
   });
 
   valuesContainer.appendChild(valuesGrid);
   values.appendChild(valuesContainer);
   page.appendChild(values);
 
-  // Team Section - h2 for proper hierarchy
-  const team = createElement('section', 'about-page__team');
+  // ══════════════════════════════════════════════════════════════════════
+  // TEAM
+  // ══════════════════════════════════════════════════════════════════════
+  const team = createElement('section', 'about-redesign__team');
   team.id = 'team';
-  team.setAttribute('aria-labelledby', 'team-title');
+  team.setAttribute('aria-labelledby', 'about-team-title');
   const teamContainer = createElement('div', 'container');
 
-  const teamHeader = createElement('header', 'about-page__team-header');
-  const teamTitle = createElement('h2', undefined, 'Meet Our Best Real Estate Agent Erbil Team');
-  teamTitle.id = 'team-title';
-  teamHeader.appendChild(teamTitle);
-  teamContainer.appendChild(teamHeader);
+  const tHead = createElement('div', 'about-redesign__section-head');
+  const tEyebrow = createElement('div', 'about-redesign__section-eyebrow', 'The People');
+  tHead.appendChild(tEyebrow);
+  const teamTitle = createElement('h2', 'about-redesign__section-title');
+  teamTitle.id = 'about-team-title';
+  teamTitle.appendChild(document.createTextNode('Meet the '));
+  const tEm = createElement('em', undefined, 'specialists');
+  teamTitle.appendChild(tEm);
+  teamTitle.appendChild(document.createTextNode('.'));
+  tHead.appendChild(teamTitle);
+  teamContainer.appendChild(tHead);
 
-  const teamGrid = createElement('div', 'about-page__team-grid');
+  const teamGrid = createElement('div', 'about-redesign__team-grid');
   teamGrid.setAttribute('role', 'list');
+
   const teamMembers = [
-    { name: 'Alexandra Chen', role: 'CEO & Founder', image: 'https://images.unsplash.com/photo-1580489944761-15a19d654956?w=400&q=80&fm=webp' },
-    { name: 'Marcus Williams', role: 'Head of Sales', image: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=400&q=80&fm=webp' },
-    { name: 'Sofia Rodriguez', role: 'Chief Marketing Officer', image: 'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=400&q=80&fm=webp' },
-    { name: 'James Mitchell', role: 'Senior Agent', image: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=400&q=80&fm=webp' }
+    { name: 'Abdalkader Ali', role: 'Sales Director', image: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=600&q=80&fm=webp', specs: ['Villas', 'Penthouses', 'Investment'] },
+    { name: 'Mahmood Hassan', role: 'Senior Advisor', image: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=600&q=80&fm=webp', specs: ['Apartments', 'Off-Plan', 'Relocation'] },
+    { name: 'Sara Yousif', role: 'Luxury Specialist', image: 'https://images.unsplash.com/photo-1580489944761-15a19d654956?w=600&q=80&fm=webp', specs: ['Luxury', 'Empire World', 'Dream City'] },
+    { name: 'Karwan Othman', role: 'Project Liaison', image: 'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=600&q=80&fm=webp', specs: ['Developers', 'New Build', 'Family Homes'] }
   ];
 
+  const waSvg = '<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413"/></svg>';
+  const mailSvg = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-10 5L2 7"/></svg>';
+  const phoneSvg = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>';
+
   teamMembers.forEach(member => {
-    // Use article for each team member (self-contained content)
-    const memberEl = createElement('article', 'about-page__member');
+    const memberEl = createElement('article', 'about-redesign__member');
     memberEl.setAttribute('role', 'listitem');
     memberEl.setAttribute('itemscope', '');
     memberEl.setAttribute('itemtype', 'https://schema.org/Person');
-    const imgDiv = createElement('div', 'about-page__member-image');
-    // SEO-optimized team member image
+
+    const imgDiv = createElement('div', 'about-redesign__member-img');
     const memberImg = createSEOImage({
       src: member.image,
       alt: `${member.name}, ${member.role} at Real House - Luxury real estate professional in Erbil, Kurdistan`,
       title: `${member.name} - ${member.role}`,
       loading: 'lazy',
-      width: 300,
-      height: 300,
-      srcset: generateSrcSet(member.image, [200, 300, 400]),
-      sizes: '(max-width: 640px) 150px, 300px',
+      width: 400,
+      height: 500,
+      srcset: generateSrcSet(member.image, [300, 400, 600]),
+      sizes: '(max-width: 540px) 100vw, 25vw',
     });
     memberImg.setAttribute('itemprop', 'image');
     imgDiv.appendChild(memberImg);
+
+    const overlay = createElement('div', 'about-redesign__member-overlay');
+    imgDiv.appendChild(overlay);
+
+    const social = createElement('div', 'about-redesign__member-social');
+    [
+      { href: 'https://wa.me/9647507922138', label: 'WhatsApp', svg: waSvg, target: '_blank' },
+      { href: 'tel:+9647507922138', label: 'Call', svg: phoneSvg, target: '' },
+      { href: 'mailto:info@realhouseiq.com', label: 'Email', svg: mailSvg, target: '' }
+    ].forEach(s => {
+      const a = createElement('a', 'about-redesign__member-sociallink');
+      a.href = s.href;
+      a.setAttribute('aria-label', `${s.label} ${member.name}`);
+      if (s.target) {
+        a.target = s.target;
+        a.rel = 'noopener noreferrer';
+      }
+      a.innerHTML = s.svg;
+      social.appendChild(a);
+    });
+    imgDiv.appendChild(social);
     memberEl.appendChild(imgDiv);
 
-    // h3 since under h2
-    const name = createElement('h3', undefined, member.name);
-    name.setAttribute('itemprop', 'name');
-    const role = createElement('p', undefined, member.role);
+    const body = createElement('div', 'about-redesign__member-body');
+    const role = createElement('div', 'about-redesign__member-role', member.role);
     role.setAttribute('itemprop', 'jobTitle');
-    memberEl.appendChild(name);
-    memberEl.appendChild(role);
+    const name = createElement('h3', 'about-redesign__member-name', member.name);
+    name.setAttribute('itemprop', 'name');
+    body.appendChild(role);
+    body.appendChild(name);
+
+    const spec = createElement('div', 'about-redesign__member-spec');
+    member.specs.forEach(s => {
+      const tag = createElement('span', 'about-redesign__member-tag', s);
+      spec.appendChild(tag);
+    });
+    body.appendChild(spec);
+    memberEl.appendChild(body);
+
     teamGrid.appendChild(memberEl);
   });
 
   teamContainer.appendChild(teamGrid);
   team.appendChild(teamContainer);
   page.appendChild(team);
+
+  // ══════════════════════════════════════════════════════════════════════
+  // PRESS / PARTNERS MARQUEE
+  // ══════════════════════════════════════════════════════════════════════
+  const press = createElement('section', 'about-redesign__press');
+  press.setAttribute('aria-label', 'Featured in media and trusted partners');
+
+  const pressEyebrow = createElement('div', 'about-redesign__press-eyebrow', 'Featured In · Trusted By');
+  press.appendChild(pressEyebrow);
+
+  const marquee = createElement('div', 'about-redesign__press-marquee');
+  const track = createElement('div', 'about-redesign__press-track');
+
+  const allLogos = [...featuredInMedia, ...partnerLogos];
+  // Duplicate for seamless loop
+  [...allLogos, ...allLogos].forEach(logo => {
+    const l = createElement('div', 'about-redesign__press-logo', logo.logo);
+    l.setAttribute('title', logo.name);
+    track.appendChild(l);
+  });
+  marquee.appendChild(track);
+  press.appendChild(marquee);
+  page.appendChild(press);
+
+  // ══════════════════════════════════════════════════════════════════════
+  // FINAL CTA
+  // ══════════════════════════════════════════════════════════════════════
+  const cta = createElement('section', 'about-redesign__cta');
+  cta.setAttribute('aria-labelledby', 'about-cta-title');
+
+  const ctaContainer = createElement('div', 'container');
+  const ctaEyebrow = createElement('div', 'about-redesign__cta-eyebrow', 'Begin your search');
+  ctaContainer.appendChild(ctaEyebrow);
+
+  const ctaTitle = createElement('h2', 'about-redesign__cta-title');
+  ctaTitle.id = 'about-cta-title';
+  ctaTitle.appendChild(document.createTextNode('Ready to '));
+  const ctaEm = createElement('em', undefined, 'work');
+  ctaTitle.appendChild(ctaEm);
+  ctaTitle.appendChild(document.createTextNode(' with us?'));
+  ctaContainer.appendChild(ctaTitle);
+
+  const ctaLede = createElement('p', 'about-redesign__cta-lede', 'Speak with a Real House advisor today. Discreet, considered and complimentary — your perfect home is closer than you think.');
+  ctaContainer.appendChild(ctaLede);
+
+  const ctaActions = createElement('div', 'about-redesign__cta-actions');
+  const ctaPrimary = createElement('a', 'btn btn--primary btn--lg', 'Start the Conversation');
+  ctaPrimary.href = '/contact';
+  ctaPrimary.setAttribute('data-route', '');
+  const ctaSecondary = createElement('a', 'btn btn--outline btn--lg', 'View Properties');
+  ctaSecondary.href = '/properties';
+  ctaSecondary.setAttribute('data-route', '');
+  ctaActions.appendChild(ctaPrimary);
+  ctaActions.appendChild(ctaSecondary);
+  ctaContainer.appendChild(ctaActions);
+
+  cta.appendChild(ctaContainer);
+  page.appendChild(cta);
+
+  // ══════════════════════════════════════════════════════════════════════
+  // INTERSECTION OBSERVER reveal — defer to next tick
+  // ══════════════════════════════════════════════════════════════════════
+  setTimeout(() => {
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('is-visible');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.15, rootMargin: '0px 0px -60px 0px' });
+
+    document.querySelectorAll(
+      '.about-redesign__hero-stat, .about-redesign__milestone, .about-redesign__value, .about-redesign__member'
+    ).forEach(el => observer.observe(el));
+  }, 0);
 
   fragment.appendChild(page);
   return fragment;
@@ -2271,33 +2507,131 @@ export function renderContactPage(): DocumentFragment {
   const fragment = document.createDocumentFragment();
 
   // Main article wrapper with structured data
-  const page = createElement('article', 'contact-page');
+  const page = createElement('article', 'contact-redesign');
   page.setAttribute('itemscope', '');
   page.setAttribute('itemtype', 'https://schema.org/ContactPage');
-  const container = createElement('div', 'container');
 
-  // Header section with h1
-  const header = createElement('header', 'contact-page__header');
-  const title = createElement('h1', 'contact-page__title', t('contact.title'));
-  const subtitle = createElement('p', 'contact-page__subtitle', t('contact.subtitle'));
-  header.appendChild(title);
-  header.appendChild(subtitle);
-  container.appendChild(header);
+  // ══════════════════════════════════════════════════════════════════════
+  // HERO
+  // ══════════════════════════════════════════════════════════════════════
+  const hero = createElement('header', 'contact-redesign__hero');
+  const heroInner = createElement('div', 'contact-redesign__hero-inner');
 
-  // Grid
-  const grid = createElement('div', 'contact-page__grid');
+  const eyebrow = createElement('span', 'contact-redesign__eyebrow', 'Begin the conversation');
+  heroInner.appendChild(eyebrow);
 
-  // Form
-  const formWrapper = createElement('div', 'contact-page__form');
+  const title = createElement('h1', 'contact-redesign__title');
+  title.appendChild(document.createTextNode("Let's "));
+  const titleEm = createElement('em', undefined, 'Talk');
+  title.appendChild(titleEm);
+  title.appendChild(document.createTextNode(' Property'));
+  heroInner.appendChild(title);
+
+  const subtitle = createElement('p', 'contact-redesign__subtitle', t('contact.subtitle') || 'Speak with a licensed Real House advisor. Discreet, considered, and complimentary — wherever your search begins.');
+  heroInner.appendChild(subtitle);
+
+  const promise = createElement('div', 'contact-redesign__promise');
+  const pulse = createElement('span', 'pulse');
+  promise.appendChild(pulse);
+  const promiseStrong = createElement('strong', undefined, 'Typical reply in 2 hours');
+  promise.appendChild(promiseStrong);
+  promise.appendChild(document.createTextNode(' · Saturday – Thursday'));
+  heroInner.appendChild(promise);
+
+  hero.appendChild(heroInner);
+  page.appendChild(hero);
+
+  // ══════════════════════════════════════════════════════════════════════
+  // QUICK CONTACT CARDS
+  // ══════════════════════════════════════════════════════════════════════
+  const quickSection = createElement('section', 'contact-redesign__quick');
+  quickSection.setAttribute('aria-label', 'Quick contact options');
+  const quickContainer = createElement('div', 'container');
+  const quickGrid = createElement('div', 'contact-redesign__quick-grid');
+
+  const arrowSvg = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17L17 7M9 7h8v8"/></svg>';
+
+  const quickCards = [
+    {
+      href: 'https://wa.me/9647507922138',
+      target: '_blank',
+      label: 'WhatsApp · Instant',
+      value: '+964 750 792 2138',
+      meta: 'Abdalkader · Sales Director',
+      icon: '<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413"/></svg>'
+    },
+    {
+      href: 'mailto:info@realhouseiq.com',
+      target: '',
+      label: 'Email · Confidential',
+      value: 'info@realhouseiq.com',
+      meta: 'Replies within 2 hours',
+      icon: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-10 5L2 7"/></svg>'
+    },
+    {
+      href: 'https://www.google.com/maps/dir/?api=1&destination=36.1901,44.0091',
+      target: '_blank',
+      label: 'Visit · Queen Tower',
+      value: 'Dream City, Erbil',
+      meta: 'Building A3 · Kurdistan Region',
+      icon: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg>'
+    }
+  ];
+
+  quickCards.forEach(card => {
+    const a = createElement('a', 'contact-redesign__quick-card');
+    a.href = card.href;
+    if (card.target) {
+      a.target = card.target;
+      a.rel = 'noopener noreferrer';
+    }
+
+    const head = createElement('div', 'contact-redesign__quick-head');
+    const icon = createElement('div', 'contact-redesign__quick-icon');
+    icon.innerHTML = card.icon;
+    const arrow = createElement('div', 'contact-redesign__quick-arrow');
+    arrow.innerHTML = arrowSvg;
+    head.appendChild(icon);
+    head.appendChild(arrow);
+    a.appendChild(head);
+
+    const label = createElement('div', 'contact-redesign__quick-label', card.label);
+    const value = createElement('div', 'contact-redesign__quick-value', card.value);
+    const meta = createElement('div', 'contact-redesign__quick-meta', card.meta);
+    a.appendChild(label);
+    a.appendChild(value);
+    a.appendChild(meta);
+
+    quickGrid.appendChild(a);
+  });
+
+  quickContainer.appendChild(quickGrid);
+  quickSection.appendChild(quickContainer);
+  page.appendChild(quickSection);
+
+  // ══════════════════════════════════════════════════════════════════════
+  // MAIN GRID — FORM + INFO
+  // ══════════════════════════════════════════════════════════════════════
+  const mainSection = createElement('section', 'contact-redesign__main');
+  const mainContainer = createElement('div', 'container');
+  const grid = createElement('div', 'contact-redesign__grid');
+
+  // ─── Form Column ────────────────────────────────────────────────────
+  const formWrap = createElement('div', 'contact-redesign__form-wrap');
+
+  const formEyebrow = createElement('span', 'contact-redesign__form-eyebrow', 'Inquiry Form');
+  formWrap.appendChild(formEyebrow);
+  const formTitle = createElement('h2', 'contact-redesign__form-title', 'Tell us what you are looking for.');
+  formWrap.appendChild(formTitle);
+  const formIntro = createElement('p', 'contact-redesign__form-intro', 'Share a few details and a specialist will reach out personally with curated matches.');
+  formWrap.appendChild(formIntro);
+
   const form = createElement('form', 'form');
   form.setAttribute('novalidate', '');
 
-  // Validation patterns
   const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-  // Iraq phone formats: +964 7XX XXX XXXX, 07XX XXX XXXX, 075X XXXX XXX
   const phonePattern = /^(\+964\s?7\d{2}\s?\d{3}\s?\d{4}|07\d{2}\s?\d{3}\s?\d{4}|075\d\s?\d{4}\s?\d{3})$/;
 
-  // Validation error messages
   const errorMessages: Record<string, string> = {
     name: 'Please enter your full name (at least 2 characters)',
     email: 'Please enter a valid email address',
@@ -2305,13 +2639,11 @@ export function renderContactPage(): DocumentFragment {
     message: 'Please enter a message (at least 10 characters)'
   };
 
-  // Helper to validate a single field with visual feedback
   function validateField(input: HTMLInputElement | HTMLTextAreaElement, _showError: boolean = true): boolean {
     const fieldName = input.name;
     const value = input.value.trim();
     let isValid = true;
 
-    // Field-specific validation
     if (fieldName === 'name') {
       isValid = value.length >= 2;
     } else if (fieldName === 'email') {
@@ -2323,7 +2655,6 @@ export function renderContactPage(): DocumentFragment {
       isValid = value.length >= 10;
     }
 
-    // Update visual feedback classes
     const group = input.closest('.form__group');
     if (group) {
       group.classList.remove('form__group--valid', 'form__group--invalid');
@@ -2341,7 +2672,6 @@ export function renderContactPage(): DocumentFragment {
     return isValid;
   }
 
-  // Helper to validate all fields
   function validateAllFields(): boolean {
     const inputs = form.querySelectorAll<HTMLInputElement | HTMLTextAreaElement>('.form__input, .form__textarea');
     let allValid = true;
@@ -2353,48 +2683,40 @@ export function renderContactPage(): DocumentFragment {
     return allValid;
   }
 
-  // Success message container (fallback)
   const successMessage = createElement('div', 'form__success');
   successMessage.style.display = 'none';
   successMessage.textContent = t('contact.messageSent');
   successMessage.setAttribute('role', 'status');
   successMessage.setAttribute('aria-live', 'polite');
 
-  // Show success modal with next steps
   function showSuccessModal(message: string) {
-    // Create modal overlay
     const overlay = createElement('div', 'form__modal-overlay');
     overlay.setAttribute('role', 'dialog');
     overlay.setAttribute('aria-modal', 'true');
     overlay.setAttribute('aria-labelledby', 'success-modal-title');
 
-    // Create modal
     const modal = createElement('div', 'form__modal');
 
-    // Success icon
     const iconWrapper = createElement('div', 'form__modal-icon');
     iconWrapper.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>';
     modal.appendChild(iconWrapper);
 
-    // Title
     const modalTitle = createElement('h3', 'form__modal-title', t('contact.messageSent'));
     modalTitle.id = 'success-modal-title';
     modal.appendChild(modalTitle);
 
-    // Message
     const msgText = createElement('p', 'form__modal-message', message);
     modal.appendChild(msgText);
 
-    // Next steps
     const nextSteps = createElement('div', 'form__modal-steps');
     const stepsTitle = createElement('h4', undefined, 'What happens next?');
     nextSteps.appendChild(stepsTitle);
 
     const stepsList = createElement('ul');
     const steps = [
-      'Our team will review your inquiry within 24 hours',
-      'A property specialist will contact you to discuss your needs',
-      'We\'ll arrange property viewings at your convenience'
+      'Our team will review your inquiry within 2 hours',
+      'A property specialist will contact you personally',
+      "We'll arrange private viewings at your convenience"
     ];
     steps.forEach(step => {
       const li = createElement('li', undefined, step);
@@ -2403,7 +2725,6 @@ export function renderContactPage(): DocumentFragment {
     nextSteps.appendChild(stepsList);
     modal.appendChild(nextSteps);
 
-    // Close button
     const closeBtn = createElement('button', 'form__modal-close', t('buttons.close'));
     closeBtn.type = 'button';
     closeBtn.addEventListener('click', () => {
@@ -2415,10 +2736,8 @@ export function renderContactPage(): DocumentFragment {
     overlay.appendChild(modal);
     document.body.appendChild(overlay);
 
-    // Focus close button for accessibility
     setTimeout(() => closeBtn.focus(), 100);
 
-    // Close on overlay click
     overlay.addEventListener('click', (e) => {
       if (e.target === overlay) {
         overlay.classList.add('form__modal-overlay--closing');
@@ -2426,7 +2745,6 @@ export function renderContactPage(): DocumentFragment {
       }
     });
 
-    // Close on Escape key
     const handleEscape = (e: KeyboardEvent) => {
       if (e.key === 'Escape') {
         overlay.classList.add('form__modal-overlay--closing');
@@ -2439,63 +2757,43 @@ export function renderContactPage(): DocumentFragment {
 
   form.addEventListener('submit', (e) => {
     e.preventDefault();
-
-    // Hide any previous success message
     successMessage.style.display = 'none';
 
-    // Validate all fields
     if (!validateAllFields()) {
-      // Add shake animation on validation failure
       form.classList.add('form--shake');
       setTimeout(() => form.classList.remove('form--shake'), 500);
-      // Focus first invalid field
       const firstInvalid = form.querySelector('.form__group--invalid .form__input, .form__group--invalid .form__textarea') as HTMLElement;
       if (firstInvalid) firstInvalid.focus();
       return;
     }
 
-    // Show loading state with ARIA
     const submitBtn = form.querySelector('.form__submit') as HTMLButtonElement;
     submitBtn.classList.add('form__submit--loading');
     submitBtn.disabled = true;
     submitBtn.setAttribute('aria-busy', 'true');
     announceToScreenReader('Sending your message, please wait.');
 
-    // Get form data
     const formData = new FormData(form);
     const name = formData.get('name') as string;
     const email = formData.get('email') as string;
     const phone = formData.get('phone') as string;
     const message = formData.get('message') as string;
 
-    // Submit to API
     submitInquiry({ name, email, phone, message })
       .then((result) => {
         if (result.success) {
-          // Reset form
           form.reset();
-
-          // Reset aria-invalid attributes
           const inputs = form.querySelectorAll<HTMLInputElement | HTMLTextAreaElement>('.form__input, .form__textarea');
           inputs.forEach(input => {
             input.setAttribute('aria-invalid', 'false');
           });
-
-          // Clear error messages
           const errorSpans = form.querySelectorAll('.form__error-message');
-          errorSpans.forEach(span => {
-            span.textContent = '';
-          });
-
-          // Clear validation states
+          errorSpans.forEach(span => { span.textContent = ''; });
           const groups = form.querySelectorAll('.form__group');
           groups.forEach(g => g.classList.remove('form__group--valid', 'form__group--invalid'));
-
-          // Show success modal
           showSuccessModal(result.message);
           announceToScreenReader('Message sent successfully!');
         } else {
-          // Show error
           successMessage.textContent = result.message;
           successMessage.style.color = 'var(--color-error, #ef4444)';
           successMessage.style.display = 'block';
@@ -2509,7 +2807,6 @@ export function renderContactPage(): DocumentFragment {
         announceToScreenReader('Error: Something went wrong. Please try again.');
       })
       .finally(() => {
-        // Restore button state
         submitBtn.classList.remove('form__submit--loading');
         submitBtn.disabled = false;
         submitBtn.setAttribute('aria-busy', 'false');
@@ -2550,22 +2847,16 @@ export function renderContactPage(): DocumentFragment {
     input.setAttribute('aria-invalid', 'false');
     input.setAttribute('aria-describedby', `${field.name}-error`);
 
-    // Add blur validation
     input.addEventListener('blur', () => validateField(input));
-
-    // Add real-time validation as user types
     input.addEventListener('input', () => validateField(input, false));
 
-    // Validation icon
     const validationIcon = createElement('span', 'form__validation-icon');
     validationIcon.setAttribute('aria-hidden', 'true');
 
-    // Error message span
     const errorSpan = createElement('span', 'form__error-message');
     errorSpan.id = `${field.name}-error`;
     errorSpan.setAttribute('aria-live', 'polite');
 
-    // Wrap input and icon in container
     const inputWrapper = createElement('div', 'form__input-wrapper');
     inputWrapper.appendChild(input);
     inputWrapper.appendChild(validationIcon);
@@ -2576,41 +2867,33 @@ export function renderContactPage(): DocumentFragment {
     form.appendChild(group);
   });
 
-  // Message field
   const msgGroup = createElement('div', 'form__group');
   const msgLabel = createElement('label', 'form__label', t('forms.message'));
   msgLabel.setAttribute('for', 'message');
   const textarea = createElement('textarea', 'form__textarea');
   textarea.name = 'message';
   textarea.id = 'message';
-  textarea.placeholder = 'Tell us about your ideal property...';
+  textarea.placeholder = 'Tell us about your ideal property — neighborhood, budget, timing…';
   textarea.rows = 5;
   textarea.required = true;
   textarea.setAttribute('aria-required', 'true');
   textarea.setAttribute('aria-invalid', 'false');
   textarea.setAttribute('aria-describedby', 'message-error');
 
-  // Pre-fill message from URL params if available
   if (prefillMessage) {
     textarea.value = prefillMessage;
   }
 
-  // Add blur validation for textarea
   textarea.addEventListener('blur', () => validateField(textarea));
-
-  // Add real-time validation for textarea
   textarea.addEventListener('input', () => validateField(textarea, false));
 
-  // Validation icon for textarea
   const msgValidationIcon = createElement('span', 'form__validation-icon');
   msgValidationIcon.setAttribute('aria-hidden', 'true');
 
-  // Error message span for message
   const msgErrorSpan = createElement('span', 'form__error-message');
   msgErrorSpan.id = 'message-error';
   msgErrorSpan.setAttribute('aria-live', 'polite');
 
-  // Wrap textarea and icon
   const textareaWrapper = createElement('div', 'form__input-wrapper form__input-wrapper--textarea');
   textareaWrapper.appendChild(textarea);
   textareaWrapper.appendChild(msgValidationIcon);
@@ -2620,7 +2903,6 @@ export function renderContactPage(): DocumentFragment {
   msgGroup.appendChild(msgErrorSpan);
   form.appendChild(msgGroup);
 
-  // Submit button with spinner
   const submit = createElement('button', 'form__submit');
   submit.type = 'submit';
   const submitText = createElement('span', 'form__submit-text', t('buttons.sendMessage'));
@@ -2630,210 +2912,179 @@ export function renderContactPage(): DocumentFragment {
   submit.appendChild(submitSpinner);
   form.appendChild(submit);
 
-  // Add success message after the form
   form.appendChild(successMessage);
+  formWrap.appendChild(form);
 
-  formWrapper.appendChild(form);
-  grid.appendChild(formWrapper);
+  // Trust signals row
+  const trustRow = createElement('div', 'contact-redesign__trust');
+  const trustItems = [
+    { label: '100% Confidential', icon: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>' },
+    { label: 'No Spam · Ever', icon: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 12l2 2 4-4"/><circle cx="12" cy="12" r="10"/></svg>' },
+    { label: 'Licensed Agency', icon: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 2L3 7l9 5 9-5-9-5z"/><path d="M3 17l9 5 9-5"/><path d="M3 12l9 5 9-5"/></svg>' },
+    { label: 'Reply in 2 Hours', icon: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>' }
+  ];
+  trustItems.forEach(t => {
+    const item = createElement('span', 'contact-redesign__trust-item');
+    item.innerHTML = `${t.icon}<span>${t.label}</span>`;
+    trustRow.appendChild(item);
+  });
+  formWrap.appendChild(trustRow);
 
-  // Info - Using semantic <address> element for contact information
-  const info = createElement('div', 'contact-page__info');
+  grid.appendChild(formWrap);
 
-  // Office Address - Using semantic address element
-  const officeSection = createElement('div', 'contact-page__info-item');
-  const officeTitle = createElement('h3', 'contact-page__info-heading', 'Office Location');
-  officeSection.appendChild(officeTitle);
-  const officeAddress = document.createElement('address');
-  officeAddress.className = 'contact-page__address';
-  officeAddress.setAttribute('itemscope', '');
-  officeAddress.setAttribute('itemtype', 'https://schema.org/PostalAddress');
-  const streetLine = createElement('span', 'contact-page__address-street');
-  streetLine.setAttribute('itemprop', 'streetAddress');
-  streetLine.textContent = 'Dream City';
-  officeAddress.appendChild(streetLine);
-  officeAddress.appendChild(document.createElement('br'));
-  const cityLine = createElement('span', 'contact-page__address-city');
-  cityLine.setAttribute('itemprop', 'addressLocality');
-  cityLine.textContent = 'Erbil';
-  officeAddress.appendChild(cityLine);
-  officeAddress.appendChild(document.createTextNode(', '));
-  const regionLine = createElement('span', 'contact-page__address-region');
-  regionLine.setAttribute('itemprop', 'addressRegion');
-  regionLine.textContent = 'Kurdistan Region';
-  officeAddress.appendChild(regionLine);
-  officeAddress.appendChild(document.createElement('br'));
-  const countryLine = createElement('span', 'contact-page__address-country');
-  countryLine.setAttribute('itemprop', 'addressCountry');
-  countryLine.textContent = 'Iraq';
-  officeAddress.appendChild(countryLine);
-  officeSection.appendChild(officeAddress);
-  info.appendChild(officeSection);
+  // ─── Info Column ────────────────────────────────────────────────────
+  const infoCol = createElement('div', 'contact-redesign__info');
 
-  // Phone Numbers - Also part of address context
-  const phoneSection = createElement('div', 'contact-page__info-item');
-  const phoneTitle = createElement('h3', 'contact-page__info-heading', 'Call Us');
-  phoneSection.appendChild(phoneTitle);
-  const phoneAddress = document.createElement('address');
-  phoneAddress.className = 'contact-page__phone-list';
+  // Primary info card
+  const infoCard = createElement('div', 'contact-redesign__info-card');
+  const infoTitle = createElement('h3', 'contact-redesign__info-title', 'Real House Headquarters');
+  infoCard.appendChild(infoTitle);
 
-  const phoneNumbers = [
-    { name: 'Abdalkader', number: '+964 750 792 2138', href: 'tel:+9647507922138' },
-    { name: 'Mahmood', number: '+964 751 441 5003', href: 'tel:+9647514415003' }
+  const infoRows = [
+    {
+      icon: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg>',
+      label: 'Office',
+      lines: ['Queen Tower, Building A3', 'Dream City · Erbil, Kurdistan', 'Iraq, 44001']
+    },
+    {
+      icon: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg>',
+      label: 'Direct Lines',
+      lines: ['<a href="tel:+9647507922138">+964 750 792 2138</a> · Abdalkader', '<a href="tel:+9647514415003">+964 751 441 5003</a> · Mahmood']
+    },
+    {
+      icon: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-10 5L2 7"/></svg>',
+      label: 'Email',
+      lines: ['<a href="mailto:info@realhouseiq.com">info@realhouseiq.com</a>']
+    }
   ];
 
-  phoneNumbers.forEach(phone => {
-    const phoneWrapper = createElement('div', 'contact-page__phone-item');
-    const phoneName = createElement('span', 'contact-page__phone-name', `${phone.name}: `);
-    phoneWrapper.appendChild(phoneName);
-    const phoneLink = createElement('a', 'contact-page__phone-link');
-    phoneLink.href = phone.href;
-    phoneLink.setAttribute('itemprop', 'telephone');
-    phoneLink.textContent = phone.number;
-    phoneWrapper.appendChild(phoneLink);
-    phoneAddress.appendChild(phoneWrapper);
+  infoRows.forEach(row => {
+    const r = createElement('div', 'contact-redesign__info-row');
+    const ic = createElement('div', 'contact-redesign__info-icon');
+    ic.innerHTML = row.icon;
+    const body = createElement('div', 'contact-redesign__info-body');
+    const lab = createElement('div', 'contact-redesign__info-label', row.label);
+    body.appendChild(lab);
+    row.lines.forEach(line => {
+      const v = createElement('div', 'contact-redesign__info-value');
+      v.innerHTML = line;
+      body.appendChild(v);
+    });
+    r.appendChild(ic);
+    r.appendChild(body);
+    infoCard.appendChild(r);
   });
-  phoneSection.appendChild(phoneAddress);
-  info.appendChild(phoneSection);
 
-  // Email
-  const emailSection = createElement('div', 'contact-page__info-item');
-  const emailTitle = createElement('h3', 'contact-page__info-heading', 'Email Us');
-  emailSection.appendChild(emailTitle);
-  const emailAddress = document.createElement('address');
-  emailAddress.className = 'contact-page__email';
-  const emailLink = createElement('a');
-  emailLink.href = 'mailto:info@realhouseiq.com';
-  emailLink.setAttribute('itemprop', 'email');
-  emailLink.textContent = 'info@realhouseiq.com';
-  emailAddress.appendChild(emailLink);
-  emailSection.appendChild(emailAddress);
-  info.appendChild(emailSection);
+  infoCol.appendChild(infoCard);
 
-  // Business Hours - Using definition list for key-value data
-  const hoursSection = createElement('div', 'contact-page__info-item');
-  const hoursTitle = createElement('h3', 'contact-page__info-heading', 'Business Hours');
-  hoursSection.appendChild(hoursTitle);
-  const hoursList = document.createElement('dl');
-  hoursList.className = 'contact-page__hours';
+  // Hours card
+  const hoursCard = createElement('div', 'contact-redesign__hours-card');
+  const hoursTitle = createElement('div', 'contact-redesign__hours-title');
+  hoursTitle.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg><span>Office Hours</span>';
+  hoursCard.appendChild(hoursTitle);
+
+  const hoursList = createElement('div', 'contact-redesign__hours-list');
   const hoursData = [
-    { days: 'Saturday - Thursday', time: '10:00 AM - 6:00 PM' },
-    { days: 'Friday', time: 'By Appointment' }
+    { days: 'Saturday – Thursday', time: '10:00 AM – 6:00 PM' },
+    { days: 'Friday', time: 'By Appointment' },
+    { days: 'WhatsApp', time: '24 / 7' }
   ];
-  hoursData.forEach(hour => {
-    const dt = createElement('dt', 'contact-page__hours-days', hour.days);
-    const dd = createElement('dd', 'contact-page__hours-time', hour.time);
-    hoursList.appendChild(dt);
-    hoursList.appendChild(dd);
+  hoursData.forEach(h => {
+    const row = createElement('div', 'contact-redesign__hours-row');
+    const a = createElement('span', undefined, h.days);
+    const b = createElement('span', undefined, h.time);
+    row.appendChild(a);
+    row.appendChild(b);
+    hoursList.appendChild(row);
   });
-  hoursSection.appendChild(hoursList);
-  info.appendChild(hoursSection);
+  hoursCard.appendChild(hoursList);
+  infoCol.appendChild(hoursCard);
 
-  grid.appendChild(info);
-  container.appendChild(grid);
+  grid.appendChild(infoCol);
+  mainContainer.appendChild(grid);
+  mainSection.appendChild(mainContainer);
+  page.appendChild(mainSection);
 
-  // ─── Google Maps Embed Section ─────────────────────────────────────────────
-  const mapSection = createElement('section', 'contact-page__map-section');
+  // ══════════════════════════════════════════════════════════════════════
+  // MAP SECTION
+  // ══════════════════════════════════════════════════════════════════════
+  const mapSection = createElement('section', 'contact-redesign__map');
+  const mapContainer = createElement('div', 'container');
 
-  const mapHeader = createElement('div', 'contact-page__map-header');
-  const mapTitle = createElement('h2', 'contact-page__map-title', 'Visit Our Office');
-  const mapSubtitle = createElement('p', 'contact-page__map-subtitle', 'Located in Dream City, Erbil - Kurdistan\'s premier real estate hub');
-  mapHeader.appendChild(mapTitle);
-  mapHeader.appendChild(mapSubtitle);
-  mapSection.appendChild(mapHeader);
+  const mapHead = createElement('div', 'contact-redesign__map-head');
+  const mapHeadline = createElement('h2', 'contact-redesign__map-headline');
+  mapHeadline.appendChild(document.createTextNode('Visit our '));
+  const mapEm = createElement('em', undefined, 'Erbil');
+  mapHeadline.appendChild(mapEm);
+  mapHeadline.appendChild(document.createTextNode(' studio.'));
+  mapHead.appendChild(mapHeadline);
 
-  // Google Maps iframe embed - Real House office location
-  const mapContainer = createElement('div', 'contact-page__map-container');
+  const mapHeadText = createElement('p', 'contact-redesign__map-subtitle');
+  mapHeadText.style.maxWidth = '420px';
+  mapHeadText.style.color = 'var(--c-text-2)';
+  mapHeadText.textContent = 'Queen Tower, Building A3 — at the heart of Kurdistan\'s premier real-estate quarter.';
+  mapHead.appendChild(mapHeadText);
+  mapContainer.appendChild(mapHead);
+
+  const mapFrame = createElement('div', 'contact-redesign__map-frame');
+
+  const pill = createElement('div', 'contact-redesign__map-pill');
+  pill.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg><span>Queen Tower · Dream City</span>';
+  mapFrame.appendChild(pill);
+
   const mapIframe = document.createElement('iframe');
-  mapIframe.src = 'https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3000!2d44.0091!3d36.1901!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2z36LCsDExJzI0LjQiTiA0NMKwMDAnMzIuOCJF!5e0!3m2!1sen!2s!4v1708500000000';
+  mapIframe.src = 'https://www.openstreetmap.org/export/embed.html?bbox=43.99%2C36.17%2C44.03%2C36.21&layer=mapnik&marker=36.1901%2C44.0091';
   mapIframe.width = '100%';
-  mapIframe.height = '400';
-  mapIframe.style.border = '0';
-  mapIframe.style.borderRadius = '12px';
+  mapIframe.height = '480';
   mapIframe.allowFullscreen = true;
   mapIframe.loading = 'lazy';
   mapIframe.referrerPolicy = 'no-referrer-when-downgrade';
-  mapIframe.title = 'Real House Office Location - Dream City, Erbil, Kurdistan';
-  mapContainer.appendChild(mapIframe);
+  mapIframe.title = 'Real House Office Location - Queen Tower, Dream City, Erbil, Kurdistan';
+  mapFrame.appendChild(mapIframe);
 
-  // Get Directions link
-  const directionsLink = createElement('a', 'contact-page__directions');
+  const mapActions = createElement('div', 'contact-redesign__map-actions');
+  const directionsLink = createElement('a', 'contact-redesign__directions');
   directionsLink.href = 'https://www.google.com/maps/dir/?api=1&destination=36.1901,44.0091';
   directionsLink.target = '_blank';
   directionsLink.rel = 'noopener noreferrer';
-  directionsLink.innerHTML = '<svg viewBox="0 0 24 24" fill="currentColor" width="20" height="20" aria-hidden="true"><path d="M21.71 11.29l-9-9c-.39-.39-1.02-.39-1.41 0l-9 9c-.39.39-.39 1.02 0 1.41l9 9c.39.39 1.02.39 1.41 0l9-9c.39-.38.39-1.01 0-1.41zM14 14.5V12h-4v3H8v-4c0-.55.45-1 1-1h5V7.5l3.5 3.5-3.5 3.5z"></path></svg> Get Driving Directions';
-  mapContainer.appendChild(directionsLink);
+  directionsLink.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polygon points="3 11 22 2 13 21 11 13 3 11"/></svg><span>Get Directions</span>';
+  mapActions.appendChild(directionsLink);
+  mapFrame.appendChild(mapActions);
 
-  mapSection.appendChild(mapContainer);
+  mapContainer.appendChild(mapFrame);
 
-  // NAP (Name, Address, Phone) Section for consistency
-  const napSection = createElement('div', 'contact-page__nap');
+  // Hidden NAP (SEO)
+  const napSection = createElement('div');
+  napSection.style.display = 'none';
   napSection.setAttribute('itemscope', '');
   napSection.setAttribute('itemtype', 'https://schema.org/RealEstateAgent');
-
-  const napName = createElement('h3', 'contact-page__nap-name');
-  napName.setAttribute('itemprop', 'name');
-  napName.textContent = 'Real House';
-  napSection.appendChild(napName);
-
-  const napLegal = createElement('p', 'contact-page__nap-legal');
-  napLegal.setAttribute('itemprop', 'legalName');
-  napLegal.textContent = 'Real House Real Estate LLC';
-  napSection.appendChild(napLegal);
-
-  const napAddress = createElement('address', 'contact-page__nap-address');
-  napAddress.setAttribute('itemprop', 'address');
-  napAddress.setAttribute('itemscope', '');
-  napAddress.setAttribute('itemtype', 'https://schema.org/PostalAddress');
-  napAddress.innerHTML = `
-    <span itemprop="streetAddress">Queen Tower, Erbil, Building A3</span><br>
-    <span itemprop="addressLocality">Erbil</span>,
-    <span itemprop="addressRegion">Kurdistan Region</span>
-    <span itemprop="postalCode">44001</span><br>
-    <span itemprop="addressCountry">Iraq</span>
-  `;
-  napSection.appendChild(napAddress);
-
-  const napPhones = createElement('div', 'contact-page__nap-phones');
-  napPhones.innerHTML = `
-    <a href="tel:+9647507922138" itemprop="telephone">+964 750 792 2138</a> (Abdalkader - Sales)<br>
-    <a href="tel:+9647514415003" itemprop="telephone">+964 751 441 5003</a> (Mahmood - Sales)
-  `;
-  napSection.appendChild(napPhones);
-
-  const napEmail = createElement('a', 'contact-page__nap-email');
-  napEmail.href = 'mailto:info@realhouseiq.com';
-  napEmail.setAttribute('itemprop', 'email');
-  napEmail.textContent = 'info@realhouseiq.com';
-  napSection.appendChild(napEmail);
-
-  // Hidden geo coordinates for SEO
-  const geoDiv = createElement('div');
-  geoDiv.setAttribute('itemprop', 'geo');
-  geoDiv.setAttribute('itemscope', '');
-  geoDiv.setAttribute('itemtype', 'https://schema.org/GeoCoordinates');
-  geoDiv.innerHTML = `
-    <meta itemprop="latitude" content="36.1901">
-    <meta itemprop="longitude" content="44.0091">
-  `;
-  geoDiv.style.display = 'none';
-  napSection.appendChild(geoDiv);
-
-  // Price range and other business meta
-  const businessMeta = createElement('div');
-  businessMeta.innerHTML = `
+  napSection.innerHTML = `
+    <span itemprop="name">Real House</span>
+    <span itemprop="legalName">Real House Real Estate LLC</span>
+    <span itemprop="address" itemscope itemtype="https://schema.org/PostalAddress">
+      <span itemprop="streetAddress">Queen Tower, Building A3</span>
+      <span itemprop="addressLocality">Erbil</span>
+      <span itemprop="addressRegion">Kurdistan Region</span>
+      <span itemprop="postalCode">44001</span>
+      <span itemprop="addressCountry">Iraq</span>
+    </span>
+    <a href="tel:+9647507922138" itemprop="telephone">+964 750 792 2138</a>
+    <a href="tel:+9647514415003" itemprop="telephone">+964 751 441 5003</a>
+    <a href="mailto:info@realhouseiq.com" itemprop="email">info@realhouseiq.com</a>
+    <span itemprop="geo" itemscope itemtype="https://schema.org/GeoCoordinates">
+      <meta itemprop="latitude" content="36.1901">
+      <meta itemprop="longitude" content="44.0091">
+    </span>
     <meta itemprop="priceRange" content="$$$">
     <link itemprop="url" href="https://realhouseiq.com">
-    <meta itemprop="openingHours" content="Sa-Th 09:00-18:00">
+    <meta itemprop="openingHours" content="Sa-Th 10:00-18:00">
   `;
-  businessMeta.style.display = 'none';
-  napSection.appendChild(businessMeta);
+  mapContainer.appendChild(napSection);
 
-  mapSection.appendChild(napSection);
-  container.appendChild(mapSection);
+  mapSection.appendChild(mapContainer);
+  page.appendChild(mapSection);
 
-  page.appendChild(container);
   fragment.appendChild(page);
-
   return fragment;
 }
 

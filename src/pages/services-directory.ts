@@ -281,6 +281,8 @@ function createQuoteForm(category: ServiceCategory): HTMLElement {
   nameInput.id = 'quote-name';
   nameInput.name = 'name';
   nameInput.required = true;
+  // WCAG 1.3.5 Identify Input Purpose — enable browser autofill for personal data.
+  nameInput.autocomplete = 'name';
   nameInput.placeholder = t('servicesDirectory.fullNamePlaceholder');
   nameGroup.appendChild(nameLabel);
   nameGroup.appendChild(nameInput);
@@ -295,6 +297,7 @@ function createQuoteForm(category: ServiceCategory): HTMLElement {
   phoneInput.id = 'quote-phone';
   phoneInput.name = 'phone';
   phoneInput.required = true;
+  phoneInput.autocomplete = 'tel';
   phoneInput.placeholder = t('servicesDirectory.phonePlaceholder');
   phoneGroup.appendChild(phoneLabel);
   phoneGroup.appendChild(phoneInput);
@@ -308,6 +311,7 @@ function createQuoteForm(category: ServiceCategory): HTMLElement {
   emailInput.type = 'email';
   emailInput.id = 'quote-email';
   emailInput.name = 'email';
+  emailInput.autocomplete = 'email';
   emailInput.placeholder = t('servicesDirectory.emailPlaceholder');
   emailGroup.appendChild(emailLabel);
   emailGroup.appendChild(emailInput);
@@ -413,10 +417,13 @@ export function renderServicesDirectoryPage(): DocumentFragment {
 
   // Search bar placeholder
   const searchWrapper = createElement('div', 'services-dir__search');
+  searchWrapper.setAttribute('role', 'search');
   const searchInput = createElement('input');
-  searchInput.type = 'text';
+  searchInput.type = 'search';
   searchInput.placeholder = t('servicesDirectory.searchPlaceholder');
   searchInput.className = 'services-dir__search-input';
+  // WCAG 4.1.2 — search input has no visible <label>; provide an accessible name.
+  searchInput.setAttribute('aria-label', t('servicesDirectory.searchPlaceholder'));
   searchWrapper.appendChild(searchInput);
   const searchBtn = createElement('button', 'btn btn--primary', t('servicesDirectory.searchButton'));
   searchWrapper.appendChild(searchBtn);

@@ -31,6 +31,7 @@ import {
   type BreadcrumbItem
 } from '../components/internal-linking';
 import { createSEOImage, generateSrcSet, generateSizes, IMAGE_DIMENSIONS } from '../utils/image-seo';
+import { createEmptyState as createUiEmptyState } from '../utils/ui-states';
 
 // ─── Helper Functions ────────────────────────────────────────────────────────
 
@@ -259,25 +260,16 @@ function createWishlistPropertyCard(property: Property, onRemove: () => void): H
 // ─── Empty State Component ───────────────────────────────────────────────────
 
 function createEmptyState(): HTMLElement {
-  const empty = createElement('div', 'wishlist-page__empty');
-
-  const icon = createElement('div', 'wishlist-page__empty-icon');
-  icon.appendChild(createHeartFilledSVG());
-  empty.appendChild(icon);
-
-  const title = createElement('h2', 'wishlist-page__empty-title', 'Your Wishlist is Empty');
-  empty.appendChild(title);
-
-  const text = createElement('p', 'wishlist-page__empty-text');
-  text.textContent = 'Save properties you love by clicking the heart icon on any property card. Your saved properties will appear here.';
-  empty.appendChild(text);
-
-  const browseBtn = createElement('a', 'btn btn--primary wishlist-page__empty-btn', 'Browse Properties');
-  browseBtn.href = '/properties';
-  browseBtn.setAttribute('data-route', '');
-  empty.appendChild(browseBtn);
-
-  return empty;
+  // Use the shared empty-state pattern so wishlist looks and feels
+  // consistent with favorites, comparison, and search empty states.
+  return createUiEmptyState({
+    className: 'wishlist-page__empty',
+    icon: 'heart',
+    title: 'Your wishlist is empty',
+    description: 'Tap the heart icon on any property to save it here. You can share your wishlist with family or our agents in one tap once you have some picks.',
+    primaryAction: { label: 'Browse properties', href: '/properties' },
+    secondaryAction: { label: 'Explore projects', href: '/projects' }
+  });
 }
 
 // ─── Shared Wishlist Banner ──────────────────────────────────────────────────
@@ -460,8 +452,10 @@ export function renderWishlistPage(): DocumentFragment {
 
     const clearRecentBtn = createElement('button', 'btn btn--ghost btn--sm', 'Clear History');
     clearRecentBtn.addEventListener('click', () => {
-      clearRecentlyViewed();
-      recentSection.remove();
+      if (confirm('Clear your recently viewed properties?')) {
+        clearRecentlyViewed();
+        recentSection.remove();
+      }
     });
     recentHeader.appendChild(clearRecentBtn);
 

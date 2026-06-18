@@ -37,30 +37,44 @@ export function getWishlistIds(): string[] {
 
 /**
  * Add a property to wishlist
+ * Returns false if persistence fails (e.g. storage quota exceeded, private mode)
  */
-export function addToWishlist(propertyId: string): void {
+export function addToWishlist(propertyId: string): boolean {
   const wishlist = getWishlist();
   if (!wishlist.some(item => item.id === propertyId)) {
     wishlist.push({
       id: propertyId,
       addedAt: Date.now()
     });
-    localStorage.setItem(WISHLIST_STORAGE_KEY, JSON.stringify(wishlist));
+    try {
+      localStorage.setItem(WISHLIST_STORAGE_KEY, JSON.stringify(wishlist));
+    } catch (e) {
+      console.error('Wishlist: failed to persist add to localStorage', e);
+      return false;
+    }
     dispatchWishlistChange();
   }
+  return true;
 }
 
 /**
  * Remove a property from wishlist
+ * Returns false if persistence fails
  */
-export function removeFromWishlist(propertyId: string): void {
+export function removeFromWishlist(propertyId: string): boolean {
   const wishlist = getWishlist();
   const index = wishlist.findIndex(item => item.id === propertyId);
   if (index > -1) {
     wishlist.splice(index, 1);
-    localStorage.setItem(WISHLIST_STORAGE_KEY, JSON.stringify(wishlist));
+    try {
+      localStorage.setItem(WISHLIST_STORAGE_KEY, JSON.stringify(wishlist));
+    } catch (e) {
+      console.error('Wishlist: failed to persist remove to localStorage', e);
+      return false;
+    }
     dispatchWishlistChange();
   }
+  return true;
 }
 
 /**

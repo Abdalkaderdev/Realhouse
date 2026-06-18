@@ -9,6 +9,7 @@ import 'leaflet.markercluster/dist/MarkerCluster.css';
 import 'leaflet.markercluster/dist/MarkerCluster.Default.css';
 import { properties, getDisplayPrice, type Property } from '../data/properties';
 import { t } from '../i18n';
+import { createErrorState, createSkeletonMap } from '../utils/ui-states';
 
 // Erbil city center coordinates (used for centering map on Erbil, Kurdistan)
 const ERBIL_CENTER: [number, number] = [36.191113, 44.009167];
@@ -113,6 +114,18 @@ export function saveViewPreference(view: ViewMode): void {
 // Store for marker cluster group
 let markerClusterGroup: L.MarkerClusterGroup | null = null;
 
+// Render an inline error state inside the map container so the user
+// understands the map failed and can recover with a single tap.
+function renderMapError(container: HTMLElement, onRetry: () => void): void {
+  while (container.firstChild) container.removeChild(container.firstChild);
+  container.appendChild(createErrorState({
+    title: 'Map failed to load',
+    description: 'We could not load the map right now. This is usually a temporary network issue. You can still browse the property list while we try again.',
+    retryLabel: 'Reload map',
+    onRetry
+  }));
+}
+
 // Initialize map for properties page with marker clustering
 export function initPropertiesMap(
   containerId: string,
@@ -122,25 +135,56 @@ export function initPropertiesMap(
   const container = document.getElementById(containerId);
   if (!container) return null;
 
-  // Create map with touch-friendly controls for mobile
-  const map = L.map(containerId, {
-    center: ERBIL_CENTER,
-    zoom: DEFAULT_ZOOM,
-    zoomControl: true,
-    scrollWheelZoom: true,
-    attributionControl: true,
-    // Mobile-friendly options
-    touchZoom: true,
-    dragging: true,
-    doubleClickZoom: true
-  });
+  // Show shimmering map skeleton until tiles report ready. This gives a
+  // perceived-loading affordance instead of a flat dark rectangle.
+  const skeleton = createSkeletonMap();
+  skeleton.style.position = 'absolute';
+  skeleton.style.inset = '0';
+  container.style.position = container.style.position || 'relative';
+  container.appendChild(skeleton);
 
-  // Add dark tile layer
-  L.tileLayer(DARK_TILE_URL, {
+  let map: L.Map;
+  try {
+    // Create map with touch-friendly controls for mobile
+    map = L.map(containerId, {
+      center: ERBIL_CENTER,
+      zoom: DEFAULT_ZOOM,
+      zoomControl: true,
+      scrollWheelZoom: true,
+      attributionControl: true,
+      // Mobile-friendly options
+      touchZoom: true,
+      dragging: true,
+      doubleClickZoom: true
+    });
+  } catch (err) {
+    // Leaflet initialization can throw if the container is detached or
+    // the library failed to load — surface a recoverable error UI.
+    console.error('Map init failed', err);
+    renderMapError(container, () => initPropertiesMap(containerId, filteredProperties, onMarkerClick));
+    return null;
+  }
+
+  // Add dark tile layer; if the tile server is unreachable, swap to the
+  // error state so the user is not staring at an empty map.
+  const tileLayer = L.tileLayer(DARK_TILE_URL, {
     attribution: TILE_ATTRIBUTION,
     maxZoom: 19,
     subdomains: 'abcd'
-  }).addTo(map);
+  });
+  let tileErrorCount = 0;
+  tileLayer.on('tileerror', () => {
+    tileErrorCount++;
+    // Many tile errors in a row → likely a network problem, give up gracefully.
+    if (tileErrorCount > 8) {
+      try { map.remove(); } catch {}
+      renderMapError(container, () => initPropertiesMap(containerId, filteredProperties, onMarkerClick));
+    }
+  });
+  tileLayer.on('load', () => {
+    skeleton.remove();
+  });
+  tileLayer.addTo(map);
 
   // Create marker cluster group with custom styling
   markerClusterGroup = L.markerClusterGroup({

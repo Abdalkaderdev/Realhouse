@@ -110,6 +110,7 @@ import {
   applyBlogSocialMeta,
   applyPageSocialMeta
 } from './seo/social';
+import { wireImageErrorFallbacks } from './utils/ui-states';
 
 export class App {
   private cursor: CustomCursor | null = null;
@@ -224,13 +225,29 @@ export class App {
     const closeMenu = () => {
       hamburger.classList.remove('active');
       mobileMenu.classList.remove('active');
+      hamburger.setAttribute('aria-expanded', 'false');
+      hamburger.setAttribute('aria-label', 'Open menu');
+      mobileMenu.setAttribute('aria-hidden', 'true');
       document.body.style.overflow = '';
+      // Return focus to the trigger (WCAG 2.4.3 Focus Order)
+      try { (hamburger as HTMLElement).focus({ preventScroll: true }); } catch { /* noop */ }
     };
 
     hamburger.addEventListener('click', () => {
+      const willOpen = !mobileMenu.classList.contains('active');
       hamburger.classList.toggle('active');
       mobileMenu.classList.toggle('active');
-      document.body.style.overflow = mobileMenu.classList.contains('active') ? 'hidden' : '';
+      hamburger.setAttribute('aria-expanded', String(willOpen));
+      hamburger.setAttribute('aria-label', willOpen ? 'Close menu' : 'Open menu');
+      mobileMenu.setAttribute('aria-hidden', String(!willOpen));
+      document.body.style.overflow = willOpen ? 'hidden' : '';
+      // Move focus to the first focusable element inside the menu when opening (WCAG 2.4.3)
+      if (willOpen) {
+        const firstLink = mobileMenu.querySelector<HTMLElement>('a, button');
+        if (firstLink) {
+          try { firstLink.focus({ preventScroll: true }); } catch { /* noop */ }
+        }
+      }
     });
 
     // Close menu on link click
@@ -320,6 +337,16 @@ export class App {
       setup404PageSEO();
     }
     app.appendChild(content);
+
+    // Wire image-error fallbacks for every <img> on the freshly rendered page.
+    // A broken image otherwise shows the platform's default "missing" glyph
+    // which looks unprofessional and gives no information.
+    try {
+      wireImageErrorFallbacks(app);
+    } catch (err) {
+      // Image fallback wiring is best-effort and must never block routing.
+      console.warn('wireImageErrorFallbacks failed', err);
+    }
 
     this.currentPage = cleanPath;
 

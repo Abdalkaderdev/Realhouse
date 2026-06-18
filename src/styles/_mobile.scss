@@ -153,6 +153,40 @@ select {
     font-size: clamp(0.9rem, 4vw, 1.125rem);
     padding: 0 16px;
   }
+
+  // Stack CTA buttons full-width on small screens
+  .hero__cta {
+    flex-direction: column;
+    width: 100%;
+    padding: 0 16px;
+
+    .btn {
+      width: 100%;
+    }
+  }
+
+  // Hide scroll indicator on very small screens to free up space
+  .hero__scroll {
+    bottom: var(--space-4);
+
+    &-line {
+      height: 40px;
+    }
+  }
+
+  // Tighter eyebrow on mobile
+  .hero__eyebrow {
+    margin-bottom: var(--space-4);
+
+    .hero__line {
+      width: 32px;
+    }
+
+    span {
+      font-size: 10px;
+      letter-spacing: 0.25em;
+    }
+  }
 }
 
 // ─── Mobile Spacing & Layout ────────────────────────────────────────────────

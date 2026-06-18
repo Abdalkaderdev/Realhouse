@@ -57,7 +57,13 @@ export function addToRecentlyViewed(propertyId: string): void {
     items = items.slice(0, MAX_RECENTLY_VIEWED);
   }
 
-  localStorage.setItem(RECENTLY_VIEWED_KEY, JSON.stringify(items));
+  try {
+    localStorage.setItem(RECENTLY_VIEWED_KEY, JSON.stringify(items));
+  } catch (e) {
+    // Recently-viewed is best-effort UX; log but do not break the page render.
+    console.warn('RecentlyViewed: failed to persist add', e);
+    return;
+  }
   dispatchRecentlyViewedChange();
 }
 
@@ -69,7 +75,12 @@ export function removeFromRecentlyViewed(propertyId: string): void {
   const index = items.findIndex(item => item.id === propertyId);
   if (index > -1) {
     items.splice(index, 1);
-    localStorage.setItem(RECENTLY_VIEWED_KEY, JSON.stringify(items));
+    try {
+      localStorage.setItem(RECENTLY_VIEWED_KEY, JSON.stringify(items));
+    } catch (e) {
+      console.warn('RecentlyViewed: failed to persist remove', e);
+      return;
+    }
     dispatchRecentlyViewedChange();
   }
 }

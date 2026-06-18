@@ -158,15 +158,23 @@ export function openVirtualTourModal(options: VirtualTourModalOptions): void {
 
   overlay.appendChild(modal);
 
+  // Capture the trigger element so we can restore focus on close (WCAG 2.4.3)
+  const triggerElement = document.activeElement as HTMLElement | null;
+
   // Close handlers
   const closeModal = () => {
     overlay.classList.add('closing');
     if (document.fullscreenElement) {
       document.exitFullscreen();
     }
+    document.removeEventListener('keydown', handleKeydown);
     setTimeout(() => {
       overlay.remove();
       document.body.style.overflow = '';
+      // Return focus to the element that opened the modal (WCAG 2.4.3 Focus Order)
+      if (triggerElement && typeof triggerElement.focus === 'function') {
+        try { triggerElement.focus({ preventScroll: true }); } catch { /* noop */ }
+      }
     }, 300);
   };
 
@@ -177,14 +185,31 @@ export function openVirtualTourModal(options: VirtualTourModalOptions): void {
     }
   });
 
-  // Escape key handler
-  const handleEscape = (e: KeyboardEvent) => {
+  // Combined Escape + focus trap handler (WCAG 2.1.2 No Keyboard Trap / 2.4.3)
+  const handleKeydown = (e: KeyboardEvent) => {
     if (e.key === 'Escape') {
       closeModal();
-      document.removeEventListener('keydown', handleEscape);
+      return;
+    }
+    if (e.key === 'Tab') {
+      // Focus trap: cycle Tab/Shift+Tab inside modal action buttons
+      const focusables = overlay.querySelectorAll<HTMLElement>(
+        'button:not([disabled]), [href], input:not([disabled]), select:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex="-1"])'
+      );
+      if (focusables.length === 0) return;
+      const first = focusables[0];
+      const last = focusables[focusables.length - 1];
+      const active = document.activeElement as HTMLElement | null;
+      if (e.shiftKey && active === first) {
+        e.preventDefault();
+        last.focus();
+      } else if (!e.shiftKey && active === last) {
+        e.preventDefault();
+        first.focus();
+      }
     }
   };
-  document.addEventListener('keydown', handleEscape);
+  document.addEventListener('keydown', handleKeydown);
 
   // Add to DOM
   document.body.appendChild(overlay);

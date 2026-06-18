@@ -856,53 +856,68 @@ function createApplicationForm(job: JobListing): HTMLElement {
 
   form.appendChild(formEl);
 
-  // Add event listeners after DOM is ready
-  setTimeout(() => {
-    const formElement = document.getElementById('job-application-form') as HTMLFormElement;
-    const resumeInput = document.getElementById('applicant-resume') as HTMLInputElement;
-    const fileNameSpan = document.getElementById('resume-file-name');
+  // Attach listeners directly to the elements we already have refs to,
+  // rather than re-querying by id after a brittle setTimeout. This makes
+  // the form work even if multiple application forms are rendered or if
+  // the form is detached before the timeout fires.
+  const MAX_RESUME_BYTES = 5 * 1024 * 1024; // 5MB advertised in the upload label
 
-    if (resumeInput && fileNameSpan) {
-      resumeInput.addEventListener('change', () => {
-        if (resumeInput.files && resumeInput.files[0]) {
-          fileNameSpan.textContent = resumeInput.files[0].name;
-        }
-      });
+  fileInput.addEventListener('change', () => {
+    if (fileInput.files && fileInput.files[0]) {
+      const file = fileInput.files[0];
+      if (file.size > MAX_RESUME_BYTES) {
+        fileInput.value = '';
+        fileName.textContent = '';
+        fileName.style.color = 'var(--color-error, #ef4444)';
+        fileName.textContent = 'File too large. Maximum size is 5MB.';
+        return;
+      }
+      fileName.style.color = '';
+      fileName.textContent = file.name;
+    }
+  });
+
+  formEl.addEventListener('submit', (e) => {
+    e.preventDefault();
+
+    // Native HTML5 validation: required name/email/phone/resume must be present.
+    if (!formEl.checkValidity()) {
+      formEl.reportValidity();
+      return;
     }
 
-    if (formElement) {
-      formElement.addEventListener('submit', (e) => {
-        e.preventDefault();
-        // Show success message using DOM methods
-        while (formElement.firstChild) {
-          formElement.removeChild(formElement.firstChild);
-        }
-
-        const successMessage = createElement('div', 'application-form__success');
-
-        const successSvg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
-        successSvg.setAttribute('viewBox', '0 0 24 24');
-        successSvg.setAttribute('fill', 'none');
-        successSvg.setAttribute('stroke', 'currentColor');
-        successSvg.setAttribute('stroke-width', '2');
-        const successPath1 = document.createElementNS('http://www.w3.org/2000/svg', 'path');
-        successPath1.setAttribute('d', 'M22 11.08V12a10 10 0 1 1-5.93-9.14');
-        successSvg.appendChild(successPath1);
-        const successPath2 = document.createElementNS('http://www.w3.org/2000/svg', 'polyline');
-        successPath2.setAttribute('points', '22 4 12 14.01 9 11.01');
-        successSvg.appendChild(successPath2);
-        successMessage.appendChild(successSvg);
-
-        const successTitle = createElement('h4', undefined, 'Application Submitted!');
-        successMessage.appendChild(successTitle);
-
-        const successDesc = createElement('p', undefined, 'Thank you for applying. We\'ll review your application and get back to you within 5-7 business days.');
-        successMessage.appendChild(successDesc);
-
-        formElement.appendChild(successMessage);
-      });
+    // Show success message using DOM methods
+    while (formEl.firstChild) {
+      formEl.removeChild(formEl.firstChild);
     }
-  }, 100);
+
+    const successMessage = createElement('div', 'application-form__success');
+
+    const successSvg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+    successSvg.setAttribute('viewBox', '0 0 24 24');
+    successSvg.setAttribute('fill', 'none');
+    successSvg.setAttribute('stroke', 'currentColor');
+    successSvg.setAttribute('stroke-width', '2');
+    const successPath1 = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+    successPath1.setAttribute('d', 'M22 11.08V12a10 10 0 1 1-5.93-9.14');
+    successSvg.appendChild(successPath1);
+    const successPath2 = document.createElementNS('http://www.w3.org/2000/svg', 'polyline');
+    successPath2.setAttribute('points', '22 4 12 14.01 9 11.01');
+    successSvg.appendChild(successPath2);
+    successMessage.appendChild(successSvg);
+
+    const successTitle = createElement('h4', undefined, 'Application Submitted!');
+    successMessage.appendChild(successTitle);
+
+    const successDesc = createElement('p', undefined, 'Thank you for applying. We\'ll review your application and get back to you within 5-7 business days.');
+    successMessage.appendChild(successDesc);
+
+    // Announce success to assistive tech.
+    successMessage.setAttribute('role', 'status');
+    successMessage.setAttribute('aria-live', 'polite');
+
+    formEl.appendChild(successMessage);
+  });
 
   return form;
 }

@@ -4,6 +4,7 @@
 // ═══════════════════════════════════════════════════════════════════════════
 
 import { t } from '../i18n';
+import { showFormError, clearFormError } from '../utils/ui-states';
 
 // ─── Helper Function ──────────────────────────────────────────────────────
 function createElement<K extends keyof HTMLElementTagNameMap>(
@@ -94,29 +95,45 @@ export function createLeadCaptureSection(): HTMLElement {
 
     // Show loading state
     subscribeBtn.textContent = t('leadCapture.subscribing');
+    subscribeBtn.setAttribute('aria-busy', 'true');
     (subscribeBtn as HTMLButtonElement).disabled = true;
+    clearFormError(leadCaptureForm);
 
     // Simulate API call (in production, send to your API)
     setTimeout(() => {
-      // Store in localStorage
-      const subscribers = JSON.parse(localStorage.getItem('rh-newsletter-subscribers') || '[]');
-      if (!subscribers.includes(email)) {
-        subscribers.push(email);
-        localStorage.setItem('rh-newsletter-subscribers', JSON.stringify(subscribers));
-      }
-      localStorage.setItem('rh-newsletter-subscribed', 'true');
+      try {
+        // localStorage can throw in private mode / disabled storage; treat that
+        // path as a recoverable error and surface a banner instead of crashing.
+        const subscribers = JSON.parse(localStorage.getItem('rh-newsletter-subscribers') || '[]');
+        if (!subscribers.includes(email)) {
+          subscribers.push(email);
+          localStorage.setItem('rh-newsletter-subscribers', JSON.stringify(subscribers));
+        }
+        localStorage.setItem('rh-newsletter-subscribed', 'true');
 
-      // Show success message
-      formSuccess.textContent = t('leadCapture.successMessage');
-      formSuccess.style.display = 'block';
-      (emailInput as HTMLInputElement).value = '';
+        // Show success message
+        formSuccess.textContent = t('leadCapture.successMessage');
+        formSuccess.style.display = 'block';
+        (emailInput as HTMLInputElement).value = '';
 
-      // Reset button
-      subscribeBtn.textContent = t('leadCapture.subscribed');
-      setTimeout(() => {
+        // Reset button
+        subscribeBtn.textContent = t('leadCapture.subscribed');
+        setTimeout(() => {
+          subscribeBtn.textContent = t('leadCapture.subscribe');
+          subscribeBtn.setAttribute('aria-busy', 'false');
+          (subscribeBtn as HTMLButtonElement).disabled = false;
+        }, 2000);
+      } catch (err) {
+        // Storage blocked (private mode) or other failure — keep the user
+        // informed and let them retry without losing their input.
+        showFormError(
+          leadCaptureForm,
+          'We could not save your subscription right now. Please check your browser privacy settings and try again.'
+        );
         subscribeBtn.textContent = t('leadCapture.subscribe');
+        subscribeBtn.setAttribute('aria-busy', 'false');
         (subscribeBtn as HTMLButtonElement).disabled = false;
-      }, 2000);
+      }
     }, 800);
   });
 

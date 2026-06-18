@@ -3,6 +3,7 @@
 // ═══════════════════════════════════════════════════════════════════════════
 
 import { getPropertyById, getDisplayPrice, type Property } from './data/properties';
+import { createEmptyState } from './utils/ui-states';
 
 const MAX_COMPARE_ITEMS = 3;
 const STORAGE_KEY = 'rh-compare-properties';
@@ -18,7 +19,13 @@ export function getCompareIds(): string[] {
 }
 
 export function setCompareIds(ids: string[]): void {
-  sessionStorage.setItem(STORAGE_KEY, JSON.stringify(ids));
+  try {
+    sessionStorage.setItem(STORAGE_KEY, JSON.stringify(ids));
+  } catch (e) {
+    // sessionStorage write failed (quota, private mode). Log so the missing
+    // persistence is debuggable instead of failing silently inside the UI handler.
+    console.error('Comparison: failed to persist compare ids', e);
+  }
   updateComparisonBar();
   updateCompareButtons();
 }
@@ -153,7 +160,10 @@ export function createComparisonBar(): HTMLElement {
   clearBtn.className = 'btn btn--ghost comparison-bar__clear-btn';
   clearBtn.textContent = 'Clear All';
   clearBtn.addEventListener('click', () => {
-    clearCompare();
+    // Destructive action — confirm to prevent accidental loss of curated set.
+    if (confirm('Remove all properties from compare?')) {
+      clearCompare();
+    }
   });
   actions.appendChild(clearBtn);
 
@@ -354,26 +364,15 @@ export function renderComparisonPage(): DocumentFragment {
   container.appendChild(header);
 
   if (properties.length === 0) {
-    // Empty state
-    const empty = document.createElement('div');
-    empty.className = 'compare-page__empty';
-
-    const emptyTitle = document.createElement('h3');
-    emptyTitle.textContent = 'No properties to compare';
-    empty.appendChild(emptyTitle);
-
-    const emptyText = document.createElement('p');
-    emptyText.textContent = 'Add properties to comparison from the properties page to see them side by side.';
-    empty.appendChild(emptyText);
-
-    const browseLink = document.createElement('a');
-    browseLink.className = 'btn btn--primary';
-    browseLink.href = '/properties';
-    browseLink.setAttribute('data-route', '');
-    browseLink.textContent = 'Browse Properties';
-    empty.appendChild(browseLink);
-
-    container.appendChild(empty);
+    // Empty state — explain the value of comparing, point to where to start.
+    container.appendChild(createEmptyState({
+      className: 'compare-page__empty',
+      icon: 'compare',
+      title: 'Nothing to compare yet',
+      description: 'Pick up to 3 properties from the listings page using the "Compare" button on any card. We will line up the specs, price, and features side by side.',
+      primaryAction: { label: 'Browse properties', href: '/properties' },
+      secondaryAction: { label: 'See development projects', href: '/projects' }
+    }));
   } else {
     // Comparison grid
     const grid = document.createElement('div');

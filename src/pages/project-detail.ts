@@ -310,8 +310,17 @@ function createConstructionProgressSection(project: Project): HTMLElement {
     milestonesWrapper.appendChild(milestonesTitle);
 
     const timeline = createElement('ul', 'project-overview__milestones-list');
+    const visibleMilestones = milestones.slice(0, 4);
+    const completedCount = visibleMilestones.filter(m => m.completed).length;
+    const lastCompletedIndex = visibleMilestones.reduce((acc, m, i) => m.completed ? i : acc, -1);
+    if (lastCompletedIndex >= 0 && visibleMilestones.length > 1) {
+      const pct = (lastCompletedIndex / (visibleMilestones.length - 1)) * 100;
+      timeline.style.setProperty('--milestone-progress', `${pct}%`);
+    } else if (completedCount === visibleMilestones.length && visibleMilestones.length > 0) {
+      timeline.style.setProperty('--milestone-progress', '100%');
+    }
 
-    milestones.slice(0, 4).forEach(milestone => {
+    visibleMilestones.forEach(milestone => {
       const item = createElement('li', `project-overview__milestone ${milestone.completed ? 'project-overview__milestone--completed' : ''}`);
 
       const marker = createElement('span', 'project-overview__milestone-marker');
@@ -791,11 +800,22 @@ export function renderComprehensiveProjectDetailPage(projectId: string): Documen
                       project.status === 'Coming Soon' ? 'project-hero__status--coming' :
                       'project-hero__status--construction';
   statusBadge.className = `project-hero__status ${statusClass}`;
-  statusBadge.textContent = project.status;
+  const statusDot = createElement('span', 'project-hero__status-dot');
+  statusBadge.appendChild(statusDot);
+  statusBadge.appendChild(document.createTextNode(project.status));
   heroInfo.appendChild(statusBadge);
 
   const heroTitle = createElement('h1', 'project-hero__title', project.name);
   heroInfo.appendChild(heroTitle);
+
+  // Developer (if available)
+  if (project.developer) {
+    const developer = createElement('p', 'project-hero__developer');
+    developer.appendChild(document.createTextNode('Developed by '));
+    const devName = createElement('strong', undefined, project.developer);
+    developer.appendChild(devName);
+    heroInfo.appendChild(developer);
+  }
 
   const heroLocation = createElement('p', 'project-hero__location');
   heroLocation.appendChild(createSVGUse('icon-location'));
@@ -804,15 +824,30 @@ export function renderComprehensiveProjectDetailPage(projectId: string): Documen
 
   const heroStats = createElement('div', 'project-hero__stats');
 
-  const statsData = [
-    { label: 'Total Units', value: project.totalUnits.toLocaleString(), icon: 'icon-building' },
-    { label: 'Price From', value: formatCurrency(project.priceRange.min), icon: 'icon-price' },
-    { label: 'Completion', value: project.completionDate, icon: 'icon-calendar' }
+  const totalUnitsValue = typeof project.totalUnits === 'number'
+    ? project.totalUnits.toLocaleString()
+    : String(project.totalUnits);
+
+  const statsData: { label: string; value: string; icon: string }[] = [
+    { label: 'Total Units', value: totalUnitsValue, icon: 'icon-building' },
   ];
+
+  if (project.buildings && project.buildings > 0) {
+    statsData.push({ label: 'Buildings', value: project.buildings.toString(), icon: 'icon-building' });
+  }
+
+  if (project.floors && project.floors > 0) {
+    statsData.push({ label: 'Floors', value: project.floors.toString(), icon: 'icon-building' });
+  }
+
+  statsData.push({ label: 'Price From', value: formatCurrency(project.priceRange.min), icon: 'icon-price' });
+
+  if (project.completionDate) {
+    statsData.push({ label: 'Completion', value: project.completionDate, icon: 'icon-calendar' });
+  }
 
   statsData.forEach(stat => {
     const statItem = createElement('div', 'project-hero__stat');
-    statItem.appendChild(createSVGUse(stat.icon));
     const statContent = createElement('div', 'project-hero__stat-content');
     const statValue = createElement('span', 'project-hero__stat-value', stat.value);
     const statLabel = createElement('span', 'project-hero__stat-label', stat.label);
@@ -878,16 +913,20 @@ export function renderComprehensiveProjectDetailPage(projectId: string): Documen
   factsCard.appendChild(factsTitle);
 
   const factsList = createElement('ul', 'project-overview__facts-list');
-  const facts = [
+  const facts: { label: string; value: string | undefined }[] = [
     { label: 'Project Name', value: project.name },
+    { label: 'Developer', value: project.developer },
     { label: 'Location', value: `${project.location.district}, ${project.location.city}` },
     { label: 'Status', value: project.status },
-    { label: 'Total Units', value: project.totalUnits.toLocaleString() },
+    { label: 'Total Units', value: totalUnitsValue },
+    { label: 'Buildings', value: project.buildings ? project.buildings.toString() : undefined },
+    { label: 'Floors', value: project.floors ? project.floors.toString() : undefined },
     { label: 'Price Range', value: formatPriceRange(project) },
     { label: 'Completion', value: project.completionDate }
   ];
 
   facts.forEach(fact => {
+    if (!fact.value) return; // gracefully skip missing data
     const li = createElement('li', 'project-overview__fact');
     const label = createElement('span', 'project-overview__fact-label', fact.label);
     const value = createElement('span', 'project-overview__fact-value', fact.value);
@@ -920,44 +959,48 @@ export function renderComprehensiveProjectDetailPage(projectId: string): Documen
   // SECTION 3: AMENITIES
   // ═══════════════════════════════════════════════════════════════════════════
 
-  const amenitiesSection = createElement('section', 'project-amenities');
-  const amenitiesContainer = createElement('div', 'container');
+  if (project.amenities && project.amenities.length > 0) {
+    const amenitiesSection = createElement('section', 'project-amenities');
+    const amenitiesContainer = createElement('div', 'container');
 
-  const amenitiesHeader = createElement('div', 'project-amenities__header');
-  const amenitiesTitle = createElement('h2', 'project-section-title', 'Amenities & Features');
-  const amenitiesSubtitle = createElement('p', 'project-section-subtitle',
-    `${project.name} offers world-class amenities designed for modern living`);
-  amenitiesHeader.appendChild(amenitiesTitle);
-  amenitiesHeader.appendChild(amenitiesSubtitle);
-  amenitiesContainer.appendChild(amenitiesHeader);
+    const amenitiesHeader = createElement('div', 'project-amenities__header');
+    const amenitiesTitle = createElement('h2', 'project-section-title', 'Amenities & Features');
+    const amenitiesSubtitle = createElement('p', 'project-section-subtitle',
+      `${project.amenities.length} world-class amenities designed for modern living`);
+    amenitiesHeader.appendChild(amenitiesTitle);
+    amenitiesHeader.appendChild(amenitiesSubtitle);
+    amenitiesContainer.appendChild(amenitiesHeader);
 
-  const categories = categorizeAmenities(project.amenities);
-  const amenitiesGrid = createElement('div', 'project-amenities__categories');
+    const categories = categorizeAmenities(project.amenities);
+    const amenitiesGrid = createElement('div', 'project-amenities__categories');
 
-  categories.forEach(category => {
-    const categoryCard = createElement('div', 'project-amenities__category');
+    categories.forEach(category => {
+      const categoryCard = createElement('div', 'project-amenities__category');
 
-    const categoryHeader = createElement('div', 'project-amenities__category-header');
-    categoryHeader.appendChild(createSVGUse(category.icon));
-    const categoryName = createElement('h3', 'project-amenities__category-name', category.name);
-    categoryHeader.appendChild(categoryName);
-    categoryCard.appendChild(categoryHeader);
+      const categoryHeader = createElement('div', 'project-amenities__category-header');
+      categoryHeader.appendChild(createSVGUse(category.icon));
+      const categoryName = createElement('h3', 'project-amenities__category-name', category.name);
+      categoryHeader.appendChild(categoryName);
+      const categoryCount = createElement('span', 'project-amenities__category-count', category.items.length.toString());
+      categoryHeader.appendChild(categoryCount);
+      categoryCard.appendChild(categoryHeader);
 
-    const itemsList = createElement('ul', 'project-amenities__items');
-    category.items.forEach(item => {
-      const li = createElement('li', 'project-amenities__item');
-      li.appendChild(createSVGUse(getAmenityIcon(item)));
-      li.appendChild(document.createTextNode(item));
-      itemsList.appendChild(li);
+      const itemsList = createElement('ul', 'project-amenities__items');
+      category.items.forEach(item => {
+        const li = createElement('li', 'project-amenities__item');
+        li.appendChild(createSVGUse(getAmenityIcon(item)));
+        li.appendChild(document.createTextNode(item));
+        itemsList.appendChild(li);
+      });
+      categoryCard.appendChild(itemsList);
+
+      amenitiesGrid.appendChild(categoryCard);
     });
-    categoryCard.appendChild(itemsList);
 
-    amenitiesGrid.appendChild(categoryCard);
-  });
-
-  amenitiesContainer.appendChild(amenitiesGrid);
-  amenitiesSection.appendChild(amenitiesContainer);
-  page.appendChild(amenitiesSection);
+    amenitiesContainer.appendChild(amenitiesGrid);
+    amenitiesSection.appendChild(amenitiesContainer);
+    page.appendChild(amenitiesSection);
+  }
 
   // ═══════════════════════════════════════════════════════════════════════════
   // SECTION 4: GALLERY

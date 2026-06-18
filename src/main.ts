@@ -33,6 +33,9 @@ import {
 // Import mobile-specific SEO schemas
 import { initMobileSchemas } from './seo/mobile-schema';
 
+// Import microinteractions (toast, CTA pulse, copy handlers, image fade-in)
+import { initMicrointeractions } from './utils/microinteractions';
+
 // Initialize critical performance optimizations immediately (before anything else)
 // 0. Initialize language/RTL direction early to prevent layout shift
 const currentLang = getCurrentLanguage();
@@ -181,6 +184,11 @@ document.addEventListener('DOMContentLoaded', () => {
   // Initialize mobile-specific SEO schemas
   scheduleIdleTask(() => {
     initMobileSchemas();
+  });
+
+  // Initialize microinteractions (CTA pulse, copy handlers, image fade-in)
+  scheduleIdleTask(() => {
+    initMicrointeractions();
   });
 });
 

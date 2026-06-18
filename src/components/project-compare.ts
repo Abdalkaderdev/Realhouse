@@ -26,7 +26,11 @@ export function getCompareProjectIds(): string[] {
 }
 
 export function setCompareProjectIds(ids: string[]): void {
-  localStorage.setItem(STORAGE_KEY, JSON.stringify(ids));
+  try {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(ids));
+  } catch (e) {
+    console.error('ProjectCompare: failed to persist compare ids', e);
+  }
   updateProjectComparisonBar();
   updateProjectCompareButtons();
 }

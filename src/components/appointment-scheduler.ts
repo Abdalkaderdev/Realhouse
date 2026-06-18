@@ -108,10 +108,17 @@ function getStoredAppointments(): Appointment[] {
 }
 
 // Save appointment to localStorage
-function saveAppointment(appointment: Appointment): void {
+// Returns false if persistence fails (quota exceeded, private browsing, etc.)
+function saveAppointment(appointment: Appointment): boolean {
   const appointments = getStoredAppointments();
   appointments.push(appointment);
-  localStorage.setItem('rh-appointments', JSON.stringify(appointments));
+  try {
+    localStorage.setItem('rh-appointments', JSON.stringify(appointments));
+    return true;
+  } catch (e) {
+    console.error('AppointmentScheduler: failed to persist appointment', e);
+    return false;
+  }
 }
 
 // Generate unique ID
@@ -334,9 +341,18 @@ export function createAppointmentScheduler(property: Property): HTMLElement {
 
   // Error message container
   const formError = createElement('div', 'appointment-form__error');
+  formError.id = 'appointment-form-error';
   formError.setAttribute('role', 'alert');
   formError.setAttribute('aria-live', 'polite');
   form.appendChild(formError);
+
+  // Link inputs to the shared error region for screen readers
+  nameInput.setAttribute('aria-describedby', 'appointment-form-error');
+  emailInput.setAttribute('aria-describedby', 'appointment-form-error');
+  phoneInput.setAttribute('aria-describedby', 'appointment-form-error');
+  nameInput.setAttribute('aria-required', 'true');
+  emailInput.setAttribute('aria-required', 'true');
+  phoneInput.setAttribute('aria-required', 'true');
 
   const submitBtn = createElement('button', 'btn btn--primary btn--full', t('appointment.confirmAppointment'));
   submitBtn.type = 'submit';
@@ -562,8 +578,12 @@ export function createAppointmentScheduler(property: Property): HTMLElement {
       createdAt: new Date().toISOString()
     };
 
-    // Save to localStorage
-    saveAppointment(appointment);
+    // Save to localStorage — if persistence fails, tell the user instead of
+    // showing a misleading "confirmed" screen for an appointment we did not save.
+    if (!saveAppointment(appointment)) {
+      formError.textContent = t('appointment.saveFailed') || 'Unable to save your appointment. Please try again or contact us directly.';
+      return;
+    }
 
     // Update confirmation details using safe DOM methods
     while (confirmationDetails.firstChild) {
@@ -592,11 +612,45 @@ export function createAppointmentScheduler(property: Property): HTMLElement {
     goToStep(4);
   }
 
+  // Remember the trigger element so we can restore focus on close (WCAG 2.4.3)
+  const triggerElement = document.activeElement as HTMLElement | null;
+
+  // Handle escape key + focus trap (WCAG 2.1.2 / 2.4.3)
+  const handleKeyDown = (e: KeyboardEvent) => {
+    if (e.key === 'Escape') {
+      closeModal();
+      return;
+    }
+    if (e.key === 'Tab') {
+      const focusables = modal.querySelectorAll<HTMLElement>(
+        'a[href], button:not([disabled]), input:not([disabled]):not([type="hidden"]), select:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex="-1"])'
+      );
+      // Filter to currently visible (offsetParent !== null) inside the active step
+      const visible = Array.from(focusables).filter(el => el.offsetParent !== null);
+      if (visible.length === 0) return;
+      const first = visible[0];
+      const last = visible[visible.length - 1];
+      const active = document.activeElement as HTMLElement | null;
+      if (e.shiftKey && active === first) {
+        e.preventDefault();
+        last.focus();
+      } else if (!e.shiftKey && active === last) {
+        e.preventDefault();
+        first.focus();
+      }
+    }
+  };
+
   // Close modal
   function closeModal() {
     modal.classList.remove('appointment-modal--active');
+    document.removeEventListener('keydown', handleKeyDown);
     setTimeout(() => {
       modal.remove();
+      // Restore focus to opener (WCAG 2.4.3)
+      if (triggerElement && typeof triggerElement.focus === 'function') {
+        try { triggerElement.focus({ preventScroll: true }); } catch { /* noop */ }
+      }
     }, 300);
     document.body.style.overflow = '';
   }
@@ -608,15 +662,13 @@ export function createAppointmentScheduler(property: Property): HTMLElement {
   requestAnimationFrame(() => {
     modal.classList.add('appointment-modal--active');
     document.body.style.overflow = 'hidden';
+    // Move focus into the modal (close button) so screen readers anchor here (WCAG 2.4.3)
+    const initialTarget = modal.querySelector<HTMLElement>('.appointment-modal__close');
+    if (initialTarget) {
+      try { initialTarget.focus({ preventScroll: true }); } catch { /* noop */ }
+    }
   });
 
-  // Handle escape key
-  const handleKeyDown = (e: KeyboardEvent) => {
-    if (e.key === 'Escape') {
-      closeModal();
-      document.removeEventListener('keydown', handleKeyDown);
-    }
-  };
   document.addEventListener('keydown', handleKeyDown);
 
   return modal;

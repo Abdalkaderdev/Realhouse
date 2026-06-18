@@ -5,6 +5,7 @@
 
 import { getShareUrl } from '../seo/social';
 import { t } from '../i18n';
+import { toast } from '../utils/toast';
 
 // =============================================================================
 // Types
@@ -322,6 +323,7 @@ function handleShare(
     // Copy to clipboard
     navigator.clipboard.writeText(config.url).then(() => {
       showCopyFeedback(button);
+      toast.success('Link copied to clipboard', { duration: 2200 });
     }).catch(() => {
       // Fallback for older browsers
       const textArea = document.createElement('textarea');
@@ -333,8 +335,10 @@ function handleShare(
       try {
         document.execCommand('copy');
         showCopyFeedback(button);
+        toast.success('Link copied to clipboard', { duration: 2200 });
       } catch (err) {
         console.error('Failed to copy:', err);
+        toast.error('Could not copy link');
       }
       document.body.removeChild(textArea);
     });

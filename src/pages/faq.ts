@@ -890,132 +890,343 @@ export function createFAQSection(category: FAQCategory): HTMLElement {
 // MAIN FAQ PAGE RENDERER
 // ═══════════════════════════════════════════════════════════════════════════
 
+// ─── Popular questions: hand-picked top performers ────────────────────────
+function getPopularFAQs(): Array<{ faq: FAQ; categoryId: string; categoryTitle: string }> {
+  const picks: Array<[string, number]> = [
+    ['buying', 1],      // Can foreigners buy property in Kurdistan
+    ['buying', 2],      // Average property price
+    ['investment', 0],  // Is Erbil real estate a good investment
+    ['legal', 0],       // Legal requirements for foreigners
+    ['financing', 1],   // Payment options
+  ];
+  return picks.map(([catId, idx]) => {
+    const cat = faqCategories.find(c => c.id === catId)!;
+    return { faq: cat.faqs[idx], categoryId: cat.id, categoryTitle: cat.title };
+  });
+}
+
+// ─── Inject JSON-LD FAQ schema into <head> ────────────────────────────────
+function injectFAQSchema(): void {
+  const existing = document.getElementById('faq-page-jsonld');
+  if (existing) existing.remove();
+  const all = getAllFAQs();
+  const schema = {
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    'mainEntity': all.map(f => ({
+      '@type': 'Question',
+      'name': f.question,
+      'acceptedAnswer': { '@type': 'Answer', 'text': f.answer }
+    }))
+  };
+  const script = document.createElement('script');
+  script.type = 'application/ld+json';
+  script.id = 'faq-page-jsonld';
+  script.textContent = JSON.stringify(schema);
+  document.head.appendChild(script);
+}
+
 export function renderComprehensiveFAQPage(): DocumentFragment {
   const fragment = document.createDocumentFragment();
+  injectFAQSchema();
 
   const page = createElement('div', 'faq-page faq-page--comprehensive');
-  const container = createElement('div', 'container');
 
-  // Hero Header
-  const header = createElement('div', 'faq-page__header');
+  // ─── HERO ──────────────────────────────────────────────────────────────
+  const hero = createElement('section', 'faq-page__hero');
+  const heroInner = createElement('div', 'faq-page__hero-inner container');
+
+  const eyebrow = createElement('div', 'faq-page__eyebrow');
+  const eyebrowDot = createElement('span', 'faq-page__eyebrow-dot');
+  const eyebrowText = createElement('span', undefined, 'Knowledge Library');
+  eyebrow.appendChild(eyebrowDot);
+  eyebrow.appendChild(eyebrowText);
+  heroInner.appendChild(eyebrow);
 
   const title = createElement('h1', 'faq-page__title');
-  title.textContent = 'Real Estate Erbil FAQ — ';
-  const em = createElement('em', undefined, 'Property Erbil Questions');
+  title.textContent = 'Frequently Asked ';
+  const em = createElement('em', undefined, 'Questions');
   title.appendChild(em);
-  header.appendChild(title);
+  heroInner.appendChild(title);
 
-  const subtitle = createElement('p', 'faq-page__subtitle', 'Find answers about houses for sale Erbil, apartments Erbil Iraq, villas Erbil Iraq, and luxury homes Kurdistan. Best real estate agent Erbil guidance to buy house Erbil in the Erbil property market. Real estate Kurdistan expertise.');
-  header.appendChild(subtitle);
+  const subtitle = createElement('p', 'faq-page__subtitle',
+    'Everything you need to know about buying, selling, renting and investing in Erbil real estate. Search 90+ expert answers or browse by topic.'
+  );
+  heroInner.appendChild(subtitle);
 
-  // Search box
+  // Prominent search
   const searchWrapper = createElement('div', 'faq-page__search');
   const searchIcon = createElement('span', 'faq-page__search-icon');
-  searchIcon.appendChild(createSVG(['M11 11m-8 0a8 8 0 1 0 16 0a8 8 0 1 0-16 0', 'M21 21l-4.35-4.35']));
+  searchIcon.appendChild(createSVG([
+    'M11 11m-8 0a8 8 0 1 0 16 0a8 8 0 1 0-16 0',
+    'M21 21l-4.35-4.35'
+  ]));
   searchWrapper.appendChild(searchIcon);
 
   const searchInput = createElement('input', 'faq-page__search-input');
-  searchInput.type = 'text';
-  searchInput.placeholder = t('faqPage.searchPlaceholder');
-  searchInput.setAttribute('aria-label', t('faqPage.searchAriaLabel'));
+  searchInput.type = 'search';
+  searchInput.placeholder = t('faqPage.searchPlaceholder') || 'Search questions, e.g. "foreigners buy property"…';
+  searchInput.setAttribute('aria-label', t('faqPage.searchAriaLabel') || 'Search FAQs');
+  searchInput.setAttribute('autocomplete', 'off');
   searchWrapper.appendChild(searchInput);
-  header.appendChild(searchWrapper);
 
-  container.appendChild(header);
+  const clearBtn = createElement('button', 'faq-page__search-clear') as HTMLButtonElement;
+  clearBtn.type = 'button';
+  clearBtn.setAttribute('aria-label', 'Clear search');
+  clearBtn.appendChild(createSVG(['M18 6L6 18', 'M6 6l12 12']));
+  clearBtn.hidden = true;
+  searchWrapper.appendChild(clearBtn);
+  heroInner.appendChild(searchWrapper);
 
-  // Category Navigation
-  const nav = createElement('nav', 'faq-page__nav');
-  nav.setAttribute('aria-label', 'FAQ Categories');
-
-  const navList = createElement('ul', 'faq-page__nav-list');
-  faqCategories.forEach(category => {
-    const navItem = createElement('li', 'faq-page__nav-item');
-    const navLink = createElement('a', 'faq-page__nav-link');
-    navLink.href = `#faq-${category.id}`;
-    navLink.textContent = category.title;
-    navLink.addEventListener('click', (e) => {
-      e.preventDefault();
-      const target = document.getElementById(`faq-${category.id}`);
-      if (target) {
-        target.scrollIntoView({ behavior: 'smooth', block: 'start' });
-      }
-    });
-    navItem.appendChild(navLink);
-    navList.appendChild(navItem);
-  });
-  nav.appendChild(navList);
-  container.appendChild(nav);
-
-  // FAQ Count Badge
-  const countBadge = createElement('div', 'faq-page__count');
+  // Search status / result counter
+  const searchStatus = createElement('div', 'faq-page__status');
+  searchStatus.setAttribute('role', 'status');
+  searchStatus.setAttribute('aria-live', 'polite');
   const totalFAQs = getAllFAQs().length;
-  const countNumber = createElement('span', 'faq-page__count-number', `${totalFAQs}+`);
-  const countText = createElement('span', 'faq-page__count-text', t('faqPage.questionsAnswered'));
-  countBadge.appendChild(countNumber);
-  countBadge.appendChild(countText);
-  container.appendChild(countBadge);
+  searchStatus.textContent = `${totalFAQs} questions, ${faqCategories.length} categories`;
+  heroInner.appendChild(searchStatus);
 
-  // All FAQ Sections
+  hero.appendChild(heroInner);
+  page.appendChild(hero);
+
+  const container = createElement('div', 'container');
+
+  // ─── CATEGORY CHIP FILTERS ─────────────────────────────────────────────
+  const filterBar = createElement('div', 'faq-page__categories');
+  filterBar.setAttribute('role', 'tablist');
+  filterBar.setAttribute('aria-label', 'Filter by category');
+
+  const chips: HTMLButtonElement[] = [];
+
+  const makeChip = (label: string, value: string, count: number): HTMLButtonElement => {
+    const chip = createElement('button', 'faq-chip') as HTMLButtonElement;
+    chip.type = 'button';
+    chip.dataset.category = value;
+    chip.setAttribute('role', 'tab');
+    chip.setAttribute('aria-selected', value === 'all' ? 'true' : 'false');
+    const chipLabel = createElement('span', 'faq-chip__label', label);
+    const chipCount = createElement('span', 'faq-chip__count', String(count));
+    chip.appendChild(chipLabel);
+    chip.appendChild(chipCount);
+    if (value === 'all') chip.classList.add('is-active');
+    chips.push(chip);
+    return chip;
+  };
+
+  filterBar.appendChild(makeChip('All', 'all', totalFAQs));
+  faqCategories.forEach(cat => {
+    filterBar.appendChild(makeChip(cat.title, cat.id, cat.faqs.length));
+  });
+  container.appendChild(filterBar);
+
+  // ─── POPULAR QUESTIONS ─────────────────────────────────────────────────
+  const popularSection = createElement('section', 'faq-page__popular');
+  const popularHeader = createElement('div', 'faq-page__popular-header');
+  const popStar = createElement('span', 'faq-page__popular-star');
+  popStar.appendChild(createSVG(['M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z']));
+  popularHeader.appendChild(popStar);
+  const popTitle = createElement('h2', 'faq-page__popular-title', 'Popular Questions');
+  popularHeader.appendChild(popTitle);
+  popularSection.appendChild(popularHeader);
+
+  const popularGrid = createElement('div', 'faq-page__popular-grid');
+  getPopularFAQs().forEach((entry, idx) => {
+    const card = createElement('a', 'faq-popular-card') as HTMLAnchorElement;
+    card.href = `#faq-${entry.categoryId}`;
+    card.addEventListener('click', (e) => {
+      e.preventDefault();
+      // Activate "All" chip, jump to category, expand the question
+      chips.forEach(c => {
+        c.classList.toggle('is-active', c.dataset.category === 'all');
+        c.setAttribute('aria-selected', c.dataset.category === 'all' ? 'true' : 'false');
+      });
+      applyFilter('all');
+      const target = document.getElementById(`faq-${entry.categoryId}`);
+      target?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      // Find & expand the matching question
+      window.setTimeout(() => {
+        const buttons = target?.querySelectorAll<HTMLButtonElement>('.faq-item__question');
+        buttons?.forEach(btn => {
+          const txt = btn.querySelector('.faq-item__question-text')?.textContent ?? '';
+          if (txt === entry.faq.question && btn.getAttribute('aria-expanded') !== 'true') {
+            btn.click();
+          }
+        });
+      }, 450);
+    });
+    const idxBadge = createElement('span', 'faq-popular-card__num', String(idx + 1).padStart(2, '0'));
+    const cardCat = createElement('span', 'faq-popular-card__cat', entry.categoryTitle);
+    const cardQ = createElement('h3', 'faq-popular-card__q', entry.faq.question);
+    const cardArrow = createElement('span', 'faq-popular-card__arrow');
+    cardArrow.appendChild(createSVG(['M7 17L17 7', 'M7 7h10v10']));
+    card.appendChild(idxBadge);
+    card.appendChild(cardCat);
+    card.appendChild(cardQ);
+    card.appendChild(cardArrow);
+    popularGrid.appendChild(card);
+  });
+  popularSection.appendChild(popularGrid);
+  container.appendChild(popularSection);
+
+  // ─── ALL CATEGORIES & ACCORDIONS ───────────────────────────────────────
+  const browseHeader = createElement('div', 'faq-page__browse-header');
+  const browseTitle = createElement('h2', 'faq-page__browse-title', 'Browse All Topics');
+  const browseRule = createElement('span', 'faq-page__browse-rule');
+  browseHeader.appendChild(browseTitle);
+  browseHeader.appendChild(browseRule);
+  container.appendChild(browseHeader);
+
   const sectionsWrapper = createElement('div', 'faq-page__sections');
   sectionsWrapper.id = 'faq-sections';
 
   faqCategories.forEach(category => {
-    sectionsWrapper.appendChild(createFAQSection(category));
+    const section = createFAQSection(category);
+    section.dataset.category = category.id;
+    // Add numbered badges to items in this section
+    const items = section.querySelectorAll<HTMLElement>('.faq-item');
+    items.forEach((item, i) => {
+      const q = item.querySelector('.faq-item__question');
+      if (!q) return;
+      const num = createElement('span', 'faq-item__num', String(i + 1).padStart(2, '0'));
+      q.insertBefore(num, q.firstChild);
+    });
+    sectionsWrapper.appendChild(section);
   });
-
   container.appendChild(sectionsWrapper);
 
-  // Search functionality
-  searchInput.addEventListener('input', () => {
-    const query = searchInput.value.toLowerCase().trim();
-    const allItems = sectionsWrapper.querySelectorAll('.faq-item');
-    const allSections = sectionsWrapper.querySelectorAll('.faq-section');
+  // ─── NO RESULTS PLACEHOLDER ────────────────────────────────────────────
+  const noResults = createElement('div', 'faq-page__no-results');
+  noResults.hidden = true;
+  const noResIcon = createElement('div', 'faq-page__no-results-icon');
+  noResIcon.appendChild(createSVG(['M11 11m-8 0a8 8 0 1 0 16 0a8 8 0 1 0-16 0', 'M21 21l-4.35-4.35']));
+  const noResTitle = createElement('h3', 'faq-page__no-results-title', 'No matching questions');
+  const noResText = createElement('p', 'faq-page__no-results-text',
+    'Try a different search term or browse all topics. Our team is ready to answer directly.'
+  );
+  noResults.appendChild(noResIcon);
+  noResults.appendChild(noResTitle);
+  noResults.appendChild(noResText);
+  sectionsWrapper.appendChild(noResults);
 
-    if (query === '') {
-      // Show all
-      allItems.forEach(item => {
-        (item as HTMLElement).style.display = '';
-      });
-      allSections.forEach(section => {
-        (section as HTMLElement).style.display = '';
-      });
-      return;
-    }
+  // ─── FILTERING LOGIC ───────────────────────────────────────────────────
+  let activeCategory = 'all';
+  let activeQuery = '';
 
-    // Filter items
-    allItems.forEach(item => {
-      const questionText = item.querySelector('.faq-item__question-text')?.textContent?.toLowerCase() || '';
-      const answerText = item.querySelector('.faq-item__answer-content')?.textContent?.toLowerCase() || '';
-      const matches = questionText.includes(query) || answerText.includes(query);
-      (item as HTMLElement).style.display = matches ? '' : 'none';
+  const applyFilter = (category: string = activeCategory, query: string = activeQuery) => {
+    activeCategory = category;
+    activeQuery = query.toLowerCase().trim();
+
+    const sections = sectionsWrapper.querySelectorAll<HTMLElement>('.faq-section');
+    let totalMatches = 0;
+
+    sections.forEach(section => {
+      const inCategory = activeCategory === 'all' || section.dataset.category === activeCategory;
+      let sectionMatches = 0;
+      const items = section.querySelectorAll<HTMLElement>('.faq-item');
+      items.forEach(item => {
+        const qText = item.querySelector('.faq-item__question-text')?.textContent?.toLowerCase() ?? '';
+        const aText = item.querySelector('.faq-item__answer-content')?.textContent?.toLowerCase() ?? '';
+        const queryMatch = activeQuery === '' || qText.includes(activeQuery) || aText.includes(activeQuery);
+        const visible = inCategory && queryMatch;
+        item.style.display = visible ? '' : 'none';
+        if (visible) sectionMatches++;
+      });
+      section.style.display = sectionMatches > 0 ? '' : 'none';
+      totalMatches += sectionMatches;
     });
 
-    // Hide sections with no visible items
-    allSections.forEach(section => {
-      const visibleItems = section.querySelectorAll('.faq-item:not([style*="display: none"])');
-      (section as HTMLElement).style.display = visibleItems.length > 0 ? '' : 'none';
+    // Hide popular section when actively filtering or searching
+    const filtering = activeCategory !== 'all' || activeQuery !== '';
+    popularSection.style.display = filtering ? 'none' : '';
+    browseHeader.style.display = filtering ? 'none' : '';
+
+    // Update status
+    if (activeQuery) {
+      searchStatus.textContent = totalMatches === 0
+        ? `No matches for "${query}"`
+        : `${totalMatches} result${totalMatches === 1 ? '' : 's'} for "${query}"`;
+    } else if (activeCategory !== 'all') {
+      const cat = faqCategories.find(c => c.id === activeCategory);
+      searchStatus.textContent = `${totalMatches} questions in ${cat?.title ?? ''}`;
+    } else {
+      searchStatus.textContent = `${totalFAQs} questions, ${faqCategories.length} categories`;
+    }
+
+    noResults.hidden = totalMatches > 0;
+  };
+
+  // Chip click handlers
+  chips.forEach(chip => {
+    chip.addEventListener('click', () => {
+      const value = chip.dataset.category!;
+      chips.forEach(c => {
+        const isActive = c === chip;
+        c.classList.toggle('is-active', isActive);
+        c.setAttribute('aria-selected', isActive ? 'true' : 'false');
+      });
+      applyFilter(value, activeQuery);
     });
   });
 
-  // Contact CTA
-  const cta = createElement('div', 'faq-page__cta');
+  // Debounced search
+  let searchTimer: number | undefined;
+  searchInput.addEventListener('input', () => {
+    clearBtn.hidden = searchInput.value.length === 0;
+    window.clearTimeout(searchTimer);
+    searchTimer = window.setTimeout(() => {
+      applyFilter(activeCategory, searchInput.value);
+    }, 200);
+  });
+  clearBtn.addEventListener('click', () => {
+    searchInput.value = '';
+    clearBtn.hidden = true;
+    applyFilter(activeCategory, '');
+    searchInput.focus();
+  });
+
+  // ─── CTA ───────────────────────────────────────────────────────────────
+  const cta = createElement('section', 'faq-page__cta');
   const ctaContent = createElement('div', 'faq-page__cta-content');
 
-  const ctaTitle = createElement('h3', 'faq-page__cta-title', t('faqPage.stillHaveQuestions'));
-  const ctaText = createElement('p', 'faq-page__cta-text', t('faqPage.expertTeamReady'));
+  const ctaEyebrow = createElement('div', 'faq-page__cta-eyebrow', 'Personal Assistance');
+  const ctaTitle = createElement('h2', 'faq-page__cta-title', t('faqPage.stillHaveQuestions') || 'Still have questions?');
+  const ctaText = createElement('p', 'faq-page__cta-text',
+    t('faqPage.expertTeamReady') || 'Our specialists are ready to answer in English, Arabic or Kurdish — usually within minutes.'
+  );
 
   const ctaActions = createElement('div', 'faq-page__cta-actions');
 
-  const ctaBtn = createElement('a', 'btn btn--primary', t('common.contactUs'));
+  const ctaBtn = createElement('a', 'btn btn--primary faq-page__cta-btn', t('common.contactUs') || 'Contact Us') as HTMLAnchorElement;
   ctaBtn.href = '/contact';
   ctaBtn.setAttribute('data-route', '');
 
-  const ctaPhone = createElement('a', 'btn btn--outline faq-page__cta-phone', '+964 750 792 2138');
+  const ctaPhone = createElement('a', 'btn btn--outline faq-page__cta-phone') as HTMLAnchorElement;
   ctaPhone.href = 'tel:+9647507922138';
+  const phoneIcon = createElement('span', 'faq-page__cta-icon');
+  phoneIcon.appendChild(createSVG(['M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.37 1.9.72 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.91.35 1.85.59 2.81.72A2 2 0 0 1 22 16.92z']));
+  ctaPhone.appendChild(phoneIcon);
+  ctaPhone.appendChild(document.createTextNode('+964 750 792 2138'));
+
+  const ctaWa = createElement('a', 'btn faq-page__cta-whatsapp') as HTMLAnchorElement;
+  ctaWa.href = 'https://wa.me/9647507922138?text=Hi%20Real%20House%2C%20I%20have%20a%20question%20about%20property%20in%20Erbil.';
+  ctaWa.target = '_blank';
+  ctaWa.rel = 'noopener noreferrer';
+  const waIcon = createElement('span', 'faq-page__cta-icon');
+  const waSvg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+  waSvg.setAttribute('viewBox', '0 0 24 24');
+  waSvg.setAttribute('fill', 'currentColor');
+  const waPath = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+  waPath.setAttribute('d', 'M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.71.306 1.263.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z');
+  waSvg.appendChild(waPath);
+  waIcon.appendChild(waSvg);
+  ctaWa.appendChild(waIcon);
+  ctaWa.appendChild(document.createTextNode('WhatsApp'));
 
   ctaActions.appendChild(ctaBtn);
   ctaActions.appendChild(ctaPhone);
+  ctaActions.appendChild(ctaWa);
 
+  ctaContent.appendChild(ctaEyebrow);
   ctaContent.appendChild(ctaTitle);
   ctaContent.appendChild(ctaText);
   ctaContent.appendChild(ctaActions);

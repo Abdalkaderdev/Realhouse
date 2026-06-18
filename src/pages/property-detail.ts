@@ -32,6 +32,7 @@ import { createPrintButton } from '../components/print-property';
 import { createVideoTourSection } from '../components/video-tour';
 import { trackPropertyView } from '../components/recently-viewed';
 import { createWishlistButton } from '../components/wishlist';
+import { submitInquiry } from '../services/api';
 import { t } from '../i18n';
 
 gsap.registerPlugin(ScrollTrigger);
@@ -507,6 +508,19 @@ export function renderPropertyDetailPage(slug: string): DocumentFragment {
   fullscreenBtn.appendChild(createExpandSVG());
   mainImageWrapper.appendChild(fullscreenBtn);
 
+  // Image counter overlay (e.g. "1 / 12")
+  if (property.images.length > 1) {
+    const imageCounter = createElement('div', 'property-detail__image-counter');
+    imageCounter.id = 'property-image-counter';
+    imageCounter.textContent = `1 / ${property.images.length}`;
+    mainImageWrapper.appendChild(imageCounter);
+  }
+
+  // Bottom gradient overlay for badge legibility
+  const heroGradient = createElement('div', 'property-detail__gallery-gradient');
+  heroGradient.setAttribute('aria-hidden', 'true');
+  mainImageWrapper.appendChild(heroGradient);
+
   // Wishlist/Save button
   const wishlistBtn = createWishlistButton(property.id);
   wishlistBtn.classList.add('property-detail__wishlist-btn');
@@ -880,72 +894,186 @@ export function renderPropertyDetailPage(slug: string): DocumentFragment {
   hiddenProperty.value = property.title;
   form.appendChild(hiddenProperty);
 
-  // Name field
-  const nameGroup = createElement('div', 'property-detail__form-group');
-  const nameLabel = createElement('label', 'property-detail__form-label', t('propertyDetail.yourName'));
-  nameLabel.setAttribute('for', 'inquiry-name');
-  nameGroup.appendChild(nameLabel);
-  const nameInput = createElement('input', 'property-detail__form-input');
-  nameInput.type = 'text';
-  nameInput.id = 'inquiry-name';
-  nameInput.name = 'name';
-  nameInput.required = true;
-  nameInput.placeholder = t('propertyDetail.enterYourName');
-  nameGroup.appendChild(nameInput);
-  form.appendChild(nameGroup);
+  // Helper to build a field group with label + required indicator + error slot
+  // Inline validation reduces submission failures and "what went wrong" toasts.
+  const buildField = (opts: {
+    id: string;
+    name: string;
+    labelText: string;
+    type: string;
+    required: boolean;
+    placeholder?: string;
+    textarea?: boolean;
+    autocomplete?: string;
+    inputmode?: string;
+  }) => {
+    const group = createElement('div', 'property-detail__form-group');
+    const label = createElement('label', 'property-detail__form-label');
+    label.setAttribute('for', opts.id);
+    label.appendChild(document.createTextNode(opts.labelText));
+    if (opts.required) {
+      const req = createElement('span', 'property-detail__form-required', '*');
+      req.setAttribute('aria-hidden', 'true');
+      label.appendChild(document.createTextNode(' '));
+      label.appendChild(req);
+    }
+    group.appendChild(label);
 
-  // Email field
-  const emailGroup = createElement('div', 'property-detail__form-group');
-  const emailLabel = createElement('label', 'property-detail__form-label', t('propertyDetail.emailAddress'));
-  emailLabel.setAttribute('for', 'inquiry-email');
-  emailGroup.appendChild(emailLabel);
-  const emailInput = createElement('input', 'property-detail__form-input');
-  emailInput.type = 'email';
-  emailInput.id = 'inquiry-email';
-  emailInput.name = 'email';
-  emailInput.required = true;
-  emailInput.placeholder = t('propertyDetail.enterYourEmail');
-  emailGroup.appendChild(emailInput);
-  form.appendChild(emailGroup);
+    const input = opts.textarea
+      ? (createElement('textarea', 'property-detail__form-textarea') as HTMLTextAreaElement)
+      : (createElement('input', 'property-detail__form-input') as HTMLInputElement);
 
-  // Phone field
-  const phoneGroup = createElement('div', 'property-detail__form-group');
-  const phoneLabel = createElement('label', 'property-detail__form-label', t('propertyDetail.phoneNumber'));
-  phoneLabel.setAttribute('for', 'inquiry-phone');
-  phoneGroup.appendChild(phoneLabel);
-  const phoneInput = createElement('input', 'property-detail__form-input');
-  phoneInput.type = 'tel';
-  phoneInput.id = 'inquiry-phone';
-  phoneInput.name = 'phone';
-  phoneInput.placeholder = t('propertyDetail.phonePlaceholder');
-  phoneGroup.appendChild(phoneInput);
-  form.appendChild(phoneGroup);
+    if (!opts.textarea) (input as HTMLInputElement).type = opts.type;
+    input.id = opts.id;
+    input.name = opts.name;
+    if (opts.required) input.required = true;
+    if (opts.placeholder) (input as HTMLInputElement | HTMLTextAreaElement).placeholder = opts.placeholder;
+    if (opts.autocomplete) input.setAttribute('autocomplete', opts.autocomplete);
+    if (opts.inputmode) input.setAttribute('inputmode', opts.inputmode);
+    if (opts.textarea) (input as HTMLTextAreaElement).rows = 4;
+    group.appendChild(input);
 
-  // Message field
-  const messageGroup = createElement('div', 'property-detail__form-group');
-  const messageLabel = createElement('label', 'property-detail__form-label', t('propertyDetail.message'));
-  messageLabel.setAttribute('for', 'inquiry-message');
-  messageGroup.appendChild(messageLabel);
-  const messageTextarea = createElement('textarea', 'property-detail__form-textarea');
-  messageTextarea.id = 'inquiry-message';
-  messageTextarea.name = 'message';
-  messageTextarea.rows = 4;
-  messageTextarea.placeholder = t('propertyDetail.messagePlaceholder');
-  messageGroup.appendChild(messageTextarea);
-  form.appendChild(messageGroup);
+    const errorEl = createElement('span', 'property-detail__form-error');
+    errorEl.id = `${opts.id}-error`;
+    errorEl.setAttribute('role', 'alert');
+    errorEl.setAttribute('aria-live', 'polite');
+    group.appendChild(errorEl);
 
-  // Submit button
+    input.setAttribute('aria-describedby', errorEl.id);
+
+    // Inline blur validation (avoid on-keystroke noise)
+    input.addEventListener('blur', () => {
+      validateField(input as HTMLInputElement | HTMLTextAreaElement, errorEl, opts);
+    });
+    input.addEventListener('input', () => {
+      if (input.getAttribute('aria-invalid') === 'true') {
+        validateField(input as HTMLInputElement | HTMLTextAreaElement, errorEl, opts);
+      }
+    });
+
+    return { group, input, errorEl };
+  };
+
+  const validateField = (
+    input: HTMLInputElement | HTMLTextAreaElement,
+    errorEl: HTMLElement,
+    opts: { required: boolean; type: string }
+  ): boolean => {
+    const value = input.value.trim();
+    let msg = '';
+    if (opts.required && !value) {
+      msg = t('propertyDetail.fieldRequired') || 'This field is required.';
+    } else if (opts.type === 'email' && value && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value)) {
+      msg = t('propertyDetail.invalidEmail') || 'Please enter a valid email address.';
+    } else if (opts.type === 'tel' && value && !/^[+\d\s\-()]{6,}$/.test(value)) {
+      msg = t('propertyDetail.invalidPhone') || 'Please enter a valid phone number.';
+    }
+    if (msg) {
+      errorEl.textContent = msg;
+      input.setAttribute('aria-invalid', 'true');
+      input.classList.add('property-detail__form-input--error');
+      return false;
+    }
+    errorEl.textContent = '';
+    input.removeAttribute('aria-invalid');
+    input.classList.remove('property-detail__form-input--error');
+    return true;
+  };
+
+  const nameField = buildField({
+    id: 'inquiry-name', name: 'name', labelText: t('propertyDetail.yourName'),
+    type: 'text', required: true, placeholder: t('propertyDetail.enterYourName'),
+    autocomplete: 'name'
+  });
+  form.appendChild(nameField.group);
+
+  const emailField = buildField({
+    id: 'inquiry-email', name: 'email', labelText: t('propertyDetail.emailAddress'),
+    type: 'email', required: true, placeholder: t('propertyDetail.enterYourEmail'),
+    autocomplete: 'email', inputmode: 'email'
+  });
+  form.appendChild(emailField.group);
+
+  const phoneField = buildField({
+    id: 'inquiry-phone', name: 'phone', labelText: t('propertyDetail.phoneNumber'),
+    type: 'tel', required: false, placeholder: t('propertyDetail.phonePlaceholder'),
+    autocomplete: 'tel', inputmode: 'tel'
+  });
+  form.appendChild(phoneField.group);
+
+  const messageField = buildField({
+    id: 'inquiry-message', name: 'message', labelText: t('propertyDetail.message'),
+    type: 'text', required: false, placeholder: t('propertyDetail.messagePlaceholder'),
+    textarea: true
+  });
+  form.appendChild(messageField.group);
+
+  // Submit button (gold = brand primary action for forms)
   const submitBtn = createElement('button', 'btn btn--gold property-detail__form-submit');
   submitBtn.type = 'submit';
   submitBtn.textContent = t('propertyDetail.sendInquiry');
   form.appendChild(submitBtn);
 
-  form.addEventListener('submit', (e) => {
+  // Trust microcopy below submit reduces perceived risk and abandonment.
+  const trustNote = createElement('p', 'property-detail__form-trust');
+  trustNote.textContent = t('propertyDetail.responseTimePromise') || 'We usually reply within 1 hour. Your details are kept private.';
+  form.appendChild(trustNote);
+
+  form.addEventListener('submit', async (e) => {
     e.preventDefault();
+
+    // Re-validate each field; focus first invalid one for accessibility
+    const checks = [
+      { field: nameField, opts: { required: true, type: 'text' } },
+      { field: emailField, opts: { required: true, type: 'email' } },
+      { field: phoneField, opts: { required: false, type: 'tel' } },
+      { field: messageField, opts: { required: false, type: 'text' } }
+    ];
+    let firstInvalid: HTMLElement | null = null;
+    for (const c of checks) {
+      const ok = validateField(c.field.input as HTMLInputElement | HTMLTextAreaElement, c.field.errorEl, c.opts);
+      if (!ok && !firstInvalid) firstInvalid = c.field.input as HTMLElement;
+    }
+    if (firstInvalid) {
+      (firstInvalid as HTMLInputElement).focus();
+      return;
+    }
+
     const formData = new FormData(form);
-    console.log('Inquiry submitted:', Object.fromEntries(formData));
-    showToast(t('propertyDetail.thankYouMessage'));
-    form.reset();
+    const name = (formData.get('name') as string || '').trim();
+    const email = (formData.get('email') as string || '').trim();
+    const phone = (formData.get('phone') as string || '').trim();
+    const message = (formData.get('message') as string || '').trim();
+
+    // Disable submit while sending so users get feedback and can't double-submit
+    submitBtn.disabled = true;
+    const originalLabel = submitBtn.textContent;
+    submitBtn.textContent = t('propertyDetail.sendingInquiry') || 'Sending...';
+
+    try {
+      const result = await submitInquiry({
+        name,
+        email,
+        phone,
+        message,
+        propertyId: property.id,
+        propertyTitle: property.title
+      });
+
+      if (result.success) {
+        showToast(result.message || t('propertyDetail.thankYouMessage'));
+        form.reset();
+      } else {
+        // Surface backend-provided error so the user knows submission failed
+        showToast(result.message || 'Unable to send your inquiry. Please try again or contact us directly.');
+      }
+    } catch (error) {
+      console.error('Property inquiry submission failed:', error);
+      showToast('Network error. Please check your connection and try again.');
+    } finally {
+      submitBtn.disabled = false;
+      submitBtn.textContent = originalLabel;
+    }
   });
 
   contactCard.appendChild(form);
@@ -1102,6 +1230,23 @@ export function renderPropertyDetailPage(slug: string): DocumentFragment {
 
   const ctaActions = createElement('div', 'property-detail__floating-cta__actions');
 
+  // Inquire — scrolls to the inquiry form; serves users who prefer text/email
+  // over voice or chat. Without this, the only sticky CTA paths are WhatsApp + Call.
+  const ctaInquire = createElement('button', 'property-detail__floating-cta__btn property-detail__floating-cta__btn--inquire');
+  (ctaInquire as HTMLButtonElement).type = 'button';
+  ctaInquire.setAttribute('aria-label', 'Scroll to inquiry form');
+  ctaInquire.innerHTML = '<svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M4 4h16v12H5.17L4 17.17V4z"/></svg>';
+  ctaInquire.appendChild(document.createTextNode(t('propertyDetail.inquire') || 'Inquire'));
+  ctaInquire.addEventListener('click', () => {
+    const formEl = document.getElementById('property-inquiry-form');
+    if (formEl) {
+      formEl.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      const firstInput = formEl.querySelector('input, textarea') as HTMLElement | null;
+      if (firstInput) setTimeout(() => firstInput.focus(), 400);
+    }
+  });
+  ctaActions.appendChild(ctaInquire);
+
   const ctaWhatsApp = createElement('a', 'property-detail__floating-cta__btn property-detail__floating-cta__btn--whatsapp');
   ctaWhatsApp.href = `https://wa.me/9647507922138?text=${encodeURIComponent(`Hi, I'm interested in: ${property.title}`)}`;
   ctaWhatsApp.target = '_blank';
@@ -1114,8 +1259,6 @@ export function renderPropertyDetailPage(slug: string): DocumentFragment {
   ctaCall.href = 'tel:+9647507922138';
   ctaCall.setAttribute('aria-label', 'Call now');
   ctaCall.appendChild(createPhoneSVG());
-  const ctaCallText = document.createTextNode(t('propertyDetail.callNow'));
-  ctaCall.appendChild(ctaCallText);
   ctaActions.appendChild(ctaCall);
 
   ctaContent.appendChild(ctaActions);
@@ -1169,6 +1312,8 @@ function initializeGallery(property: Property): void {
 
   let currentIndex = 0;
 
+  const counter = document.getElementById('property-image-counter');
+
   const updateMainImage = (index: number) => {
     if (index < 0) index = property.images.length - 1;
     if (index >= property.images.length) index = 0;
@@ -1177,6 +1322,11 @@ function initializeGallery(property: Property): void {
     mainImage.src = property.images[index];
     mainImage.srcset = generateSrcSet(property.images[index], [600, 900, 1200, 1600]);
     mainImage.alt = `${property.title} - Image ${index + 1} of ${property.images.length}`;
+    if (counter) counter.textContent = `${index + 1} / ${property.images.length}`;
+    // Subtle fade transition on image change
+    mainImage.classList.remove('property-detail__main-image--fade-in');
+    void mainImage.offsetWidth;
+    mainImage.classList.add('property-detail__main-image--fade-in');
 
     thumbnails.forEach((thumb, i) => {
       thumb.classList.toggle('active', i === index);
@@ -1287,6 +1437,35 @@ function openFullscreenGallery(property: Property, startIndex: number): void {
 // ─── Animations ──────────────────────────────────────────────────────────────
 
 function initializeAnimations(): void {
+  // Hero entrance: title block + gallery rise
+  const heroHeader = document.querySelector('.property-detail__header');
+  const priceBlock = document.querySelector('.property-detail__price-section');
+  const galleryMain = document.querySelector('.property-detail__gallery-main');
+
+  if (galleryMain) {
+    gsap.fromTo(
+      galleryMain,
+      { opacity: 0, y: 20 },
+      { opacity: 1, y: 0, duration: 0.7, ease: 'power3.out' }
+    );
+  }
+
+  if (heroHeader) {
+    gsap.fromTo(
+      heroHeader.children,
+      { opacity: 0, y: 16 },
+      { opacity: 1, y: 0, duration: 0.5, ease: 'power2.out', stagger: 0.08, delay: 0.15 }
+    );
+  }
+
+  if (priceBlock) {
+    gsap.fromTo(
+      priceBlock,
+      { opacity: 0, y: 16 },
+      { opacity: 1, y: 0, duration: 0.5, ease: 'power2.out', delay: 0.4 }
+    );
+  }
+
   const sections = document.querySelectorAll('.property-detail__specs, .property-detail__description, .property-detail__features, .property-detail__map');
 
   sections.forEach(section => {
@@ -1300,12 +1479,33 @@ function initializeAnimations(): void {
         ease: 'power2.out',
         scrollTrigger: {
           trigger: section,
-          start: 'top 80%',
+          start: 'top 85%',
           toggleActions: 'play none none none'
         }
       }
     );
   });
+
+  // Stagger spec items
+  const specItems = document.querySelectorAll('.property-detail__spec-item');
+  if (specItems.length > 0) {
+    gsap.fromTo(
+      specItems,
+      { opacity: 0, y: 12 },
+      {
+        opacity: 1,
+        y: 0,
+        duration: 0.4,
+        ease: 'power2.out',
+        stagger: 0.05,
+        scrollTrigger: {
+          trigger: specItems[0],
+          start: 'top 90%',
+          toggleActions: 'play none none none'
+        }
+      }
+    );
+  }
 
   const cards = document.querySelectorAll('.property-detail__similar-card');
   cards.forEach((card, index) => {

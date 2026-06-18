@@ -425,6 +425,9 @@ export function openFloorPlanModal(options: FloorPlanModalOptions): void {
     }
   };
 
+  // Capture the trigger element so we can restore focus on close (WCAG 2.4.3)
+  const triggerElement = document.activeElement as HTMLElement | null;
+
   // Close handlers - clean up all document-level listeners
   const closeModal = () => {
     document.removeEventListener('mousemove', handleMouseMove);
@@ -437,6 +440,10 @@ export function openFloorPlanModal(options: FloorPlanModalOptions): void {
     setTimeout(() => {
       overlay.remove();
       document.body.style.overflow = '';
+      // Restore focus to the element that opened the modal (WCAG 2.4.3)
+      if (triggerElement && typeof triggerElement.focus === 'function') {
+        try { triggerElement.focus({ preventScroll: true }); } catch { /* noop */ }
+      }
     }, 300);
   };
 
