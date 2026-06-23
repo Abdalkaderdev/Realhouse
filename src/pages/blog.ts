@@ -30,6 +30,7 @@ import {
   IMAGE_DIMENSIONS
 } from '../utils/image-seo';
 import { createBlogShareButtons } from '../components/share-buttons';
+import { createEmptyState } from '../utils/ui-states';
 import {
   createBreadcrumbs,
   injectBreadcrumbSchema,
@@ -243,19 +244,123 @@ function filterAndRenderPosts(grid: HTMLElement): void {
 
   // Render posts or empty state
   if (filteredPosts.length === 0) {
-    const emptyState = createElement('div', 'blog-page__empty');
-    const emptyIcon = createSVGUse('icon-area');
-    emptyState.appendChild(emptyIcon);
-    const emptyTitle = createElement('h3', undefined, t('blog.noArticlesFound'));
-    emptyState.appendChild(emptyTitle);
-    const emptyText = createElement('p', undefined, t('blog.tryAdjustingFilters'));
-    emptyState.appendChild(emptyText);
+    const emptyState = createEmptyState({
+      icon: 'search',
+      title: t('blog.noArticlesFound'),
+      description: t('blog.tryAdjustingFilters'),
+      primaryAction: {
+        label: t('blog.filterAll'),
+        onClick: () => {
+          currentBlogFilterState = { category: 'All', searchQuery: '' };
+          const searchInputs = document.querySelectorAll<HTMLInputElement>(
+            '.blog-page__search-input, .blog-hero__search-input'
+          );
+          searchInputs.forEach((i) => (i.value = ''));
+          document.querySelectorAll('.blog-page__category-btn').forEach((b) => {
+            b.classList.toggle('active', b.getAttribute('data-category') === 'All');
+          });
+          filterAndRenderPosts(grid);
+        }
+      },
+      className: 'blog-page__empty'
+    });
     grid.appendChild(emptyState);
   } else {
     filteredPosts.forEach(post => {
       grid.appendChild(createBlogCard(post));
     });
   }
+}
+
+// ─── Cinematic Hero ────────────────────────────────────────────────────────
+function createBlogHero(): HTMLElement {
+  const hero = createElement('section', 'blog-hero');
+
+  // Decorative atmospheric layers
+  const grain = createElement('div', 'blog-hero__grain');
+  hero.appendChild(grain);
+  const aurora = createElement('div', 'blog-hero__aurora');
+  hero.appendChild(aurora);
+
+  const heroInner = createElement('div', 'blog-hero__inner');
+
+  // Issue badge
+  const issue = createElement('div', 'blog-hero__issue');
+  const issueLabel = createElement('span', 'blog-hero__issue-label', 'The Journal');
+  issue.appendChild(issueLabel);
+  const issueDot = createElement('span', 'blog-hero__issue-dot');
+  issue.appendChild(issueDot);
+  const issueNum = createElement('span', 'blog-hero__issue-num', `Vol. ${blogPosts.length.toString().padStart(2, '0')}`);
+  issue.appendChild(issueNum);
+  heroInner.appendChild(issue);
+
+  // Eyebrow
+  const eyebrow = createElement('div', 'blog-hero__eyebrow', 'Erbil · Kurdistan · Property Intelligence');
+  heroInner.appendChild(eyebrow);
+
+  // Title — split for animation
+  const title = createElement('h1', 'blog-hero__title');
+  const titlePrefix = createElement('span', 'blog-hero__title-line');
+  titlePrefix.textContent = t('blog.heroTitle');
+  title.appendChild(titlePrefix);
+  const em = createElement('em', 'blog-hero__title-em', t('blog.heroTitleEmphasis'));
+  title.appendChild(em);
+  const titleSuffix = createElement('span', 'blog-hero__title-line', t('blog.heroSubtitle'));
+  title.appendChild(titleSuffix);
+  heroInner.appendChild(title);
+
+  const subtitle = createElement('p', 'blog-hero__subtitle', t('blog.pageSubtitle'));
+  heroInner.appendChild(subtitle);
+
+  // Hero search
+  const searchForm = createElement('form', 'blog-hero__search');
+  searchForm.setAttribute('role', 'search');
+  searchForm.addEventListener('submit', (e) => e.preventDefault());
+  const searchIcon = createSVGUse('icon-search');
+  searchIcon.classList.add('blog-hero__search-icon');
+  searchForm.appendChild(searchIcon);
+  const searchInput = createElement('input', 'blog-hero__search-input');
+  searchInput.type = 'text';
+  searchInput.placeholder = t('blog.searchPlaceholder');
+  searchInput.setAttribute('aria-label', t('blog.searchAriaLabel'));
+  searchInput.id = 'blog-hero-search';
+  searchForm.appendChild(searchInput);
+  const searchKbd = createElement('kbd', 'blog-hero__search-kbd', '↵');
+  searchForm.appendChild(searchKbd);
+  heroInner.appendChild(searchForm);
+
+  // Quick category chips
+  const quick = createElement('div', 'blog-hero__quick');
+  const quickLabel = createElement('span', 'blog-hero__quick-label', 'Popular');
+  quick.appendChild(quickLabel);
+  ['Market Trends', 'Investment', 'Neighborhoods', 'Buying Guide'].forEach(cat => {
+    const chip = createElement('button', 'blog-hero__quick-chip', cat);
+    chip.setAttribute('data-category', cat);
+    chip.setAttribute('type', 'button');
+    quick.appendChild(chip);
+  });
+  heroInner.appendChild(quick);
+
+  // Stats strip
+  const stats = createElement('div', 'blog-hero__stats');
+  const totalReads = blogPosts.reduce((acc, p) => acc + p.readTime, 0);
+  const statsData = [
+    { num: blogPosts.length.toString(), label: 'Articles' },
+    { num: blogCategories.length.toString(), label: 'Topics' },
+    { num: `${totalReads}m`, label: 'Of Reading' }
+  ];
+  statsData.forEach(s => {
+    const stat = createElement('div', 'blog-hero__stat');
+    const n = createElement('div', 'blog-hero__stat-num', s.num);
+    stat.appendChild(n);
+    const l = createElement('div', 'blog-hero__stat-label', s.label);
+    stat.appendChild(l);
+    stats.appendChild(stat);
+  });
+  heroInner.appendChild(stats);
+
+  hero.appendChild(heroInner);
+  return hero;
 }
 
 // ─── Blog Listing Page ─────────────────────────────────────────────────────
@@ -269,31 +374,30 @@ export function renderBlogPage(): DocumentFragment {
   };
 
   const page = createElement('div', 'blog-page');
+
+  // Breadcrumbs above hero
+  const breadcrumbContainer = createElement('div', 'container');
+  const breadcrumbItems = getBlogBreadcrumbs();
+  breadcrumbContainer.appendChild(createBreadcrumbs(breadcrumbItems));
+  injectBreadcrumbSchema(breadcrumbItems);
+  page.appendChild(breadcrumbContainer);
+
+  // Cinematic hero
+  page.appendChild(createBlogHero());
+
   const container = createElement('div', 'container');
 
-  // Breadcrumbs
-  const breadcrumbItems = getBlogBreadcrumbs();
-  container.appendChild(createBreadcrumbs(breadcrumbItems));
-  injectBreadcrumbSchema(breadcrumbItems);
-
-  // Header section with SEO keywords
-  const header = createElement('div', 'blog-page__header');
-  const title = createElement('h1', 'blog-page__title');
-  title.textContent = t('blog.heroTitle');
-  const em = createElement('em', undefined, t('blog.heroTitleEmphasis'));
-  title.appendChild(em);
-  title.appendChild(document.createTextNode(t('blog.heroSubtitle')));
-  header.appendChild(title);
-  const subtitle = createElement('p', 'blog-page__subtitle', t('blog.pageSubtitle'));
-  header.appendChild(subtitle);
-  container.appendChild(header);
-
-  // Featured posts section
+  // Featured posts section — editorial layout
   const featuredPosts = getFeaturedPosts();
   if (featuredPosts.length > 0) {
     const featuredSection = createElement('section', 'blog-page__featured');
+
+    const featuredHeader = createElement('div', 'blog-page__section-head');
+    const featuredKicker = createElement('span', 'blog-page__kicker', '— Editor’s Selection');
+    featuredHeader.appendChild(featuredKicker);
     const featuredTitle = createElement('h2', 'blog-page__section-title', t('blog.featuredArticles'));
-    featuredSection.appendChild(featuredTitle);
+    featuredHeader.appendChild(featuredTitle);
+    featuredSection.appendChild(featuredHeader);
 
     const featuredGrid = createElement('div', 'blog-page__featured-grid');
     featuredPosts.slice(0, 3).forEach((post, index) => {
@@ -304,11 +408,14 @@ export function renderBlogPage(): DocumentFragment {
     container.appendChild(featuredSection);
   }
 
-  // Filters section
+  // Sticky filters bar
   const filters = createElement('div', 'blog-page__filters');
 
   // Search input
   const searchWrapper = createElement('div', 'blog-page__search');
+  const searchIcon = createSVGUse('icon-search');
+  searchIcon.classList.add('blog-page__search-icon');
+  searchWrapper.appendChild(searchIcon);
   const searchInput = createElement('input', 'blog-page__search-input');
   searchInput.type = 'text';
   searchInput.placeholder = t('blog.searchPlaceholder');
@@ -316,15 +423,25 @@ export function renderBlogPage(): DocumentFragment {
   searchWrapper.appendChild(searchInput);
   filters.appendChild(searchWrapper);
 
-  // Category filters
+  // Category filters with count badges
   const categoryWrapper = createElement('div', 'blog-page__categories');
-  const allBtn = createElement('button', 'blog-page__category-btn active', t('blog.filterAll'));
+  const allBtn = createElement('button', 'blog-page__category-btn active');
   allBtn.setAttribute('data-category', 'All');
+  const allLabel = createElement('span', 'blog-page__category-label', t('blog.filterAll'));
+  allBtn.appendChild(allLabel);
+  const allCount = createElement('span', 'blog-page__category-count', blogPosts.length.toString());
+  allBtn.appendChild(allCount);
   categoryWrapper.appendChild(allBtn);
 
   blogCategories.forEach(category => {
-    const btn = createElement('button', 'blog-page__category-btn', category);
+    const count = blogPosts.filter(p => p.category === category).length;
+    if (count === 0) return;
+    const btn = createElement('button', 'blog-page__category-btn');
     btn.setAttribute('data-category', category);
+    const lbl = createElement('span', 'blog-page__category-label', category);
+    btn.appendChild(lbl);
+    const cnt = createElement('span', 'blog-page__category-count', count.toString());
+    btn.appendChild(cnt);
     categoryWrapper.appendChild(btn);
   });
   filters.appendChild(categoryWrapper);
@@ -333,8 +450,12 @@ export function renderBlogPage(): DocumentFragment {
 
   // All posts section
   const postsSection = createElement('section', 'blog-page__posts');
+  const postsHeader = createElement('div', 'blog-page__section-head');
+  const postsKicker = createElement('span', 'blog-page__kicker', '— The Library');
+  postsHeader.appendChild(postsKicker);
   const postsTitle = createElement('h2', 'blog-page__section-title', t('blog.allArticles'));
-  postsSection.appendChild(postsTitle);
+  postsHeader.appendChild(postsTitle);
+  postsSection.appendChild(postsHeader);
 
   const postsGrid = createElement('div', 'blog-page__grid');
   blogPosts.forEach(post => {
@@ -344,18 +465,37 @@ export function renderBlogPage(): DocumentFragment {
 
   container.appendChild(postsSection);
 
-  // Newsletter CTA
-  const ctaSection = createElement('section', 'blog-page__cta');
-  const ctaContent = createElement('div', 'blog-page__cta-content');
-  const ctaTitle = createElement('h2', 'blog-page__cta-title', t('blog.stayUpdated'));
-  ctaContent.appendChild(ctaTitle);
-  const ctaText = createElement('p', 'blog-page__cta-text', t('blog.stayUpdatedText'));
-  ctaContent.appendChild(ctaText);
-  const ctaBtn = createElement('a', 'btn btn--primary', t('common.contactUs'));
-  ctaBtn.href = '/contact';
-  ctaBtn.setAttribute('data-route', '');
-  ctaContent.appendChild(ctaBtn);
-  ctaSection.appendChild(ctaContent);
+  // Newsletter signup — editorial style
+  const ctaSection = createElement('section', 'blog-newsletter');
+  const ctaInner = createElement('div', 'blog-newsletter__inner');
+  const ctaKicker = createElement('div', 'blog-newsletter__kicker', '— Dispatch');
+  ctaInner.appendChild(ctaKicker);
+  const ctaTitle = createElement('h2', 'blog-newsletter__title');
+  ctaTitle.textContent = 'The ';
+  const ctaEm = createElement('em', undefined, 'Erbil Brief');
+  ctaTitle.appendChild(ctaEm);
+  ctaInner.appendChild(ctaTitle);
+  const ctaText = createElement('p', 'blog-newsletter__text', t('blog.stayUpdatedText'));
+  ctaInner.appendChild(ctaText);
+
+  const ctaForm = createElement('form', 'blog-newsletter__form');
+  ctaForm.addEventListener('submit', (e) => e.preventDefault());
+  const ctaEmail = createElement('input', 'blog-newsletter__input');
+  ctaEmail.type = 'email';
+  ctaEmail.placeholder = 'your@email.com';
+  ctaEmail.setAttribute('aria-label', 'Email address');
+  ctaForm.appendChild(ctaEmail);
+  const ctaSubmit = createElement('button', 'blog-newsletter__submit');
+  ctaSubmit.type = 'submit';
+  ctaSubmit.appendChild(document.createTextNode('Subscribe'));
+  ctaSubmit.appendChild(createSVGUse('icon-arrow-right'));
+  ctaForm.appendChild(ctaSubmit);
+  ctaInner.appendChild(ctaForm);
+
+  const ctaFine = createElement('p', 'blog-newsletter__fine', 'No spam. Unsubscribe any time. Twice-monthly intelligence on Erbil property.');
+  ctaInner.appendChild(ctaFine);
+
+  ctaSection.appendChild(ctaInner);
   container.appendChild(ctaSection);
 
   page.appendChild(container);
@@ -377,30 +517,68 @@ export function renderBlogPage(): DocumentFragment {
 
   // Add event listeners after DOM is ready
   setTimeout(() => {
+    const grid = document.querySelector('.blog-page__grid') as HTMLElement | null;
+    const filtersBar = document.querySelector('.blog-page__filters') as HTMLElement | null;
+
+    const setCategory = (cat: string): void => {
+      currentBlogFilterState.category = cat;
+      document.querySelectorAll('.blog-page__category-btn').forEach(b => {
+        b.classList.toggle('active', b.getAttribute('data-category') === cat);
+      });
+      if (grid) filterAndRenderPosts(grid);
+      // Smooth-scroll to results
+      const postsSection = document.querySelector('.blog-page__posts');
+      if (postsSection) postsSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    };
+
     // Category filter buttons
-    const categoryBtns = document.querySelectorAll('.blog-page__category-btn');
-    categoryBtns.forEach(btn => {
+    document.querySelectorAll('.blog-page__category-btn').forEach(btn => {
       btn.addEventListener('click', () => {
-        categoryBtns.forEach(b => b.classList.remove('active'));
-        btn.classList.add('active');
-        currentBlogFilterState.category = btn.getAttribute('data-category') || 'All';
-        const grid = document.querySelector('.blog-page__grid') as HTMLElement;
-        if (grid) filterAndRenderPosts(grid);
+        setCategory(btn.getAttribute('data-category') || 'All');
       });
     });
 
-    // Search input
-    const search = document.querySelector('.blog-page__search-input') as HTMLInputElement;
-    if (search) {
-      let debounceTimer: number;
-      search.addEventListener('input', () => {
-        clearTimeout(debounceTimer);
-        debounceTimer = window.setTimeout(() => {
-          currentBlogFilterState.searchQuery = search.value;
-          const grid = document.querySelector('.blog-page__grid') as HTMLElement;
-          if (grid) filterAndRenderPosts(grid);
-        }, 300);
+    // Hero quick-filter chips
+    document.querySelectorAll('.blog-hero__quick-chip').forEach(chip => {
+      chip.addEventListener('click', () => {
+        setCategory(chip.getAttribute('data-category') || 'All');
       });
+    });
+
+    // Filter-bar search
+    const search = document.querySelector('.blog-page__search-input') as HTMLInputElement | null;
+    const heroSearch = document.querySelector('.blog-hero__search-input') as HTMLInputElement | null;
+    let debounceTimer: number;
+    const onSearchInput = (value: string): void => {
+      clearTimeout(debounceTimer);
+      debounceTimer = window.setTimeout(() => {
+        currentBlogFilterState.searchQuery = value;
+        if (grid) filterAndRenderPosts(grid);
+      }, 250);
+    };
+
+    if (search) {
+      search.addEventListener('input', () => {
+        if (heroSearch) heroSearch.value = search.value;
+        onSearchInput(search.value);
+      });
+    }
+    if (heroSearch) {
+      heroSearch.addEventListener('input', () => {
+        if (search) search.value = heroSearch.value;
+        onSearchInput(heroSearch.value);
+      });
+    }
+
+    // Sticky search bar — toggle compact state on scroll
+    if (filtersBar) {
+      const onScroll = (): void => {
+        const rect = filtersBar.getBoundingClientRect();
+        // When the bar sticks to the top (its top is at/near 0), add a class
+        filtersBar.classList.toggle('is-stuck', rect.top <= 8);
+      };
+      window.addEventListener('scroll', onScroll, { passive: true });
+      onScroll();
     }
   }, 0);
 
@@ -438,7 +616,15 @@ export function renderBlogPostPage(slug: string): DocumentFragment {
   page.setAttribute('itemscope', '');
   page.setAttribute('itemtype', 'https://schema.org/BlogPosting');
 
-  // Hero section with SEO-optimized image wrapped in figure
+  // Reading progress bar (fixed at top)
+  const progress = createElement('div', 'blog-progress');
+  progress.setAttribute('role', 'progressbar');
+  progress.setAttribute('aria-label', 'Reading progress');
+  const progressBar = createElement('div', 'blog-progress__bar');
+  progress.appendChild(progressBar);
+  page.appendChild(progress);
+
+  // Hero section — cinematic with overlayed meta
   const hero = createElement('figure', 'blog-post-page__hero');
   const heroImage = createSEOImage({
     src: post.image,
@@ -455,6 +641,52 @@ export function renderBlogPostPage(slug: string): DocumentFragment {
   hero.appendChild(heroImage);
   const heroOverlay = createElement('div', 'blog-post-page__hero-overlay');
   hero.appendChild(heroOverlay);
+
+  // Hero content (overlayed on image)
+  const heroContent = createElement('div', 'blog-post-page__hero-content');
+  const heroContentInner = createElement('div', 'blog-post-page__hero-inner');
+
+  const heroCategory = createElement('a', 'blog-post-page__hero-category', post.category);
+  heroCategory.href = `/blog?category=${encodeURIComponent(post.category)}`;
+  heroCategory.setAttribute('data-route', '');
+  heroContentInner.appendChild(heroCategory);
+
+  const heroTitle = createElement('h1', 'blog-post-page__hero-title', post.title);
+  heroContentInner.appendChild(heroTitle);
+
+  const heroMeta = createElement('div', 'blog-post-page__hero-meta');
+  const heroAuthor = createElement('div', 'blog-post-page__hero-author');
+  const heroAuthorImg = createElement('img', 'blog-post-page__hero-author-img');
+  heroAuthorImg.src = post.author.image;
+  heroAuthorImg.alt = post.author.name;
+  heroAuthor.appendChild(heroAuthorImg);
+  const heroAuthorText = createElement('div', 'blog-post-page__hero-author-text');
+  const heroAuthorLabel = createElement('span', 'blog-post-page__hero-author-label', 'Written by');
+  heroAuthorText.appendChild(heroAuthorLabel);
+  const heroAuthorName = createElement('span', 'blog-post-page__hero-author-name', post.author.name);
+  heroAuthorText.appendChild(heroAuthorName);
+  heroAuthor.appendChild(heroAuthorText);
+  heroMeta.appendChild(heroAuthor);
+
+  const heroDivider = createElement('span', 'blog-post-page__hero-divider');
+  heroMeta.appendChild(heroDivider);
+
+  const heroDate = document.createElement('time');
+  heroDate.className = 'blog-post-page__hero-date';
+  heroDate.setAttribute('datetime', new Date(post.date).toISOString());
+  heroDate.textContent = formatBlogDate(post.date);
+  heroMeta.appendChild(heroDate);
+
+  const heroDivider2 = createElement('span', 'blog-post-page__hero-divider');
+  heroMeta.appendChild(heroDivider2);
+
+  const heroRead = createElement('span', 'blog-post-page__hero-read', `${post.readTime} ${t('blog.minRead')}`);
+  heroMeta.appendChild(heroRead);
+
+  heroContentInner.appendChild(heroMeta);
+  heroContent.appendChild(heroContentInner);
+  hero.appendChild(heroContent);
+
   page.appendChild(hero);
 
   // Update meta tags for social sharing
@@ -525,7 +757,45 @@ export function renderBlogPostPage(slug: string): DocumentFragment {
   // Article content - safely parsed
   const articleContent = createElement('div', 'blog-post-page__content');
   articleContent.appendChild(parseArticleContent(post.content));
+
+  // Apply drop-cap to first paragraph & assign ids to headings for TOC
+  const firstP = articleContent.querySelector('p');
+  if (firstP && (firstP.textContent || '').trim().length > 30) {
+    firstP.classList.add('blog-post-page__content-lead');
+  }
+
+  const slugify = (s: string): string =>
+    s.toLowerCase()
+      .replace(/[^a-z0-9\s-]/g, '')
+      .trim()
+      .replace(/\s+/g, '-')
+      .slice(0, 60);
+
+  const tocEntries: Array<{ id: string; text: string; level: number }> = [];
+  articleContent.querySelectorAll('h2, h3').forEach((h, idx) => {
+    const text = (h.textContent || '').trim();
+    if (!text) return;
+    const id = `section-${slugify(text)}-${idx}`;
+    h.id = id;
+    tocEntries.push({ id, text, level: h.tagName === 'H2' ? 2 : 3 });
+  });
+
   article.appendChild(articleContent);
+
+  // Pull quote — inject after lead paragraph if a <strong> exists in a paragraph
+  // (Optional decorative element drawn from existing strong text in second paragraph)
+  const paragraphs = articleContent.querySelectorAll('p');
+  if (paragraphs.length >= 3) {
+    const strongInThird = paragraphs[2].querySelector('strong');
+    if (strongInThird && (strongInThird.textContent || '').length > 24) {
+      const pull = createElement('aside', 'blog-post-page__pullquote');
+      const pullText = createElement('p', 'blog-post-page__pullquote-text', strongInThird.textContent || '');
+      pull.appendChild(pullText);
+      const pullAttr = createElement('cite', 'blog-post-page__pullquote-cite', `— ${post.author.name}`);
+      pull.appendChild(pullAttr);
+      paragraphs[2].after(pull);
+    }
+  }
 
   // Tags
   const tagsSection = createElement('div', 'blog-post-page__tags');
@@ -551,6 +821,34 @@ export function renderBlogPostPage(slug: string): DocumentFragment {
 
   // Sidebar
   const sidebar = createElement('aside', 'blog-post-page__sidebar');
+
+  // Table of Contents — sticky on desktop, accordion on mobile
+  if (tocEntries.length > 1) {
+    const tocCard = createElement('details', 'blog-post-page__toc');
+    tocCard.setAttribute('open', '');
+    const tocSummary = document.createElement('summary');
+    tocSummary.className = 'blog-post-page__toc-summary';
+    const tocLabel = createElement('span', 'blog-post-page__toc-label', 'On this page');
+    tocSummary.appendChild(tocLabel);
+    const tocChevron = createSVGUse('icon-chevron-down');
+    tocChevron.classList.add('blog-post-page__toc-chevron');
+    tocSummary.appendChild(tocChevron);
+    tocCard.appendChild(tocSummary);
+
+    const tocList = createElement('ol', 'blog-post-page__toc-list');
+    tocEntries.forEach((entry, idx) => {
+      const li = createElement('li', `blog-post-page__toc-item blog-post-page__toc-item--l${entry.level}`);
+      const num = createElement('span', 'blog-post-page__toc-num', String(idx + 1).padStart(2, '0'));
+      li.appendChild(num);
+      const link = createElement('a', 'blog-post-page__toc-link', entry.text);
+      link.href = `#${entry.id}`;
+      link.setAttribute('data-toc-target', entry.id);
+      li.appendChild(link);
+      tocList.appendChild(li);
+    });
+    tocCard.appendChild(tocList);
+    sidebar.appendChild(tocCard);
+  }
 
   // Enhanced author bio card with E-E-A-T credentials
   const authorCard = createElement('div', 'blog-post-page__author-card');
@@ -689,6 +987,78 @@ export function renderBlogPostPage(slug: string): DocumentFragment {
     container.appendChild(contentLinks);
   }
 
+  // Continue Reading — next article CTA
+  const allPostsSorted = [...blogPosts].sort(
+    (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime()
+  );
+  const currentIdx = allPostsSorted.findIndex(p => p.id === post.id);
+  const nextPost = currentIdx >= 0
+    ? allPostsSorted[(currentIdx + 1) % allPostsSorted.length]
+    : null;
+
+  if (nextPost && nextPost.id !== post.id) {
+    const continueCta = createElement('aside', 'blog-continue');
+    const continueLink = createElement('a', 'blog-continue__link');
+    continueLink.href = `/blog/${nextPost.slug}`;
+    continueLink.setAttribute('data-route', '');
+
+    const continueText = createElement('div', 'blog-continue__text');
+    const continueKicker = createElement('span', 'blog-continue__kicker', 'Continue Reading →');
+    continueText.appendChild(continueKicker);
+    const continueCategory = createElement('span', 'blog-continue__category', nextPost.category);
+    continueText.appendChild(continueCategory);
+    const continueTitle = createElement('h3', 'blog-continue__title', nextPost.title);
+    continueText.appendChild(continueTitle);
+    const continueMeta = createElement('div', 'blog-continue__meta');
+    const continueDate = createElement('span', undefined, formatBlogDate(nextPost.date));
+    continueMeta.appendChild(continueDate);
+    const continueDot = createElement('span', 'blog-continue__dot', '·');
+    continueMeta.appendChild(continueDot);
+    const continueRead = createElement('span', undefined, `${nextPost.readTime} ${t('blog.minRead')}`);
+    continueMeta.appendChild(continueRead);
+    continueText.appendChild(continueMeta);
+    continueLink.appendChild(continueText);
+
+    const continueImageWrap = createElement('div', 'blog-continue__image-wrap');
+    const continueImg = createElement('img', 'blog-continue__image');
+    continueImg.src = nextPost.image;
+    continueImg.alt = nextPost.title;
+    continueImg.loading = 'lazy';
+    continueImageWrap.appendChild(continueImg);
+    continueLink.appendChild(continueImageWrap);
+
+    continueCta.appendChild(continueLink);
+    container.appendChild(continueCta);
+  }
+
+  // Newsletter signup — before footer
+  const newsletter = createElement('section', 'blog-newsletter blog-newsletter--post');
+  const nInner = createElement('div', 'blog-newsletter__inner');
+  const nKicker = createElement('div', 'blog-newsletter__kicker', '— Dispatch');
+  nInner.appendChild(nKicker);
+  const nTitle = createElement('h2', 'blog-newsletter__title');
+  nTitle.textContent = 'Never miss an ';
+  const nEm = createElement('em', undefined, 'edition');
+  nTitle.appendChild(nEm);
+  nInner.appendChild(nTitle);
+  const nText = createElement('p', 'blog-newsletter__text', 'Curated property intelligence for Erbil, delivered to your inbox twice a month.');
+  nInner.appendChild(nText);
+  const nForm = createElement('form', 'blog-newsletter__form');
+  nForm.addEventListener('submit', (e) => e.preventDefault());
+  const nEmail = createElement('input', 'blog-newsletter__input');
+  nEmail.type = 'email';
+  nEmail.placeholder = 'your@email.com';
+  nEmail.setAttribute('aria-label', 'Email address');
+  nForm.appendChild(nEmail);
+  const nSubmit = createElement('button', 'blog-newsletter__submit');
+  nSubmit.type = 'submit';
+  nSubmit.appendChild(document.createTextNode('Subscribe'));
+  nSubmit.appendChild(createSVGUse('icon-arrow-right'));
+  nForm.appendChild(nSubmit);
+  nInner.appendChild(nForm);
+  newsletter.appendChild(nInner);
+  container.appendChild(newsletter);
+
   // Back to blog
   const backSection = createElement('div', 'blog-post-page__back');
   const backLink = createElement('a', 'btn btn--ghost', t('blog.backToBlog'));
@@ -706,6 +1076,62 @@ export function renderBlogPostPage(slug: string): DocumentFragment {
   page.appendChild(youMayLikeSection);
 
   fragment.appendChild(page);
+
+  // Wire reading progress + TOC active state after DOM is mounted
+  setTimeout(() => {
+    const bar = document.querySelector('.blog-progress__bar') as HTMLElement | null;
+    const articleEl = document.querySelector('.blog-post-page__article') as HTMLElement | null;
+    if (bar && articleEl) {
+      const updateProgress = (): void => {
+        const rect = articleEl.getBoundingClientRect();
+        const total = articleEl.offsetHeight - window.innerHeight;
+        const scrolled = -rect.top;
+        const pct = total > 0 ? Math.max(0, Math.min(100, (scrolled / total) * 100)) : 0;
+        bar.style.width = `${pct}%`;
+      };
+      window.addEventListener('scroll', updateProgress, { passive: true });
+      window.addEventListener('resize', updateProgress);
+      updateProgress();
+    }
+
+    // TOC: highlight active section via IntersectionObserver
+    const tocLinks = Array.from(document.querySelectorAll<HTMLAnchorElement>('.blog-post-page__toc-link'));
+    if (tocLinks.length > 0 && 'IntersectionObserver' in window) {
+      const headingMap = new Map<string, HTMLAnchorElement>();
+      tocLinks.forEach(link => {
+        const target = link.getAttribute('data-toc-target');
+        if (target) headingMap.set(target, link);
+      });
+
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          const link = headingMap.get(entry.target.id);
+          if (!link) return;
+          if (entry.isIntersecting) {
+            tocLinks.forEach(l => l.classList.remove('is-active'));
+            link.classList.add('is-active');
+          }
+        });
+      }, { rootMargin: '-20% 0px -70% 0px' });
+
+      headingMap.forEach((_, id) => {
+        const el = document.getElementById(id);
+        if (el) observer.observe(el);
+      });
+
+      // Smooth scroll on click
+      tocLinks.forEach(link => {
+        link.addEventListener('click', (e) => {
+          const target = link.getAttribute('data-toc-target');
+          if (!target) return;
+          const el = document.getElementById(target);
+          if (!el) return;
+          e.preventDefault();
+          el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        });
+      });
+    }
+  }, 0);
 
   return fragment;
 }

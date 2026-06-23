@@ -137,6 +137,39 @@ function createTableOfContents(sections: GuideSection[]): HTMLElement {
   return toc;
 }
 
+// --- Styled Callout Box (Tip / Warning / Note / Pro Tip) ---
+type CalloutVariant = 'tip' | 'warning' | 'note' | 'pro-tip';
+
+function createCalloutBox(variant: CalloutVariant, title: string, items: string[]): HTMLElement {
+  const box = createElement('aside', `guide-callout guide-callout--${variant}`);
+  box.setAttribute('role', 'note');
+
+  const head = createElement('div', 'guide-callout__head');
+
+  const iconWrap = createElement('span', 'guide-callout__icon');
+  const iconMap: Record<CalloutVariant, string> = {
+    'tip': 'icon-check',
+    'warning': 'icon-warning',
+    'note': 'icon-info',
+    'pro-tip': 'icon-check'
+  };
+  iconWrap.appendChild(createSVGUse(iconMap[variant]));
+  head.appendChild(iconWrap);
+
+  const titleEl = createElement('h4', 'guide-callout__title', title);
+  head.appendChild(titleEl);
+
+  box.appendChild(head);
+
+  const list = createElement('ul', 'guide-callout__list');
+  items.forEach(text => {
+    const li = createElement('li', 'guide-callout__item', text);
+    list.appendChild(li);
+  });
+  box.appendChild(list);
+  return box;
+}
+
 // --- Guide Section Component ---
 function createGuideSection(section: GuideSection, index: number): HTMLElement {
   const sectionEl = createElement('section', 'guide-page__section');
@@ -152,41 +185,90 @@ function createGuideSection(section: GuideSection, index: number): HTMLElement {
   sectionContent.appendChild(parseGuideContent(section.content));
   sectionEl.appendChild(sectionContent);
 
-  // Tips
+  // Tips -> Pro Tip styled callout
   if (section.tips && section.tips.length > 0) {
-    const tipsBox = createElement('div', 'guide-page__tips');
-    const tipsTitle = createElement('h4', 'guide-page__tips-title');
-    tipsTitle.appendChild(createSVGUse('icon-check'));
-    tipsTitle.appendChild(document.createTextNode(' Pro Tips'));
-    tipsBox.appendChild(tipsTitle);
-
-    const tipsList = createElement('ul', 'guide-page__tips-list');
-    section.tips.forEach(tip => {
-      const tipItem = createElement('li', undefined, tip);
-      tipsList.appendChild(tipItem);
-    });
-    tipsBox.appendChild(tipsList);
-    sectionEl.appendChild(tipsBox);
+    sectionEl.appendChild(createCalloutBox('pro-tip', 'Pro Tip', section.tips));
   }
 
-  // Warnings
+  // Warnings -> Warning callout
   if (section.warnings && section.warnings.length > 0) {
-    const warningsBox = createElement('div', 'guide-page__warnings');
-    const warningsTitle = createElement('h4', 'guide-page__warnings-title');
-    warningsTitle.appendChild(createSVGUse('icon-warning'));
-    warningsTitle.appendChild(document.createTextNode(' Important'));
-    warningsBox.appendChild(warningsTitle);
-
-    const warningsList = createElement('ul', 'guide-page__warnings-list');
-    section.warnings.forEach(warning => {
-      const warningItem = createElement('li', undefined, warning);
-      warningsList.appendChild(warningItem);
-    });
-    warningsBox.appendChild(warningsList);
-    sectionEl.appendChild(warningsBox);
+    sectionEl.appendChild(createCalloutBox('warning', 'Important', section.warnings));
   }
 
   return sectionEl;
+}
+
+// --- Helpful Feedback Widget ---
+function createFeedbackWidget(guideSlug: string): HTMLElement {
+  const widget = createElement('section', 'guide-feedback');
+  widget.setAttribute('aria-label', 'Was this guide helpful?');
+
+  const title = createElement('h3', 'guide-feedback__title', 'Was this guide helpful?');
+  widget.appendChild(title);
+
+  const actions = createElement('div', 'guide-feedback__actions');
+
+  const yesBtn = createElement('button', 'guide-feedback__btn guide-feedback__btn--yes');
+  yesBtn.type = 'button';
+  yesBtn.setAttribute('aria-label', 'Yes, this guide was helpful');
+  yesBtn.appendChild(createSVG(['M7 10v12', 'M15 5.88L14 10h5.83a2 2 0 011.92 2.56l-2.33 8A2 2 0 0117.5 22H7V10l5-9 1 1 .88 3.88z']));
+  yesBtn.appendChild(document.createTextNode(' Yes'));
+
+  const noBtn = createElement('button', 'guide-feedback__btn guide-feedback__btn--no');
+  noBtn.type = 'button';
+  noBtn.setAttribute('aria-label', 'No, this guide was not helpful');
+  noBtn.appendChild(createSVG(['M17 14V2', 'M9 18.12L10 14H4.17a2 2 0 01-1.92-2.56l2.33-8A2 2 0 016.5 2H17v12l-5 9-1-1-1-3.88z']));
+  noBtn.appendChild(document.createTextNode(' No'));
+
+  const thanksMsg = createElement('p', 'guide-feedback__thanks', 'Thanks for your feedback!');
+  thanksMsg.hidden = true;
+
+  const followUp = createElement('div', 'guide-feedback__followup');
+  followUp.hidden = true;
+  const followLabel = createElement('label', 'guide-feedback__label', 'How can we improve?');
+  followLabel.htmlFor = `guide-feedback-text-${guideSlug}`;
+  const textarea = createElement('textarea', 'guide-feedback__textarea');
+  textarea.id = `guide-feedback-text-${guideSlug}`;
+  textarea.placeholder = 'Tell us what we missed...';
+  textarea.rows = 3;
+  const submitBtn = createElement('button', 'btn btn--primary btn--sm guide-feedback__submit', 'Send feedback');
+  submitBtn.type = 'button';
+  followUp.appendChild(followLabel);
+  followUp.appendChild(textarea);
+  followUp.appendChild(submitBtn);
+
+  yesBtn.addEventListener('click', () => {
+    actions.hidden = true;
+    thanksMsg.hidden = false;
+  });
+  noBtn.addEventListener('click', () => {
+    actions.hidden = true;
+    followUp.hidden = false;
+  });
+  submitBtn.addEventListener('click', () => {
+    followUp.hidden = true;
+    thanksMsg.hidden = false;
+  });
+
+  actions.appendChild(yesBtn);
+  actions.appendChild(noBtn);
+  widget.appendChild(actions);
+  widget.appendChild(followUp);
+  widget.appendChild(thanksMsg);
+  return widget;
+}
+
+// --- Download PDF Button (uses window.print as a PDF approximation) ---
+function createDownloadPdfButton(guide: Guide): HTMLElement {
+  const btn = createElement('button', 'guide-page__download-pdf btn btn--outline');
+  btn.type = 'button';
+  btn.setAttribute('aria-label', `Download ${guide.title} as PDF`);
+  btn.appendChild(createSVG(['M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4', 'M7 10l5 5 5-5', 'M12 15V3']));
+  btn.appendChild(document.createTextNode(' Download PDF'));
+  btn.addEventListener('click', () => {
+    window.print();
+  });
+  return btn;
 }
 
 // --- FAQ Accordion for Guide ---
@@ -381,10 +463,13 @@ export function renderGuidePage(slug: string): DocumentFragment {
   });
   article.appendChild(sectionsWrapper);
 
-  // FAQs
+  // FAQs (inline accordion)
   if (guide.faqs.length > 0) {
     article.appendChild(createGuideFAQ(guide.faqs));
   }
+
+  // Helpful Feedback Widget
+  article.appendChild(createFeedbackWidget(guide.slug));
 
   // Related Guides
   if (guide.relatedGuides.length > 0) {
@@ -396,10 +481,20 @@ export function renderGuidePage(slug: string): DocumentFragment {
   // Sidebar
   const sidebar = createElement('aside', 'guide-page__sidebar');
 
-  // Table of Contents (desktop)
+  // Table of Contents (desktop, sticky)
   const tocDesktop = createTableOfContents(guide.sections);
   tocDesktop.classList.add('guide-page__toc--desktop');
+  tocDesktop.classList.add('guide-page__toc--sticky');
   sidebar.appendChild(tocDesktop);
+
+  // Download PDF card
+  const pdfCard = createElement('div', 'guide-page__pdf-card');
+  const pdfTitle = createElement('h3', 'guide-page__pdf-title', 'Take it offline');
+  pdfCard.appendChild(pdfTitle);
+  const pdfText = createElement('p', 'guide-page__pdf-text', 'Download the full guide as a printable PDF.');
+  pdfCard.appendChild(pdfText);
+  pdfCard.appendChild(createDownloadPdfButton(guide));
+  sidebar.appendChild(pdfCard);
 
   // CTA Card
   const ctaCard = createElement('div', 'guide-page__cta-card');
@@ -564,13 +659,101 @@ export function setupGuidePageSEO(guide: Guide): void {
 // GUIDES LISTING PAGE (INDEX)
 // =============================================================================
 
+// Derive a category label and icon id from a guide slug
+type GuideCategory = 'Buying' | 'Investing' | 'Renting' | 'Resources';
+function getGuideCategory(guide: Guide): GuideCategory {
+  if (guide.slug.includes('buying') || guide.slug.includes('buyer')) return 'Buying';
+  if (guide.slug.includes('invest')) return 'Investing';
+  if (guide.slug.includes('rent')) return 'Renting';
+  return 'Resources';
+}
+function getGuideCategoryIcon(category: GuideCategory): SVGSVGElement {
+  switch (category) {
+    case 'Buying':
+      return createSVG(['M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6']);
+    case 'Investing':
+      return createSVG(['M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z']);
+    case 'Renting':
+      return createSVG(['M3 9.5L12 3l9 6.5V21a1 1 0 01-1 1h-5v-6h-6v6H4a1 1 0 01-1-1V9.5z']);
+    default:
+      return createSVG(['M8 14v3m4-3v3m4-3v3M3 21h18M3 10h18M3 7l9-4 9 4M4 10h16v11H4V10z']);
+  }
+}
+function getGuideDifficulty(guide: Guide): 'Beginner' | 'Intermediate' | 'Advanced' {
+  if (guide.readTime <= 7) return 'Beginner';
+  if (guide.readTime <= 12) return 'Intermediate';
+  return 'Advanced';
+}
+function getGuideViews(guide: Guide): number {
+  // deterministic pseudo-views based on slug length
+  let h = 0;
+  for (const ch of guide.slug) h = (h * 31 + ch.charCodeAt(0)) >>> 0;
+  return 1200 + (h % 8800);
+}
+function formatViews(n: number): string {
+  return n >= 1000 ? `${(n / 1000).toFixed(1)}k` : n.toString();
+}
+
+function buildGuideCard(guide: Guide, opts: { featured?: boolean } = {}): HTMLElement {
+  const card = createElement('a', `guides-listing__card${opts.featured ? ' guides-listing__card--featured' : ''}`);
+  card.href = `/guides/${guide.slug}`;
+  card.setAttribute('data-route', '');
+
+  const category = getGuideCategory(guide);
+  card.setAttribute('data-category', category);
+
+  // Icon
+  const cardIcon = createElement('div', 'guides-listing__card-icon');
+  cardIcon.appendChild(getGuideCategoryIcon(category));
+  card.appendChild(cardIcon);
+
+  // Content
+  const cardContent = createElement('div', 'guides-listing__card-content');
+
+  // Top row: category chip
+  const chipRow = createElement('div', 'guides-listing__card-chips');
+  const catChip = createElement('span', 'guides-listing__card-chip guides-listing__card-chip--category', category);
+  chipRow.appendChild(catChip);
+  const diff = getGuideDifficulty(guide);
+  const diffChip = createElement('span', `guides-listing__card-chip guides-listing__card-chip--difficulty guides-listing__card-chip--${diff.toLowerCase()}`, diff);
+  chipRow.appendChild(diffChip);
+  cardContent.appendChild(chipRow);
+
+  const cardTitle = createElement('h2', 'guides-listing__card-title', guide.title);
+  cardContent.appendChild(cardTitle);
+
+  const cardDescription = createElement('p', 'guides-listing__card-description', guide.introduction.substring(0, 150) + '...');
+  cardContent.appendChild(cardDescription);
+
+  const cardMeta = createElement('div', 'guides-listing__card-meta');
+  const metaTime = createElement('span', 'guides-listing__card-meta-item');
+  metaTime.appendChild(createSVGUse('icon-clock'));
+  metaTime.appendChild(document.createTextNode(`${guide.readTime} min read`));
+  cardMeta.appendChild(metaTime);
+
+  const metaViews = createElement('span', 'guides-listing__card-meta-item');
+  metaViews.appendChild(createSVG(['M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z', 'M12 15a3 3 0 100-6 3 3 0 000 6z']));
+  metaViews.appendChild(document.createTextNode(`${formatViews(getGuideViews(guide))} views`));
+  cardMeta.appendChild(metaViews);
+
+  cardContent.appendChild(cardMeta);
+
+  const readMore = createElement('span', 'guides-listing__card-link');
+  readMore.textContent = opts.featured ? 'Read Featured Guide' : 'Read Guide';
+  readMore.appendChild(createSVGUse('icon-arrow-right'));
+  cardContent.appendChild(readMore);
+
+  card.appendChild(cardContent);
+  return card;
+}
+
 export function renderGuidesListingPage(): DocumentFragment {
   const fragment = document.createDocumentFragment();
 
   const page = createElement('div', 'guides-listing-page');
 
-  // Hero Section
-  const hero = createElement('section', 'guides-listing__hero');
+  // Hero Section with search bar
+  const hero = createElement('section', 'guides-listing__hero guides-listing__hero--cinematic');
   const heroOverlay = createElement('div', 'guides-listing__hero-overlay');
   hero.appendChild(heroOverlay);
 
@@ -591,70 +774,117 @@ export function renderGuidesListingPage(): DocumentFragment {
   const heroSubtitle = createElement('p', 'guides-listing__hero-subtitle', 'Expert advice for buying, investing, and renting property in Erbil, Kurdistan. Comprehensive guides to help you make informed decisions.');
   heroContent.appendChild(heroSubtitle);
 
+  // Search bar
+  const searchForm = createElement('form', 'guides-listing__search');
+  searchForm.setAttribute('role', 'search');
+  const searchInput = createElement('input', 'guides-listing__search-input');
+  searchInput.type = 'search';
+  searchInput.placeholder = 'Search guides... e.g. "first-time buyer"';
+  searchInput.setAttribute('aria-label', 'Search guides');
+  searchInput.id = 'guides-search-input';
+  const searchIcon = createElement('span', 'guides-listing__search-icon');
+  searchIcon.appendChild(createSVG(['M21 21l-4.35-4.35', 'M11 19a8 8 0 100-16 8 8 0 000 16z']));
+  searchForm.appendChild(searchIcon);
+  searchForm.appendChild(searchInput);
+  searchForm.addEventListener('submit', e => e.preventDefault());
+  heroContent.appendChild(searchForm);
+
   heroContainer.appendChild(heroContent);
   hero.appendChild(heroContainer);
   page.appendChild(hero);
+
+  // Featured Guide highlighted
+  const featuredGuide = allGuides[0];
+  if (featuredGuide) {
+    const featuredSection = createElement('section', 'guides-listing__featured');
+    const featuredContainer = createElement('div', 'container');
+    const featuredLabel = createElement('span', 'guides-listing__featured-eyebrow', 'Featured Guide');
+    featuredContainer.appendChild(featuredLabel);
+    featuredContainer.appendChild(buildGuideCard(featuredGuide, { featured: true }));
+    featuredSection.appendChild(featuredContainer);
+    page.appendChild(featuredSection);
+  }
 
   // Guides Grid Section
   const guidesSection = createElement('section', 'guides-listing__section');
   const guidesContainer = createElement('div', 'container');
 
+  // Category Filters
+  const categories: GuideCategory[] = ['Buying', 'Investing', 'Renting', 'Resources'];
+  const filtersBar = createElement('div', 'guides-listing__filters');
+  const allBtn = createElement('button', 'guides-listing__filter guides-listing__filter--active');
+  allBtn.type = 'button';
+  allBtn.textContent = 'All Guides';
+  allBtn.setAttribute('data-filter', 'All');
+  filtersBar.appendChild(allBtn);
+  categories.forEach(cat => {
+    const btn = createElement('button', 'guides-listing__filter');
+    btn.type = 'button';
+    btn.textContent = cat;
+    btn.setAttribute('data-filter', cat);
+    filtersBar.appendChild(btn);
+  });
+  guidesContainer.appendChild(filtersBar);
+
   const guidesGrid = createElement('div', 'guides-listing__grid');
+  guidesGrid.id = 'guides-grid';
 
-  allGuides.forEach(guide => {
-    const card = createElement('a', 'guides-listing__card');
-    card.href = `/guides/${guide.slug}`;
-    card.setAttribute('data-route', '');
-
-    // Card Icon
-    const cardIcon = createElement('div', 'guides-listing__card-icon');
-    let iconSvg: SVGSVGElement;
-    if (guide.slug.includes('buying')) {
-      iconSvg = createSVG(['M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6']);
-    } else if (guide.slug.includes('invest')) {
-      iconSvg = createSVG(['M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z']);
-    } else {
-      iconSvg = createSVG(['M8 14v3m4-3v3m4-3v3M3 21h18M3 10h18M3 7l9-4 9 4M4 10h16v11H4V10z']);
-    }
-    cardIcon.appendChild(iconSvg);
-    card.appendChild(cardIcon);
-
-    // Card Content
-    const cardContent = createElement('div', 'guides-listing__card-content');
-
-    const cardTitle = createElement('h2', 'guides-listing__card-title', guide.title);
-    cardContent.appendChild(cardTitle);
-
-    const cardDescription = createElement('p', 'guides-listing__card-description', guide.introduction.substring(0, 150) + '...');
-    cardContent.appendChild(cardDescription);
-
-    // Card Meta
-    const cardMeta = createElement('div', 'guides-listing__card-meta');
-
-    const metaTime = createElement('span', 'guides-listing__card-meta-item');
-    metaTime.appendChild(createSVGUse('icon-clock'));
-    metaTime.appendChild(document.createTextNode(`${guide.readTime} min read`));
-    cardMeta.appendChild(metaTime);
-
-    const metaSections = createElement('span', 'guides-listing__card-meta-item');
-    metaSections.appendChild(document.createTextNode(`${guide.sections.length} sections`));
-    cardMeta.appendChild(metaSections);
-
-    cardContent.appendChild(cardMeta);
-
-    // Read More Link
-    const readMore = createElement('span', 'guides-listing__card-link');
-    readMore.textContent = 'Read Guide';
-    readMore.appendChild(createSVGUse('icon-arrow-right'));
-    cardContent.appendChild(readMore);
-
-    card.appendChild(cardContent);
-    guidesGrid.appendChild(card);
+  const otherGuides = allGuides.slice(1); // exclude featured from the main grid
+  otherGuides.forEach(guide => {
+    guidesGrid.appendChild(buildGuideCard(guide));
   });
 
   guidesContainer.appendChild(guidesGrid);
+
+  // No results message
+  const noResults = createElement('div', 'guides-listing__no-results');
+  noResults.id = 'guides-no-results';
+  noResults.hidden = true;
+  const noResultsTitle = createElement('h3', undefined, 'No guides match your search');
+  const noResultsText = createElement('p', undefined, 'Try a different keyword or clear the category filter.');
+  noResults.appendChild(noResultsTitle);
+  noResults.appendChild(noResultsText);
+  guidesContainer.appendChild(noResults);
+
   guidesSection.appendChild(guidesContainer);
   page.appendChild(guidesSection);
+
+  // Wire up filter + search
+  setTimeout(() => {
+    const filterBtns = document.querySelectorAll<HTMLButtonElement>('.guides-listing__filter');
+    const cards = document.querySelectorAll<HTMLElement>('#guides-grid .guides-listing__card');
+    const searchInputEl = document.getElementById('guides-search-input') as HTMLInputElement | null;
+    const noResultsEl = document.getElementById('guides-no-results');
+    let activeFilter = 'All';
+
+    const applyFilters = () => {
+      const query = (searchInputEl?.value || '').trim().toLowerCase();
+      let visibleCount = 0;
+      cards.forEach(card => {
+        const cat = card.getAttribute('data-category') || '';
+        const text = card.textContent?.toLowerCase() || '';
+        const matchesCat = activeFilter === 'All' || cat === activeFilter;
+        const matchesQuery = !query || text.includes(query);
+        const show = matchesCat && matchesQuery;
+        card.style.display = show ? '' : 'none';
+        if (show) visibleCount++;
+      });
+      if (noResultsEl) noResultsEl.hidden = visibleCount > 0;
+    };
+
+    filterBtns.forEach(btn => {
+      btn.addEventListener('click', () => {
+        filterBtns.forEach(b => b.classList.remove('guides-listing__filter--active'));
+        btn.classList.add('guides-listing__filter--active');
+        activeFilter = btn.getAttribute('data-filter') || 'All';
+        applyFilters();
+      });
+    });
+
+    if (searchInputEl) {
+      searchInputEl.addEventListener('input', applyFilters);
+    }
+  }, 0);
 
   // Additional Resources Section
   const resourcesSection = createElement('section', 'guides-listing__resources');

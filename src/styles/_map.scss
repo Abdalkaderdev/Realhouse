@@ -1,25 +1,81 @@
 // ═══════════════════════════════════════════════════════════════════════════
-// Map Styles - Leaflet Dark Theme
+// Map Styles - Leaflet Dark/Satellite Theme + Polished Markers + Popups
 // ═══════════════════════════════════════════════════════════════════════════
 
-// Import Leaflet base styles via the component
-// (Leaflet CSS is imported in the property-map.ts component)
-
-// ─── Custom Marker Styles ───────────────────────────────────────────────────
+// Custom marker — gold gradient pin with house icon and pulse on active
+// ────────────────────────────────────────────────────────────────────────────
 .property-marker {
   background: transparent !important;
   border: none !important;
 
-  &__icon {
-    cursor: pointer;
-    transition: transform 0.2s ease, filter 0.2s ease;
+  &__pin {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
+    will-change: transform;
 
     &:hover,
     &--active {
-      transform: scale(1.1);
-      filter: drop-shadow(0 6px 20px rgba(201, 168, 76, 0.4));
+      transform: translateY(-2px) scale(1.06);
     }
   }
+
+  &__body {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, #E6CB72 0%, #C9A84C 55%, #A88438 100%);
+    border-radius: 50% 50% 50% 6px;
+    transform: rotate(-45deg);
+    border: 2.5px solid rgba(10, 10, 15, 0.85);
+    box-shadow:
+      0 6px 18px rgba(0, 0, 0, 0.4),
+      0 2px 6px rgba(201, 168, 76, 0.35),
+      inset 0 1px 0 rgba(255, 255, 255, 0.35);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  &__icon {
+    transform: rotate(45deg);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 58%;
+    height: 58%;
+
+    svg {
+      width: 100%;
+      height: 100%;
+    }
+  }
+
+  &__pulse {
+    position: absolute;
+    inset: -4px;
+    border-radius: 50% 50% 50% 6px;
+    transform: rotate(-45deg);
+    background: radial-gradient(circle, rgba(201, 168, 76, 0.45) 0%, transparent 70%);
+    opacity: 0;
+    pointer-events: none;
+  }
+
+  &__pin--active &__pulse {
+    animation: property-marker-pulse 1.6s ease-out infinite;
+  }
+}
+
+@keyframes property-marker-pulse {
+  0%   { opacity: 0.65; transform: rotate(-45deg) scale(0.8); }
+  100% { opacity: 0;    transform: rotate(-45deg) scale(1.7); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .property-marker__pin { transition: none; }
+  .property-marker__pin--active .property-marker__pulse { animation: none; }
 }
 
 // ─── Map Popup Styles ───────────────────────────────────────────────────────
@@ -28,7 +84,7 @@
     background: var(--c-surface);
     border: 1px solid var(--c-glass-border);
     border-radius: var(--radius-lg);
-    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
+    box-shadow: 0 24px 48px rgba(0, 0, 0, 0.55);
     padding: 0;
     overflow: hidden;
   }
@@ -46,21 +102,24 @@
 
   .leaflet-popup-close-button {
     color: var(--c-text-2) !important;
-    font-size: 20px !important;
-    width: 30px !important;
-    height: 30px !important;
+    font-size: 18px !important;
+    width: 32px !important;
+    height: 32px !important;
     padding: 0 !important;
     right: 8px !important;
     top: 8px !important;
     z-index: 10;
-    background: var(--c-surface-2);
+    background: rgba(10, 10, 15, 0.6) !important;
+    backdrop-filter: blur(8px);
     border-radius: 50%;
     display: flex;
     align-items: center;
     justify-content: center;
+    line-height: 1;
 
     &:hover {
       color: var(--c-gold) !important;
+      background: rgba(10, 10, 15, 0.85) !important;
     }
   }
 }
@@ -70,13 +129,23 @@
   &__image {
     position: relative;
     width: 100%;
-    height: 150px;
+    height: 160px;
     overflow: hidden;
+    background: linear-gradient(135deg, #1a1a1f 0%, #2a2a32 100%);
 
     img {
       width: 100%;
       height: 100%;
       object-fit: cover;
+      display: block;
+    }
+
+    &::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to top, rgba(10, 10, 15, 0.7) 0%, transparent 50%);
+      pointer-events: none;
     }
   }
 
@@ -85,24 +154,41 @@
     top: 12px;
     left: 12px;
     padding: 4px 10px;
-    background: var(--c-gold);
+    background: linear-gradient(135deg, #E6CB72 0%, #C9A84C 100%);
     color: var(--c-bg);
     font-size: 11px;
-    font-weight: 600;
+    font-weight: 700;
     text-transform: uppercase;
-    letter-spacing: 0.05em;
+    letter-spacing: 0.06em;
     border-radius: var(--radius-sm);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+    z-index: 2;
+  }
+
+  &__price-chip {
+    position: absolute;
+    right: 12px;
+    bottom: 12px;
+    padding: 6px 12px;
+    background: rgba(10, 10, 15, 0.85);
+    backdrop-filter: blur(8px);
+    color: var(--c-gold);
+    font-size: 14px;
+    font-weight: 700;
+    border-radius: var(--radius-sm);
+    border: 1px solid rgba(201, 168, 76, 0.35);
+    z-index: 2;
   }
 
   &__content {
-    padding: 16px;
+    padding: 14px 16px 16px;
   }
 
   &__title {
-    font-size: 14px;
+    font-size: 15px;
     font-weight: 600;
     color: var(--c-text);
-    margin-bottom: 4px;
+    margin: 0 0 6px;
     line-height: 1.3;
     display: -webkit-box;
     -webkit-line-clamp: 2;
@@ -111,52 +197,81 @@
   }
 
   &__location {
+    display: flex;
+    align-items: center;
+    gap: 4px;
     font-size: 12px;
     color: var(--c-text-2);
-    margin-bottom: 10px;
+    margin: 0 0 10px;
+
+    svg {
+      width: 14px;
+      height: 14px;
+      color: var(--c-gold);
+      flex-shrink: 0;
+    }
   }
 
   &__specs {
     display: flex;
-    gap: 12px;
+    gap: 14px;
+    list-style: none;
+    margin: 0 0 12px;
+    padding: 0 0 12px;
+    border-bottom: 1px solid var(--c-glass-border);
     font-size: 12px;
     color: var(--c-text-2);
-    margin-bottom: 12px;
-    padding-bottom: 12px;
-    border-bottom: 1px solid var(--c-glass-border);
 
-    span {
+    li {
       display: flex;
-      align-items: center;
+      align-items: baseline;
       gap: 4px;
+    }
+
+    strong {
+      color: var(--c-text);
+      font-weight: 700;
+      font-variant-numeric: tabular-nums;
     }
   }
 
   &__footer {
     display: flex;
-    justify-content: space-between;
+    justify-content: flex-end;
     align-items: center;
   }
 
-  &__price {
-    font-size: 16px;
-    font-weight: 700;
-    color: var(--c-gold);
-  }
-
   &__btn {
-    padding: 8px 16px;
-    background: var(--c-gold);
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 9px 14px;
+    background: linear-gradient(135deg, #E6CB72 0%, #C9A84C 100%);
     color: var(--c-bg);
     font-size: 12px;
-    font-weight: 600;
-    border-radius: var(--radius-sm);
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    border-radius: var(--radius-md);
     text-decoration: none;
-    transition: all 0.2s ease;
+    transition: transform 0.18s ease, box-shadow 0.18s ease, background 0.18s ease;
+    box-shadow: 0 2px 8px rgba(201, 168, 76, 0.3);
+    min-height: 36px;
 
-    &:hover {
-      background: var(--c-gold-light);
+    svg {
+      width: 14px;
+      height: 14px;
+    }
+
+    &:hover,
+    &:focus-visible {
       transform: translateY(-1px);
+      box-shadow: 0 6px 18px rgba(201, 168, 76, 0.45);
+      outline: none;
+    }
+
+    &:focus-visible {
+      box-shadow: 0 0 0 3px rgba(201, 168, 76, 0.4), 0 6px 18px rgba(201, 168, 76, 0.45);
     }
   }
 }
@@ -200,9 +315,7 @@
     align-items: center;
     gap: var(--space-2);
 
-    svg {
-      color: var(--c-gold);
-    }
+    svg { color: var(--c-gold); }
   }
 
   &__list {
@@ -210,9 +323,7 @@
     grid-template-columns: repeat(2, 1fr);
     gap: var(--space-3);
 
-    @media (max-width: 640px) {
-      grid-template-columns: 1fr;
-    }
+    @media (max-width: 640px) { grid-template-columns: 1fr; }
   }
 
   &__item {
@@ -252,29 +363,29 @@
   border: 1px solid var(--c-glass-border) !important;
   border-radius: var(--radius-md) !important;
   overflow: hidden;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.35);
 
   a {
-    background: var(--c-surface) !important;
+    background: rgba(20, 20, 26, 0.9) !important;
+    backdrop-filter: blur(10px);
     color: var(--c-text) !important;
     border-bottom: 1px solid var(--c-glass-border) !important;
-    width: 36px !important;
-    height: 36px !important;
-    line-height: 36px !important;
+    width: 38px !important;
+    height: 38px !important;
+    line-height: 38px !important;
 
     &:hover {
-      background: var(--c-surface-2) !important;
+      background: rgba(35, 35, 44, 0.95) !important;
       color: var(--c-gold) !important;
     }
 
     &.leaflet-disabled {
-      background: var(--c-surface) !important;
+      background: rgba(20, 20, 26, 0.5) !important;
       color: var(--c-text-3) !important;
     }
   }
 
-  .leaflet-control-zoom-out {
-    border-bottom: none !important;
-  }
+  .leaflet-control-zoom-out { border-bottom: none !important; }
 }
 
 .leaflet-control-attribution {
@@ -284,10 +395,7 @@
 
   a {
     color: var(--c-text-2) !important;
-
-    &:hover {
-      color: var(--c-gold) !important;
-    }
+    &:hover { color: var(--c-gold) !important; }
   }
 }
 
@@ -311,8 +419,11 @@
   }
 }
 
-@keyframes spin {
-  to {
-    transform: rotate(360deg);
-  }
+@keyframes spin { to { transform: rotate(360deg); } }
+
+// Skeleton crossfade out when tiles ready
+.skeleton-map--fading {
+  opacity: 0;
+  transition: opacity 0.25s ease-out;
+  pointer-events: none;
 }

@@ -928,3 +928,343 @@
   border-radius: 10px;
   margin-left: var(--space-2);
 }
+
+// ═══════════════════════════════════════════════════════════════════════════
+// ─── Redesigned Offers Page Enhancements ─────────────────────────────────
+// ═══════════════════════════════════════════════════════════════════════════
+
+// ─── Cinematic Hero ───────────────────────────────────────────────────────
+.offers-page__hero--cinematic {
+  position: relative;
+  min-height: 60vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-24) 0 var(--space-20);
+  margin: 0 calc(-1 * var(--space-4)) var(--space-12);
+  overflow: hidden;
+  text-align: center;
+
+  @media (max-width: 768px) {
+    min-height: 50vh;
+    padding: var(--space-20) 0 var(--space-12);
+    margin: 0 0 var(--space-8);
+  }
+}
+
+.offers-page__hero-bg {
+  position: absolute;
+  inset: 0;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  z-index: 0;
+  transform: scale(1.05);
+
+  @media (max-width: 1024px) {
+    background-attachment: scroll;
+  }
+}
+
+.offers-page__hero-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(0, 0, 0, 0.7) 0%, rgba(0, 0, 0, 0.5) 50%, rgba(0, 0, 0, 0.85) 100%);
+  z-index: 1;
+}
+
+.offers-page__hero--cinematic .offers-page__hero-content {
+  position: relative;
+  z-index: 2;
+  color: #fff;
+}
+
+.offers-page__hero--cinematic .offers-page__title {
+  color: #fff;
+  text-shadow: 0 2px 24px rgba(0, 0, 0, 0.5);
+}
+
+.offers-page__hero--cinematic .offers-page__subtitle {
+  color: rgba(255, 255, 255, 0.85);
+}
+
+.offers-page__hero--cinematic .offers-page__stat {
+  background: rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(10px);
+  border-color: rgba(255, 255, 255, 0.15);
+}
+
+// ─── Featured Offer Banner ────────────────────────────────────────────────
+.offers-page__featured-banner {
+  position: relative;
+  margin: 0 0 var(--space-12);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  min-height: 420px;
+  display: flex;
+  align-items: center;
+  border: 2px solid var(--c-gold);
+  box-shadow: 0 0 40px rgba(201, 168, 76, 0.25), 0 12px 40px rgba(0, 0, 0, 0.3);
+  isolation: isolate;
+
+  @media (max-width: 768px) {
+    min-height: 360px;
+  }
+}
+
+.offers-page__featured-bg {
+  position: absolute;
+  inset: 0;
+  background-size: cover;
+  background-position: center;
+  z-index: 0;
+}
+
+.offers-page__featured-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(110deg, rgba(0, 0, 0, 0.85) 0%, rgba(0, 0, 0, 0.7) 50%, rgba(0, 0, 0, 0.4) 100%);
+  z-index: 1;
+}
+
+.offers-page__featured-inner {
+  position: relative;
+  z-index: 2;
+  padding: var(--space-10);
+  max-width: 600px;
+  color: #fff;
+
+  @media (max-width: 768px) {
+    padding: var(--space-6);
+  }
+}
+
+.offers-page__featured-eyebrow {
+  display: inline-block;
+  padding: var(--space-1) var(--space-3);
+  background: var(--c-gold);
+  color: var(--c-bg);
+  font-size: var(--text-xs);
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  border-radius: var(--radius-pill);
+  margin-bottom: var(--space-4);
+}
+
+.offers-page__featured-title {
+  font-family: var(--font-display);
+  font-size: var(--text-4xl);
+  color: #fff;
+  margin: 0 0 var(--space-3);
+  line-height: 1.15;
+
+  @media (max-width: 768px) {
+    font-size: var(--text-3xl);
+  }
+}
+
+.offers-page__featured-desc {
+  color: rgba(255, 255, 255, 0.85);
+  font-size: var(--text-lg);
+  margin: 0 0 var(--space-5);
+}
+
+.offers-page__featured-price-row {
+  display: flex;
+  align-items: center;
+  gap: var(--space-4);
+  flex-wrap: wrap;
+  margin-bottom: var(--space-5);
+}
+
+.offers-page__featured-discount {
+  padding: var(--space-2) var(--space-3);
+  background: linear-gradient(135deg, #ef4444, #dc2626);
+  color: #fff;
+  font-weight: 800;
+  font-size: var(--text-sm);
+  border-radius: var(--radius-md);
+  letter-spacing: 0.05em;
+}
+
+.offers-page__featured-original {
+  text-decoration: line-through;
+  color: rgba(255, 255, 255, 0.6);
+  font-size: var(--text-base);
+}
+
+.offers-page__featured-new {
+  color: var(--c-gold);
+  font-weight: 800;
+  font-size: var(--text-2xl);
+  font-family: var(--font-display);
+}
+
+.offers-page__featured-cta {
+  margin-top: var(--space-5);
+}
+
+// ─── Status Filters ───────────────────────────────────────────────────────
+.offers-page__status-filters {
+  display: flex;
+  justify-content: center;
+  gap: var(--space-2);
+  margin-bottom: var(--space-6);
+  padding: var(--space-1);
+  background: var(--c-surface);
+  border-radius: var(--radius-pill);
+  width: fit-content;
+  margin-left: auto;
+  margin-right: auto;
+  border: 1px solid var(--c-glass-border);
+}
+
+.offers-page__status-filter {
+  padding: var(--space-2) var(--space-5);
+  background: transparent;
+  border: none;
+  color: var(--c-text-2);
+  font-size: var(--text-sm);
+  font-weight: 600;
+  border-radius: var(--radius-pill);
+  cursor: pointer;
+  transition: all var(--transition-fast);
+
+  &:hover {
+    color: var(--c-text);
+  }
+
+  &--active {
+    background: var(--c-gold);
+    color: var(--c-bg);
+  }
+}
+
+// ─── Offer Card Stock Bar ─────────────────────────────────────────────────
+.offer-card__stock {
+  margin: var(--space-3) 0;
+  padding: var(--space-3);
+  background: var(--c-surface);
+  border-radius: var(--radius-md);
+
+  &--critical .offer-card__stock-fill {
+    background: linear-gradient(90deg, #ef4444, #dc2626);
+  }
+
+  &--critical .offer-card__stock-text {
+    color: #ef4444;
+    font-weight: 700;
+  }
+}
+
+.offer-card__stock-label {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: var(--space-2);
+}
+
+.offer-card__stock-text {
+  font-size: var(--text-xs);
+  font-weight: 600;
+  color: var(--c-text);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.offer-card__stock-bar {
+  width: 100%;
+  height: 6px;
+  background: var(--c-glass-border);
+  border-radius: var(--radius-pill);
+  overflow: hidden;
+}
+
+.offer-card__stock-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--c-gold), #E9A33E);
+  border-radius: var(--radius-pill);
+  transition: width 600ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+// ─── Subscribe Form ───────────────────────────────────────────────────────
+.offers-page__subscribe {
+  text-align: center;
+  padding: var(--space-12) var(--space-6);
+  margin: var(--space-12) 0;
+  background: linear-gradient(135deg, var(--c-surface), var(--c-bg));
+  border: 1px solid var(--c-glass-border);
+  border-radius: var(--radius-lg);
+}
+
+.offers-page__subscribe-title {
+  font-family: var(--font-display);
+  font-size: var(--text-3xl);
+  color: var(--c-text);
+  margin: 0 0 var(--space-3);
+
+  @media (max-width: 768px) {
+    font-size: var(--text-2xl);
+  }
+}
+
+.offers-page__subscribe-subtitle {
+  color: var(--c-text-2);
+  font-size: var(--text-base);
+  margin: 0 auto var(--space-6);
+  max-width: 480px;
+}
+
+.offers-page__subscribe-form {
+  display: flex;
+  gap: var(--space-3);
+  max-width: 480px;
+  margin: 0 auto;
+
+  @media (max-width: 540px) {
+    flex-direction: column;
+  }
+}
+
+.offers-page__subscribe-input {
+  flex: 1;
+  padding: var(--space-3) var(--space-4);
+  background: var(--c-bg);
+  border: 1px solid var(--c-glass-border);
+  border-radius: var(--radius-md);
+  color: var(--c-text);
+  font-size: var(--text-base);
+  transition: border-color var(--transition-fast);
+
+  &:focus {
+    outline: none;
+    border-color: var(--c-gold);
+    box-shadow: 0 0 0 3px rgba(201, 168, 76, 0.15);
+  }
+
+  &[aria-invalid="true"] {
+    border-color: #ef4444;
+  }
+}
+
+.offers-page__subscribe-btn {
+  white-space: nowrap;
+}
+
+.offers-page__subscribe-success {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: var(--space-3) var(--space-5);
+  background: rgba(34, 197, 94, 0.12);
+  color: #22c55e;
+  border: 1px solid rgba(34, 197, 94, 0.3);
+  border-radius: var(--radius-md);
+  font-weight: 600;
+
+  svg {
+    width: 20px;
+    height: 20px;
+  }
+}

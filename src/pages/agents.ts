@@ -1,6 +1,6 @@
 // ═══════════════════════════════════════════════════════════════════════════
-// Agents Directory Page
-// /agents - All agents listing with filtering and sorting
+// Agents Directory Page - Editorial Premium Redesign
+// /agents - Hero showcase for our property consultants
 // ═══════════════════════════════════════════════════════════════════════════
 
 import {
@@ -30,6 +30,7 @@ function createElement<K extends keyof HTMLElementTagNameMap>(
 function createSVGUse(iconId: string): SVGSVGElement {
   const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
   svg.setAttribute('class', 'icon');
+  svg.setAttribute('aria-hidden', 'true');
   const use = document.createElementNS('http://www.w3.org/2000/svg', 'use');
   use.setAttributeNS('http://www.w3.org/1999/xlink', 'href', `#${iconId}`);
   svg.appendChild(use);
@@ -45,217 +46,177 @@ function getAgentsBreadcrumbs() {
 }
 
 // ═══════════════════════════════════════════════════════════════════════════
-// Agent Card Component
+// Agent Hero Card - Editorial layout, large + cinematic
 // ═══════════════════════════════════════════════════════════════════════════
 
-function createAgentCard(agent: Agent): HTMLElement {
-  const card = createElement('article', 'agent-card');
+function createAgentHeroCard(agent: Agent, index: number): HTMLElement {
+  const card = createElement('article', 'agent-hero-card');
   card.setAttribute('data-id', agent.id);
-  card.setAttribute('data-specialization', agent.specialization);
-  card.setAttribute('data-experience', agent.yearsExperience.toString());
-  card.setAttribute('data-sales', agent.propertiesSold.toString());
+  card.setAttribute('data-index', String(index + 1).padStart(2, '0'));
+  card.style.setProperty('--card-delay', `${index * 120}ms`);
 
-  // Image Section
-  const imageWrapper = createElement('div', 'agent-card__image-wrapper');
-  const image = createElement('img', 'agent-card__image') as HTMLImageElement;
-  image.src = agent.image;
-  image.alt = `${agent.name} - ${agent.role} at Real House`;
-  image.width = 300;
-  image.height = 300;
-  image.loading = 'lazy';
-  imageWrapper.appendChild(image);
+  // ── Portrait Column ──
+  const portrait = createElement('div', 'agent-hero-card__portrait');
 
-  // Leadership badge
-  if (agent.isLeadership) {
-    const badge = createElement('span', 'agent-card__badge', t('agentsPage.leadership'));
-    imageWrapper.appendChild(badge);
-  }
+  const portraitFrame = createElement('div', 'agent-hero-card__portrait-frame');
+  const portraitImage = createElement('img', 'agent-hero-card__image') as HTMLImageElement;
+  portraitImage.src = agent.image;
+  portraitImage.alt = `${agent.name}, ${agent.role} at Real House`;
+  portraitImage.width = 600;
+  portraitImage.height = 800;
+  portraitImage.loading = index === 0 ? 'eager' : 'lazy';
+  portraitFrame.appendChild(portraitImage);
 
-  card.appendChild(imageWrapper);
+  const portraitOverlay = createElement('div', 'agent-hero-card__portrait-overlay');
+  portraitFrame.appendChild(portraitOverlay);
 
-  // Content Section
-  const content = createElement('div', 'agent-card__content');
+  // Index numeral (editorial accent)
+  const indexNum = createElement('span', 'agent-hero-card__index');
+  indexNum.textContent = String(index + 1).padStart(2, '0');
+  portraitFrame.appendChild(indexNum);
 
-  const name = createElement('h3', 'agent-card__name', agent.name);
-  content.appendChild(name);
+  portrait.appendChild(portraitFrame);
+  card.appendChild(portrait);
 
-  const role = createElement('p', 'agent-card__role', agent.role);
-  content.appendChild(role);
+  // ── Body Column ──
+  const body = createElement('div', 'agent-hero-card__body');
 
-  const specialization = createElement('p', 'agent-card__specialization');
-  specialization.appendChild(createSVGUse('icon-check'));
-  specialization.appendChild(document.createTextNode(agent.specialization));
-  content.appendChild(specialization);
+  const eyebrow = createElement('span', 'agent-hero-card__eyebrow', agent.role);
+  body.appendChild(eyebrow);
 
-  // Stats Row
-  const stats = createElement('div', 'agent-card__stats');
+  const name = createElement('h3', 'agent-hero-card__name', agent.name);
+  body.appendChild(name);
 
-  const expStat = createElement('div', 'agent-card__stat');
-  const expValue = createElement('span', 'agent-card__stat-value', `${agent.yearsExperience}+`);
-  const expLabel = createElement('span', 'agent-card__stat-label', t('agentsPage.yearsExp'));
-  expStat.appendChild(expValue);
-  expStat.appendChild(expLabel);
-  stats.appendChild(expStat);
+  const tagline = createElement('p', 'agent-hero-card__tagline', agent.bio);
+  body.appendChild(tagline);
 
-  const salesStat = createElement('div', 'agent-card__stat');
-  const salesValue = createElement('span', 'agent-card__stat-value', agent.propertiesSold.toString());
-  const salesLabel = createElement('span', 'agent-card__stat-label', t('agentsPage.propertiesSold'));
-  salesStat.appendChild(salesValue);
-  salesStat.appendChild(salesLabel);
-  stats.appendChild(salesStat);
-
-  const langStat = createElement('div', 'agent-card__stat');
-  const langValue = createElement('span', 'agent-card__stat-value', agent.languages.length.toString());
-  const langLabel = createElement('span', 'agent-card__stat-label', t('agentsPage.languages'));
-  langStat.appendChild(langValue);
-  langStat.appendChild(langLabel);
-  stats.appendChild(langStat);
-
-  content.appendChild(stats);
-
-  // Languages
-  const languages = createElement('div', 'agent-card__languages');
-  agent.languages.slice(0, 3).forEach(lang => {
-    const tag = createElement('span', 'agent-card__lang-tag', lang);
-    languages.appendChild(tag);
+  // Specializations as gold pills
+  const specs = createElement('div', 'agent-hero-card__specs');
+  agent.specializations.slice(0, 4).forEach(spec => {
+    const pill = createElement('span', 'agent-hero-card__spec-pill', spec);
+    specs.appendChild(pill);
   });
-  if (agent.languages.length > 3) {
-    const more = createElement('span', 'agent-card__lang-more', `+${agent.languages.length - 3}`);
-    languages.appendChild(more);
-  }
-  content.appendChild(languages);
+  body.appendChild(specs);
 
-  card.appendChild(content);
+  // Stats row - large editorial numerals
+  const stats = createElement('div', 'agent-hero-card__stats');
+  const statItems = [
+    { value: agent.propertiesSold.toString(), label: t('agentsPage.propertiesSold') },
+    { value: `${agent.yearsExperience}+`, label: t('agentsPage.yearsExp') },
+    { value: agent.languages.length.toString(), label: t('agentsPage.languages') }
+  ];
+  statItems.forEach(stat => {
+    const item = createElement('div', 'agent-hero-card__stat');
+    const value = createElement('span', 'agent-hero-card__stat-value', stat.value);
+    const label = createElement('span', 'agent-hero-card__stat-label', stat.label);
+    item.appendChild(value);
+    item.appendChild(label);
+    stats.appendChild(item);
+  });
+  body.appendChild(stats);
 
-  // Footer with actions
-  const footer = createElement('div', 'agent-card__footer');
+  // Languages row
+  const langs = createElement('div', 'agent-hero-card__langs');
+  const langLabel = createElement('span', 'agent-hero-card__langs-label', 'Speaks');
+  langs.appendChild(langLabel);
+  agent.languages.forEach(lang => {
+    const tag = createElement('span', 'agent-hero-card__lang', lang);
+    langs.appendChild(tag);
+  });
+  body.appendChild(langs);
 
-  const viewBtn = createElement('a', 'btn btn--primary', t('agentsPage.viewProfile'));
-  viewBtn.href = `/agents/${agent.slug}`;
-  viewBtn.setAttribute('data-route', '');
-  footer.appendChild(viewBtn);
+  // Actions row
+  const actions = createElement('div', 'agent-hero-card__actions');
 
-  const contactBtn = createElement('a', 'btn btn--ghost agent-card__whatsapp');
-  contactBtn.href = `https://wa.me/${agent.whatsapp}`;
-  contactBtn.target = '_blank';
-  contactBtn.rel = 'noopener noreferrer';
-  contactBtn.appendChild(createSVGUse('icon-whatsapp'));
-  footer.appendChild(contactBtn);
+  const profileBtn = createElement('a', 'agent-hero-card__action agent-hero-card__action--primary');
+  profileBtn.href = `/agents/${agent.slug}`;
+  profileBtn.setAttribute('data-route', '');
+  profileBtn.appendChild(document.createTextNode(t('agentsPage.viewProfile')));
+  profileBtn.appendChild(createSVGUse('icon-arrow-right'));
+  actions.appendChild(profileBtn);
 
-  card.appendChild(footer);
+  const whatsappBtn = createElement('a', 'agent-hero-card__action agent-hero-card__action--whatsapp');
+  whatsappBtn.href = `https://wa.me/${agent.whatsapp}`;
+  whatsappBtn.target = '_blank';
+  whatsappBtn.rel = 'noopener noreferrer';
+  whatsappBtn.appendChild(createSVGUse('icon-whatsapp'));
+  whatsappBtn.appendChild(document.createTextNode('WhatsApp'));
+  actions.appendChild(whatsappBtn);
+
+  const callBtn = createElement('a', 'agent-hero-card__action agent-hero-card__action--call');
+  callBtn.href = `tel:${agent.phone.replace(/\s/g, '')}`;
+  callBtn.appendChild(createSVGUse('icon-phone'));
+  callBtn.appendChild(document.createTextNode('Call'));
+  actions.appendChild(callBtn);
+
+  body.appendChild(actions);
+
+  card.appendChild(body);
 
   return card;
 }
 
 // ═══════════════════════════════════════════════════════════════════════════
-// Filter/Sort Controls
+// Combined Testimonials From All Agents
 // ═══════════════════════════════════════════════════════════════════════════
 
-function createFilterControls(): HTMLElement {
-  const controls = createElement('div', 'agents-page__controls');
+function buildClientTestimonials(): HTMLElement {
+  const section = createElement('section', 'agents-page__voices');
 
-  // Specialization filter
-  const filterGroup = createElement('div', 'agents-page__filter-group');
+  const header = createElement('div', 'agents-page__voices-header');
+  const eyebrow = createElement('span', 'agents-page__voices-eyebrow', 'Client Voices');
+  header.appendChild(eyebrow);
+  const title = createElement('h2', 'agents-page__voices-title', 'What Our Clients Say');
+  header.appendChild(title);
+  const sub = createElement('p', 'agents-page__voices-sub', 'Real stories from the people who trusted us to find their next home or investment.');
+  header.appendChild(sub);
+  section.appendChild(header);
 
-  const filterLabel = createElement('label', 'agents-page__filter-label', t('agentsPage.specialization'));
-  filterLabel.setAttribute('for', 'agent-filter');
-  filterGroup.appendChild(filterLabel);
+  // Pull 1 testimonial per agent (max 4)
+  const grid = createElement('div', 'agents-page__voices-grid');
 
-  const filterSelect = createElement('select', 'agents-page__filter-select');
-  filterSelect.id = 'agent-filter';
+  agents.forEach((agent, agentIndex) => {
+    agent.testimonials.slice(0, 2).forEach((testimonial, tIndex) => {
+      const card = createElement('figure', 'voice-card');
+      card.style.setProperty('--voice-delay', `${(agentIndex * 2 + tIndex) * 100}ms`);
 
-  const specializations = [
-    { value: '', label: t('agentsPage.allSpecializations') },
-    { value: 'luxury', label: t('agentsPage.luxuryVillas') },
-    { value: 'investment', label: t('agentsPage.investment') },
-    { value: 'commercial', label: t('agentsPage.commercial') },
-    { value: 'penthouse', label: t('agentsPage.penthousesApartments') },
-    { value: 'new-development', label: t('agentsPage.newDevelopments') }
-  ];
+      const quoteMark = createElement('span', 'voice-card__quote-mark', '“');
+      card.appendChild(quoteMark);
 
-  specializations.forEach(spec => {
-    const option = createElement('option', undefined, spec.label);
-    option.value = spec.value;
-    filterSelect.appendChild(option);
+      const stars = createElement('div', 'voice-card__stars');
+      for (let i = 0; i < testimonial.rating; i++) {
+        const star = createElement('span', 'voice-card__star', '★');
+        stars.appendChild(star);
+      }
+      card.appendChild(stars);
+
+      const text = createElement('blockquote', 'voice-card__text', testimonial.text);
+      card.appendChild(text);
+
+      const footer = createElement('figcaption', 'voice-card__footer');
+      const clientInfo = createElement('div', 'voice-card__client');
+      const clientName = createElement('span', 'voice-card__name', testimonial.clientName);
+      const clientLoc = createElement('span', 'voice-card__loc', testimonial.clientLocation);
+      clientInfo.appendChild(clientName);
+      clientInfo.appendChild(clientLoc);
+      footer.appendChild(clientInfo);
+
+      const agentTag = createElement('a', 'voice-card__agent');
+      agentTag.href = `/agents/${agent.slug}`;
+      agentTag.setAttribute('data-route', '');
+      const agentTagLabel = createElement('span', 'voice-card__agent-label', 'via');
+      const agentTagName = createElement('span', 'voice-card__agent-name', agent.name);
+      agentTag.appendChild(agentTagLabel);
+      agentTag.appendChild(agentTagName);
+      footer.appendChild(agentTag);
+
+      card.appendChild(footer);
+      grid.appendChild(card);
+    });
   });
 
-  filterGroup.appendChild(filterSelect);
-  controls.appendChild(filterGroup);
-
-  // Sort control
-  const sortGroup = createElement('div', 'agents-page__filter-group');
-
-  const sortLabel = createElement('label', 'agents-page__filter-label', t('agentsPage.sortBy'));
-  sortLabel.setAttribute('for', 'agent-sort');
-  sortGroup.appendChild(sortLabel);
-
-  const sortSelect = createElement('select', 'agents-page__filter-select');
-  sortSelect.id = 'agent-sort';
-
-  const sortOptions = [
-    { value: 'experience', label: t('agentsPage.experienceHighToLow') },
-    { value: 'sales', label: t('agentsPage.propertiesSoldSort') },
-    { value: 'name', label: t('agentsPage.nameAZ') }
-  ];
-
-  sortOptions.forEach(opt => {
-    const option = createElement('option', undefined, opt.label);
-    option.value = opt.value;
-    sortSelect.appendChild(option);
-  });
-
-  sortGroup.appendChild(sortSelect);
-  controls.appendChild(sortGroup);
-
-  return controls;
-}
-
-// ═══════════════════════════════════════════════════════════════════════════
-// Filter/Sort Logic
-// ═══════════════════════════════════════════════════════════════════════════
-
-function initFilterSort(grid: HTMLElement): void {
-  const filterSelect = document.getElementById('agent-filter') as HTMLSelectElement;
-  const sortSelect = document.getElementById('agent-sort') as HTMLSelectElement;
-
-  if (!filterSelect || !sortSelect) return;
-
-  const filterAndSort = () => {
-    const filterValue = filterSelect.value.toLowerCase();
-    const sortValue = sortSelect.value;
-    const cards = Array.from(grid.querySelectorAll('.agent-card')) as HTMLElement[];
-
-    // Filter
-    cards.forEach(card => {
-      const spec = (card.dataset.specialization || '').toLowerCase();
-      if (!filterValue || spec.includes(filterValue)) {
-        card.style.display = '';
-      } else {
-        card.style.display = 'none';
-      }
-    });
-
-    // Sort visible cards
-    const visibleCards = cards.filter(c => c.style.display !== 'none');
-
-    visibleCards.sort((a, b) => {
-      if (sortValue === 'experience') {
-        return parseInt(b.dataset.experience || '0') - parseInt(a.dataset.experience || '0');
-      } else if (sortValue === 'sales') {
-        return parseInt(b.dataset.sales || '0') - parseInt(a.dataset.sales || '0');
-      } else {
-        const nameA = a.querySelector('.agent-card__name')?.textContent || '';
-        const nameB = b.querySelector('.agent-card__name')?.textContent || '';
-        return nameA.localeCompare(nameB);
-      }
-    });
-
-    // Re-append in sorted order
-    visibleCards.forEach(card => grid.appendChild(card));
-  };
-
-  filterSelect.addEventListener('change', filterAndSort);
-  sortSelect.addEventListener('change', filterAndSort);
+  section.appendChild(grid);
+  return section;
 }
 
 // ═══════════════════════════════════════════════════════════════════════════
@@ -268,115 +229,153 @@ export function renderAgentsPage(): DocumentFragment {
   injectBreadcrumbSchema(breadcrumbs);
 
   const page = createElement('div', 'agents-page');
-  const container = createElement('div', 'container');
 
-  // Breadcrumbs
-  container.appendChild(createBreadcrumbs(breadcrumbs));
+  // ── Cinematic Hero ──
+  const hero = createElement('section', 'agents-page__hero');
+  const heroContainer = createElement('div', 'container');
+  heroContainer.appendChild(createBreadcrumbs(breadcrumbs));
 
-  // Header Section
-  const header = createElement('header', 'agents-page__header');
-  const title = createElement('h1', 'agents-page__title', t('agentsPage.title'));
-  header.appendChild(title);
+  const heroInner = createElement('div', 'agents-page__hero-inner');
 
-  const subtitle = createElement('p', 'agents-page__subtitle');
-  subtitle.textContent = t('agentsPage.subtitle');
-  header.appendChild(subtitle);
+  const heroEyebrow = createElement('div', 'agents-page__hero-eyebrow');
+  const heroEyebrowLine = createElement('span', 'agents-page__hero-eyebrow-line');
+  const heroEyebrowText = createElement('span', 'agents-page__hero-eyebrow-text', 'Our People');
+  heroEyebrow.appendChild(heroEyebrowLine);
+  heroEyebrow.appendChild(heroEyebrowText);
+  heroInner.appendChild(heroEyebrow);
 
-  container.appendChild(header);
+  const heroTitle = createElement('h1', 'agents-page__hero-title');
+  const heroTitleLine1 = createElement('span', 'agents-page__hero-title-line', 'Meet Our');
+  const heroTitleLine2 = createElement('span', 'agents-page__hero-title-line agents-page__hero-title-line--accent', 'Property Experts');
+  heroTitle.appendChild(heroTitleLine1);
+  heroTitle.appendChild(heroTitleLine2);
+  heroInner.appendChild(heroTitle);
 
-  // Stats Section
+  const heroSubtitle = createElement('p', 'agents-page__hero-subtitle',
+    "A small, deliberately curated team. Two senior consultants. A combined fifteen years inside Kurdistan's luxury and investment property market. Personally accountable to every client they take on.");
+  heroInner.appendChild(heroSubtitle);
+
+  // Hero stats inline (trust signal)
   const stats = getAgentStats();
-  const statsSection = createElement('div', 'agents-page__stats');
-
-  const statItems = [
-    { value: `${stats.totalAgents}`, label: t('agentsPage.expertAgents') },
-    { value: `${stats.totalSales}+`, label: t('agentsPage.propertiesSold') },
-    { value: formatSalesVolume(stats.totalVolume), label: t('agentsPage.totalSales') },
-    { value: `${stats.avgExperience}+`, label: t('agentsPage.avgYearsExperience') }
+  const heroStats = createElement('div', 'agents-page__hero-stats');
+  const heroStatsItems = [
+    { value: `${stats.totalSales}+`, label: 'Properties Closed' },
+    { value: formatSalesVolume(stats.totalVolume), label: 'In Total Sales' },
+    { value: `${stats.avgExperience}+`, label: 'Years Avg Experience' },
+    { value: '4.9', label: 'Client Rating' }
   ];
+  heroStatsItems.forEach((stat, i) => {
+    const item = createElement('div', 'agents-page__hero-stat');
+    item.style.setProperty('--stat-delay', `${i * 80}ms`);
+    const value = createElement('span', 'agents-page__hero-stat-value', stat.value);
+    const label = createElement('span', 'agents-page__hero-stat-label', stat.label);
+    item.appendChild(value);
+    item.appendChild(label);
+    heroStats.appendChild(item);
+  });
+  heroInner.appendChild(heroStats);
 
-  statItems.forEach(stat => {
-    const statCard = createElement('div', 'agents-page__stat-card');
-    const statValue = createElement('span', 'agents-page__stat-value', stat.value);
-    const statLabel = createElement('span', 'agents-page__stat-label', stat.label);
-    statCard.appendChild(statValue);
-    statCard.appendChild(statLabel);
-    statsSection.appendChild(statCard);
+  heroContainer.appendChild(heroInner);
+  hero.appendChild(heroContainer);
+
+  // Atmospheric background flourishes
+  const heroAtmos = createElement('div', 'agents-page__hero-atmos');
+  heroAtmos.setAttribute('aria-hidden', 'true');
+  hero.appendChild(heroAtmos);
+
+  page.appendChild(hero);
+
+  // ── Hero Agent Cards Section ──
+  const consultants = createElement('section', 'agents-page__consultants');
+  const consultantsContainer = createElement('div', 'container');
+
+  const consultantsHeader = createElement('div', 'agents-page__consultants-header');
+  const consultantsEyebrow = createElement('span', 'agents-page__consultants-eyebrow', 'The Team');
+  consultantsHeader.appendChild(consultantsEyebrow);
+  const consultantsTitle = createElement('h2', 'agents-page__consultants-title', 'Senior Consultants');
+  consultantsHeader.appendChild(consultantsTitle);
+  consultantsContainer.appendChild(consultantsHeader);
+
+  const cardsGrid = createElement('div', 'agents-page__cards-grid');
+  cardsGrid.id = 'agents-grid';
+
+  agents.forEach((agent, i) => {
+    cardsGrid.appendChild(createAgentHeroCard(agent, i));
   });
 
-  container.appendChild(statsSection);
+  consultantsContainer.appendChild(cardsGrid);
+  consultants.appendChild(consultantsContainer);
+  page.appendChild(consultants);
 
-  // Filter/Sort Controls
-  container.appendChild(createFilterControls());
+  // ── Client Voices Section ──
+  const voicesContainer = createElement('div', 'container');
+  voicesContainer.appendChild(buildClientTestimonials());
+  const voicesSection = createElement('section', 'agents-page__voices-wrap');
+  voicesSection.appendChild(voicesContainer);
+  page.appendChild(voicesSection);
 
-  // Leadership Team Section
-  const leadershipAgents = agents.filter(a => a.isLeadership);
-  if (leadershipAgents.length > 0) {
-    const leadershipSection = createElement('section', 'agents-page__section');
-    const leadershipTitle = createElement('h2', 'agents-page__section-title', t('agentsPage.leadershipTeam'));
-    leadershipSection.appendChild(leadershipTitle);
+  // ── Trust Stats Row ──
+  const trust = createElement('section', 'agents-page__trust');
+  const trustContainer = createElement('div', 'container');
+  const trustInner = createElement('div', 'agents-page__trust-inner');
 
-    const leadershipGrid = createElement('div', 'agents-page__grid agents-page__grid--leadership');
-    leadershipAgents.forEach(agent => {
-      leadershipGrid.appendChild(createAgentCard(agent));
-    });
-    leadershipSection.appendChild(leadershipGrid);
-
-    container.appendChild(leadershipSection);
-  }
-
-  // All Agents Grid
-  const agentsSection = createElement('section', 'agents-page__section');
-  const agentsTitle = createElement('h2', 'agents-page__section-title', t('agentsPage.propertyConsultants'));
-  agentsSection.appendChild(agentsTitle);
-
-  const grid = createElement('div', 'agents-page__grid');
-  grid.id = 'agents-grid';
-
-  const salesAgents = agents.filter(a => !a.isLeadership);
-  salesAgents.forEach(agent => {
-    grid.appendChild(createAgentCard(agent));
+  const trustItems = [
+    { icon: 'icon-shield', value: '100%', label: 'Licensed & Verified' },
+    { icon: 'icon-award', value: '12+', label: 'Industry Awards' },
+    { icon: 'icon-users', value: '325+', label: 'Happy Clients' },
+    { icon: 'icon-clock', value: '< 2hr', label: 'Avg Response Time' }
+  ];
+  trustItems.forEach(item => {
+    const trustCard = createElement('div', 'agents-page__trust-card');
+    const trustIcon = createElement('div', 'agents-page__trust-icon');
+    trustIcon.appendChild(createSVGUse(item.icon));
+    trustCard.appendChild(trustIcon);
+    const trustValue = createElement('span', 'agents-page__trust-value', item.value);
+    const trustLabel = createElement('span', 'agents-page__trust-label', item.label);
+    trustCard.appendChild(trustValue);
+    trustCard.appendChild(trustLabel);
+    trustInner.appendChild(trustCard);
   });
 
-  agentsSection.appendChild(grid);
-  container.appendChild(agentsSection);
+  trustContainer.appendChild(trustInner);
+  trust.appendChild(trustContainer);
+  page.appendChild(trust);
 
-  // CTA Section
-  const cta = createElement('section', 'agents-page__cta');
-  const ctaContent = createElement('div', 'agents-page__cta-content');
+  // ── Join the Team CTA ──
+  const cta = createElement('section', 'agents-page__join');
+  const ctaContainer = createElement('div', 'container');
+  const ctaCard = createElement('div', 'agents-page__join-card');
 
-  const ctaTitle = createElement('h2', 'agents-page__cta-title', t('agentsPage.ctaTitle'));
-  ctaContent.appendChild(ctaTitle);
+  const ctaBadge = createElement('span', 'agents-page__join-badge', 'We’re Hiring');
+  ctaCard.appendChild(ctaBadge);
 
-  const ctaText = createElement('p', 'agents-page__cta-text');
-  ctaText.textContent = t('agentsPage.ctaText');
-  ctaContent.appendChild(ctaText);
+  const ctaTitle = createElement('h2', 'agents-page__join-title', 'Want to join the team?');
+  ctaCard.appendChild(ctaTitle);
 
-  const ctaActions = createElement('div', 'agents-page__cta-actions');
+  const ctaText = createElement('p', 'agents-page__join-text',
+    'We’re looking for one or two experienced consultants who care about doing this work well. Kurdistan property knowledge, fluency in Kurdish or Arabic, and a track record of closing deals will get our attention.');
+  ctaCard.appendChild(ctaText);
 
-  const contactBtn = createElement('a', 'btn btn--primary btn--lg', t('common.contactUs'));
+  const ctaActions = createElement('div', 'agents-page__join-actions');
+  const careersBtn = createElement('a', 'agents-page__join-btn agents-page__join-btn--primary');
+  careersBtn.href = '/careers';
+  careersBtn.setAttribute('data-route', '');
+  careersBtn.appendChild(document.createTextNode('View Open Roles'));
+  careersBtn.appendChild(createSVGUse('icon-arrow-right'));
+  ctaActions.appendChild(careersBtn);
+
+  const contactBtn = createElement('a', 'agents-page__join-btn agents-page__join-btn--ghost');
   contactBtn.href = '/contact';
   contactBtn.setAttribute('data-route', '');
+  contactBtn.textContent = 'Get In Touch';
   ctaActions.appendChild(contactBtn);
 
-  const propertiesBtn = createElement('a', 'btn btn--ghost btn--lg', t('projectsPage.browseProperties'));
-  propertiesBtn.href = '/properties';
-  propertiesBtn.setAttribute('data-route', '');
-  ctaActions.appendChild(propertiesBtn);
+  ctaCard.appendChild(ctaActions);
+  ctaContainer.appendChild(ctaCard);
+  cta.appendChild(ctaContainer);
+  page.appendChild(cta);
 
-  ctaContent.appendChild(ctaActions);
-  cta.appendChild(ctaContent);
-  container.appendChild(cta);
-
-  page.appendChild(container);
   fragment.appendChild(page);
-
-  // Initialize filter/sort after DOM is ready
-  setTimeout(() => {
-    const gridEl = document.getElementById('agents-grid');
-    if (gridEl) initFilterSort(gridEl);
-  }, 100);
-
   return fragment;
 }
 
@@ -392,7 +391,6 @@ export function setupAgentsPageSEO(): void {
     meta.setAttribute('content', 'Meet our expert real estate agents in Erbil, Kurdistan. Licensed professionals specializing in luxury villas, apartments, commercial properties, and investment. Contact us today!');
   }
 
-  // Inject agents list schema
   const schema = {
     '@context': 'https://schema.org',
     '@type': 'ItemList',

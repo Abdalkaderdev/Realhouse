@@ -230,115 +230,447 @@ function createPropertyCardMini(property: typeof properties[0]): HTMLElement {
   return card;
 }
 
+// ─── Decorative Hero Ornaments ────────────────────────────────────────────
+function createHeroOrnaments(): HTMLElement {
+  const ornaments = createElement('div', 'services-page__ornaments');
+  ornaments.setAttribute('aria-hidden', 'true');
+
+  // Glowing orbs
+  for (let i = 0; i < 3; i++) {
+    const orb = createElement('span', `services-page__orb services-page__orb--${i + 1}`);
+    ornaments.appendChild(orb);
+  }
+
+  // Decorative gold lines
+  const lineLeft = createElement('span', 'services-page__line services-page__line--left');
+  const lineRight = createElement('span', 'services-page__line services-page__line--right');
+  ornaments.appendChild(lineLeft);
+  ornaments.appendChild(lineRight);
+
+  // Floating diamond glyphs
+  for (let i = 0; i < 4; i++) {
+    const glyph = createElement('span', `services-page__glyph services-page__glyph--${i + 1}`);
+    glyph.textContent = '◆';
+    ornaments.appendChild(glyph);
+  }
+
+  return ornaments;
+}
+
+// ─── How It Works Step ────────────────────────────────────────────────────
+interface ProcessStep {
+  num: string;
+  title: string;
+  description: string;
+  icon: string;
+  duration: string;
+}
+
+function createTimelineStep(step: ProcessStep, idx: number, total: number): HTMLElement {
+  const node = createElement('div', 'services-page__timeline-step');
+  node.style.setProperty('--step-delay', `${idx * 120}ms`);
+
+  const connector = createElement('div', 'services-page__timeline-connector');
+  const dot = createElement('span', 'services-page__timeline-dot');
+  dot.textContent = step.num;
+  connector.appendChild(dot);
+  if (idx < total - 1) {
+    connector.appendChild(createElement('span', 'services-page__timeline-line'));
+  }
+  node.appendChild(connector);
+
+  const card = createElement('div', 'services-page__timeline-card');
+
+  const iconWrap = createElement('div', 'services-page__timeline-icon');
+  iconWrap.appendChild(createSVGUse(step.icon));
+  card.appendChild(iconWrap);
+
+  const titleRow = createElement('div', 'services-page__timeline-titlerow');
+  const title = createElement('h3', 'services-page__timeline-title', step.title);
+  const duration = createElement('span', 'services-page__timeline-duration', step.duration);
+  titleRow.appendChild(title);
+  titleRow.appendChild(duration);
+  card.appendChild(titleRow);
+
+  const desc = createElement('p', 'services-page__timeline-desc', step.description);
+  card.appendChild(desc);
+
+  node.appendChild(card);
+  return node;
+}
+
+// ─── Pricing Package Card ────────────────────────────────────────────────
+interface PricingPkg {
+  name: string;
+  tagline: string;
+  price: string;
+  unit: string;
+  features: string[];
+  featured?: boolean;
+  cta: string;
+}
+
+function createPricingCard(pkg: PricingPkg): HTMLElement {
+  const card = createElement('article', `services-page__pricing-card${pkg.featured ? ' services-page__pricing-card--featured' : ''}`);
+
+  if (pkg.featured) {
+    const badge = createElement('span', 'services-page__pricing-badge', 'Most Chosen');
+    card.appendChild(badge);
+  }
+
+  const header = createElement('div', 'services-page__pricing-header');
+  const name = createElement('h3', 'services-page__pricing-name', pkg.name);
+  header.appendChild(name);
+  const tagline = createElement('p', 'services-page__pricing-tagline', pkg.tagline);
+  header.appendChild(tagline);
+  card.appendChild(header);
+
+  const priceBlock = createElement('div', 'services-page__pricing-priceblock');
+  const price = createElement('span', 'services-page__pricing-price', pkg.price);
+  const unit = createElement('span', 'services-page__pricing-unit', pkg.unit);
+  priceBlock.appendChild(price);
+  priceBlock.appendChild(unit);
+  card.appendChild(priceBlock);
+
+  const features = createElement('ul', 'services-page__pricing-features');
+  pkg.features.forEach(feat => {
+    const li = createElement('li');
+    li.appendChild(createSVGUse('icon-check'));
+    li.appendChild(document.createTextNode(feat));
+    features.appendChild(li);
+  });
+  card.appendChild(features);
+
+  const cta = createElement('a', `btn ${pkg.featured ? 'btn--primary' : 'btn--ghost'} btn--block`, pkg.cta);
+  cta.href = '/contact';
+  cta.setAttribute('data-route', '');
+  card.appendChild(cta);
+
+  return card;
+}
+
+// ─── Highlight Testimonial Card ───────────────────────────────────────────
+function createHighlightTestimonial(testimonial: Testimonial): HTMLElement {
+  const card = createElement('div', 'services-page__highlight');
+
+  const quoteMark = createElement('span', 'services-page__highlight-mark');
+  quoteMark.textContent = '"';
+  quoteMark.setAttribute('aria-hidden', 'true');
+  card.appendChild(quoteMark);
+
+  const inner = createElement('div', 'services-page__highlight-inner');
+
+  const rating = createElement('div', 'services-page__highlight-rating');
+  for (let i = 0; i < 5; i++) {
+    rating.appendChild(createSVGUse(i < testimonial.rating ? 'icon-star' : 'icon-star-outline'));
+  }
+  inner.appendChild(rating);
+
+  const quote = createElement('blockquote', 'services-page__highlight-quote');
+  quote.textContent = testimonial.quote;
+  inner.appendChild(quote);
+
+  const author = createElement('div', 'services-page__highlight-author');
+  const avatar = createElement('img', 'services-page__highlight-avatar');
+  avatar.src = testimonial.image;
+  avatar.alt = testimonial.name;
+  avatar.loading = 'lazy';
+  author.appendChild(avatar);
+
+  const meta = createElement('div', 'services-page__highlight-meta');
+  const name = createElement('span', 'services-page__highlight-name', testimonial.name);
+  meta.appendChild(name);
+  const role = createElement('span', 'services-page__highlight-role', `${testimonial.role} · ${testimonial.location}`);
+  meta.appendChild(role);
+  author.appendChild(meta);
+
+  inner.appendChild(author);
+  card.appendChild(inner);
+
+  return card;
+}
+
 // ─── Services Overview Page ───────────────────────────────────────────────
 export function renderServicesPage(): DocumentFragment {
   const fragment = document.createDocumentFragment();
   const page = createElement('div', 'services-page');
 
-  // Hero Section
+  // ── Cinematic Hero Section ─────────────────────────────────────────────
   const hero = createElement('section', 'services-page__hero');
-  const heroContainer = createElement('div', 'container');
+  hero.appendChild(createHeroOrnaments());
 
-  const heroBadge = createElement('span', 'services-page__badge', t('common.ourServices'));
-  heroContainer.appendChild(heroBadge);
+  const heroContainer = createElement('div', 'container services-page__hero-container');
+
+  const heroEyebrow = createElement('div', 'services-page__eyebrow');
+  const eyebrowDot = createElement('span', 'services-page__eyebrow-dot');
+  heroEyebrow.appendChild(eyebrowDot);
+  const eyebrowText = createElement('span', undefined, t('common.ourServices'));
+  heroEyebrow.appendChild(eyebrowText);
+  heroContainer.appendChild(heroEyebrow);
 
   const heroTitle = createElement('h1', 'services-page__title');
-  heroTitle.textContent = 'Real Estate Erbil Services — ';
-  const heroTitleEm = createElement('em', undefined, 'Best Real Estate Agent Erbil');
-  heroTitle.appendChild(heroTitleEm);
+  const t1 = createElement('span', 'services-page__title-line', 'Real Estate Erbil');
+  heroTitle.appendChild(t1);
+  const t2 = createElement('span', 'services-page__title-line');
+  const t2em = createElement('em', undefined, 'Crafted Services');
+  t2.appendChild(t2em);
+  heroTitle.appendChild(t2);
   heroContainer.appendChild(heroTitle);
 
   const heroSubtitle = createElement('p', 'services-page__subtitle');
-  heroSubtitle.textContent = 'Real House provides property Erbil services for houses for sale Erbil, apartments Erbil Iraq, villas Erbil Iraq, and luxury homes Kurdistan. Our best real estate agent Erbil team delivers professional guidance to buy house Erbil and navigate the Erbil property market.';
+  heroSubtitle.textContent = 'From discovery to keys in hand. Real House delivers white-glove property sales, acquisitions, management, and legal support across Erbil, Kurdistan — built around your goals.';
   heroContainer.appendChild(heroSubtitle);
+
+  // Value props row
+  const valueProps = createElement('div', 'services-page__valueprops');
+  const props = [
+    { icon: 'icon-shield', label: 'Licensed & Verified' },
+    { icon: 'icon-star', label: '4.9 Client Rating' },
+    { icon: 'icon-check', label: '15+ Years Local Insight' },
+    { icon: 'icon-home', label: '500+ Properties Sold' }
+  ];
+  props.forEach(p => {
+    const item = createElement('div', 'services-page__valueprop');
+    const ic = createElement('span', 'services-page__valueprop-icon');
+    ic.appendChild(createSVGUse(p.icon));
+    item.appendChild(ic);
+    const lbl = createElement('span', undefined, p.label);
+    item.appendChild(lbl);
+    valueProps.appendChild(item);
+  });
+  heroContainer.appendChild(valueProps);
+
+  // Hero CTAs
+  const heroCtas = createElement('div', 'services-page__hero-ctas');
+  const heroCta1 = createElement('a', 'btn btn--primary btn--lg', t('common.getStarted'));
+  heroCta1.href = '/contact';
+  heroCta1.setAttribute('data-route', '');
+  heroCtas.appendChild(heroCta1);
+  const heroCta2 = createElement('a', 'btn btn--ghost btn--lg', 'Explore Services');
+  heroCta2.href = '#services-grid';
+  heroCtas.appendChild(heroCta2);
+  heroContainer.appendChild(heroCtas);
 
   hero.appendChild(heroContainer);
   page.appendChild(hero);
 
-  // Services Grid Section
+  // ── Featured Services Grid ─────────────────────────────────────────────
   const servicesSection = createElement('section', 'services-page__services');
+  servicesSection.id = 'services-grid';
   const servicesContainer = createElement('div', 'container');
 
+  const servicesHeader = createElement('div', 'services-page__section-header');
+  const servicesEyebrow = createElement('span', 'services-page__section-eyebrow', '— Our Expertise');
+  servicesHeader.appendChild(servicesEyebrow);
+  const servicesTitle = createElement('h2', 'services-page__section-title');
+  servicesTitle.textContent = 'A Complete Real Estate ';
+  const stEm = createElement('em', undefined, 'Concierge');
+  servicesTitle.appendChild(stEm);
+  servicesHeader.appendChild(servicesTitle);
+  const servicesSub = createElement('p', 'services-page__section-subtitle', 'Every service is led by a senior advisor — no scripts, no shortcuts.');
+  servicesHeader.appendChild(servicesSub);
+  servicesContainer.appendChild(servicesHeader);
+
   const servicesGrid = createElement('div', 'services-page__grid');
-  services.forEach(service => {
-    servicesGrid.appendChild(createServiceCard(service));
+  services.forEach((service, idx) => {
+    const card = createServiceCard(service);
+    card.style.setProperty('--card-delay', `${idx * 80}ms`);
+    servicesGrid.appendChild(card);
   });
   servicesContainer.appendChild(servicesGrid);
   servicesSection.appendChild(servicesContainer);
   page.appendChild(servicesSection);
 
-  // Why Choose Us Section
-  const whySection = createElement('section', 'services-page__why');
-  const whyContainer = createElement('div', 'container');
+  // ── How It Works Timeline ──────────────────────────────────────────────
+  const howSection = createElement('section', 'services-page__how');
+  const howContainer = createElement('div', 'container');
 
-  const whyHeader = createElement('div', 'services-page__section-header');
-  const whyTitle = createElement('h2', 'services-page__section-title', 'Why Choose Real House for Property Erbil?');
-  whyHeader.appendChild(whyTitle);
-  const whySubtitle = createElement('p', 'services-page__section-subtitle');
-  whySubtitle.textContent = 'Trusted by hundreds of clients for real estate Erbil - houses for sale Erbil and apartments Erbil Iraq services.';
-  whyHeader.appendChild(whySubtitle);
-  whyContainer.appendChild(whyHeader);
+  const howHeader = createElement('div', 'services-page__section-header');
+  const howEyebrow = createElement('span', 'services-page__section-eyebrow', '— Process');
+  howHeader.appendChild(howEyebrow);
+  const howTitle = createElement('h2', 'services-page__section-title');
+  howTitle.textContent = 'How It ';
+  const htEm = createElement('em', undefined, 'Works');
+  howTitle.appendChild(htEm);
+  howHeader.appendChild(howTitle);
+  const howSub = createElement('p', 'services-page__section-subtitle', 'Four refined steps from first call to signed contract.');
+  howHeader.appendChild(howSub);
+  howContainer.appendChild(howHeader);
 
-  const statsGrid = createElement('div', 'services-page__stats');
-
-  const stats = [
-    { value: '500+', label: t('servicesPage.propertiesListed') },
-    { value: '200+', label: t('servicesPage.happyClients') },
-    { value: '15+', label: t('servicesPage.yearsExperience') },
-    { value: '98%', label: t('servicesPage.clientSatisfaction') }
+  const timelineSteps: ProcessStep[] = [
+    { num: '01', title: 'Consult', description: 'A confidential conversation to map your goals, timeline, and budget. We surface what really matters.', icon: 'icon-phone', duration: 'Day 1' },
+    { num: '02', title: 'Search', description: 'Curated property shortlists with floor plans, comparables, and neighborhood intelligence delivered to your inbox.', icon: 'icon-home', duration: 'Week 1–2' },
+    { num: '03', title: 'Negotiate', description: 'Senior advisors handle every offer, counter, and concession — protecting your position from start to finish.', icon: 'icon-check', duration: 'Week 2–3' },
+    { num: '04', title: 'Close', description: 'Legal review, escrow coordination, and a seamless handover. Keys in hand, paperwork archived.', icon: 'icon-star', duration: 'Week 3–4' }
   ];
 
-  stats.forEach(stat => {
+  const timeline = createElement('div', 'services-page__timeline');
+  timelineSteps.forEach((step, idx) => {
+    timeline.appendChild(createTimelineStep(step, idx, timelineSteps.length));
+  });
+  howContainer.appendChild(timeline);
+  howSection.appendChild(howContainer);
+  page.appendChild(howSection);
+
+  // ── Pricing / Packages ─────────────────────────────────────────────────
+  const pricingSection = createElement('section', 'services-page__pricing');
+  const pricingContainer = createElement('div', 'container');
+
+  const pricingHeader = createElement('div', 'services-page__section-header');
+  const pricingEyebrow = createElement('span', 'services-page__section-eyebrow', '— Packages');
+  pricingHeader.appendChild(pricingEyebrow);
+  const pricingTitle = createElement('h2', 'services-page__section-title');
+  pricingTitle.textContent = 'Engagement ';
+  const ptEm = createElement('em', undefined, 'Tiers');
+  pricingTitle.appendChild(ptEm);
+  pricingHeader.appendChild(pricingTitle);
+  const pricingSub = createElement('p', 'services-page__section-subtitle', 'Transparent commission structures — pick the level of attention you need.');
+  pricingHeader.appendChild(pricingSub);
+  pricingContainer.appendChild(pricingHeader);
+
+  const packages: PricingPkg[] = [
+    {
+      name: 'Essential',
+      tagline: 'For self-directed buyers and sellers.',
+      price: '1.5%',
+      unit: 'transaction commission',
+      features: ['Professional listing photography', 'Featured on Real House portal', 'Standard contract templates', 'Weekly performance updates', 'Email & WhatsApp support'],
+      cta: 'Start with Essential'
+    },
+    {
+      name: 'Signature',
+      tagline: 'Our most popular full-service tier.',
+      price: '2.5%',
+      unit: 'transaction commission',
+      featured: true,
+      features: ['Everything in Essential', 'HDR photography + 360° tour', 'International portal syndication', 'Dedicated senior advisor', 'Contract negotiation support', 'Legal review included', 'Priority phone access'],
+      cta: 'Go Signature'
+    },
+    {
+      name: 'Bespoke',
+      tagline: 'Concierge-level for luxury & investment.',
+      price: 'Custom',
+      unit: 'tailored engagement',
+      features: ['Everything in Signature', 'Private off-market access', 'Drone & cinematic video', 'Dedicated PR campaign', 'Portfolio strategy sessions', 'Cross-border tax coordination', 'White-glove handover'],
+      cta: 'Request Bespoke'
+    }
+  ];
+
+  const pricingGrid = createElement('div', 'services-page__pricing-grid');
+  packages.forEach((pkg, idx) => {
+    const card = createPricingCard(pkg);
+    card.style.setProperty('--card-delay', `${idx * 100}ms`);
+    pricingGrid.appendChild(card);
+  });
+  pricingContainer.appendChild(pricingGrid);
+  pricingSection.appendChild(pricingContainer);
+  page.appendChild(pricingSection);
+
+  // ── Trust Signals Row ──────────────────────────────────────────────────
+  const trustSection = createElement('section', 'services-page__trust');
+  const trustContainer = createElement('div', 'container');
+
+  const trustHeader = createElement('div', 'services-page__section-header');
+  const trustEyebrow = createElement('span', 'services-page__section-eyebrow', '— By the Numbers');
+  trustHeader.appendChild(trustEyebrow);
+  const trustTitle = createElement('h2', 'services-page__section-title');
+  trustTitle.textContent = 'Trusted Across ';
+  const ttEm = createElement('em', undefined, 'Kurdistan');
+  trustTitle.appendChild(ttEm);
+  trustHeader.appendChild(trustTitle);
+  trustContainer.appendChild(trustHeader);
+
+  const statsGrid = createElement('div', 'services-page__stats');
+  const stats = [
+    { value: '500+', label: t('servicesPage.propertiesListed'), icon: 'icon-home' },
+    { value: '200+', label: t('servicesPage.happyClients'), icon: 'icon-check' },
+    { value: '15+', label: t('servicesPage.yearsExperience'), icon: 'icon-star' },
+    { value: '98%', label: t('servicesPage.clientSatisfaction'), icon: 'icon-shield' }
+  ];
+
+  stats.forEach((stat, idx) => {
     const statCard = createElement('div', 'services-page__stat');
+    statCard.style.setProperty('--stat-delay', `${idx * 100}ms`);
+    const statIcon = createElement('div', 'services-page__stat-icon');
+    statIcon.appendChild(createSVGUse(stat.icon));
+    statCard.appendChild(statIcon);
     const statValue = createElement('span', 'services-page__stat-value', stat.value);
     statCard.appendChild(statValue);
     const statLabel = createElement('span', 'services-page__stat-label', stat.label);
     statCard.appendChild(statLabel);
     statsGrid.appendChild(statCard);
   });
+  trustContainer.appendChild(statsGrid);
+  trustSection.appendChild(trustContainer);
+  page.appendChild(trustSection);
 
-  whyContainer.appendChild(statsGrid);
-  whySection.appendChild(whyContainer);
-  page.appendChild(whySection);
+  // ── Highlight Testimonial ──────────────────────────────────────────────
+  if (testimonials.length > 0) {
+    const highlightSection = createElement('section', 'services-page__highlight-section');
+    const highlightContainer = createElement('div', 'container');
+    highlightContainer.appendChild(createHighlightTestimonial(testimonials[0]));
+    highlightSection.appendChild(highlightContainer);
+    page.appendChild(highlightSection);
+  }
 
-  // Testimonials Section
+  // ── Additional Testimonials ────────────────────────────────────────────
   const testimonialsSection = createElement('section', 'services-page__testimonials');
   const testimonialsContainer = createElement('div', 'container');
 
   const testimonialsHeader = createElement('div', 'services-page__section-header');
-  const testimonialsTitle = createElement('h2', 'services-page__section-title', 'Property Erbil Client Testimonials');
+  const tEyebrow = createElement('span', 'services-page__section-eyebrow', '— Voices');
+  testimonialsHeader.appendChild(tEyebrow);
+  const testimonialsTitle = createElement('h2', 'services-page__section-title');
+  testimonialsTitle.textContent = 'What Clients ';
+  const tttEm = createElement('em', undefined, 'Say');
+  testimonialsTitle.appendChild(tttEm);
   testimonialsHeader.appendChild(testimonialsTitle);
   testimonialsContainer.appendChild(testimonialsHeader);
 
   const testimonialsGrid = createElement('div', 'services-page__testimonials-grid');
-  testimonials.slice(0, 3).forEach(testimonial => {
-    testimonialsGrid.appendChild(createTestimonialCard(testimonial));
+  testimonials.slice(1, 4).forEach((testimonial, idx) => {
+    const card = createTestimonialCard(testimonial);
+    card.style.setProperty('--card-delay', `${idx * 100}ms`);
+    testimonialsGrid.appendChild(card);
   });
   testimonialsContainer.appendChild(testimonialsGrid);
 
   testimonialsSection.appendChild(testimonialsContainer);
   page.appendChild(testimonialsSection);
 
-  // CTA Section
+  // ── Final CTA ──────────────────────────────────────────────────────────
   const ctaSection = createElement('section', 'services-page__cta');
+  const ctaOrn = createElement('div', 'services-page__cta-ornaments');
+  ctaOrn.setAttribute('aria-hidden', 'true');
+  for (let i = 0; i < 6; i++) {
+    ctaOrn.appendChild(createElement('span', `services-page__cta-glyph services-page__cta-glyph--${i + 1}`));
+  }
+  ctaSection.appendChild(ctaOrn);
+
   const ctaContainer = createElement('div', 'container');
   const ctaContent = createElement('div', 'services-page__cta-content');
 
-  const ctaTitle = createElement('h2', 'services-page__cta-title', 'Ready for Real Estate Erbil Services?');
+  const ctaEyebrow = createElement('span', 'services-page__cta-eyebrow', '— Begin');
+  ctaContent.appendChild(ctaEyebrow);
+
+  const ctaTitle = createElement('h2', 'services-page__cta-title');
+  ctaTitle.textContent = 'Ready for ';
+  const ctaTitleEm = createElement('em', undefined, 'Real Service?');
+  ctaTitle.appendChild(ctaTitleEm);
   ctaContent.appendChild(ctaTitle);
 
   const ctaText = createElement('p', 'services-page__cta-text');
-  ctaText.textContent = 'Contact our best real estate agent Erbil team for houses for sale Erbil, apartments Erbil Iraq, luxury homes Kurdistan, and property Erbil assistance.';
+  ctaText.textContent = 'Tell us what you need — we will respond personally within one business hour.';
   ctaContent.appendChild(ctaText);
 
   const ctaBtns = createElement('div', 'services-page__cta-btns');
 
-  const ctaBtn1 = createElement('a', 'btn btn--primary', t('common.contactUs'));
+  const ctaBtn1 = createElement('a', 'btn btn--primary btn--lg', t('common.contactUs'));
   ctaBtn1.href = '/contact';
   ctaBtn1.setAttribute('data-route', '');
   ctaBtns.appendChild(ctaBtn1);
 
-  const ctaBtn2 = createElement('a', 'btn btn--ghost', t('servicesPage.viewProperties'));
+  const ctaBtn2 = createElement('a', 'btn btn--ghost btn--lg', t('servicesPage.viewProperties'));
   ctaBtn2.href = '/properties';
   ctaBtn2.setAttribute('data-route', '');
   ctaBtns.appendChild(ctaBtn2);
@@ -389,6 +721,11 @@ export function renderServiceDetailPage(slug: string): DocumentFragment {
   const heroOverlay = createElement('div', 'service-detail-page__hero-overlay');
   hero.appendChild(heroOverlay);
 
+  // Decorative gold frame
+  const heroFrame = createElement('div', 'service-detail-page__hero-frame');
+  heroFrame.setAttribute('aria-hidden', 'true');
+  hero.appendChild(heroFrame);
+
   const heroContainer = createElement('div', 'container');
 
   // Breadcrumb
@@ -420,9 +757,14 @@ export function renderServiceDetailPage(slug: string): DocumentFragment {
 
   // Hero Content
   const heroContent = createElement('div', 'service-detail-page__hero-content');
+
+  const eyebrowRow = createElement('div', 'service-detail-page__hero-eyebrow');
   const heroIcon = createElement('div', 'service-detail-page__icon');
   heroIcon.appendChild(createSVGUse(service.icon));
-  heroContent.appendChild(heroIcon);
+  eyebrowRow.appendChild(heroIcon);
+  const eyebrowLabel = createElement('span', 'service-detail-page__hero-label', service.title);
+  eyebrowRow.appendChild(eyebrowLabel);
+  heroContent.appendChild(eyebrowRow);
 
   // Use SEO-optimized H1 title with target keyword
   const heroTitle = createElement('h1', 'service-detail-page__title', service.h1Title || service.title);
@@ -431,10 +773,16 @@ export function renderServiceDetailPage(slug: string): DocumentFragment {
   const heroSubtitle = createElement('p', 'service-detail-page__subtitle', service.shortDescription);
   heroContent.appendChild(heroSubtitle);
 
+  const heroCtaRow = createElement('div', 'service-detail-page__hero-ctas');
   const heroCta = createElement('a', 'btn btn--primary btn--lg', t('common.getStarted'));
   heroCta.href = '/contact';
   heroCta.setAttribute('data-route', '');
-  heroContent.appendChild(heroCta);
+  heroCtaRow.appendChild(heroCta);
+
+  const heroCta2 = createElement('a', 'btn btn--ghost btn--lg', 'Book a Call');
+  heroCta2.href = 'tel:+9647507922138';
+  heroCtaRow.appendChild(heroCta2);
+  heroContent.appendChild(heroCtaRow);
 
   heroContainer.appendChild(heroContent);
   hero.appendChild(heroContainer);

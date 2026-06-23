@@ -2,67 +2,67 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
         xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
   <!-- Real House Projects Sitemap - Auto-generated -->
-  <!-- Projects: 93 developments -->
-  <!-- Generated: 2026-03-28 -->
+  <!-- Projects: 85 developments -->
+  <!-- Generated: 2026-06-23 -->
 
   <url>
     <loc>https://realhouseiq.com/projects/empire-world</loc>
-    <lastmod>2026-03-28</lastmod>
+    <lastmod>2026-06-23</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
     <image:image>
-      <image:loc>https://images.unsplash.com/photo-1486325212027-8081e485255e?w=1200&amp;q=80&amp;fm=webp</image:loc>
-      <image:title>Empire World</image:title>
-      <image:caption>Empire World development in Gulan, Erbil</image:caption>
+      <image:loc>https://realhouseiq.com/images/projects/empire-world/01.jpeg</image:loc>
+      <image:title>Empire World - Empire World</image:title>
+      <image:caption>Empire World development in Gulan, Erbil by Empire World</image:caption>
     </image:image>
   </url>
   <url>
     <loc>https://realhouseiq.com/projects/dream-city</loc>
-    <lastmod>2026-03-28</lastmod>
+    <lastmod>2026-06-23</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
     <image:image>
-      <image:loc>https://images.unsplash.com/photo-1449824913935-59a10b8d2000?w=1200&amp;q=80&amp;fm=webp</image:loc>
-      <image:title>Dream City</image:title>
-      <image:caption>Dream City development in Dream City, Erbil</image:caption>
+      <image:loc>https://realhouseiq.com/images/projects/dream-city/page01_img01.jpeg</image:loc>
+      <image:title>Dream City - Nasri Group of Companies (NGC)</image:title>
+      <image:caption>Dream City development in Dream City, Erbil by Nasri Group of Companies (NGC)</image:caption>
     </image:image>
   </url>
   <url>
     <loc>https://realhouseiq.com/projects/italian-village</loc>
-    <lastmod>2026-03-28</lastmod>
+    <lastmod>2026-06-23</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
     <image:image>
-      <image:loc>https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=1200&amp;q=80&amp;fm=webp</image:loc>
-      <image:title>Italian City 1</image:title>
-      <image:caption>Italian City 1 development in Italian Village, Erbil</image:caption>
+      <image:loc>https://realhouseiq.com/images/projects/italian-village/01.jpg</image:loc>
+      <image:title>Italian City 1 - Hemn Group</image:title>
+      <image:caption>Italian City 1 development in Italian Village, Erbil by Hemn Group</image:caption>
     </image:image>
   </url>
   <url>
     <loc>https://realhouseiq.com/projects/english-village</loc>
-    <lastmod>2026-03-28</lastmod>
+    <lastmod>2026-06-23</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
     <image:image>
       <image:loc>https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=1200&amp;q=80&amp;fm=webp</image:loc>
-      <image:title>English Village</image:title>
-      <image:caption>English Village development in English Village, Erbil</image:caption>
+      <image:title>English Village - Hawler Housing Project</image:title>
+      <image:caption>English Village development in English Village, Erbil by Hawler Housing Project</image:caption>
     </image:image>
   </url>
   <url>
     <loc>https://realhouseiq.com/projects/boulevard</loc>
-    <lastmod>2026-03-28</lastmod>
+    <lastmod>2026-06-23</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
     <image:image>
-      <image:loc>https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=1200&amp;q=80&amp;fm=webp</image:loc>
+      <image:loc>https://realhouseiq.com/images/projects/boulevard/01.webp</image:loc>
       <image:title>The Boulevard - 4Bridges</image:title>
       <image:caption>The Boulevard development in Gulan, Erbil by 4Bridges</image:caption>
     </image:image>
   </url>
   <url>
     <loc>https://realhouseiq.com/projects/cavalli-tower</loc>
-    <lastmod>2026-03-28</lastmod>
+    <lastmod>2026-06-23</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
     <image:image>
@@ -73,7 +73,7 @@
   </url>
   <url>
     <loc>https://realhouseiq.com/projects/tulip-towers</loc>
-    <lastmod>2026-03-28</lastmod>
+    <lastmod>2026-06-23</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
     <image:image>
@@ -83,393 +83,390 @@
     </image:image>
   </url>
   <url>
-    <loc>https://realhouseiq.com/projects/london-towers</loc>
-    <lastmod>2026-03-28</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
-    <image:image>
-      <image:loc>https://images.unsplash.com/photo-1486325212027-8081e485255e?w=1200&amp;q=80&amp;fm=webp</image:loc>
-      <image:title>London Towers</image:title>
-      <image:caption>London Towers development in Waziran, Erbil</image:caption>
-    </image:image>
-  </url>
-  <url>
     <loc>https://realhouseiq.com/projects/mnw-towers</loc>
-    <lastmod>2026-03-28</lastmod>
+    <lastmod>2026-06-23</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://realhouseiq.com/projects/pavilion-erbil</loc>
-    <lastmod>2026-03-28</lastmod>
+    <lastmod>2026-06-23</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
     <image:image>
-      <image:loc>https://images.unsplash.com/photo-1512917774080-9991f1c4c750?w=1200&amp;q=80&amp;fm=webp</image:loc>
-      <image:title>Pavilion by Rams</image:title>
-      <image:caption>Pavilion by Rams development in Pavilion, Erbil</image:caption>
+      <image:loc>https://realhouseiq.com/images/projects/mnw-towers/01.jpg</image:loc>
+      <image:title>Pavilion by Rams - RAMS Global / Lalav Group</image:title>
+      <image:caption>Pavilion by Rams development in Pavilion, Erbil by RAMS Global / Lalav Group</image:caption>
     </image:image>
   </url>
   <url>
     <loc>https://realhouseiq.com/projects/lebanese-village</loc>
-    <lastmod>2026-03-28</lastmod>
+    <lastmod>2026-06-23</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://realhouseiq.com/projects/downtown-erbil</loc>
-    <lastmod>2026-03-28</lastmod>
+    <lastmod>2026-06-23</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
     <image:image>
       <image:loc>https://images.unsplash.com/photo-1449824913935-59a10b8d2000?w=1200&amp;q=80&amp;fm=webp</image:loc>
-      <image:title>Downtown Erbil</image:title>
-      <image:caption>Downtown Erbil development in Downtown, Erbil</image:caption>
+      <image:title>Downtown Erbil - Emaar Properties</image:title>
+      <image:caption>Downtown Erbil development in Downtown, Erbil by Emaar Properties</image:caption>
     </image:image>
   </url>
   <url>
     <loc>https://realhouseiq.com/projects/sky-towers</loc>
-    <lastmod>2026-03-28</lastmod>
+    <lastmod>2026-06-23</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
+    <image:image>
+      <image:loc>https://realhouseiq.com/images/projects/sky-towers/01.jpg</image:loc>
+      <image:title>Sky Towers - Galiawa Group</image:title>
+      <image:caption>Sky Towers development in 100 Meter Road, Erbil by Galiawa Group</image:caption>
+    </image:image>
   </url>
   <url>
     <loc>https://realhouseiq.com/projects/zaniary-towers</loc>
-    <lastmod>2026-03-28</lastmod>
+    <lastmod>2026-06-23</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://realhouseiq.com/projects/american-village</loc>
-    <lastmod>2026-03-28</lastmod>
+    <lastmod>2026-06-23</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://realhouseiq.com/projects/ankawa-4-towers</loc>
-    <lastmod>2026-03-28</lastmod>
+    <lastmod>2026-06-23</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
+    <image:image>
+      <image:loc>https://realhouseiq.com/images/projects/ankawa-4-towers/01.jpg</image:loc>
+      <image:title>Ankawa 4 Towers - Ashur Ban Company</image:title>
+      <image:caption>Ankawa 4 Towers development in Ankawa, Erbil by Ashur Ban Company</image:caption>
+    </image:image>
   </url>
   <url>
     <loc>https://realhouseiq.com/projects/naz-city</loc>
-    <lastmod>2026-03-28</lastmod>
+    <lastmod>2026-06-23</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://realhouseiq.com/projects/gulan-towers</loc>
-    <lastmod>2026-03-28</lastmod>
+    <lastmod>2026-06-23</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
+    <image:image>
+      <image:loc>https://realhouseiq.com/images/projects/gulan-towers/01.jpeg</image:loc>
+      <image:title>Gulan Park-WTC Towers - SB Ozel Group</image:title>
+      <image:caption>Gulan Park-WTC Towers development in Gulan, Erbil by SB Ozel Group</image:caption>
+    </image:image>
   </url>
   <url>
     <loc>https://realhouseiq.com/projects/roya-towers</loc>
-    <lastmod>2026-03-28</lastmod>
+    <lastmod>2026-06-23</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://realhouseiq.com/projects/quattro-towers</loc>
-    <lastmod>2026-03-28</lastmod>
+    <lastmod>2026-06-23</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://realhouseiq.com/projects/star-towers</loc>
-    <lastmod>2026-03-28</lastmod>
+    <lastmod>2026-06-23</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://realhouseiq.com/projects/garden-city</loc>
-    <lastmod>2026-03-28</lastmod>
+    <lastmod>2026-06-23</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://realhouseiq.com/projects/ganjan-city</loc>
-    <lastmod>2026-03-28</lastmod>
+    <lastmod>2026-06-23</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://realhouseiq.com/projects/hiwa-city</loc>
-    <lastmod>2026-03-28</lastmod>
+    <lastmod>2026-06-23</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://realhouseiq.com/projects/majidi-view</loc>
-    <lastmod>2026-03-28</lastmod>
+    <lastmod>2026-06-23</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://realhouseiq.com/projects/kurdistan-city</loc>
-    <lastmod>2026-03-28</lastmod>
+    <lastmod>2026-06-23</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
+    <image:image>
+      <image:loc>https://realhouseiq.com/images/projects/kurdistan-city/01.jpg</image:loc>
+      <image:title>Kurdistan City - Rostvale Company</image:title>
+      <image:caption>Kurdistan City development in 150 Meter Road, Erbil by Rostvale Company</image:caption>
+    </image:image>
   </url>
   <url>
     <loc>https://realhouseiq.com/projects/signature-towers</loc>
-    <lastmod>2026-03-28</lastmod>
+    <lastmod>2026-06-23</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://realhouseiq.com/projects/rotana-hotel-residences</loc>
-    <lastmod>2026-03-28</lastmod>
+    <lastmod>2026-06-23</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
     <image:image>
-      <image:loc>https://images.unsplash.com/photo-1566073771259-6a8506099945?w=1200&amp;q=80&amp;fm=webp</image:loc>
-      <image:title>Erbil Arjaan by Rotana</image:title>
-      <image:caption>Erbil Arjaan by Rotana development in 100 Meter Road, Erbil</image:caption>
+      <image:loc>https://images.unsplash.com/photo-1566073771259-6a8506099945?w=800&amp;q=80&amp;fm=webp</image:loc>
+      <image:title>Erbil Arjaan by Rotana - Rotana Hotels</image:title>
+      <image:caption>Erbil Arjaan by Rotana development in 100 Meter Road, Erbil by Rotana Hotels</image:caption>
     </image:image>
   </url>
   <url>
     <loc>https://realhouseiq.com/projects/divan-erbil</loc>
-    <lastmod>2026-03-28</lastmod>
+    <lastmod>2026-06-23</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
     <image:image>
-      <image:loc>https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?w=1200&amp;q=80&amp;fm=webp</image:loc>
-      <image:title>Divan Erbil</image:title>
-      <image:caption>Divan Erbil development in Gulan, Erbil</image:caption>
+      <image:loc>https://realhouseiq.com/images/projects/divan-erbil/01.jpg</image:loc>
+      <image:title>Divan Erbil - Elegan Group</image:title>
+      <image:caption>Divan Erbil development in Gulan, Erbil by Elegan Group</image:caption>
     </image:image>
   </url>
   <url>
     <loc>https://realhouseiq.com/projects/marriott-erbil-residences</loc>
-    <lastmod>2026-03-28</lastmod>
+    <lastmod>2026-06-23</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://realhouseiq.com/projects/kempinski-erbil</loc>
-    <lastmod>2026-03-28</lastmod>
+    <lastmod>2026-06-23</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
+    <image:image>
+      <image:loc>https://realhouseiq.com/images/projects/kempinski-erbil/01.jpg</image:loc>
+      <image:title>Kempinski Erbil - Via Group</image:title>
+      <image:caption>Kempinski Erbil development in Ankawa, Erbil by Via Group</image:caption>
+    </image:image>
   </url>
   <url>
     <loc>https://realhouseiq.com/projects/royal-city</loc>
-    <lastmod>2026-03-28</lastmod>
+    <lastmod>2026-06-23</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://realhouseiq.com/projects/sarbast-heights</loc>
-    <lastmod>2026-03-28</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
+    <image:image>
+      <image:loc>https://realhouseiq.com/images/projects/royal-city/01.jpeg</image:loc>
+      <image:title>Royal City - Falcon Group / Empire World</image:title>
+      <image:caption>Royal City development in Pirmam, Erbil by Falcon Group / Empire World</image:caption>
+    </image:image>
   </url>
   <url>
     <loc>https://realhouseiq.com/projects/newroz-city</loc>
-    <lastmod>2026-03-28</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://realhouseiq.com/projects/classy-tower</loc>
-    <lastmod>2026-03-28</lastmod>
+    <lastmod>2026-06-23</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://realhouseiq.com/projects/royal-towers</loc>
-    <lastmod>2026-03-28</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://realhouseiq.com/projects/amna-suraka-development</loc>
-    <lastmod>2026-03-28</lastmod>
+    <lastmod>2026-06-23</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://realhouseiq.com/projects/family-village</loc>
-    <lastmod>2026-03-28</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://realhouseiq.com/projects/sami-abdulrahman-park-residences</loc>
-    <lastmod>2026-03-28</lastmod>
+    <lastmod>2026-06-23</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://realhouseiq.com/projects/naz-towers</loc>
-    <lastmod>2026-03-28</lastmod>
+    <lastmod>2026-06-23</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://realhouseiq.com/projects/park-view</loc>
-    <lastmod>2026-03-28</lastmod>
+    <lastmod>2026-06-23</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://realhouseiq.com/projects/ster-tower</loc>
-    <lastmod>2026-03-28</lastmod>
+    <lastmod>2026-06-23</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://realhouseiq.com/projects/cihan-tower</loc>
-    <lastmod>2026-03-28</lastmod>
+    <lastmod>2026-06-23</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://realhouseiq.com/projects/asia-city</loc>
-    <lastmod>2026-03-28</lastmod>
+    <lastmod>2026-06-23</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://realhouseiq.com/projects/hawler-city</loc>
-    <lastmod>2026-03-28</lastmod>
+    <lastmod>2026-06-23</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://realhouseiq.com/projects/venus-tower</loc>
-    <lastmod>2026-03-28</lastmod>
+    <lastmod>2026-06-23</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
+    <image:image>
+      <image:loc>https://realhouseiq.com/images/projects/venus-tower/01.png</image:loc>
+      <image:title>Venus Tower - Lalav Group</image:title>
+      <image:caption>Venus Tower development in 60 Meter Road, Erbil by Lalav Group</image:caption>
+    </image:image>
   </url>
   <url>
     <loc>https://realhouseiq.com/projects/crystal-tower</loc>
-    <lastmod>2026-03-28</lastmod>
+    <lastmod>2026-06-23</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://realhouseiq.com/projects/new-eskan</loc>
-    <lastmod>2026-03-28</lastmod>
+    <lastmod>2026-06-23</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://realhouseiq.com/projects/cihan-city</loc>
-    <lastmod>2026-03-28</lastmod>
+    <lastmod>2026-06-23</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://realhouseiq.com/projects/mrf-towers</loc>
-    <lastmod>2026-03-28</lastmod>
+    <lastmod>2026-06-23</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://realhouseiq.com/projects/the-atlantic</loc>
-    <lastmod>2026-03-28</lastmod>
+    <lastmod>2026-06-23</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://realhouseiq.com/projects/nawroz-city</loc>
-    <lastmod>2026-03-28</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://realhouseiq.com/projects/msy-nefes</loc>
-    <lastmod>2026-03-28</lastmod>
+    <lastmod>2026-06-23</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://realhouseiq.com/projects/aram-village</loc>
-    <lastmod>2026-03-28</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://realhouseiq.com/projects/qaiwan-mirador</loc>
-    <lastmod>2026-03-28</lastmod>
+    <lastmod>2026-06-23</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://realhouseiq.com/projects/erbil-one-tower</loc>
-    <lastmod>2026-03-28</lastmod>
+    <lastmod>2026-06-23</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
+    <image:image>
+      <image:loc>https://realhouseiq.com/images/projects/erbil-one-tower/01.jpg</image:loc>
+      <image:title>Erbil One Tower - Kirmanj Group</image:title>
+      <image:caption>Erbil One Tower development in 100 Meter Road, Erbil by Kirmanj Group</image:caption>
+    </image:image>
   </url>
   <url>
     <loc>https://realhouseiq.com/projects/life-tower</loc>
-    <lastmod>2026-03-28</lastmod>
+    <lastmod>2026-06-23</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://realhouseiq.com/projects/miran-city</loc>
-    <lastmod>2026-03-28</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
+    <image:image>
+      <image:loc>https://realhouseiq.com/images/projects/life-tower/01.jpg</image:loc>
+      <image:title>Life Tower - Tanj Group</image:title>
+      <image:caption>Life Tower development in Gulan, Erbil by Tanj Group</image:caption>
+    </image:image>
   </url>
   <url>
     <loc>https://realhouseiq.com/projects/four-towers</loc>
-    <lastmod>2026-03-28</lastmod>
+    <lastmod>2026-06-23</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://realhouseiq.com/projects/zanko-village</loc>
-    <lastmod>2026-03-28</lastmod>
+    <lastmod>2026-06-23</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://realhouseiq.com/projects/diplomati-safiran</loc>
-    <lastmod>2026-03-28</lastmod>
+    <lastmod>2026-06-23</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
+    <image:image>
+      <image:loc>https://realhouseiq.com/images/projects/diplomati-safiran/01.jpg</image:loc>
+      <image:title>Diplomati Safiran - Bramak Company</image:title>
+      <image:caption>Diplomati Safiran development in Diplomatic Quarter, Erbil by Bramak Company</image:caption>
+    </image:image>
   </url>
   <url>
     <loc>https://realhouseiq.com/projects/lana-city</loc>
-    <lastmod>2026-03-28</lastmod>
+    <lastmod>2026-06-23</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://realhouseiq.com/projects/mnara-village</loc>
-    <lastmod>2026-03-28</lastmod>
+    <lastmod>2026-06-23</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://realhouseiq.com/projects/zaner-city</loc>
-    <lastmod>2026-03-28</lastmod>
+    <lastmod>2026-06-23</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://realhouseiq.com/projects/zilan-city</loc>
-    <lastmod>2026-03-28</lastmod>
+    <lastmod>2026-06-23</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://realhouseiq.com/projects/z-center-towers</loc>
-    <lastmod>2026-03-28</lastmod>
+    <lastmod>2026-06-23</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://realhouseiq.com/projects/safiran-city</loc>
-    <lastmod>2026-03-28</lastmod>
+    <lastmod>2026-06-23</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://realhouseiq.com/projects/ruby-towers</loc>
-    <lastmod>2026-03-28</lastmod>
+    <lastmod>2026-06-23</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
     <image:image>
@@ -480,77 +477,82 @@
   </url>
   <url>
     <loc>https://realhouseiq.com/projects/four-season-park</loc>
-    <lastmod>2026-03-28</lastmod>
+    <lastmod>2026-06-23</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://realhouseiq.com/projects/family-land</loc>
-    <lastmod>2026-03-28</lastmod>
+    <lastmod>2026-06-23</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://realhouseiq.com/projects/firdaws-city</loc>
-    <lastmod>2026-03-28</lastmod>
+    <lastmod>2026-06-23</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://realhouseiq.com/projects/dubai-city</loc>
-    <lastmod>2026-03-28</lastmod>
+    <lastmod>2026-06-23</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://realhouseiq.com/projects/bakhtyari-twin-towers</loc>
-    <lastmod>2026-03-28</lastmod>
+    <lastmod>2026-06-23</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://realhouseiq.com/projects/queen-towers</loc>
-    <lastmod>2026-03-28</lastmod>
+    <lastmod>2026-06-23</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
     <image:image>
-      <image:loc>https://realhouseiq.com/images/projects/queen-towers/page01_img01.jpeg</image:loc>
+      <image:loc>https://realhouseiq.com/images/projects/bakhtyari-twin-towers/01.jpg</image:loc>
       <image:title>Queen Tower</image:title>
       <image:caption>Queen Tower development in NazNaz, Erbil</image:caption>
     </image:image>
   </url>
   <url>
     <loc>https://realhouseiq.com/projects/hana-city</loc>
-    <lastmod>2026-03-28</lastmod>
+    <lastmod>2026-06-23</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://realhouseiq.com/projects/asuda-city</loc>
-    <lastmod>2026-03-28</lastmod>
+    <lastmod>2026-06-23</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://realhouseiq.com/projects/green-world</loc>
-    <lastmod>2026-03-28</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://realhouseiq.com/projects/salam-residences</loc>
-    <lastmod>2026-03-28</lastmod>
+    <lastmod>2026-06-23</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
     <image:image>
-      <image:loc>https://realhouseiq.com/images/projects/salam-residences/page04_img01.jpeg</image:loc>
+      <image:loc>https://realhouseiq.com/images/projects/green-world/01.jpg</image:loc>
+      <image:title>Green World - SUA Insaat</image:title>
+      <image:caption>Green World development in Shaqlawa Road, Erbil by SUA Insaat</image:caption>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://realhouseiq.com/projects/salam-residences</loc>
+    <lastmod>2026-06-23</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+    <image:image>
+      <image:loc>https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=800&amp;q=80&amp;fm=webp</image:loc>
       <image:title>Salam Residences - Salam Group</image:title>
       <image:caption>Salam Residences development in Gulan, Erbil by Salam Group</image:caption>
     </image:image>
   </url>
   <url>
     <loc>https://realhouseiq.com/projects/rami-towers</loc>
-    <lastmod>2026-03-28</lastmod>
+    <lastmod>2026-06-23</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
     <image:image>
@@ -561,7 +563,7 @@
   </url>
   <url>
     <loc>https://realhouseiq.com/projects/spanish-village</loc>
-    <lastmod>2026-03-28</lastmod>
+    <lastmod>2026-06-23</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
     <image:image>
@@ -572,7 +574,7 @@
   </url>
   <url>
     <loc>https://realhouseiq.com/projects/aram-towers</loc>
-    <lastmod>2026-03-28</lastmod>
+    <lastmod>2026-06-23</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
     <image:image>
@@ -583,7 +585,7 @@
   </url>
   <url>
     <loc>https://realhouseiq.com/projects/empire-square</loc>
-    <lastmod>2026-03-28</lastmod>
+    <lastmod>2026-06-23</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
     <image:image>
@@ -594,7 +596,7 @@
   </url>
   <url>
     <loc>https://realhouseiq.com/projects/erbil-garden</loc>
-    <lastmod>2026-03-28</lastmod>
+    <lastmod>2026-06-23</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
     <image:image>
@@ -605,7 +607,7 @@
   </url>
   <url>
     <loc>https://realhouseiq.com/projects/north-holland</loc>
-    <lastmod>2026-03-28</lastmod>
+    <lastmod>2026-06-23</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
     <image:image>
@@ -616,7 +618,7 @@
   </url>
   <url>
     <loc>https://realhouseiq.com/projects/spanish-village-2</loc>
-    <lastmod>2026-03-28</lastmod>
+    <lastmod>2026-06-23</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
     <image:image>
@@ -627,50 +629,65 @@
   </url>
   <url>
     <loc>https://realhouseiq.com/projects/vana-towers</loc>
-    <lastmod>2026-03-28</lastmod>
+    <lastmod>2026-06-23</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://realhouseiq.com/projects/alaska-towers</loc>
-    <lastmod>2026-03-28</lastmod>
+    <lastmod>2026-06-23</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://realhouseiq.com/projects/english-tower</loc>
-    <lastmod>2026-03-28</lastmod>
+    <lastmod>2026-06-23</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://realhouseiq.com/projects/london-towers</loc>
-    <lastmod>2026-03-28</lastmod>
+    <lastmod>2026-06-23</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
+    <image:image>
+      <image:loc>https://realhouseiq.com/images/projects/vana-towers/page02_img01.jpeg</image:loc>
+      <image:title>London Towers - London Group</image:title>
+      <image:caption>London Towers development in Gulan, Erbil by London Group</image:caption>
+    </image:image>
   </url>
   <url>
     <loc>https://realhouseiq.com/projects/qaiwan-mirador</loc>
-    <lastmod>2026-03-28</lastmod>
+    <lastmod>2026-06-23</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://realhouseiq.com/projects/green-land-erbil</loc>
-    <lastmod>2026-03-28</lastmod>
+    <lastmod>2026-06-23</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
     <loc>https://realhouseiq.com/projects/address-city</loc>
-    <lastmod>2026-03-28</lastmod>
+    <lastmod>2026-06-23</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
+    <image:image>
+      <image:loc>https://realhouseiq.com/images/projects/address-city/01.png</image:loc>
+      <image:title>Address City - Address Erbil Company</image:title>
+      <image:caption>Address City development in Bahirka, Erbil by Address Erbil Company</image:caption>
+    </image:image>
   </url>
   <url>
     <loc>https://realhouseiq.com/projects/mirage-city</loc>
-    <lastmod>2026-03-28</lastmod>
+    <lastmod>2026-06-23</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
+    <image:image>
+      <image:loc>https://realhouseiq.com/images/projects/mirage-city/01.png</image:loc>
+      <image:title>Mirage City - Address Erbil Company</image:title>
+      <image:caption>Mirage City development in Northeast, Erbil by Address Erbil Company</image:caption>
+    </image:image>
   </url>
 </urlset>

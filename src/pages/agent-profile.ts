@@ -1,5 +1,5 @@
 // ═══════════════════════════════════════════════════════════════════════════
-// Agent Profile Page
+// Agent Profile Page - Cinematic Editorial Redesign
 // /agents/:slug - Individual agent detail page
 // ═══════════════════════════════════════════════════════════════════════════
 
@@ -7,6 +7,7 @@ import {
   getAgentBySlug,
   generateAgentSchema,
   formatSalesVolume,
+  agents,
   type Agent
 } from '../data/agents';
 import { properties, type Property } from '../data/properties';
@@ -31,6 +32,7 @@ function createElement<K extends keyof HTMLElementTagNameMap>(
 function createSVGUse(iconId: string): SVGSVGElement {
   const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
   svg.setAttribute('class', 'icon');
+  svg.setAttribute('aria-hidden', 'true');
   const use = document.createElementNS('http://www.w3.org/2000/svg', 'use');
   use.setAttributeNS('http://www.w3.org/1999/xlink', 'href', `#${iconId}`);
   svg.appendChild(use);
@@ -48,7 +50,6 @@ function getAgentDetailBreadcrumbs(agent: Agent) {
 
 // ─── Get Agent Properties ───────────────────────────────────────────────────
 function getAgentProperties(agent: Agent): Property[] {
-  // Return properties from agent's featured areas (simulated assignment)
   return properties
     .filter(p => agent.featuredAreas.some(area =>
       p.location.district.toLowerCase().includes(area.toLowerCase()) ||
@@ -57,12 +58,37 @@ function getAgentProperties(agent: Agent): Property[] {
     .slice(0, 6);
 }
 
+// ─── Language flag emoji helper ─────────────────────────────────────────────
+function getLanguageFlag(lang: string): string {
+  const map: Record<string, string> = {
+    'Kurdish': '🇮🇶',
+    'Arabic': '🇸🇦',
+    'English': '🇬🇧',
+    'Turkish': '🇹🇷',
+    'Persian': '🇮🇷',
+    'French': '🇫🇷',
+    'German': '🇩🇪',
+    'Spanish': '🇪🇸'
+  };
+  return map[lang] || '🌐';
+}
+
+// ─── Specialization Icon Mapping ────────────────────────────────────────────
+function getSpecIcon(spec: string): string {
+  const s = spec.toLowerCase();
+  if (s.includes('villa') || s.includes('residential') || s.includes('home')) return 'icon-home';
+  if (s.includes('commercial') || s.includes('investment') || s.includes('roi')) return 'icon-chart';
+  if (s.includes('luxury') || s.includes('high-end') || s.includes('dream')) return 'icon-award';
+  if (s.includes('waterfront') || s.includes('off-plan')) return 'icon-building';
+  return 'icon-check';
+}
+
 // ─── Create Star Rating ─────────────────────────────────────────────────────
 function createStarRating(rating: number): HTMLElement {
   const stars = createElement('div', 'agent-profile__stars');
   for (let i = 1; i <= 5; i++) {
     const star = createElement('span', i <= rating ? 'agent-profile__star agent-profile__star--filled' : 'agent-profile__star');
-    star.textContent = '\u2605'; // Unicode star
+    star.textContent = '★';
     stars.appendChild(star);
   }
   return stars;
@@ -70,7 +96,10 @@ function createStarRating(rating: number): HTMLElement {
 
 // ─── Create Testimonial Card ────────────────────────────────────────────────
 function createTestimonialCard(testimonial: Agent['testimonials'][0]): HTMLElement {
-  const card = createElement('div', 'agent-profile__testimonial');
+  const card = createElement('figure', 'agent-profile__testimonial');
+
+  const quoteMark = createElement('span', 'agent-profile__testimonial-quote', '“');
+  card.appendChild(quoteMark);
 
   const header = createElement('div', 'agent-profile__testimonial-header');
   header.appendChild(createStarRating(testimonial.rating));
@@ -79,13 +108,12 @@ function createTestimonialCard(testimonial: Agent['testimonials'][0]): HTMLEleme
     const badge = createElement('span', 'agent-profile__testimonial-badge', testimonial.propertyType);
     header.appendChild(badge);
   }
-
   card.appendChild(header);
 
-  const text = createElement('p', 'agent-profile__testimonial-text', `"${testimonial.text}"`);
+  const text = createElement('blockquote', 'agent-profile__testimonial-text', testimonial.text);
   card.appendChild(text);
 
-  const footer = createElement('div', 'agent-profile__testimonial-footer');
+  const footer = createElement('figcaption', 'agent-profile__testimonial-footer');
   const clientName = createElement('span', 'agent-profile__testimonial-client', testimonial.clientName);
   footer.appendChild(clientName);
   const clientLocation = createElement('span', 'agent-profile__testimonial-location', testimonial.clientLocation);
@@ -134,12 +162,43 @@ function createCompactPropertyCard(property: Property): HTMLElement {
   }
   const baths = createElement('span', undefined, `${property.specs.baths} ${t('agentProfile.baths')}`);
   specs.appendChild(baths);
-  const sqm = createElement('span', undefined, `${property.specs.sqm} m\u00B2`);
+  const sqm = createElement('span', undefined, `${property.specs.sqm} m²`);
   specs.appendChild(sqm);
   content.appendChild(specs);
 
   card.appendChild(content);
 
+  return card;
+}
+
+// ─── Other Team Member Card ──────────────────────────────────────────────────
+function createOtherMemberCard(agent: Agent): HTMLElement {
+  const card = createElement('a', 'agent-profile__other-card');
+  card.href = `/agents/${agent.slug}`;
+  card.setAttribute('data-route', '');
+
+  const imageWrap = createElement('div', 'agent-profile__other-image-wrap');
+  const image = createElement('img', 'agent-profile__other-image') as HTMLImageElement;
+  image.src = agent.image;
+  image.alt = agent.name;
+  image.loading = 'lazy';
+  image.width = 200;
+  image.height = 240;
+  imageWrap.appendChild(image);
+  card.appendChild(imageWrap);
+
+  const body = createElement('div', 'agent-profile__other-body');
+  const name = createElement('h4', 'agent-profile__other-name', agent.name);
+  body.appendChild(name);
+  const role = createElement('p', 'agent-profile__other-role', agent.role);
+  body.appendChild(role);
+
+  const cta = createElement('span', 'agent-profile__other-cta');
+  cta.appendChild(document.createTextNode('View profile'));
+  cta.appendChild(createSVGUse('icon-arrow-right'));
+  body.appendChild(cta);
+
+  card.appendChild(body);
   return card;
 }
 
@@ -152,22 +211,18 @@ export function renderAgentProfilePage(slug: string): DocumentFragment {
   const agent = getAgentBySlug(slug);
 
   if (!agent) {
-    // 404 state
     const page = createElement('div', 'agent-profile-page agent-profile-page--not-found');
     const container = createElement('div', 'container');
 
     const notFound = createElement('div', 'agent-profile-page__not-found');
     const title = createElement('h1', undefined, t('agentProfile.agentNotFound'));
     notFound.appendChild(title);
-
     const text = createElement('p', undefined, t('agentProfile.agentNotFoundMessage'));
     notFound.appendChild(text);
-
     const backLink = createElement('a', 'btn btn--primary', t('agentProfile.viewAllAgents'));
     backLink.href = '/agents';
     backLink.setAttribute('data-route', '');
     notFound.appendChild(backLink);
-
     container.appendChild(notFound);
     page.appendChild(container);
     fragment.appendChild(page);
@@ -179,211 +234,285 @@ export function renderAgentProfilePage(slug: string): DocumentFragment {
 
   const page = createElement('div', 'agent-profile-page');
 
-  // Hero Section
+  // ═══════════════════════════════════════════════════════════════════════
+  // CINEMATIC HERO - Full-bleed photo + gradient + content
+  // ═══════════════════════════════════════════════════════════════════════
   const hero = createElement('section', 'agent-profile__hero');
-  const heroContainer = createElement('div', 'container');
 
+  const heroBg = createElement('div', 'agent-profile__hero-bg');
+  heroBg.setAttribute('aria-hidden', 'true');
+  const heroImage = createElement('div', 'agent-profile__hero-image');
+  heroImage.style.backgroundImage = `url(${agent.image})`;
+  heroBg.appendChild(heroImage);
+  const heroGradient = createElement('div', 'agent-profile__hero-gradient');
+  heroBg.appendChild(heroGradient);
+  const heroGrain = createElement('div', 'agent-profile__hero-grain');
+  heroBg.appendChild(heroGrain);
+  hero.appendChild(heroBg);
+
+  const heroContainer = createElement('div', 'container');
   heroContainer.appendChild(createBreadcrumbs(breadcrumbs));
 
   const heroContent = createElement('div', 'agent-profile__hero-content');
 
-  // Agent Image
-  const imageWrapper = createElement('div', 'agent-profile__image-wrapper');
-  const image = createElement('img', 'agent-profile__image');
-  image.src = agent.image;
-  image.alt = `${agent.name} - ${agent.role} at Real House`;
-  imageWrapper.appendChild(image);
+  // Portrait
+  const portraitWrap = createElement('div', 'agent-profile__portrait');
+  const portraitFrame = createElement('div', 'agent-profile__portrait-frame');
+  const portraitImg = createElement('img', 'agent-profile__portrait-img') as HTMLImageElement;
+  portraitImg.src = agent.image;
+  portraitImg.alt = `${agent.name}, ${agent.role}`;
+  portraitImg.width = 480;
+  portraitImg.height = 600;
+  portraitFrame.appendChild(portraitImg);
+  portraitWrap.appendChild(portraitFrame);
+  heroContent.appendChild(portraitWrap);
 
-  if (agent.isLeadership) {
-    const badge = createElement('span', 'agent-profile__leadership-badge', t('agentProfile.leadership'));
-    imageWrapper.appendChild(badge);
-  }
-
-  heroContent.appendChild(imageWrapper);
-
-  // Agent Info
+  // Info
   const heroInfo = createElement('div', 'agent-profile__hero-info');
+
+  const heroEyebrow = createElement('div', 'agent-profile__hero-eyebrow');
+  const heroEyebrowLine = createElement('span', 'agent-profile__hero-eyebrow-line');
+  const heroEyebrowText = createElement('span', 'agent-profile__hero-eyebrow-text', agent.role);
+  heroEyebrow.appendChild(heroEyebrowLine);
+  heroEyebrow.appendChild(heroEyebrowText);
+  heroInfo.appendChild(heroEyebrow);
 
   const name = createElement('h1', 'agent-profile__name', agent.name);
   heroInfo.appendChild(name);
 
-  const role = createElement('p', 'agent-profile__role', agent.title);
-  heroInfo.appendChild(role);
+  const tagline = createElement('p', 'agent-profile__tagline', agent.bio);
+  heroInfo.appendChild(tagline);
 
-  const specialization = createElement('p', 'agent-profile__specialization', agent.specialization);
-  heroInfo.appendChild(specialization);
-
-  // Quick Stats
-  const quickStats = createElement('div', 'agent-profile__quick-stats');
-
-  const statsData = [
-    { value: `${agent.yearsExperience}+`, label: t('agentProfile.yearsExperience') },
-    { value: agent.propertiesSold.toString(), label: t('agentProfile.propertiesSold') },
-    { value: formatSalesVolume(agent.totalSalesVolume), label: t('agentProfile.totalSales') },
-    { value: agent.activeListings.toString(), label: t('agentProfile.activeListings') }
-  ];
-
-  statsData.forEach(stat => {
-    const statItem = createElement('div', 'agent-profile__quick-stat');
-    const statValue = createElement('span', 'agent-profile__quick-stat-value', stat.value);
-    const statLabel = createElement('span', 'agent-profile__quick-stat-label', stat.label);
-    statItem.appendChild(statValue);
-    statItem.appendChild(statLabel);
-    quickStats.appendChild(statItem);
+  // Spec pills
+  const specPills = createElement('div', 'agent-profile__spec-pills');
+  agent.specializations.slice(0, 4).forEach(spec => {
+    const pill = createElement('span', 'agent-profile__spec-pill', spec);
+    specPills.appendChild(pill);
   });
-
-  heroInfo.appendChild(quickStats);
-
-  // Languages
-  const languages = createElement('div', 'agent-profile__languages');
-  const langLabel = createElement('span', 'agent-profile__languages-label', t('agentProfile.languages'));
-  languages.appendChild(langLabel);
-  agent.languages.forEach((lang, i) => {
-    const langTag = createElement('span', 'agent-profile__lang-tag', lang);
-    languages.appendChild(langTag);
-    if (i < agent.languages.length - 1) {
-      languages.appendChild(document.createTextNode(' '));
-    }
-  });
-  heroInfo.appendChild(languages);
-
-  // CTA Buttons
-  const heroCta = createElement('div', 'agent-profile__hero-cta');
-
-  const callBtn = createElement('a', 'btn btn--primary btn--lg');
-  callBtn.href = `tel:${agent.phone.replace(/\s/g, '')}`;
-  callBtn.appendChild(createSVGUse('icon-phone'));
-  callBtn.appendChild(document.createTextNode(t('agentProfile.callNow')));
-  heroCta.appendChild(callBtn);
-
-  const whatsappBtn = createElement('a', 'btn btn--whatsapp btn--lg');
-  whatsappBtn.href = `https://wa.me/${agent.whatsapp}?text=${encodeURIComponent(`Hi ${agent.name}, I'm interested in property assistance.`)}`;
-  whatsappBtn.target = '_blank';
-  whatsappBtn.rel = 'noopener noreferrer';
-  whatsappBtn.appendChild(createSVGUse('icon-whatsapp'));
-  whatsappBtn.appendChild(document.createTextNode(t('agentProfile.whatsApp')));
-  heroCta.appendChild(whatsappBtn);
-
-  const emailBtn = createElement('a', 'btn btn--ghost btn--lg');
-  emailBtn.href = `mailto:${agent.email}`;
-  emailBtn.appendChild(createSVGUse('icon-email'));
-  emailBtn.appendChild(document.createTextNode(t('agentProfile.email')));
-  heroCta.appendChild(emailBtn);
-
-  heroInfo.appendChild(heroCta);
+  heroInfo.appendChild(specPills);
 
   heroContent.appendChild(heroInfo);
   heroContainer.appendChild(heroContent);
   hero.appendChild(heroContainer);
   page.appendChild(hero);
 
-  // Main Content
+  // ═══════════════════════════════════════════════════════════════════════
+  // QUICK STATS BAR
+  // ═══════════════════════════════════════════════════════════════════════
+  const statsBar = createElement('section', 'agent-profile__stats-bar');
+  const statsBarContainer = createElement('div', 'container');
+  const statsBarInner = createElement('div', 'agent-profile__stats-bar-inner');
+
+  const statBarItems = [
+    { value: `${agent.yearsExperience}+`, label: t('agentProfile.yearsExperience') },
+    { value: agent.propertiesSold.toString(), label: t('agentProfile.propertiesSold') },
+    { value: formatSalesVolume(agent.totalSalesVolume), label: t('agentProfile.totalSales') },
+    { value: agent.activeListings.toString(), label: t('agentProfile.activeListings') }
+  ];
+  statBarItems.forEach((stat, i) => {
+    const item = createElement('div', 'agent-profile__stats-bar-item');
+    item.style.setProperty('--stat-delay', `${i * 80}ms`);
+    const value = createElement('span', 'agent-profile__stats-bar-value', stat.value);
+    const label = createElement('span', 'agent-profile__stats-bar-label', stat.label);
+    item.appendChild(value);
+    item.appendChild(label);
+    statsBarInner.appendChild(item);
+  });
+
+  statsBarContainer.appendChild(statsBarInner);
+  statsBar.appendChild(statsBarContainer);
+  page.appendChild(statsBar);
+
+  // ═══════════════════════════════════════════════════════════════════════
+  // MAIN CONTENT GRID (main + sticky sidebar)
+  // ═══════════════════════════════════════════════════════════════════════
   const mainContent = createElement('section', 'agent-profile__content');
   const mainContainer = createElement('div', 'container');
   const grid = createElement('div', 'agent-profile__grid');
-
-  // Left Column - Main Content
   const main = createElement('div', 'agent-profile__main');
 
-  // About Section
-  const aboutSection = createElement('div', 'agent-profile__section');
-  const aboutTitle = createElement('h2', 'agent-profile__section-title', t('agentProfile.about', { name: agent.name }));
-  aboutSection.appendChild(aboutTitle);
+  // ─── About Me Section ───
+  const aboutSection = createElement('div', 'agent-profile__section agent-profile__section--about');
 
+  const aboutHeader = createElement('div', 'agent-profile__section-header');
+  const aboutEyebrow = createElement('span', 'agent-profile__section-eyebrow', '01 · Story');
+  aboutHeader.appendChild(aboutEyebrow);
+  const aboutTitle = createElement('h2', 'agent-profile__section-title', `About ${agent.name}`);
+  aboutHeader.appendChild(aboutTitle);
+  aboutSection.appendChild(aboutHeader);
+
+  const aboutLayout = createElement('div', 'agent-profile__about-layout');
+  const aboutText = createElement('div', 'agent-profile__about-text');
   const bioParagraphs = agent.fullBio.split('\n\n');
-  bioParagraphs.forEach(para => {
+  bioParagraphs.forEach((para, i) => {
     if (para.trim()) {
-      const p = createElement('p', 'agent-profile__bio-text', para.trim());
-      aboutSection.appendChild(p);
+      const p = createElement('p', i === 0 ? 'agent-profile__bio-text agent-profile__bio-text--lead' : 'agent-profile__bio-text', para.trim());
+      aboutText.appendChild(p);
     }
   });
+  aboutLayout.appendChild(aboutText);
 
+  const aboutSide = createElement('aside', 'agent-profile__about-side');
+  const sideImg = createElement('div', 'agent-profile__about-side-img');
+  sideImg.style.backgroundImage = `url(${agent.image})`;
+  aboutSide.appendChild(sideImg);
+
+  const sideCaption = createElement('div', 'agent-profile__about-side-caption');
+  const sideCapName = createElement('span', 'agent-profile__about-side-name', agent.name);
+  const sideCapTitle = createElement('span', 'agent-profile__about-side-title', agent.title);
+  sideCaption.appendChild(sideCapName);
+  sideCaption.appendChild(sideCapTitle);
+  aboutSide.appendChild(sideCaption);
+
+  aboutLayout.appendChild(aboutSide);
+  aboutSection.appendChild(aboutLayout);
   main.appendChild(aboutSection);
 
-  // Specializations Section
+  // ─── Specialties Section ───
   const specSection = createElement('div', 'agent-profile__section');
-  const specTitle = createElement('h2', 'agent-profile__section-title', t('agentProfile.specializations'));
-  specSection.appendChild(specTitle);
+  const specHeader = createElement('div', 'agent-profile__section-header');
+  const specEyebrow = createElement('span', 'agent-profile__section-eyebrow', '02 · Expertise');
+  specHeader.appendChild(specEyebrow);
+  const specTitle = createElement('h2', 'agent-profile__section-title', 'Specialties');
+  specHeader.appendChild(specTitle);
+  specSection.appendChild(specHeader);
 
-  const specList = createElement('ul', 'agent-profile__spec-list');
+  const specGrid = createElement('div', 'agent-profile__specialties-grid');
   agent.specializations.forEach(spec => {
-    const li = createElement('li', 'agent-profile__spec-item');
-    li.appendChild(createSVGUse('icon-check'));
-    li.appendChild(document.createTextNode(spec));
-    specList.appendChild(li);
+    const item = createElement('div', 'agent-profile__specialty');
+    const iconWrap = createElement('div', 'agent-profile__specialty-icon');
+    iconWrap.appendChild(createSVGUse(getSpecIcon(spec)));
+    item.appendChild(iconWrap);
+    const label = createElement('span', 'agent-profile__specialty-label', spec);
+    item.appendChild(label);
+    specGrid.appendChild(item);
   });
-  specSection.appendChild(specList);
+  specSection.appendChild(specGrid);
 
-  main.appendChild(specSection);
-
-  // Featured Areas Section
-  const areasSection = createElement('div', 'agent-profile__section');
-  const areasTitle = createElement('h2', 'agent-profile__section-title', t('agentProfile.featuredAreas'));
-  areasSection.appendChild(areasTitle);
-
+  // Featured areas inline
+  const areasBlock = createElement('div', 'agent-profile__areas-block');
+  const areasLabel = createElement('span', 'agent-profile__areas-label', 'Active in');
+  areasBlock.appendChild(areasLabel);
   const areasTags = createElement('div', 'agent-profile__areas-tags');
   agent.featuredAreas.forEach(area => {
     const tag = createElement('span', 'agent-profile__area-tag', area);
     areasTags.appendChild(tag);
   });
-  areasSection.appendChild(areasTags);
+  areasBlock.appendChild(areasTags);
+  specSection.appendChild(areasBlock);
 
-  main.appendChild(areasSection);
+  main.appendChild(specSection);
 
-  // Certifications & Awards Section
+  // ─── Certifications & Awards ───
   if (agent.certifications.length > 0 || agent.awards.length > 0) {
     const credSection = createElement('div', 'agent-profile__section');
-    const credTitle = createElement('h2', 'agent-profile__section-title', t('agentProfile.certificationsAwards'));
-    credSection.appendChild(credTitle);
+    const credHeader = createElement('div', 'agent-profile__section-header');
+    const credEyebrow = createElement('span', 'agent-profile__section-eyebrow', '03 · Credentials');
+    credHeader.appendChild(credEyebrow);
+    const credTitle = createElement('h2', 'agent-profile__section-title', 'Certifications & Awards');
+    credHeader.appendChild(credTitle);
+    credSection.appendChild(credHeader);
 
-    const credGrid = createElement('div', 'agent-profile__cred-grid');
+    const credCards = createElement('div', 'agent-profile__cred-cards');
 
-    if (agent.certifications.length > 0) {
-      const certCol = createElement('div', 'agent-profile__cred-col');
-      const certTitle = createElement('h3', 'agent-profile__cred-heading', t('agentProfile.certifications'));
-      certCol.appendChild(certTitle);
+    agent.certifications.forEach(cert => {
+      const card = createElement('div', 'agent-profile__cred-card agent-profile__cred-card--cert');
+      const icon = createElement('div', 'agent-profile__cred-card-icon');
+      icon.appendChild(createSVGUse('icon-shield'));
+      card.appendChild(icon);
+      const type = createElement('span', 'agent-profile__cred-card-type', 'Certification');
+      card.appendChild(type);
+      const name = createElement('p', 'agent-profile__cred-card-name', cert);
+      card.appendChild(name);
+      credCards.appendChild(card);
+    });
 
-      const certList = createElement('ul', 'agent-profile__cred-list');
-      agent.certifications.forEach(cert => {
-        const li = createElement('li', 'agent-profile__cred-item');
-        li.appendChild(createSVGUse('icon-award'));
-        li.appendChild(document.createTextNode(cert));
-        certList.appendChild(li);
-      });
-      certCol.appendChild(certList);
-      credGrid.appendChild(certCol);
-    }
+    agent.awards.forEach(award => {
+      const card = createElement('div', 'agent-profile__cred-card agent-profile__cred-card--award');
+      const icon = createElement('div', 'agent-profile__cred-card-icon');
+      icon.appendChild(createSVGUse('icon-award'));
+      card.appendChild(icon);
+      const type = createElement('span', 'agent-profile__cred-card-type', 'Award');
+      card.appendChild(type);
+      const name = createElement('p', 'agent-profile__cred-card-name', award);
+      card.appendChild(name);
+      credCards.appendChild(card);
+    });
 
-    if (agent.awards.length > 0) {
-      const awardsCol = createElement('div', 'agent-profile__cred-col');
-      const awardsTitle = createElement('h3', 'agent-profile__cred-heading', t('agentProfile.awards'));
-      awardsCol.appendChild(awardsTitle);
-
-      const awardsList = createElement('ul', 'agent-profile__cred-list');
-      agent.awards.forEach(award => {
-        const li = createElement('li', 'agent-profile__cred-item');
-        li.appendChild(createSVGUse('icon-award'));
-        li.appendChild(document.createTextNode(award));
-        awardsList.appendChild(li);
-      });
-      awardsCol.appendChild(awardsList);
-      credGrid.appendChild(awardsCol);
-    }
-
-    credSection.appendChild(credGrid);
+    credSection.appendChild(credCards);
     main.appendChild(credSection);
   }
 
-  // Testimonials Section
+  // ─── Featured Properties Carousel ───
+  const agentProperties = getAgentProperties(agent);
+  if (agentProperties.length > 0) {
+    const propertiesSection = createElement('div', 'agent-profile__section');
+    const propHeader = createElement('div', 'agent-profile__section-header');
+    const propEyebrow = createElement('span', 'agent-profile__section-eyebrow', '04 · Portfolio');
+    propHeader.appendChild(propEyebrow);
+    const propTitleRow = createElement('div', 'agent-profile__section-title-row');
+    const propTitle = createElement('h2', 'agent-profile__section-title', `${agent.name}'s Featured Listings`);
+    propTitleRow.appendChild(propTitle);
+    const viewAllLink = createElement('a', 'agent-profile__view-all', t('agentProfile.viewAllProperties'));
+    viewAllLink.href = '/properties';
+    viewAllLink.setAttribute('data-route', '');
+    viewAllLink.appendChild(createSVGUse('icon-arrow-right'));
+    propTitleRow.appendChild(viewAllLink);
+    propHeader.appendChild(propTitleRow);
+    propertiesSection.appendChild(propHeader);
+
+    const carouselWrap = createElement('div', 'agent-profile__carousel-wrap');
+    const carousel = createElement('div', 'agent-profile__carousel');
+    carousel.id = `agent-${agent.slug}-carousel`;
+    agentProperties.forEach(property => {
+      const slide = createElement('div', 'agent-profile__carousel-slide');
+      slide.appendChild(createCompactPropertyCard(property));
+      carousel.appendChild(slide);
+    });
+    carouselWrap.appendChild(carousel);
+
+    // Carousel controls
+    const carouselControls = createElement('div', 'agent-profile__carousel-controls');
+    const prevBtn = createElement('button', 'agent-profile__carousel-btn agent-profile__carousel-btn--prev');
+    prevBtn.setAttribute('aria-label', 'Previous properties');
+    prevBtn.appendChild(createSVGUse('icon-arrow-left'));
+    const nextBtn = createElement('button', 'agent-profile__carousel-btn agent-profile__carousel-btn--next');
+    nextBtn.setAttribute('aria-label', 'Next properties');
+    nextBtn.appendChild(createSVGUse('icon-arrow-right'));
+    carouselControls.appendChild(prevBtn);
+    carouselControls.appendChild(nextBtn);
+    carouselWrap.appendChild(carouselControls);
+
+    propertiesSection.appendChild(carouselWrap);
+    main.appendChild(propertiesSection);
+
+    // Wire up carousel
+    setTimeout(() => {
+      const carouselEl = document.getElementById(`agent-${agent.slug}-carousel`);
+      if (!carouselEl) return;
+      prevBtn.addEventListener('click', () => {
+        carouselEl.scrollBy({ left: -carouselEl.clientWidth * 0.8, behavior: 'smooth' });
+      });
+      nextBtn.addEventListener('click', () => {
+        carouselEl.scrollBy({ left: carouselEl.clientWidth * 0.8, behavior: 'smooth' });
+      });
+    }, 100);
+  }
+
+  // ─── Testimonials Section ───
   if (agent.testimonials.length > 0) {
     const testimonialsSection = createElement('div', 'agent-profile__section');
-    const testimonialsTitle = createElement('h2', 'agent-profile__section-title', t('agentProfile.clientReviews'));
-    testimonialsSection.appendChild(testimonialsTitle);
+    const tHeader = createElement('div', 'agent-profile__section-header');
+    const tEyebrow = createElement('span', 'agent-profile__section-eyebrow', '05 · Voices');
+    tHeader.appendChild(tEyebrow);
+    const tTitle = createElement('h2', 'agent-profile__section-title', 'What Clients Say');
+    tHeader.appendChild(tTitle);
+    testimonialsSection.appendChild(tHeader);
 
     const avgRating = agent.testimonials.reduce((sum, t) => sum + t.rating, 0) / agent.testimonials.length;
     const ratingRow = createElement('div', 'agent-profile__rating-row');
     ratingRow.appendChild(createStarRating(Math.round(avgRating)));
-    const ratingText = createElement('span', 'agent-profile__rating-text', `${avgRating.toFixed(1)} out of 5 (${agent.testimonials.length} reviews)`);
+    const ratingText = createElement('span', 'agent-profile__rating-text', `${avgRating.toFixed(1)} out of 5 · ${agent.testimonials.length} client reviews`);
     ratingRow.appendChild(ratingText);
     testimonialsSection.appendChild(ratingRow);
 
@@ -396,229 +525,189 @@ export function renderAgentProfilePage(slug: string): DocumentFragment {
     main.appendChild(testimonialsSection);
   }
 
-  // Properties Section
-  const agentProperties = getAgentProperties(agent);
-  if (agentProperties.length > 0) {
-    const propertiesSection = createElement('div', 'agent-profile__section');
-    const propertiesHeader = createElement('div', 'agent-profile__section-header');
-    const propertiesTitle = createElement('h2', 'agent-profile__section-title', t('agentProfile.listings', { name: agent.name }));
-    propertiesHeader.appendChild(propertiesTitle);
+  // ─── Languages Section ───
+  const langSection = createElement('div', 'agent-profile__section');
+  const langHeader = createElement('div', 'agent-profile__section-header');
+  const langEyebrow = createElement('span', 'agent-profile__section-eyebrow', '06 · Languages');
+  langHeader.appendChild(langEyebrow);
+  const langTitle = createElement('h2', 'agent-profile__section-title', 'Languages Spoken');
+  langHeader.appendChild(langTitle);
+  langSection.appendChild(langHeader);
 
-    const viewAllLink = createElement('a', 'agent-profile__view-all', t('agentProfile.viewAllProperties'));
-    viewAllLink.href = '/properties';
-    viewAllLink.setAttribute('data-route', '');
-    viewAllLink.appendChild(createSVGUse('icon-arrow-right'));
-    propertiesHeader.appendChild(viewAllLink);
-
-    propertiesSection.appendChild(propertiesHeader);
-
-    const propertiesGrid = createElement('div', 'agent-profile__properties-grid');
-    agentProperties.forEach(property => {
-      propertiesGrid.appendChild(createCompactPropertyCard(property));
-    });
-    propertiesSection.appendChild(propertiesGrid);
-
-    main.appendChild(propertiesSection);
-  }
+  const langGrid = createElement('div', 'agent-profile__lang-grid');
+  agent.languages.forEach(lang => {
+    const card = createElement('div', 'agent-profile__lang-card');
+    const flag = createElement('span', 'agent-profile__lang-flag', getLanguageFlag(lang));
+    card.appendChild(flag);
+    const name = createElement('span', 'agent-profile__lang-name', lang);
+    card.appendChild(name);
+    const fluency = createElement('span', 'agent-profile__lang-fluency', 'Fluent');
+    card.appendChild(fluency);
+    langGrid.appendChild(card);
+  });
+  langSection.appendChild(langGrid);
+  main.appendChild(langSection);
 
   grid.appendChild(main);
 
-  // Right Column - Sidebar
+  // ═══════════════════════════════════════════════════════════════════════
+  // STICKY SIDEBAR
+  // ═══════════════════════════════════════════════════════════════════════
   const sidebar = createElement('aside', 'agent-profile__sidebar');
+  const stickyInner = createElement('div', 'agent-profile__sidebar-sticky');
 
   // Contact Card
   const contactCard = createElement('div', 'agent-profile__contact-card');
-  const contactTitle = createElement('h3', 'agent-profile__card-title', t('agentProfile.contactInformation'));
-  contactCard.appendChild(contactTitle);
 
-  const contactInfo = createElement('div', 'agent-profile__contact-info');
+  const contactHeader = createElement('div', 'agent-profile__contact-header');
+  const contactAvatar = createElement('img', 'agent-profile__contact-avatar') as HTMLImageElement;
+  contactAvatar.src = agent.image;
+  contactAvatar.alt = agent.name;
+  contactAvatar.width = 64;
+  contactAvatar.height = 64;
+  contactHeader.appendChild(contactAvatar);
+  const contactNameWrap = createElement('div', 'agent-profile__contact-name-wrap');
+  const contactName = createElement('span', 'agent-profile__contact-name', agent.name);
+  contactNameWrap.appendChild(contactName);
+  const contactRole = createElement('span', 'agent-profile__contact-role', agent.role);
+  contactNameWrap.appendChild(contactRole);
+  contactHeader.appendChild(contactNameWrap);
+  contactCard.appendChild(contactHeader);
 
-  const phoneItem = createElement('a', 'agent-profile__contact-item');
-  phoneItem.href = `tel:${agent.phone.replace(/\s/g, '')}`;
-  phoneItem.appendChild(createSVGUse('icon-phone'));
-  phoneItem.appendChild(document.createTextNode(agent.phone));
-  contactInfo.appendChild(phoneItem);
+  const contactStatus = createElement('div', 'agent-profile__contact-status');
+  const statusDot = createElement('span', 'agent-profile__contact-status-dot');
+  contactStatus.appendChild(statusDot);
+  const statusText = createElement('span', 'agent-profile__contact-status-text', 'Available now · Replies within 2 hours');
+  contactStatus.appendChild(statusText);
+  contactCard.appendChild(contactStatus);
 
-  const emailItem = createElement('a', 'agent-profile__contact-item');
-  emailItem.href = `mailto:${agent.email}`;
-  emailItem.appendChild(createSVGUse('icon-email'));
-  emailItem.appendChild(document.createTextNode(agent.email));
-  contactInfo.appendChild(emailItem);
+  // Primary action stack
+  const contactActions = createElement('div', 'agent-profile__contact-actions');
 
-  const whatsappItem = createElement('a', 'agent-profile__contact-item');
-  whatsappItem.href = `https://wa.me/${agent.whatsapp}`;
-  whatsappItem.target = '_blank';
-  whatsappItem.rel = 'noopener noreferrer';
-  whatsappItem.appendChild(createSVGUse('icon-whatsapp'));
-  whatsappItem.appendChild(document.createTextNode(t('agentProfile.whatsApp')));
-  contactInfo.appendChild(whatsappItem);
+  const whatsappBtn = createElement('a', 'agent-profile__contact-btn agent-profile__contact-btn--whatsapp');
+  whatsappBtn.href = `https://wa.me/${agent.whatsapp}?text=${encodeURIComponent(`Hi ${agent.name}, I'd like to discuss a property.`)}`;
+  whatsappBtn.target = '_blank';
+  whatsappBtn.rel = 'noopener noreferrer';
+  whatsappBtn.appendChild(createSVGUse('icon-whatsapp'));
+  whatsappBtn.appendChild(document.createTextNode('WhatsApp'));
+  contactActions.appendChild(whatsappBtn);
 
-  contactCard.appendChild(contactInfo);
+  const callBtn = createElement('a', 'agent-profile__contact-btn agent-profile__contact-btn--call');
+  callBtn.href = `tel:${agent.phone.replace(/\s/g, '')}`;
+  callBtn.appendChild(createSVGUse('icon-phone'));
+  callBtn.appendChild(document.createTextNode('Call'));
+  contactActions.appendChild(callBtn);
+
+  const emailBtn = createElement('a', 'agent-profile__contact-btn agent-profile__contact-btn--email');
+  emailBtn.href = `mailto:${agent.email}`;
+  emailBtn.appendChild(createSVGUse('icon-email'));
+  emailBtn.appendChild(document.createTextNode('Email'));
+  contactActions.appendChild(emailBtn);
+
+  contactCard.appendChild(contactActions);
+
+  // Book consultation CTA
+  const bookBtn = createElement('a', 'agent-profile__contact-book');
+  bookBtn.href = `/contact?agent=${agent.slug}`;
+  bookBtn.setAttribute('data-route', '');
+  bookBtn.appendChild(createSVGUse('icon-calendar'));
+  bookBtn.appendChild(document.createTextNode('Book Consultation'));
+  contactCard.appendChild(bookBtn);
+
+  // Mini stats inside contact card
+  const miniStats = createElement('div', 'agent-profile__contact-mini-stats');
+  const miniItems = [
+    { v: `${agent.yearsExperience}+`, l: 'Years' },
+    { v: agent.propertiesSold.toString(), l: 'Deals' },
+    { v: agent.languages.length.toString(), l: 'Langs' }
+  ];
+  miniItems.forEach(m => {
+    const mi = createElement('div', 'agent-profile__contact-mini-stat');
+    const mv = createElement('span', 'agent-profile__contact-mini-value', m.v);
+    const ml = createElement('span', 'agent-profile__contact-mini-label', m.l);
+    mi.appendChild(mv);
+    mi.appendChild(ml);
+    miniStats.appendChild(mi);
+  });
+  contactCard.appendChild(miniStats);
 
   // Social Links
   if (Object.values(agent.socialLinks).some(Boolean)) {
     const socialLinks = createElement('div', 'agent-profile__social-links');
-    const socialTitle = createElement('p', 'agent-profile__social-title', t('agentProfile.connectOnSocialMedia'));
+    const socialTitle = createElement('p', 'agent-profile__social-title', 'Connect');
     socialLinks.appendChild(socialTitle);
-
     const socialButtons = createElement('div', 'agent-profile__social-buttons');
-
     if (agent.socialLinks.linkedin) {
-      const linkedinBtn = createElement('a', 'agent-profile__social-btn');
-      linkedinBtn.href = agent.socialLinks.linkedin;
-      linkedinBtn.target = '_blank';
-      linkedinBtn.rel = 'noopener noreferrer';
-      linkedinBtn.textContent = t('agentProfile.linkedin');
-      socialButtons.appendChild(linkedinBtn);
+      const b = createElement('a', 'agent-profile__social-btn');
+      b.href = agent.socialLinks.linkedin;
+      b.target = '_blank';
+      b.rel = 'noopener noreferrer';
+      b.textContent = 'LinkedIn';
+      socialButtons.appendChild(b);
     }
-
     if (agent.socialLinks.instagram) {
-      const instaBtn = createElement('a', 'agent-profile__social-btn');
-      instaBtn.href = agent.socialLinks.instagram;
-      instaBtn.target = '_blank';
-      instaBtn.rel = 'noopener noreferrer';
-      instaBtn.textContent = t('agentProfile.instagram');
-      socialButtons.appendChild(instaBtn);
+      const b = createElement('a', 'agent-profile__social-btn');
+      b.href = agent.socialLinks.instagram;
+      b.target = '_blank';
+      b.rel = 'noopener noreferrer';
+      b.textContent = 'Instagram';
+      socialButtons.appendChild(b);
     }
-
     if (agent.socialLinks.facebook) {
-      const fbBtn = createElement('a', 'agent-profile__social-btn');
-      fbBtn.href = agent.socialLinks.facebook;
-      fbBtn.target = '_blank';
-      fbBtn.rel = 'noopener noreferrer';
-      fbBtn.textContent = t('agentProfile.facebook');
-      socialButtons.appendChild(fbBtn);
+      const b = createElement('a', 'agent-profile__social-btn');
+      b.href = agent.socialLinks.facebook;
+      b.target = '_blank';
+      b.rel = 'noopener noreferrer';
+      b.textContent = 'Facebook';
+      socialButtons.appendChild(b);
     }
-
     socialLinks.appendChild(socialButtons);
     contactCard.appendChild(socialLinks);
   }
 
-  sidebar.appendChild(contactCard);
-
-  // Inquiry Form Card
-  const inquiryCard = createElement('div', 'agent-profile__inquiry-card');
-  const inquiryTitle = createElement('h3', 'agent-profile__card-title', `Message ${agent.name}`);
-  inquiryCard.appendChild(inquiryTitle);
-
-  const form = createElement('form', 'agent-profile__inquiry-form');
-  form.setAttribute('action', '/contact');
-  form.setAttribute('method', 'GET');
-
-  const nameGroup = createElement('div', 'agent-profile__form-group');
-  const nameLabel = createElement('label', 'agent-profile__form-label', t('agentProfile.yourName'));
-  nameLabel.setAttribute('for', 'inquiry-name');
-  const nameInput = createElement('input', 'agent-profile__form-input');
-  nameInput.type = 'text';
-  nameInput.id = 'inquiry-name';
-  nameInput.name = 'name';
-  nameInput.autocomplete = 'name';
-  nameInput.placeholder = t('agentProfile.enterYourName');
-  nameInput.required = true;
-  nameGroup.appendChild(nameLabel);
-  nameGroup.appendChild(nameInput);
-  form.appendChild(nameGroup);
-
-  const phoneGroup = createElement('div', 'agent-profile__form-group');
-  const phoneLabel = createElement('label', 'agent-profile__form-label', t('agentProfile.phoneNumber'));
-  phoneLabel.setAttribute('for', 'inquiry-phone');
-  const phoneInput = createElement('input', 'agent-profile__form-input');
-  phoneInput.type = 'tel';
-  phoneInput.id = 'inquiry-phone';
-  phoneInput.name = 'phone';
-  phoneInput.autocomplete = 'tel';
-  phoneInput.placeholder = t('agentProfile.phonePlaceholder');
-  phoneInput.required = true;
-  phoneGroup.appendChild(phoneLabel);
-  phoneGroup.appendChild(phoneInput);
-  form.appendChild(phoneGroup);
-
-  const emailGroup = createElement('div', 'agent-profile__form-group');
-  const emailLabel = createElement('label', 'agent-profile__form-label', t('agentProfile.email'));
-  emailLabel.setAttribute('for', 'inquiry-email');
-  const emailInput = createElement('input', 'agent-profile__form-input');
-  emailInput.type = 'email';
-  emailInput.id = 'inquiry-email';
-  emailInput.name = 'email';
-  emailInput.autocomplete = 'email';
-  emailInput.placeholder = t('agentProfile.emailPlaceholder');
-  emailInput.required = true;
-  emailGroup.appendChild(emailLabel);
-  emailGroup.appendChild(emailInput);
-  form.appendChild(emailGroup);
-
-  const messageGroup = createElement('div', 'agent-profile__form-group');
-  const messageLabel = createElement('label', 'agent-profile__form-label', t('agentProfile.message'));
-  messageLabel.setAttribute('for', 'inquiry-message');
-  const messageTextarea = createElement('textarea', 'agent-profile__form-textarea');
-  messageTextarea.id = 'inquiry-message';
-  messageTextarea.name = 'message';
-  messageTextarea.rows = 4;
-  messageTextarea.placeholder = `Hi ${agent.name}, I'm interested in...`;
-  messageGroup.appendChild(messageLabel);
-  messageGroup.appendChild(messageTextarea);
-  form.appendChild(messageGroup);
-
-  const hiddenAgent = createElement('input');
-  hiddenAgent.type = 'hidden';
-  hiddenAgent.name = 'agent';
-  hiddenAgent.value = agent.name;
-  form.appendChild(hiddenAgent);
-
-  const submitBtn = createElement('button', 'btn btn--primary btn--full', t('agentProfile.sendMessage'));
-  submitBtn.type = 'submit';
-  form.appendChild(submitBtn);
-
-  inquiryCard.appendChild(form);
-  sidebar.appendChild(inquiryCard);
-
-  // Quick Stats Card
-  const statsCard = createElement('div', 'agent-profile__stats-card');
-  const statsTitle = createElement('h3', 'agent-profile__card-title', t('agentProfile.performanceStats'));
-  statsCard.appendChild(statsTitle);
-
-  const statsList = createElement('div', 'agent-profile__stats-list');
-
-  const statsItems = [
-    { label: t('agentProfile.yearsExperience'), value: `${agent.yearsExperience}+` },
-    { label: t('agentProfile.yearsWithRealHouse'), value: `${agent.yearsWithCompany}+` },
-    { label: t('agentProfile.propertiesSold'), value: agent.propertiesSold.toString() },
-    { label: t('agentProfile.totalSales'), value: formatSalesVolume(agent.totalSalesVolume) },
-    { label: t('agentProfile.activeListings'), value: agent.activeListings.toString() },
-    { label: t('agentProfile.languagesSpoken'), value: agent.languages.length.toString() }
-  ];
-
-  statsItems.forEach(item => {
-    const statRow = createElement('div', 'agent-profile__stat-row');
-    const statLabel = createElement('span', 'agent-profile__stat-label', item.label);
-    const statValue = createElement('span', 'agent-profile__stat-value', item.value);
-    statRow.appendChild(statLabel);
-    statRow.appendChild(statValue);
-    statsList.appendChild(statRow);
-  });
-
-  statsCard.appendChild(statsList);
-  sidebar.appendChild(statsCard);
+  stickyInner.appendChild(contactCard);
+  sidebar.appendChild(stickyInner);
 
   grid.appendChild(sidebar);
   mainContainer.appendChild(grid);
   mainContent.appendChild(mainContainer);
   page.appendChild(mainContent);
 
-  // Back to Agents Link
-  const backSection = createElement('section', 'agent-profile__back');
-  const backContainer = createElement('div', 'container');
-  const backLink = createElement('a', 'agent-profile__back-link');
-  backLink.href = '/agents';
-  backLink.setAttribute('data-route', '');
-  backLink.appendChild(createSVGUse('icon-arrow-left'));
-  backLink.appendChild(document.createTextNode(t('agentProfile.backToAllAgents')));
-  backContainer.appendChild(backLink);
-  backSection.appendChild(backContainer);
-  page.appendChild(backSection);
+  // ═══════════════════════════════════════════════════════════════════════
+  // OTHER TEAM MEMBERS
+  // ═══════════════════════════════════════════════════════════════════════
+  const otherAgents = agents.filter(a => a.slug !== agent.slug);
+  if (otherAgents.length > 0) {
+    const otherSection = createElement('section', 'agent-profile__others');
+    const otherContainer = createElement('div', 'container');
+
+    const otherHeader = createElement('div', 'agent-profile__others-header');
+    const otherEyebrow = createElement('span', 'agent-profile__others-eyebrow', 'The Rest of the Team');
+    otherHeader.appendChild(otherEyebrow);
+    const otherTitle = createElement('h2', 'agent-profile__others-title', 'Other Team Members');
+    otherHeader.appendChild(otherTitle);
+    const otherSub = createElement('p', 'agent-profile__others-sub', 'Need a different perspective? Meet the rest of our consultants.');
+    otherHeader.appendChild(otherSub);
+    otherContainer.appendChild(otherHeader);
+
+    const othersGrid = createElement('div', 'agent-profile__others-grid');
+    otherAgents.forEach(a => {
+      othersGrid.appendChild(createOtherMemberCard(a));
+    });
+    otherContainer.appendChild(othersGrid);
+
+    const viewAllBtn = createElement('a', 'agent-profile__others-view-all');
+    viewAllBtn.href = '/agents';
+    viewAllBtn.setAttribute('data-route', '');
+    viewAllBtn.appendChild(document.createTextNode('View Full Team'));
+    viewAllBtn.appendChild(createSVGUse('icon-arrow-right'));
+    otherContainer.appendChild(viewAllBtn);
+
+    otherSection.appendChild(otherContainer);
+    page.appendChild(otherSection);
+  }
 
   fragment.appendChild(page);
-
   return fragment;
 }
 
@@ -627,18 +716,14 @@ export function renderAgentProfilePage(slug: string): DocumentFragment {
 // ═══════════════════════════════════════════════════════════════════════════
 
 export function setupAgentProfilePageSEO(agent: Agent): void {
-  // Dynamic title
   document.title = `${agent.name} - ${agent.role} | Real House Erbil`;
 
-  // Dynamic description
   const meta = document.querySelector('meta[name="description"]');
   if (meta) {
     meta.setAttribute('content', `${agent.name} is a ${agent.role} at Real House with ${agent.yearsExperience}+ years experience. Specializing in ${agent.specialization}. ${agent.propertiesSold} properties sold. Contact today!`);
   }
 
-  // Inject Person schema
   const schema = generateAgentSchema(agent);
-
   let script = document.querySelector('script[data-schema="agent-profile"]');
   if (!script) {
     script = document.createElement('script');
@@ -648,13 +733,11 @@ export function setupAgentProfilePageSEO(agent: Agent): void {
   }
   script.textContent = JSON.stringify(schema);
 
-  // Update canonical URL
   const canonical = document.querySelector('link[rel="canonical"]');
   if (canonical) {
     canonical.setAttribute('href', `https://realhouseiq.com/agents/${agent.slug}`);
   }
 
-  // Update Open Graph
   const ogTitle = document.querySelector('meta[property="og:title"]');
   if (ogTitle) ogTitle.setAttribute('content', `${agent.name} - ${agent.role} | Real House`);
 

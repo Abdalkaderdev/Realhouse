@@ -218,16 +218,34 @@ function createOfferCard(offer: Offer): HTMLElement {
   const countdown = createCountdownTimer(offer.endDate, offer.id);
   content.appendChild(countdown);
 
+  // Stock progress bar (if units available)
+  if (offer.unitsAvailable !== undefined && offer.unitsAvailable !== null) {
+    const stock = createElement('div', 'offer-card__stock');
+    if (offer.unitsAvailable <= 3) {
+      stock.classList.add('offer-card__stock--critical');
+    }
+
+    const stockLabel = createElement('div', 'offer-card__stock-label');
+    const stockText = createElement('span', 'offer-card__stock-text', `Only ${offer.unitsAvailable} ${offer.unitsAvailable === 1 ? 'unit' : 'units'} left`);
+    stockLabel.appendChild(stockText);
+    stock.appendChild(stockLabel);
+
+    const bar = createElement('div', 'offer-card__stock-bar');
+    bar.setAttribute('role', 'progressbar');
+    bar.setAttribute('aria-valuemin', '0');
+    bar.setAttribute('aria-valuemax', '10');
+    bar.setAttribute('aria-valuenow', offer.unitsAvailable.toString());
+    const fill = createElement('div', 'offer-card__stock-fill');
+    const pct = Math.max(5, Math.min(95, (offer.unitsAvailable / 10) * 100));
+    fill.style.width = `${pct}%`;
+    bar.appendChild(fill);
+    stock.appendChild(bar);
+
+    content.appendChild(stock);
+  }
+
   // Footer
   const footer = createElement('div', 'offer-card__footer');
-
-  // Units available (if applicable)
-  if (offer.unitsAvailable) {
-    const units = createElement('span', 'offer-card__units');
-    units.appendChild(createSVGUse('icon-home'));
-    units.appendChild(document.createTextNode(`${offer.unitsAvailable} units available`));
-    footer.appendChild(units);
-  }
 
   // View offer button
   const viewBtn = createElement('a', 'btn btn--primary btn--sm', 'View Offer');
@@ -241,13 +259,109 @@ function createOfferCard(offer: Offer): HTMLElement {
   return card;
 }
 
+// ─── Featured Offer Banner ────────────────────────────────────────────────
+function createFeaturedBanner(offer: Offer): HTMLElement {
+  const banner = createElement('section', 'offers-page__featured-banner');
+  banner.setAttribute('aria-label', 'Featured offer');
+
+  const bg = createElement('div', 'offers-page__featured-bg');
+  bg.style.backgroundImage = `url(${offer.featuredImage})`;
+  banner.appendChild(bg);
+
+  const overlay = createElement('div', 'offers-page__featured-overlay');
+  banner.appendChild(overlay);
+
+  const inner = createElement('div', 'offers-page__featured-inner');
+
+  const eyebrow = createElement('span', 'offers-page__featured-eyebrow', 'Featured Offer');
+  inner.appendChild(eyebrow);
+
+  const featuredTitle = createElement('h2', 'offers-page__featured-title', offer.title);
+  inner.appendChild(featuredTitle);
+
+  const featuredDesc = createElement('p', 'offers-page__featured-desc', offer.shortDescription);
+  inner.appendChild(featuredDesc);
+
+  const priceRow = createElement('div', 'offers-page__featured-price-row');
+
+  const discountBadge = createElement('span', 'offers-page__featured-discount', getDiscountLabel(offer));
+  priceRow.appendChild(discountBadge);
+
+  if (offer.originalPrice) {
+    const original = createElement('span', 'offers-page__featured-original', formatOfferPrice(offer.originalPrice));
+    priceRow.appendChild(original);
+  }
+  if (offer.discountedPrice) {
+    const newPrice = createElement('span', 'offers-page__featured-new', formatOfferPrice(offer.discountedPrice));
+    priceRow.appendChild(newPrice);
+  }
+  inner.appendChild(priceRow);
+
+  // Live countdown (uses existing initCountdownTimers)
+  inner.appendChild(createCountdownTimer(offer.endDate, offer.id));
+
+  const cta = createElement('a', 'btn btn--primary offers-page__featured-cta', 'Claim Offer');
+  cta.href = `/offers/${offer.slug}`;
+  cta.setAttribute('data-route', '');
+  inner.appendChild(cta);
+
+  banner.appendChild(inner);
+  return banner;
+}
+
+// ─── Subscribe Section ────────────────────────────────────────────────────
+function createSubscribeSection(): HTMLElement {
+  const section = createElement('section', 'offers-page__subscribe');
+
+  const title = createElement('h2', 'offers-page__subscribe-title', 'Never Miss a Deal');
+  section.appendChild(title);
+
+  const subtitle = createElement('p', 'offers-page__subscribe-subtitle', 'Get exclusive offers delivered to your inbox before anyone else.');
+  section.appendChild(subtitle);
+
+  const form = createElement('form', 'offers-page__subscribe-form');
+  form.setAttribute('novalidate', '');
+
+  const input = createElement('input', 'offers-page__subscribe-input');
+  input.type = 'email';
+  input.required = true;
+  input.placeholder = 'you@example.com';
+  input.setAttribute('aria-label', 'Email address');
+  form.appendChild(input);
+
+  const btn = createElement('button', 'btn btn--primary offers-page__subscribe-btn', 'Subscribe');
+  btn.setAttribute('type', 'submit');
+  form.appendChild(btn);
+
+  form.addEventListener('submit', (e) => {
+    e.preventDefault();
+    if (!input.value || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(input.value)) {
+      input.setAttribute('aria-invalid', 'true');
+      input.focus();
+      return;
+    }
+    while (form.firstChild) form.removeChild(form.firstChild);
+    const success = createElement('div', 'offers-page__subscribe-success');
+    success.appendChild(createSVGUse('icon-check'));
+    success.appendChild(document.createTextNode(" You're subscribed! Check your inbox."));
+    form.appendChild(success);
+  });
+
+  section.appendChild(form);
+  return section;
+}
+
 // ─── Filter State ─────────────────────────────────────────────────────────
+type OfferStatus = 'Active' | 'Expiring Soon' | 'All';
+
 interface OffersFilterState {
   type: string;
+  status: OfferStatus;
 }
 
 let currentFilterState: OffersFilterState = {
-  type: 'All'
+  type: 'All',
+  status: 'Active'
 };
 
 // ─── Offers Listing Page ──────────────────────────────────────────────────
@@ -255,28 +369,33 @@ export function renderOffersPage(): DocumentFragment {
   const fragment = document.createDocumentFragment();
 
   // Reset filter state
-  currentFilterState = { type: 'All' };
+  currentFilterState = { type: 'All', status: 'Active' };
 
   const page = createElement('div', 'offers-page');
-  const container = createElement('div', 'container');
 
-  // Breadcrumbs
-  const breadcrumbItems = getOffersBreadcrumbs();
-  container.appendChild(createBreadcrumbs(breadcrumbItems));
-  injectBreadcrumbSchema(breadcrumbItems);
+  // Cinematic Hero Section (full-width, outside container)
+  const hero = createElement('section', 'offers-page__hero offers-page__hero--cinematic');
+  const heroBg = createElement('div', 'offers-page__hero-bg');
+  heroBg.style.backgroundImage = 'url(https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=1920&q=80&fm=webp)';
+  hero.appendChild(heroBg);
+  const heroOverlay = createElement('div', 'offers-page__hero-overlay');
+  hero.appendChild(heroOverlay);
 
-  // Hero Section
-  const hero = createElement('section', 'offers-page__hero');
+  const heroContainer = createElement('div', 'container');
   const heroContent = createElement('div', 'offers-page__hero-content');
+
+  // Breadcrumbs inside cinematic hero
+  const breadcrumbItems = getOffersBreadcrumbs();
+  heroContent.appendChild(createBreadcrumbs(breadcrumbItems));
+  injectBreadcrumbSchema(breadcrumbItems);
 
   const badge = createElement('span', 'offers-page__badge', 'Limited Time Deals');
   heroContent.appendChild(badge);
 
   const title = createElement('h1', 'offers-page__title');
-  title.appendChild(document.createTextNode('Special '));
-  const em = createElement('em', undefined, 'Offers');
+  const em = createElement('em', undefined, 'Exclusive');
   title.appendChild(em);
-  title.appendChild(document.createTextNode(' & Deals'));
+  title.appendChild(document.createTextNode(' Offers'));
   heroContent.appendChild(title);
 
   const subtitle = createElement('p', 'offers-page__subtitle', 'Discover exclusive property offers, discounts, and flexible payment plans on premium real estate in Erbil, Kurdistan. Limited time opportunities for smart investors.');
@@ -302,8 +421,31 @@ export function renderOffersPage(): DocumentFragment {
   });
 
   heroContent.appendChild(stats);
-  hero.appendChild(heroContent);
-  container.appendChild(hero);
+  heroContainer.appendChild(heroContent);
+  hero.appendChild(heroContainer);
+  page.appendChild(hero);
+
+  const container = createElement('div', 'container');
+
+  // Featured Offer Banner
+  if (offers.length > 0) {
+    const featuredOffer = offers.find(o => o.featured) || offers[0];
+    container.appendChild(createFeaturedBanner(featuredOffer));
+  }
+
+  // Status Filters (Active / Expiring Soon / All)
+  const statusFilters = createElement('div', 'offers-page__status-filters');
+  const statusOptions: OfferStatus[] = ['Active', 'Expiring Soon', 'All'];
+  statusOptions.forEach(status => {
+    const btn = createElement('button',
+      'offers-page__status-filter' + (status === 'Active' ? ' offers-page__status-filter--active' : ''),
+      status
+    );
+    btn.setAttribute('type', 'button');
+    btn.setAttribute('data-status-filter', status);
+    statusFilters.appendChild(btn);
+  });
+  container.appendChild(statusFilters);
 
   // Filter Section
   const filterSection = createElement('div', 'offers-page__filters');
@@ -336,6 +478,9 @@ export function renderOffersPage(): DocumentFragment {
   });
 
   container.appendChild(grid);
+
+  // Subscribe Section
+  container.appendChild(createSubscribeSection());
 
   // CTA Section
   const ctaSection = createInternalCTA(
@@ -687,14 +832,24 @@ function initFilterListeners(): void {
       const type = btn.getAttribute('data-filter-type');
       if (!type) return;
 
-      // Update active state
       filterButtons.forEach(b => b.classList.remove('active'));
       btn.classList.add('active');
 
-      // Update filter state
       currentFilterState.type = type;
+      renderOffersGrid();
+    });
+  });
 
-      // Re-render the grid
+  const statusButtons = document.querySelectorAll('.offers-page__status-filter');
+  statusButtons.forEach(btn => {
+    btn.addEventListener('click', () => {
+      const status = btn.getAttribute('data-status-filter') as OfferStatus | null;
+      if (!status) return;
+
+      statusButtons.forEach(b => b.classList.remove('offers-page__status-filter--active'));
+      btn.classList.add('offers-page__status-filter--active');
+
+      currentFilterState.status = status;
       renderOffersGrid();
     });
   });
@@ -704,16 +859,23 @@ function renderOffersGrid(): void {
   const gridEl = document.getElementById('offers-grid');
   if (!gridEl) return;
 
-  // Clear the grid
   while (gridEl.firstChild) {
     gridEl.removeChild(gridEl.firstChild);
   }
 
-  // Filter offers
-  let filteredOffers = [...offers];
+  // Status filter
+  let filteredOffers: Offer[];
+  if (currentFilterState.status === 'Active') {
+    filteredOffers = getActiveOffers();
+  } else if (currentFilterState.status === 'Expiring Soon') {
+    filteredOffers = getActiveOffers().filter(o => isOfferExpiringSoon(o, 7));
+  } else {
+    filteredOffers = [...offers];
+  }
 
+  // Type filter
   if (currentFilterState.type !== 'All') {
-    filteredOffers = getOffersByType(currentFilterState.type as OfferType);
+    filteredOffers = filteredOffers.filter(o => o.offerType === currentFilterState.type);
   }
 
   if (filteredOffers.length === 0) {

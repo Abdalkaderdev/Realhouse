@@ -132,6 +132,133 @@ function createCategoryCard(category: ServiceCategory): HTMLElement {
   return card;
 }
 
+// ─── Provider Profile Modal ──────────────────────────────────────────────
+function openProviderModal(provider: ServiceProvider): void {
+  // Remove any existing modal
+  const existing = document.querySelector('.services-dir__modal-backdrop');
+  if (existing) existing.remove();
+
+  const backdrop = createElement('div', 'services-dir__modal-backdrop');
+  backdrop.setAttribute('role', 'dialog');
+  backdrop.setAttribute('aria-modal', 'true');
+
+  const modal = createElement('div', 'services-dir__modal');
+
+  const closeBtn = createElement('button', 'services-dir__modal-close');
+  closeBtn.setAttribute('aria-label', 'Close');
+  closeBtn.innerHTML = '&times;';
+  modal.appendChild(closeBtn);
+
+  // Cover
+  const cover = createElement('div', 'services-dir__modal-cover');
+  const coverImg = createElement('img');
+  coverImg.src = provider.image;
+  coverImg.alt = provider.name;
+  cover.appendChild(coverImg);
+  const coverOverlay = createElement('div', 'services-dir__modal-cover-overlay');
+  cover.appendChild(coverOverlay);
+  modal.appendChild(cover);
+
+  // Body
+  const body = createElement('div', 'services-dir__modal-body');
+
+  const head = createElement('div', 'services-dir__modal-head');
+  const name = createElement('h2', 'services-dir__modal-name', provider.name);
+  head.appendChild(name);
+  if (provider.verified) {
+    const vb = createElement('span', 'services-dir__modal-verified');
+    vb.appendChild(createSVGUse('icon-check'));
+    vb.appendChild(document.createTextNode('Verified'));
+    head.appendChild(vb);
+  }
+  body.appendChild(head);
+
+  // Rating + meta strip
+  const metaStrip = createElement('div', 'services-dir__modal-strip');
+  const ratingBlock = createElement('div', 'services-dir__modal-rating');
+  const stars = createElement('div', 'services-dir__stars');
+  for (let i = 0; i < 5; i++) {
+    stars.appendChild(createSVGUse(i < Math.floor(provider.rating) ? 'icon-star' : 'icon-star-outline'));
+  }
+  ratingBlock.appendChild(stars);
+  const ratingTxt = createElement('span', undefined, `${provider.rating.toFixed(1)} · ${provider.reviewCount} reviews`);
+  ratingBlock.appendChild(ratingTxt);
+  metaStrip.appendChild(ratingBlock);
+
+  const responseBlock = createElement('div', 'services-dir__modal-response');
+  const dot = createElement('span', 'services-dir__modal-dot');
+  responseBlock.appendChild(dot);
+  responseBlock.appendChild(document.createTextNode(provider.workingHours || 'Responds within 2 hours'));
+  metaStrip.appendChild(responseBlock);
+  body.appendChild(metaStrip);
+
+  // Description
+  const desc = createElement('p', 'services-dir__modal-desc', provider.description);
+  body.appendChild(desc);
+
+  // Portfolio / services list
+  const portTitle = createElement('h3', 'services-dir__modal-subtitle', 'Specializations & Portfolio');
+  body.appendChild(portTitle);
+  const portGrid = createElement('div', 'services-dir__modal-portfolio');
+  provider.services.forEach(s => {
+    const chip = createElement('span', 'services-dir__modal-chip', s);
+    portGrid.appendChild(chip);
+  });
+  body.appendChild(portGrid);
+
+  // Contact options
+  const contactTitle = createElement('h3', 'services-dir__modal-subtitle', 'Get in touch');
+  body.appendChild(contactTitle);
+
+  const actions = createElement('div', 'services-dir__modal-actions');
+  const callBtn = createElement('a', 'btn btn--primary', `Call ${provider.contact.phone}`);
+  callBtn.href = `tel:${provider.contact.phone.replace(/\s/g, '')}`;
+  actions.appendChild(callBtn);
+
+  if (provider.contact.whatsapp) {
+    const waBtn = createElement('a', 'btn btn--success', 'WhatsApp');
+    waBtn.href = `https://wa.me/${provider.contact.whatsapp.replace(/[^0-9]/g, '')}`;
+    waBtn.target = '_blank';
+    waBtn.rel = 'noopener noreferrer';
+    actions.appendChild(waBtn);
+  }
+  if (provider.contact.email) {
+    const emBtn = createElement('a', 'btn btn--ghost', 'Email');
+    emBtn.href = `mailto:${provider.contact.email}`;
+    actions.appendChild(emBtn);
+  }
+  body.appendChild(actions);
+
+  modal.appendChild(body);
+  backdrop.appendChild(modal);
+  document.body.appendChild(backdrop);
+
+  // Lock scroll
+  document.body.style.overflow = 'hidden';
+
+  // Close handlers
+  const close = () => {
+    backdrop.classList.add('services-dir__modal-backdrop--closing');
+    setTimeout(() => {
+      backdrop.remove();
+      document.body.style.overflow = '';
+    }, 200);
+  };
+  closeBtn.addEventListener('click', close);
+  backdrop.addEventListener('click', (e) => {
+    if (e.target === backdrop) close();
+  });
+  document.addEventListener('keydown', function escClose(e) {
+    if (e.key === 'Escape') {
+      close();
+      document.removeEventListener('keydown', escClose);
+    }
+  });
+
+  // Animate in
+  requestAnimationFrame(() => backdrop.classList.add('services-dir__modal-backdrop--open'));
+}
+
 // ─── Provider Card Component ──────────────────────────────────────────────
 function createProviderCard(provider: ServiceProvider): HTMLElement {
   const card = createElement('article', 'services-dir__provider-card');
@@ -139,6 +266,9 @@ function createProviderCard(provider: ServiceProvider): HTMLElement {
     card.classList.add('services-dir__provider-card--featured');
   }
   card.setAttribute('data-provider', provider.id);
+  card.setAttribute('data-rating', String(provider.rating));
+  card.setAttribute('data-price', provider.priceRange || '');
+  card.setAttribute('data-services', provider.services.join('|').toLowerCase());
 
   // Header with image
   const header = createElement('div', 'services-dir__provider-header');
@@ -147,6 +277,10 @@ function createProviderCard(provider: ServiceProvider): HTMLElement {
   img.alt = provider.name;
   img.loading = 'lazy';
   header.appendChild(img);
+
+  // Gradient overlay on header
+  const overlay = createElement('div', 'services-dir__provider-overlay');
+  header.appendChild(overlay);
 
   if (provider.featured) {
     const badge = createElement('span', 'services-dir__featured-badge', t('servicesDirectory.featured'));
@@ -158,6 +292,14 @@ function createProviderCard(provider: ServiceProvider): HTMLElement {
     verified.appendChild(document.createTextNode(t('servicesDirectory.verified')));
     header.appendChild(verified);
   }
+
+  // Rating pinned bottom-right of header
+  const ratingPin = createElement('div', 'services-dir__provider-ratingpin');
+  ratingPin.appendChild(createSVGUse('icon-star'));
+  const rpText = createElement('span', undefined, provider.rating.toFixed(1));
+  ratingPin.appendChild(rpText);
+  header.appendChild(ratingPin);
+
   card.appendChild(header);
 
   // Content
@@ -166,33 +308,44 @@ function createProviderCard(provider: ServiceProvider): HTMLElement {
   const name = createElement('h3', 'services-dir__provider-name', provider.name);
   content.appendChild(name);
 
-  // Rating
-  const rating = createElement('div', 'services-dir__provider-rating');
-  const stars = createElement('div', 'services-dir__stars');
+  // Meta row: reviews + response time
+  const metaRow = createElement('div', 'services-dir__provider-meta');
+
+  const reviews = createElement('span', 'services-dir__provider-reviews');
+  const stars = createElement('span', 'services-dir__stars');
   for (let i = 0; i < 5; i++) {
     const starIcon = i < Math.floor(provider.rating) ? 'icon-star' : 'icon-star-outline';
     stars.appendChild(createSVGUse(starIcon));
   }
-  rating.appendChild(stars);
-  const ratingText = createElement('span', undefined, t('servicesDirectory.reviewCount', { rating: provider.rating, count: provider.reviewCount }));
-  rating.appendChild(ratingText);
-  content.appendChild(rating);
+  reviews.appendChild(stars);
+  const revTxt = createElement('span', undefined, `(${provider.reviewCount})`);
+  reviews.appendChild(revTxt);
+  metaRow.appendChild(reviews);
+
+  // Response time pill
+  const respPill = createElement('span', 'services-dir__provider-response');
+  const respDot = createElement('span', 'services-dir__provider-response-dot');
+  respPill.appendChild(respDot);
+  respPill.appendChild(document.createTextNode(provider.workingHours ? 'Open now' : 'Replies < 2h'));
+  metaRow.appendChild(respPill);
+
+  content.appendChild(metaRow);
 
   const desc = createElement('p', 'services-dir__provider-desc', provider.shortDescription);
   content.appendChild(desc);
 
   // Services
-  const services = createElement('div', 'services-dir__provider-services');
+  const servicesRow = createElement('div', 'services-dir__provider-services');
   provider.services.slice(0, 3).forEach(service => {
     const tag = createElement('span', 'services-dir__service-tag', service);
-    services.appendChild(tag);
+    servicesRow.appendChild(tag);
   });
   if (provider.services.length > 3) {
     const more = createElement('span', 'services-dir__service-tag services-dir__service-tag--more');
     more.textContent = t('servicesDirectory.moreServices', { count: provider.services.length - 3 });
-    services.appendChild(more);
+    servicesRow.appendChild(more);
   }
-  content.appendChild(services);
+  content.appendChild(servicesRow);
 
   // Price range
   if (provider.priceRange) {
@@ -211,6 +364,15 @@ function createProviderCard(provider: ServiceProvider): HTMLElement {
   // Contact buttons
   const actions = createElement('div', 'services-dir__provider-actions');
 
+  const viewBtn = createElement('button', 'btn btn--ghost btn--sm services-dir__provider-view');
+  viewBtn.type = 'button';
+  viewBtn.textContent = 'View Profile';
+  viewBtn.addEventListener('click', (e) => {
+    e.preventDefault();
+    openProviderModal(provider);
+  });
+  actions.appendChild(viewBtn);
+
   const phoneBtn = createElement('a', 'btn btn--primary btn--sm', t('servicesDirectory.callNow'));
   phoneBtn.href = `tel:${provider.contact.phone.replace(/\s/g, '')}`;
   phoneBtn.appendChild(createSVGUse('icon-phone'));
@@ -226,6 +388,108 @@ function createProviderCard(provider: ServiceProvider): HTMLElement {
 
   card.appendChild(actions);
   return card;
+}
+
+// ─── Filter Bar Component ────────────────────────────────────────────────
+function createFilterBar(): HTMLElement {
+  const bar = createElement('div', 'services-dir__filterbar');
+
+  // Service type
+  const typeGroup = createElement('div', 'services-dir__filter-group');
+  const typeLabel = createElement('label', 'services-dir__filter-label', 'Service Type');
+  typeLabel.setAttribute('for', 'filter-type');
+  typeGroup.appendChild(typeLabel);
+  const typeSelect = createElement('select', 'services-dir__filter-select');
+  typeSelect.id = 'filter-type';
+  ['All Services', 'Interior Design', 'Cleaning', 'Plumbing', 'Electrical', 'Landscaping', 'AC Repair'].forEach((label, i) => {
+    const opt = createElement('option', undefined, label);
+    opt.value = i === 0 ? '' : label.toLowerCase();
+    typeSelect.appendChild(opt);
+  });
+  typeGroup.appendChild(typeSelect);
+  bar.appendChild(typeGroup);
+
+  // Location
+  const locGroup = createElement('div', 'services-dir__filter-group');
+  const locLabel = createElement('label', 'services-dir__filter-label', 'Location');
+  locLabel.setAttribute('for', 'filter-loc');
+  locGroup.appendChild(locLabel);
+  const locSelect = createElement('select', 'services-dir__filter-select');
+  locSelect.id = 'filter-loc';
+  ['All Erbil', 'Downtown', 'Ankawa', 'Italian Village', 'English Village', 'Empire World'].forEach((label, i) => {
+    const opt = createElement('option', undefined, label);
+    opt.value = i === 0 ? '' : label.toLowerCase();
+    locSelect.appendChild(opt);
+  });
+  locGroup.appendChild(locSelect);
+  bar.appendChild(locGroup);
+
+  // Rating
+  const ratingGroup = createElement('div', 'services-dir__filter-group');
+  const ratingLabel = createElement('label', 'services-dir__filter-label', 'Min. Rating');
+  ratingLabel.setAttribute('for', 'filter-rating');
+  ratingGroup.appendChild(ratingLabel);
+  const ratingSelect = createElement('select', 'services-dir__filter-select');
+  ratingSelect.id = 'filter-rating';
+  [['Any', ''], ['4.5+ ★', '4.5'], ['4.0+ ★', '4.0'], ['3.5+ ★', '3.5']].forEach(([label, value]) => {
+    const opt = createElement('option', undefined, label);
+    opt.value = value;
+    ratingSelect.appendChild(opt);
+  });
+  ratingGroup.appendChild(ratingSelect);
+  bar.appendChild(ratingGroup);
+
+  // Language
+  const langGroup = createElement('div', 'services-dir__filter-group');
+  const langLabel = createElement('label', 'services-dir__filter-label', 'Language');
+  langLabel.setAttribute('for', 'filter-lang');
+  langGroup.appendChild(langLabel);
+  const langSelect = createElement('select', 'services-dir__filter-select');
+  langSelect.id = 'filter-lang';
+  ['Any Language', 'English', 'Kurdish', 'Arabic'].forEach((label, i) => {
+    const opt = createElement('option', undefined, label);
+    opt.value = i === 0 ? '' : label.toLowerCase();
+    langSelect.appendChild(opt);
+  });
+  langGroup.appendChild(langSelect);
+  bar.appendChild(langGroup);
+
+  // Apply / clear
+  const actions = createElement('div', 'services-dir__filter-actions');
+  const applyBtn = createElement('button', 'btn btn--primary btn--sm', 'Apply');
+  applyBtn.type = 'button';
+  applyBtn.addEventListener('click', () => applyFilters());
+  actions.appendChild(applyBtn);
+  const clearBtn = createElement('button', 'btn btn--ghost btn--sm', 'Clear');
+  clearBtn.type = 'button';
+  clearBtn.addEventListener('click', () => {
+    (typeSelect as HTMLSelectElement).value = '';
+    (locSelect as HTMLSelectElement).value = '';
+    (ratingSelect as HTMLSelectElement).value = '';
+    (langSelect as HTMLSelectElement).value = '';
+    applyFilters();
+  });
+  actions.appendChild(clearBtn);
+  bar.appendChild(actions);
+
+  return bar;
+}
+
+function applyFilters(): void {
+  const typeVal = (document.getElementById('filter-type') as HTMLSelectElement)?.value || '';
+  const ratingVal = parseFloat((document.getElementById('filter-rating') as HTMLSelectElement)?.value || '0');
+
+  const cards = document.querySelectorAll<HTMLElement>('.services-dir__provider-card');
+  cards.forEach(card => {
+    const cardRating = parseFloat(card.getAttribute('data-rating') || '0');
+    const cardServices = (card.getAttribute('data-services') || '').toLowerCase();
+
+    let show = true;
+    if (typeVal && !cardServices.includes(typeVal)) show = false;
+    if (ratingVal && cardRating < ratingVal) show = false;
+
+    card.style.display = show ? '' : 'none';
+  });
 }
 
 // ─── Quote Success Message Component ──────────────────────────────────────
@@ -467,6 +731,9 @@ export function renderServicesDirectoryPage(): DocumentFragment {
     featuredHeader.appendChild(featuredSubtitle);
     featuredContainer.appendChild(featuredHeader);
 
+    // Filter bar above the featured grid
+    featuredContainer.appendChild(createFilterBar());
+
     const featuredGrid = createElement('div', 'services-dir__providers-grid');
     featuredProviders.slice(0, 6).forEach(provider => {
       featuredGrid.appendChild(createProviderCard(provider));
@@ -667,6 +934,8 @@ export function renderServiceCategoryPage(slug: string): DocumentFragment {
     const providersSection = createElement('div', 'services-dir__providers-section');
     const providersTitle = createElement('h2', 'services-dir__section-title', t('servicesDirectory.recommendedProvidersTitle', { category: category.title }));
     providersSection.appendChild(providersTitle);
+
+    providersSection.appendChild(createFilterBar());
 
     const providersGrid = createElement('div', 'services-dir__providers-grid');
     providers.forEach(provider => {

@@ -21,5 +21,9 @@
       "mcp__plugin_serena_serena__find_file",
       "Skill(update-config)"
     ]
-  }
+  },
+  "enabledMcpjsonServers": [
+    "code-review-graph"
+  ],
+  "enableAllProjectMcpServers": true
 }

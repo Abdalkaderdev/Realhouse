@@ -979,6 +979,215 @@ Building amenities include 24/7 security, elevator access, and parking. Excellen
     isFeatured: false,
     isNew: true,
     agent: agents[0]
+  },
+
+  // ─── Ruby Towers - Commercial Offices & Stores ──────────────────────────────
+  {
+    id: 'ruby-towers-office-1',
+    title: 'Ruby Towers - Premium Office Space (120 sqm)',
+    titleKu: 'ڕووبی تاوەرز - ئۆفیس (١٢٠ م٢)',
+    titleAr: 'روبي تاورز - مكتب (120 م٢)',
+    type: 'Commercial',
+    price: 0,
+    status: 'For Rent',
+    badges: ['Hot', 'Exclusive'],
+    location: {
+      address: 'Ruby Towers, Tower A, Floor 8',
+      city: 'Erbil',
+      district: 'Gulan',
+      country: 'Iraq',
+      coordinates: { lat: 36.2135, lng: 44.0165 },
+      nearbyLandmarks: ['100 Meter Road', 'Family Mall', 'Empire World', 'Sami Abdulrahman Park']
+    },
+    specs: { beds: 0, baths: 2, sqm: 120, floor: 8 },
+    images: ['/images/projects/ruby-towers/page01_img01.jpeg', '/images/projects/ruby-towers/page04_img01.jpeg'],
+    description: `Premium office space in Ruby Towers, one of Erbil's premier commercial high-rises. This 120 sqm office offers panoramic city views, modern open-plan layout, and direct access to the building's executive lounge.
+
+Features include floor-to-ceiling windows, high-speed fiber internet, central HVAC, dedicated executive parking, and 24/7 concierge services. Perfect for corporate headquarters, professional firms, or international company branches.`,
+    features: ['Panoramic City Views', 'Open-Plan Layout', 'High-Speed Fiber', 'Central HVAC', '24/7 Concierge', 'Executive Parking', 'Modern Finishes', 'Conference Room Access'],
+    isFeatured: true,
+    isNew: true,
+    neighborhood: { name: 'Gulan', walkScore: 88, description: 'Premium business district with international hotels and high-end retail.' },
+    agent: agents[0],
+    agents: [agents[0], agents[1]]
+  },
+  {
+    id: 'ruby-towers-store-1',
+    title: 'Ruby Towers - Ground Floor Retail Store (95 sqm)',
+    titleKu: 'ڕووبی تاوەرز - دوکان (٩٥ م٢)',
+    titleAr: 'روبي تاورز - محل تجاري (95 م٢)',
+    type: 'Commercial',
+    price: 0,
+    status: 'For Rent',
+    badges: ['New', 'Hot'],
+    location: {
+      address: 'Ruby Towers, Ground Floor',
+      city: 'Erbil',
+      district: 'Gulan',
+      country: 'Iraq',
+      coordinates: { lat: 36.2133, lng: 44.0163 },
+      nearbyLandmarks: ['100 Meter Road', 'Family Mall', 'Empire World']
+    },
+    specs: { beds: 0, baths: 1, sqm: 95, floor: 0 },
+    images: ['/images/projects/ruby-towers/page06_img01.jpeg', '/images/projects/ruby-towers/page08_img01.jpeg'],
+    description: `Prime ground-floor retail space in Ruby Towers with exceptional street visibility. This 95 sqm store benefits from heavy pedestrian traffic from the building's 300+ apartment residents and office tenants.
+
+Large display windows, double-height ceilings, modern electrical infrastructure, and flexible layout suitable for boutique retail, café, restaurant, or showroom.`,
+    features: ['Street-Level Visibility', 'Heavy Foot Traffic', 'Display Windows', 'Double-Height Ceilings', 'Flexible Layout', 'Modern Infrastructure', '24/7 Security', 'Loading Access'],
+    isFeatured: true,
+    isNew: true,
+    neighborhood: { name: 'Gulan', walkScore: 88, description: 'High-traffic commercial zone on Erbil\'s main retail corridor.' },
+    agent: agents[1],
+    agents: [agents[0], agents[1]]
+  },
+
+  // ─── Phoenix Tower - Commercial Offices & Stores ────────────────────────────
+  {
+    id: 'phoenix-tower-office-1',
+    title: 'Phoenix Tower - Corporate Office Suite (180 sqm)',
+    titleKu: 'فینکس تاوەر - ئۆفیس (١٨٠ م٢)',
+    titleAr: 'فينيكس تاور - مكتب (180 م٢)',
+    type: 'Commercial',
+    price: 0,
+    status: 'For Rent',
+    badges: ['Exclusive', 'New'],
+    location: {
+      address: 'Phoenix Tower, Floor 12',
+      city: 'Erbil',
+      district: 'Central',
+      country: 'Iraq',
+      coordinates: { lat: 36.1911, lng: 44.0084 },
+      nearbyLandmarks: ['Erbil Citadel', 'Doctors Street', 'Italian Village', 'Empire Diamond']
+    },
+    specs: { beds: 0, baths: 3, sqm: 180, floor: 12 },
+    images: ['/images/projects/empire-world/01.jpeg', '/images/projects/empire-world/02.jpeg'],
+    description: `Corporate office suite in Phoenix Tower, a landmark commercial high-rise in central Erbil. This 180 sqm space is configured as 4 private offices + open work area + executive conference room + reception.
+
+Premium amenities include marble lobby access, 6 high-speed elevators, smart building management, premium kitchenette, and stunning city + citadel views. Ideal for legal firms, financial services, consulting, or regional HQ.`,
+    features: ['Citadel Views', 'Private Offices', 'Conference Room', 'Reception Area', 'Smart Building', 'Premium Kitchenette', '6 Elevators', 'Concierge Service', 'Underground Parking'],
+    isFeatured: true,
+    isNew: true,
+    neighborhood: { name: 'Central', walkScore: 92, description: 'Erbil\'s historic and commercial heart with embassies, banks, and government offices.' },
+    agent: agents[0],
+    agents: [agents[0], agents[1]]
+  },
+  {
+    id: 'phoenix-tower-store-1',
+    title: 'Phoenix Tower - Showroom Space (220 sqm)',
+    titleKu: 'فینکس تاوەر - نمایشگا (٢٢٠ م٢)',
+    titleAr: 'فينيكس تاور - معرض (220 م٢)',
+    type: 'Commercial',
+    price: 0,
+    status: 'For Rent',
+    badges: ['Hot', 'Exclusive'],
+    location: {
+      address: 'Phoenix Tower, Ground & Mezzanine',
+      city: 'Erbil',
+      district: 'Central',
+      country: 'Iraq',
+      coordinates: { lat: 36.1909, lng: 44.0082 },
+      nearbyLandmarks: ['Erbil Citadel', 'Doctors Street', 'Main Bazaar']
+    },
+    specs: { beds: 0, baths: 2, sqm: 220, floor: 0 },
+    images: ['/images/projects/empire-world/03.jpeg', '/images/projects/empire-world/04.jpeg'],
+    description: `Two-level showroom space in the iconic Phoenix Tower combining 130 sqm ground floor + 90 sqm mezzanine. Triple-height frontage with floor-to-ceiling glass façade offers unmatched visibility.
+
+Perfect for luxury car dealerships, high-end furniture, designer fashion, jewelry, or flagship brand stores. Includes internal staircase, freight elevator access, dedicated VIP client parking, and signage rights on the building façade.`,
+    features: ['Triple-Height Frontage', 'Glass Façade', 'Mezzanine Level', 'Signage Rights', 'VIP Parking', 'Freight Elevator', 'Premium Location', 'Showroom-Ready'],
+    isFeatured: true,
+    isNew: true,
+    neighborhood: { name: 'Central', walkScore: 92 },
+    agent: agents[1],
+    agents: [agents[0], agents[1]]
+  },
+
+  // ─── Doctors Street - Medical & Professional Offices ────────────────────────
+  {
+    id: 'doctors-street-clinic-1',
+    title: 'Doctors Street - Medical Clinic Space (85 sqm)',
+    titleKu: 'شەقامی پزیشکان - کلینیک (٨٥ م٢)',
+    titleAr: 'شارع الأطباء - عيادة (85 م٢)',
+    type: 'Commercial',
+    price: 0,
+    status: 'For Rent',
+    badges: ['Hot'],
+    location: {
+      address: 'Doctors Street, Medical Building, Floor 3',
+      city: 'Erbil',
+      district: 'Central',
+      country: 'Iraq',
+      coordinates: { lat: 36.1890, lng: 44.0102 },
+      nearbyLandmarks: ['Erbil Teaching Hospital', 'Citadel', 'Medical Laboratories District', 'Pharmacy Row']
+    },
+    specs: { beds: 0, baths: 2, sqm: 85, floor: 3 },
+    images: ['/images/projects/queen-towers/page01_img01.jpeg'],
+    description: `Turnkey medical clinic space on Erbil's famous Doctors Street - the medical hub of the Kurdistan Region. This 85 sqm unit is pre-configured with 2 consultation rooms, examination area, reception, waiting room, and dedicated patient washroom.
+
+Features include medical-grade flooring, soundproofed walls, lead-lined option for radiology, dedicated patient and staff entrances, and existing infrastructure for medical gas and imaging equipment. Building has 24/7 security, ground-floor pharmacy, and dedicated patient parking.`,
+    features: ['Pre-Configured Clinic', '2 Consultation Rooms', 'Examination Area', 'Patient Waiting Area', 'Medical-Grade Flooring', 'Soundproofed', 'Medical Gas Ready', 'Patient Parking', 'Pharmacy On-Site'],
+    isFeatured: true,
+    isNew: true,
+    neighborhood: { name: 'Central', walkScore: 95, description: 'Erbil\'s medical district - home to 200+ clinics, specialists, and pharmacies. The destination for healthcare in Kurdistan.' },
+    agent: agents[0],
+    agents: [agents[0], agents[1]]
+  },
+  {
+    id: 'doctors-street-office-1',
+    title: 'Doctors Street - Specialist Office Suite (140 sqm)',
+    titleKu: 'شەقامی پزیشکان - ئۆفیس پسپۆڕی (١٤٠ م٢)',
+    titleAr: 'شارع الأطباء - مكتب تخصصي (140 م٢)',
+    type: 'Commercial',
+    price: 0,
+    status: 'For Sale',
+    badges: ['Exclusive', 'Installment'],
+    location: {
+      address: 'Doctors Street, Medical Plaza, Floor 5',
+      city: 'Erbil',
+      district: 'Central',
+      country: 'Iraq',
+      coordinates: { lat: 36.1888, lng: 44.0105 },
+      nearbyLandmarks: ['Erbil Teaching Hospital', 'Medical Laboratories District', 'Imaging Center']
+    },
+    specs: { beds: 0, baths: 2, sqm: 140, floor: 5 },
+    images: ['/images/projects/queen-towers/page02_img01.jpeg'],
+    description: `Premium specialist office for sale on Doctors Street. This 140 sqm suite is ideal for specialist consultations (cardiology, dermatology, pediatrics) or shared practice with multiple practitioners.
+
+Layout: 3 consultation rooms, treatment room, large reception with patient waiting area, staff break room, and 2 washrooms. Includes flexible payment plan with 30% down, balance over 36 months. Located in the most established medical building on Doctors Street with continuous specialist tenancy for 15+ years.`,
+    features: ['3 Consultation Rooms', 'Treatment Room', 'Large Reception', 'Staff Area', 'Established Medical Building', 'Installment Plan Available', '36-Month Payment', '24/7 Building Access', 'Patient Elevator'],
+    isFeatured: true,
+    isNew: true,
+    neighborhood: { name: 'Central', walkScore: 95 },
+    agent: agents[1],
+    agents: [agents[0], agents[1]]
+  },
+  {
+    id: 'doctors-street-pharmacy-1',
+    title: 'Doctors Street - Pharmacy Ground Floor (110 sqm)',
+    titleKu: 'شەقامی پزیشکان - دەرمانخانە (١١٠ م٢)',
+    titleAr: 'شارع الأطباء - صيدلية (110 م٢)',
+    type: 'Commercial',
+    price: 0,
+    status: 'For Rent',
+    badges: ['Hot', 'New'],
+    location: {
+      address: 'Doctors Street, Ground Floor',
+      city: 'Erbil',
+      district: 'Central',
+      country: 'Iraq',
+      coordinates: { lat: 36.1892, lng: 44.0100 },
+      nearbyLandmarks: ['Doctors Street', 'Erbil Teaching Hospital', '12 Clinics in Same Building']
+    },
+    specs: { beds: 0, baths: 1, sqm: 110, floor: 0 },
+    images: ['/images/projects/queen-towers/page03_img01.jpeg'],
+    description: `Prime pharmacy location on the busiest stretch of Doctors Street. This 110 sqm ground-floor space is purpose-built for pharmacy operations with built-in dispensary shelving, refrigerated storage area, consultation booth, and customer queueing area.
+
+The building hosts 12 active medical clinics generating high prescription volume daily. Adjacent to imaging center and medical laboratory ensures steady walk-in traffic. Street-facing entrance with delivery vehicle access.`,
+    features: ['Purpose-Built Pharmacy', 'Built-In Shelving', 'Refrigerated Storage', 'Consultation Booth', '12 Clinics in Building', 'Adjacent Imaging Center', 'Street Entrance', 'Delivery Access', 'High Prescription Volume Area'],
+    isFeatured: true,
+    isNew: true,
+    neighborhood: { name: 'Central', walkScore: 95 },
+    agent: agents[0],
+    agents: [agents[0], agents[1]]
   }
 ];
 

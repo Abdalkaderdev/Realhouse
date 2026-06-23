@@ -4,6 +4,7 @@
 // ═══════════════════════════════════════════════════════════════════════════
 
 import { properties, featuredProperties, getDisplayPrice, getPropertyById, formatPrice, type Property, type PropertyFeature, PROPERTY_FEATURES } from './data/properties';
+import { blogPosts, formatBlogDate } from './data/blog';
 import { testimonials } from './data/testimonials';
 import { agents, trustBadges, enhancedStats, featuredInMedia, partnerLogos } from './data/agents';
 import { projects, getProjectById, formatPriceRange, type Project, type ProjectStatus } from './data/projects';
@@ -51,6 +52,8 @@ import {
   type BreadcrumbItem
 } from './components/internal-linking';
 import { t } from './i18n';
+import { toast, copyToClipboard } from './utils/toast';
+import { createEmptyState, createSkeleton } from './utils/ui-states';
 
 // ─── Mortgage Calculator Interface ─────────────────────────────────────────
 interface MortgageCalculation {
@@ -542,6 +545,316 @@ function createVideoFullscreenButton(video: HTMLVideoElement): HTMLButtonElement
   return btn;
 }
 
+// ─── Hero Search Bar (Buy / Rent / Projects) ──────────────────────────────
+function createHeroSearchBar(): HTMLElement {
+  const wrap = createElement('div', 'hero-search');
+  wrap.setAttribute('role', 'search');
+  wrap.setAttribute('aria-label', 'Find your property');
+
+  // Tabs
+  const tabs = createElement('div', 'hero-search__tabs');
+  tabs.setAttribute('role', 'tablist');
+  const tabConfig: Array<{ key: string; label: string; status: string; type?: string }> = [
+    { key: 'buy', label: 'Buy', status: 'For Sale' },
+    { key: 'rent', label: 'Rent', status: 'For Rent' },
+    { key: 'projects', label: 'Projects', status: 'All' },
+  ];
+  let activeTab = 'buy';
+  tabConfig.forEach((tab, idx) => {
+    const btn = createElement('button', `hero-search__tab${idx === 0 ? ' hero-search__tab--active' : ''}`, tab.label);
+    btn.setAttribute('type', 'button');
+    btn.setAttribute('role', 'tab');
+    btn.setAttribute('data-tab', tab.key);
+    btn.setAttribute('aria-selected', idx === 0 ? 'true' : 'false');
+    btn.addEventListener('click', () => {
+      activeTab = tab.key;
+      tabs.querySelectorAll('.hero-search__tab').forEach(b => {
+        b.classList.remove('hero-search__tab--active');
+        b.setAttribute('aria-selected', 'false');
+      });
+      btn.classList.add('hero-search__tab--active');
+      btn.setAttribute('aria-selected', 'true');
+    });
+    tabs.appendChild(btn);
+  });
+  wrap.appendChild(tabs);
+
+  // Form row
+  const form = createElement('form', 'hero-search__form');
+  form.setAttribute('aria-label', 'Property search');
+
+  // Location field
+  const locField = createElement('div', 'hero-search__field hero-search__field--location');
+  const locLabel = createElement('label', 'hero-search__label', 'Location');
+  locLabel.setAttribute('for', 'hero-search-location');
+  locField.appendChild(locLabel);
+  const locSelect = createElement('select', 'hero-search__select') as HTMLSelectElement;
+  locSelect.id = 'hero-search-location';
+  ['Any Location', 'Erbil', 'Kark', 'Empire World', 'Dream City', 'English Village', 'Italian Village', 'Newroz', 'Pak City']
+    .forEach(loc => {
+      const opt = document.createElement('option');
+      opt.value = loc === 'Any Location' ? 'All' : loc;
+      opt.textContent = loc;
+      locSelect.appendChild(opt);
+    });
+  locField.appendChild(locSelect);
+  form.appendChild(locField);
+
+  // Property Type field
+  const typeField = createElement('div', 'hero-search__field');
+  const typeLabel = createElement('label', 'hero-search__label', 'Property Type');
+  typeLabel.setAttribute('for', 'hero-search-type');
+  typeField.appendChild(typeLabel);
+  const typeSelect = createElement('select', 'hero-search__select') as HTMLSelectElement;
+  typeSelect.id = 'hero-search-type';
+  ['Any Type', 'Villa', 'Apartment', 'Penthouse', 'Townhouse', 'Duplex', 'Land', 'Commercial']
+    .forEach(typ => {
+      const opt = document.createElement('option');
+      opt.value = typ === 'Any Type' ? 'All' : typ;
+      opt.textContent = typ;
+      typeSelect.appendChild(opt);
+    });
+  typeField.appendChild(typeSelect);
+  form.appendChild(typeField);
+
+  // Budget field
+  const budgetField = createElement('div', 'hero-search__field');
+  const budgetLabel = createElement('label', 'hero-search__label', 'Budget');
+  budgetLabel.setAttribute('for', 'hero-search-budget');
+  budgetField.appendChild(budgetLabel);
+  const budgetSelect = createElement('select', 'hero-search__select') as HTMLSelectElement;
+  budgetSelect.id = 'hero-search-budget';
+  ['Any Budget', 'Under $200K', '$200K-$400K', '$400K-$700K', '$700K+']
+    .forEach(b => {
+      const opt = document.createElement('option');
+      opt.value = b === 'Any Budget' ? 'All' : b;
+      opt.textContent = b;
+      budgetSelect.appendChild(opt);
+    });
+  budgetField.appendChild(budgetSelect);
+  form.appendChild(budgetField);
+
+  // Keyword field
+  const keywordField = createElement('div', 'hero-search__field hero-search__field--keyword');
+  const keywordLabel = createElement('label', 'hero-search__label', 'Keyword');
+  keywordLabel.setAttribute('for', 'hero-search-keyword');
+  keywordField.appendChild(keywordLabel);
+  const keywordInput = createElement('input', 'hero-search__input') as HTMLInputElement;
+  keywordInput.id = 'hero-search-keyword';
+  keywordInput.type = 'text';
+  keywordInput.placeholder = 'Neighborhood, project, ID…';
+  keywordField.appendChild(keywordInput);
+  form.appendChild(keywordField);
+
+  // Submit
+  const submitBtn = createElement('button', 'hero-search__submit btn btn--primary');
+  submitBtn.setAttribute('type', 'submit');
+  submitBtn.setAttribute('aria-label', 'Search properties');
+  const submitSvg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+  submitSvg.setAttribute('viewBox', '0 0 24 24');
+  submitSvg.setAttribute('fill', 'none');
+  submitSvg.setAttribute('stroke', 'currentColor');
+  submitSvg.setAttribute('stroke-width', '2.4');
+  submitSvg.setAttribute('stroke-linecap', 'round');
+  submitSvg.setAttribute('stroke-linejoin', 'round');
+  submitSvg.setAttribute('aria-hidden', 'true');
+  const circle = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
+  circle.setAttribute('cx', '11'); circle.setAttribute('cy', '11'); circle.setAttribute('r', '7');
+  const line = document.createElementNS('http://www.w3.org/2000/svg', 'line');
+  line.setAttribute('x1', '21'); line.setAttribute('y1', '21'); line.setAttribute('x2', '16.65'); line.setAttribute('y2', '16.65');
+  submitSvg.appendChild(circle); submitSvg.appendChild(line);
+  submitBtn.appendChild(submitSvg);
+  const submitText = createElement('span', 'hero-search__submit-label', 'Search');
+  submitBtn.appendChild(submitText);
+  form.appendChild(submitBtn);
+
+  form.addEventListener('submit', (e) => {
+    e.preventDefault();
+    // If Projects tab, go to /projects with keyword
+    if (activeTab === 'projects') {
+      const url = new URL('/projects', window.location.origin);
+      const kw = keywordInput.value.trim();
+      if (kw) url.searchParams.set('q', kw);
+      window.history.pushState({}, '', url.pathname + (url.search ? url.search : ''));
+      window.dispatchEvent(new PopStateEvent('popstate'));
+      return;
+    }
+    // Build /properties URL with filters
+    const params = new URLSearchParams();
+    const tabCfg = tabConfig.find(c => c.key === activeTab);
+    if (tabCfg && tabCfg.status !== 'All') params.set('status', tabCfg.status);
+    if (locSelect.value && locSelect.value !== 'All') params.set('district', locSelect.value);
+    if (typeSelect.value && typeSelect.value !== 'All') params.set('type', typeSelect.value);
+    if (budgetSelect.value && budgetSelect.value !== 'All') params.set('priceRange', budgetSelect.value);
+    const kw = keywordInput.value.trim();
+    if (kw) params.set('q', kw);
+    const qs = params.toString();
+    const url = qs ? `/properties?${qs}` : '/properties';
+    window.history.pushState({}, '', url);
+    window.dispatchEvent(new PopStateEvent('popstate'));
+  });
+
+  wrap.appendChild(form);
+  return wrap;
+}
+
+// ─── Journal Preview Section (3 recent blog posts) ────────────────────────
+function createJournalPreviewSection(): HTMLElement {
+  const section = createElement('section', 'journal-preview');
+  section.setAttribute('aria-labelledby', 'journal-preview-title');
+  const container = createElement('div', 'container');
+
+  const header = createElement('header', 'journal-preview__header');
+  const heading = createElement('div', 'journal-preview__heading');
+  const eyebrow = createElement('span', 'journal-preview__eyebrow', 'From Our Journal');
+  eyebrow.setAttribute('aria-hidden', 'true');
+  heading.appendChild(eyebrow);
+  const title = createElement('h2', 'journal-preview__title');
+  title.id = 'journal-preview-title';
+  title.textContent = 'Insights, Stories & Market ';
+  title.appendChild(createElement('em', undefined, 'Intelligence'));
+  heading.appendChild(title);
+  const subtitle = createElement('p', 'journal-preview__subtitle',
+    'Field notes from the Erbil market — what we are watching, buying, and recommending.');
+  heading.appendChild(subtitle);
+  header.appendChild(heading);
+
+  const viewAll = createElement('a', 'journal-preview__view-all', 'Read all articles');
+  viewAll.href = '/blog';
+  viewAll.setAttribute('data-route', '');
+  viewAll.appendChild(createSVGUse('icon-arrow-right'));
+  header.appendChild(viewAll);
+  container.appendChild(header);
+
+  const grid = createElement('div', 'journal-preview__grid');
+  // 3 most recent posts by date desc
+  const recent = [...blogPosts]
+    .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
+    .slice(0, 3);
+
+  recent.forEach((post, idx) => {
+    const card = createElement('article', `journal-preview__card${idx === 0 ? ' journal-preview__card--lead' : ''}`);
+
+    const mediaLink = createElement('a', 'journal-preview__media');
+    mediaLink.href = `/blog/${post.slug}`;
+    mediaLink.setAttribute('data-route', '');
+    mediaLink.setAttribute('aria-label', post.title);
+    const img = createSEOImage({
+      src: post.image,
+      alt: post.title,
+      loading: 'lazy',
+      width: 800,
+      height: 500,
+      className: 'journal-preview__image',
+    });
+    mediaLink.appendChild(img);
+    const categoryTag = createElement('span', 'journal-preview__category', post.category);
+    mediaLink.appendChild(categoryTag);
+    card.appendChild(mediaLink);
+
+    const content = createElement('div', 'journal-preview__content');
+    const meta = createElement('div', 'journal-preview__meta');
+    meta.appendChild(createElement('time', 'journal-preview__date', formatBlogDate(post.date)));
+    meta.appendChild(createElement('span', 'journal-preview__dot', '•'));
+    meta.appendChild(createElement('span', 'journal-preview__read-time', `${post.readTime} min read`));
+    content.appendChild(meta);
+
+    const titleLink = createElement('a', 'journal-preview__article-title');
+    titleLink.href = `/blog/${post.slug}`;
+    titleLink.setAttribute('data-route', '');
+    const h3 = createElement('h3', undefined, post.title);
+    titleLink.appendChild(h3);
+    content.appendChild(titleLink);
+
+    content.appendChild(createElement('p', 'journal-preview__excerpt', post.excerpt));
+
+    const author = createElement('div', 'journal-preview__author');
+    author.appendChild(createElement('span', 'journal-preview__author-name', post.author.name));
+    author.appendChild(createElement('span', 'journal-preview__author-role', post.author.role));
+    content.appendChild(author);
+
+    card.appendChild(content);
+    grid.appendChild(card);
+  });
+
+  container.appendChild(grid);
+  section.appendChild(container);
+  return section;
+}
+
+// ─── Newsletter Signup Section (home) ─────────────────────────────────────
+function createHomeNewsletterSection(): HTMLElement {
+  const section = createElement('section', 'home-newsletter');
+  section.setAttribute('aria-labelledby', 'home-newsletter-title');
+
+  const container = createElement('div', 'container');
+  const card = createElement('div', 'home-newsletter__card');
+
+  const decor = createElement('div', 'home-newsletter__decor');
+  decor.setAttribute('aria-hidden', 'true');
+  card.appendChild(decor);
+
+  const content = createElement('div', 'home-newsletter__content');
+  const eyebrow = createElement('span', 'home-newsletter__eyebrow', 'The Dispatch');
+  eyebrow.setAttribute('aria-hidden', 'true');
+  content.appendChild(eyebrow);
+
+  const title = createElement('h2', 'home-newsletter__title');
+  title.id = 'home-newsletter-title';
+  title.textContent = 'First access to ';
+  title.appendChild(createElement('em', undefined, 'off-market'));
+  title.appendChild(document.createTextNode(' listings.'));
+  content.appendChild(title);
+
+  content.appendChild(createElement('p', 'home-newsletter__text',
+    'Join 4,800+ readers receiving Erbil\'s premier real estate intelligence — one curated dispatch, every Sunday morning.'));
+
+  const form = createElement('form', 'home-newsletter__form');
+  form.setAttribute('aria-label', 'Newsletter signup');
+  const inputWrap = createElement('div', 'home-newsletter__input-wrap');
+  const emailLabel = createElement('label', 'visually-hidden', 'Email address');
+  emailLabel.setAttribute('for', 'home-newsletter-email');
+  inputWrap.appendChild(emailLabel);
+  const input = createElement('input', 'home-newsletter__input') as HTMLInputElement;
+  input.id = 'home-newsletter-email';
+  input.type = 'email';
+  input.required = true;
+  input.placeholder = 'your@email.com';
+  input.autocomplete = 'email';
+  inputWrap.appendChild(input);
+  form.appendChild(inputWrap);
+
+  const submit = createElement('button', 'home-newsletter__submit btn btn--primary', 'Subscribe');
+  submit.setAttribute('type', 'submit');
+  form.appendChild(submit);
+
+  form.addEventListener('submit', (e) => {
+    e.preventDefault();
+    if (!input.value || !input.checkValidity()) {
+      toast.error('Please enter a valid email address.');
+      input.focus();
+      return;
+    }
+    toast.success('Welcome aboard — check your inbox to confirm.');
+    input.value = '';
+  });
+
+  content.appendChild(form);
+
+  const trust = createElement('div', 'home-newsletter__trust');
+  trust.appendChild(createElement('span', 'home-newsletter__trust-item', 'No spam'));
+  trust.appendChild(createElement('span', 'home-newsletter__trust-sep', '·'));
+  trust.appendChild(createElement('span', 'home-newsletter__trust-item', 'Unsubscribe anytime'));
+  trust.appendChild(createElement('span', 'home-newsletter__trust-sep', '·'));
+  trust.appendChild(createElement('span', 'home-newsletter__trust-item', '4,800+ readers'));
+  content.appendChild(trust);
+
+  card.appendChild(content);
+  container.appendChild(card);
+  section.appendChild(container);
+  return section;
+}
+
 // ─── Screen Reader Announcements ───────────────────────────────────────────
 function announceToScreenReader(message: string): void {
   const announcer = document.getElementById('sr-announcements');
@@ -838,6 +1151,9 @@ export function renderHomePage(): DocumentFragment {
   cta.appendChild(consultationBtn);
   heroContent.appendChild(cta);
 
+  // ─── Hero Search Bar (overlays video) ─────────────────────────────────────
+  heroContent.appendChild(createHeroSearchBar());
+
   hero.appendChild(heroContent);
 
   // Scroll-down indicator (cinematic cue)
@@ -968,10 +1284,18 @@ export function renderHomePage(): DocumentFragment {
   const featuredContainer = createElement('div', 'container');
 
   const featuredHeader = createElement('header', 'featured__header');
+  const featuredHeading = createElement('div', 'featured__heading');
+  const featuredEyebrow = createElement('span', 'featured__eyebrow', 'Curated Selection');
+  featuredEyebrow.setAttribute('aria-hidden', 'true');
+  featuredHeading.appendChild(featuredEyebrow);
   const featuredTitle = createElement('h2', 'featured__title');
   featuredTitle.id = 'featured-title';
   featuredTitle.textContent = t('property.featured');
-  featuredHeader.appendChild(featuredTitle);
+  featuredHeading.appendChild(featuredTitle);
+  const featuredSubtitle = createElement('p', 'featured__subtitle',
+    'A handpicked edit of distinctive homes, villas, and investment plots across Erbil and Kurdistan.');
+  featuredHeading.appendChild(featuredSubtitle);
+  featuredHeader.appendChild(featuredHeading);
 
   const viewAllLink = createElement('a', 'featured__link', t('buttons.viewAll'));
   viewAllLink.href = '/properties';
@@ -1026,6 +1350,12 @@ export function renderHomePage(): DocumentFragment {
 
   featured.appendChild(featuredContainer);
   fragment.appendChild(featured);
+
+  // ─── From Our Journal (Blog Preview) ──────────────────────────────────────
+  fragment.appendChild(createJournalPreviewSection());
+
+  // ─── Newsletter Signup ────────────────────────────────────────────────────
+  fragment.appendChild(createHomeNewsletterSection());
 
   // Marquee Banner
   const marquee = createElement('div', 'marquee-banner marquee-banner--large');
@@ -1611,13 +1941,69 @@ export function renderPropertiesPage(): DocumentFragment {
   advancedPanel.appendChild(advancedContent);
   container.appendChild(advancedPanel);
 
-  // Filters Summary
+  // Filters Summary + Sort + Saved Searches toolbar
   const filtersSummary = createElement('div', 'properties-page__filters-summary');
   filtersSummary.id = 'filters-summary';
   const filtersCount = createElement('span', 'properties-page__filters-count');
   filtersCount.id = 'filters-count';
   filtersCount.textContent = t('filters.propertiesFound', { count: properties.length });
   filtersSummary.appendChild(filtersCount);
+
+  // Toolbar (saved searches + sort)
+  const toolbar = createElement('div', 'properties-page__toolbar');
+
+  // Saved Searches
+  const savedWrap = createElement('div', 'properties-page__saved');
+  const savedBtn = createElement('button', 'properties-page__saved-btn');
+  savedBtn.setAttribute('type', 'button');
+  savedBtn.setAttribute('aria-haspopup', 'menu');
+  savedBtn.setAttribute('aria-expanded', 'false');
+  savedBtn.id = 'saved-searches-btn';
+  const savedIcon = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+  savedIcon.setAttribute('viewBox', '0 0 24 24'); savedIcon.setAttribute('fill', 'none');
+  savedIcon.setAttribute('stroke', 'currentColor'); savedIcon.setAttribute('stroke-width', '2');
+  savedIcon.setAttribute('stroke-linecap', 'round'); savedIcon.setAttribute('stroke-linejoin', 'round');
+  savedIcon.setAttribute('aria-hidden', 'true');
+  const bookmark = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+  bookmark.setAttribute('d', 'M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z');
+  savedIcon.appendChild(bookmark);
+  savedBtn.appendChild(savedIcon);
+  savedBtn.appendChild(createElement('span', 'properties-page__saved-label', 'Saved Searches'));
+  const savedBadge = createElement('span', 'properties-page__saved-badge');
+  savedBadge.id = 'saved-searches-badge';
+  savedBtn.appendChild(savedBadge);
+  savedWrap.appendChild(savedBtn);
+
+  const savedMenu = createElement('div', 'properties-page__saved-menu');
+  savedMenu.id = 'saved-searches-menu';
+  savedMenu.setAttribute('role', 'menu');
+  savedMenu.setAttribute('aria-labelledby', 'saved-searches-btn');
+  savedWrap.appendChild(savedMenu);
+  toolbar.appendChild(savedWrap);
+
+  // Sort
+  const sortWrap = createElement('div', 'properties-page__sort');
+  const sortLabel = createElement('label', 'properties-page__sort-label', 'Sort:');
+  sortLabel.setAttribute('for', 'properties-sort');
+  sortWrap.appendChild(sortLabel);
+  const sortSelect = createElement('select', 'properties-page__sort-select') as HTMLSelectElement;
+  sortSelect.id = 'properties-sort';
+  [
+    { v: 'featured', l: 'Featured' },
+    { v: 'newest', l: 'Newest' },
+    { v: 'price-asc', l: 'Price: Low to High' },
+    { v: 'price-desc', l: 'Price: High to Low' },
+    { v: 'area-desc', l: 'Largest Area' },
+    { v: 'beds-desc', l: 'Most Bedrooms' },
+  ].forEach(o => {
+    const opt = document.createElement('option');
+    opt.value = o.v; opt.textContent = o.l;
+    sortSelect.appendChild(opt);
+  });
+  sortWrap.appendChild(sortSelect);
+  toolbar.appendChild(sortWrap);
+
+  filtersSummary.appendChild(toolbar);
   container.appendChild(filtersSummary);
 
   // Content wrapper for grid and map
@@ -1626,12 +2012,14 @@ export function renderPropertiesPage(): DocumentFragment {
   grid.id = 'properties-grid';
   const initialFilteredProps = filterProperties(properties, currentFilterState);
   if (initialFilteredProps.length === 0) {
-    const noResults = createElement('div', 'properties-page__no-results');
-    const noResultsTitle = createElement('h3', undefined, t('filters.noPropertiesFound'));
-    const noResultsText = createElement('p', undefined, t('filters.tryAdjustingFilters'));
-    noResults.appendChild(noResultsTitle);
-    noResults.appendChild(noResultsText);
-    grid.appendChild(noResults);
+    grid.appendChild(createEmptyState({
+      icon: 'search',
+      title: 'No properties match your filters',
+      description: 'Try widening your budget, removing a feature, or clearing all filters to see everything we have available.',
+      primaryAction: { label: 'Clear all filters', href: '/properties' },
+      secondaryAction: { label: 'Talk to an advisor', href: '/contact' },
+      className: 'properties-page__empty',
+    }));
   } else {
     initialFilteredProps.forEach(property => {
       grid.appendChild(createPropertyCard(property));
@@ -1821,6 +2209,32 @@ export function renderPropertiesPage(): DocumentFragment {
     }
   }
 
+  // Current sort mode (persisted)
+  let currentSort: string = localStorage.getItem('rh-properties-sort') || 'featured';
+
+  function applySort(props: Property[]): Property[] {
+    const sorted = [...props];
+    switch (currentSort) {
+      case 'newest':
+        sorted.sort((a, b) => (b.specs.yearBuilt || 0) - (a.specs.yearBuilt || 0));
+        break;
+      case 'price-asc':
+        sorted.sort((a, b) => a.price - b.price);
+        break;
+      case 'price-desc':
+        sorted.sort((a, b) => b.price - a.price);
+        break;
+      case 'area-desc':
+        sorted.sort((a, b) => (b.specs.sqm || 0) - (a.specs.sqm || 0));
+        break;
+      case 'beds-desc':
+        sorted.sort((a, b) => (b.specs.beds || 0) - (a.specs.beds || 0));
+        break;
+      // 'featured' = original order
+    }
+    return sorted;
+  }
+
   // Function to re-render the grid
   function renderGrid() {
     const gridEl = document.getElementById('properties-grid');
@@ -1835,18 +2249,20 @@ export function renderPropertiesPage(): DocumentFragment {
       gridEl.removeChild(gridEl.firstChild);
     }
 
-    // Filter properties
-    const filteredProperties = filterProperties(properties, currentFilterState);
+    // Filter + sort properties
+    const filteredProperties = applySort(filterProperties(properties, currentFilterState));
 
     if (filteredProperties.length === 0) {
-      // Show no results message
-      const noResults = createElement('div', 'properties-page__no-results');
-      const noResultsTitle = createElement('h3', undefined, 'No properties found');
-      const noResultsText = createElement('p', undefined, 'Try adjusting your filters to find more properties.');
-      noResults.appendChild(noResultsTitle);
-      noResults.appendChild(noResultsText);
-      gridEl.appendChild(noResults);
-      // Announce to screen readers
+      // Enhanced empty state
+      const empty = createEmptyState({
+        icon: 'search',
+        title: 'No properties match your filters',
+        description: 'Try widening your budget, removing a feature, or clearing all filters to see everything we have available.',
+        primaryAction: { label: 'Clear all filters', onClick: clearAllFilters },
+        secondaryAction: { label: 'Talk to an advisor', href: '/contact' },
+        className: 'properties-page__empty',
+      });
+      gridEl.appendChild(empty);
       announceToScreenReader('No properties found. Try adjusting your filters.');
     } else {
       // Render filtered properties
@@ -2099,6 +2515,171 @@ export function renderPropertiesPage(): DocumentFragment {
 
     updateFiltersCountDisplay();
     updateAdvancedFilterCountBadge();
+
+    // ─── Sort handler ─────────────────────────────────────────────────────
+    const sortSelectEl = document.getElementById('properties-sort') as HTMLSelectElement | null;
+    if (sortSelectEl) {
+      sortSelectEl.value = currentSort;
+      sortSelectEl.addEventListener('change', () => {
+        currentSort = sortSelectEl.value;
+        try { localStorage.setItem('rh-properties-sort', currentSort); } catch (_) {}
+        renderGrid();
+      });
+    }
+
+    // ─── Saved Searches ───────────────────────────────────────────────────
+    const SAVED_KEY = 'rh-saved-searches';
+    type SavedSearch = { id: string; name: string; query: string; createdAt: number };
+
+    function loadSaved(): SavedSearch[] {
+      try {
+        const raw = localStorage.getItem(SAVED_KEY);
+        return raw ? JSON.parse(raw) : [];
+      } catch { return []; }
+    }
+    function persistSaved(list: SavedSearch[]) {
+      try { localStorage.setItem(SAVED_KEY, JSON.stringify(list)); } catch (_) {}
+    }
+    function currentQueryString(): string {
+      // Re-derive query string from currentFilterState
+      const params = new URLSearchParams();
+      const currentYear = new Date().getFullYear();
+      const s = currentFilterState;
+      if (s.type !== 'All') params.set('type', s.type);
+      if (s.priceRange !== 'All') params.set('priceRange', s.priceRange);
+      if (s.minBeds > 0) params.set('minBeds', s.minBeds.toString());
+      if (s.searchQuery.trim()) params.set('q', s.searchQuery.trim());
+      if (s.status !== 'All') params.set('status', s.status);
+      if (s.minArea > 0) params.set('minArea', s.minArea.toString());
+      if (s.maxArea < 1000) params.set('maxArea', s.maxArea.toString());
+      if (s.badges.length > 0) params.set('badges', s.badges.join(','));
+      if (s.minYearBuilt > 2000) params.set('minYear', s.minYearBuilt.toString());
+      if (s.maxYearBuilt < currentYear) params.set('maxYear', s.maxYearBuilt.toString());
+      if (s.district !== 'All') params.set('district', s.district);
+      if (s.minPrice > 0) params.set('minPrice', s.minPrice.toString());
+      if (s.maxPrice < 10000000) params.set('maxPrice', s.maxPrice.toString());
+      if (s.furnishing !== 'All') params.set('furnishing', s.furnishing);
+      if (s.propertyFeatures.length > 0) params.set('features', s.propertyFeatures.join(','));
+      if (s.viewType !== 'All') params.set('viewType', s.viewType);
+      if (s.minFloors > 0) params.set('minFloors', s.minFloors.toString());
+      if (s.maxFloors < 20) params.set('maxFloors', s.maxFloors.toString());
+      return params.toString();
+    }
+    function summarizeCurrentFilters(): string {
+      const parts: string[] = [];
+      const s = currentFilterState;
+      if (s.type !== 'All') parts.push(s.type);
+      if (s.status !== 'All') parts.push(s.status);
+      if (s.district !== 'All') parts.push(s.district);
+      if (s.priceRange !== 'All') parts.push(s.priceRange);
+      if (s.minBeds > 0) parts.push(`${s.minBeds}+ beds`);
+      if (s.searchQuery.trim()) parts.push(`"${s.searchQuery.trim()}"`);
+      return parts.length ? parts.join(' · ') : 'All properties';
+    }
+
+    const savedBtnEl = document.getElementById('saved-searches-btn');
+    const savedMenuEl = document.getElementById('saved-searches-menu');
+    const savedBadgeEl = document.getElementById('saved-searches-badge');
+
+    function renderSavedMenu() {
+      if (!savedMenuEl || !savedBadgeEl) return;
+      const list = loadSaved();
+      savedBadgeEl.textContent = list.length ? String(list.length) : '';
+      savedBadgeEl.style.display = list.length ? '' : 'none';
+      while (savedMenuEl.firstChild) savedMenuEl.removeChild(savedMenuEl.firstChild);
+
+      // Save current
+      const saveBtn = createElement('button', 'properties-page__saved-action');
+      saveBtn.setAttribute('type', 'button');
+      saveBtn.setAttribute('role', 'menuitem');
+      const saveIcon = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+      saveIcon.setAttribute('viewBox', '0 0 24 24'); saveIcon.setAttribute('fill', 'none');
+      saveIcon.setAttribute('stroke', 'currentColor'); saveIcon.setAttribute('stroke-width', '2');
+      saveIcon.setAttribute('stroke-linecap', 'round'); saveIcon.setAttribute('stroke-linejoin', 'round');
+      saveIcon.setAttribute('aria-hidden', 'true');
+      const plus = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+      plus.setAttribute('d', 'M12 5v14M5 12h14');
+      saveIcon.appendChild(plus);
+      saveBtn.appendChild(saveIcon);
+      saveBtn.appendChild(createElement('span', undefined, 'Save current search'));
+      saveBtn.addEventListener('click', () => {
+        if (!hasActiveFilters(currentFilterState)) {
+          toast.info('Apply at least one filter before saving.');
+          return;
+        }
+        const defaultName = summarizeCurrentFilters();
+        const name = window.prompt('Name this search', defaultName);
+        if (!name) return;
+        const next: SavedSearch = {
+          id: 'ss-' + Date.now().toString(36),
+          name: name.trim() || defaultName,
+          query: currentQueryString(),
+          createdAt: Date.now(),
+        };
+        const all = loadSaved();
+        all.unshift(next);
+        persistSaved(all.slice(0, 12));
+        renderSavedMenu();
+        toast.success(`Saved "${next.name}"`);
+      });
+      savedMenuEl.appendChild(saveBtn);
+
+      if (list.length === 0) {
+        const empty = createElement('div', 'properties-page__saved-empty', 'No saved searches yet.');
+        savedMenuEl.appendChild(empty);
+        return;
+      }
+
+      const sep = createElement('div', 'properties-page__saved-sep');
+      savedMenuEl.appendChild(sep);
+
+      list.forEach(item => {
+        const row = createElement('div', 'properties-page__saved-row');
+        const applyBtn = createElement('button', 'properties-page__saved-item');
+        applyBtn.setAttribute('type', 'button');
+        applyBtn.setAttribute('role', 'menuitem');
+        const nameEl = createElement('span', 'properties-page__saved-name', item.name);
+        const dateEl = createElement('span', 'properties-page__saved-date',
+          new Date(item.createdAt).toLocaleDateString(undefined, { month: 'short', day: 'numeric' }));
+        applyBtn.appendChild(nameEl);
+        applyBtn.appendChild(dateEl);
+        applyBtn.addEventListener('click', () => {
+          const url = item.query ? `/properties?${item.query}` : '/properties';
+          window.history.pushState({}, '', url);
+          window.dispatchEvent(new PopStateEvent('popstate'));
+        });
+        row.appendChild(applyBtn);
+
+        const removeBtn = createElement('button', 'properties-page__saved-remove');
+        removeBtn.setAttribute('type', 'button');
+        removeBtn.setAttribute('aria-label', `Remove ${item.name}`);
+        removeBtn.textContent = '×';
+        removeBtn.addEventListener('click', (e) => {
+          e.stopPropagation();
+          const next = loadSaved().filter(s => s.id !== item.id);
+          persistSaved(next);
+          renderSavedMenu();
+          toast.info('Saved search removed');
+        });
+        row.appendChild(removeBtn);
+        savedMenuEl.appendChild(row);
+      });
+    }
+
+    if (savedBtnEl && savedMenuEl) {
+      renderSavedMenu();
+      savedBtnEl.addEventListener('click', (e) => {
+        e.stopPropagation();
+        const open = savedMenuEl.classList.toggle('properties-page__saved-menu--open');
+        savedBtnEl.setAttribute('aria-expanded', open ? 'true' : 'false');
+      });
+      document.addEventListener('click', (e) => {
+        if (!savedMenuEl.contains(e.target as Node) && !savedBtnEl.contains(e.target as Node)) {
+          savedMenuEl.classList.remove('properties-page__saved-menu--open');
+          savedBtnEl.setAttribute('aria-expanded', 'false');
+        }
+      });
+    }
 
     // Initialize comparison bar
     initComparisonBar();
@@ -4230,74 +4811,263 @@ export function renderFavoritesPage(): DocumentFragment {
   const header = createElement('header', 'favorites-page__header');
   const title = createElement('h1', 'favorites-page__title', 'My Saved Properties');
   title.id = 'favorites-title';
+  header.appendChild(title);
 
   const favoriteIds = getFavorites();
   const subtitle = createElement('p', 'favorites-page__subtitle');
   subtitle.textContent = favoriteIds.length === 0
     ? 'You haven\'t saved any properties yet.'
     : `You have ${favoriteIds.length} saved ${favoriteIds.length === 1 ? 'property' : 'properties'}.`;
-
-  header.appendChild(title);
   header.appendChild(subtitle);
   container.appendChild(header);
 
-  // If there are favorites, show clear all button and grid
-  if (favoriteIds.length > 0) {
-    // Actions row
-    const actions = createElement('div', 'favorites-page__actions');
+  // ─── Apply shareable list from URL ?ids=… (overrides local list) ─────────
+  const shareParams = new URLSearchParams(window.location.search);
+  const sharedIdsParam = shareParams.get('ids');
+  const sharedIds = sharedIdsParam ? sharedIdsParam.split(',').filter(Boolean) : null;
+  const displayIds = sharedIds && sharedIds.length > 0 ? sharedIds : favoriteIds;
 
-    const clearAllBtn = createElement('button', 'btn btn--ghost', 'Clear All Favorites');
-    clearAllBtn.addEventListener('click', () => {
-      if (confirm('Are you sure you want to remove all saved properties?')) {
-        clearFavorites();
-        // Re-render the page
-        const app = document.getElementById('app');
-        if (app) {
-          while (app.firstChild) {
-            app.removeChild(app.firstChild);
-          }
-          app.appendChild(renderFavoritesPage());
-        }
-        updateFavoritesBadge();
-      }
+  if (displayIds.length === 0) {
+    // Empty state — use shared utility
+    const empty = createEmptyState({
+      icon: 'heart',
+      title: 'Your collection is empty',
+      description: 'Browse properties and tap the heart icon to start building your private shortlist. It\'s saved here for easy comparison.',
+      primaryAction: { label: 'Browse Properties', href: '/properties' },
+      secondaryAction: { label: 'View Featured', href: '/' },
+      className: 'favorites-page__empty-state',
     });
-    actions.appendChild(clearAllBtn);
-    container.appendChild(actions);
-
-    // Grid of favorite properties
-    const grid = createElement('div', 'favorites-page__grid');
-    grid.id = 'favorites-grid';
-
-    favoriteIds.forEach(id => {
-      const property = getPropertyById(id);
-      if (property) {
-        grid.appendChild(createPropertyCard(property));
-      }
-    });
-
-    container.appendChild(grid);
-  } else {
-    // Empty state
-    const emptyState = createElement('div', 'favorites-page__empty');
-
-    const emptyIcon = createElement('div', 'favorites-page__empty-icon');
-    emptyIcon.appendChild(createSVGUse('icon-heart-outline'));
-    emptyState.appendChild(emptyIcon);
-
-    const emptyTitle = createElement('h3', 'favorites-page__empty-title', 'No Favorites Yet');
-    emptyState.appendChild(emptyTitle);
-
-    const emptyText = createElement('p', 'favorites-page__empty-text',
-      'Start exploring properties and save your favorites by clicking the heart icon on any property card.');
-    emptyState.appendChild(emptyText);
-
-    const browseBtn = createElement('a', 'btn btn--primary', 'Browse Properties');
-    browseBtn.href = '/properties';
-    browseBtn.setAttribute('data-route', '');
-    emptyState.appendChild(browseBtn);
-
-    container.appendChild(emptyState);
+    container.appendChild(empty);
+    page.appendChild(container);
+    fragment.appendChild(page);
+    return fragment;
   }
+
+  // Sort + layout state (persisted)
+  const VIEW_KEY = 'rh-favorites-view';
+  const SORT_KEY = 'rh-favorites-sort';
+  let layoutMode: 'grid' | 'list' = ((): 'grid' | 'list' => {
+    const v = localStorage.getItem(VIEW_KEY);
+    return v === 'list' ? 'list' : 'grid';
+  })();
+  let sortMode: string = localStorage.getItem(SORT_KEY) || 'newest';
+
+  function getSortedProperties(): Property[] {
+    const props: Property[] = [];
+    displayIds.forEach(id => {
+      const p = getPropertyById(id);
+      if (p) props.push(p);
+    });
+    switch (sortMode) {
+      case 'price-asc': return props.sort((a, b) => a.price - b.price);
+      case 'price-desc': return props.sort((a, b) => b.price - a.price);
+      case 'location': return props.sort((a, b) =>
+        (a.location.district || a.location.city || '').localeCompare(b.location.district || b.location.city || ''));
+      case 'newest':
+      default: return props; // order preserved (newest first in storage)
+    }
+  }
+
+  // ─── Toolbar ─────────────────────────────────────────────────────────────
+  const toolbar = createElement('div', 'favorites-page__toolbar');
+
+  const leftGroup = createElement('div', 'favorites-page__toolbar-left');
+  const selectAllLabel = createElement('label', 'favorites-page__select-all');
+  const selectAllCheckbox = createElement('input') as HTMLInputElement;
+  selectAllCheckbox.type = 'checkbox';
+  selectAllCheckbox.id = 'favorites-select-all';
+  selectAllLabel.appendChild(selectAllCheckbox);
+  selectAllLabel.appendChild(document.createTextNode('Select all'));
+  leftGroup.appendChild(selectAllLabel);
+  const countText = createElement('span', 'favorites-page__count-text');
+  countText.id = 'favorites-count-text';
+  countText.textContent = `${displayIds.length} ${displayIds.length === 1 ? 'property' : 'properties'}`;
+  leftGroup.appendChild(countText);
+  toolbar.appendChild(leftGroup);
+
+  const rightGroup = createElement('div', 'favorites-page__toolbar-right');
+
+  // Sort
+  const sortWrap = createElement('div', 'favorites-page__sort');
+  const sortLabel = createElement('label', undefined, 'Sort');
+  sortLabel.setAttribute('for', 'favorites-sort');
+  sortWrap.appendChild(sortLabel);
+  const sortSelect = createElement('select') as HTMLSelectElement;
+  sortSelect.id = 'favorites-sort';
+  [
+    { v: 'newest', l: 'Newest first' },
+    { v: 'price-asc', l: 'Price: Low to High' },
+    { v: 'price-desc', l: 'Price: High to Low' },
+    { v: 'location', l: 'By Location' },
+  ].forEach(o => {
+    const opt = document.createElement('option');
+    opt.value = o.v; opt.textContent = o.l;
+    if (o.v === sortMode) opt.selected = true;
+    sortSelect.appendChild(opt);
+  });
+  sortWrap.appendChild(sortSelect);
+  rightGroup.appendChild(sortWrap);
+
+  // View toggle (grid/list)
+  const viewToggle = createElement('div', 'favorites-page__view-toggle');
+  viewToggle.setAttribute('role', 'group');
+  viewToggle.setAttribute('aria-label', 'Layout');
+  const gridViewBtn = createElement('button');
+  gridViewBtn.setAttribute('type', 'button');
+  gridViewBtn.setAttribute('aria-pressed', layoutMode === 'grid' ? 'true' : 'false');
+  gridViewBtn.setAttribute('aria-label', 'Grid view');
+  gridViewBtn.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg><span>Grid</span>';
+  const listViewBtn = createElement('button');
+  listViewBtn.setAttribute('type', 'button');
+  listViewBtn.setAttribute('aria-pressed', layoutMode === 'list' ? 'true' : 'false');
+  listViewBtn.setAttribute('aria-label', 'List view');
+  listViewBtn.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><line x1="3" y1="6" x2="3.01" y2="6"/><line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/></svg><span>List</span>';
+  viewToggle.appendChild(gridViewBtn);
+  viewToggle.appendChild(listViewBtn);
+  rightGroup.appendChild(viewToggle);
+
+  // Remove selected
+  const removeBtn = createElement('button', 'favorites-page__icon-btn favorites-page__icon-btn--danger');
+  removeBtn.setAttribute('type', 'button');
+  removeBtn.id = 'favorites-remove-selected';
+  removeBtn.disabled = true;
+  removeBtn.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-2 14a2 2 0 0 1-2 2H9a2 2 0 0 1-2-2L5 6"/><path d="M10 11v6"/><path d="M14 11v6"/></svg><span>Remove</span>';
+  rightGroup.appendChild(removeBtn);
+
+  // Share
+  const shareBtn = createElement('button', 'favorites-page__icon-btn');
+  shareBtn.setAttribute('type', 'button');
+  shareBtn.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg><span>Share</span>';
+  shareBtn.addEventListener('click', async () => {
+    const params = new URLSearchParams();
+    params.set('ids', displayIds.join(','));
+    const shareUrl = `${window.location.origin}/favorites?${params.toString()}`;
+    const ok = await copyToClipboard(shareUrl);
+    if (ok) toast.success('Link copied — share your collection');
+    else toast.error('Could not copy link. Try again.');
+  });
+  rightGroup.appendChild(shareBtn);
+
+  // Print
+  const printBtn = createElement('button', 'favorites-page__icon-btn');
+  printBtn.setAttribute('type', 'button');
+  printBtn.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="6 9 6 2 18 2 18 9"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg><span>Print</span>';
+  printBtn.addEventListener('click', () => window.print());
+  rightGroup.appendChild(printBtn);
+
+  // Clear all
+  const clearAllBtn = createElement('button', 'favorites-page__icon-btn');
+  clearAllBtn.setAttribute('type', 'button');
+  clearAllBtn.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 6h18"/><path d="M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/><path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/></svg><span>Clear all</span>';
+  clearAllBtn.addEventListener('click', () => {
+    if (confirm('Are you sure you want to remove all saved properties?')) {
+      clearFavorites();
+      toast.info('All saved properties removed');
+      const app = document.getElementById('app');
+      if (app) {
+        while (app.firstChild) app.removeChild(app.firstChild);
+        app.appendChild(renderFavoritesPage());
+      }
+      updateFavoritesBadge();
+    }
+  });
+  rightGroup.appendChild(clearAllBtn);
+
+  toolbar.appendChild(rightGroup);
+  container.appendChild(toolbar);
+
+  // ─── Grid ───────────────────────────────────────────────────────────────
+  const grid = createElement('div', `favorites-page__grid${layoutMode === 'list' ? ' favorites-page__grid--list' : ''}`);
+  grid.id = 'favorites-grid';
+  container.appendChild(grid);
+
+  function renderCards() {
+    while (grid.firstChild) grid.removeChild(grid.firstChild);
+    const sorted = getSortedProperties();
+    sorted.forEach(property => {
+      const wrap = createElement('div', 'favorites-page__card-wrap');
+      wrap.setAttribute('data-fav-id', property.id);
+      const select = createElement('input', 'favorites-page__card-select') as HTMLInputElement;
+      select.type = 'checkbox';
+      select.setAttribute('aria-label', `Select ${property.title}`);
+      select.addEventListener('change', updateBulkUI);
+      wrap.appendChild(select);
+      wrap.appendChild(createPropertyCard(property));
+      grid.appendChild(wrap);
+    });
+  }
+  renderCards();
+
+  function getSelectedIds(): string[] {
+    return Array.from(grid.querySelectorAll('.favorites-page__card-select'))
+      .filter(cb => (cb as HTMLInputElement).checked)
+      .map(cb => (cb.closest('.favorites-page__card-wrap') as HTMLElement | null)?.getAttribute('data-fav-id') || '')
+      .filter(Boolean);
+  }
+
+  function updateBulkUI() {
+    const selected = getSelectedIds();
+    const removeBtnEl = document.getElementById('favorites-remove-selected') as HTMLButtonElement | null;
+    if (removeBtnEl) {
+      removeBtnEl.disabled = selected.length === 0;
+      const label = removeBtnEl.querySelector('span');
+      if (label) label.textContent = selected.length > 0 ? `Remove (${selected.length})` : 'Remove';
+    }
+    const allBoxes = grid.querySelectorAll('.favorites-page__card-select');
+    if (allBoxes.length > 0 && selected.length === allBoxes.length) {
+      selectAllCheckbox.checked = true;
+      selectAllCheckbox.indeterminate = false;
+    } else if (selected.length > 0) {
+      selectAllCheckbox.checked = false;
+      selectAllCheckbox.indeterminate = true;
+    } else {
+      selectAllCheckbox.checked = false;
+      selectAllCheckbox.indeterminate = false;
+    }
+  }
+
+  selectAllCheckbox.addEventListener('change', () => {
+    const checked = selectAllCheckbox.checked;
+    grid.querySelectorAll('.favorites-page__card-select').forEach(cb => {
+      (cb as HTMLInputElement).checked = checked;
+    });
+    updateBulkUI();
+  });
+
+  removeBtn.addEventListener('click', () => {
+    const selected = getSelectedIds();
+    if (selected.length === 0) return;
+    selected.forEach(id => toggleFavorite(id));
+    toast.success(`Removed ${selected.length} ${selected.length === 1 ? 'property' : 'properties'}`);
+    updateFavoritesBadge();
+    const app = document.getElementById('app');
+    if (app) {
+      while (app.firstChild) app.removeChild(app.firstChild);
+      app.appendChild(renderFavoritesPage());
+    }
+  });
+
+  sortSelect.addEventListener('change', () => {
+    sortMode = sortSelect.value;
+    try { localStorage.setItem(SORT_KEY, sortMode); } catch (_) {}
+    renderCards();
+    updateBulkUI();
+  });
+
+  gridViewBtn.addEventListener('click', () => {
+    layoutMode = 'grid';
+    try { localStorage.setItem(VIEW_KEY, 'grid'); } catch (_) {}
+    grid.classList.remove('favorites-page__grid--list');
+    gridViewBtn.setAttribute('aria-pressed', 'true');
+    listViewBtn.setAttribute('aria-pressed', 'false');
+  });
+  listViewBtn.addEventListener('click', () => {
+    layoutMode = 'list';
+    try { localStorage.setItem(VIEW_KEY, 'list'); } catch (_) {}
+    grid.classList.add('favorites-page__grid--list');
+    listViewBtn.setAttribute('aria-pressed', 'true');
+    gridViewBtn.setAttribute('aria-pressed', 'false');
+  });
 
   page.appendChild(container);
   fragment.appendChild(page);

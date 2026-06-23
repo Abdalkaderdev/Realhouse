@@ -1,9 +1,8 @@
 // ═══════════════════════════════════════════════════════════════════════════
-// Wishlist Page - Saved Properties with Share Functionality
+// Wishlist Page - Saved Properties with Share, Sort, Bulk Actions & Lists
 // ═══════════════════════════════════════════════════════════════════════════
 
 import {
-  getWishlist,
   getWishlistIds,
   clearWishlist,
   removeFromWishlist,
@@ -11,11 +10,9 @@ import {
   parseSharedWishlist,
   importSharedWishlist,
   updateWishlistBadge,
-  showWishlistToast,
-  type WishlistItem
+  showWishlistToast
 } from '../components/wishlist';
 import {
-  getRecentlyViewed,
   getRecentlyViewedIds,
   clearRecentlyViewed
 } from '../components/recently-viewed';
@@ -30,7 +27,7 @@ import {
   injectBreadcrumbSchema,
   type BreadcrumbItem
 } from '../components/internal-linking';
-import { createSEOImage, generateSrcSet, generateSizes, IMAGE_DIMENSIONS } from '../utils/image-seo';
+import { createSEOImage, generateSrcSet } from '../utils/image-seo';
 import { createEmptyState as createUiEmptyState } from '../utils/ui-states';
 
 // ─── Helper Functions ────────────────────────────────────────────────────────
@@ -78,37 +75,21 @@ function createShareSVG(): SVGSVGElement {
   svg.setAttribute('stroke-width', '2');
   svg.setAttribute('aria-hidden', 'true');
 
-  const circle1 = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
-  circle1.setAttribute('cx', '18');
-  circle1.setAttribute('cy', '5');
-  circle1.setAttribute('r', '3');
-  svg.appendChild(circle1);
-
-  const circle2 = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
-  circle2.setAttribute('cx', '6');
-  circle2.setAttribute('cy', '12');
-  circle2.setAttribute('r', '3');
-  svg.appendChild(circle2);
-
-  const circle3 = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
-  circle3.setAttribute('cx', '18');
-  circle3.setAttribute('cy', '19');
-  circle3.setAttribute('r', '3');
-  svg.appendChild(circle3);
-
-  const line1 = document.createElementNS('http://www.w3.org/2000/svg', 'line');
-  line1.setAttribute('x1', '8.59');
-  line1.setAttribute('y1', '13.51');
-  line1.setAttribute('x2', '15.42');
-  line1.setAttribute('y2', '17.49');
-  svg.appendChild(line1);
-
-  const line2 = document.createElementNS('http://www.w3.org/2000/svg', 'line');
-  line2.setAttribute('x1', '15.41');
-  line2.setAttribute('y1', '6.51');
-  line2.setAttribute('x2', '8.59');
-  line2.setAttribute('y2', '10.49');
-  svg.appendChild(line2);
+  const c1 = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
+  c1.setAttribute('cx', '18'); c1.setAttribute('cy', '5'); c1.setAttribute('r', '3');
+  svg.appendChild(c1);
+  const c2 = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
+  c2.setAttribute('cx', '6'); c2.setAttribute('cy', '12'); c2.setAttribute('r', '3');
+  svg.appendChild(c2);
+  const c3 = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
+  c3.setAttribute('cx', '18'); c3.setAttribute('cy', '19'); c3.setAttribute('r', '3');
+  svg.appendChild(c3);
+  const l1 = document.createElementNS('http://www.w3.org/2000/svg', 'line');
+  l1.setAttribute('x1', '8.59'); l1.setAttribute('y1', '13.51'); l1.setAttribute('x2', '15.42'); l1.setAttribute('y2', '17.49');
+  svg.appendChild(l1);
+  const l2 = document.createElementNS('http://www.w3.org/2000/svg', 'line');
+  l2.setAttribute('x1', '15.41'); l2.setAttribute('y1', '6.51'); l2.setAttribute('x2', '8.59'); l2.setAttribute('y2', '10.49');
+  svg.appendChild(l2);
 
   return svg;
 }
@@ -132,30 +113,139 @@ function createTrashSVG(): SVGSVGElement {
   return svg;
 }
 
-function createLinkSVG(): SVGSVGElement {
+function createCloseSVG(): SVGSVGElement {
   const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
   svg.setAttribute('viewBox', '0 0 24 24');
   svg.setAttribute('fill', 'none');
   svg.setAttribute('stroke', 'currentColor');
   svg.setAttribute('stroke-width', '2');
+  svg.setAttribute('stroke-linecap', 'round');
   svg.setAttribute('aria-hidden', 'true');
-
-  const path1 = document.createElementNS('http://www.w3.org/2000/svg', 'path');
-  path1.setAttribute('d', 'M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71');
-  svg.appendChild(path1);
-
-  const path2 = document.createElementNS('http://www.w3.org/2000/svg', 'path');
-  path2.setAttribute('d', 'M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71');
-  svg.appendChild(path2);
-
+  const l1 = document.createElementNS('http://www.w3.org/2000/svg', 'line');
+  l1.setAttribute('x1', '18'); l1.setAttribute('y1', '6'); l1.setAttribute('x2', '6'); l1.setAttribute('y2', '18');
+  svg.appendChild(l1);
+  const l2 = document.createElementNS('http://www.w3.org/2000/svg', 'line');
+  l2.setAttribute('x1', '6'); l2.setAttribute('y1', '6'); l2.setAttribute('x2', '18'); l2.setAttribute('y2', '18');
+  svg.appendChild(l2);
   return svg;
 }
 
-// ─── Wishlist Property Card ──────────────────────────────────────────────────
+// ─── State ─────────────────────────────────────────────────────────────────
+
+type SortMode = 'newest' | 'price-asc' | 'price-desc' | 'recently-viewed';
+
+interface NamedList {
+  name: string;
+  ids: string[];
+}
+
+const DEFAULT_LIST = 'My Wishlist';
+const LISTS_KEY = 'wishlist_lists';
+
+const selection = new Set<string>();
+let currentSort: SortMode = 'newest';
+let activeListName: string = DEFAULT_LIST;
+
+function readNamedLists(): NamedList[] {
+  try {
+    const raw = localStorage.getItem(LISTS_KEY);
+    if (!raw) return [];
+    const parsed = JSON.parse(raw);
+    if (!Array.isArray(parsed)) return [];
+    return parsed.filter(l => l && typeof l.name === 'string' && Array.isArray(l.ids));
+  } catch {
+    return [];
+  }
+}
+
+function writeNamedLists(lists: NamedList[]): void {
+  try {
+    localStorage.setItem(LISTS_KEY, JSON.stringify(lists));
+  } catch {
+    /* storage full or disabled */
+  }
+}
+
+function getActiveListIds(): string[] {
+  if (activeListName === DEFAULT_LIST) return getWishlistIds();
+  const lists = readNamedLists();
+  const list = lists.find(l => l.name === activeListName);
+  return list ? list.ids : [];
+}
+
+// ─── Sort logic ────────────────────────────────────────────────────────────
+
+function sortPropertyIds(ids: string[], mode: SortMode): string[] {
+  if (mode === 'newest') return ids;
+
+  if (mode === 'recently-viewed') {
+    const recent = getRecentlyViewedIds();
+    const inWishlist = new Set(ids);
+    const ordered = recent.filter(id => inWishlist.has(id));
+    const remaining = ids.filter(id => !ordered.includes(id));
+    return [...ordered, ...remaining];
+  }
+
+  // Price sorts — drop ids without a property, keep zero-price at the end
+  const enriched = ids
+    .map(id => ({ id, prop: getPropertyById(id) }))
+    .filter(e => e.prop !== undefined) as { id: string; prop: Property }[];
+
+  enriched.sort((a, b) => {
+    const ap = a.prop.price || 0;
+    const bp = b.prop.price || 0;
+    if (mode === 'price-asc') {
+      // Send 0-priced ("contact for price") items to the end
+      if (ap === 0 && bp === 0) return 0;
+      if (ap === 0) return 1;
+      if (bp === 0) return -1;
+      return ap - bp;
+    }
+    return bp - ap;
+  });
+
+  return enriched.map(e => e.id);
+}
+
+// ─── Wishlist Property Card (row layout) ───────────────────────────────────
 
 function createWishlistPropertyCard(property: Property, onRemove: () => void): HTMLElement {
-  const card = createElement('article', 'wishlist-card');
+  const card = createElement('article', 'wishlist-card wishlist-card--row');
   card.setAttribute('data-id', property.id);
+
+  // Selection checkbox
+  const checkboxWrap = createElement('label', 'wishlist-card__checkbox');
+  checkboxWrap.setAttribute('aria-label', `Select ${property.title}`);
+  const checkbox = createElement('input', 'wishlist-card__checkbox-input');
+  checkbox.type = 'checkbox';
+  checkbox.checked = selection.has(property.id);
+  checkbox.addEventListener('change', () => {
+    if (checkbox.checked) {
+      selection.add(property.id);
+      card.classList.add('wishlist-card--selected');
+    } else {
+      selection.delete(property.id);
+      card.classList.remove('wishlist-card--selected');
+    }
+    updateBulkBar();
+    updateSelectAllCheckbox();
+  });
+  if (checkbox.checked) card.classList.add('wishlist-card--selected');
+  checkboxWrap.appendChild(checkbox);
+  const checkboxIndicator = createElement('span', 'wishlist-card__checkbox-indicator');
+  checkboxWrap.appendChild(checkboxIndicator);
+  card.appendChild(checkboxWrap);
+
+  // Remove X (top-right)
+  const closeBtn = createElement('button', 'wishlist-card__close');
+  closeBtn.setAttribute('aria-label', `Remove ${property.title} from wishlist`);
+  closeBtn.type = 'button';
+  closeBtn.appendChild(createCloseSVG());
+  closeBtn.addEventListener('click', () => {
+    card.classList.add('wishlist-card--removing');
+    setTimeout(() => onRemove(), 250);
+  });
+  card.appendChild(closeBtn);
 
   // Image section
   const imageWrapper = createElement('a', 'wishlist-card__image');
@@ -170,11 +260,10 @@ function createWishlistPropertyCard(property: Property, onRemove: () => void): H
     width: 300,
     height: 200,
     srcset: generateSrcSet(property.images[0], [300, 400, 600]),
-    sizes: '(max-width: 768px) 100vw, 300px'
+    sizes: '(max-width: 768px) 100vw, 200px'
   });
   imageWrapper.appendChild(img);
 
-  // Status badge
   const statusBadge = createElement('span', `wishlist-card__status wishlist-card__status--${property.status.toLowerCase().replace(/\s/g, '-')}`);
   statusBadge.textContent = property.status;
   imageWrapper.appendChild(statusBadge);
@@ -184,46 +273,41 @@ function createWishlistPropertyCard(property: Property, onRemove: () => void): H
   // Content section
   const content = createElement('div', 'wishlist-card__content');
 
-  // Type tag
   const typeTag = createElement('span', 'wishlist-card__type', property.type);
   content.appendChild(typeTag);
 
-  // Title
   const titleLink = createElement('a', 'wishlist-card__title');
   titleLink.href = `/properties/${generatePropertySlug(property)}`;
   titleLink.setAttribute('data-route', '');
   titleLink.textContent = property.title;
   content.appendChild(titleLink);
 
-  // Location
   const location = createElement('p', 'wishlist-card__location');
   location.appendChild(createSVGUse('icon-location'));
   location.appendChild(document.createTextNode(`${property.location.district}, ${property.location.city}`));
   content.appendChild(location);
 
-  // Specs
   const specs = createElement('div', 'wishlist-card__specs');
 
   if (property.specs.beds > 0) {
     const beds = createElement('span', 'wishlist-card__spec');
     beds.appendChild(createSVGUse('icon-bed'));
-    beds.appendChild(document.createTextNode(property.specs.beds.toString()));
+    beds.appendChild(document.createTextNode(`${property.specs.beds} beds`));
     specs.appendChild(beds);
   }
 
   const baths = createElement('span', 'wishlist-card__spec');
   baths.appendChild(createSVGUse('icon-bath'));
-  baths.appendChild(document.createTextNode(property.specs.baths.toString()));
+  baths.appendChild(document.createTextNode(`${property.specs.baths} baths`));
   specs.appendChild(baths);
 
   const area = createElement('span', 'wishlist-card__spec');
   area.appendChild(createSVGUse('icon-area'));
-  area.appendChild(document.createTextNode(`${property.specs.sqm.toLocaleString()} m\u00B2`));
+  area.appendChild(document.createTextNode(`${property.specs.sqm.toLocaleString()} m²`));
   specs.appendChild(area);
 
   content.appendChild(specs);
 
-  // Price
   const price = createElement('span', 'wishlist-card__price');
   price.textContent = getDisplayPrice(property);
   content.appendChild(price);
@@ -233,24 +317,17 @@ function createWishlistPropertyCard(property: Property, onRemove: () => void): H
   // Actions section
   const actions = createElement('div', 'wishlist-card__actions');
 
-  // View button
-  const viewBtn = createElement('a', 'btn btn--primary btn--sm wishlist-card__btn');
+  const inquireBtn = createElement('a', 'btn btn--primary btn--sm wishlist-card__btn');
+  inquireBtn.href = `/contact?property=${property.id}`;
+  inquireBtn.setAttribute('data-route', '');
+  inquireBtn.textContent = 'Inquire';
+  actions.appendChild(inquireBtn);
+
+  const viewBtn = createElement('a', 'btn btn--outline btn--sm wishlist-card__btn');
   viewBtn.href = `/properties/${generatePropertySlug(property)}`;
   viewBtn.setAttribute('data-route', '');
   viewBtn.textContent = 'View Details';
   actions.appendChild(viewBtn);
-
-  // Remove button
-  const removeBtn = createElement('button', 'btn btn--ghost btn--sm wishlist-card__btn wishlist-card__btn--remove');
-  removeBtn.appendChild(createTrashSVG());
-  removeBtn.appendChild(document.createTextNode('Remove'));
-  removeBtn.addEventListener('click', () => {
-    card.classList.add('wishlist-card--removing');
-    setTimeout(() => {
-      onRemove();
-    }, 300);
-  });
-  actions.appendChild(removeBtn);
 
   card.appendChild(actions);
 
@@ -260,8 +337,6 @@ function createWishlistPropertyCard(property: Property, onRemove: () => void): H
 // ─── Empty State Component ───────────────────────────────────────────────────
 
 function createEmptyState(): HTMLElement {
-  // Use the shared empty-state pattern so wishlist looks and feels
-  // consistent with favorites, comparison, and search empty states.
   return createUiEmptyState({
     className: 'wishlist-page__empty',
     icon: 'heart',
@@ -301,7 +376,6 @@ function createSharedWishlistBanner(sharedIds: string[], onImport: () => void): 
   const dismissBtn = createElement('button', 'btn btn--ghost btn--sm', 'Dismiss');
   dismissBtn.addEventListener('click', () => {
     banner.remove();
-    // Remove share param from URL
     const url = new URL(window.location.href);
     url.searchParams.delete('share');
     window.history.replaceState({}, '', url.toString());
@@ -313,18 +387,249 @@ function createSharedWishlistBanner(sharedIds: string[], onImport: () => void): 
   return banner;
 }
 
+// ─── Lists tabs ────────────────────────────────────────────────────────────
+
+function createListsBar(): HTMLElement {
+  const wrap = createElement('div', 'wishlist-page__lists');
+  wrap.setAttribute('role', 'tablist');
+
+  const lists = readNamedLists();
+  const names = [DEFAULT_LIST, ...lists.map(l => l.name)];
+
+  names.forEach(name => {
+    const tab = createElement('button', 'wishlist-page__list-tab');
+    tab.type = 'button';
+    tab.textContent = name;
+    if (name === activeListName) tab.classList.add('wishlist-page__list-tab--active');
+    tab.setAttribute('role', 'tab');
+    tab.setAttribute('aria-selected', name === activeListName ? 'true' : 'false');
+    tab.addEventListener('click', () => {
+      activeListName = name;
+      selection.clear();
+      rerenderWishlistContent();
+      rerenderToolbar();
+    });
+    wrap.appendChild(tab);
+  });
+
+  const newBtn = createElement('button', 'wishlist-page__new-list-btn', '+ New List');
+  newBtn.type = 'button';
+  newBtn.addEventListener('click', () => {
+    if (wrap.querySelector('.wishlist-page__new-list-input')) return;
+    const input = createElement('input', 'wishlist-page__new-list-input');
+    input.type = 'text';
+    input.placeholder = 'List name…';
+    input.maxLength = 40;
+    const commit = () => {
+      const value = input.value.trim();
+      if (!value) {
+        input.remove();
+        return;
+      }
+      const existing = readNamedLists();
+      if (existing.some(l => l.name === value) || value === DEFAULT_LIST) {
+        showWishlistToast('That list name is already taken');
+        input.remove();
+        return;
+      }
+      existing.push({ name: value, ids: [] });
+      writeNamedLists(existing);
+      activeListName = value;
+      selection.clear();
+      rerenderToolbar();
+      rerenderWishlistContent();
+      showWishlistToast(`Created list "${value}"`);
+    };
+    input.addEventListener('keydown', e => {
+      if (e.key === 'Enter') { e.preventDefault(); commit(); }
+      else if (e.key === 'Escape') input.remove();
+    });
+    input.addEventListener('blur', commit);
+    wrap.insertBefore(input, newBtn);
+    input.focus();
+  });
+  wrap.appendChild(newBtn);
+
+  return wrap;
+}
+
+// ─── Toolbar ───────────────────────────────────────────────────────────────
+
+function createToolbar(): HTMLElement {
+  const toolbar = createElement('div', 'wishlist-page__toolbar');
+
+  // Left: select all + lists
+  const left = createElement('div', 'wishlist-page__toolbar-left');
+
+  const selectAllLabel = createElement('label', 'wishlist-page__select-all');
+  const selectAll = createElement('input', 'wishlist-page__select-all-input');
+  selectAll.type = 'checkbox';
+  selectAll.id = 'wishlist-select-all';
+  selectAll.addEventListener('change', () => {
+    const ids = sortPropertyIds(getActiveListIds(), currentSort);
+    if (selectAll.checked) ids.forEach(id => selection.add(id));
+    else ids.forEach(id => selection.delete(id));
+    rerenderGridOnly();
+    updateBulkBar();
+  });
+  selectAllLabel.appendChild(selectAll);
+  const selectAllText = createElement('span', undefined, 'Select all');
+  selectAllLabel.appendChild(selectAllText);
+  left.appendChild(selectAllLabel);
+
+  left.appendChild(createListsBar());
+  toolbar.appendChild(left);
+
+  // Right: sort
+  const right = createElement('div', 'wishlist-page__toolbar-right');
+  const sortLabel = createElement('label', 'wishlist-page__sort-label');
+  sortLabel.setAttribute('for', 'wishlist-sort');
+  sortLabel.textContent = 'Sort:';
+  right.appendChild(sortLabel);
+
+  const sort = createElement('select', 'wishlist-page__sort');
+  sort.id = 'wishlist-sort';
+  const sortOptions: { value: SortMode; label: string }[] = [
+    { value: 'newest', label: 'Newest' },
+    { value: 'price-asc', label: 'Price (low to high)' },
+    { value: 'price-desc', label: 'Price (high to low)' },
+    { value: 'recently-viewed', label: 'Recently viewed' }
+  ];
+  sortOptions.forEach(opt => {
+    const o = createElement('option', undefined, opt.label);
+    o.value = opt.value;
+    if (opt.value === currentSort) o.selected = true;
+    sort.appendChild(o);
+  });
+  sort.addEventListener('change', () => {
+    currentSort = sort.value as SortMode;
+    rerenderGridOnly();
+  });
+  right.appendChild(sort);
+
+  toolbar.appendChild(right);
+
+  return toolbar;
+}
+
+function rerenderToolbar(): void {
+  const old = document.querySelector('.wishlist-page__toolbar');
+  if (!old || !old.parentElement) return;
+  const fresh = createToolbar();
+  old.parentElement.replaceChild(fresh, old);
+}
+
+function updateSelectAllCheckbox(): void {
+  const cb = document.getElementById('wishlist-select-all') as HTMLInputElement | null;
+  if (!cb) return;
+  const ids = sortPropertyIds(getActiveListIds(), currentSort);
+  if (ids.length === 0) {
+    cb.checked = false;
+    cb.indeterminate = false;
+    return;
+  }
+  const selectedCount = ids.filter(id => selection.has(id)).length;
+  cb.checked = selectedCount === ids.length;
+  cb.indeterminate = selectedCount > 0 && selectedCount < ids.length;
+}
+
+// ─── Bulk Action Bar ───────────────────────────────────────────────────────
+
+function createBulkBar(): HTMLElement {
+  const bar = createElement('div', 'wishlist-page__bulk-bar');
+  bar.id = 'wishlist-bulk-bar';
+  bar.setAttribute('role', 'region');
+  bar.setAttribute('aria-label', 'Bulk actions');
+
+  const count = createElement('span', 'wishlist-page__bulk-count', '0 selected');
+  count.id = 'wishlist-bulk-count';
+  bar.appendChild(count);
+
+  const actions = createElement('div', 'wishlist-page__bulk-actions');
+
+  const removeBtn = createElement('button', 'btn btn--ghost btn--sm');
+  removeBtn.type = 'button';
+  removeBtn.appendChild(createTrashSVG());
+  removeBtn.appendChild(document.createTextNode('Remove Selected'));
+  removeBtn.addEventListener('click', () => {
+    if (selection.size === 0) return;
+    const ids = Array.from(selection);
+    if (activeListName === DEFAULT_LIST) {
+      ids.forEach(id => removeFromWishlist(id));
+      updateWishlistBadge();
+    } else {
+      const lists = readNamedLists();
+      const list = lists.find(l => l.name === activeListName);
+      if (list) {
+        list.ids = list.ids.filter(id => !selection.has(id));
+        writeNamedLists(lists);
+      }
+    }
+    selection.clear();
+    rerenderWishlistContent();
+    updateBulkBar();
+    showWishlistToast(`Removed ${ids.length} ${ids.length === 1 ? 'property' : 'properties'}`);
+  });
+  actions.appendChild(removeBtn);
+
+  const shareBtn = createElement('button', 'btn btn--outline btn--sm');
+  shareBtn.type = 'button';
+  shareBtn.appendChild(createShareSVG());
+  shareBtn.appendChild(document.createTextNode('Share Selected'));
+  shareBtn.addEventListener('click', () => {
+    if (selection.size === 0) return;
+    const ids = Array.from(selection);
+    const url = `${window.location.origin}/wishlist?share=${encodeURIComponent(ids.join(','))}`;
+    copyToClipboard(url, 'Link copied!');
+  });
+  actions.appendChild(shareBtn);
+
+  const clearSelBtn = createElement('button', 'btn btn--ghost btn--sm', 'Clear Selection');
+  clearSelBtn.type = 'button';
+  clearSelBtn.addEventListener('click', () => {
+    selection.clear();
+    rerenderGridOnly();
+    updateBulkBar();
+  });
+  actions.appendChild(clearSelBtn);
+
+  bar.appendChild(actions);
+
+  return bar;
+}
+
+function updateBulkBar(): void {
+  const bar = document.getElementById('wishlist-bulk-bar');
+  const count = document.getElementById('wishlist-bulk-count');
+  if (!bar || !count) return;
+  count.textContent = `${selection.size} selected`;
+  bar.classList.toggle('wishlist-page__bulk-bar--visible', selection.size > 0);
+}
+
 // ═══════════════════════════════════════════════════════════════════════════
 // Main Wishlist Page Renderer
 // ═══════════════════════════════════════════════════════════════════════════
 
 export function renderWishlistPage(): DocumentFragment {
+  // Reset transient state on fresh renders
+  selection.clear();
+  currentSort = 'newest';
+  activeListName = DEFAULT_LIST;
+
   const fragment = document.createDocumentFragment();
   const page = createElement('section', 'wishlist-page');
   page.setAttribute('aria-labelledby', 'wishlist-title');
 
-  const container = createElement('div', 'container');
+  // ── Cinematic Hero ──────────────────────────────────────────────────────
+  const hero = createElement('div', 'wishlist-page__hero');
 
-  // Breadcrumbs
+  const heroBg = createElement('div', 'wishlist-page__hero-bg');
+  heroBg.setAttribute('aria-hidden', 'true');
+  hero.appendChild(heroBg);
+
+  const heroContainer = createElement('div', 'container wishlist-page__hero-container');
+
+  // Breadcrumbs inside hero
   const breadcrumbNav = createElement('nav', 'wishlist-page__breadcrumbs');
   breadcrumbNav.setAttribute('aria-label', 'Breadcrumb navigation');
   const breadcrumbs: BreadcrumbItem[] = [
@@ -332,21 +637,8 @@ export function renderWishlistPage(): DocumentFragment {
     { name: 'Wishlist', url: '/wishlist', current: true }
   ];
   breadcrumbNav.appendChild(createBreadcrumbs(breadcrumbs));
-  container.appendChild(breadcrumbNav);
+  heroContainer.appendChild(breadcrumbNav);
   injectBreadcrumbSchema(breadcrumbs);
-
-  // Check for shared wishlist
-  const sharedIds = parseSharedWishlist();
-  if (sharedIds && sharedIds.length > 0) {
-    const banner = createSharedWishlistBanner(sharedIds, () => {
-      // Re-render the page after import
-      rerenderWishlistContent();
-    });
-    container.appendChild(banner);
-  }
-
-  // Header
-  const header = createElement('header', 'wishlist-page__header');
 
   const titleWrapper = createElement('div', 'wishlist-page__title-wrapper');
   const title = createElement('h1', 'wishlist-page__title');
@@ -355,97 +647,92 @@ export function renderWishlistPage(): DocumentFragment {
   title.appendChild(document.createTextNode('My Wishlist'));
   titleWrapper.appendChild(title);
 
-  const wishlistIds = getWishlistIds();
+  const initialIds = getWishlistIds();
   const subtitle = createElement('p', 'wishlist-page__subtitle');
-  subtitle.textContent = wishlistIds.length === 0
-    ? 'Save your favorite properties'
-    : `${wishlistIds.length} saved ${wishlistIds.length === 1 ? 'property' : 'properties'}`;
+  subtitle.textContent = initialIds.length === 0
+    ? 'Save your favorite properties — share them with family or your agent.'
+    : `${initialIds.length} saved ${initialIds.length === 1 ? 'property' : 'properties'}`;
   titleWrapper.appendChild(subtitle);
+  heroContainer.appendChild(titleWrapper);
 
-  header.appendChild(titleWrapper);
+  hero.appendChild(heroContainer);
+  page.appendChild(hero);
 
-  // Header actions (if has items)
-  if (wishlistIds.length > 0) {
+  const container = createElement('div', 'container');
+
+  // Shared wishlist banner
+  const sharedIds = parseSharedWishlist();
+  if (sharedIds && sharedIds.length > 0) {
+    const banner = createSharedWishlistBanner(sharedIds, () => rerenderWishlistContent());
+    container.appendChild(banner);
+  }
+
+  // Header actions (Share Wishlist, Clear All)
+  if (initialIds.length > 0) {
     const headerActions = createElement('div', 'wishlist-page__header-actions');
 
-    // Share button
     const shareBtn = createElement('button', 'btn btn--outline wishlist-page__share-btn');
     shareBtn.appendChild(createShareSVG());
     shareBtn.appendChild(document.createTextNode('Share Wishlist'));
     shareBtn.addEventListener('click', async () => {
       const shareLink = generateWishlistShareLink();
-
       if (navigator.share) {
         try {
           await navigator.share({
             title: 'My Real House Wishlist',
-            text: `Check out ${wishlistIds.length} properties I saved on Real House`,
+            text: `Check out ${initialIds.length} properties I saved on Real House`,
             url: shareLink
           });
         } catch {
-          // User cancelled or share failed, fall back to copy
-          copyToClipboard(shareLink);
+          copyToClipboard(shareLink, 'Wishlist link copied to clipboard!');
         }
       } else {
-        copyToClipboard(shareLink);
+        copyToClipboard(shareLink, 'Wishlist link copied to clipboard!');
       }
     });
     headerActions.appendChild(shareBtn);
 
-    // Clear all button
     const clearBtn = createElement('button', 'btn btn--ghost wishlist-page__clear-btn');
     clearBtn.appendChild(createTrashSVG());
     clearBtn.appendChild(document.createTextNode('Clear All'));
     clearBtn.addEventListener('click', () => {
-      if (confirm('Are you sure you want to clear your entire wishlist?')) {
+      if (!confirm('Are you sure you want to clear your entire wishlist?')) return;
+      if (activeListName === DEFAULT_LIST) {
         clearWishlist();
-        rerenderWishlistContent();
         updateWishlistBadge();
-        showWishlistToast('Wishlist cleared');
+      } else {
+        const lists = readNamedLists();
+        const list = lists.find(l => l.name === activeListName);
+        if (list) { list.ids = []; writeNamedLists(lists); }
       }
+      selection.clear();
+      rerenderWishlistContent();
+      showWishlistToast('Wishlist cleared');
     });
     headerActions.appendChild(clearBtn);
 
-    header.appendChild(headerActions);
+    container.appendChild(headerActions);
   }
 
-  container.appendChild(header);
+  // Toolbar (lists + sort + select-all)
+  container.appendChild(createToolbar());
 
-  // Content area (grid or empty state)
+  // Content area
   const content = createElement('div', 'wishlist-page__content');
   content.id = 'wishlist-content';
-
-  if (wishlistIds.length === 0) {
-    content.appendChild(createEmptyState());
-  } else {
-    const grid = createElement('div', 'wishlist-page__grid');
-    grid.id = 'wishlist-grid';
-
-    wishlistIds.forEach(id => {
-      const property = getPropertyById(id);
-      if (property) {
-        const card = createWishlistPropertyCard(property, () => {
-          removeFromWishlist(id);
-          updateWishlistBadge();
-          rerenderWishlistContent();
-        });
-        grid.appendChild(card);
-      }
-    });
-
-    content.appendChild(grid);
-  }
-
+  renderGridInto(content);
   container.appendChild(content);
 
-  // Recently Viewed Section
+  // Bulk action bar
+  container.appendChild(createBulkBar());
+
+  // Recently Viewed
   const recentlyViewedIds = getRecentlyViewedIds();
   if (recentlyViewedIds.length > 0) {
     const recentSection = createElement('section', 'wishlist-page__recently-viewed');
     recentSection.setAttribute('aria-labelledby', 'recent-title');
 
     const recentHeader = createElement('div', 'wishlist-page__recent-header');
-
     const recentTitle = createElement('h2', 'wishlist-page__recent-title', 'Recently Viewed');
     recentTitle.id = 'recent-title';
     recentHeader.appendChild(recentTitle);
@@ -458,22 +745,18 @@ export function renderWishlistPage(): DocumentFragment {
       }
     });
     recentHeader.appendChild(clearRecentBtn);
-
     recentSection.appendChild(recentHeader);
 
     const recentGrid = createElement('div', 'wishlist-page__recent-grid');
-
     let count = 0;
     for (const id of recentlyViewedIds) {
       if (count >= 4) break;
       const property = getPropertyById(id);
       if (property) {
-        const card = createRecentlyViewedCard(property);
-        recentGrid.appendChild(card);
+        recentGrid.appendChild(createRecentlyViewedCard(property));
         count++;
       }
     }
-
     if (count > 0) {
       recentSection.appendChild(recentGrid);
       container.appendChild(recentSection);
@@ -484,6 +767,53 @@ export function renderWishlistPage(): DocumentFragment {
   fragment.appendChild(page);
 
   return fragment;
+}
+
+// ─── Grid Rendering ────────────────────────────────────────────────────────
+
+function renderGridInto(target: HTMLElement): void {
+  while (target.firstChild) target.removeChild(target.firstChild);
+
+  const ids = sortPropertyIds(getActiveListIds(), currentSort);
+
+  if (ids.length === 0) {
+    target.appendChild(createEmptyState());
+    return;
+  }
+
+  const grid = createElement('div', 'wishlist-page__grid');
+  grid.id = 'wishlist-grid';
+
+  ids.forEach(id => {
+    const property = getPropertyById(id);
+    if (!property) return;
+    const card = createWishlistPropertyCard(property, () => {
+      if (activeListName === DEFAULT_LIST) {
+        removeFromWishlist(id);
+        updateWishlistBadge();
+      } else {
+        const lists = readNamedLists();
+        const list = lists.find(l => l.name === activeListName);
+        if (list) {
+          list.ids = list.ids.filter(x => x !== id);
+          writeNamedLists(lists);
+        }
+      }
+      selection.delete(id);
+      rerenderWishlistContent();
+      updateBulkBar();
+    });
+    grid.appendChild(card);
+  });
+
+  target.appendChild(grid);
+}
+
+function rerenderGridOnly(): void {
+  const content = document.getElementById('wishlist-content');
+  if (!content) return;
+  renderGridInto(content);
+  updateSelectAllCheckbox();
 }
 
 // ─── Recently Viewed Card (Compact) ──────────────────────────────────────────
@@ -505,18 +835,14 @@ function createRecentlyViewedCard(property: Property): HTMLElement {
   card.appendChild(imageWrapper);
 
   const content = createElement('div', 'recently-viewed-card__content');
-
   const title = createElement('h3', 'recently-viewed-card__title', property.title);
   content.appendChild(title);
-
   const location = createElement('p', 'recently-viewed-card__location');
   location.textContent = `${property.type} in ${property.location.district}`;
   content.appendChild(location);
-
   const price = createElement('span', 'recently-viewed-card__price');
   price.textContent = getDisplayPrice(property);
   content.appendChild(price);
-
   card.appendChild(content);
 
   return card;
@@ -528,57 +854,31 @@ function rerenderWishlistContent(): void {
   const content = document.getElementById('wishlist-content');
   if (!content) return;
 
-  // Clear existing content
-  while (content.firstChild) {
-    content.removeChild(content.firstChild);
-  }
-
-  const wishlistIds = getWishlistIds();
-
-  // Update subtitle
+  const ids = getActiveListIds();
   const subtitle = document.querySelector('.wishlist-page__subtitle');
   if (subtitle) {
-    subtitle.textContent = wishlistIds.length === 0
-      ? 'Save your favorite properties'
-      : `${wishlistIds.length} saved ${wishlistIds.length === 1 ? 'property' : 'properties'}`;
+    subtitle.textContent = ids.length === 0
+      ? 'Save your favorite properties — share them with family or your agent.'
+      : `${ids.length} saved ${ids.length === 1 ? 'property' : 'properties'}`;
   }
 
-  // Update header actions visibility
-  const headerActions = document.querySelector('.wishlist-page__header-actions');
+  const headerActions = document.querySelector('.wishlist-page__header-actions') as HTMLElement | null;
   if (headerActions) {
-    (headerActions as HTMLElement).style.display = wishlistIds.length === 0 ? 'none' : 'flex';
+    headerActions.style.display = ids.length === 0 ? 'none' : 'flex';
   }
 
-  if (wishlistIds.length === 0) {
-    content.appendChild(createEmptyState());
-  } else {
-    const grid = createElement('div', 'wishlist-page__grid');
-    grid.id = 'wishlist-grid';
-
-    wishlistIds.forEach(id => {
-      const property = getPropertyById(id);
-      if (property) {
-        const card = createWishlistPropertyCard(property, () => {
-          removeFromWishlist(id);
-          updateWishlistBadge();
-          rerenderWishlistContent();
-        });
-        grid.appendChild(card);
-      }
-    });
-
-    content.appendChild(grid);
-  }
+  renderGridInto(content);
+  updateSelectAllCheckbox();
+  updateBulkBar();
 }
 
 // ─── Helper: Copy to Clipboard ───────────────────────────────────────────────
 
-async function copyToClipboard(text: string): Promise<void> {
+async function copyToClipboard(text: string, message: string = 'Link copied to clipboard!'): Promise<void> {
   try {
     await navigator.clipboard.writeText(text);
-    showWishlistToast('Wishlist link copied to clipboard!');
+    showWishlistToast(message);
   } catch {
-    // Fallback for older browsers
     const textArea = document.createElement('textarea');
     textArea.value = text;
     textArea.style.position = 'fixed';
@@ -587,7 +887,7 @@ async function copyToClipboard(text: string): Promise<void> {
     textArea.select();
     document.execCommand('copy');
     document.body.removeChild(textArea);
-    showWishlistToast('Wishlist link copied to clipboard!');
+    showWishlistToast(message);
   }
 }
 
@@ -601,7 +901,6 @@ export function setupWishlistPageSEO(): void {
     metaDesc.setAttribute('content', 'View and manage your saved properties on Real House. Share your wishlist with friends and family. Find your dream home in Erbil, Kurdistan.');
   }
 
-  // Noindex wishlist pages (user-specific content)
   let robots = document.querySelector('meta[name="robots"]');
   if (!robots) {
     robots = document.createElement('meta');
