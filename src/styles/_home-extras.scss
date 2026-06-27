@@ -468,10 +468,14 @@
     position: relative;
     overflow: hidden;
     padding: clamp(2rem, 6vw, 5rem);
-    background: linear-gradient(135deg, #14141F 0%, #1A1820 40%, #221E15 100%);
+    background:
+      linear-gradient(135deg, rgba(var(--c-gold-rgb), 0.06) 0%, transparent 50%),
+      linear-gradient(180deg, #0F0F17 0%, #15131B 100%);
     border-radius: var(--radius-xl);
-    border: 1px solid rgba(var(--c-gold-rgb), 0.25);
-    box-shadow: 0 32px 80px rgba(0, 0, 0, 0.45);
+    border: 1px solid rgba(var(--c-gold-rgb), 0.32);
+    box-shadow:
+      0 32px 80px rgba(0, 0, 0, 0.5),
+      inset 0 1px 0 rgba(255, 255, 255, 0.04);
   }
 
   &__decor {
@@ -479,16 +483,16 @@
     inset: 0;
     pointer-events: none;
     background:
-      radial-gradient(60% 50% at 100% 0%, rgba(var(--c-gold-rgb), 0.22), transparent 60%),
-      radial-gradient(40% 30% at 0% 100%, rgba(var(--c-gold-rgb), 0.10), transparent 60%);
+      radial-gradient(55% 45% at 92% 8%, rgba(var(--c-gold-rgb), 0.28), transparent 65%),
+      radial-gradient(45% 35% at 8% 95%, rgba(var(--c-gold-rgb), 0.14), transparent 65%);
 
     &::after {
       content: '';
       position: absolute;
       inset: 0;
       background-image:
-        repeating-linear-gradient(90deg, rgba(255,255,255,0.02) 0 1px, transparent 1px 80px);
-      mix-blend-mode: overlay;
+        repeating-linear-gradient(90deg, rgba(var(--c-gold-rgb), 0.025) 0 1px, transparent 1px 80px);
+      mix-blend-mode: screen;
     }
   }
 
@@ -510,16 +514,17 @@
     font-family: var(--font-sans);
     font-size: 0.7rem;
     font-weight: 700;
-    letter-spacing: 0.28em;
+    letter-spacing: 0.32em;
     text-transform: uppercase;
-    color: var(--c-gold);
+    color: var(--c-gold-light, var(--c-gold));
+    text-shadow: 0 0 24px rgba(var(--c-gold-rgb), 0.4);
 
     &::before, &::after {
       content: '';
       display: inline-block;
       width: 36px;
       height: 1px;
-      background: currentColor;
+      background: linear-gradient(90deg, transparent, var(--c-gold), transparent);
     }
   }
 
@@ -605,7 +610,43 @@
     justify-content: center;
   }
 
-  &__trust-sep { color: var(--c-gold); }
+  &__trust-sep {
+    color: var(--c-gold);
+    opacity: 0.5;
+    font-size: 0.6rem;
+  }
+}
+
+// ─── Property/Project Card Carousel - smaller dots and arrows ─────────────
+.property-card__dot,
+.project-card__dot {
+  width: 6px !important;
+  height: 6px !important;
+
+  &--active {
+    width: 18px !important;
+    height: 6px !important;
+    border-radius: 3px !important;
+  }
+}
+
+.property-card__dots,
+.project-card__dots {
+  bottom: var(--space-2) !important;
+  gap: 4px !important;
+  padding: 4px 8px !important;
+}
+
+.property-card__carousel-btn,
+.project-card__carousel-btn {
+  width: 28px !important;
+  height: 28px !important;
+  font-size: 14px !important;
+
+  svg {
+    width: 14px !important;
+    height: 14px !important;
+  }
 }
 
 // ─── Properties Page Toolbar (sort + saved searches) ───────────────────────
