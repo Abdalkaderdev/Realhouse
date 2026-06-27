@@ -1095,7 +1095,7 @@ Rent: $10 per m² gross = $1,685/month. The first floor offers premium accessibi
 
 Rent: $10 per m² gross = $1,595/month. Ideal for professional services, consulting firms, or growing corporate teams. Direct access to building's elevator core and shared services.`,
     features: ['Spacious Layout', 'Column-Divided', 'First Floor Premium', 'Flexible Floorplan', 'Modern Infrastructure', 'Lobby Access', 'Elevator Bank', 'Mechanical Services Included', '$10/m² Gross Rent'],
-    isFeatured: true,
+    isFeatured: false,
     isNew: true,
     neighborhood: { name: 'Central', walkScore: 92 },
     agent: agents[1],
