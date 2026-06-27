@@ -194,7 +194,7 @@ function createOtherMemberCard(agent: Agent): HTMLElement {
   body.appendChild(role);
 
   const cta = createElement('span', 'agent-profile__other-cta');
-  cta.appendChild(document.createTextNode('View profile'));
+  cta.appendChild(document.createTextNode(t('agentProfile.viewProfile')));
   cta.appendChild(createSVGUse('icon-arrow-right'));
   body.appendChild(cta);
 
@@ -335,9 +335,9 @@ export function renderAgentProfilePage(slug: string): DocumentFragment {
   const aboutSection = createElement('div', 'agent-profile__section agent-profile__section--about');
 
   const aboutHeader = createElement('div', 'agent-profile__section-header');
-  const aboutEyebrow = createElement('span', 'agent-profile__section-eyebrow', '01 · Story');
+  const aboutEyebrow = createElement('span', 'agent-profile__section-eyebrow', t('agentProfile.sectionEyebrow01'));
   aboutHeader.appendChild(aboutEyebrow);
-  const aboutTitle = createElement('h2', 'agent-profile__section-title', `About ${agent.name}`);
+  const aboutTitle = createElement('h2', 'agent-profile__section-title', t('agentProfile.aboutAgent', { name: agent.name }));
   aboutHeader.appendChild(aboutTitle);
   aboutSection.appendChild(aboutHeader);
 

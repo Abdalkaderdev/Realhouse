@@ -58,7 +58,7 @@ export const offices: OfficeLocation[] = [
       latitude: 36.1901,
       longitude: 44.0091
     },
-    phone: ['+964 750 792 2138', '+964 751 441 5003'],
+    phone: ['+964 750 792 2138', '+964 751 441 5003', '+964 750 445 5822'],
     fax: '+964 66 223 4567',
     email: 'info@realhouseiq.com',
     hours: {

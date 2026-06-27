@@ -286,16 +286,16 @@ function createBlogHero(): HTMLElement {
 
   // Issue badge
   const issue = createElement('div', 'blog-hero__issue');
-  const issueLabel = createElement('span', 'blog-hero__issue-label', 'The Journal');
+  const issueLabel = createElement('span', 'blog-hero__issue-label', t('blogPage.heroIssueLabel'));
   issue.appendChild(issueLabel);
   const issueDot = createElement('span', 'blog-hero__issue-dot');
   issue.appendChild(issueDot);
-  const issueNum = createElement('span', 'blog-hero__issue-num', `Vol. ${blogPosts.length.toString().padStart(2, '0')}`);
+  const issueNum = createElement('span', 'blog-hero__issue-num', t('blogPage.heroIssueVolume', { num: blogPosts.length.toString().padStart(2, '0') }));
   issue.appendChild(issueNum);
   heroInner.appendChild(issue);
 
   // Eyebrow
-  const eyebrow = createElement('div', 'blog-hero__eyebrow', 'Erbil · Kurdistan · Property Intelligence');
+  const eyebrow = createElement('div', 'blog-hero__eyebrow', t('blogPage.heroEyebrow'));
   heroInner.appendChild(eyebrow);
 
   // Title — split for animation
@@ -331,11 +331,17 @@ function createBlogHero(): HTMLElement {
 
   // Quick category chips
   const quick = createElement('div', 'blog-hero__quick');
-  const quickLabel = createElement('span', 'blog-hero__quick-label', 'Popular');
+  const quickLabel = createElement('span', 'blog-hero__quick-label', t('blogPage.heroPopularLabel'));
   quick.appendChild(quickLabel);
-  ['Market Trends', 'Investment', 'Neighborhoods', 'Buying Guide'].forEach(cat => {
-    const chip = createElement('button', 'blog-hero__quick-chip', cat);
-    chip.setAttribute('data-category', cat);
+  const quickChips: Array<{ value: string; label: string }> = [
+    { value: 'Market Trends', label: t('blogPage.chipMarketTrends') },
+    { value: 'Investment', label: t('blogPage.chipInvestment') },
+    { value: 'Neighborhoods', label: t('blogPage.chipNeighborhoods') },
+    { value: 'Buying Guide', label: t('blogPage.chipBuyingGuide') }
+  ];
+  quickChips.forEach(({ value, label }) => {
+    const chip = createElement('button', 'blog-hero__quick-chip', label);
+    chip.setAttribute('data-category', value);
     chip.setAttribute('type', 'button');
     quick.appendChild(chip);
   });
@@ -345,9 +351,9 @@ function createBlogHero(): HTMLElement {
   const stats = createElement('div', 'blog-hero__stats');
   const totalReads = blogPosts.reduce((acc, p) => acc + p.readTime, 0);
   const statsData = [
-    { num: blogPosts.length.toString(), label: 'Articles' },
-    { num: blogCategories.length.toString(), label: 'Topics' },
-    { num: `${totalReads}m`, label: 'Of Reading' }
+    { num: blogPosts.length.toString(), label: t('blogPage.statArticles') },
+    { num: blogCategories.length.toString(), label: t('blogPage.statTopics') },
+    { num: `${totalReads}m`, label: t('blogPage.statOfReading') }
   ];
   statsData.forEach(s => {
     const stat = createElement('div', 'blog-hero__stat');

@@ -407,6 +407,27 @@ export const en: CoreTranslations = {
     bathsShort: 'Baths',
     viewProperty: 'View',
     propertyIn: 'in',
+    specifications: 'Specifications',
+    propertiesCount: '{{count}} properties',
+    mapControls: 'Map controls',
+    switchToSatellite: 'Switch to satellite view',
+    switchToMap: 'Switch to map view',
+    fitAllProperties: 'Fit all properties in view',
+    myLocation: 'Center map on my location',
+    showLayers: 'Show map layers',
+    mapLayers: 'Map layers',
+    layers: 'Layers',
+    closeLayersPanel: 'Close layers panel',
+    properties: 'Properties',
+    projects: 'Projects',
+    locationsOfInterest: 'Locations of interest',
+    geolocationNotSupported: 'Geolocation is not supported by your browser',
+    locationDenied: 'Location access denied. Enable it in your browser settings to use this.',
+    locationFailed: 'Could not determine your location. Please try again.',
+    closePreview: 'Close preview',
+    mapFailedToLoad: 'Map failed to load',
+    mapFailedDescription: 'We could not load the map right now. This is usually a temporary network issue. You can still browse the property list while we try again.',
+    reloadMap: 'Reload map',
   },
 
   filters: {
@@ -515,6 +536,7 @@ export const en: CoreTranslations = {
     disclaimer: 'This calculation is for illustrative purposes only. Actual rates and terms may vary.',
     poweredBy: 'Powered by Real House - realhouseiq.com',
     contactForPrice: 'Contact for Price',
+    enterValidPrice: 'Please enter a valid property price',
   },
 
   servicesPage: {
@@ -662,6 +684,7 @@ export const en: CoreTranslations = {
     emailPlaceholder: 'john@example.com',
     phonePlaceholder: '+1 (555) 000-0000',
     notesPlaceholder: 'Any special requests or questions...',
+    saveFailed: 'Unable to save your appointment. Please try again or contact us directly.',
   },
 
   modals: {

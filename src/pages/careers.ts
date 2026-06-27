@@ -20,6 +20,7 @@ import {
   type JobType
 } from '../data/careers';
 import { injectSchema } from '../seo/schema';
+import { t } from '../i18n';
 
 // ─── Helper Functions ────────────────────────────────────────────────────────
 
@@ -121,34 +122,34 @@ function createHeroSection(): HTMLElement {
   const eyebrow = createElement('div', 'careers-hero__eyebrow');
   const eyebrowLine = createElement('span', 'careers-hero__eyebrow-line');
   eyebrow.appendChild(eyebrowLine);
-  const badge = createElement('span', 'careers-hero__badge', 'Careers · Erbil, Kurdistan');
+  const badge = createElement('span', 'careers-hero__badge', t('careersPage.heroBadge'));
   eyebrow.appendChild(badge);
   content.appendChild(eyebrow);
 
   const title = createElement('h1', 'careers-hero__title');
   const titleLine1 = createElement('span', 'careers-hero__title-line');
-  titleLine1.textContent = 'Build Your';
+  titleLine1.textContent = t('careersPage.heroTitleLine1');
   title.appendChild(titleLine1);
   const titleLine2 = createElement('span', 'careers-hero__title-line');
-  const em = createElement('em', undefined, 'Career');
+  const em = createElement('em', undefined, t('careersPage.heroTitleEmphasis'));
   titleLine2.appendChild(em);
-  titleLine2.appendChild(document.createTextNode(' in'));
+  titleLine2.appendChild(document.createTextNode(t('careersPage.heroTitleLine2Suffix')));
   title.appendChild(titleLine2);
-  const titleLine3 = createElement('span', 'careers-hero__title-line', 'Erbil Real Estate.');
+  const titleLine3 = createElement('span', 'careers-hero__title-line', t('careersPage.heroTitleLine3'));
   title.appendChild(titleLine3);
   content.appendChild(title);
 
   const subtitle = createElement('p', 'careers-hero__subtitle',
-    'Join Kurdistan\'s leading real estate agency and shape the future of property in Erbil. Growth-oriented roles, competitive commissions, and a team that genuinely has your back.'
+    t('careersPage.heroSubtitle')
   );
   content.appendChild(subtitle);
 
   const stats = createElement('div', 'careers-hero__stats');
   const statsData = [
-    { value: '25+', label: 'Team Members' },
-    { value: '+38%', label: 'YoY Growth' },
-    { value: '94%', label: 'Satisfaction' },
-    { value: '23', label: 'Years Strong' }
+    { value: '25+', label: t('careersPage.heroStatTeamMembers') },
+    { value: '+38%', label: t('careersPage.heroStatYoYGrowth') },
+    { value: '94%', label: t('careersPage.heroStatSatisfaction') },
+    { value: '23', label: t('careersPage.heroStatYearsStrong') }
   ];
 
   statsData.forEach(stat => {
@@ -163,11 +164,11 @@ function createHeroSection(): HTMLElement {
   content.appendChild(stats);
 
   const cta = createElement('div', 'careers-hero__cta');
-  const viewJobsBtn = createElement('a', 'btn btn--primary btn--lg', 'View Open Positions');
+  const viewJobsBtn = createElement('a', 'btn btn--primary btn--lg', t('careersPage.viewOpenPositions'));
   viewJobsBtn.href = '#openings';
   cta.appendChild(viewJobsBtn);
 
-  const learnMoreBtn = createElement('a', 'btn btn--outline btn--lg', 'Learn About Us');
+  const learnMoreBtn = createElement('a', 'btn btn--outline btn--lg', t('careersPage.learnAboutUs'));
   learnMoreBtn.href = '/about';
   learnMoreBtn.setAttribute('data-route', '');
   cta.appendChild(learnMoreBtn);
@@ -177,7 +178,7 @@ function createHeroSection(): HTMLElement {
   // Scroll indicator
   const scroller = createElement('div', 'careers-hero__scroller');
   scroller.setAttribute('aria-hidden', 'true');
-  const scrollerLabel = createElement('span', 'careers-hero__scroller-label', 'Scroll');
+  const scrollerLabel = createElement('span', 'careers-hero__scroller-label', t('careersPage.scrollLabel'));
   scroller.appendChild(scrollerLabel);
   const scrollerLine = createElement('span', 'careers-hero__scroller-line');
   scroller.appendChild(scrollerLine);
@@ -190,10 +191,17 @@ function createHeroSection(): HTMLElement {
   const marquee = createElement('div', 'careers-hero__marquee');
   marquee.setAttribute('aria-hidden', 'true');
   const marqueeTrack = createElement('div', 'careers-hero__marquee-track');
-  const items = ['Sales', '●', 'Marketing', '●', 'Operations', '●', 'IT & Product', '●', 'Internship', '●', 'Leadership', '●'];
+  const items = [
+    t('careersPage.marqueeSales'), '●',
+    t('careersPage.marqueeMarketing'), '●',
+    t('careersPage.marqueeOperations'), '●',
+    t('careersPage.marqueeItProduct'), '●',
+    t('careersPage.marqueeInternship'), '●',
+    t('careersPage.marqueeLeadership'), '●'
+  ];
   // Duplicate for seamless loop
-  [...items, ...items, ...items].forEach(t => {
-    const span = createElement('span', 'careers-hero__marquee-item', t);
+  [...items, ...items, ...items].forEach(item => {
+    const span = createElement('span', 'careers-hero__marquee-item', item);
     marqueeTrack.appendChild(span);
   });
   marquee.appendChild(marqueeTrack);
@@ -210,12 +218,12 @@ function createWhyWorkSection(): HTMLElement {
 
   const header = createElement('div', 'section-header');
   const headerTitle = createElement('h2', 'section-title');
-  headerTitle.textContent = 'Why Work at ';
-  const em = createElement('em', undefined, 'Real House');
+  headerTitle.textContent = t('careersPage.whyWorkTitlePrefix');
+  const em = createElement('em', undefined, t('careersPage.whyWorkTitleEmphasis'));
   headerTitle.appendChild(em);
-  headerTitle.appendChild(document.createTextNode('?'));
+  headerTitle.appendChild(document.createTextNode(t('careersPage.whyWorkTitleSuffix')));
   header.appendChild(headerTitle);
-  const headerSubtitle = createElement('p', 'section-subtitle', 'We invest in our people because great teams build great companies');
+  const headerSubtitle = createElement('p', 'section-subtitle', t('careersPage.whyWorkSubtitle'));
   header.appendChild(headerSubtitle);
   container.appendChild(header);
 

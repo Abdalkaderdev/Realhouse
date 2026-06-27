@@ -285,6 +285,12 @@ export interface CoreTranslations {
     luxuryProperties: string;
     allProjects: string;
     contactUs: string;
+    breadcrumbNavigation: string;
+    quickNavigation: string;
+    bedsLabel: string;
+    bathsLabel: string;
+    totalUnitsLabel: string;
+    completionLabel: string;
   };
 
   breadcrumbs: {
@@ -428,6 +434,27 @@ export interface CoreTranslations {
     bathsShort: string;
     viewProperty: string;
     propertyIn: string;
+    specifications: string;
+    propertiesCount: string;
+    mapControls: string;
+    switchToSatellite: string;
+    switchToMap: string;
+    fitAllProperties: string;
+    myLocation: string;
+    showLayers: string;
+    mapLayers: string;
+    layers: string;
+    closeLayersPanel: string;
+    properties: string;
+    projects: string;
+    locationsOfInterest: string;
+    geolocationNotSupported: string;
+    locationDenied: string;
+    locationFailed: string;
+    closePreview: string;
+    mapFailedToLoad: string;
+    mapFailedDescription: string;
+    reloadMap: string;
   };
 
   filters: {
@@ -536,6 +563,7 @@ export interface CoreTranslations {
     disclaimer: string;
     poweredBy: string;
     contactForPrice: string;
+    enterValidPrice: string;
   };
 
   servicesPage: {
@@ -593,6 +621,8 @@ export interface CoreTranslations {
     separator: string;
     whatsApp: string;
     email: string;
+    linkCopiedToClipboard: string;
+    couldNotCopyLink: string;
     // Platform names
     platforms: {
       facebook: string;
@@ -683,6 +713,7 @@ export interface CoreTranslations {
     emailPlaceholder: string;
     phonePlaceholder: string;
     notesPlaceholder: string;
+    saveFailed: string;
   };
 
   modals: {
@@ -707,6 +738,8 @@ export interface CoreTranslations {
     closeVirtualTour: string;
     loading3DTour: string;
     virtualTourInstructions: string;
+    virtualTourOf: string;
+    floorPlanOf: string;
   };
 
   leadCapture: {
@@ -723,6 +756,7 @@ export interface CoreTranslations {
     privacyNote: string;
     scheduleConsultation: string;
     scheduleConsultationAria: string;
+    subscriptionFailed: string;
   };
 
   inquiry: {
@@ -1009,6 +1043,12 @@ export interface CoreTranslations {
     copied: string;
     bestValue: string;
     best: string;
+    tbd: string;
+    whatsApp: string;
+    email: string;
+    whatsAppShareText: string;
+    emailSubject: string;
+    emailBody: string;
   };
 
   compareProjects: {
@@ -1658,6 +1698,25 @@ export interface CoreTranslations {
     closeLightbox: string;
     pageTitle: string;
     pageSubtitle: string;
+  };
+
+  toast: {
+    notifications: string;
+    dismissNotification: string;
+    copiedToClipboard: string;
+    couldNotCopy: string;
+    copied: string;
+  };
+
+  uiStates: {
+    loadingResults: string;
+    loadingDetails: string;
+    loadingMap: string;
+    somethingWentWrong: string;
+    errorDescription: string;
+    tryAgain: string;
+    getHelp: string;
+    imageUnavailable: string;
   };
 }
 

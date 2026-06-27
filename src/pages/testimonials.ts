@@ -20,6 +20,7 @@ import {
   injectBreadcrumbSchema
 } from '../components/internal-linking';
 import { partnerLogos } from '../data/agents';
+import { t } from '../i18n';
 
 // ─── Helpers ──────────────────────────────────────────────────────────────
 function createElement<K extends keyof HTMLElementTagNameMap>(
@@ -35,8 +36,8 @@ function createElement<K extends keyof HTMLElementTagNameMap>(
 
 function getTestimonialsBreadcrumbs() {
   return [
-    { name: 'Home', url: '/' },
-    { name: 'Testimonials', url: '/testimonials' }
+    { name: t('testimonialsPage.breadcrumbHome'), url: '/' },
+    { name: t('testimonialsPage.breadcrumbTestimonials'), url: '/testimonials' }
   ];
 }
 
@@ -67,23 +68,23 @@ function createHero(stats: ReturnType<typeof getTestimonialStats>): HTMLElement 
   // Eyebrow
   const eyebrow = createElement('div', 'testimonials-hero__eyebrow');
   eyebrow.appendChild(createElement('span', 'testimonials-hero__eyebrow-dot'));
-  eyebrow.appendChild(createElement('span', 'testimonials-hero__eyebrow-text', 'Voices of Our Clients'));
+  eyebrow.appendChild(createElement('span', 'testimonials-hero__eyebrow-text', t('testimonialsPage.heroEyebrow')));
   inner.appendChild(eyebrow);
 
   // Title
   const title = createElement('h1', 'testimonials-hero__title');
-  const w1 = createElement('span', 'testimonials-hero__word', 'What');
-  const w2 = createElement('span', 'testimonials-hero__word', 'Our');
+  const w1 = createElement('span', 'testimonials-hero__word', t('testimonialsPage.heroTitleWord1'));
+  const w2 = createElement('span', 'testimonials-hero__word', t('testimonialsPage.heroTitleWord2'));
   const w3 = createElement('span', 'testimonials-hero__word testimonials-hero__word--accent');
-  const accentEm = createElement('em', undefined, 'Clients');
+  const accentEm = createElement('em', undefined, t('testimonialsPage.heroTitleAccent'));
   w3.appendChild(accentEm);
-  const w4 = createElement('span', 'testimonials-hero__word', 'Say');
+  const w4 = createElement('span', 'testimonials-hero__word', t('testimonialsPage.heroTitleWord4'));
   title.append(w1, document.createTextNode(' '), w2, document.createTextNode(' '), w3, document.createTextNode(' '), w4);
   inner.appendChild(title);
 
   // Subtitle
   const subtitle = createElement('p', 'testimonials-hero__subtitle',
-    'A decade of trust, written in the words of the families and investors who built their futures with Real House.');
+    t('testimonialsPage.heroSubtitle'));
   inner.appendChild(subtitle);
 
   // Animated stat overlay

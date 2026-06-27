@@ -61,7 +61,7 @@ function createAgentHeroCard(agent: Agent, index: number): HTMLElement {
   const portraitFrame = createElement('div', 'agent-hero-card__portrait-frame');
   const portraitImage = createElement('img', 'agent-hero-card__image') as HTMLImageElement;
   portraitImage.src = agent.image;
-  portraitImage.alt = `${agent.name}, ${agent.role} at Real House`;
+  portraitImage.alt = t('agentsPage.portraitAlt', { name: agent.name, role: agent.role });
   portraitImage.width = 600;
   portraitImage.height = 800;
   portraitImage.loading = index === 0 ? 'eager' : 'lazy';
@@ -117,7 +117,7 @@ function createAgentHeroCard(agent: Agent, index: number): HTMLElement {
 
   // Languages row
   const langs = createElement('div', 'agent-hero-card__langs');
-  const langLabel = createElement('span', 'agent-hero-card__langs-label', 'Speaks');
+  const langLabel = createElement('span', 'agent-hero-card__langs-label', t('agentsPage.speaks'));
   langs.appendChild(langLabel);
   agent.languages.forEach(lang => {
     const tag = createElement('span', 'agent-hero-card__lang', lang);
@@ -146,7 +146,7 @@ function createAgentHeroCard(agent: Agent, index: number): HTMLElement {
   const callBtn = createElement('a', 'agent-hero-card__action agent-hero-card__action--call');
   callBtn.href = `tel:${agent.phone.replace(/\s/g, '')}`;
   callBtn.appendChild(createSVGUse('icon-phone'));
-  callBtn.appendChild(document.createTextNode('Call'));
+  callBtn.appendChild(document.createTextNode(t('agentsPage.call')));
   actions.appendChild(callBtn);
 
   body.appendChild(actions);
@@ -164,11 +164,11 @@ function buildClientTestimonials(): HTMLElement {
   const section = createElement('section', 'agents-page__voices');
 
   const header = createElement('div', 'agents-page__voices-header');
-  const eyebrow = createElement('span', 'agents-page__voices-eyebrow', 'Client Voices');
+  const eyebrow = createElement('span', 'agents-page__voices-eyebrow', t('agentsPage.voicesEyebrow'));
   header.appendChild(eyebrow);
-  const title = createElement('h2', 'agents-page__voices-title', 'What Our Clients Say');
+  const title = createElement('h2', 'agents-page__voices-title', t('agentsPage.voicesTitle'));
   header.appendChild(title);
-  const sub = createElement('p', 'agents-page__voices-sub', 'Real stories from the people who trusted us to find their next home or investment.');
+  const sub = createElement('p', 'agents-page__voices-sub', t('agentsPage.voicesSub'));
   header.appendChild(sub);
   section.appendChild(header);
 
@@ -204,7 +204,7 @@ function buildClientTestimonials(): HTMLElement {
       const agentTag = createElement('a', 'voice-card__agent');
       agentTag.href = `/agents/${agent.slug}`;
       agentTag.setAttribute('data-route', '');
-      const agentTagLabel = createElement('span', 'voice-card__agent-label', 'via');
+      const agentTagLabel = createElement('span', 'voice-card__agent-label', t('agentsPage.via'));
       const agentTagName = createElement('span', 'voice-card__agent-name', agent.name);
       agentTag.appendChild(agentTagLabel);
       agentTag.appendChild(agentTagName);
@@ -239,20 +239,20 @@ export function renderAgentsPage(): DocumentFragment {
 
   const heroEyebrow = createElement('div', 'agents-page__hero-eyebrow');
   const heroEyebrowLine = createElement('span', 'agents-page__hero-eyebrow-line');
-  const heroEyebrowText = createElement('span', 'agents-page__hero-eyebrow-text', 'Our People');
+  const heroEyebrowText = createElement('span', 'agents-page__hero-eyebrow-text', t('agentsPage.heroEyebrow'));
   heroEyebrow.appendChild(heroEyebrowLine);
   heroEyebrow.appendChild(heroEyebrowText);
   heroInner.appendChild(heroEyebrow);
 
   const heroTitle = createElement('h1', 'agents-page__hero-title');
-  const heroTitleLine1 = createElement('span', 'agents-page__hero-title-line', 'Meet Our');
-  const heroTitleLine2 = createElement('span', 'agents-page__hero-title-line agents-page__hero-title-line--accent', 'Property Experts');
+  const heroTitleLine1 = createElement('span', 'agents-page__hero-title-line', t('agentsPage.heroTitleLine1'));
+  const heroTitleLine2 = createElement('span', 'agents-page__hero-title-line agents-page__hero-title-line--accent', t('agentsPage.heroTitleLine2'));
   heroTitle.appendChild(heroTitleLine1);
   heroTitle.appendChild(heroTitleLine2);
   heroInner.appendChild(heroTitle);
 
   const heroSubtitle = createElement('p', 'agents-page__hero-subtitle',
-    "A small, deliberately curated team. Two senior consultants. A combined fifteen years inside Kurdistan's luxury and investment property market. Personally accountable to every client they take on.");
+    t('agentsPage.heroSubtitle'));
   heroInner.appendChild(heroSubtitle);
 
   // Hero stats inline (trust signal)

@@ -3676,6 +3676,7 @@ export function renderContactPage(): DocumentFragment {
     </span>
     <a href="tel:+9647507922138" itemprop="telephone">+964 750 792 2138</a>
     <a href="tel:+9647514415003" itemprop="telephone">+964 751 441 5003</a>
+    <a href="tel:+9647504455822" itemprop="telephone">+964 750 445 5822</a>
     <a href="mailto:info@realhouseiq.com" itemprop="email">info@realhouseiq.com</a>
     <span itemprop="geo" itemscope itemtype="https://schema.org/GeoCoordinates">
       <meta itemprop="latitude" content="36.1901">
