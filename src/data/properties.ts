@@ -1041,30 +1041,31 @@ Large display windows, double-height ceilings, modern electrical infrastructure,
     agents: [agents[0], agents[1]]
   },
 
-  // ─── Phoenix Tower - Commercial Offices & Stores ────────────────────────────
+  // ─── Phoenix Tower - First Floor Offices (7 units, $10/sqm rent) ────────────
+  // Gross area-based rent. Floor plan dated 13-05-2026.
   {
     id: 'phoenix-tower-office-1',
-    title: 'Phoenix Tower - Corporate Office Suite (180 sqm)',
-    titleKu: 'فینکس تاوەر - ئۆفیس (١٨٠ م٢)',
-    titleAr: 'فينيكس تاور - مكتب (180 م٢)',
+    title: 'Phoenix Tower - Office 1 (168.47 m² gross)',
+    titleKu: 'فینکس تاوەر - ئۆفیس ١ (١٦٨.٤٧ م٢)',
+    titleAr: 'فينيكس تاور - مكتب 1 (168.47 م²)',
     type: 'Commercial',
-    price: 0,
+    price: 1685,
     status: 'For Rent',
-    badges: ['Exclusive', 'New'],
+    badges: ['New', 'Exclusive'],
     location: {
-      address: 'Phoenix Tower, Floor 12',
+      address: 'Phoenix Tower, First Floor - Office 1',
       city: 'Erbil',
       district: 'Central',
       country: 'Iraq',
       coordinates: { lat: 36.1911, lng: 44.0084 },
-      nearbyLandmarks: ['Erbil Citadel', 'Doctors Street', 'Italian Village', 'Empire Diamond']
+      nearbyLandmarks: ['Erbil Citadel', 'Doctors Street', 'Italian Village']
     },
-    specs: { beds: 0, baths: 3, sqm: 180, floor: 12 },
+    specs: { beds: 0, baths: 2, sqm: 168.47, floor: 1 },
     images: ['/images/projects/empire-world/01.jpeg', '/images/projects/empire-world/02.jpeg'],
-    description: `Corporate office suite in Phoenix Tower, a landmark commercial high-rise in central Erbil. This 180 sqm space is configured as 4 private offices + open work area + executive conference room + reception.
+    description: `Premium first-floor office at Phoenix Tower. Office 1 spans 168.47 m² gross (145.90 m² net) with corner positioning, large windows, and direct access to the main lobby core.
 
-Premium amenities include marble lobby access, 6 high-speed elevators, smart building management, premium kitchenette, and stunning city + citadel views. Ideal for legal firms, financial services, consulting, or regional HQ.`,
-    features: ['Citadel Views', 'Private Offices', 'Conference Room', 'Reception Area', 'Smart Building', 'Premium Kitchenette', '6 Elevators', 'Concierge Service', 'Underground Parking'],
+Rent: $10 per m² gross = $1,685/month. The first floor offers premium accessibility, easy client reception, and shared use of the building's mechanical, restroom, and elevator services. Configurable as open plan, partitioned offices, or executive suite.`,
+    features: ['Corner Position', 'Large Windows', 'First Floor Premium', 'Open-Plan Ready', 'Modern Infrastructure', 'Lobby Access', 'Elevator Bank', 'Mechanical Services Included', '$10/m² Gross Rent'],
     isFeatured: true,
     isNew: true,
     neighborhood: { name: 'Central', walkScore: 92, description: 'Erbil\'s historic and commercial heart with embassies, banks, and government offices.' },
@@ -1072,32 +1073,177 @@ Premium amenities include marble lobby access, 6 high-speed elevators, smart bui
     agents: [agents[0], agents[1]]
   },
   {
-    id: 'phoenix-tower-store-1',
-    title: 'Phoenix Tower - Showroom Space (220 sqm)',
-    titleKu: 'فینکس تاوەر - نمایشگا (٢٢٠ م٢)',
-    titleAr: 'فينيكس تاور - معرض (220 م٢)',
+    id: 'phoenix-tower-office-2',
+    title: 'Phoenix Tower - Office 2 (159.54 m² gross)',
+    titleKu: 'فینکس تاوەر - ئۆفیس ٢ (١٥٩.٥٤ م٢)',
+    titleAr: 'فينيكس تاور - مكتب 2 (159.54 م²)',
     type: 'Commercial',
-    price: 0,
+    price: 1595,
     status: 'For Rent',
-    badges: ['Hot', 'Exclusive'],
+    badges: ['New'],
     location: {
-      address: 'Phoenix Tower, Ground & Mezzanine',
+      address: 'Phoenix Tower, First Floor - Office 2',
       city: 'Erbil',
       district: 'Central',
       country: 'Iraq',
-      coordinates: { lat: 36.1909, lng: 44.0082 },
-      nearbyLandmarks: ['Erbil Citadel', 'Doctors Street', 'Main Bazaar']
+      coordinates: { lat: 36.1911, lng: 44.0084 },
+      nearbyLandmarks: ['Erbil Citadel', 'Doctors Street', 'Italian Village']
     },
-    specs: { beds: 0, baths: 2, sqm: 220, floor: 0 },
+    specs: { beds: 0, baths: 2, sqm: 159.54, floor: 1 },
     images: ['/images/projects/empire-world/03.jpeg', '/images/projects/empire-world/04.jpeg'],
-    description: `Two-level showroom space in the iconic Phoenix Tower combining 130 sqm ground floor + 90 sqm mezzanine. Triple-height frontage with floor-to-ceiling glass façade offers unmatched visibility.
+    description: `Spacious first-floor office at Phoenix Tower. Office 2 spans 159.54 m² gross (138.17 m² net) with multiple structural columns providing natural divisions for open-plan or partitioned layouts.
 
-Perfect for luxury car dealerships, high-end furniture, designer fashion, jewelry, or flagship brand stores. Includes internal staircase, freight elevator access, dedicated VIP client parking, and signage rights on the building façade.`,
-    features: ['Triple-Height Frontage', 'Glass Façade', 'Mezzanine Level', 'Signage Rights', 'VIP Parking', 'Freight Elevator', 'Premium Location', 'Showroom-Ready'],
+Rent: $10 per m² gross = $1,595/month. Ideal for professional services, consulting firms, or growing corporate teams. Direct access to building's elevator core and shared services.`,
+    features: ['Spacious Layout', 'Column-Divided', 'First Floor Premium', 'Flexible Floorplan', 'Modern Infrastructure', 'Lobby Access', 'Elevator Bank', 'Mechanical Services Included', '$10/m² Gross Rent'],
     isFeatured: true,
     isNew: true,
     neighborhood: { name: 'Central', walkScore: 92 },
     agent: agents[1],
+    agents: [agents[0], agents[1]]
+  },
+  {
+    id: 'phoenix-tower-office-3',
+    title: 'Phoenix Tower - Office 3 (256.87 m² gross)',
+    titleKu: 'فینکس تاوەر - ئۆفیس ٣ (٢٥٦.٨٧ م٢)',
+    titleAr: 'فينيكس تاور - مكتب 3 (256.87 م²)',
+    type: 'Commercial',
+    price: 2569,
+    status: 'For Rent',
+    badges: ['Hot', 'Exclusive'],
+    location: {
+      address: 'Phoenix Tower, First Floor - Office 3',
+      city: 'Erbil',
+      district: 'Central',
+      country: 'Iraq',
+      coordinates: { lat: 36.1911, lng: 44.0084 },
+      nearbyLandmarks: ['Erbil Citadel', 'Doctors Street', 'Italian Village']
+    },
+    specs: { beds: 0, baths: 3, sqm: 256.87, floor: 1 },
+    images: ['/images/projects/empire-world/05.jpeg', '/images/projects/empire-world/06.jpeg'],
+    description: `Phoenix Tower's largest first-floor office. Office 3 spans 256.87 m² gross (222.46 m² net) - the premier office suite on the floor, suitable for corporate HQ, large law firms, or banking branches.
+
+Rent: $10 per m² gross = $2,569/month. Features expansive open floor plate with multiple window walls, executive corner positioning, and ample room for reception, multiple private offices, conference rooms, and open workstations.`,
+    features: ['Largest First-Floor Office', 'Corner Premium', 'Multiple Window Walls', 'HQ-Ready', 'Conference Room Capacity', 'Executive Reception Ready', 'Lobby Access', 'Mechanical Services Included', '$10/m² Gross Rent'],
+    isFeatured: true,
+    isNew: true,
+    neighborhood: { name: 'Central', walkScore: 92 },
+    agent: agents[0],
+    agents: [agents[0], agents[1]]
+  },
+  {
+    id: 'phoenix-tower-office-4',
+    title: 'Phoenix Tower - Office 4 (104.91 m² gross)',
+    titleKu: 'فینکس تاوەر - ئۆفیس ٤ (١٠٤.٩١ م٢)',
+    titleAr: 'فينيكس تاور - مكتب 4 (104.91 م²)',
+    type: 'Commercial',
+    price: 1049,
+    status: 'For Rent',
+    badges: ['New'],
+    location: {
+      address: 'Phoenix Tower, First Floor - Office 4',
+      city: 'Erbil',
+      district: 'Central',
+      country: 'Iraq',
+      coordinates: { lat: 36.1911, lng: 44.0084 },
+      nearbyLandmarks: ['Erbil Citadel', 'Doctors Street']
+    },
+    specs: { beds: 0, baths: 1, sqm: 104.91, floor: 1 },
+    images: ['/images/projects/empire-world/07.jpeg', '/images/projects/empire-world/08.jpeg'],
+    description: `Compact first-floor office at Phoenix Tower. Office 4 spans 104.91 m² gross (90.86 m² net) - perfect for small to medium professional firms.
+
+Rent: $10 per m² gross = $1,049/month. Efficient layout suitable for boutique law firms, accounting practices, design studios, or startup HQ. Modern infrastructure and shared building services included.`,
+    features: ['Boutique Size', 'Efficient Layout', 'First Floor', 'Modern Infrastructure', 'Lobby Access', 'Elevator Bank', 'Mechanical Services Included', '$10/m² Gross Rent'],
+    isFeatured: false,
+    isNew: true,
+    neighborhood: { name: 'Central', walkScore: 92 },
+    agent: agents[1],
+    agents: [agents[0], agents[1]]
+  },
+  {
+    id: 'phoenix-tower-office-5',
+    title: 'Phoenix Tower - Office 5 (103.00 m² gross)',
+    titleKu: 'فینکس تاوەر - ئۆفیس ٥ (١٠٣ م٢)',
+    titleAr: 'فينيكس تاور - مكتب 5 (103 م²)',
+    type: 'Commercial',
+    price: 1030,
+    status: 'For Rent',
+    badges: ['New'],
+    location: {
+      address: 'Phoenix Tower, First Floor - Office 5',
+      city: 'Erbil',
+      district: 'Central',
+      country: 'Iraq',
+      coordinates: { lat: 36.1911, lng: 44.0084 },
+      nearbyLandmarks: ['Erbil Citadel', 'Doctors Street']
+    },
+    specs: { beds: 0, baths: 1, sqm: 103.00, floor: 1 },
+    images: ['/images/projects/empire-world/09.jpeg', '/images/projects/empire-world/01.jpeg'],
+    description: `Mid-row first-floor office at Phoenix Tower. Office 5 spans 103 m² gross (89.20 m² net) with central first-floor positioning.
+
+Rent: $10 per m² gross = $1,030/month. Ideal for professional services, consulting, financial advisory, or medical/dental practice. Shared building services and modern infrastructure included.`,
+    features: ['Mid-Row Position', 'First Floor', 'Modern Infrastructure', 'Lobby Access', 'Elevator Bank', 'Flexible Layout', 'Mechanical Services Included', '$10/m² Gross Rent'],
+    isFeatured: false,
+    isNew: true,
+    neighborhood: { name: 'Central', walkScore: 92 },
+    agent: agents[0],
+    agents: [agents[0], agents[1]]
+  },
+  {
+    id: 'phoenix-tower-office-6',
+    title: 'Phoenix Tower - Office 6 (101.11 m² gross)',
+    titleKu: 'فینکس تاوەر - ئۆفیس ٦ (١٠١.١١ م٢)',
+    titleAr: 'فينيكس تاور - مكتب 6 (101.11 م²)',
+    type: 'Commercial',
+    price: 1011,
+    status: 'For Rent',
+    badges: ['New'],
+    location: {
+      address: 'Phoenix Tower, First Floor - Office 6',
+      city: 'Erbil',
+      district: 'Central',
+      country: 'Iraq',
+      coordinates: { lat: 36.1911, lng: 44.0084 },
+      nearbyLandmarks: ['Erbil Citadel', 'Doctors Street']
+    },
+    specs: { beds: 0, baths: 1, sqm: 101.11, floor: 1 },
+    images: ['/images/projects/empire-world/02.jpeg', '/images/projects/empire-world/03.jpeg'],
+    description: `Mid-row first-floor office at Phoenix Tower. Office 6 spans 101.11 m² gross (87.57 m² net) - the most affordable office on the floor at full lease.
+
+Rent: $10 per m² gross = $1,011/month. Practical efficient layout ideal for tech startups, freelance professionals, small consulting practices, or satellite offices. Shared services included.`,
+    features: ['Most Affordable On Floor', 'First Floor', 'Modern Infrastructure', 'Efficient Layout', 'Lobby Access', 'Elevator Bank', 'Mechanical Services Included', '$10/m² Gross Rent'],
+    isFeatured: false,
+    isNew: true,
+    neighborhood: { name: 'Central', walkScore: 92 },
+    agent: agents[1],
+    agents: [agents[0], agents[1]]
+  },
+  {
+    id: 'phoenix-tower-office-7',
+    title: 'Phoenix Tower - Office 7 (104.91 m² gross)',
+    titleKu: 'فینکس تاوەر - ئۆفیس ٧ (١٠٤.٩١ م٢)',
+    titleAr: 'فينيكس تاور - مكتب 7 (104.91 م²)',
+    type: 'Commercial',
+    price: 1049,
+    status: 'For Rent',
+    badges: ['New'],
+    location: {
+      address: 'Phoenix Tower, First Floor - Office 7',
+      city: 'Erbil',
+      district: 'Central',
+      country: 'Iraq',
+      coordinates: { lat: 36.1911, lng: 44.0084 },
+      nearbyLandmarks: ['Erbil Citadel', 'Doctors Street']
+    },
+    specs: { beds: 0, baths: 1, sqm: 104.91, floor: 1 },
+    images: ['/images/projects/empire-world/04.jpeg', '/images/projects/empire-world/05.jpeg'],
+    description: `Compact corner first-floor office at Phoenix Tower. Office 7 spans 104.91 m² gross (90.86 m² net) with end-of-row corner positioning offering additional natural light.
+
+Rent: $10 per m² gross = $1,049/month. End corner location ideal for client-facing businesses, design studios, or boutique professional services seeking premium light. Modern infrastructure included.`,
+    features: ['End Corner Position', 'Premium Natural Light', 'First Floor', 'Modern Infrastructure', 'Lobby Access', 'Elevator Bank', 'Mechanical Services Included', '$10/m² Gross Rent'],
+    isFeatured: false,
+    isNew: true,
+    neighborhood: { name: 'Central', walkScore: 92 },
+    agent: agents[0],
     agents: [agents[0], agents[1]]
   },
 
