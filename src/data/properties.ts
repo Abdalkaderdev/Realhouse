@@ -1061,7 +1061,7 @@ Large display windows, double-height ceilings, modern electrical infrastructure,
       nearbyLandmarks: ['Erbil Citadel', 'Doctors Street', 'Italian Village']
     },
     specs: { beds: 0, baths: 2, sqm: 168.47, floor: 1 },
-    images: ['/images/projects/empire-world/01.jpeg', '/images/projects/empire-world/02.jpeg'],
+    images: ['/images/projects/phoenix-tower/tower-fullview.jpg', '/images/projects/phoenix-tower/tower-front.jpg'],
     description: `Premium first-floor office at Phoenix Tower. Office 1 spans 168.47 m² gross (145.90 m² net) with corner positioning, large windows, and direct access to the main lobby core.
 
 Rent: $10 per m² gross = $1,685/month. The first floor offers premium accessibility, easy client reception, and shared use of the building's mechanical, restroom, and elevator services. Configurable as open plan, partitioned offices, or executive suite.`,
@@ -1090,7 +1090,7 @@ Rent: $10 per m² gross = $1,685/month. The first floor offers premium accessibi
       nearbyLandmarks: ['Erbil Citadel', 'Doctors Street', 'Italian Village']
     },
     specs: { beds: 0, baths: 2, sqm: 159.54, floor: 1 },
-    images: ['/images/projects/empire-world/03.jpeg', '/images/projects/empire-world/04.jpeg'],
+    images: ['/images/projects/phoenix-tower/tower-night.jpg', '/images/projects/phoenix-tower/tower-aerial.jpg'],
     description: `Spacious first-floor office at Phoenix Tower. Office 2 spans 159.54 m² gross (138.17 m² net) with multiple structural columns providing natural divisions for open-plan or partitioned layouts.
 
 Rent: $10 per m² gross = $1,595/month. Ideal for professional services, consulting firms, or growing corporate teams. Direct access to building's elevator core and shared services.`,
@@ -1119,7 +1119,7 @@ Rent: $10 per m² gross = $1,595/month. Ideal for professional services, consult
       nearbyLandmarks: ['Erbil Citadel', 'Doctors Street', 'Italian Village']
     },
     specs: { beds: 0, baths: 3, sqm: 256.87, floor: 1 },
-    images: ['/images/projects/empire-world/05.jpeg', '/images/projects/empire-world/06.jpeg'],
+    images: ['/images/projects/phoenix-tower/tower-sunset.jpg', '/images/projects/phoenix-tower/tower-roofline.jpg'],
     description: `Phoenix Tower's largest first-floor office. Office 3 spans 256.87 m² gross (222.46 m² net) - the premier office suite on the floor, suitable for corporate HQ, large law firms, or banking branches.
 
 Rent: $10 per m² gross = $2,569/month. Features expansive open floor plate with multiple window walls, executive corner positioning, and ample room for reception, multiple private offices, conference rooms, and open workstations.`,
@@ -1148,7 +1148,7 @@ Rent: $10 per m² gross = $2,569/month. Features expansive open floor plate with
       nearbyLandmarks: ['Erbil Citadel', 'Doctors Street']
     },
     specs: { beds: 0, baths: 1, sqm: 104.91, floor: 1 },
-    images: ['/images/projects/empire-world/07.jpeg', '/images/projects/empire-world/08.jpeg'],
+    images: ['/images/projects/phoenix-tower/tower-street.jpg', '/images/projects/phoenix-tower/tower-lookup.jpg'],
     description: `Compact first-floor office at Phoenix Tower. Office 4 spans 104.91 m² gross (90.86 m² net) - perfect for small to medium professional firms.
 
 Rent: $10 per m² gross = $1,049/month. Efficient layout suitable for boutique law firms, accounting practices, design studios, or startup HQ. Modern infrastructure and shared building services included.`,
@@ -1177,7 +1177,7 @@ Rent: $10 per m² gross = $1,049/month. Efficient layout suitable for boutique l
       nearbyLandmarks: ['Erbil Citadel', 'Doctors Street']
     },
     specs: { beds: 0, baths: 1, sqm: 103.00, floor: 1 },
-    images: ['/images/projects/empire-world/09.jpeg', '/images/projects/empire-world/01.jpeg'],
+    images: ['/images/projects/phoenix-tower/park-aerial.jpg', '/images/projects/phoenix-tower/skyline-aerial.jpg'],
     description: `Mid-row first-floor office at Phoenix Tower. Office 5 spans 103 m² gross (89.20 m² net) with central first-floor positioning.
 
 Rent: $10 per m² gross = $1,030/month. Ideal for professional services, consulting, financial advisory, or medical/dental practice. Shared building services and modern infrastructure included.`,
@@ -1206,7 +1206,7 @@ Rent: $10 per m² gross = $1,030/month. Ideal for professional services, consult
       nearbyLandmarks: ['Erbil Citadel', 'Doctors Street']
     },
     specs: { beds: 0, baths: 1, sqm: 101.11, floor: 1 },
-    images: ['/images/projects/empire-world/02.jpeg', '/images/projects/empire-world/03.jpeg'],
+    images: ['/images/projects/phoenix-tower/tiltshift-aerial.jpg', '/images/projects/phoenix-tower/tower-fullview.jpg'],
     description: `Mid-row first-floor office at Phoenix Tower. Office 6 spans 101.11 m² gross (87.57 m² net) - the most affordable office on the floor at full lease.
 
 Rent: $10 per m² gross = $1,011/month. Practical efficient layout ideal for tech startups, freelance professionals, small consulting practices, or satellite offices. Shared services included.`,
@@ -1235,7 +1235,7 @@ Rent: $10 per m² gross = $1,011/month. Practical efficient layout ideal for tec
       nearbyLandmarks: ['Erbil Citadel', 'Doctors Street']
     },
     specs: { beds: 0, baths: 1, sqm: 104.91, floor: 1 },
-    images: ['/images/projects/empire-world/04.jpeg', '/images/projects/empire-world/05.jpeg'],
+    images: ['/images/projects/phoenix-tower/tower-aerial.jpg', '/images/projects/phoenix-tower/tower-night.jpg'],
     description: `Compact corner first-floor office at Phoenix Tower. Office 7 spans 104.91 m² gross (90.86 m² net) with end-of-row corner positioning offering additional natural light.
 
 Rent: $10 per m² gross = $1,049/month. End corner location ideal for client-facing businesses, design studios, or boutique professional services seeking premium light. Modern infrastructure included.`,
