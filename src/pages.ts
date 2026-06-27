@@ -872,9 +872,34 @@ function createPropertyCard(property: Property): HTMLElement {
   // Use article element for self-contained property listing
   const card = createElement('article', 'property-card');
   card.setAttribute('data-id', property.id);
+  card.setAttribute('role', 'link');
+  card.setAttribute('tabindex', '0');
+  card.style.cursor = 'pointer';
   // Add structured data attributes for SEO
   card.setAttribute('itemscope', '');
   card.setAttribute('itemtype', 'https://schema.org/RealEstateListing');
+
+  // Whole-card click navigates to property detail (interactive children stopPropagation)
+  const navigateToProperty = () => {
+    const url = `/properties/${property.id}`;
+    history.pushState({}, '', url);
+    window.dispatchEvent(new PopStateEvent('popstate'));
+  };
+  card.addEventListener('click', (e) => {
+    const t = e.target as HTMLElement;
+    // Skip if click came from inside a button or link (they handle their own action)
+    if (t.closest('button, a, .property-card__favorite, .property-card__carousel-btn, .property-card__dot')) return;
+    e.preventDefault();
+    navigateToProperty();
+  });
+  card.addEventListener('keydown', (e) => {
+    if (e.key === 'Enter' || e.key === ' ') {
+      const t = e.target as HTMLElement;
+      if (t.closest('button, a')) return;
+      e.preventDefault();
+      navigateToProperty();
+    }
+  });
 
   // Media section with figure element for semantic markup
   const media = createElement('figure', 'property-card__media');
