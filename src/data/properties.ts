@@ -299,58 +299,6 @@ export const properties: Property[] = [
 
   // Queen Towers - Commercial Stores
   {
-    id: 'queen-towers-store-1',
-    title: 'Queen Towers - Commercial Store (128 sqm)',
-    titleKu: 'کوین تاوەرز - دوکان (١٢٨ م٢)',
-    titleAr: 'كوين تاورز - محل تجاري (128 م٢)',
-    type: 'Commercial',
-    price: 0,
-    status: 'For Rent',
-    badges: ['Hot', 'Exclusive'],
-    location: {
-      address: 'Queen Towers, Ground Floor',
-      city: 'Erbil',
-      district: 'Gulan',
-      country: 'Iraq',
-      coordinates: { lat: 36.2120, lng: 44.0150 },
-      nearbyLandmarks: ['Erbil International Hotel', 'Sami Abdulrahman Park', '100 Meter Road', 'Ankawa']
-    },
-    specs: {
-      beds: 0,
-      baths: 1,
-      sqm: 128,
-      floor: 0
-    },
-    images: [
-      '/images/properties/queen-towers-store/1.jpg',
-      '/images/properties/queen-towers-store/2.jpg'
-    ],
-    description: `Prime commercial space available for rent in Queen Towers, one of Erbil's most prestigious mixed-use developments. This 128 sqm store offers excellent visibility and foot traffic.
-
-Features include high ceilings, large display windows, modern electrical and plumbing infrastructure, and flexible layout suitable for retail, restaurant, or office use. The location benefits from the tower's residential and office tenants as built-in customers.
-
-Contact us for rental pricing and available lease terms.`,
-    features: [
-      'Prime Location',
-      'High Foot Traffic',
-      'Large Display Windows',
-      'High Ceilings',
-      'Flexible Layout',
-      'Modern Infrastructure',
-      '24/7 Security',
-      'Ample Parking'
-    ],
-    isFeatured: true,
-    isNew: true,
-    neighborhood: {
-      name: 'Gulan',
-      walkScore: 90,
-      description: 'High-traffic commercial area with excellent visibility and access.'
-    },
-    agent: agents[2],
-    agents: [agents[0], agents[1], agents[2]]
-  },
-  {
     id: 'queen-towers-store-2',
     title: 'Queen Towers - Commercial Store (81 sqm)',
     titleKu: 'کوین تاوەرز - دوکان (٨١ م٢)',
@@ -1167,7 +1115,10 @@ The building hosts 12 active medical clinics generating high prescription volume
   }
 ];
 
-export const featuredProperties = properties.filter(p => p.isFeatured);
+export const featuredProperties = properties
+  .filter(p => p.isFeatured)
+  // Show newest listings first (Phoenix Tower offices, etc.)
+  .sort((a, b) => Number(b.isNew ?? 0) - Number(a.isNew ?? 0));
 
 export function formatPrice(price: number, currency: 'USD' | 'IQD' = 'USD'): string {
   if (currency === 'IQD') {
