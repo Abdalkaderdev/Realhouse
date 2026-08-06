@@ -264,6 +264,12 @@ export const en: CoreTranslations = {
     luxuryProperties: 'Luxury Properties',
     allProjects: 'All Projects',
     contactUs: 'Contact Us',
+    breadcrumbNavigation: 'Breadcrumb navigation',
+    quickNavigation: 'Quick navigation',
+    bedsLabel: 'Beds',
+    bathsLabel: 'Baths',
+    totalUnitsLabel: 'Total units',
+    completionLabel: 'Completion',
   },
 
   breadcrumbs: {
@@ -594,6 +600,8 @@ export const en: CoreTranslations = {
     separator: ' | ',
     whatsApp: 'WhatsApp',
     email: 'Email',
+    linkCopiedToClipboard: 'Link copied to clipboard',
+    couldNotCopyLink: 'Could not copy link',
     // Platform names
     platforms: {
       facebook: 'Facebook',
@@ -709,6 +717,8 @@ export const en: CoreTranslations = {
     closeVirtualTour: 'Close virtual tour',
     loading3DTour: 'Loading 3D Tour...',
     virtualTourInstructions: 'Use mouse to look around. Click and drag to navigate. Scroll to zoom.',
+    virtualTourOf: 'Virtual tour of {{title}}',
+    floorPlanOf: 'Floor plan of {{title}}',
   },
 
   leadCapture: {
@@ -725,6 +735,7 @@ export const en: CoreTranslations = {
     privacyNote: 'We respect your privacy. Unsubscribe at any time.',
     scheduleConsultation: 'Schedule Consultation',
     scheduleConsultationAria: 'Schedule a free consultation',
+    subscriptionFailed: 'We could not save your subscription right now. Please check your browser privacy settings and try again.',
   },
 
   inquiry: {
@@ -951,6 +962,12 @@ export const en: CoreTranslations = {
     copied: 'Copied!',
     bestValue: 'Best Value',
     best: 'Best',
+    tbd: 'TBD',
+    whatsApp: 'WhatsApp',
+    email: 'Email',
+    whatsAppShareText: 'Check out these projects on Real House',
+    emailSubject: 'Project comparison',
+    emailBody: 'I would like to compare these projects',
   },
 
   projectInquiry: {
@@ -1656,5 +1673,24 @@ export const en: CoreTranslations = {
     closeLightbox: 'Close lightbox',
     pageTitle: 'Property Erbil Gallery',
     pageSubtitle: 'Browse stunning photos of luxury homes Kurdistan, villas Erbil Iraq, apartments Erbil Iraq, and penthouse Erbil. High-quality images showcasing the finest real estate Erbil.',
+  },
+
+  toast: {
+    notifications: 'Notifications',
+    dismissNotification: 'Dismiss notification',
+    copiedToClipboard: 'Copied to clipboard',
+    couldNotCopy: 'Could not copy',
+    copied: 'Copied',
+  },
+
+  uiStates: {
+    loadingResults: 'Loading results...',
+    loadingDetails: 'Loading details...',
+    loadingMap: 'Loading map...',
+    somethingWentWrong: 'Something went wrong',
+    errorDescription: 'We could not load this. Please try again.',
+    tryAgain: 'Try again',
+    getHelp: 'Get help',
+    imageUnavailable: 'Image unavailable',
   },
 };

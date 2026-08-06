@@ -90,9 +90,9 @@ function createHero(stats: ReturnType<typeof getTestimonialStats>): HTMLElement 
   // Animated stat overlay
   const overlay = createElement('div', 'testimonials-hero__stats');
   const heroStats = [
-    { value: 1000, suffix: '+', label: 'Happy Clients' },
-    { value: stats.averageRating, suffix: '', label: 'Avg Rating', decimal: true },
-    { value: stats.satisfactionPercentage, suffix: '%', label: 'Recommend' }
+    { value: 1000, suffix: '+', label: t('testimonialsPage.heroStatHappyClients') },
+    { value: stats.averageRating, suffix: '', label: t('testimonialsPage.heroStatAvgRating'), decimal: true },
+    { value: stats.satisfactionPercentage, suffix: '%', label: t('testimonialsPage.heroStatRecommend') }
   ];
 
   heroStats.forEach((stat, i) => {
@@ -117,7 +117,7 @@ function createHero(stats: ReturnType<typeof getTestimonialStats>): HTMLElement 
   // Scroll indicator
   const scroll = createElement('div', 'testimonials-hero__scroll');
   scroll.appendChild(createElement('span', 'testimonials-hero__scroll-line'));
-  scroll.appendChild(createElement('span', 'testimonials-hero__scroll-text', 'Scroll'));
+  scroll.appendChild(createElement('span', 'testimonials-hero__scroll-text', t('testimonialsPage.scrollIndicator')));
   inner.appendChild(scroll);
 
   hero.appendChild(inner);
@@ -140,7 +140,7 @@ function createFeaturedTestimonial(testimonial: Testimonial, featuredList: Testi
 
   const label = createElement('div', 'testimonials-featured__label');
   label.appendChild(createElement('span', 'testimonials-featured__label-line'));
-  label.appendChild(createElement('span', 'testimonials-featured__label-text', 'Featured Story'));
+  label.appendChild(createElement('span', 'testimonials-featured__label-text', t('testimonialsPage.featuredStoryLabel')));
   header.appendChild(label);
 
   // Navigation (only when we have more than one featured story)

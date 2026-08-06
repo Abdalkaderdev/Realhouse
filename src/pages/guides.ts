@@ -14,6 +14,7 @@ import {
   injectBreadcrumbSchema,
   type BreadcrumbItem
 } from '../components/internal-linking';
+import { t } from '../i18n';
 
 // --- Helper Functions ---
 function createElement<K extends keyof HTMLElementTagNameMap>(
@@ -101,8 +102,8 @@ function parseGuideContent(htmlContent: string): DocumentFragment {
 // --- Breadcrumb Helpers ---
 function getGuideBreadcrumbs(guide: Guide): BreadcrumbItem[] {
   return [
-    { name: 'Home', url: '/' },
-    { name: 'Guides', url: '/guides' },
+    { name: t('guidesPage.breadcrumbHome'), url: '/' },
+    { name: t('guidesPage.breadcrumbGuides'), url: '/guides' },
     { name: guide.title, url: `/guides/${guide.slug}` }
   ];
 }

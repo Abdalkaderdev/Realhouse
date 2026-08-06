@@ -399,7 +399,7 @@ export function renderBlogPage(): DocumentFragment {
     const featuredSection = createElement('section', 'blog-page__featured');
 
     const featuredHeader = createElement('div', 'blog-page__section-head');
-    const featuredKicker = createElement('span', 'blog-page__kicker', '— Editor’s Selection');
+    const featuredKicker = createElement('span', 'blog-page__kicker', t('blogPage.featuredKicker'));
     featuredHeader.appendChild(featuredKicker);
     const featuredTitle = createElement('h2', 'blog-page__section-title', t('blog.featuredArticles'));
     featuredHeader.appendChild(featuredTitle);
@@ -457,7 +457,7 @@ export function renderBlogPage(): DocumentFragment {
   // All posts section
   const postsSection = createElement('section', 'blog-page__posts');
   const postsHeader = createElement('div', 'blog-page__section-head');
-  const postsKicker = createElement('span', 'blog-page__kicker', '— The Library');
+  const postsKicker = createElement('span', 'blog-page__kicker', t('blogPage.libraryKicker'));
   postsHeader.appendChild(postsKicker);
   const postsTitle = createElement('h2', 'blog-page__section-title', t('blog.allArticles'));
   postsHeader.appendChild(postsTitle);
@@ -474,11 +474,11 @@ export function renderBlogPage(): DocumentFragment {
   // Newsletter signup — editorial style
   const ctaSection = createElement('section', 'blog-newsletter');
   const ctaInner = createElement('div', 'blog-newsletter__inner');
-  const ctaKicker = createElement('div', 'blog-newsletter__kicker', '— Dispatch');
+  const ctaKicker = createElement('div', 'blog-newsletter__kicker', t('blogPage.dispatchKicker'));
   ctaInner.appendChild(ctaKicker);
   const ctaTitle = createElement('h2', 'blog-newsletter__title');
-  ctaTitle.textContent = 'The ';
-  const ctaEm = createElement('em', undefined, 'Erbil Brief');
+  ctaTitle.textContent = t('blogPage.newsletterTitlePrefix');
+  const ctaEm = createElement('em', undefined, t('blogPage.newsletterTitleEm'));
   ctaTitle.appendChild(ctaEm);
   ctaInner.appendChild(ctaTitle);
   const ctaText = createElement('p', 'blog-newsletter__text', t('blog.stayUpdatedText'));

@@ -371,9 +371,9 @@ export function renderAgentProfilePage(slug: string): DocumentFragment {
   // ─── Specialties Section ───
   const specSection = createElement('div', 'agent-profile__section');
   const specHeader = createElement('div', 'agent-profile__section-header');
-  const specEyebrow = createElement('span', 'agent-profile__section-eyebrow', '02 · Expertise');
+  const specEyebrow = createElement('span', 'agent-profile__section-eyebrow', t('agentProfile.sectionEyebrow02'));
   specHeader.appendChild(specEyebrow);
-  const specTitle = createElement('h2', 'agent-profile__section-title', 'Specialties');
+  const specTitle = createElement('h2', 'agent-profile__section-title', t('agentProfile.specialties'));
   specHeader.appendChild(specTitle);
   specSection.appendChild(specHeader);
 
@@ -391,7 +391,7 @@ export function renderAgentProfilePage(slug: string): DocumentFragment {
 
   // Featured areas inline
   const areasBlock = createElement('div', 'agent-profile__areas-block');
-  const areasLabel = createElement('span', 'agent-profile__areas-label', 'Active in');
+  const areasLabel = createElement('span', 'agent-profile__areas-label', t('agentProfile.activeIn'));
   areasBlock.appendChild(areasLabel);
   const areasTags = createElement('div', 'agent-profile__areas-tags');
   agent.featuredAreas.forEach(area => {
@@ -407,9 +407,9 @@ export function renderAgentProfilePage(slug: string): DocumentFragment {
   if (agent.certifications.length > 0 || agent.awards.length > 0) {
     const credSection = createElement('div', 'agent-profile__section');
     const credHeader = createElement('div', 'agent-profile__section-header');
-    const credEyebrow = createElement('span', 'agent-profile__section-eyebrow', '03 · Credentials');
+    const credEyebrow = createElement('span', 'agent-profile__section-eyebrow', t('agentProfile.sectionEyebrow03'));
     credHeader.appendChild(credEyebrow);
-    const credTitle = createElement('h2', 'agent-profile__section-title', 'Certifications & Awards');
+    const credTitle = createElement('h2', 'agent-profile__section-title', t('agentProfile.certificationsAndAwards'));
     credHeader.appendChild(credTitle);
     credSection.appendChild(credHeader);
 

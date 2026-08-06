@@ -259,10 +259,10 @@ export function renderAgentsPage(): DocumentFragment {
   const stats = getAgentStats();
   const heroStats = createElement('div', 'agents-page__hero-stats');
   const heroStatsItems = [
-    { value: `${stats.totalSales}+`, label: 'Properties Closed' },
-    { value: formatSalesVolume(stats.totalVolume), label: 'In Total Sales' },
-    { value: `${stats.avgExperience}+`, label: 'Years Avg Experience' },
-    { value: '4.9', label: 'Client Rating' }
+    { value: `${stats.totalSales}+`, label: t('agentsPage.statPropertiesClosed') },
+    { value: formatSalesVolume(stats.totalVolume), label: t('agentsPage.statInTotalSales') },
+    { value: `${stats.avgExperience}+`, label: t('agentsPage.statYearsAvgExperience') },
+    { value: '4.9', label: t('agentsPage.statClientRating') }
   ];
   heroStatsItems.forEach((stat, i) => {
     const item = createElement('div', 'agents-page__hero-stat');
@@ -290,9 +290,9 @@ export function renderAgentsPage(): DocumentFragment {
   const consultantsContainer = createElement('div', 'container');
 
   const consultantsHeader = createElement('div', 'agents-page__consultants-header');
-  const consultantsEyebrow = createElement('span', 'agents-page__consultants-eyebrow', 'The Team');
+  const consultantsEyebrow = createElement('span', 'agents-page__consultants-eyebrow', t('agentsPage.consultantsEyebrow'));
   consultantsHeader.appendChild(consultantsEyebrow);
-  const consultantsTitle = createElement('h2', 'agents-page__consultants-title', 'Senior Consultants');
+  const consultantsTitle = createElement('h2', 'agents-page__consultants-title', t('agentsPage.consultantsTitle'));
   consultantsHeader.appendChild(consultantsTitle);
   consultantsContainer.appendChild(consultantsHeader);
 
@@ -320,10 +320,10 @@ export function renderAgentsPage(): DocumentFragment {
   const trustInner = createElement('div', 'agents-page__trust-inner');
 
   const trustItems = [
-    { icon: 'icon-shield', value: '100%', label: 'Licensed & Verified' },
-    { icon: 'icon-award', value: '12+', label: 'Industry Awards' },
-    { icon: 'icon-users', value: '325+', label: 'Happy Clients' },
-    { icon: 'icon-clock', value: '< 2hr', label: 'Avg Response Time' }
+    { icon: 'icon-shield', value: '100%', label: t('agentsPage.trustLicensedVerified') },
+    { icon: 'icon-award', value: '12+', label: t('agentsPage.trustIndustryAwards') },
+    { icon: 'icon-users', value: '325+', label: t('agentsPage.trustHappyClients') },
+    { icon: 'icon-clock', value: '< 2hr', label: t('agentsPage.trustAvgResponseTime') }
   ];
   trustItems.forEach(item => {
     const trustCard = createElement('div', 'agents-page__trust-card');

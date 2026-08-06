@@ -259,11 +259,11 @@ function createCultureSection(): HTMLElement {
 
   const header = createElement('div', 'section-header');
   const headerTitle = createElement('h2', 'section-title');
-  headerTitle.textContent = 'Our ';
-  const em = createElement('em', undefined, 'Culture');
+  headerTitle.textContent = t('careersPage.cultureTitlePrefix');
+  const em = createElement('em', undefined, t('careersPage.cultureTitleEmphasis'));
   headerTitle.appendChild(em);
   header.appendChild(headerTitle);
-  const headerSubtitle = createElement('p', 'section-subtitle', 'The values that guide everything we do');
+  const headerSubtitle = createElement('p', 'section-subtitle', t('careersPage.cultureSubtitle'));
   header.appendChild(headerSubtitle);
   container.appendChild(header);
 
@@ -309,12 +309,12 @@ function createCultureSection(): HTMLElement {
   // Team philosophy block
   const teamSection = createElement('div', 'careers-culture__team');
   const teamContent = createElement('div', 'careers-culture__team-content');
-  const teamEyebrow = createElement('span', 'careers-culture__team-eyebrow', 'The team');
+  const teamEyebrow = createElement('span', 'careers-culture__team-eyebrow', t('careersPage.teamEyebrow'));
   teamContent.appendChild(teamEyebrow);
-  const teamTitle = createElement('h3', undefined, 'A winning team, not a winner-takes-all one.');
+  const teamTitle = createElement('h3', undefined, t('careersPage.teamTitle'));
   teamContent.appendChild(teamTitle);
   const teamDesc = createElement('p', undefined,
-    'At Real House, we genuinely believe in a collaborative, inclusive workplace where every team member can thrive. Our people come from real estate, marketing, technology, and customer service — and we win when they all win.'
+    t('careersPage.teamDescription')
   );
   teamContent.appendChild(teamDesc);
   teamSection.appendChild(teamContent);

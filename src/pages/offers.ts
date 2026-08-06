@@ -22,6 +22,7 @@ import {
   createInternalCTA,
   type BreadcrumbItem
 } from '../components/internal-linking';
+import { t } from '../i18n';
 
 // ─── Helper Functions ─────────────────────────────────────────────────────
 function createElement<K extends keyof HTMLElementTagNameMap>(
