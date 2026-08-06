@@ -1255,6 +1255,11 @@ em {
     object-position: center;
   }
 
+  &__video {
+    object-fit: cover;
+    object-position: center;
+  }
+
   &__overlay {
     position: absolute;
     top: 0;

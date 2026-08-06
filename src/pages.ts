@@ -1147,42 +1147,19 @@ export function renderHomePage(): DocumentFragment {
   hero.id = 'hero';
   hero.setAttribute('aria-label', t('homePage.heroAriaLabel'));
 
-  // Hero Slideshow Background - Kark aerials (clean, watermark-free)
-  // (Reverted from video which had branding watermarks baked in.)
-  const heroImages = [
-    { src: '/images/lands/kark/aerial-01.jpeg', alt: 'Kark land aerial view' },
-    { src: '/images/lands/kark/aerial-02.jpeg', alt: 'Kark development from above' },
-    { src: '/images/lands/kark/aerial-05.jpeg', alt: 'Kark plots infrastructure' },
-    { src: '/images/lands/kark/aerial-06.jpeg', alt: 'Kark district panorama' },
-  ];
-
-  const heroBackground = createElement('div', 'hero__background hero__slideshow');
-  heroBackground.setAttribute('aria-hidden', 'true');
-  const slides: HTMLImageElement[] = [];
-  heroImages.forEach((img, index) => {
-    const heroImage = document.createElement('img');
-    heroImage.src = img.src;
-    heroImage.alt = img.alt;
-    heroImage.className = `hero__image hero__slide${index === 0 ? ' hero__slide--active' : ''}`;
-    heroImage.width = 1920;
-    heroImage.height = 1080;
-    heroImage.loading = index === 0 ? 'eager' : 'lazy';
-    heroBackground.appendChild(heroImage);
-    slides.push(heroImage);
-  });
-  hero.appendChild(heroBackground);
-
-  // Auto-rotate slides every 6 seconds (opacity fade via CSS .hero__slide--active)
-  let currentSlideIndex = 0;
-  const slideInterval = setInterval(() => {
-    if (!document.getElementById('hero')) {
-      clearInterval(slideInterval);
-      return;
-    }
-    slides[currentSlideIndex].classList.remove('hero__slide--active');
-    currentSlideIndex = (currentSlideIndex + 1) % slides.length;
-    slides[currentSlideIndex].classList.add('hero__slide--active');
-  }, 6000);
+  // Hero video background (same aerial tour used in the Kark showcase).
+  const heroVideo = document.createElement('video');
+  heroVideo.className = 'hero__background hero__video';
+  heroVideo.src = '/videos/kark-hero.mp4';
+  heroVideo.autoplay = true;
+  heroVideo.muted = true;
+  heroVideo.loop = true;
+  heroVideo.playsInline = true;
+  heroVideo.setAttribute('aria-hidden', 'true');
+  heroVideo.poster = '/images/lands/kark/aerial-01.jpeg';
+  hero.appendChild(heroVideo);
+  hero.appendChild(createVideoSoundButton(heroVideo));
+  hero.appendChild(createVideoFullscreenButton(heroVideo));
 
   const heroOverlay = createElement('div', 'hero__overlay');
   heroOverlay.setAttribute('aria-hidden', 'true');
