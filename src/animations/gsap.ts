@@ -26,6 +26,7 @@ const EASES = {
 };
 
 // ─── Loader Animations ────────────────────────────────────────────────────
+// Fast loader to avoid covering the hero video with the "eye line" logo.
 export function animateLoader(): Promise<void> {
   return new Promise((resolve) => {
     const loader = document.getElementById('loader');
@@ -38,32 +39,30 @@ export function animateLoader(): Promise<void> {
       return;
     }
 
-    const tl = gsap.timeline({
-      onComplete: resolve
-    });
+    const tl = gsap.timeline({ onComplete: resolve });
 
-    // Animate logo SVG lines (draw effect)
+    // Fast logo draw
     if (logoLines && logoLines.length > 0) {
       tl.to(logoLines, {
         strokeDashoffset: 0,
-        duration: 1,
-        stagger: 0.15,
+        duration: 0.35,
+        stagger: 0.05,
         ease: EASES.luxury
       });
     }
 
-    // Animate progress bar and counter
+    // Jump the counter/progress fast so hero appears quickly
     const counterObj = { value: 0 };
     tl.to(counterObj, {
       value: 100,
-      duration: 2,
-      ease: 'power2.inOut',
+      duration: 0.4,
+      ease: 'power2.out',
       onUpdate: () => {
         const v = Math.round(counterObj.value);
         if (counter) counter.textContent = `${v}%`;
         gsap.set(progressBar, { scaleX: v / 100 });
       }
-    }, '-=0.5');
+    }, '-=0.15');
   });
 }
 
@@ -75,19 +74,12 @@ export function hideLoader(): Promise<void> {
       return;
     }
 
-    const content = loader.querySelector('.loader__content');
-
+    // Fast fade + immediate hide so it doesn't linger over the hero video.
     gsap.timeline({ onComplete: resolve })
-      .to(content, {
-        opacity: 0,
-        y: -30,
-        duration: 0.5,
-        ease: EASES.luxury
-      })
       .to(loader, {
-        clipPath: 'inset(0% 0% 100% 0%)',
-        duration: 1,
-        ease: 'power4.inOut'
+        opacity: 0,
+        duration: 0.25,
+        ease: 'power2.out'
       })
       .set(loader, { display: 'none' });
   });
