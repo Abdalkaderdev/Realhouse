@@ -14,15 +14,16 @@
   width: 100%;
   max-width: 1024px;
   margin: var(--space-10) auto 0;
-  padding: var(--space-3);
-  background: rgba(10, 10, 15, 0.55);
-  backdrop-filter: blur(20px) saturate(140%);
-  -webkit-backdrop-filter: blur(20px) saturate(140%);
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  padding: var(--space-2);
+  background: rgba(8, 8, 12, 0.72);
+  backdrop-filter: blur(24px) saturate(150%);
+  -webkit-backdrop-filter: blur(24px) saturate(150%);
+  border: 1px solid rgba(var(--c-gold-rgb), 0.28);
   border-radius: var(--radius-lg);
   box-shadow:
-    0 24px 64px rgba(0, 0, 0, 0.55),
-    inset 0 1px 0 rgba(255, 255, 255, 0.08);
+    0 32px 80px rgba(0, 0, 0, 0.6),
+    0 0 0 1px rgba(var(--c-gold-rgb), 0.08),
+    inset 0 1px 0 rgba(255, 255, 255, 0.06);
   z-index: 2;
 
   &::before {
@@ -31,7 +32,7 @@
     inset: -1px;
     border-radius: inherit;
     padding: 1px;
-    background: linear-gradient(135deg, rgba(var(--c-gold-rgb), 0.5), transparent 40%, rgba(var(--c-gold-rgb), 0.15));
+    background: linear-gradient(135deg, rgba(var(--c-gold-rgb), 0.6), transparent 35%, rgba(var(--c-gold-rgb), 0.2) 70%, rgba(var(--c-gold-rgb), 0.5));
     -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
     -webkit-mask-composite: xor;
     mask-composite: exclude;
@@ -41,30 +42,35 @@
   &__tabs {
     display: flex;
     gap: var(--space-1);
-    padding: 0 var(--space-2) var(--space-2);
+    padding: var(--space-1) var(--space-3) var(--space-2);
+    border-bottom: 1px solid rgba(var(--c-gold-rgb), 0.12);
+    margin-bottom: var(--space-2);
   }
 
   &__tab {
     appearance: none;
     background: transparent;
     border: 0;
-    color: var(--c-text-2);
+    color: var(--c-text-3);
     font-family: var(--font-sans);
-    font-size: var(--text-sm);
-    font-weight: 600;
-    letter-spacing: 0.08em;
+    font-size: 0.78rem;
+    font-weight: 700;
+    letter-spacing: 0.18em;
     text-transform: uppercase;
-    padding: var(--space-2) var(--space-5);
+    padding: var(--space-3) var(--space-5);
     border-radius: var(--radius-pill);
     cursor: pointer;
-    transition: color var(--transition-fast), background var(--transition-fast);
+    transition: all var(--transition-fast);
+    position: relative;
 
     &:hover { color: var(--c-text); }
 
     &--active {
-      background: var(--c-gold);
+      background: linear-gradient(135deg, var(--c-gold-light, var(--c-gold)), var(--c-gold));
       color: var(--c-bg);
-      box-shadow: 0 6px 20px rgba(var(--c-gold-rgb), 0.35);
+      box-shadow:
+        0 8px 24px rgba(var(--c-gold-rgb), 0.4),
+        inset 0 1px 0 rgba(255, 255, 255, 0.3);
     }
 
     &:focus-visible {
@@ -76,10 +82,11 @@
   &__form {
     display: grid;
     grid-template-columns: 1.2fr 1fr 1fr 1.2fr auto;
-    gap: var(--space-2);
-    padding: var(--space-2);
-    background: rgba(255, 255, 255, 0.03);
+    gap: 1px;
+    padding: 0;
+    background: rgba(var(--c-gold-rgb), 0.06);
     border-radius: calc(var(--radius-lg) - 6px);
+    overflow: hidden;
 
     @media (max-width: 900px) {
       grid-template-columns: 1fr 1fr;
@@ -93,26 +100,26 @@
   &__field {
     display: flex;
     flex-direction: column;
-    gap: 2px;
-    padding: var(--space-2) var(--space-4);
-    border-right: 1px solid rgba(255, 255, 255, 0.06);
+    gap: 4px;
+    padding: var(--space-3) var(--space-4);
+    background: rgba(8, 8, 12, 0.85);
     min-width: 0;
+    transition: background var(--transition-fast);
 
-    &:last-of-type { border-right: 0; }
-
-    @media (max-width: 900px) {
-      border-right: 0;
-      border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+    &:hover,
+    &:focus-within {
+      background: rgba(20, 18, 12, 0.95);
     }
   }
 
   &__label {
     font-family: var(--font-sans);
-    font-size: 0.65rem;
-    font-weight: 600;
-    letter-spacing: 0.14em;
+    font-size: 0.62rem;
+    font-weight: 700;
+    letter-spacing: 0.2em;
     text-transform: uppercase;
     color: var(--c-gold);
+    opacity: 0.9;
   }
 
   &__select,

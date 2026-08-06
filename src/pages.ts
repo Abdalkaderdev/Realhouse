@@ -1143,17 +1143,6 @@ export function renderHomePage(): DocumentFragment {
 
   const heroContent = createElement('div', 'hero__content container');
 
-  // Eyebrow with decorative lines for cinematic feel
-  const heroEyebrow = createElement('div', 'hero__eyebrow');
-  heroEyebrow.setAttribute('aria-hidden', 'true');
-  const eyebrowLineLeft = createElement('span', 'hero__line');
-  const eyebrowText = createElement('span', '', 'Real House Erbil');
-  const eyebrowLineRight = createElement('span', 'hero__line');
-  heroEyebrow.appendChild(eyebrowLineLeft);
-  heroEyebrow.appendChild(eyebrowText);
-  heroEyebrow.appendChild(eyebrowLineRight);
-  heroContent.appendChild(heroEyebrow);
-
   // Cinematic headline (text-gold-gradient on the parent so GSAP cinematicReveal,
   // which rebuilds the element from textContent into character spans, preserves the gold gradient).
   const headline = createElement('h1', 'hero__headline text-gold-gradient', 'Luxury Real Estate in Erbil');
