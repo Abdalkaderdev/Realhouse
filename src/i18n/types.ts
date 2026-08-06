@@ -1718,6 +1718,88 @@ export interface CoreTranslations {
     getHelp: string;
     imageUnavailable: string;
   };
+
+  homePage: {
+    heroAriaLabel: string;
+    heroHeadline: string;
+    heroSubline: string;
+    heroScroll: string;
+    searchAriaLabel: string;
+    searchSubmitAriaLabel: string;
+    tabBuy: string;
+    tabRent: string;
+    tabProjects: string;
+    locationLabel: string;
+    propertyTypeLabel: string;
+    budgetLabel: string;
+    keywordLabel: string;
+    keywordPlaceholder: string;
+    anyLocation: string;
+    anyType: string;
+    anyBudget: string;
+    searchButton: string;
+    karkAriaLabel: string;
+    karkEyebrow: string;
+    karkTitle: string;
+    karkTitleAccent: string;
+    karkSubtitle: string;
+    karkExploreCta: string;
+    karkContactCta: string;
+    journalEyebrow: string;
+    journalTitle: string;
+    journalTitleEmphasis: string;
+    journalSubtitle: string;
+    journalReadAll: string;
+    journalMinRead: string;
+    newsletterEyebrow: string;
+    newsletterTitle: string;
+    newsletterTitleEmphasis: string;
+    newsletterTitleEnd: string;
+    newsletterDescription: string;
+    newsletterEmailLabel: string;
+    newsletterSubscribe: string;
+    newsletterFormAriaLabel: string;
+    newsletterNoSpam: string;
+    newsletterUnsubscribe: string;
+    newsletterReaders: string;
+    newsletterInvalidEmail: string;
+    newsletterSuccess: string;
+    cardBeds: string;
+    cardBaths: string;
+    cardAreaUnit: string;
+    cardViewDetails: string;
+    cardViewDetailsFor: string;
+    cardPreviousImage: string;
+    cardNextImage: string;
+    cardImageIndex: string;
+    cardAddToFavorites: string;
+    cardRemoveFromFavorites: string;
+  };
+
+  propertiesPage: {
+    gridLabel: string;
+    viewAsGridAria: string;
+    anyBeds: string;
+    statusForSale: string;
+    statusForRent: string;
+    statusDailyRent: string;
+    savedSearches: string;
+    sortLabel: string;
+    sortFeatured: string;
+    sortNewest: string;
+    sortPriceAsc: string;
+    sortPriceDesc: string;
+    sortAreaDesc: string;
+    sortBedsDesc: string;
+    emptyTitle: string;
+    emptyDescription: string;
+    emptyClearAll: string;
+    emptyTalkAdvisor: string;
+    minPlaceholder: string;
+    maxAreaPlaceholder: string;
+    minYearPlaceholder: string;
+    maxYearPlaceholder: string;
+  };
 }
 
 /**

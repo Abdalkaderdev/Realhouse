@@ -555,9 +555,9 @@ function createHeroSearchBar(): HTMLElement {
   const tabs = createElement('div', 'hero-search__tabs');
   tabs.setAttribute('role', 'tablist');
   const tabConfig: Array<{ key: string; label: string; status: string; type?: string }> = [
-    { key: 'buy', label: 'Buy', status: 'For Sale' },
-    { key: 'rent', label: 'Rent', status: 'For Rent' },
-    { key: 'projects', label: 'Projects', status: 'All' },
+    { key: 'buy', label: t('homePage.tabBuy'), status: 'For Sale' },
+    { key: 'rent', label: t('homePage.tabRent'), status: 'For Rent' },
+    { key: 'projects', label: t('homePage.tabProjects'), status: 'All' },
   ];
   let activeTab = 'buy';
   tabConfig.forEach((tab, idx) => {
@@ -581,75 +581,100 @@ function createHeroSearchBar(): HTMLElement {
 
   // Form row
   const form = createElement('form', 'hero-search__form');
-  form.setAttribute('aria-label', 'Property search');
+  form.setAttribute('aria-label', t('homePage.searchAriaLabel'));
 
   // Location field
   const locField = createElement('div', 'hero-search__field hero-search__field--location');
-  const locLabel = createElement('label', 'hero-search__label', 'Location');
+  const locLabel = createElement('label', 'hero-search__label', t('homePage.locationLabel'));
   locLabel.setAttribute('for', 'hero-search-location');
   locField.appendChild(locLabel);
   const locSelect = createElement('select', 'hero-search__select') as HTMLSelectElement;
   locSelect.id = 'hero-search-location';
-  ['Any Location', 'Erbil', 'Kark', 'Empire World', 'Dream City', 'English Village', 'Italian Village', 'Newroz', 'Pak City']
-    .forEach(loc => {
-      const opt = document.createElement('option');
-      opt.value = loc === 'Any Location' ? 'All' : loc;
-      opt.textContent = loc;
-      locSelect.appendChild(opt);
-    });
+  const locOptions: Array<{ label: string; value: string }> = [
+    { label: t('homePage.anyLocation'), value: 'All' },
+    { label: 'Erbil', value: 'Erbil' },
+    { label: 'Kark', value: 'Kark' },
+    { label: 'Empire World', value: 'Empire World' },
+    { label: 'Dream City', value: 'Dream City' },
+    { label: 'English Village', value: 'English Village' },
+    { label: 'Italian Village', value: 'Italian Village' },
+    { label: 'Newroz', value: 'Newroz' },
+    { label: 'Pak City', value: 'Pak City' },
+  ];
+  locOptions.forEach(o => {
+    const opt = document.createElement('option');
+    opt.value = o.value;
+    opt.textContent = o.label;
+    locSelect.appendChild(opt);
+  });
   locField.appendChild(locSelect);
   form.appendChild(locField);
 
   // Property Type field
   const typeField = createElement('div', 'hero-search__field');
-  const typeLabel = createElement('label', 'hero-search__label', 'Property Type');
+  const typeLabel = createElement('label', 'hero-search__label', t('homePage.propertyTypeLabel'));
   typeLabel.setAttribute('for', 'hero-search-type');
   typeField.appendChild(typeLabel);
   const typeSelect = createElement('select', 'hero-search__select') as HTMLSelectElement;
   typeSelect.id = 'hero-search-type';
-  ['Any Type', 'Villa', 'Apartment', 'Penthouse', 'Townhouse', 'Duplex', 'Land', 'Commercial']
-    .forEach(typ => {
-      const opt = document.createElement('option');
-      opt.value = typ === 'Any Type' ? 'All' : typ;
-      opt.textContent = typ;
-      typeSelect.appendChild(opt);
-    });
+  const typeOptions: Array<{ label: string; value: string }> = [
+    { label: t('homePage.anyType'), value: 'All' },
+    { label: t('propertyTypes.villa'), value: 'Villa' },
+    { label: t('propertyTypes.apartment'), value: 'Apartment' },
+    { label: t('propertyTypes.penthouse'), value: 'Penthouse' },
+    { label: t('propertyTypes.townhouse'), value: 'Townhouse' },
+    { label: t('propertyTypes.duplex'), value: 'Duplex' },
+    { label: t('propertyTypes.land'), value: 'Land' },
+    { label: t('propertyTypes.commercial'), value: 'Commercial' },
+  ];
+  typeOptions.forEach(o => {
+    const opt = document.createElement('option');
+    opt.value = o.value;
+    opt.textContent = o.label;
+    typeSelect.appendChild(opt);
+  });
   typeField.appendChild(typeSelect);
   form.appendChild(typeField);
 
   // Budget field
   const budgetField = createElement('div', 'hero-search__field');
-  const budgetLabel = createElement('label', 'hero-search__label', 'Budget');
+  const budgetLabel = createElement('label', 'hero-search__label', t('homePage.budgetLabel'));
   budgetLabel.setAttribute('for', 'hero-search-budget');
   budgetField.appendChild(budgetLabel);
   const budgetSelect = createElement('select', 'hero-search__select') as HTMLSelectElement;
   budgetSelect.id = 'hero-search-budget';
-  ['Any Budget', 'Under $200K', '$200K-$400K', '$400K-$700K', '$700K+']
-    .forEach(b => {
-      const opt = document.createElement('option');
-      opt.value = b === 'Any Budget' ? 'All' : b;
-      opt.textContent = b;
-      budgetSelect.appendChild(opt);
-    });
+  const budgetOptions: Array<{ label: string; value: string }> = [
+    { label: t('homePage.anyBudget'), value: 'All' },
+    { label: 'Under $200K', value: 'Under $200K' },
+    { label: '$200K-$400K', value: '$200K-$400K' },
+    { label: '$400K-$700K', value: '$400K-$700K' },
+    { label: '$700K+', value: '$700K+' },
+  ];
+  budgetOptions.forEach(o => {
+    const opt = document.createElement('option');
+    opt.value = o.value;
+    opt.textContent = o.label;
+    budgetSelect.appendChild(opt);
+  });
   budgetField.appendChild(budgetSelect);
   form.appendChild(budgetField);
 
   // Keyword field
   const keywordField = createElement('div', 'hero-search__field hero-search__field--keyword');
-  const keywordLabel = createElement('label', 'hero-search__label', 'Keyword');
+  const keywordLabel = createElement('label', 'hero-search__label', t('homePage.keywordLabel'));
   keywordLabel.setAttribute('for', 'hero-search-keyword');
   keywordField.appendChild(keywordLabel);
   const keywordInput = createElement('input', 'hero-search__input') as HTMLInputElement;
   keywordInput.id = 'hero-search-keyword';
   keywordInput.type = 'text';
-  keywordInput.placeholder = 'Neighborhood, project, ID…';
+  keywordInput.placeholder = t('homePage.keywordPlaceholder');
   keywordField.appendChild(keywordInput);
   form.appendChild(keywordField);
 
   // Submit
   const submitBtn = createElement('button', 'hero-search__submit btn btn--primary');
   submitBtn.setAttribute('type', 'submit');
-  submitBtn.setAttribute('aria-label', 'Search properties');
+  submitBtn.setAttribute('aria-label', t('homePage.searchSubmitAriaLabel'));
   const submitSvg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
   submitSvg.setAttribute('viewBox', '0 0 24 24');
   submitSvg.setAttribute('fill', 'none');
@@ -664,7 +689,7 @@ function createHeroSearchBar(): HTMLElement {
   line.setAttribute('x1', '21'); line.setAttribute('y1', '21'); line.setAttribute('x2', '16.65'); line.setAttribute('y2', '16.65');
   submitSvg.appendChild(circle); submitSvg.appendChild(line);
   submitBtn.appendChild(submitSvg);
-  const submitText = createElement('span', 'hero-search__submit-label', 'Search');
+  const submitText = createElement('span', 'hero-search__submit-label', t('homePage.searchButton'));
   submitBtn.appendChild(submitText);
   form.appendChild(submitBtn);
 
@@ -706,20 +731,20 @@ function createJournalPreviewSection(): HTMLElement {
 
   const header = createElement('header', 'journal-preview__header');
   const heading = createElement('div', 'journal-preview__heading');
-  const eyebrow = createElement('span', 'journal-preview__eyebrow', 'From Our Journal');
+  const eyebrow = createElement('span', 'journal-preview__eyebrow', t('homePage.journalEyebrow'));
   eyebrow.setAttribute('aria-hidden', 'true');
   heading.appendChild(eyebrow);
   const title = createElement('h2', 'journal-preview__title');
   title.id = 'journal-preview-title';
-  title.textContent = 'Insights, Stories & Market ';
-  title.appendChild(createElement('em', undefined, 'Intelligence'));
+  title.textContent = t('homePage.journalTitle');
+  title.appendChild(createElement('em', undefined, t('homePage.journalTitleEmphasis')));
   heading.appendChild(title);
   const subtitle = createElement('p', 'journal-preview__subtitle',
-    'Field notes from the Erbil market — what we are watching, buying, and recommending.');
+    t('homePage.journalSubtitle'));
   heading.appendChild(subtitle);
   header.appendChild(heading);
 
-  const viewAll = createElement('a', 'journal-preview__view-all', 'Read all articles');
+  const viewAll = createElement('a', 'journal-preview__view-all', t('homePage.journalReadAll'));
   viewAll.href = '/blog';
   viewAll.setAttribute('data-route', '');
   viewAll.appendChild(createSVGUse('icon-arrow-right'));
@@ -756,7 +781,7 @@ function createJournalPreviewSection(): HTMLElement {
     const meta = createElement('div', 'journal-preview__meta');
     meta.appendChild(createElement('time', 'journal-preview__date', formatBlogDate(post.date)));
     meta.appendChild(createElement('span', 'journal-preview__dot', '•'));
-    meta.appendChild(createElement('span', 'journal-preview__read-time', `${post.readTime} min read`));
+    meta.appendChild(createElement('span', 'journal-preview__read-time', t('homePage.journalMinRead', { count: post.readTime })));
     content.appendChild(meta);
 
     const titleLink = createElement('a', 'journal-preview__article-title');
@@ -795,24 +820,24 @@ function createHomeNewsletterSection(): HTMLElement {
   card.appendChild(decor);
 
   const content = createElement('div', 'home-newsletter__content');
-  const eyebrow = createElement('span', 'home-newsletter__eyebrow', 'The Dispatch');
+  const eyebrow = createElement('span', 'home-newsletter__eyebrow', t('homePage.newsletterEyebrow'));
   eyebrow.setAttribute('aria-hidden', 'true');
   content.appendChild(eyebrow);
 
   const title = createElement('h2', 'home-newsletter__title');
   title.id = 'home-newsletter-title';
-  title.textContent = 'First access to ';
-  title.appendChild(createElement('em', undefined, 'off-market'));
-  title.appendChild(document.createTextNode(' listings.'));
+  title.textContent = t('homePage.newsletterTitle');
+  title.appendChild(createElement('em', undefined, t('homePage.newsletterTitleEmphasis')));
+  title.appendChild(document.createTextNode(t('homePage.newsletterTitleEnd')));
   content.appendChild(title);
 
   content.appendChild(createElement('p', 'home-newsletter__text',
-    'Join 4,800+ readers receiving Erbil\'s premier real estate intelligence — one curated dispatch, every Sunday morning.'));
+    t('homePage.newsletterDescription')));
 
   const form = createElement('form', 'home-newsletter__form');
-  form.setAttribute('aria-label', 'Newsletter signup');
+  form.setAttribute('aria-label', t('homePage.newsletterFormAriaLabel'));
   const inputWrap = createElement('div', 'home-newsletter__input-wrap');
-  const emailLabel = createElement('label', 'visually-hidden', 'Email address');
+  const emailLabel = createElement('label', 'visually-hidden', t('homePage.newsletterEmailLabel'));
   emailLabel.setAttribute('for', 'home-newsletter-email');
   inputWrap.appendChild(emailLabel);
   const input = createElement('input', 'home-newsletter__input') as HTMLInputElement;
@@ -824,29 +849,29 @@ function createHomeNewsletterSection(): HTMLElement {
   inputWrap.appendChild(input);
   form.appendChild(inputWrap);
 
-  const submit = createElement('button', 'home-newsletter__submit btn btn--primary', 'Subscribe');
+  const submit = createElement('button', 'home-newsletter__submit btn btn--primary', t('homePage.newsletterSubscribe'));
   submit.setAttribute('type', 'submit');
   form.appendChild(submit);
 
   form.addEventListener('submit', (e) => {
     e.preventDefault();
     if (!input.value || !input.checkValidity()) {
-      toast.error('Please enter a valid email address.');
+      toast.error(t('homePage.newsletterInvalidEmail'));
       input.focus();
       return;
     }
-    toast.success('Welcome aboard — check your inbox to confirm.');
+    toast.success(t('homePage.newsletterSuccess'));
     input.value = '';
   });
 
   content.appendChild(form);
 
   const trust = createElement('div', 'home-newsletter__trust');
-  trust.appendChild(createElement('span', 'home-newsletter__trust-item', 'No spam'));
+  trust.appendChild(createElement('span', 'home-newsletter__trust-item', t('homePage.newsletterNoSpam')));
   trust.appendChild(createElement('span', 'home-newsletter__trust-sep', '·'));
-  trust.appendChild(createElement('span', 'home-newsletter__trust-item', 'Unsubscribe anytime'));
+  trust.appendChild(createElement('span', 'home-newsletter__trust-item', t('homePage.newsletterUnsubscribe')));
   trust.appendChild(createElement('span', 'home-newsletter__trust-sep', '·'));
-  trust.appendChild(createElement('span', 'home-newsletter__trust-item', '4,800+ readers'));
+  trust.appendChild(createElement('span', 'home-newsletter__trust-item', t('homePage.newsletterReaders')));
   content.appendChild(trust);
 
   card.appendChild(content);
@@ -943,7 +968,7 @@ function createPropertyCard(property: Property): HTMLElement {
 
     for (let i = 0; i < maxSlides; i++) {
       const dot = createElement('button', `property-card__dot${i === 0 ? ' property-card__dot--active' : ''}`);
-      dot.setAttribute('aria-label', `Image ${i + 1}`);
+      dot.setAttribute('aria-label', t('homePage.cardImageIndex', { index: i + 1 }));
       dot.addEventListener('click', (e) => {
         e.preventDefault();
         e.stopPropagation();
@@ -956,7 +981,7 @@ function createPropertyCard(property: Property): HTMLElement {
     // Prev/Next buttons
     const prevBtn = createElement('button', 'property-card__carousel-btn property-card__carousel-btn--prev');
     prevBtn.innerHTML = '&#8249;';
-    prevBtn.setAttribute('aria-label', 'Previous image');
+    prevBtn.setAttribute('aria-label', t('homePage.cardPreviousImage'));
     prevBtn.addEventListener('click', (e) => {
       e.preventDefault();
       e.stopPropagation();
@@ -966,7 +991,7 @@ function createPropertyCard(property: Property): HTMLElement {
 
     const nextBtn = createElement('button', 'property-card__carousel-btn property-card__carousel-btn--next');
     nextBtn.innerHTML = '&#8250;';
-    nextBtn.setAttribute('aria-label', 'Next image');
+    nextBtn.setAttribute('aria-label', t('homePage.cardNextImage'));
     nextBtn.addEventListener('click', (e) => {
       e.preventDefault();
       e.stopPropagation();
@@ -1018,7 +1043,7 @@ function createPropertyCard(property: Property): HTMLElement {
   // Favorite button
   const favorite = createElement('button', 'property-card__favorite');
   const isPropertyFavorite = isFavorite(property.id);
-  favorite.setAttribute('aria-label', isPropertyFavorite ? 'Remove from favorites' : 'Add to favorites');
+  favorite.setAttribute('aria-label', isPropertyFavorite ? t('homePage.cardRemoveFromFavorites') : t('homePage.cardAddToFavorites'));
   if (isPropertyFavorite) {
     favorite.classList.add('active');
   }
@@ -1078,17 +1103,17 @@ function createPropertyCard(property: Property): HTMLElement {
 
   const bedSpec = createElement('span', 'property-card__spec');
   bedSpec.appendChild(createSVGUse('icon-bed'));
-  bedSpec.appendChild(document.createTextNode(`${property.specs.beds} Beds`));
+  bedSpec.appendChild(document.createTextNode(`${property.specs.beds} ${t('homePage.cardBeds')}`));
   specs.appendChild(bedSpec);
 
   const bathSpec = createElement('span', 'property-card__spec');
   bathSpec.appendChild(createSVGUse('icon-bath'));
-  bathSpec.appendChild(document.createTextNode(`${property.specs.baths} Baths`));
+  bathSpec.appendChild(document.createTextNode(`${property.specs.baths} ${t('homePage.cardBaths')}`));
   specs.appendChild(bathSpec);
 
   const areaSpec = createElement('span', 'property-card__spec');
   areaSpec.appendChild(createSVGUse('icon-area'));
-  areaSpec.appendChild(document.createTextNode(`${property.specs.sqm.toLocaleString()} m²`));
+  areaSpec.appendChild(document.createTextNode(`${property.specs.sqm.toLocaleString()} ${t('homePage.cardAreaUnit')}`));
   specs.appendChild(areaSpec);
 
   content.appendChild(specs);
@@ -1100,11 +1125,11 @@ function createPropertyCard(property: Property): HTMLElement {
   price.setAttribute('itemprop', 'price');
   footer.appendChild(price);
 
-  const viewBtn = createElement('a', 'btn btn--ghost btn--sm', 'View property details');
+  const viewBtn = createElement('a', 'btn btn--ghost btn--sm', t('homePage.cardViewDetails'));
   viewBtn.href = `/properties/${property.id}`;
   viewBtn.setAttribute('data-route', '');
   viewBtn.setAttribute('itemprop', 'url');
-  viewBtn.setAttribute('aria-label', `View details for ${property.title}`);
+  viewBtn.setAttribute('aria-label', t('homePage.cardViewDetailsFor', { title: property.title }));
   footer.appendChild(viewBtn);
 
   content.appendChild(footer);
@@ -1120,7 +1145,7 @@ export function renderHomePage(): DocumentFragment {
   // Hero Section with proper semantic structure
   const hero = createElement('section', 'hero');
   hero.id = 'hero';
-  hero.setAttribute('aria-label', 'Welcome to Real House - Luxury Real Estate');
+  hero.setAttribute('aria-label', t('homePage.heroAriaLabel'));
 
   // Hero Video Background
   const heroVideo = document.createElement('video');
@@ -1145,12 +1170,12 @@ export function renderHomePage(): DocumentFragment {
 
   // Cinematic headline (text-gold-gradient on the parent so GSAP cinematicReveal,
   // which rebuilds the element from textContent into character spans, preserves the gold gradient).
-  const headline = createElement('h1', 'hero__headline text-gold-gradient', 'Luxury Real Estate in Erbil');
+  const headline = createElement('h1', 'hero__headline text-gold-gradient', t('homePage.heroHeadline'));
   heroContent.appendChild(headline);
 
   // Subline
   const subline = createElement('p', 'hero__subline',
-    'Discover premium properties, exclusive land plots, and the finest developments in Kurdistan.');
+    t('homePage.heroSubline'));
   heroContent.appendChild(subline);
 
   // CTA
@@ -1173,7 +1198,7 @@ export function renderHomePage(): DocumentFragment {
   // Scroll-down indicator (cinematic cue)
   const heroScroll = createElement('div', 'hero__scroll');
   heroScroll.setAttribute('aria-hidden', 'true');
-  const scrollLabel = createElement('span', 'hero__scroll-label', 'Scroll');
+  const scrollLabel = createElement('span', 'hero__scroll-label', t('homePage.heroScroll'));
   const scrollLine = createElement('span', 'hero__scroll-line');
   heroScroll.appendChild(scrollLabel);
   heroScroll.appendChild(scrollLine);
@@ -1240,7 +1265,7 @@ export function renderHomePage(): DocumentFragment {
 
   // Kark Land Showcase Section
   const karkShowcase = createElement('section', 'kark-showcase');
-  karkShowcase.setAttribute('aria-label', 'Kark Land Investment Opportunities');
+  karkShowcase.setAttribute('aria-label', t('homePage.karkAriaLabel'));
   const karkVideo = document.createElement('video');
   karkVideo.className = 'kark-showcase__video';
   karkVideo.src = '/videos/kark-hero.mp4';
@@ -1262,7 +1287,7 @@ export function renderHomePage(): DocumentFragment {
   const karkEyebrow = createElement('div', 'kark-showcase__eyebrow');
   karkEyebrow.setAttribute('aria-hidden', 'true');
   const karkEyebrowLineL = createElement('span', 'kark-showcase__eyebrow-line');
-  const karkEyebrowText = createElement('span', 'kark-showcase__eyebrow-text', 'Exclusive Investment');
+  const karkEyebrowText = createElement('span', 'kark-showcase__eyebrow-text', t('homePage.karkEyebrow'));
   const karkEyebrowLineR = createElement('span', 'kark-showcase__eyebrow-line');
   karkEyebrow.appendChild(karkEyebrowLineL);
   karkEyebrow.appendChild(karkEyebrowText);
@@ -1270,21 +1295,21 @@ export function renderHomePage(): DocumentFragment {
   karkContent.appendChild(karkEyebrow);
 
   const karkTitle = createElement('h2', 'kark-showcase__title');
-  const karkTitleLine1 = createElement('span', 'kark-showcase__title-line', 'Kark Land Plots');
-  const karkTitleLine2 = createElement('span', 'kark-showcase__title-accent', 'Erbil\'s Next Investment Frontier');
+  const karkTitleLine1 = createElement('span', 'kark-showcase__title-line', t('homePage.karkTitle'));
+  const karkTitleLine2 = createElement('span', 'kark-showcase__title-accent', t('homePage.karkTitleAccent'));
   karkTitle.appendChild(karkTitleLine1);
   karkTitle.appendChild(karkTitleLine2);
   karkContent.appendChild(karkTitle);
 
   const karkSubtitle = createElement('p', 'kark-showcase__subtitle',
-    'Premium commercial and residential land in Erbil\'s fastest-growing district. Direct highway access, full infrastructure, ready for development.');
+    t('homePage.karkSubtitle'));
   karkContent.appendChild(karkSubtitle);
   const karkCta = createElement('div', 'kark-showcase__cta');
-  const karkBtn = createElement('a', 'btn btn--primary btn--large', 'Explore Kark Lands');
+  const karkBtn = createElement('a', 'btn btn--primary btn--large', t('homePage.karkExploreCta'));
   karkBtn.href = '/properties/kark-land-plot';
   karkBtn.setAttribute('data-route', '');
   karkCta.appendChild(karkBtn);
-  const karkBtn2 = createElement('a', 'btn btn--ghost btn--large', 'Contact Us');
+  const karkBtn2 = createElement('a', 'btn btn--ghost btn--large', t('homePage.karkContactCta'));
   karkBtn2.href = '/contact';
   karkBtn2.setAttribute('data-route', '');
   karkCta.appendChild(karkBtn2);
@@ -1657,9 +1682,9 @@ export function renderPropertiesPage(): DocumentFragment {
   // Grid View Button
   const gridBtn = createElement('button', `properties-page__view-btn${currentViewMode === 'grid' ? ' properties-page__view-btn--active' : ''}`);
   gridBtn.setAttribute('data-view', 'grid');
-  gridBtn.setAttribute('aria-label', 'View properties as grid');
+  gridBtn.setAttribute('aria-label', t('propertiesPage.viewAsGridAria'));
   gridBtn.setAttribute('aria-pressed', currentViewMode === 'grid' ? 'true' : 'false');
-  gridBtn.innerHTML = '<svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg><span>Grid</span>';
+  gridBtn.innerHTML = `<svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg><span>${t('propertiesPage.gridLabel')}</span>`;
   viewToggle.appendChild(gridBtn);
 
   // List View Button
@@ -1700,12 +1725,21 @@ export function renderPropertiesPage(): DocumentFragment {
   const typeFilterGroup = createElement('div', 'properties-page__filter-group');
   const typeLabel = createElement('span', 'properties-page__filter-label', t('forms.propertyType') + ':');
   typeFilterGroup.appendChild(typeLabel);
-  const filterTypes = ['All', 'Villa', 'Apartment', 'Penthouse', 'Townhouse', 'Duplex', 'Land', 'Commercial'];
-  filterTypes.forEach((type) => {
-    const isActive = currentFilterState.type === type;
-    const btn = createElement('button', `properties-page__filter${isActive ? ' active' : ''}`, type);
+  const filterTypes: Array<{ label: string; value: string }> = [
+    { label: t('filters.all'), value: 'All' },
+    { label: t('propertyTypes.villa'), value: 'Villa' },
+    { label: t('propertyTypes.apartment'), value: 'Apartment' },
+    { label: t('propertyTypes.penthouse'), value: 'Penthouse' },
+    { label: t('propertyTypes.townhouse'), value: 'Townhouse' },
+    { label: t('propertyTypes.duplex'), value: 'Duplex' },
+    { label: t('propertyTypes.land'), value: 'Land' },
+    { label: t('propertyTypes.commercial'), value: 'Commercial' },
+  ];
+  filterTypes.forEach(({ label, value }) => {
+    const isActive = currentFilterState.type === value;
+    const btn = createElement('button', `properties-page__filter${isActive ? ' active' : ''}`, label);
     btn.setAttribute('data-filter-type', 'type');
-    btn.setAttribute('data-filter-value', type);
+    btn.setAttribute('data-filter-value', value);
     typeFilterGroup.appendChild(btn);
   });
   container.appendChild(typeFilterGroup);
@@ -1714,12 +1748,18 @@ export function renderPropertiesPage(): DocumentFragment {
   const priceFilterGroup = createElement('div', 'properties-page__filter-group');
   const priceLabel = createElement('span', 'properties-page__filter-label', t('property.price') + ':');
   priceFilterGroup.appendChild(priceLabel);
-  const priceRanges = ['All', 'Under $200K', '$200K-$400K', '$400K-$700K', '$700K+'];
-  priceRanges.forEach((range) => {
-    const isActive = currentFilterState.priceRange === range;
-    const btn = createElement('button', `properties-page__filter${isActive ? ' active' : ''}`, range);
+  const priceRanges: Array<{ label: string; value: string }> = [
+    { label: t('filters.all'), value: 'All' },
+    { label: 'Under $200K', value: 'Under $200K' },
+    { label: '$200K-$400K', value: '$200K-$400K' },
+    { label: '$400K-$700K', value: '$400K-$700K' },
+    { label: '$700K+', value: '$700K+' },
+  ];
+  priceRanges.forEach(({ label, value }) => {
+    const isActive = currentFilterState.priceRange === value;
+    const btn = createElement('button', `properties-page__filter${isActive ? ' active' : ''}`, label);
     btn.setAttribute('data-filter-type', 'price');
-    btn.setAttribute('data-filter-value', range);
+    btn.setAttribute('data-filter-value', value);
     priceFilterGroup.appendChild(btn);
   });
   container.appendChild(priceFilterGroup);
@@ -1729,7 +1769,7 @@ export function renderPropertiesPage(): DocumentFragment {
   const bedsLabel = createElement('span', 'properties-page__filter-label', t('filters.bedrooms') + ':');
   bedsFilterGroup.appendChild(bedsLabel);
   const bedOptions = [
-    { label: 'Any', value: 0 },
+    { label: t('filters.any'), value: 0 },
     { label: '3+', value: 3 },
     { label: '4+', value: 4 },
     { label: '5+', value: 5 },
@@ -1748,12 +1788,17 @@ export function renderPropertiesPage(): DocumentFragment {
   const statusFilterGroup = createElement('div', 'properties-page__filter-group');
   const statusLabel = createElement('span', 'properties-page__filter-label', t('filters.status') + ':');
   statusFilterGroup.appendChild(statusLabel);
-  const statusOptions = ['All', 'For Sale', 'For Rent', 'Daily Rent'];
-  statusOptions.forEach((status) => {
-    const isActive = currentFilterState.status === status;
-    const btn = createElement('button', `properties-page__filter${isActive ? ' active' : ''}`, status);
+  const statusOptions: Array<{ label: string; value: string }> = [
+    { label: t('filters.all'), value: 'All' },
+    { label: t('propertiesPage.statusForSale'), value: 'For Sale' },
+    { label: t('propertiesPage.statusForRent'), value: 'For Rent' },
+    { label: t('propertiesPage.statusDailyRent'), value: 'Daily Rent' },
+  ];
+  statusOptions.forEach(({ label, value }) => {
+    const isActive = currentFilterState.status === value;
+    const btn = createElement('button', `properties-page__filter${isActive ? ' active' : ''}`, label);
     btn.setAttribute('data-filter-type', 'status');
-    btn.setAttribute('data-filter-value', status);
+    btn.setAttribute('data-filter-value', value);
     statusFilterGroup.appendChild(btn);
   });
   container.appendChild(statusFilterGroup);
@@ -1816,9 +1861,9 @@ export function renderPropertiesPage(): DocumentFragment {
   areaWrapper.appendChild(createElement('label', 'advanced-filter__label', t('filters.areaSqm')));
   const areaSliderContainer = createElement('div', 'advanced-filter__slider-container');
   const minAreaInput = createElement('input', 'advanced-filter__range-input') as HTMLInputElement;
-  minAreaInput.type = 'number'; minAreaInput.min = '0'; minAreaInput.placeholder = 'Min'; minAreaInput.id = 'min-area-input';
+  minAreaInput.type = 'number'; minAreaInput.min = '0'; minAreaInput.placeholder = t('propertiesPage.minPlaceholder'); minAreaInput.id = 'min-area-input';
   const maxAreaInput = createElement('input', 'advanced-filter__range-input') as HTMLInputElement;
-  maxAreaInput.type = 'number'; maxAreaInput.min = '0'; maxAreaInput.placeholder = 'Max (1000+)'; maxAreaInput.id = 'max-area-input';
+  maxAreaInput.type = 'number'; maxAreaInput.min = '0'; maxAreaInput.placeholder = t('propertiesPage.maxAreaPlaceholder'); maxAreaInput.id = 'max-area-input';
   areaSliderContainer.appendChild(minAreaInput);
   areaSliderContainer.appendChild(createElement('span', 'advanced-filter__separator', t('filters.to')));
   areaSliderContainer.appendChild(maxAreaInput);
@@ -1829,9 +1874,9 @@ export function renderPropertiesPage(): DocumentFragment {
   yearWrapper.appendChild(createElement('label', 'advanced-filter__label', t('filters.yearBuilt')));
   const yearSliderContainer = createElement('div', 'advanced-filter__slider-container');
   const minYearInput = createElement('input', 'advanced-filter__range-input') as HTMLInputElement;
-  minYearInput.type = 'number'; minYearInput.min = '2000'; minYearInput.placeholder = 'Min Year'; minYearInput.id = 'min-year-input';
+  minYearInput.type = 'number'; minYearInput.min = '2000'; minYearInput.placeholder = t('propertiesPage.minYearPlaceholder'); minYearInput.id = 'min-year-input';
   const maxYearInput = createElement('input', 'advanced-filter__range-input') as HTMLInputElement;
-  maxYearInput.type = 'number'; maxYearInput.min = '2000'; maxYearInput.placeholder = 'Max Year'; maxYearInput.id = 'max-year-input';
+  maxYearInput.type = 'number'; maxYearInput.min = '2000'; maxYearInput.placeholder = t('propertiesPage.maxYearPlaceholder'); maxYearInput.id = 'max-year-input';
   yearSliderContainer.appendChild(minYearInput);
   yearSliderContainer.appendChild(createElement('span', 'advanced-filter__separator', t('filters.to')));
   yearSliderContainer.appendChild(maxYearInput);
@@ -1982,7 +2027,7 @@ export function renderPropertiesPage(): DocumentFragment {
   bookmark.setAttribute('d', 'M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z');
   savedIcon.appendChild(bookmark);
   savedBtn.appendChild(savedIcon);
-  savedBtn.appendChild(createElement('span', 'properties-page__saved-label', 'Saved Searches'));
+  savedBtn.appendChild(createElement('span', 'properties-page__saved-label', t('propertiesPage.savedSearches')));
   const savedBadge = createElement('span', 'properties-page__saved-badge');
   savedBadge.id = 'saved-searches-badge';
   savedBtn.appendChild(savedBadge);
@@ -1997,18 +2042,18 @@ export function renderPropertiesPage(): DocumentFragment {
 
   // Sort
   const sortWrap = createElement('div', 'properties-page__sort');
-  const sortLabel = createElement('label', 'properties-page__sort-label', 'Sort:');
+  const sortLabel = createElement('label', 'properties-page__sort-label', t('propertiesPage.sortLabel'));
   sortLabel.setAttribute('for', 'properties-sort');
   sortWrap.appendChild(sortLabel);
   const sortSelect = createElement('select', 'properties-page__sort-select') as HTMLSelectElement;
   sortSelect.id = 'properties-sort';
   [
-    { v: 'featured', l: 'Featured' },
-    { v: 'newest', l: 'Newest' },
-    { v: 'price-asc', l: 'Price: Low to High' },
-    { v: 'price-desc', l: 'Price: High to Low' },
-    { v: 'area-desc', l: 'Largest Area' },
-    { v: 'beds-desc', l: 'Most Bedrooms' },
+    { v: 'featured', l: t('propertiesPage.sortFeatured') },
+    { v: 'newest', l: t('propertiesPage.sortNewest') },
+    { v: 'price-asc', l: t('propertiesPage.sortPriceAsc') },
+    { v: 'price-desc', l: t('propertiesPage.sortPriceDesc') },
+    { v: 'area-desc', l: t('propertiesPage.sortAreaDesc') },
+    { v: 'beds-desc', l: t('propertiesPage.sortBedsDesc') },
   ].forEach(o => {
     const opt = document.createElement('option');
     opt.value = o.v; opt.textContent = o.l;
@@ -2028,10 +2073,10 @@ export function renderPropertiesPage(): DocumentFragment {
   if (initialFilteredProps.length === 0) {
     grid.appendChild(createEmptyState({
       icon: 'search',
-      title: 'No properties match your filters',
-      description: 'Try widening your budget, removing a feature, or clearing all filters to see everything we have available.',
-      primaryAction: { label: 'Clear all filters', href: '/properties' },
-      secondaryAction: { label: 'Talk to an advisor', href: '/contact' },
+      title: t('propertiesPage.emptyTitle'),
+      description: t('propertiesPage.emptyDescription'),
+      primaryAction: { label: t('propertiesPage.emptyClearAll'), href: '/properties' },
+      secondaryAction: { label: t('propertiesPage.emptyTalkAdvisor'), href: '/contact' },
       className: 'properties-page__empty',
     }));
   } else {
