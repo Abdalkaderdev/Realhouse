@@ -1331,11 +1331,21 @@ export class App {
         });
       }
 
-      // Animate hero headline with cinematic reveal
+      // Hero headline + subline: simple fade-in (no per-char split so the
+      // giant first letter can never be mistaken for a logo watermark).
       const heroHeadline = document.querySelector('.hero__headline') as HTMLElement;
-      if (heroHeadline) {
-        cinematicReveal(heroHeadline, { delay: 0.5 });
-      }
+      const heroSubline = document.querySelector('.hero__subline') as HTMLElement;
+      [heroHeadline, heroSubline].forEach((el, i) => {
+        if (!el) return;
+        el.style.opacity = '0';
+        el.style.transform = 'translateY(16px)';
+        el.style.transition = 'opacity 0.7s ease-out, transform 0.7s ease-out';
+        el.style.transitionDelay = `${i * 0.1}s`;
+        requestAnimationFrame(() => {
+          el.style.opacity = '1';
+          el.style.transform = 'translateY(0)';
+        });
+      });
 
       animateProcess();
     } else if (path === '/properties') {

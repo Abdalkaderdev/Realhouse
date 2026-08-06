@@ -308,19 +308,8 @@ export function animateHero(): gsap.core.Timeline {
     { opacity: 1, y: 0, duration: 0.8, ease: EASES.luxury }
   );
 
-  // Headline
-  const headline = document.querySelector('.hero__headline') as HTMLElement;
-  if (headline) {
-    tl.add(splitTextReveal(headline), '-=0.4');
-  }
-
-  // Subline
-  tl.to('.hero__subline', {
-    opacity: 1,
-    y: 0,
-    duration: 0.8,
-    ease: EASES.luxury
-  }, '-=0.6');
+  // Headline + subline are handled by the simple fade in app.ts (initPageAnimations)
+  // to preserve the gold gradient text (which breaks when split into per-word spans).
 
   // CTA buttons
   tl.to('.hero__cta', {
